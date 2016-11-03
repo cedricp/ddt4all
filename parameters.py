@@ -231,16 +231,21 @@ class Param_widget(gui.QWidget):
             qlabel.move(rect['left'], rect['top'])
             
             if len(self.ecurequestsparser.data[text].items) > 0:
-                # Should put a dropbox here
                 print self.ecurequestsparser.data[text].items
-            
-            qlineedit = gui.QLineEdit(self.panel)
-            qlineedit.setFont(qfnt)
-            qlineedit.setText("--")
-            qlineedit.resize(rect['width'] - width, rect['height'])
-            qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
-            qlineedit.setStyleSheet("color: " + self.getFontColor(input))
-            qlineedit.move(rect['left'] + width, rect['top'])
+                qcombo = gui.QComboBox(self.panel)
+                items_ref = self.ecurequestsparser.data[text].items
+                for key in items_ref.keys():
+                    qcombo.addItem(key)
+                qcombo.resize(rect['width'] - width, rect['height'])
+                qcombo.move(rect['left'] + width, rect['top'])
+            else:
+                qlineedit = gui.QLineEdit(self.panel)
+                qlineedit.setFont(qfnt)
+                qlineedit.setText("--")
+                qlineedit.resize(rect['width'] - width, rect['height'])
+                qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
+                qlineedit.setStyleSheet("color: " + self.getFontColor(input))
+                qlineedit.move(rect['left'] + width, rect['top'])
             
             self.display_inputs[text] = self.ecurequestsparser.requests[req].name
       

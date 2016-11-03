@@ -224,7 +224,7 @@ class Ecu_data:
                 for item in items:
                     value = int(item.getAttribute("Value"))
                     text  = item.getAttribute("Text")
-                    self.items[value] = text
+                    self.items[text] = value
                   
             scaled_value = bits.item(0).getElementsByTagName("Scaled")
             if scaled_value:
@@ -301,6 +301,7 @@ class Ecu_database:
         xdom = xml.dom.minidom.parse(xmlfile)
         self.xmldoc = xdom.documentElement  
         self.targets = []
+        self.numecu = 0
           
         if not self.xmldoc:
             print "Unable to find eculist"
@@ -314,6 +315,7 @@ class Ecu_database:
             group = target.getAttribute("group")
             autoidents = target.getElementsByTagName("AutoIdents")
             for autoident in autoidents:
+                self.numecu += 1
                 for ai in autoident.getElementsByTagName("AutoIdent"):
                     diagversion = ai.getAttribute("DiagVersion")
                     supplier    = ai.getAttribute("Supplier")
@@ -327,7 +329,9 @@ class Ecu_scanner:
         self.totalecu = 0
         self.ecus = []
         self.ecu_database = Ecu_database()
-        
+        self.num_ecu_found = 0
+    def getNumEcuDb(self):
+        return self.ecu_database.numecu
     def scan(self):
         for tx, rx in zip(ECUTX,ECURX):
             ecuconf = { 'idTx' : tx, 'idRx' : rx, 'ecuname' : 'SCAN' }
@@ -344,8 +348,8 @@ class Ecu_scanner:
 
                 for target in self.ecu_database.targets:
                     if target.check_with(diagversion, supplier, soft, version):
-                        print "Found ECU " + target.href
                         self.ecus.append(target)
+                        self.num_ecu_found += 1
                         
 
 if __name__ == '__main__':
