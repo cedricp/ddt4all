@@ -325,6 +325,7 @@ class Ecu_database:
 class Ecu_scanner:
     def __init__(self):
         self.totalecu = 0
+        self.ecus = []
         self.ecu_database = Ecu_database()
         
     def scan(self):
@@ -332,6 +333,7 @@ class Ecu_scanner:
             ecuconf = { 'idTx' : tx, 'idRx' : rx, 'ecuname' : 'SCAN' }
 
             if tx == "745": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+            elif tx == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
             else: can_response = "61 80 82 00 14 97 39 00 00 00 30 00 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
             
             if len(can_response)>59:
@@ -343,6 +345,8 @@ class Ecu_scanner:
                 for target in self.ecu_database.targets:
                     if target.check_with(diagversion, supplier, soft, version):
                         print "Found ECU " + target.href
+                        self.ecus.append(target)
+                        
 
 if __name__ == '__main__':
     ecur = Ecu_file("ecus/UCH_84_J84_04_00.xml", True)

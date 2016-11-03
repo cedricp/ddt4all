@@ -232,7 +232,7 @@ class Param_widget(gui.QWidget):
             
             qlineedit = gui.QLineEdit(self.panel)
             qlineedit.setFont(qfnt)
-            qlineedit.setText("Value")
+            qlineedit.setText("--")
             qlineedit.resize(rect['width'] - width, rect['height'])
             qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
             qlineedit.setStyleSheet("color: " + self.getFontColor(input))
@@ -244,10 +244,14 @@ class Param_widget(gui.QWidget):
         if not self.button_requests.has_key(txt):
             print "Button request not found : " + txt
             return
+            
         requests =  self.button_requests[txt]
         for req in requests:
-            for di in  self.ecurequestsparser.requests[req['RequestName']].dataitems:
-                print di.name
+            req_ref = self.ecurequestsparser.requests[req['RequestName']].dataitems
+            for k in req_ref.keys():
+                ecu_data  = self.ecurequestsparser.data[k]
+                dataitem = req_ref[k]
+                print "DATA >> " , ecu_data.unit, dataitem.name, dataitem.firstbyte
         
     def updateDisplays(self):
         self.elm_req_cache = {}
@@ -267,9 +271,10 @@ class Param_widget(gui.QWidget):
                 #Prefer using cached data to speed up display processing
                 elm_response = self.elm_req_cache[ecu_bytes_to_send]
             else :
-                # TODO : Send bytes here replace line above
+                # TODO : Send bytes here replace line below
                 elm_response = reply_bytes + ''.zfill(min_bytes*2 - len(reply_bytes)) # for testing
-                #elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
+                # test data below
+                # elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
                 self.elm_req_cache[ecu_bytes_to_send] = elm_response
                 
             if (reply_bytes != elm_response[:len(reply_bytes)]):
