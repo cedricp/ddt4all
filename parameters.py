@@ -230,6 +230,10 @@ class Param_widget(gui.QWidget):
             qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabel.move(rect['left'], rect['top'])
             
+            if len(self.ecurequestsparser.data[text].items) > 0:
+                # Should put a dropbox here
+                print self.ecurequestsparser.data[text].items
+            
             qlineedit = gui.QLineEdit(self.panel)
             qlineedit.setFont(qfnt)
             qlineedit.setText("--")
