@@ -4,7 +4,7 @@ import sys, os
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
-#import elm
+import elm, options
 
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
@@ -82,6 +82,7 @@ class Main_widget(gui.QMainWindow):
 class Port_chooser(gui.QDialog):
     def __init__(self):
         self.port = None
+        self.mode = 0
         super(Port_chooser, self).__init__(None)
         ports = ["COM1:"] #elm.get_available_ports()
         layout = gui.QVBoxLayout()
@@ -95,23 +96,43 @@ class Port_chooser(gui.QDialog):
         
         layout.addWidget(label)
         layout.addWidget(self.listview)
-        self.listview.doubleClicked.connect(self.setPort)
+        
+        button_layout = gui.QHBoxLayout()
+        button_pro = gui.QPushButton("Mode PRO")
+        button_jnr = gui.QPushButton("Mode LECTURE")
+        button_layout.addWidget(button_jnr)
+        button_layout.addWidget(button_pro)
+        layout.addLayout(button_layout)
+        
+        button_pro.clicked.connect(self.proMode)
+        button_jnr.clicked.connect(self.dumbMode)
         
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
             item.setText(p)
-            
-    def setPort(self, index):
-        item = self.listview.model().itemData(index)
-        port = item[core.Qt.DisplayRole].toString()
-        self.port = port
+    
+    def proMode(self):
+        self.port = self.listview.currentItem().text()
+        self.mode = 1
+        self.close()
+
+    def dumbMode(self):
+        self.port = self.listview.currentItem().text()
+        self.mode = 2    
         self.close()
         
 if __name__ == '__main__':
+    options.simultation_mode = True
     app = gui.QApplication(sys.argv)
     pc = Port_chooser()
     pc.exec_()
-    port = pc.port
+    if pc.mode == 0:
+        exit(0)
+    if pc.mode == 1:
+        options.promode = True
+    if pc.mode == 2:
+        options.promode = False
+    options.port = pc.port
     w = Main_widget()
     w.show()
     app.exec_()

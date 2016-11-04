@@ -156,6 +156,7 @@ class Param_widget(gui.QWidget):
             qlabelval.setStyleSheet("background-color: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
+            qlabelval.setToolTip(req_name)
             
             self.display_labels[text]     = qlabel
             self.display_values[text]     = qlabelval
@@ -164,6 +165,7 @@ class Param_widget(gui.QWidget):
     def drawButtons(self, screen):
         self.button_requests = {}
         buttons = screen.getElementsByTagName("Button")
+        button_count = 0
         for button in buttons:
             text = button.getAttribute("Text")
             rect = self.getRectangle(button.getElementsByTagName("Rectangle").item(0))
@@ -175,19 +177,25 @@ class Param_widget(gui.QWidget):
             qbutton.resize(rect['width'], rect['height'])
             qbutton.setStyleSheet("background-color: red; color: black")
             qbutton.move(rect['left'], rect['top'])
-            
+            butname = text + "_" + str(button_count)
+            button_count += 1
             send = button.getElementsByTagName("Send")
             if send:
                 sendlist = []
                 for snd in send:
                     smap = {}
-                    xsDelay       = snd.getAttribute("Delay")
-                    xsRequestName = snd.getAttribute("RequestName")
-                    smap['Delay']       = xsDelay
-                    smap['RequestName'] = xsRequestName
+                    delay       = snd.getAttribute("Delay")
+                    reqname = snd.getAttribute("RequestName")
+                    smap['Delay']       = delay
+                    smap['RequestName'] = reqname
                     sendlist.append(smap)
-                self.button_requests[text] = sendlist
-            qbutton.clicked.connect(lambda state, btn=text: self.buttonClicked(btn))
+                self.button_requests[butname] = sendlist
+                tooltiptext = ''
+                for k in smap.keys():
+                    tooltiptext += smap[k] + '\n'
+                tooltiptext = tooltiptext[0:-1]
+                qbutton.setToolTip(tooltiptext)
+            qbutton.clicked.connect(lambda state, btn=butname: self.buttonClicked(btn))
     
     def drawLabels(self, screen):
         labels = screen.getElementsByTagName("Label")
@@ -259,12 +267,12 @@ class Param_widget(gui.QWidget):
         for req in requests:
             request_delay = req['Delay']
             request_type  = req['RequestName']
-            
-            req_ref = self.ecurequestsparser.requests[request_type].dataitems
-            for k in req_ref.keys():
+            #print "> " + request_type
+            dataitems = self.ecurequestsparser.requests[request_type].dataitems
+            for k in dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
-                dataitem = req_ref[k]
-                print "DATA >> " , ecu_data.unit, dataitem.name, dataitem.firstbyte
+                dataitem = dataitems[k]
+                #print txt, k, " DATA " , ecu_data.unit, dataitem.name, dataitem.firstbyte
         
     def updateDisplays(self):
         self.elm_req_cache = {}
@@ -287,7 +295,7 @@ class Param_widget(gui.QWidget):
                 elm_response = self.elm_req_cache[ecu_bytes_to_send]
             else :
                 # TODO : Send bytes here replace line below
-                elm_response = ''.zfill((min_bytes + 1 + shiftbytes)*2 - len(reply_bytes)) # for testing
+                elm_response = ''.zfill(80*2) # for testing
                 # test data below
                 # elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
                 self.elm_req_cache[ecu_bytes_to_send] = elm_response
@@ -301,19 +309,34 @@ class Param_widget(gui.QWidget):
             
     def readDTC(self):
         request   = self.ecurequestsparser.requests["ReadDTC"]
-        print "Requesting %s with command %s" % (request.name, request.sentbytes)
-        print "Command returns %i bytes + %i bytes" % (request.minbytes, request.shiftbytescount)
-        can_response = "47".zfill(10)
-        for k in request.dataitems.keys():
-            ecu_data  = self.ecurequestsparser.data[k]
-            dataitem = request.dataitems[k]
-            value = ecu_data.getValue(can_response, dataitem)
-            for i in ecu_data.items.keys():
-                print ecu_data.items[i], i
-            if len(ecu_data.items) > 0 and ecu_data.items.has_key(int(value)):
-                print dataitem.name + " : " + ecu_data.items[value]
-            else:
-                print dataitem.name + " : " , value
+        dataitems = request.dataitems
+        moredtcbyte = -1
+        
+        if dataitems.has_key("MoreDTC"):
+            moredtcbyte = dataitems["MoreDTC"].firstbyte - 1
+        
+        dtclist = [0]
+        if moredtcbyte > 0:
+            dtclist = [i for i in range(0, 10)]
+        
+        for dtcnum in dtclist:        
+            bytestosend = list(request.sentbytes.encode('ascii'))
+            if moredtcbyte != -1:
+                bytestosend[2*moredtcbyte+1] = hex(dtcnum)[-1:]
+            print bytestosend
+            print "Requesting %s with command %s" % (request.name, ''.join(bytestosend))
+            print "Command returns %i bytes + %i bytes" % (request.minbytes, request.shiftbytescount)
+            can_response = "47".zfill(10)
+            for k in request.dataitems.keys():
+                ecu_data  = self.ecurequestsparser.data[k]
+                dataitem = request.dataitems[k]
+                value = ecu_data.getValue(can_response, dataitem)
+                for i in ecu_data.items.keys():
+                    print ecu_data.items[i], i
+                if len(ecu_data.items) > 0 and ecu_data.items.has_key(int(value)):
+                    print dataitem.name + " : " + ecu_data.items[value]
+                else:
+                    print dataitem.name + " : " , value
 
 if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
