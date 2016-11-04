@@ -377,20 +377,19 @@ class ELM:
   
   lastMessage = ""
   
-  def __init__(self, portName, speed, log, startSession='10C0'):
+  def __init__(self, portName, speed, startSession='10C0'):
   
     self.portName = portName
     
     if not options.simulation_mode:
-      #self.port = serial.Serial(portName, baudrate=speed, timeout=self.portTimeout)
       self.port = Port(portName, speed, self.portTimeout)
     
     if not os.path.exists("./logs"):
       os.mkdir("./logs")
     
-    if len(options.opt_log)>0:
-      self.lf = open("./logs/elm_"+options.opt_log, "at")
-      self.vf = open("./logs/ecu_"+options.opt_log, "at")
+    if len(options.log)>0:
+      self.lf = open("./logs/elm_"+options.log, "at")
+      self.vf = open("./logs/ecu_"+options.log, "at")
      
     self.lastCMDtime = 0
     self.ATCFC0 = options.opt_cfc0
@@ -916,6 +915,7 @@ class ELM:
     else:
       self.cmd("at sp 6")
     #self.cmd("at al")
+    return (TXa, RXa)
   
   def start_session_iso(self,start_session):
     self.startSession = start_session

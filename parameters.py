@@ -1,7 +1,7 @@
 import sys, os
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-
+import options
 from   xml.dom.minidom import parse
 import xml.dom.minidom
 
@@ -276,6 +276,19 @@ class Param_widget(gui.QWidget):
         
     def updateDisplays(self):
         self.elm_req_cache = {}
+        if self.ecurequestsparser.requests.has_key("Start Diagnostic Session"):
+            diag_request = self.ecurequestsparser.requests["Start Diagnostic Session"]
+            diag_data = diag_request.sentbytes
+        elif self.ecurequestsparser.requests.has_key("StartDiagnosticSession"):
+            diag_request = self.ecurequestsparser.requests["StartDiagnosticSession"]
+            diag_data = diag_request.sentbytes
+            options.elm.start_session_can(diag_data)
+        else:
+            print "Cannot find a valid StartDiagnoticSession entry, using default"
+            diag_data = '10C0'
+        if not options.simulation_mode:
+            options.elm.start_session_can(diag_data)
+            
         for key in self.display_labels.keys():
             can_req   = self.display_labels_req[key]
             ecu_data  = self.ecurequestsparser.data[key]
@@ -295,15 +308,16 @@ class Param_widget(gui.QWidget):
                 elm_response = self.elm_req_cache[ecu_bytes_to_send]
             else :
                 # TODO : Send bytes here replace line below
-                elm_response = ''.zfill(80*2) # for testing
-                # test data below
+                if options.simulation_mode:
+                    elm_response = ''.zfill(80*2) # for testing
+                    print "Requesting ELM command " + can_req.name
+                else:
+                    print "Requesting ELM command " + can_req.name
+                    elm_response = options.elm.request(command=can_req, cache = False)
+                    print "ELM Response : " + elm_response
                 # elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
                 self.elm_req_cache[ecu_bytes_to_send] = elm_response
                 
-            #if (reply_bytes != elm_response[:len(reply_bytes)]):
-            #    print "Reply problem to request : %s, response : %s" % (ecu_bytes_to_send, elm_response)
-            #    return
-
             value = ecu_data.getValue(elm_response, data_item)
             qvalues.setText(value + ' ' + ecu_data.unit)
             
@@ -323,7 +337,7 @@ class Param_widget(gui.QWidget):
             bytestosend = list(request.sentbytes.encode('ascii'))
             if moredtcbyte != -1:
                 bytestosend[2*moredtcbyte+1] = hex(dtcnum)[-1:]
-            print bytestosend
+
             print "Requesting %s with command %s" % (request.name, ''.join(bytestosend))
             print "Command returns %i bytes + %i bytes" % (request.minbytes, request.shiftbytescount)
             can_response = "47".zfill(10)

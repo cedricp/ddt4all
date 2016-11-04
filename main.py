@@ -100,12 +100,15 @@ class Port_chooser(gui.QDialog):
         button_layout = gui.QHBoxLayout()
         button_pro = gui.QPushButton("Mode PRO")
         button_jnr = gui.QPushButton("Mode LECTURE")
+        button_dmo = gui.QPushButton("Mode DEMO")
         button_layout.addWidget(button_jnr)
         button_layout.addWidget(button_pro)
+        button_layout.addWidget(button_dmo)
         layout.addLayout(button_layout)
         
         button_pro.clicked.connect(self.proMode)
         button_jnr.clicked.connect(self.dumbMode)
+        button_dmo.clicked.connect(self.demoMode)
         
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
@@ -120,6 +123,11 @@ class Port_chooser(gui.QDialog):
         self.port = self.listview.currentItem().text()
         self.mode = 2    
         self.close()
+
+    def demoMode(self):
+        self.port = ''
+        self.mode = 3    
+        self.close()
         
 if __name__ == '__main__':
     options.simultation_mode = True
@@ -130,9 +138,17 @@ if __name__ == '__main__':
         exit(0)
     if pc.mode == 1:
         options.promode = True
+        options.simulation_mode = False
     if pc.mode == 2:
         options.promode = False
-    options.port = pc.port
+        options.simulation_mode = False
+    if pc.mode == 3:
+         options.promode = False
+         options.simulation_mode = True
+    options.port = str(pc.port)
+    
+    print "Initilizing ELM..."
+    options.elm = elm.ELM(options.port, options.port_speed)
     w = Main_widget()
     w.show()
     app.exec_()

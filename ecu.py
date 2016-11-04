@@ -1,23 +1,7 @@
 import sys, os, math, string
-
+import options, elm
 from   xml.dom.minidom import parse
 import xml.dom.minidom
-
-ECURX = ["760", "724", "762", "771", "778", "775", "76E", "770",  
-		 "732", "7AC", "76B", "768", "773", "77D", "765", "76D",  
-		 "764", "76F", "772", "7BC", "776", "7D2", "727", "7BD",  
-		 "738", "763", "767", "734", "7DD", "739", "793", "77E",  
-		 "7B5", "7E9", "7DA", "7EA", "7E8", "77C", "7A2", "7A0",  
-		 "7BB", "7EC", "725", "726", "733", "7B6", "7B9", "7EE",  
-		 "736", "737", "77B", "76F", "76C", "7D0"]
-
-ECUTX = ["740", "704", "742", "751", "758", "755", "74E", "750",  
-		 "712", "7A4", "74B", "748", "753", "75D", "745", "74D",  
-		 "744", "74F", "752", "79C", "756", "7D6", "707", "79D",  
-		 "718", "743", "747", "714", "7DC", "719", "792", "75A",  
-		 "795", "7E1", "7CA", "7E2", "7E0", "75C", "782", "780",  
-		 "79B", "7E4", "705", "706", "713", "796", "799", "7E6",  
-		 "716", "717", "75B", "74F", "74C", "7D0"]
 		 
 class Data_item:
     def __init__(self, item):
@@ -337,13 +321,19 @@ class Ecu_scanner:
     def getNumEcuDb(self):
         return self.ecu_database.numecu
     def scan(self):
-        for tx, rx in zip(ECUTX,ECURX):
-            ecuconf = { 'idTx' : tx, 'idRx' : rx, 'ecuname' : 'SCAN' }
-
-            if tx == "745": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
-            elif tx == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
-            else: can_response = "61 80 82 00 14 97 39 00 00 00 30 00 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+        options.elm.init_can()
+        
+        for addr in elm.snat.keys():
+            TXa, RXa = options.elm.set_can_addr(addr, { 'idTx' : '', 'idRx' : '', 'ecuname' : 'SCAN' })
+            options.elm.start_session_can('10C0')
             
+            if options.simulation_mode:
+                if TXa == "745": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+                elif TXa == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
+                else: can_response = "61 80 82 00 14 97 39 00 00 00 30 00 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+            else:
+                options.elm.request( req = '2180', positive = '41', cache = False )
+                
             if len(can_response)>59:
                 diagversion = str(int(can_response[21:23],16))
                 supplier    = can_response[24:32].replace(' ','').decode('hex')
