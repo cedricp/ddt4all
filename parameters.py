@@ -51,12 +51,12 @@ class Param_widget(gui.QWidget):
         send_id = xdoc.getElementsByTagName("SendId")
         if send_id:
             can_id = send_id.item(0).getElementsByTagName("CANId")
-            self.can_send_id = int(can_id.item(0).getAttribute("Value"))
+            self.can_send_id = hex(int(can_id.item(0).getAttribute("Value")))
         
         rcv_id = xdoc.getElementsByTagName("ReceiveId")
         if rcv_id:
             can_id = rcv_id.item(0).getElementsByTagName("CANId")
-            self.can_rcv_id = int(can_id.item(0).getAttribute("Value"))
+            self.can_rcv_id = hex(int(can_id.item(0).getAttribute("Value")))
 
         xml_cats = xdoc.getElementsByTagName("Category")
         for category in xml_cats:
@@ -67,7 +67,7 @@ class Param_widget(gui.QWidget):
                 screen_name = screen.getAttribute("Name")
                 self.xmlscreen[screen_name] = screen
                 self.categories[category_name].append(screen_name)
-            
+
     def initScreen(self, screen_name):
         if not screen_name in self.xmlscreen.keys():
             return

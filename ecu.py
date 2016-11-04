@@ -275,12 +275,14 @@ class Ecu_ident:
         self.name        = name
         self.group       = group
         self.href        = href
+        self.addr        = None
         
-    def check_with(self, diagversion, supplier, soft, version):
+    def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.diagversion != diagversion: return False
         if self.supplier != supplier: return False
         if self.soft != soft: return False
         if self.version != version: return False
+        self.addr = addr
         return True
         
 class Ecu_database:
@@ -341,7 +343,7 @@ class Ecu_scanner:
                 version     = can_response[54:59].replace(' ','')
 
                 for target in self.ecu_database.targets:
-                    if target.check_with(diagversion, supplier, soft, version):
+                    if target.checkWith(diagversion, supplier, soft, version, addr):
                         self.ecus.append(target)
                         self.num_ecu_found += 1
                         

@@ -69,6 +69,7 @@ class Main_widget(gui.QMainWindow):
             
         ecu = self.ecu_scan.ecus[ecu_from_index[0]]
         ecu_file = "ecus/" + ecu.href
+        # init addr here
         self.paramview = parameters.Param_widget(self.scrollview, ecu_file)
         self.scrollview.setWidget(self.paramview)
         
