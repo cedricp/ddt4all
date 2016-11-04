@@ -3,7 +3,8 @@
 import sys, os
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import parameters, ecu, elm
+import parameters, ecu
+#import elm
 
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
@@ -48,7 +49,8 @@ class Main_widget(gui.QMainWindow):
         
         
     def readDTC(self):
-        print "DTC"
+        if self.paramview:
+            self.paramview.readDTC()
         
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
@@ -81,7 +83,7 @@ class Port_chooser(gui.QDialog):
     def __init__(self):
         self.port = None
         super(Port_chooser, self).__init__(None)
-        ports = elm.get_available_ports()
+        ports = ["COM1:"] #elm.get_available_ports()
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
         label.setText("Selection du port ELM")

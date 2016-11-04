@@ -17,6 +17,7 @@ class Param_widget(gui.QWidget):
          self.panel = None
          self.layout = gui.QHBoxLayout(self)
          self.initXML()
+         self.uiscale = 10
                         
     def init(self, screen):
          if self.panel:
@@ -102,10 +103,10 @@ class Param_widget(gui.QWidget):
     
     def getRectangle(self, xml):
         rect = {}
-        rect['left']    = int(xml.getAttribute("Left"))  / 10
-        rect['top']     = int(xml.getAttribute("Top"))  / 10
-        rect['height']  = int(xml.getAttribute("Height"))  / 10
-        rect['width']   = int(xml.getAttribute("Width"))  / 10
+        rect['left']    = int(xml.getAttribute("Left"))  / self.uiscale
+        rect['top']     = int(xml.getAttribute("Top"))  / self.uiscale
+        rect['height']  = int(xml.getAttribute("Height"))  / self.uiscale
+        rect['width']   = int(xml.getAttribute("Width"))  / self.uiscale
         return rect
     
     def getFont(self, xml):
@@ -135,7 +136,7 @@ class Param_widget(gui.QWidget):
             text      = display.getAttribute("DataName")
             req_name  = display.getAttribute("RequestName")
             color     = display.getAttribute("Color")
-            width     = int(display.getAttribute("Width")) / 10
+            width     = int(display.getAttribute("Width")) / self.uiscale
             rect = self.getRectangle(display.getElementsByTagName("Rectangle").item(0))
             qfnt = self.getFont(display)
             
@@ -217,7 +218,7 @@ class Param_widget(gui.QWidget):
             text      = input.getAttribute("DataName")
             req       = input.getAttribute("RequestName")
             color     = input.getAttribute("Color")
-            width     = int(input.getAttribute("Width")) / 10
+            width     = int(input.getAttribute("Width")) / self.uiscale
             rect = self.getRectangle(input.getElementsByTagName("Rectangle").item(0))
             qfnt = self.getFont(input)  
 
@@ -256,7 +257,10 @@ class Param_widget(gui.QWidget):
             
         requests =  self.button_requests[txt]
         for req in requests:
-            req_ref = self.ecurequestsparser.requests[req['RequestName']].dataitems
+            request_delay = req['Delay']
+            request_type  = req['RequestName']
+            
+            req_ref = self.ecurequestsparser.requests[request_type].dataitems
             for k in req_ref.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = req_ref[k]
@@ -273,25 +277,44 @@ class Param_widget(gui.QWidget):
             qvalues  = self.display_values[key]
             
             reply_bytes = can_req.replybytes.encode('ascii')
+
             min_bytes   = can_req.minbytes
+            shiftbytes  = can_req.shiftbytescount
             ecu_bytes_to_send = can_req.sentbytes
-            
+
             if (self.elm_req_cache.has_key(ecu_bytes_to_send)):
                 #Prefer using cached data to speed up display processing
                 elm_response = self.elm_req_cache[ecu_bytes_to_send]
             else :
                 # TODO : Send bytes here replace line below
-                elm_response = reply_bytes + ''.zfill(min_bytes*2 - len(reply_bytes)) # for testing
+                elm_response = ''.zfill((min_bytes + 1 + shiftbytes)*2 - len(reply_bytes)) # for testing
                 # test data below
                 # elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
                 self.elm_req_cache[ecu_bytes_to_send] = elm_response
                 
-            if (reply_bytes != elm_response[:len(reply_bytes)]):
-                print "Reply problem to request : %s, response : %s" % (ecu_bytes_to_send, elm_response)
-                #return
+            #if (reply_bytes != elm_response[:len(reply_bytes)]):
+            #    print "Reply problem to request : %s, response : %s" % (ecu_bytes_to_send, elm_response)
+            #    return
+
             value = ecu_data.getValue(elm_response, data_item)
-            qvalues.setText(value + ' ' + ecu_data.unit) 
+            qvalues.setText(value + ' ' + ecu_data.unit)
             
+    def readDTC(self):
+        request   = self.ecurequestsparser.requests["ReadDTC"]
+        print "Requesting %s with command %s" % (request.name, request.sentbytes)
+        print "Command returns %i bytes + %i bytes" % (request.minbytes, request.shiftbytescount)
+        can_response = "47".zfill(10)
+        for k in request.dataitems.keys():
+            ecu_data  = self.ecurequestsparser.data[k]
+            dataitem = request.dataitems[k]
+            value = ecu_data.getValue(can_response, dataitem)
+            for i in ecu_data.items.keys():
+                print ecu_data.items[i], i
+            if len(ecu_data.items) > 0 and ecu_data.items.has_key(int(value)):
+                print dataitem.name + " : " + ecu_data.items[value]
+            else:
+                print dataitem.name + " : " , value
+
 if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
     w = Param_widget(None, "ecus/UCH_84_J84_04_00.xml")
