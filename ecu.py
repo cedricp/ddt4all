@@ -3,11 +3,11 @@ import options, elm
 from   xml.dom.minidom import parse
 import xml.dom.minidom
 
-# Returns signed values from 16 bits
+# Returns signed value from 16 bits
 def s16(value):
     return -(value & 0x8000) | (value & 0x7fff)
 
-# Returns signed values from 8 bits
+# Returns signed value from 8 bits
 def s8(value):
     return -(value & 0x80) | (value & 0x7f)
 
@@ -193,6 +193,9 @@ class Ecu_data:
                     for i in range(0,len(a),2):
                         b = a[i:i+2]+b
                     hexval = b
+              else:
+                print "Warning, cannot convert little endian value"
+                
         exbits = bits % 8
         if exbits:
             val = int(hexval,16)

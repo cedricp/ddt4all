@@ -9,6 +9,7 @@ import elm, options
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
+        self.setWindowTitle("DDT4all")
         print "Scanning ECUs..."
         self.ecu_scan = ecu.Ecu_scanner()
         print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
@@ -26,6 +27,11 @@ class Main_widget(gui.QMainWindow):
         self.treedock_params.setWidget(self.treeview_params)
         self.treeview_params.setHeaderLabels(["Screens"])
         self.treeview_params.doubleClicked.connect(self.changeScreen)
+
+        self.treedock_logs = gui.QDockWidget(self)
+        self.logview       = gui.QTextEdit()
+        self.logview.setReadOnly(True)
+        self.treedock_logs.setWidget(self.logview)
         
         self.treedock_ecu = gui.QDockWidget(self)
         self.treeview_ecu = gui.QTreeWidget(self.treedock_ecu)
@@ -41,6 +47,7 @@ class Main_widget(gui.QMainWindow):
         
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_ecu)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_params)
+        self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
         
         menu = self.menuBar()
         diagmenu = menu.addMenu("Diagnostic")
@@ -71,7 +78,7 @@ class Main_widget(gui.QMainWindow):
         ecu = self.ecu_scan.ecus[ecu_name]
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr
-        self.paramview = parameters.Param_widget(self.scrollview, ecu_file, ecu_addr, ecu_name)
+        self.paramview = parameters.Param_widget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
         self.scrollview.setWidget(self.paramview)
         
         screens = self.paramview.categories.keys()
