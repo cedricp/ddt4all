@@ -17,7 +17,7 @@ class Data_item:
         self.bitoffset  = 0
         self.ref        = None
         self.endian     = ''
-        self.items      = {}
+        #self.items      = {}
         self.name       = item.getAttribute("Name")
         
         fb = item.getAttribute("FirstByte")

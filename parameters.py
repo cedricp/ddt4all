@@ -305,12 +305,15 @@ class Param_widget(gui.QWidget):
         for req in requests:
             request_delay = req['Delay']
             request_type  = req['RequestName']
-
-            dataitems = self.ecurequestsparser.requests[request_type].dataitems
+            log = 'Request name : ' + request_type.decode('ascii')
+            self.logview.append(log)
+            dataitems = self.ecurequestsparser.requests[request_type].sendbyte_dataitems
             for k in dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = dataitems[k]
-        
+                print dataitem.name
+
+
     def updateDisplays(self):
         self.elm_req_cache = {}
         if not options.simulation_mode:
