@@ -9,38 +9,39 @@ import ecu
 
 class Param_widget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name):
-         super(Param_widget, self).__init__(parent)
-         self.ddtfile = ddtfile
-         self.ecurequestsparser = None
-         self.can_send_id = 0
-         self.can_rcv_id  = 0
-         self.panel = None
-         self.layout = gui.QHBoxLayout(self)
-         self.initXML()
-         self.uiscale = 10
-         self.startsession_command = '10C0'
-         self.ecu_address = ecu_addr
-         self.ecu_name = ecu_name
-         if not options.simulation_mode:
+        super(Param_widget, self).__init__(parent)
+        self.ddtfile           = ddtfile
+        self.ecurequestsparser = None
+        self.can_send_id       = 0
+        self.can_rcv_id        = 0
+        self.panel             = None
+        self.layout            = gui.QHBoxLayout(self)
+        self.initXML()
+        self.uiscale           = 10
+        self.startsession_command = '10C0'
+        self.ecu_address       = ecu_addr
+        self.ecu_name          = ecu_name
+         
+        if not options.simulation_mode:
             ecu_conf = { 'idTx' : self.can_send_id, 'idRx' : self.can_rcv_id, 'ecuname' : ecu_name }
             options.elm.set_can_addr(self.ecu_addr, ecu_conf)
                         
     def init(self, screen):
-         if self.panel:
+        if self.panel:
             self.layout.removeWidget(self.panel)
             self.panel.close()
             self.panel.destroy()
-         self.panel = gui.QWidget(self)
-         self.button_requests = {}
-         self.display_inputs = {}
-         self.display_labels = {}
-         self.display_labels_req = {}
-         self.button_requests = {}
-         self.display_labels_req = {}
-         self.display_values = {}
-         self.elm_req_cache = {}
-         self.initScreen(screen)
-         self.layout.addWidget(self.panel)
+        self.panel              = gui.QWidget(self)
+        self.button_requests    = {}
+        self.display_input      = {}
+        self.display_labels     = {}
+        self.display_labels_req = {}
+        self.button_requests    = {}
+        self.display_labels_req = {}
+        self.display_values     = {}
+        self.elm_req_cache      = {}
+        self.initScreen(screen)
+        self.layout.addWidget(self.panel)
          
     def initXML(self):
         self.categories = {}
@@ -342,6 +343,9 @@ class Param_widget(gui.QWidget):
                         input_widget[0].setCurrentIndex(index)
             
     def readDTC(self):
+        if not options.simulation_mode:
+            options.elm.start_session_can(self.startsession_command)
+            
         request   = self.ecurequestsparser.requests["ReadDTC"]
         dataitems = request.dataitems
         sendbyte_dataitems = request.sendbyte_dataitems
@@ -373,10 +377,14 @@ class Param_widget(gui.QWidget):
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
                 value_hex = ecu_data.getValue(can_response, dataitem)
-                value = int('0x'+value_hex, 0)
                 
                 if not dtc_result.has_key(dataitem.name):
                     dtc_result[dataitem.name] = []
+                
+                if ecu_data.scaled:
+                    dtc_result[dataitem.name].append(str(value_hex))
+                    continue
+                value = int('0x'+value_hex, 0)
                 
                 value = 16
                 

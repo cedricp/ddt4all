@@ -3,20 +3,22 @@ import options, elm
 from   xml.dom.minidom import parse
 import xml.dom.minidom
 
+# Returns signed values from 16 bits
 def s16(value):
     return -(value & 0x8000) | (value & 0x7fff)
 
+# Returns signed values from 8 bits
 def s8(value):
     return -(value & 0x80) | (value & 0x7f)
 
 class Data_item:
     def __init__(self, item):
-        self.firstbyte = 0
-        self.bitoffset = 0
-        self.ref = None
-        self.endian = ''
-        self.items = {}
-        self.name = item.getAttribute("Name")
+        self.firstbyte  = 0
+        self.bitoffset  = 0
+        self.ref        = None
+        self.endian     = ''
+        self.items      = {}
+        self.name       = item.getAttribute("Name")
         
         fb = item.getAttribute("FirstByte")
         if fb: self.firstbyte = int(fb)
@@ -31,11 +33,12 @@ class Data_item:
 
 class Ecu_device:
      def __init__(self, dev):
-        self.xmldoc = xml
-        self.dtc = 0
-        self.dtctype = 0
+        self.xmldoc     = xml
+        self.dtc        = 0
+        self.dtctype    = 0
         self.devicedata = {}
-        self.name = dev.getAttribute("Name")
+        self.name       = dev.getAttribute("Name")
+        
         dtc = dev.getAttribute("DTC")
         if dtc: self.dtc = int(dtc)
         dtctype = dev.getAttribute("Type")
@@ -50,16 +53,15 @@ class Ecu_device:
 
 class Ecu_request:
     def __init__(self, xml):
-        self.xmldoc = xml
-        self.minbytes = 0
-        self.shiftbytescount = 0
-        self.replybytes = ''
-        self.manualsend = False
-        self.sentbytes = 0
-        self.dataitems = {}
+        self.xmldoc             = xml
+        self.minbytes           = 0
+        self.shiftbytescount    = 0
+        self.replybytes         = ''
+        self.manualsend         = False
+        self.sentbytes          = 0
+        self.dataitems          = {}
         self.sendbyte_dataitems = {}
-        self.name = 'uninit'
-        
+        self.name               = 'uninit'
         self.initEcuReq()
         
     def initEcuReq(self):
@@ -101,24 +103,24 @@ class Ecu_request:
 
 class Ecu_data:
     def __init__(self, xml):
-        self.xmldoc = xml
-        self.name = ''
-        self.bitscount = 8
-        self.scaled = False
-        self.signed = False
-        self.byte = False
-        self.bits = False
-        self.binary = False
+        self.xmldoc     = xml
+        self.name       = ''
+        self.bitscount  = 8
+        self.scaled     = False
+        self.signed     = False
+        self.byte       = False
+        self.bits       = False
+        self.binary     = False
         self.bytescount = 1
-        self.bytesascii  = False
-        self.step = 1.0
-        self.offset = 0.0
-        self.divideby = 1.0
-        self.format = ""
-        self.items = {}
-        self.lists = {}
+        self.bytesascii = False
+        self.step       = 1.0
+        self.offset     = 0.0
+        self.divideby   = 1.0
+        self.format     = ""
+        self.items      = {}
+        self.lists      = {}
         self.description = ''
-        self.unit = ""
+        self.unit       = ""
         
         self.initData()
     def getDisplayValue(self, elm_data, dataitem):
@@ -153,6 +155,8 @@ class Ecu_data:
                 fmt = '%.'+str(acc)+'f'
                 res = fmt%(res)
                 print self.name, res
+            else:
+                res = int(res)
             return str(res)
 
         if self.bytesascii:
@@ -312,12 +316,10 @@ class Ecu_ident:
         self.group       = group
         self.href        = href
         self.addr        = None
+        self.hash        = diagversion + supplier + soft + version
         
     def checkWith(self, diagversion, supplier, soft, version, addr):
-        if self.diagversion != diagversion: return False
-        if self.supplier != supplier: return False
-        if self.soft != soft: return False
-        if self.version != version: return False
+        if self.hash != diagversion + supplier + soft + version: return False
         self.addr = addr
         return True
         
