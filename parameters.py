@@ -8,7 +8,7 @@ import xml.dom.minidom
 import ecu
 
 class Param_widget(gui.QWidget):
-    def __init__(self, parent, ddtfile):
+    def __init__(self, parent, ddtfile, ecu_addr, ecu_name):
          super(Param_widget, self).__init__(parent)
          self.ddtfile = ddtfile
          self.ecurequestsparser = None
@@ -18,6 +18,12 @@ class Param_widget(gui.QWidget):
          self.layout = gui.QHBoxLayout(self)
          self.initXML()
          self.uiscale = 10
+         self.startsession_command = '10C0'
+         self.ecu_address = ecu_addr
+         self.ecu_name = ecu_name
+         if not options.simulation_mode:
+            ecu_conf = { 'idTx' : self.can_send_id, 'idRx' : self.can_rcv_id, 'ecuname' : ecu_name }
+            options.elm.set_can_addr(self.ecu_addr, ecu_conf)
                         
     def init(self, screen):
          if self.panel:
@@ -67,6 +73,16 @@ class Param_widget(gui.QWidget):
                 screen_name = screen.getAttribute("Name")
                 self.xmlscreen[screen_name] = screen
                 self.categories[category_name].append(screen_name)
+
+        if self.ecurequestsparser.requests.has_key("Start Diagnostic Session"):
+            diag_request = self.ecurequestsparser.requests["Start Diagnostic Session"]
+            self.startsession_command = diag_request.sentbytes
+        elif self.ecurequestsparser.requests.has_key("StartDiagnosticSession"):
+            diag_request = self.ecurequestsparser.requests["StartDiagnosticSession"]
+            self.startsession_command = diag_request.sentbytes
+        else:
+            print "Cannot find a valid StartDiagnoticSession entry, using default"
+            self.startsession_command = '10C0'
 
     def initScreen(self, screen_name):
         if not screen_name in self.xmlscreen.keys():
@@ -221,6 +237,7 @@ class Param_widget(gui.QWidget):
     
     def drawInputs(self,screen):
         self.display_inputs = {}
+        self.inputs = {}
         inputs = screen.getElementsByTagName("Input")
         for input in inputs:
             text      = input.getAttribute("DataName")
@@ -247,6 +264,7 @@ class Param_widget(gui.QWidget):
                     qcombo.addItem(key)
                 qcombo.resize(rect['width'] - width, rect['height'])
                 qcombo.move(rect['left'] + width, rect['top'])
+                self.inputs[text] = (qcombo, True)
             else:
                 qlineedit = gui.QLineEdit(self.panel)
                 qlineedit.setFont(qfnt)
@@ -255,6 +273,7 @@ class Param_widget(gui.QWidget):
                 qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
                 qlineedit.setStyleSheet("color: " + self.getFontColor(input))
                 qlineedit.move(rect['left'] + width, rect['top'])
+                self.inputs[text] = (qlineedit, False)
             
             self.display_inputs[text] = self.ecurequestsparser.requests[req].name
       
@@ -267,27 +286,16 @@ class Param_widget(gui.QWidget):
         for req in requests:
             request_delay = req['Delay']
             request_type  = req['RequestName']
-            #print "> " + request_type
+
             dataitems = self.ecurequestsparser.requests[request_type].dataitems
             for k in dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = dataitems[k]
-                #print txt, k, " DATA " , ecu_data.unit, dataitem.name, dataitem.firstbyte
         
     def updateDisplays(self):
         self.elm_req_cache = {}
-        if self.ecurequestsparser.requests.has_key("Start Diagnostic Session"):
-            diag_request = self.ecurequestsparser.requests["Start Diagnostic Session"]
-            diag_data = diag_request.sentbytes
-        elif self.ecurequestsparser.requests.has_key("StartDiagnosticSession"):
-            diag_request = self.ecurequestsparser.requests["StartDiagnosticSession"]
-            diag_data = diag_request.sentbytes
-            options.elm.start_session_can(diag_data)
-        else:
-            print "Cannot find a valid StartDiagnoticSession entry, using default"
-            diag_data = '10C0'
         if not options.simulation_mode:
-            options.elm.start_session_can(diag_data)
+            options.elm.start_session_can(self.startsession_command)
             
         for key in self.display_labels.keys():
             can_req   = self.display_labels_req[key]
@@ -318,39 +326,81 @@ class Param_widget(gui.QWidget):
                 # elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
                 self.elm_req_cache[ecu_bytes_to_send] = elm_response
                 
-            value = ecu_data.getValue(elm_response, data_item)
+            value = ecu_data.getDisplayValue(elm_response, data_item)
+
             qvalues.setText(value + ' ' + ecu_data.unit)
+            # Auto-fill inputs with same DataName with value
+            if self.inputs.has_key(key):
+                input_widget = self.inputs[key]
+                if input_widget[1] == False:
+                    # lineedit case
+                    input_widget[0].setText(value)
+                else:
+                    # combobox case
+                    index = input_widget[0].findData(value)
+                    if index != -1:
+                        input_widget[0].setCurrentIndex(index)
             
     def readDTC(self):
         request   = self.ecurequestsparser.requests["ReadDTC"]
         dataitems = request.dataitems
+        sendbyte_dataitems = request.sendbyte_dataitems
         moredtcbyte = -1
         
-        if dataitems.has_key("MoreDTC"):
-            moredtcbyte = dataitems["MoreDTC"].firstbyte - 1
+        if sendbyte_dataitems.has_key("MoreDTC"):
+            moredtcbyte = sendbyte_dataitems["MoreDTC"].firstbyte - 1
         
         dtclist = [0]
         if moredtcbyte > 0:
             dtclist = [i for i in range(0, 10)]
         
+        dtc_result = {}
+        dtc_num = 0
         for dtcnum in dtclist:        
             bytestosend = list(request.sentbytes.encode('ascii'))
             if moredtcbyte != -1:
                 bytestosend[2*moredtcbyte+1] = hex(dtcnum)[-1:]
+            dtcread_command = ''.join(bytestosend)
 
-            print "Requesting %s with command %s" % (request.name, ''.join(bytestosend))
-            print "Command returns %i bytes + %i bytes" % (request.minbytes, request.shiftbytescount)
-            can_response = "47".zfill(10)
+            if not options.simulation_mode:
+                can_response = options.elm.request(command = dtcread_command, cache=False)
+            else:
+                can_response = ''.zfill(40)
+                
+            dtc_num += 1
+            
             for k in request.dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
-                value = ecu_data.getValue(can_response, dataitem)
-                for i in ecu_data.items.keys():
-                    print ecu_data.items[i], i
-                if len(ecu_data.items) > 0 and ecu_data.items.has_key(int(value)):
-                    print dataitem.name + " : " + ecu_data.items[value]
+                value_hex = ecu_data.getValue(can_response, dataitem)
+                value = int('0x'+value_hex, 0)
+                
+                if not dtc_result.has_key(dataitem.name):
+                    dtc_result[dataitem.name] = []
+                
+                value = 16
+                
+                if len(ecu_data.items) > 0 and ecu_data.lists.has_key(value):
+                    dtc_result[dataitem.name].append(ecu_data.lists[value])
                 else:
-                    print dataitem.name + " : " , value
+                    dtc_result[dataitem.name].append(str(value))
+                    
+        columns = dtc_result.keys()
+        self.table = gui.QTableWidget(None)
+        self.table.setColumnCount(len(columns))
+        self.table.setRowCount(dtc_num)
+        
+        self.table.setHorizontalHeaderLabels(dtc_result.keys())
+        i = 0
+        for dtc_key in columns:
+            j = 0
+            for dtc_val in dtc_result[dtc_key]:
+                self.table.setItem(j, i, gui.QTableWidgetItem(dtc_val))
+                j += 1
+            i += 1
+        self.table.resizeColumnsToContents()
+        self.table.setFixedSize(self.table.horizontalHeader().length() + 40, self.table.verticalHeader().length() + 50);
+        self.table.show()
 
 if __name__ == '__main__':
     app = gui.QApplication(sys.argv)

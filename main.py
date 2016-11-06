@@ -66,11 +66,12 @@ class Main_widget(gui.QMainWindow):
             return
 
         self.treeview_params.clear()
-            
-        ecu = self.ecu_scan.ecus[ecu_from_index[0]]
+        
+        ecu_name = ecu_from_index[0]
+        ecu = self.ecu_scan.ecus[ecu_name]
         ecu_file = "ecus/" + ecu.href
-        # init addr here
-        self.paramview = parameters.Param_widget(self.scrollview, ecu_file)
+        ecu_addr = ecu.addr
+        self.paramview = parameters.Param_widget(self.scrollview, ecu_file, ecu_addr, ecu_name)
         self.scrollview.setWidget(self.paramview)
         
         screens = self.paramview.categories.keys()
@@ -85,7 +86,7 @@ class Port_chooser(gui.QDialog):
         self.port = None
         self.mode = 0
         super(Port_chooser, self).__init__(None)
-        ports = ["COM1:"] #elm.get_available_ports()
+        ports = elm.get_available_ports()
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
         label.setText("Selection du port ELM")

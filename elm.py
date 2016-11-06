@@ -86,6 +86,13 @@ negrsp = {	"10":"NR: General Reject",
 			"92":"NR: Voltage Too High",
 			"93":"NR: Voltage Too Low"}
 
+def get_available_ports():
+    ports = []
+    iterator = sorted(list(list_ports.comports()))
+    for port, desc, hwid in iterator:
+        ports.append(port)
+    return ports
+
 class Port:
   '''This is a serial port or a TCP-connection
      if portName looks like a 192.168.0.10:35000 
@@ -235,26 +242,26 @@ class Port:
     print "\nELM not responding"
     sys.exit()
   
-  def soft_boudrate(self, boudrate):
+  def soft_baudrate(self, baudrate):
     
     if options.simulation_mode:
       return
     
     if self.portType==1: #wifi is not supported
-      print "ERROR - wifi do not support changing boud rate"
+      print "ERROR - wifi do not support changing baud rate"
       return
       
-    print "Changing baud rate to:", boudrate,
+    print "Changing baud rate to:", baudrate,
     
-    if   boudrate==38400:
+    if   baudrate==38400:
       self.write("at brd 68\r")
-    elif boudrate==57600:
+    elif baudrate==57600:
       self.write("at brd 45\r")
-    elif boudrate==115200:
+    elif baudrate==115200:
       self.write("at brd 23\r")
-    elif boudrate==230400:
+    elif baudrate==230400:
       self.write("at brd 11\r")
-    elif boudrate==500000:
+    elif baudrate==500000:
       self.write("at brd 8\r")
       
     # search OK
@@ -277,15 +284,15 @@ class Port:
         sys.exit()
     
     self.hdr.timeout = 1
-    if    boudrate==38400:
+    if    baudrate==38400:
       self.hdr.baudrate = 38400
-    elif  boudrate==57600:
+    elif  baudrate==57600:
       self.hdr.baudrate = 57600
-    elif  boudrate==115200:
+    elif  baudrate==115200:
       self.hdr.baudrate = 115200
-    elif  boudrate==230400:
+    elif  baudrate==230400:
       self.hdr.baudrate = 230400
-    elif  boudrate==500000:
+    elif  baudrate==500000:
       self.hdr.baudrate = 500000
     
     # search ELM

@@ -2,13 +2,20 @@ import sys, os, math, string
 import options, elm
 from   xml.dom.minidom import parse
 import xml.dom.minidom
-		 
+
+def s16(value):
+    return -(value & 0x8000) | (value & 0x7fff)
+
+def s8(value):
+    return -(value & 0x80) | (value & 0x7f)
+
 class Data_item:
     def __init__(self, item):
         self.firstbyte = 0
         self.bitoffset = 0
         self.ref = None
         self.endian = ''
+        self.items = {}
         self.name = item.getAttribute("Name")
         
         fb = item.getAttribute("FirstByte")
@@ -20,6 +27,7 @@ class Data_item:
             self.endian = endian
         ref = item.getAttribute("Ref")
         if ref and ref == '1': self.ref = True
+        
 
 class Ecu_device:
      def __init__(self, dev):
@@ -49,6 +57,7 @@ class Ecu_request:
         self.manualsend = False
         self.sentbytes = 0
         self.dataitems = {}
+        self.sendbyte_dataitems = {}
         self.name = 'uninit'
         
         self.initEcuReq()
@@ -88,7 +97,7 @@ class Ecu_request:
             if dataitems:
                 for dataitem in dataitems:
                     di = Data_item(dataitem)
-                    self.dataitems[di.name] = di
+                    self.sendbyte_dataitems[di.name] = di
 
 class Ecu_data:
     def __init__(self, xml):
@@ -107,10 +116,31 @@ class Ecu_data:
         self.divideby = 1.0
         self.format = ""
         self.items = {}
+        self.lists = {}
         self.description = ''
         self.unit = ""
         
         self.initData()
+    def getDisplayValue(self, elm_data, dataitem):
+        value = self.getValue(elm_data, dataitem)
+        
+        if not self.scaled and not self.bytesascii:
+            val = int('0x' + value, 0)
+            
+            # Manage signed values
+            if self.signed:
+                if len(value) == 2:
+                    val = s8(val)
+                elif len(value) == 4:
+                    val = s16(val)
+                    
+            # Manage text values
+            if self.lists.has_key(val):
+                return self.lists[val]
+                
+            return str(val)
+        
+        return value
         
     def getValue(self, elm_data, dataitem):
         hv = self.getHex( elm_data, dataitem )
@@ -120,8 +150,9 @@ class Ecu_data:
             res = (int(hv,16) * float(self.step) + float(self.offset)) / float(self.divideby) 
             if len(self.format) and '.' in self.format:
                 acc = len(self.format.split('.')[1])
-                fmt = '%.'+str(acc)+'d'
+                fmt = '%.'+str(acc)+'f'
                 res = fmt%(res)
+                print self.name, res
             return str(res)
 
         if self.bytesascii:
@@ -175,6 +206,14 @@ class Ecu_data:
         if description:
             self.description = description.item(0).firstChild.nodeValue.replace('<![CDATA[','').replace(']]>','')
         
+        lst = self.xmldoc.getElementsByTagName("List")
+        if lst:
+            for l in lst:
+                items = l.getElementsByTagName("Item")
+                for item in items:
+                    key = int(item.getAttribute('Value'))
+                    self.lists[key] = item.getAttribute('Text')
+        
         bytes = self.xmldoc.getElementsByTagName("Bytes")
         if bytes:
             self.byte = True
@@ -210,27 +249,24 @@ class Ecu_data:
                   
             scaled_value = bits.item(0).getElementsByTagName("Scaled")
             if scaled_value:
+                self.scaled = True
                 sc = scaled_value.item(0)
 
                 step = sc.getAttribute("Step")
                 if step:
                     self.step = float(step) 
-                    self.scaled = True
 
                 offset = sc.getAttribute("Offset")
                 if offset:
                     self.offset = float(offset) 
-                    self.scaled = True
 
                 divideby = sc.getAttribute("DivideBy")
                 if divideby:
                     self.divideby = float(divideby) 
-                    self.scaled = True
 
                 format = sc.getAttribute("Format")
                 if format:
                     self.format = format 
-                    self.scaled = True
 
                 unit = sc.getAttribute("Unit")
                 if unit: self.unit = unit  
