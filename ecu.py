@@ -16,20 +16,22 @@ class Data_item:
         self.firstbyte  = 0
         self.bitoffset  = 0
         self.ref        = None
-        self.endian     = ''
-        #self.items      = {}
+        self.endian     = "Big"
         self.name       = item.getAttribute("Name")
-        
+
         fb = item.getAttribute("FirstByte")
         if fb: self.firstbyte = int(fb)
+
         bo = item.getAttribute("BitOffset")
         if bo: self.bitoffset = int(bo)
+
         endian = item.getAttribute("Endian")
         if endian:
-            self.endian = endian
+            self.endian = endian.encode('ascii')
+
         ref = item.getAttribute("Ref")
         if ref and ref == '1': self.ref = True
-        
+
 
 class Ecu_device:
      def __init__(self, dev):
@@ -38,7 +40,7 @@ class Ecu_device:
         self.dtctype    = 0
         self.devicedata = {}
         self.name       = dev.getAttribute("Name")
-        
+
         dtc = dev.getAttribute("DTC")
         if dtc: self.dtc = int(dtc)
         dtctype = dev.getAttribute("Type")
@@ -52,7 +54,7 @@ class Ecu_device:
                 self.devicedata[name] = failureflag
 
 class Ecu_request:
-    def __init__(self, xml):
+    def __init__(self, xml, endian):
         self.xmldoc             = xml
         self.minbytes           = 0
         self.shiftbytescount    = 0
@@ -62,18 +64,19 @@ class Ecu_request:
         self.dataitems          = {}
         self.sendbyte_dataitems = {}
         self.name               = 'uninit'
+        self.endian             = endian
         self.initEcuReq()
-        
+
     def initEcuReq(self):
         manualsend = False
         self.name = self.xmldoc.getAttribute("Name")
 
         manualsenddata = self.xmldoc.getElementsByTagName("ManuelSend").item(0)
         if manualsenddata: self.manualsend = True
-        
+
         shiftbytescount = self.xmldoc.getElementsByTagName("ShiftBytesCount")
         if shiftbytescount: self.shiftbytescount = int(shiftbytescount.item(0).firstChild.nodeValue)
-        
+
         replybytes = self.xmldoc.getElementsByTagName("ReplyBytes")
         if replybytes: self.replybytes = replybytes.item(0).firstChild.nodeValue
 
@@ -91,11 +94,11 @@ class Ecu_request:
         sentdata = self.xmldoc.getElementsByTagName("Sent")
         if sentdata:
             sent = sentdata.item(0)
-            sentbytesdata  = sent.getElementsByTagName("SentBytes")
+            sentbytesdata = sent.getElementsByTagName("SentBytes")
             if sentbytesdata:
                 self.sentbytes = sentbytesdata.item(0).firstChild.nodeValue
-                
-            dataitems =  sent.getElementsByTagName("DataItem")
+
+            dataitems = sent.getElementsByTagName("DataItem")
             if dataitems:
                 for dataitem in dataitems:
                     di = Data_item(dataitem)
@@ -121,40 +124,86 @@ class Ecu_data:
         self.lists      = {}
         self.description = ''
         self.unit       = ""
-        
+
         self.initData()
+
+    def setValue(self, value, bytes_list, dataitem):
+        start_byte      = dataitem.firstbyte - 1
+        start_bit       = dataitem.bitoffset
+        little_endian   = False
+
+        if dataitem.endian == "Little":
+            little_endian = True
+
+        if self.bytesascii:
+            if self.bytescount != len(value):
+                return None
+
+            for i in range(self.bytescount):
+                bytes_list[i] = value[i]
+                return bytes_list
+
+        if self.scaled:
+            value = float(value)
+            # Value is base 10
+            value = (value * float(self.divideby) - float(self.offset)) / float(self.step)
+        else:
+            # Value is base 16
+            value = int('0x' + str(value), 16)
+
+        value = int(value)
+        value = (value << start_bit) & (2**self.bitscount - 1)
+
+        hex_value = "{0:#0{1}x}".format(value, self.bytescount * 2 + 2)[2:].upper()
+        hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
+
+        n = 0
+        for h in hex_bytes:
+            original_byte  = int('0x' + bytes_list[n + start_byte], 16)
+            original_value = int('0x' + h, 16)
+            new = original_value | original_byte
+
+            value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
+
+            if little_endian:
+                value_formatted = value_formatted[1] + value_formatted[0]
+
+            bytes_list[start_byte + n] = value_formatted
+            n += 1
+
+        return bytes_list
+
     def getDisplayValue(self, elm_data, dataitem):
         value = self.getValue(elm_data, dataitem)
-        
+
         if not self.scaled and not self.bytesascii:
             val = int('0x' + value, 0)
-            
+
             # Manage signed values
             if self.signed:
                 if len(value) == 2:
                     val = s8(val)
                 elif len(value) == 4:
                     val = s16(val)
-                    
+
             # Manage text values
-            if self.lists.has_key(val):
+            if val in self.lists:
                 return self.lists[val]
-                
+
             return str(val)
-        
+
         return value
-        
+
     def getValue(self, elm_data, dataitem):
         hv = self.getHex( elm_data, dataitem )
         assert hv is not None
 
         if self.scaled:
-            res = (int(hv,16) * float(self.step) + float(self.offset)) / float(self.divideby) 
+            res = (int(hv,16) * float(self.step) + float(self.offset)) / float(self.divideby)
             if len(self.format) and '.' in self.format:
                 acc = len(self.format.split('.')[1])
-                fmt = '%.'+str(acc)+'f'
+                fmt = '%.' + str(acc) + 'f'
                 res = fmt%(res)
-                print self.name, res
             else:
                 res = int(res)
             return str(res)
@@ -164,55 +213,55 @@ class Ecu_data:
             return res
 
         return hv
-    
+
     def getHex(self, resp, dataitem):
         resp = resp.strip().replace(' ','')
         if not all(c in string.hexdigits for c in resp): resp = ''
-        resp = ' '.join( a + b for a, b in zip(resp[::2], resp[1::2]))
-          
+        resp = ' '.join(a + b for a, b in zip(resp[::2], resp[1::2]))
+
         bits  = self.bitscount
         bytes = bits/8
         if bits % 8:
-            bytes = bytes + 1
-        
+            bytes += 1
+
         startByte = dataitem.firstbyte
         startBit  = dataitem.bitoffset
-        littleEndian = True if dataitem.endian=="Little" else False
-        
-        sb = startByte-1
+
+        sb = startByte - 1
         assert ((sb * 3 + bytes * 3 - 1) <= (len(resp)))
-        
-        hexval = resp[sb*3:(sb+bytes)*3-1]
-        hexval = hexval.replace(" ","")
+
+        hexval = resp[sb * 3:(sb + bytes) * 3 - 1]
+        hexval = hexval.replace(" ", "")
         assert len(hexval) > 0
-        
-        if littleEndian:
-              a = hexval
-              b = ''
-              if not len(a) % 2:
-                    for i in range(0,len(a),2):
-                        b = a[i:i+2]+b
+
+        if dataitem.endian == "Little":
+            a = hexval
+            b = ''
+            if not len(a) % 2:
+                for i in range(0, len(a), 2):
+                    b = a[i:i + 2] + b
                     hexval = b
-              else:
+            else:
                 print "Warning, cannot convert little endian value"
-                
+
         exbits = bits % 8
         if exbits:
-            val = int(hexval,16)
-            val = (val<<int(startBit)>>(8-exbits))&(2**bits-1)
+            val = int(hexval, 16)
+            val = (val << int(startBit) >> (8 - exbits)) & (2**bits - 1)
             hexval = hex(val)[2:]
-            if hexval[-1:].upper()=='L':
+            if hexval[-1:].upper() == 'L':
                 hexval = hexval[:-1]
-            if len(hexval)%2:
-                hexval = '0'+hexval
+            if len(hexval) % 2:
+                hexval = '0' + hexval
+
         return hexval
-    
+
     def initData(self):
         self.name = self.xmldoc.getAttribute("Name")
         description = self.xmldoc.getElementsByTagName("Description")
         if description:
-            self.description = description.item(0).firstChild.nodeValue.replace('<![CDATA[','').replace(']]>','')
-        
+            self.description = description.item(0).firstChild.nodeValue.replace('<![CDATA[', '').replace(']]>', '')
+
         lst = self.xmldoc.getElementsByTagName("List")
         if lst:
             for l in lst:
@@ -220,7 +269,7 @@ class Ecu_data:
                 for item in items:
                     key = int(item.getAttribute('Value'))
                     self.lists[key] = item.getAttribute('Text')
-        
+
         bytes = self.xmldoc.getElementsByTagName("Bytes")
         if bytes:
             self.byte = True
@@ -228,10 +277,10 @@ class Ecu_data:
             if bytescount:
                 self.bytescount = int(bytescount)
                 self.bitscount  = self.bytescount * 8
-            
+
             bytesascii = bytes.item(0).getAttribute("ascii")
             if bytesascii and bytesascii == '1': self.bytesascii = True
-            
+
         bits = self.xmldoc.getElementsByTagName("Bits")
         if bits:
             self.bits = True
@@ -239,13 +288,13 @@ class Ecu_data:
             if bitscount:
                 self.bitscount  = int(bitscount)
                 self.bytescount = int(math.ceil(float(bitscount) / 8.0))
-            
+
             signed = bits.item(0).getAttribute("signed")
             if signed: self.signed = True
-            
+
             binary = bits.item(0).getElementsByTagName("Binary")
             if binary: self.binary = True
-            
+
             self.items = {}
             items = bits.item(0).getElementsByTagName("Item")
             if items:
@@ -253,7 +302,7 @@ class Ecu_data:
                     value = int(item.getAttribute("Value"))
                     text  = item.getAttribute("Text")
                     self.items[text] = value
-                  
+
             scaled_value = bits.item(0).getElementsByTagName("Scaled")
             if scaled_value:
                 self.scaled = True
@@ -261,23 +310,23 @@ class Ecu_data:
 
                 step = sc.getAttribute("Step")
                 if step:
-                    self.step = float(step) 
+                    self.step = float(step)
 
                 offset = sc.getAttribute("Offset")
                 if offset:
-                    self.offset = float(offset) 
+                    self.offset = float(offset)
 
                 divideby = sc.getAttribute("DivideBy")
                 if divideby:
-                    self.divideby = float(divideby) 
+                    self.divideby = float(divideby)
 
                 format = sc.getAttribute("Format")
                 if format:
-                    self.format = format 
+                    self.format = format
 
                 unit = sc.getAttribute("Unit")
-                if unit: self.unit = unit  
-        
+                if unit: self.unit = unit
+
 class Ecu_file:
     def __init__(self, xmldoc, isfile = False):
         self.requests = {}
@@ -288,26 +337,35 @@ class Ecu_file:
         else:
             self.xmldoc = xmldoc
         self.parseXML()
-        
+
     def parseXML(self):
         if not self.xmldoc:
             print("XML not found")
             return
-        
+
         devices = self.xmldoc.getElementsByTagName("Device")
         for d in devices:
             ecu_dev = Ecu_device(d)
             self.requests[ecu_dev.name] = ecu_dev
-            
-        requests = self.xmldoc.getElementsByTagName("Request")
-        for f in requests:
-            ecu_req = Ecu_request(f)
-            self.requests[ecu_req.name] = ecu_req
-            
-        data = self.xmldoc.getElementsByTagName("Data")
-        for f in data:
-            ecu_data = Ecu_data(f)
-            self.data[ecu_data.name] = ecu_data
+
+        requests_tag = self.xmldoc.getElementsByTagName("Requests")
+
+        if requests_tag:
+            for request_tag in requests_tag:
+                endian = "Big"
+                endian_attr = request_tag.getAttribute("Endian")
+                if endian_attr:
+                    endian = endian_attr.encode('ascii')
+
+                requests = request_tag.getElementsByTagName("Request")
+                for f in requests:
+                    ecu_req = Ecu_request(f, endian)
+                    self.requests[ecu_req.name] = ecu_req
+
+                data = self.xmldoc.getElementsByTagName("Data")
+                for f in data:
+                    ecu_data = Ecu_data(f)
+                    self.data[ecu_data.name] = ecu_data
 
 class Ecu_ident:
     def __init__(self, diagversion, supplier, soft, version, name, group, href):
@@ -320,26 +378,26 @@ class Ecu_ident:
         self.href        = href
         self.addr        = None
         self.hash        = diagversion + supplier + soft + version
-        
+
     def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.hash != diagversion + supplier + soft + version: return False
         self.addr = addr
         return True
-        
+
 class Ecu_database:
     def __init__(self):
         xmlfile = "ecus/eculist.xml"
         xdom = xml.dom.minidom.parse(xmlfile)
-        self.xmldoc = xdom.documentElement  
+        self.xmldoc = xdom.documentElement
         self.targets = []
         self.numecu = 0
-          
+
         if not self.xmldoc:
             print "Unable to find eculist"
             return
-            
+
         targets = self.xmldoc.getElementsByTagName("Target")
-        
+
         for target in targets:
             href  = target.getAttribute("href")
             name  = target.getAttribute("Name")
@@ -361,22 +419,25 @@ class Ecu_scanner:
         self.ecus = []
         self.ecu_database = Ecu_database()
         self.num_ecu_found = 0
+        if options.simulation_mode:
+            self.ecus.append(Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml"))
+
     def getNumEcuDb(self):
         return self.ecu_database.numecu
     def scan(self):
         options.elm.init_can()
-        
+
         for addr in elm.snat.keys():
             TXa, RXa = options.elm.set_can_addr(addr, { 'idTx' : '', 'idRx' : '', 'ecuname' : 'SCAN' })
             options.elm.start_session_can('10C0')
-            
+
             if options.simulation_mode:
                 if TXa == "745": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
                 elif TXa == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
                 else: can_response = "61 80 82 00 14 97 39 00 00 00 30 00 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
             else:
                 options.elm.request( req = '2180', positive = '41', cache = False )
-                
+
             if len(can_response)>59:
                 diagversion = str(int(can_response[21:23],16))
                 supplier    = can_response[24:32].replace(' ','').decode('hex')
@@ -387,8 +448,8 @@ class Ecu_scanner:
                     if target.checkWith(diagversion, supplier, soft, version, addr):
                         self.ecus.append(target)
                         self.num_ecu_found += 1
-                        
+
 
 if __name__ == '__main__':
     ecur = Ecu_file("ecus/UCH_84_J84_04_00.xml", True)
-    
+

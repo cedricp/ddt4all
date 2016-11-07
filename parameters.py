@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, time
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options
@@ -20,6 +20,7 @@ class Param_widget(gui.QWidget):
         self.uiscale           = 15
         self.ecu_address       = ecu_addr
         self.ecu_name          = ecu_name
+        self.elm_req_cache     = {}
         self.startsession_command = '10C0'
         self.initXML()
                  
@@ -78,10 +79,10 @@ class Param_widget(gui.QWidget):
                 self.xmlscreen[screen_name] = screen
                 self.categories[category_name].append(screen_name)
 
-        if self.ecurequestsparser.requests.has_key("Start Diagnostic Session"):
+        if "Start Diagnostic Session" in self.ecurequestsparser.requests:
             diag_request = self.ecurequestsparser.requests["Start Diagnostic Session"]
             self.startsession_command = diag_request.sentbytes
-        elif self.ecurequestsparser.requests.has_key("StartDiagnosticSession"):
+        elif "StartDiagnosticSession" in self.ecurequestsparser.requests:
             diag_request = self.ecurequestsparser.requests["StartDiagnosticSession"]
             self.startsession_command = diag_request.sentbytes
         else:
@@ -126,6 +127,7 @@ class Param_widget(gui.QWidget):
         self.drawDisplays(screen)
         self.drawInputs(screen)
         self.drawButtons(screen)
+        self.updateDisplays(True)
         self.timer.timeout.connect(self.updateDisplays)
         self.timer.start(1000)
 
@@ -276,7 +278,6 @@ class Param_widget(gui.QWidget):
             qlabel.move(rect['left'], rect['top'])
             
             if len(self.ecurequestsparser.data[text].items) > 0:
-                print self.ecurequestsparser.data[text].items
                 qcombo = gui.QComboBox(self.panel)
                 items_ref = self.ecurequestsparser.data[text].items
                 for key in items_ref.keys():
@@ -287,7 +288,7 @@ class Param_widget(gui.QWidget):
             else:
                 qlineedit = gui.QLineEdit(self.panel)
                 qlineedit.setFont(qfnt)
-                qlineedit.setText("--")
+                qlineedit.setText("No Value")
                 qlineedit.resize(rect['width'] - width, rect['height'])
                 qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
                 qlineedit.setStyleSheet("color: " + self.getFontColor(input))
@@ -297,67 +298,111 @@ class Param_widget(gui.QWidget):
             self.display_inputs[text] = self.ecurequestsparser.requests[req].name
       
     def buttonClicked(self, txt):
-        if not self.button_requests.has_key(txt):
+        if not txt in self.button_requests:
             print "Button request not found : " + txt
             return
             
-        requests =  self.button_requests[txt]
-        for req in requests:
-            request_delay = req['Delay']
-            request_type  = req['RequestName']
-            log = 'Request name : ' + request_type.decode('ascii')
+        request_list = self.button_requests[txt]
+        for req in request_list:
+            request_delay = float(req['Delay'].encode('ascii'))
+            request_name  = req['RequestName']
+            log = 'Request name : ' + request_name.encode('ascii', 'ignore')
             self.logview.append(log)
-            dataitems = self.ecurequestsparser.requests[request_type].sendbyte_dataitems
-            for k in dataitems.keys():
-                ecu_data  = self.ecurequestsparser.data[k]
-                dataitem = dataitems[k]
-                print dataitem.name
+
+            ecu_request = self.ecurequestsparser.requests[request_name]
+            data_items = ecu_request.sendbyte_dataitems
+
+            bytes_to_send_ascii = ecu_request.sentbytes.encode('ascii', 'ignore')
+            bytes_to_send = [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
+            elm_data_stream = bytes_to_send
+
+            for k in data_items.keys():
+                ecu_data = self.ecurequestsparser.data[k]
+                dataitem = data_items[k]
+                input_value = "00"
+
+                if k in self.inputs:
+                    if not self.inputs[k][1]:
+                        input_value = self.inputs[k][0].text().toAscii()
+                    else:
+                        combo_value = unicode(self.inputs[k][0].currentText().toUtf8(), encoding="UTF-8")
+                        items_ref = ecu_data.items
+                        print combo_value, items_ref[combo_value]
+                        input_value = hex(items_ref[combo_value])[2:]
+                else:
+                    print "Cannot map dataitem " + k.encode('ascii')
+
+                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem)
+
+                if not elm_data_stream:
+                    self.inputs[k][0].setText("Invalide")
+                    self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
+                    return
+
+            if ecu_request.endian == 'Little':
+                # TODO :
+                pass
+
+            # Manage delay
+            self.logview.append("Delay " + str(request_delay))
+            time.sleep(request_delay / 1000.0)
+            self.logview.append("Command : " + ' '.join(elm_data_stream))
+            # TODO : send elm with ecu_data.endian condition
+            # Then show received values
+            elm_response = self.sendElm(' '.join(elm_data_stream))
+
+            for key in data_items.keys():
+                data_item = data_items[key]
+                value = ecu_data.getDisplayValue(elm_response, data_item)
+                self.updateDisplay(value, key, ecu_data.unit, True)
 
 
-    def updateDisplays(self):
+
+    def updateDisplays(self, update_inputs=False):
         self.elm_req_cache = {}
+
         if not options.simulation_mode:
             options.elm.start_session_can(self.startsession_command)
             
         for key in self.display_labels.keys():
             can_req   = self.display_labels_req[key]
-            ecu_data  = self.ecurequestsparser.data[key]
-            data_item = self.ecurequestsparser.requests[can_req.name].dataitems[key]
-            
-            qlabel   = self.display_labels[key]
-            qvalues  = self.display_values[key]
-            
-            reply_bytes = can_req.replybytes.encode('ascii')
+            if can_req.manualsend:
+                continue
 
-            min_bytes   = can_req.minbytes
-            shiftbytes  = can_req.shiftbytescount
             ecu_bytes_to_send = can_req.sentbytes
 
-            if (self.elm_req_cache.has_key(ecu_bytes_to_send)):
-                #Prefer using cached data to speed up display processing
+            if ecu_bytes_to_send in self.elm_req_cache:
+                # Prefer using cached data to speed up display processing
                 elm_response = self.elm_req_cache[ecu_bytes_to_send]
             else :
                 # TODO : Send bytes here replace line below
                 elm_response = self.sendElm(ecu_bytes_to_send, True)
-                # elm_response = "610A163232025800B43C3C1E3C0A0A0A0A012C5C6167B5BBC10A5C"
+                # Test data with UCT Megane II
+                # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
                 self.elm_req_cache[ecu_bytes_to_send] = elm_response
-                
-            value = ecu_data.getDisplayValue(elm_response, data_item)
 
-            qvalues.setText(value + ' ' + ecu_data.unit)
-            # Auto-fill inputs with same DataName with value
-            if self.inputs.has_key(key):
-                input_widget = self.inputs[key]
-                if input_widget[1] == False:
-                    # lineedit case
-                    input_widget[0].setText(value)
-                else:
-                    # combobox case
-                    index = input_widget[0].findData(value)
-                    if index != -1:
-                        input_widget[0].setCurrentIndex(index)
-                        
+            ecu_data  = self.ecurequestsparser.data[key]
+            data_item = self.ecurequestsparser.requests[can_req.name].dataitems[key]
+            value = ecu_data.getDisplayValue(elm_response, data_item)
+            self.updateDisplay(value, key, ecu_data.unit, update_inputs)
+
         self.timer.start(1000)
+
+    def updateDisplay(self, value, key, unit, update_inputs):
+        qvalues  = self.display_values[key]
+        qvalues.setText(value + ' ' + unit)
+        # Auto-fill inputs with same DataName with value
+        if key in self.inputs and update_inputs:
+            input_widget = self.inputs[key]
+            if not input_widget[1]:
+                # line edit case
+                input_widget[0].setText(value)
+            else:
+                # combobox case
+                index = input_widget[0].findData(value)
+                if index != -1:
+                    input_widget[0].setCurrentIndex(index)
+
     def readDTC(self):
         if not options.simulation_mode:
             options.elm.start_session_can(self.startsession_command)
@@ -367,7 +412,7 @@ class Param_widget(gui.QWidget):
         sendbyte_dataitems = request.sendbyte_dataitems
         moredtcbyte = -1
         
-        if sendbyte_dataitems.has_key("MoreDTC"):
+        if "MoreDTC" in sendbyte_dataitems:
             moredtcbyte = sendbyte_dataitems["MoreDTC"].firstbyte - 1
         
         dtclist = [0]
@@ -390,7 +435,7 @@ class Param_widget(gui.QWidget):
                 dataitem = request.dataitems[k]
                 value_hex = ecu_data.getValue(can_response, dataitem)
                 
-                if not dtc_result.has_key(dataitem.name):
+                if not dataitem.name in dtc_result:
                     dtc_result[dataitem.name] = []
                 
                 if ecu_data.scaled:
@@ -400,7 +445,7 @@ class Param_widget(gui.QWidget):
                 
                 value = 16
                 
-                if len(ecu_data.items) > 0 and ecu_data.lists.has_key(value):
+                if len(ecu_data.items) > 0 and value in ecu_data.lists:
                     dtc_result[dataitem.name].append(ecu_data.lists[value])
                 else:
                     dtc_result[dataitem.name].append(str(value))
@@ -424,7 +469,7 @@ class Param_widget(gui.QWidget):
 
 if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
-    w = Param_widget(None, "ecus/UCH_84_J84_04_00.xml")
+    w = Param_widget(None)
     w.show()
     app.exec_()
 
