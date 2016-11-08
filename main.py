@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, os
+import sys
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
@@ -78,7 +78,7 @@ class Main_widget(gui.QMainWindow):
         ecu = self.ecu_scan.ecus[ecu_name]
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr
-        self.paramview = parameters.Param_widget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
+        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
         self.scrollview.setWidget(self.paramview)
         
         screens = self.paramview.categories.keys()
@@ -88,11 +88,11 @@ class Main_widget(gui.QMainWindow):
                 param_item = gui.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
 
-class Port_chooser(gui.QDialog):
+class portChooser(gui.QDialog):
     def __init__(self):
         self.port = None
         self.mode = 0
-        super(Port_chooser, self).__init__(None)
+        super(portChooser, self).__init__(None)
         ports = elm.get_available_ports()
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
@@ -141,7 +141,7 @@ class Port_chooser(gui.QDialog):
 if __name__ == '__main__':
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
-    pc = Port_chooser()
+    pc = portChooser()
     pc.exec_()
     if pc.mode == 0:
         exit(0)

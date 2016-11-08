@@ -3,13 +3,16 @@ import options, elm
 from   xml.dom.minidom import parse
 import xml.dom.minidom
 
+
 # Returns signed value from 16 bits
 def s16(value):
     return -(value & 0x8000) | (value & 0x7fff)
 
+
 # Returns signed value from 8 bits
 def s8(value):
     return -(value & 0x80) | (value & 0x7f)
+
 
 class Data_item:
     def __init__(self, item):
@@ -68,13 +71,10 @@ class Ecu_request:
         self.initEcuReq()
 
     def initEcuReq(self):
-        manualsend = False
         self.name = self.xmldoc.getAttribute("Name")
 
         manualsenddata = self.xmldoc.getElementsByTagName("ManuelSend").item(0)
-        if manualsenddata:
-            self.manualsend = True
-            print "Manual ", self.name
+        if manualsenddata: self.manualsend = True
 
         shiftbytescount = self.xmldoc.getElementsByTagName("ShiftBytesCount")
         if shiftbytescount: self.shiftbytescount = int(shiftbytescount.item(0).firstChild.nodeValue)
@@ -177,6 +177,8 @@ class Ecu_data:
 
     def getDisplayValue(self, elm_data, dataitem):
         value = self.getValue(elm_data, dataitem)
+        if value == None:
+            return None
 
         if not self.scaled and not self.bytesascii:
             val = int('0x' + value, 0)
@@ -198,6 +200,9 @@ class Ecu_data:
 
     def getValue(self, elm_data, dataitem):
         hv = self.getHex( elm_data, dataitem )
+        if hv == None:
+            return None
+
         assert hv is not None
 
         if self.scaled:
@@ -230,7 +235,8 @@ class Ecu_data:
         startBit  = dataitem.bitoffset
 
         sb = startByte - 1
-        assert ((sb * 3 + bytes * 3 - 1) <= (len(resp)))
+        if ((sb * 3 + bytes * 3 - 1) > (len(resp))):
+            return None
 
         hexval = resp[sb * 3:(sb + bytes) * 3 - 1]
         hexval = hexval.replace(" ", "")

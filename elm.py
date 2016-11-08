@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 '''module contains class for working with ELM327
    version: 160829
-   Borrowed from PyRen
+   Borrowed from PyRen (modified for this use)
 '''
 
 import options
@@ -11,7 +11,6 @@ from serial.tools import list_ports
 
 import sys
 import os
-import io
 import re
 import time
 import string

@@ -1,4 +1,4 @@
-import sys, os, time
+import sys, time
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options
@@ -13,14 +13,18 @@ class displayData:
         self.widget  = widget
         self.is_combo = is_combo
 
+
 class displayDict:
     def __init__(self, request_name, request):
         self.request = request
         self.request_name = request_name
         self.data    = []
+        self.datadict = {}
 
     def addData(self, displaydata):
         self.data.append(displaydata)
+        if not displaydata.data.name in self.datadict:
+            self.datadict[displaydata.data.name] = displaydata
 
     def getDataByName(self, name):
         for data in self.data:
@@ -28,9 +32,10 @@ class displayDict:
                 return data
         return None
 
-class Param_widget(gui.QWidget):
+
+class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
-        super(Param_widget, self).__init__(parent)
+        super(paramWidget, self).__init__(parent)
         self.logview           = logview
         self.ddtfile           = ddtfile
         self.ecurequestsparser = None
@@ -38,7 +43,7 @@ class Param_widget(gui.QWidget):
         self.can_rcv_id        = 0
         self.panel             = None
         self.layout            = gui.QHBoxLayout(self)
-        self.uiscale           = 15
+        self.uiscale           = 10
         self.ecu_address       = ecu_addr
         self.ecu_name          = ecu_name
         self.elm_req_cache     = {}
@@ -113,7 +118,7 @@ class Param_widget(gui.QWidget):
         if not options.simulation_mode:
             elm_response = options.elm.request(command=command, cache=False)
         else:
-            elm_response = ''.zfill(90)
+            elm_response = '00 ' * 70
 
         if not auto:
             self.logview.append('ELM Receive : ' + elm_response)
@@ -144,7 +149,7 @@ class Param_widget(gui.QWidget):
         self.drawDisplays(screen)
         self.drawInputs(screen)
         self.drawButtons(screen)
-        self.updateDisplays()
+        self.updateDisplays(True)
         self.timer.timeout.connect(self.updateDisplays)
         self.timer.start(1000)
 
@@ -346,11 +351,19 @@ class Param_widget(gui.QWidget):
 
             for k in sendbytes_data_items.keys():
                 dataitem = sendbytes_data_items[k]
+
                 if not request_name in self.inputDict:
                     print "cannot find ", request_name
                     continue
+
                 inputdict = self.inputDict[request_name]
                 data = inputdict.getDataByName(k)
+
+                if data == None:
+                    log = u"TODO : implement " + k + u"of " + request_name
+                    self.logview.append(log)
+                    return
+
                 widget = data.widget
                 ecu_data = data.data
                 is_combo_widget = data.is_combo
@@ -374,9 +387,7 @@ class Param_widget(gui.QWidget):
                 pass
 
         # Manage delay
-        self.logview.append("Delay " + str(request_delay))
         time.sleep(request_delay / 1000.0)
-        self.logview.append("Command : " + ' '.join(elm_data_stream))
 
         # TODO : send elm with ecu_data.endian condition
         # Then show received values
@@ -389,9 +400,17 @@ class Param_widget(gui.QWidget):
                 value = ecu_data.getDisplayValue(elm_response, data_item)
                 request_data = self.displayDict[request_name]
                 data = request_data.getDataByName(key)
-                data.widget.setText(value + ' ' + ecu_data.unit)
 
-    def updateDisplay(self, request_name):
+                if value == None:
+                    if data: data.widget.setStyleSheet("background-color: red")
+                    value = "ERREUR"
+                else:
+                    if data: data.widget.setStyleSheet("background-color: white")
+
+                if data:
+                    data.widget.setText(value + ' ' + ecu_data.unit)
+
+    def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displayDict[request_name]
         request = request_data.request
 
@@ -400,21 +419,35 @@ class Param_widget(gui.QWidget):
 
         ecu_bytes_to_send = request.sentbytes.encode('ascii')
         elm_response = self.sendElm(ecu_bytes_to_send, True)
-
+        # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
         for data_struct in request_data.data:
             qlabel = data_struct.widget
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
             value = ecu_data.getDisplayValue(elm_response, data_item)
 
+            if value == None:
+                qlabel.setStyleSheet("background-color: red")
+                value = "ERREUR"
+            else:
+                qlabel.setStyleSheet("background-color: blue")
+
             qlabel.setText(value + ' ' + ecu_data.unit)
 
-    def updateDisplays(self):
+            if update_inputs:
+                for inputkey in self.inputDict:
+                    input = self.inputDict[inputkey]
+                    if ecu_data.name in input.datadict:
+                        data = input.datadict[ecu_data.name]
+                        if not data.is_combo:
+                            data.widget.setText(value)
+
+    def updateDisplays(self, update_inputs= False):
         if not options.simulation_mode:
             options.elm.start_session_can(self.startsession_command)
 
         for request_name in self.displayDict.keys():
-            self.updateDisplay(request_name)
+            self.updateDisplay(request_name, update_inputs)
 
         self.timer.start(1000)
 
@@ -457,10 +490,9 @@ class Param_widget(gui.QWidget):
                 if ecu_data.scaled:
                     dtc_result[dataitem.name].append(str(value_hex))
                     continue
+
                 value = int('0x'+value_hex, 0)
-                
-                value = 16
-                
+
                 if len(ecu_data.items) > 0 and value in ecu_data.lists:
                     dtc_result[dataitem.name].append(ecu_data.lists[value])
                 else:
@@ -485,7 +517,7 @@ class Param_widget(gui.QWidget):
 
 if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
-    w = Param_widget(None)
+    w = paramWidget(None)
     w.show()
     app.exec_()
 
