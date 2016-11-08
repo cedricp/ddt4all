@@ -167,12 +167,16 @@ class Ecu_data:
 
             value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
 
-            if little_endian:
-                value_formatted = value_formatted[1] + value_formatted[0]
-
             bytes_list[start_byte + n] = value_formatted
             n += 1
 
+        if little_endian:
+            a = hexval
+            b = ''
+            for i in range(0, len(a), 2):
+                b = a[i:i + 2] + b
+                hexval = b
+                    
         return bytes_list
 
     def getDisplayValue(self, elm_data, dataitem):

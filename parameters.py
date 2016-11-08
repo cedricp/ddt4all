@@ -7,6 +7,12 @@ import xml.dom.minidom
 
 import ecu
 
+# TODO : 
+# figure out what are self.presend (<Send> in screen XML section) commands
+# Delay unit (second, milliseconds ?)
+# little endian requests
+# Read freezeframe data
+
 class displayData:
     def __init__(self, data, widget, is_combo=False):
         self.data    = data
@@ -50,6 +56,7 @@ class paramWidget(gui.QWidget):
         self.button_requests   = {}
         self.displayDict       = {}
         self.inputDict         = {}
+        self.presend           = []
         self.startsession_command = '10C0'
         self.initXML()
                  
@@ -125,6 +132,7 @@ class paramWidget(gui.QWidget):
         return elm_response
 
     def initScreen(self, screen_name):
+        self.presend = []
         self.timer.stop()
         if not screen_name in self.xmlscreen.keys():
             return
@@ -145,6 +153,15 @@ class paramWidget(gui.QWidget):
         
         self.resize(self.screen_width+20, self.screen_height+20)
         self.panel.resize(self.screen_width+40, self.screen_height+40)
+        
+        sends = screen.getElementsByTagName("Send")
+        if sends:
+            for send in sends:
+                delay = send.getAttribute('Delay')
+                req_name = send.getAttribute('RequestName')
+                self.presend.append( (delay, req_name) )
+            
+        
         self.drawLabels(screen)
         self.drawDisplays(screen)
         self.drawInputs(screen)
@@ -215,7 +232,7 @@ class paramWidget(gui.QWidget):
             qlabelval.setStyleSheet("background-color: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
-            qlabelval.setToolTip(req_name)
+            qlabelval.setToolTip(req_name + u' : ' + text)
 
             data = self.ecurequestsparser.data[text]
             ddata = displayData(data, qlabelval)
