@@ -72,7 +72,9 @@ class Ecu_request:
         self.name = self.xmldoc.getAttribute("Name")
 
         manualsenddata = self.xmldoc.getElementsByTagName("ManuelSend").item(0)
-        if manualsenddata: self.manualsend = True
+        if manualsenddata:
+            self.manualsend = True
+            print "Manual ", self.name
 
         shiftbytescount = self.xmldoc.getElementsByTagName("ShiftBytesCount")
         if shiftbytescount: self.shiftbytescount = int(shiftbytescount.item(0).firstChild.nodeValue)
@@ -161,7 +163,7 @@ class Ecu_data:
         for h in hex_bytes:
             original_byte  = int('0x' + bytes_list[n + start_byte], 16)
             original_value = int('0x' + h, 16)
-            new = original_value | original_byte
+            new = original_value #| original_byte
 
             value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
 
@@ -190,7 +192,7 @@ class Ecu_data:
             if val in self.lists:
                 return self.lists[val]
 
-            return str(val)
+            return str(val).zfill(self.bytescount*2)
 
         return value
 

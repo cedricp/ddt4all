@@ -7,6 +7,27 @@ import xml.dom.minidom
 
 import ecu
 
+class displayData:
+    def __init__(self, data, widget, is_combo=False):
+        self.data    = data
+        self.widget  = widget
+        self.is_combo = is_combo
+
+class displayDict:
+    def __init__(self, request_name, request):
+        self.request = request
+        self.request_name = request_name
+        self.data    = []
+
+    def addData(self, displaydata):
+        self.data.append(displaydata)
+
+    def getDataByName(self, name):
+        for data in self.data:
+            if data.data.name == name:
+                return data
+        return None
+
 class Param_widget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
         super(Param_widget, self).__init__(parent)
@@ -21,6 +42,9 @@ class Param_widget(gui.QWidget):
         self.ecu_address       = ecu_addr
         self.ecu_name          = ecu_name
         self.elm_req_cache     = {}
+        self.button_requests   = {}
+        self.displayDict       = {}
+        self.inputDict         = {}
         self.startsession_command = '10C0'
         self.initXML()
                  
@@ -33,15 +57,8 @@ class Param_widget(gui.QWidget):
             self.layout.removeWidget(self.panel)
             self.panel.close()
             self.panel.destroy()
+
         self.panel              = gui.QWidget(self)
-        self.button_requests    = {}
-        self.display_input      = {}
-        self.display_labels     = {}
-        self.display_labels_req = {}
-        self.button_requests    = {}
-        self.display_labels_req = {}
-        self.display_values     = {}
-        self.elm_req_cache      = {}
         self.timer              = core.QTimer()
         self.timer.setSingleShot(True)
         self.initScreen(screen)
@@ -127,7 +144,7 @@ class Param_widget(gui.QWidget):
         self.drawDisplays(screen)
         self.drawInputs(screen)
         self.drawButtons(screen)
-        self.updateDisplays(True)
+        self.updateDisplays()
         self.timer.timeout.connect(self.updateDisplays)
         self.timer.start(1000)
 
@@ -166,9 +183,9 @@ class Param_widget(gui.QWidget):
         return qfnt
     
     def drawDisplays(self, screen):
-        self.display_labels = {}
-        self.display_labels_req = {}
+        self.displayDict = {}
         displays = screen.getElementsByTagName("Display")
+
         for display in displays:
             text      = display.getAttribute("DataName")
             req_name  = display.getAttribute("RequestName")
@@ -194,13 +211,18 @@ class Param_widget(gui.QWidget):
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
             qlabelval.setToolTip(req_name)
-            
-            self.display_labels[text]     = qlabel
-            self.display_values[text]     = qlabelval
-            self.display_labels_req[text] = self.ecurequestsparser.requests[req_name]
+
+            data = self.ecurequestsparser.data[text]
+            ddata = displayData(data, qlabelval)
+
+            if not req_name in self.displayDict:
+                req = self.ecurequestsparser.requests[req_name]
+                self.displayDict[req_name] = displayDict(req_name, req)
+
+            dd = self.displayDict[req_name]
+            dd.addData(ddata)
             
     def drawButtons(self, screen):
-        self.button_requests = {}
         buttons = screen.getElementsByTagName("Button")
         button_count = 0
         for button in buttons:
@@ -257,12 +279,11 @@ class Param_widget(gui.QWidget):
                 qlabel.setAlignment(core.Qt.AlignLeft)
     
     def drawInputs(self,screen):
-        self.display_inputs = {}
-        self.inputs = {}
+        self.inputDict = {}
         inputs = screen.getElementsByTagName("Input")
         for input in inputs:
             text      = input.getAttribute("DataName")
-            req       = input.getAttribute("RequestName")
+            req_name  = input.getAttribute("RequestName")
             color     = input.getAttribute("Color")
             width     = int(input.getAttribute("Width")) / self.uiscale
             rect = self.getRectangle(input.getElementsByTagName("Rectangle").item(0))
@@ -276,6 +297,7 @@ class Param_widget(gui.QWidget):
             qlabel.setStyleSheet("color: " + self.getFontColor(input))
             qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabel.move(rect['left'], rect['top'])
+            data = self.ecurequestsparser.data[text]
             
             if len(self.ecurequestsparser.data[text].items) > 0:
                 qcombo = gui.QComboBox(self.panel)
@@ -284,7 +306,7 @@ class Param_widget(gui.QWidget):
                     qcombo.addItem(key)
                 qcombo.resize(rect['width'] - width, rect['height'])
                 qcombo.move(rect['left'] + width, rect['top'])
-                self.inputs[text] = (qcombo, True)
+                ddata = displayData(data, qcombo, True)
             else:
                 qlineedit = gui.QLineEdit(self.panel)
                 qlineedit.setFont(qfnt)
@@ -293,15 +315,20 @@ class Param_widget(gui.QWidget):
                 qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
                 qlineedit.setStyleSheet("color: " + self.getFontColor(input))
                 qlineedit.move(rect['left'] + width, rect['top'])
-                self.inputs[text] = (qlineedit, False)
-            
-            self.display_inputs[text] = self.ecurequestsparser.requests[req].name
-      
+                ddata = displayData(data, qlineedit)
+
+            if not req_name in self.inputDict:
+                req = self.ecurequestsparser.requests[req_name]
+                self.inputDict[req_name] = displayDict(req_name, req)
+
+            dd = self.inputDict[req_name]
+            dd.addData(ddata)
+
     def buttonClicked(self, txt):
         if not txt in self.button_requests:
-            print "Button request not found : " + txt
+            print "Requete bouton non trouvee : " + txt
             return
-            
+
         request_list = self.button_requests[txt]
         for req in request_list:
             request_delay = float(req['Delay'].encode('ascii'))
@@ -310,32 +337,35 @@ class Param_widget(gui.QWidget):
             self.logview.append(log)
 
             ecu_request = self.ecurequestsparser.requests[request_name]
-            data_items = ecu_request.sendbyte_dataitems
+            sendbytes_data_items = ecu_request.sendbyte_dataitems
+            rcvbytes_data_items = ecu_request.dataitems
 
             bytes_to_send_ascii = ecu_request.sentbytes.encode('ascii', 'ignore')
             bytes_to_send = [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
             elm_data_stream = bytes_to_send
 
-            for k in data_items.keys():
-                ecu_data = self.ecurequestsparser.data[k]
-                dataitem = data_items[k]
-                input_value = "00"
+            for k in sendbytes_data_items.keys():
+                dataitem = sendbytes_data_items[k]
+                if not request_name in self.inputDict:
+                    print "cannot find ", request_name
+                    continue
+                inputdict = self.inputDict[request_name]
+                data = inputdict.getDataByName(k)
+                widget = data.widget
+                ecu_data = data.data
+                is_combo_widget = data.is_combo
 
-                if k in self.inputs:
-                    if not self.inputs[k][1]:
-                        input_value = self.inputs[k][0].text().toAscii()
-                    else:
-                        combo_value = unicode(self.inputs[k][0].currentText().toUtf8(), encoding="UTF-8")
-                        items_ref = ecu_data.items
-                        print combo_value, items_ref[combo_value]
-                        input_value = hex(items_ref[combo_value])[2:]
+                if not is_combo_widget:
+                    input_value = widget.text().toAscii()
                 else:
-                    print "Cannot map dataitem " + k.encode('ascii')
+                    combo_value = unicode(widget.currentText().toUtf8(), encoding="UTF-8")
+                    items_ref = ecu_data.items
+                    input_value = hex(items_ref[combo_value])[2:]
 
                 elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem)
 
                 if not elm_data_stream:
-                    self.inputs[k][0].setText("Invalide")
+                    widget.setText("Invalide")
                     self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
                     return
 
@@ -343,65 +373,51 @@ class Param_widget(gui.QWidget):
                 # TODO :
                 pass
 
-            # Manage delay
-            self.logview.append("Delay " + str(request_delay))
-            time.sleep(request_delay / 1000.0)
-            self.logview.append("Command : " + ' '.join(elm_data_stream))
-            # TODO : send elm with ecu_data.endian condition
-            # Then show received values
-            elm_response = self.sendElm(' '.join(elm_data_stream))
+        # Manage delay
+        self.logview.append("Delay " + str(request_delay))
+        time.sleep(request_delay / 1000.0)
+        self.logview.append("Command : " + ' '.join(elm_data_stream))
 
-            for key in data_items.keys():
-                data_item = data_items[key]
+        # TODO : send elm with ecu_data.endian condition
+        # Then show received values
+        elm_response = self.sendElm(' '.join(elm_data_stream))
+
+        for key in rcvbytes_data_items.keys():
+            if request_name in self.displayDict:
+                data_item = rcvbytes_data_items[key]
+                ecu_data = self.ecurequestsparser.data[key]
                 value = ecu_data.getDisplayValue(elm_response, data_item)
-                self.updateDisplay(value, key, ecu_data.unit, True)
+                request_data = self.displayDict[request_name]
+                data = request_data.getDataByName(key)
+                data.widget.setText(value + ' ' + ecu_data.unit)
 
+    def updateDisplay(self, request_name):
+        request_data = self.displayDict[request_name]
+        request = request_data.request
 
+        if request.manualsend:
+            return
 
-    def updateDisplays(self, update_inputs=False):
-        self.elm_req_cache = {}
+        ecu_bytes_to_send = request.sentbytes.encode('ascii')
+        elm_response = self.sendElm(ecu_bytes_to_send, True)
 
+        for data_struct in request_data.data:
+            qlabel = data_struct.widget
+            ecu_data = data_struct.data
+            data_item = request.dataitems[ecu_data.name]
+            value = ecu_data.getDisplayValue(elm_response, data_item)
+
+            qlabel.setText(value + ' ' + ecu_data.unit)
+
+    def updateDisplays(self):
         if not options.simulation_mode:
             options.elm.start_session_can(self.startsession_command)
-            
-        for key in self.display_labels.keys():
-            can_req   = self.display_labels_req[key]
-            if can_req.manualsend:
-                continue
 
-            ecu_bytes_to_send = can_req.sentbytes
-
-            if ecu_bytes_to_send in self.elm_req_cache:
-                # Prefer using cached data to speed up display processing
-                elm_response = self.elm_req_cache[ecu_bytes_to_send]
-            else :
-                # TODO : Send bytes here replace line below
-                elm_response = self.sendElm(ecu_bytes_to_send, True)
-                # Test data with UCT Megane II
-                # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
-                self.elm_req_cache[ecu_bytes_to_send] = elm_response
-
-            ecu_data  = self.ecurequestsparser.data[key]
-            data_item = self.ecurequestsparser.requests[can_req.name].dataitems[key]
-            value = ecu_data.getDisplayValue(elm_response, data_item)
-            self.updateDisplay(value, key, ecu_data.unit, update_inputs)
+        for request_name in self.displayDict.keys():
+            self.updateDisplay(request_name)
 
         self.timer.start(1000)
 
-    def updateDisplay(self, value, key, unit, update_inputs):
-        qvalues  = self.display_values[key]
-        qvalues.setText(value + ' ' + unit)
-        # Auto-fill inputs with same DataName with value
-        if key in self.inputs and update_inputs:
-            input_widget = self.inputs[key]
-            if not input_widget[1]:
-                # line edit case
-                input_widget[0].setText(value)
-            else:
-                # combobox case
-                index = input_widget[0].findData(value)
-                if index != -1:
-                    input_widget[0].setCurrentIndex(index)
 
     def readDTC(self):
         if not options.simulation_mode:
