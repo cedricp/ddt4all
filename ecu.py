@@ -198,7 +198,7 @@ class Ecu_data:
             if val in self.lists:
                 return self.lists[val]
 
-            return str(val).zfill(self.bytescount*2)
+            return str(val).zfill(self.bytescount * 2)
 
         return value
 
@@ -210,11 +210,11 @@ class Ecu_data:
         assert hv is not None
 
         if self.scaled:
-            res = (int(hv,16) * float(self.step) + float(self.offset)) / float(self.divideby)
+            res = (int(hv, 16) * float(self.step) + float(self.offset)) / float(self.divideby)
             if len(self.format) and '.' in self.format:
                 acc = len(self.format.split('.')[1])
                 fmt = '%.' + str(acc) + 'f'
-                res = fmt%(res)
+                res = fmt % res
             else:
                 res = int(res)
             return str(res)

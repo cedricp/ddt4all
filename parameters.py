@@ -12,6 +12,7 @@ import ecu
 # Delay unit (second, milliseconds ?)
 # little endian requests
 # Read freezeframe data
+# Check ELM response validity (mode + 0x40)
 
 class displayData:
     def __init__(self, data, widget, is_combo=False):
@@ -42,13 +43,13 @@ class displayDict:
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
         super(paramWidget, self).__init__(parent)
+        self.layout            = gui.QHBoxLayout(self)
         self.logview           = logview
         self.ddtfile           = ddtfile
         self.ecurequestsparser = None
         self.can_send_id       = 0
         self.can_rcv_id        = 0
         self.panel             = None
-        self.layout            = gui.QHBoxLayout(self)
         self.uiscale           = 10
         self.ecu_address       = ecu_addr
         self.ecu_name          = ecu_name
@@ -215,6 +216,8 @@ class paramWidget(gui.QWidget):
             width     = int(display.getAttribute("Width")) / self.uiscale
             rect = self.getRectangle(display.getElementsByTagName("Rectangle").item(0))
             qfnt = self.getFont(display)
+            req = self.ecurequestsparser.requests[req_name]
+            data = self.ecurequestsparser.data[text]
             
             qlabel = gui.QLabel(self.panel)
             qlabel.setFont(qfnt)
@@ -232,13 +235,10 @@ class paramWidget(gui.QWidget):
             qlabelval.setStyleSheet("background-color: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
-            qlabelval.setToolTip(req_name + u' : ' + text)
+            qlabelval.setToolTip(req_name + u' : ' + text + u' NumBits=' + unicode(data.bitscount))
 
-            data = self.ecurequestsparser.data[text]
             ddata = displayData(data, qlabelval)
-
             if not req_name in self.displayDict:
-                req = self.ecurequestsparser.requests[req_name]
                 self.displayDict[req_name] = displayDict(req_name, req)
 
             dd = self.displayDict[req_name]
@@ -377,9 +377,9 @@ class paramWidget(gui.QWidget):
                 data = inputdict.getDataByName(k)
 
                 if data == None:
-                    log = u"TODO : implement " + k + u"of " + request_name
-                    self.logview.append(log)
-                    return
+                    # Keep value provided by sentbytes
+                    # Confirmed with S3000 ECU request "ReadMemoryByAddress" value "MEMSIZE"
+                    continue
 
                 widget = data.widget
                 ecu_data = data.data
@@ -399,9 +399,9 @@ class paramWidget(gui.QWidget):
                     self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
                     return
 
-            if ecu_request.endian == 'Little':
-                # TODO :
-                pass
+        if ecu_request.endian == 'Little':
+            # TODO :
+            pass
 
         # Manage delay
         time.sleep(request_delay / 1000.0)
@@ -447,7 +447,7 @@ class paramWidget(gui.QWidget):
                 qlabel.setStyleSheet("background-color: red")
                 value = "ERREUR"
             else:
-                qlabel.setStyleSheet("background-color: blue")
+                qlabel.setStyleSheet("background-color: white")
 
             qlabel.setText(value + ' ' + ecu_data.unit)
 
