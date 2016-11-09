@@ -9,8 +9,8 @@ import ecu
 
 # TODO : 
 # figure out what are self.presend (<Send> in screen XML section) commands
-# Delay unit (second, milliseconds ?)
-# little endian requests
+# Delay unit (second, milliseconds ?) // Seems ms
+# little endian requests // Done needs check
 # Read freezeframe data
 # Check ELM response validity (mode + 0x40)
 
@@ -53,7 +53,6 @@ class paramWidget(gui.QWidget):
         self.uiscale           = 10
         self.ecu_address       = ecu_addr
         self.ecu_name          = ecu_name
-        self.elm_req_cache     = {}
         self.button_requests   = {}
         self.displayDict       = {}
         self.inputDict         = {}
@@ -121,15 +120,20 @@ class paramWidget(gui.QWidget):
 
     def sendElm(self, command, auto=False):
         if not auto:
-            self.logview.append('ELM Send : ' + command)
+            self.logview.append('<font color=blue>Envoie requete ELM :</font>' + command)
 
         if not options.simulation_mode:
             elm_response = options.elm.request(command=command, cache=False)
         else:
             elm_response = '00 ' * 70
 
+        if elm_response.startswith('7F'):
+            nrsp = options.elm.errorval(elm_response[6:8])
+            self.logview.append("<font color=red>Mauvaise reponse ELM :</font> " + nrsp)
+
         if not auto:
-            self.logview.append('ELM Receive : ' + elm_response)
+            self.logview.append('Reception ELM : ' + elm_response)
+
         return elm_response
 
     def initScreen(self, screen_name):
@@ -139,19 +143,9 @@ class paramWidget(gui.QWidget):
             return
         screen = self.xmlscreen[screen_name]
         
-        rectangles = screen.getElementsByTagName("Rectangle")
-        self.screen_width  = 0
-        self.screen_height = 0
-        
-        for rectangle in rectangles:
-            rect = self.getRectangle(rectangle)
-            
-            if rect['left'] + rect['width'] > self.screen_width:
-                self.screen_width = rect['left'] + rect['width']
-                
-            if rect['top'] + rect['height'] > self.screen_height:
-                self.screen_height = rect['top'] + rect['height']
-        
+        self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale
+        self.screen_height = int(screen.getAttribute("Height")) / self.uiscale
+
         self.resize(self.screen_width+20, self.screen_height+20)
         self.panel.resize(self.screen_width+40, self.screen_height+40)
         
@@ -161,8 +155,7 @@ class paramWidget(gui.QWidget):
                 delay = send.getAttribute('Delay')
                 req_name = send.getAttribute('RequestName')
                 self.presend.append( (delay, req_name) )
-            
-        
+
         self.drawLabels(screen)
         self.drawDisplays(screen)
         self.drawInputs(screen)
@@ -247,6 +240,7 @@ class paramWidget(gui.QWidget):
     def drawButtons(self, screen):
         buttons = screen.getElementsByTagName("Button")
         button_count = 0
+
         for button in buttons:
             text = button.getAttribute("Text")
             rect = self.getRectangle(button.getElementsByTagName("Rectangle").item(0))
@@ -260,6 +254,7 @@ class paramWidget(gui.QWidget):
             qbutton.move(rect['left'], rect['top'])
             butname = text + "_" + str(button_count)
             button_count += 1
+
             send = button.getElementsByTagName("Send")
             if send:
                 sendlist = []
@@ -267,6 +262,7 @@ class paramWidget(gui.QWidget):
                     smap = {}
                     delay       = snd.getAttribute("Delay")
                     reqname = snd.getAttribute("RequestName")
+                    rq = self.ecurequestsparser.requests[reqname]
                     smap['Delay']       = delay
                     smap['RequestName'] = reqname
                     sendlist.append(smap)
@@ -276,6 +272,7 @@ class paramWidget(gui.QWidget):
                     tooltiptext += smap[k] + '\n'
                 tooltiptext = tooltiptext[0:-1]
                 qbutton.setToolTip(tooltiptext)
+
             qbutton.clicked.connect(lambda state, btn=butname: self.buttonClicked(btn))
     
     def drawLabels(self, screen):
@@ -348,15 +345,14 @@ class paramWidget(gui.QWidget):
 
     def buttonClicked(self, txt):
         if not txt in self.button_requests:
-            print "Requete bouton non trouvee : " + txt
+            self.logview.append(u"Requete bouton non trouvee : " + txt)
             return
 
         request_list = self.button_requests[txt]
         for req in request_list:
             request_delay = float(req['Delay'].encode('ascii'))
             request_name  = req['RequestName']
-            log = 'Request name : ' + request_name.encode('ascii', 'ignore')
-            self.logview.append(log)
+            self.logview.append(u'Lancement requete : ' + request_name)
 
             ecu_request = self.ecurequestsparser.requests[request_name]
             sendbytes_data_items = ecu_request.sendbyte_dataitems
@@ -370,14 +366,14 @@ class paramWidget(gui.QWidget):
                 dataitem = sendbytes_data_items[k]
 
                 if not request_name in self.inputDict:
-                    print "cannot find ", request_name
+                    # Simple command with no user parameters
                     continue
 
                 inputdict = self.inputDict[request_name]
                 data = inputdict.getDataByName(k)
 
                 if data == None:
-                    # Keep value provided by sentbytes
+                    # Keep values provided by sentbytes
                     # Confirmed with S3000 ECU request "ReadMemoryByAddress" value "MEMSIZE"
                     continue
 
@@ -392,40 +388,39 @@ class paramWidget(gui.QWidget):
                     items_ref = ecu_data.items
                     input_value = hex(items_ref[combo_value])[2:]
 
-                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem)
+                force_little = False
+                if ecu_request.endian == 'Little':
+                    print "little forced"
+                    force_little = True
+
+                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, force_little)
 
                 if not elm_data_stream:
                     widget.setText("Invalide")
                     self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
                     return
 
-        if ecu_request.endian == 'Little':
-            # TODO :
-            pass
+            # Manage delay
+            time.sleep(request_delay / 1000.0)
+            # Then show received values
+            elm_response = self.sendElm(' '.join(elm_data_stream))
 
-        # Manage delay
-        time.sleep(request_delay / 1000.0)
+            for key in rcvbytes_data_items.keys():
+                if request_name in self.displayDict:
+                    data_item = rcvbytes_data_items[key]
+                    ecu_data = self.ecurequestsparser.data[key]
+                    value = ecu_data.getDisplayValue(elm_response, data_item)
+                    request_data = self.displayDict[request_name]
+                    data = request_data.getDataByName(key)
 
-        # TODO : send elm with ecu_data.endian condition
-        # Then show received values
-        elm_response = self.sendElm(' '.join(elm_data_stream))
+                    if value == None:
+                        if data: data.widget.setStyleSheet("background-color: red")
+                        value = "ERREUR"
+                    else:
+                        if data: data.widget.setStyleSheet("background-color: white")
 
-        for key in rcvbytes_data_items.keys():
-            if request_name in self.displayDict:
-                data_item = rcvbytes_data_items[key]
-                ecu_data = self.ecurequestsparser.data[key]
-                value = ecu_data.getDisplayValue(elm_response, data_item)
-                request_data = self.displayDict[request_name]
-                data = request_data.getDataByName(key)
-
-                if value == None:
-                    if data: data.widget.setStyleSheet("background-color: red")
-                    value = "ERREUR"
-                else:
-                    if data: data.widget.setStyleSheet("background-color: white")
-
-                if data:
-                    data.widget.setText(value + ' ' + ecu_data.unit)
+                    if data:
+                        data.widget.setText(value + ' ' + ecu_data.unit)
 
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displayDict[request_name]
@@ -463,18 +458,26 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             options.elm.start_session_can(self.startsession_command)
 
+        # <Screen> <Send/> <Screen/> tag management
+        for sendcom in self.presend:
+            delay = float(sendcom[0])
+            req_name = sendcom[1]
+
+            time.sleep(delay / 1000.)
+            request = self.ecurequestsparser.requests[req_name]
+
+            self.sendElm(request.sentbytes, True)
+
         for request_name in self.displayDict.keys():
             self.updateDisplay(request_name, update_inputs)
 
         self.timer.start(1000)
 
-
     def readDTC(self):
         if not options.simulation_mode:
             options.elm.start_session_can(self.startsession_command)
             
-        request   = self.ecurequestsparser.requests["ReadDTC"]
-        dataitems = request.dataitems
+        request = self.ecurequestsparser.requests["ReadDTC"]
         sendbyte_dataitems = request.sendbyte_dataitems
         moredtcbyte = -1
         

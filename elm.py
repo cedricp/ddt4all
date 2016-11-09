@@ -481,6 +481,10 @@ class ELM:
 
         return rsp
 
+    def errorval(self, val):
+        if val in negrsp.keys():
+            return negrsp[val]
+
     def cmd(self, command, serviceDelay="0"):
 
         tb = time.time()  # start time

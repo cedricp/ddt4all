@@ -129,7 +129,7 @@ class Ecu_data:
 
         self.initData()
 
-    def setValue(self, value, bytes_list, dataitem):
+    def setValue(self, value, bytes_list, dataitem, force_little_endian = False):
         start_byte      = dataitem.firstbyte - 1
         start_bit       = dataitem.bitoffset
         little_endian   = False
@@ -137,13 +137,20 @@ class Ecu_data:
         if dataitem.endian == "Little":
             little_endian = True
 
+        if force_little_endian:
+            little_endian = True
+
         if self.bytesascii:
             if self.bytescount != len(value):
                 return None
 
             for i in range(self.bytescount):
-                bytes_list[i] = value[i]
-                return bytes_list
+                if not little_endian:
+                    bytes_list[i] = ord(value[i])
+                else:
+                    bytes_list[self.bytescount - i - 1] = ord(value[i])
+
+            return bytes_list
 
         if self.scaled:
             value = float(value)
@@ -160,6 +167,7 @@ class Ecu_data:
         hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
 
         n = 0
+        hex_len = len(hex_bytes) - 1
         for h in hex_bytes:
             original_byte  = int('0x' + bytes_list[n + start_byte], 16)
             original_value = int('0x' + h, 16)
@@ -167,16 +175,12 @@ class Ecu_data:
 
             value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
 
-            bytes_list[start_byte + n] = value_formatted
+            if not little_endian:
+                bytes_list[start_byte + n] = value_formatted
+            else:
+                bytes_list[start_byte + hex_len - n] = value_formatted
             n += 1
 
-        if little_endian:
-            a = hexval
-            b = ''
-            for i in range(0, len(a), 2):
-                b = a[i:i + 2] + b
-                hexval = b
-                    
         return bytes_list
 
     def getDisplayValue(self, elm_data, dataitem):
@@ -379,8 +383,20 @@ class Ecu_file:
                     ecu_data = Ecu_data(f)
                     self.data[ecu_data.name] = ecu_data
 
+# Protocols:
+
+# KWP2000 FastInit MonoPoint            ?ATSP 5?
+# KWP2000 FastInit MultiPoint           ?ATSP 5?
+# KWP2000 Init 5 Baud Type I and II     ?ATSP 4?
+# DiagOnCAN                             ATSP 6
+# CAN Messaging (125 kbps CAN)          ?ATSP B?
+# ISO8                                  ?ATSP 3?
+
 class Ecu_ident:
-    def __init__(self, diagversion, supplier, soft, version, name, group, href):
+    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol):
+        self.protocols = [u"KWP2000 Init 5 Baud Type I and II", u"ISO8",
+                          u"CAN Messaging (125 kbps CAN)", u"KWP2000 FastInit MultiPoint",
+                          u"KWP2000 FastInit MonoPoint", u"DiagOnCAN"]
         self.diagversion = diagversion
         self.supplier    = supplier
         self.soft        = soft
@@ -389,12 +405,17 @@ class Ecu_ident:
         self.group       = group
         self.href        = href
         self.addr        = None
+        self.protocol    = protocol
         self.hash        = diagversion + supplier + soft + version
 
     def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.hash != diagversion + supplier + soft + version: return False
         self.addr = addr
         return True
+
+    def checkProtocol(self):
+        if not self.protocol in self.protocols:
+            print "Unknown protocol '", self.protocol, "' "
 
 class Ecu_database:
     def __init__(self):
@@ -414,6 +435,7 @@ class Ecu_database:
             href  = target.getAttribute("href")
             name  = target.getAttribute("Name")
             group = target.getAttribute("group")
+            protocol = target.getAttribute("Protocol")
             autoidents = target.getElementsByTagName("AutoIdents")
             for autoident in autoidents:
                 self.numecu += 1
@@ -422,7 +444,7 @@ class Ecu_database:
                     supplier    = ai.getAttribute("Supplier")
                     soft        = ai.getAttribute("Soft")
                     version     = ai.getAttribute("Version")
-                    ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href)
+                    ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol)
                     self.targets.append(ecu_ident)
 
 class Ecu_scanner:
@@ -432,13 +454,17 @@ class Ecu_scanner:
         self.ecu_database = Ecu_database()
         self.num_ecu_found = 0
         if options.simulation_mode:
-            self.ecus.append(Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml"))
+            self.ecus.append(Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan"))
+            self.ecus.append(Ecu_ident("000", "000", "000", "00", "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan"))
+            self.ecus.append(Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan"))
 
     def getNumEcuDb(self):
         return self.ecu_database.numecu
     def scan(self):
         options.elm.init_can()
 
+        # Get CAN ECUs first
+        # TODO : implement other protocols
         for addr in elm.snat.keys():
             TXa, RXa = options.elm.set_can_addr(addr, { 'idTx' : '', 'idRx' : '', 'ecuname' : 'SCAN' })
             options.elm.start_session_can('10C0')
@@ -452,9 +478,9 @@ class Ecu_scanner:
 
             if len(can_response)>59:
                 diagversion = str(int(can_response[21:23],16))
-                supplier    = can_response[24:32].replace(' ','').decode('hex')
-                soft        = can_response[48:53].replace(' ','')
-                version     = can_response[54:59].replace(' ','')
+                supplier    = can_response[24:32].replace(' ', '').decode('hex')
+                soft        = can_response[48:53].replace(' ', '')
+                version     = can_response[54:59].replace(' ', '')
 
                 for target in self.ecu_database.targets:
                     if target.checkWith(diagversion, supplier, soft, version, addr):
