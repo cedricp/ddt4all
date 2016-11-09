@@ -397,9 +397,11 @@ class paramWidget(gui.QWidget):
 
                 if not elm_data_stream:
                     widget.setText("Invalide")
+                    widget.setStyleSheet("background-color: red")
                     self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
                     return
-
+                widget.setStyleSheet("background-color: white")
+                
             # Manage delay
             time.sleep(request_delay / 1000.0)
             # Then show received values

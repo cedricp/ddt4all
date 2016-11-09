@@ -153,10 +153,15 @@ class Ecu_data:
             return bytes_list
 
         if self.scaled:
+            if not str(value).isdigit():
+                return None
+
             value = float(value)
             # Value is base 10
             value = (value * float(self.divideby) - float(self.offset)) / float(self.step)
         else:
+            if not all(c in string.hexdigits for c in value):
+                return None
             # Value is base 16
             value = int('0x' + str(value), 16)
 
@@ -460,6 +465,7 @@ class Ecu_scanner:
 
     def getNumEcuDb(self):
         return self.ecu_database.numecu
+
     def scan(self):
         options.elm.init_can()
 
