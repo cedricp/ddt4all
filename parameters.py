@@ -1,11 +1,11 @@
-import sys, time
+import sys
+import time
+import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options
-from   xml.dom.minidom import parse
+from xml.dom.minidom import parse
 import xml.dom.minidom
-
-import ecu, elm
 
 # TODO : 
 # figure out what are self.presend (<Send> in screen XML section) commands
@@ -14,11 +14,13 @@ import ecu, elm
 # Read freezeframe data
 # Check ELM response validity (mode + 0x40)
 
+
 class displayData:
     def __init__(self, data, widget, is_combo=False):
         self.data    = data
         self.widget  = widget
         self.is_combo = is_combo
+
 
 class displayDict:
     def __init__(self, request_name, request):
@@ -63,7 +65,6 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             ecu_conf = { 'idTx' : '', 'idRx' : '', 'ecuname' : str(ecu_name) }
             txa, rxa = options.elm.set_can_addr(self.ecu_addr, ecu_conf)
-            print txa, rxa
 
     def init(self, screen):
         if self.panel:
@@ -74,6 +75,9 @@ class paramWidget(gui.QWidget):
         self.panel              = gui.QWidget(self)
         self.timer              = core.QTimer()
         self.timer.setSingleShot(True)
+        if not screen:
+            return
+
         self.initScreen(screen)
         self.layout.addWidget(self.panel)
          
@@ -492,7 +496,7 @@ class paramWidget(gui.QWidget):
 
     def updateDisplays(self, update_inputs= False):
         if not options.simulation_mode:
-            options.elm.start_session_can('10C0')#self.startsession_command)
+            options.elm.start_session_can('10C0')
 
         # <Screen> <Send/> <Screen/> tag management
         for sendcom in self.presend:

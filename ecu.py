@@ -1,8 +1,7 @@
-import sys, os, math, string
+import math, string
 import options, elm
 from   xml.dom.minidom import parse
 import xml.dom.minidom
-
 
 # Returns signed value from 16 bits
 def s16(value):
@@ -462,7 +461,10 @@ class Ecu_scanner:
     def getNumEcuDb(self):
         return self.ecu_database.numecu
 
-    def scan(self):
+    def getNumAddr(self):
+        return len(elm.dnat)
+
+    def scan(self, progress=None, label=None):
         self.totalecu = 0
         self.ecus = {}
         self.num_ecu_found = 0
@@ -473,23 +475,24 @@ class Ecu_scanner:
                                                                 "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan")
             self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan")
 
-        options.elm.init_can()
-        print "Scan"
-
-        # Get CAN ECUs first
         # TODO : implement other protocols
+
+        i = 0
+        options.elm.init_can()
         for addr in elm.snat.keys():
+            progress.setValue(i)
+            i += 1
             TXa, RXa = options.elm.set_can_addr(addr, { 'idTx' : '', 'idRx' : '', 'ecuname' : 'SCAN' })
             options.elm.start_session_can('10C0')
 
             if options.simulation_mode:
                 if TXa == "74B": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
                 elif TXa == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
-                else: can_response = "61 80 82 00 14 97 39 00 00 00 30 00 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+                else: can_response =  "61 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
             else:
                 can_response = options.elm.request( req = '2180', positive = '61', cache = False )
 
-            if len(can_response)>59:
+            if len(can_response) > 59:
                 diagversion = str(int(can_response[21:23],16))
                 supplier    = can_response[24:32].replace(' ', '').decode('hex')
                 soft        = can_response[48:53].replace(' ', '')
@@ -499,7 +502,7 @@ class Ecu_scanner:
                     if target.checkWith(diagversion, supplier, soft, version, addr):
                         self.ecus[target.name] = target
                         self.num_ecu_found += 1
-                        print "Found %i ecu" % self.num_ecu_found, TXa, RXa, target.href, addr
+                        label.setText("Found %i ecu" % self.num_ecu_found)
 
 
 if __name__ == '__main__':

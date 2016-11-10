@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import sys
+import os
+import pickle
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
@@ -16,10 +18,24 @@ class Main_widget(gui.QMainWindow):
         self.initUI()
 
     def scan(self):
-        self.ecu_scan.scan()
-        print "Scan finished, %i ECU(s) found on CAN" % self.ecu_scan.num_ecu_found
+        progressWidget = gui.QWidget(None)
+        progressLayout = gui.QVBoxLayout()
+        labelWidget = gui.QLabel()
+        progress = gui.QProgressBar()
+        progressLayout.addWidget(progress)
+        progressLayout.addWidget(labelWidget)
+        progressWidget.setLayout(progressLayout)
+        progress.setRange(0, self.ecu_scan.getNumAddr())
+        progressWidget.show()
+        progress.setValue(0)
+
+        self.ecu_scan.scan(progress, labelWidget)
 
         self.treeview_ecu.clear()
+        self.treeview_params.clear()
+        if self.paramview:
+            self.paramview.init(None)
+
         for ecu in self.ecu_scan.ecus.keys():
             item = gui.QListWidgetItem(ecu)
             self.treeview_ecu.addItem(item)
@@ -52,6 +68,13 @@ class Main_widget(gui.QMainWindow):
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
 
         self.toolbar = self.addToolBar("File")
+
+        scanaction = gui.QAction(gui.QIcon("icons/scan.png"), "Scanner les ECUs", self)
+        scanaction.triggered.connect(self.scan)
+
+        diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), "Lire les Codes defauts", self)
+        diagaction.triggered.connect(self.readDtc)
+
         self.log = gui.QAction(gui.QIcon("icons/log.png"), "Full log", self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
@@ -71,20 +94,56 @@ class Main_widget(gui.QMainWindow):
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
+        self.toolbar.addAction(scanaction)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
         self.toolbar.addAction(self.expert)
         self.toolbar.addAction(self.autorefresh)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.refresh)
-        
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(diagaction)
+
+        vehicle_dir = "vehicles"
+        if not os.path.exists(vehicle_dir):
+            os.mkdir(vehicle_dir)
+
+        ecu_files = []
+        for filename in os.listdir(vehicle_dir):
+            basename, ext = os.path.splitext(filename)
+            if ext == '.ecu':
+                ecu_files.append(basename)
+
         menu = self.menuBar()
         diagmenu = menu.addMenu("Diagnostic")
-        scanaction = diagmenu.addAction("Scanner ECUs")
-        scanaction.triggered.connect(self.scan)
+        savevehicleaction = diagmenu.addAction("Sauvegarder ce vehicule")
+        savevehicleaction.triggered.connect(self.saveEcus)
         menu.addSeparator()
-        dtcaction = diagmenu.addAction("Lire DTC")
 
-        dtcaction.triggered.connect(self.readDTC)
+        for ecu in ecu_files:
+            ecuaction = diagmenu.addAction(ecu)
+            ecuaction.triggered.connect(lambda state, a=ecu: self.loadEcu(a))
+
+    def saveEcus(self):
+        filename = gui.QFileDialog.getSaveFileName(self, "Sauvegarde vehicule", "./vehicles/mycar.ecu", ".ecu")
+        pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
+
+    def loadEcu(self, name):
+        vehicle_file = "vehicles/" + name + ".ecu"
+        self.ecu_scan.ecus = pickle.load(open(vehicle_file, "rb"))
+
+        self.treeview_ecu.clear()
+        self.treeview_params.clear()
+        if self.paramview:
+            self.paramview.init(None)
+
+        for ecu in self.ecu_scan.ecus.keys():
+            item = gui.QListWidgetItem(ecu)
+            self.treeview_ecu.addItem(item)
+
+    def readDtc(self):
+        if self.paramview:
+            self.paramview.readDTC()
 
     def changeAutorefresh(self):
         options.auto_refresh = self.autorefresh.isChecked()
@@ -103,7 +162,6 @@ class Main_widget(gui.QMainWindow):
 
     def changeLogMode(self):
         options.log_all = self.log.isChecked()
-        print options.log_all
 
     def readDTC(self):
         if self.paramview:
@@ -131,6 +189,7 @@ class Main_widget(gui.QMainWindow):
             for param in self.paramview.categories[screen]:
                 param_item = gui.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
+
 
 class portChooser(gui.QDialog):
     def __init__(self):
@@ -176,10 +235,13 @@ class portChooser(gui.QDialog):
         self.close()
         
 if __name__ == '__main__':
+    os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
+
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
     pc = portChooser()
     pc.exec_()
+
     if pc.mode == 0:
         exit(0)
     if pc.mode == 1:

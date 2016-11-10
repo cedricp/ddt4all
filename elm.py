@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 '''module contains class for working with ELM327
    version: 160829
    Borrowed from PyRen (modified for this use)
