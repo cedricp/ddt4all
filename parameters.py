@@ -20,7 +20,6 @@ class displayData:
         self.widget  = widget
         self.is_combo = is_combo
 
-
 class displayDict:
     def __init__(self, request_name, request):
         self.request = request
@@ -91,26 +90,40 @@ class paramWidget(gui.QWidget):
             return
             
         self.ecurequestsparser = ecu.Ecu_file(xdoc)
-        
-        send_id = xdoc.getElementsByTagName("SendId")
-        if send_id:
-            can_id = send_id.item(0).getElementsByTagName("CANId")
-            self.can_send_id = hex(int(can_id.item(0).getAttribute("Value")))
-        
-        rcv_id = xdoc.getElementsByTagName("ReceiveId")
-        if rcv_id:
-            can_id = rcv_id.item(0).getElementsByTagName("CANId")
-            self.can_rcv_id = hex(int(can_id.item(0).getAttribute("Value")))
 
-        xml_cats = xdoc.getElementsByTagName("Category")
-        for category in xml_cats:
-            category_name = category.getAttribute("Name")
-            self.categories[category_name] = []
-            screens_name = category.getElementsByTagName("Screen")
-            for screen in screens_name:
-                screen_name = screen.getAttribute("Name")
-                self.xmlscreen[screen_name] = screen
-                self.categories[category_name].append(screen_name)
+        target = self.findChildNodesByName(xdoc, u"Target")[0]
+        if not target:
+            self.logview.append("Invalid DDT file")
+            return
+
+        can = self.findChildNodesByName(target, u"CAN")[0]
+        if can:
+            send_ids = self.findChildNodesByName(can, "SendId")
+            if send_ids:
+                send_id = send_ids[0]
+                can_id = self.findChildNodesByName(send_id, "CANId")
+                if can_id:
+                    self.can_send_id = hex(int(can_id[0].getAttribute("Value")))
+
+            rcv_ids = self.findChildNodesByName(can, "ReceiveId")
+            if rcv_ids:
+                rcv_id = rcv_ids[0]
+                can_id = self.findChildNodesByName(rcv_id, "CANId")
+                if can_id:
+                    self.can_rcv_id = hex(int(can_id[0].getAttribute("Value")))
+
+        categories = self.findChildNodesByName(target, u"Categories")
+
+        for cats in categories:
+            xml_cats = self.findChildNodesByName(cats, u"Category")
+            for category in xml_cats:
+                category_name = category.getAttribute(u"Name")
+                self.categories[category_name] = []
+                screens_name = self.findChildNodesByName(category, u"Screen")
+                for screen in screens_name:
+                    screen_name = screen.getAttribute(u"Name")
+                    self.xmlscreen[screen_name] = screen
+                    self.categories[category_name].append(screen_name)
 
         if "Start Diagnostic Session" in self.ecurequestsparser.requests:
             diag_request = self.ecurequestsparser.requests["Start Diagnostic Session"]
@@ -123,22 +136,35 @@ class paramWidget(gui.QWidget):
             self.startsession_command = '10C0'
 
     def sendElm(self, command, auto=False):
-        if not auto:
+        if not auto or options.log_all:
             self.logview.append('<font color=blue>Envoie requete ELM :</font>' + command)
         print command
+
+        elm_response = '00 ' * 70
         if not options.simulation_mode:
-            elm_response = options.elm.request(command, cache=False)
-        else:
-            elm_response = '00 ' * 70
+            if options.promode:
+                # Allow read only modes
+                if command.startswith('10') or command.startswith('21') or command.startswith('22'):
+                    elm_response = options.elm.request(command, cache=False)
+            else:
+                # Pro mode *Watch out*
+                elm_response = options.elm.request(command, cache=False)
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
             self.logview.append("<font color=red>Mauvaise reponse ELM :</font> " + nrsp)
 
-        if not auto:
+        if not auto or options.log_all:
             self.logview.append('Reception ELM : ' + elm_response)
 
         return elm_response
+
+    def findChildNodesByName(self, parent, name):
+        nodes = []
+        for node in parent.childNodes:
+            if node.nodeType == node.ELEMENT_NODE and node.localName == name:
+                nodes.append(node)
+        return nodes
 
     def initScreen(self, screen_name):
         self.presend = []
@@ -150,17 +176,16 @@ class paramWidget(gui.QWidget):
         self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale
         self.screen_height = int(screen.getAttribute("Height")) / self.uiscale
 
-        self.resize(self.screen_width+20, self.screen_height+20)
-        self.panel.resize(self.screen_width+40, self.screen_height+40)
-        
-        sends = screen.getElementsByTagName("Send")
-        if sends:
-            for send in sends:
-                delay = send.getAttribute('Delay')
-                req_name = send.getAttribute('RequestName')
-                print req_name
-                #self.presend.append( (delay, req_name) )
+        self.resize(self.screen_width+20, self.screen_height + 20)
+        self.panel.resize(self.screen_width+40, self.screen_height + 40)
 
+        for elem in self.findChildNodesByName(screen, u"Send"):
+            delay = elem.getAttribute('Delay')
+            req_name = elem.getAttribute('RequestName')
+            self.presend.append((delay, req_name))
+            print (delay, req_name)
+
+        self.drawLabels(screen)
         self.drawLabels(screen)
         self.drawDisplays(screen)
         self.drawInputs(screen)
@@ -173,7 +198,7 @@ class paramWidget(gui.QWidget):
         return '#'+hex(int(color)).replace("0x","").zfill(6).upper()
     
     def getFontColor(self, xml):
-        font = xml.getElementsByTagName("Font").item(0)
+        font = self.findChildNodesByName(xml, "Font")[0]
         return self.colorConvert(font.getAttribute("Color"))
     
     def getRectangle(self, xml):
@@ -186,7 +211,7 @@ class paramWidget(gui.QWidget):
     
     def getFont(self, xml):
         data = {}
-        font = xml.getElementsByTagName("Font").item(0)
+        font = self.findChildNodesByName(xml, "Font")[0]
         font_name    = font.getAttribute("Name")
         font_size    = float(font.getAttribute("Size"))
         font_bold    = font.getAttribute("Bold")
@@ -206,14 +231,14 @@ class paramWidget(gui.QWidget):
     
     def drawDisplays(self, screen):
         self.displayDict = {}
-        displays = screen.getElementsByTagName("Display")
+        displays = self.findChildNodesByName(screen, "Display")
 
         for display in displays:
             text      = display.getAttribute("DataName")
             req_name  = display.getAttribute("RequestName")
             color     = display.getAttribute("Color")
             width     = int(display.getAttribute("Width")) / self.uiscale
-            rect = self.getRectangle(display.getElementsByTagName("Rectangle").item(0))
+            rect = self.getRectangle(self.findChildNodesByName(display, "Rectangle")[0])
             qfnt = self.getFont(display)
             req = self.ecurequestsparser.requests[req_name]
             data = self.ecurequestsparser.data[text]
@@ -244,12 +269,12 @@ class paramWidget(gui.QWidget):
             dd.addData(ddata)
             
     def drawButtons(self, screen):
-        buttons = screen.getElementsByTagName("Button")
+        buttons = self.findChildNodesByName(screen, "Button")
         button_count = 0
 
         for button in buttons:
             text = button.getAttribute("Text")
-            rect = self.getRectangle(button.getElementsByTagName("Rectangle").item(0))
+            rect = self.getRectangle(self.findChildNodesByName(button, "Rectangle")[0])
             qfnt = self.getFont(button)
             
             qbutton = gui.QPushButton(text, self.panel)
@@ -261,7 +286,7 @@ class paramWidget(gui.QWidget):
             butname = text + "_" + str(button_count)
             button_count += 1
 
-            send = button.getElementsByTagName("Send")
+            send = self.findChildNodesByName(button, "Send")
             if send:
                 sendlist = []
                 for snd in send:
@@ -282,13 +307,13 @@ class paramWidget(gui.QWidget):
             qbutton.clicked.connect(lambda state, btn=butname: self.buttonClicked(btn))
     
     def drawLabels(self, screen):
-        labels = screen.getElementsByTagName("Label")
+        labels = self.findChildNodesByName(screen, "Label")
         for label in labels:
             text      = label.getAttribute("Text")
             color     = label.getAttribute("Color")
             alignment = label.getAttribute("Alignment")
             
-            rect = self.getRectangle(label.getElementsByTagName("Rectangle").item(0))
+            rect = self.getRectangle(self.findChildNodesByName(label, "Rectangle")[0])
             qfnt = self.getFont(label)
                 
             qlabel = gui.QLabel(self.panel)
@@ -305,13 +330,13 @@ class paramWidget(gui.QWidget):
     
     def drawInputs(self,screen):
         self.inputDict = {}
-        inputs = screen.getElementsByTagName("Input")
+        inputs = self.findChildNodesByName(screen, "Input")
         for input in inputs:
             text      = input.getAttribute("DataName")
             req_name  = input.getAttribute("RequestName")
             color     = input.getAttribute("Color")
             width     = int(input.getAttribute("Width")) / self.uiscale
-            rect = self.getRectangle(input.getElementsByTagName("Rectangle").item(0))
+            rect = self.getRectangle(self.findChildNodesByName(input, "Rectangle")[0])
             qfnt = self.getFont(input)  
 
             qlabel = gui.QLabel(self.panel)

@@ -18,6 +18,8 @@ class Main_widget(gui.QMainWindow):
         self.initUI()
         
     def initUI(self):
+        self.paramview = None
+
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
         self.setCentralWidget(self.scrollview)
@@ -52,9 +54,17 @@ class Main_widget(gui.QMainWindow):
         menu = self.menuBar()
         diagmenu = menu.addMenu("Diagnostic")
         dtcaction = diagmenu.addAction("Lire DTC")
+        self.logaction = diagmenu.addAction("Log auto")
+        self.logaction.setCheckable(True)
+        self.logaction.setChecked(False)
+        options.log_all = False
+
         dtcaction.triggered.connect(self.readDTC)
+        self.logaction.toggled.connect(self.logToggle)
         
-        
+    def logToggle(self):
+        options.log_all = self.logaction.isChecked()
+
     def readDTC(self):
         if self.paramview:
             self.paramview.readDTC()

@@ -8,3 +8,4 @@ elm=None
 log="ddt"
 opt_cfc0=False
 opt_n1c=True
+log_all=False
