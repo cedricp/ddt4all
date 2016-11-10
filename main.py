@@ -125,7 +125,7 @@ class Main_widget(gui.QMainWindow):
             ecuaction.triggered.connect(lambda state, a=ecu: self.loadEcu(a))
 
     def saveEcus(self):
-        filename = gui.QFileDialog.getSaveFileName(self, "Sauvegarde vehicule", "./vehicles/mycar.ecu", ".ecu")
+        filename = gui.QFileDialog.getSaveFileName(self, "Sauvegarde vehicule (gardez l'extention .ecu)", "./vehicles/mycar.ecu", ".ecu")
         pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
 
     def loadEcu(self, name):
@@ -225,7 +225,9 @@ class portChooser(gui.QDialog):
             item.setText(p)
 
     def connectedMode(self):
-        self.port = self.listview.currentItem().text()
+        currentitem = self.listview.currentItem()
+        if currentitem:
+            self.port = currentitem.text()
         self.mode = 1
         self.close()
 

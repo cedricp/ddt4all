@@ -14,7 +14,6 @@ import xml.dom.minidom
 # Read freezeframe data
 # Check ELM response validity (mode + 0x40)
 
-
 class displayData:
     def __init__(self, data, widget, is_combo=False):
         self.data    = data
@@ -138,25 +137,23 @@ class paramWidget(gui.QWidget):
             self.startsession_command = '10C0'
 
     def sendElm(self, command, auto=False):
-
-        blocked_command = False
+        txt = '<font color=blue>Envoie requete ELM :</font>'
         elm_response = '00 ' * 70
+
         if not options.simulation_mode:
             if not options.promode:
                 # Allow read only modes
                 if command.startswith('10') or command.startswith('21') or command.startswith('22'):
                     elm_response = options.elm.request(command, cache=False)
-                    blocked_command = True
+                    txt = '<font color=red>Envoie requete bloquee ELM :</font>'
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
-
-        fontColor = 'blue'
-        if blocked_command:
-            fontColor = 'red'
+        else:
+            txt = '<font color=green>Envoie requete simulee ELM :</font>'
 
         if not auto or options.log_all:
-            self.logview.append('<font color=' + fontColor + '>Envoie requete ELM :</font>' + command)
+            self.logview.append(txt + command)
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
@@ -183,6 +180,8 @@ class paramWidget(gui.QWidget):
         
         self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale
         self.screen_height = int(screen.getAttribute("Height")) / self.uiscale
+        screencolor = screen.getAttribute("Color")
+        self.setStyleSheet("background-color: %s" % self.colorConvert(screencolor))
 
         self.resize(self.screen_width+20, self.screen_height + 20)
         self.panel.resize(self.screen_width+40, self.screen_height + 40)
@@ -193,7 +192,6 @@ class paramWidget(gui.QWidget):
             self.presend.append((delay, req_name))
 
         self.drawLabels(screen)
-        self.drawLabels(screen)
         self.drawDisplays(screen)
         self.drawInputs(screen)
         self.drawButtons(screen)
@@ -202,8 +200,12 @@ class paramWidget(gui.QWidget):
         self.timer.start(1000)
 
     def colorConvert(self, color):
-        return '#'+hex(int(color)).replace("0x","").zfill(6).upper()
-    
+        hexcolor = hex(int(color)).replace("0x", "").upper().zfill(6)
+        redcolor = int('0x' + hexcolor[0:2], 16)
+        greencolor = int('0x' + hexcolor[2:4], 16)
+        bluecolor = int('0x' + hexcolor[4:6], 16)
+        print hexcolor, (redcolor, greencolor, bluecolor)
+
     def getFontColor(self, xml):
         font = self.findChildNodesByName(xml, "Font")[0]
         return self.colorConvert(font.getAttribute("Color"))
@@ -254,7 +256,7 @@ class paramWidget(gui.QWidget):
             qlabel.setFont(qfnt)
             qlabel.setText(text)
             qlabel.resize(width, rect['height'])
-            qlabel.setStyleSheet("background-color: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
+            qlabel.setStyleSheet("background: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabel.setAlignment(core.Qt.AlignLeft)
             qlabel.move(rect['left'], rect['top'])
@@ -263,7 +265,7 @@ class paramWidget(gui.QWidget):
             qlabelval.setFont(qfnt)
             qlabelval.setText("")
             qlabelval.resize(rect['width'] - width, rect['height'])
-            qlabelval.setStyleSheet("background-color: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
+            qlabelval.setStyleSheet("background: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
             qlabelval.setToolTip(req_name + u' : ' + text + u' NumBits=' + unicode(data.bitscount))
@@ -288,7 +290,7 @@ class paramWidget(gui.QWidget):
             qbutton.setFont(qfnt)
             qbutton.setText(text)
             qbutton.resize(rect['width'], rect['height'])
-            qbutton.setStyleSheet("background-color: red; color: black")
+            qbutton.setStyleSheet("background: red; color: black")
             qbutton.move(rect['left'], rect['top'])
             butname = text + "_" + str(button_count)
             button_count += 1
@@ -327,8 +329,8 @@ class paramWidget(gui.QWidget):
             qlabel.setFont(qfnt)
             qlabel.setText(text)
             qlabel.resize(rect['width'], rect['height'])
-            qlabel.setStyleSheet("background-color: %s; color: %s" % (self.colorConvert(color), self.getFontColor(label)))
-            #qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
+            qlabel.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(label)))
+
             qlabel.move(rect['left'], rect['top'])
             if alignment == '2':
                 qlabel.setAlignment(core.Qt.AlignHCenter)
@@ -350,7 +352,7 @@ class paramWidget(gui.QWidget):
             qlabel.setFont(qfnt)
             qlabel.setText(text)
             qlabel.resize(rect['width'], rect['height'])
-            qlabel.setStyleSheet("background-color: " + self.colorConvert(color))
+            qlabel.setStyleSheet("background: " + self.colorConvert(color))
             qlabel.setStyleSheet("color: " + self.getFontColor(input))
             qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabel.move(rect['left'], rect['top'])
@@ -369,7 +371,7 @@ class paramWidget(gui.QWidget):
                 qlineedit.setFont(qfnt)
                 qlineedit.setText("No Value")
                 qlineedit.resize(rect['width'] - width, rect['height'])
-                qlineedit.setStyleSheet("background-color: " + self.colorConvert(color))
+                qlineedit.setStyleSheet("background: " + self.colorConvert(color))
                 qlineedit.setStyleSheet("color: " + self.getFontColor(input))
                 qlineedit.move(rect['left'] + width, rect['top'])
                 ddata = displayData(data, qlineedit)
@@ -434,10 +436,10 @@ class paramWidget(gui.QWidget):
 
                 if not elm_data_stream:
                     widget.setText("Invalide")
-                    widget.setStyleSheet("background-color: red")
+                    widget.setStyleSheet("background: red")
                     self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
                     return
-                widget.setStyleSheet("background-color: white")
+                widget.setStyleSheet("background: white")
 
             # Manage delay
             time.sleep(request_delay / 1000.0)
@@ -453,10 +455,10 @@ class paramWidget(gui.QWidget):
                     data = request_data.getDataByName(key)
 
                     if value == None:
-                        if data: data.widget.setStyleSheet("background-color: red")
+                        if data: data.widget.setStyleSheet("background: red")
                         value = "ERREUR"
                     else:
-                        if data: data.widget.setStyleSheet("background-color: white")
+                        if data: data.widget.setStyleSheet("background: white")
 
                     if data:
                         data.widget.setText(value + ' ' + ecu_data.unit)
@@ -479,10 +481,10 @@ class paramWidget(gui.QWidget):
             value = ecu_data.getDisplayValue(elm_response, data_item)
 
             if value == None:
-                qlabel.setStyleSheet("background-color: red")
+                qlabel.setStyleSheet("background: red")
                 value = "ERREUR"
             else:
-                qlabel.setStyleSheet("background-color: white")
+                qlabel.setStyleSheet("background: white")
 
             qlabel.setText(value + ' ' + ecu_data.unit)
 
