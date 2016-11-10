@@ -7,8 +7,7 @@ import options
 from xml.dom.minidom import parse
 import xml.dom.minidom
 
-# TODO : 
-# figure out what are self.presend (<Send> in screen XML section) commands
+# TODO :
 # Delay unit (second, milliseconds ?) // Seems ms
 # little endian requests // Done needs check
 # Read freezeframe data
@@ -204,7 +203,7 @@ class paramWidget(gui.QWidget):
         redcolor = int('0x' + hexcolor[0:2], 16)
         greencolor = int('0x' + hexcolor[2:4], 16)
         bluecolor = int('0x' + hexcolor[4:6], 16)
-        print hexcolor, (redcolor, greencolor, bluecolor)
+        return 'rgb(%i,%i,%i)' % (redcolor, greencolor, bluecolor)
 
     def getFontColor(self, xml):
         font = self.findChildNodesByName(xml, "Font")[0]

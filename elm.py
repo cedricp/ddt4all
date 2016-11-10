@@ -144,8 +144,8 @@ class Port:
                 for port, desc, hwid in iterator:
                     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
                 print ""
-                options.simulation_mode = True
-                exit(2)
+                options.elm_failed = True
+                return
             # print self.hdr.BAUDRATES
             if options.port_speed == 38400:
                 self.check_elm()
@@ -395,6 +395,8 @@ class ELM:
 
         if not options.simulation_mode:
             self.port = Port(portName, speed, self.portTimeout)
+            if options.elm_failed:
+                return
 
         if not os.path.exists("./logs"):
             os.mkdir("./logs")

@@ -232,7 +232,7 @@ class portChooser(gui.QDialog):
         self.close()
 
     def demoMode(self):
-        self.port = ''
+        self.port = 'DUMMY'
         self.mode = 2
         self.close()
         
@@ -252,10 +252,24 @@ if __name__ == '__main__':
     if pc.mode == 2:
          options.promode = False
          options.simulation_mode = True
+
     options.port = str(pc.port)
-    
+
+    if not options.port:
+        msgbox = gui.QMessageBox()
+        msgbox.setText("Pas de port de communication selectionne")
+        msgbox.exec_()
+        exit(0)
+
     print "Initilizing ELM..."
     options.elm = elm.ELM(options.port, options.port_speed)
+
+    if options.elm_failed:
+        msgbox = gui.QMessageBox()
+        msgbox.setText("Pas d'ELM327 sur le port communication selectionne")
+        msgbox.exec_()
+        exit(0)
+
     w = Main_widget()
     w.show()
     app.exec_()
