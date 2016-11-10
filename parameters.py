@@ -61,8 +61,9 @@ class paramWidget(gui.QWidget):
         self.initXML()
                  
         if not options.simulation_mode:
-            ecu_conf = { 'idTx' : self.can_send_id, 'idRx' : self.can_rcv_id, 'ecuname' : str(ecu_name) }
+            ecu_conf = { 'idTx' : '', 'idRx' : '', 'ecuname' : str(ecu_name) }
             txa, rxa = options.elm.set_can_addr(self.ecu_addr, ecu_conf)
+            print txa, rxa
 
     def init(self, screen):
         if self.panel:
@@ -491,7 +492,7 @@ class paramWidget(gui.QWidget):
 
     def updateDisplays(self, update_inputs= False):
         if not options.simulation_mode:
-            options.elm.start_session_can(self.startsession_command)
+            options.elm.start_session_can('10C0')#self.startsession_command)
 
         # <Screen> <Send/> <Screen/> tag management
         for sendcom in self.presend:
