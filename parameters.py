@@ -191,10 +191,11 @@ class paramWidget(gui.QWidget):
             fnt_flags = gui.QFont.Bold
         else:
             fnt_flags = gui.QFont.Normal
-        
-        qfnt = gui.QFont(font_name, int(font_size), fnt_flags);
+
         if font_italic == '1':
-            qfnt.setStyle(gui.QFont.StyleItalic)
+            fnt_flags |= gui.QFont.StyleItalic
+        
+        qfnt = gui.QFont(font_name, font_size, fnt_flags);
         
         return qfnt
     
@@ -390,7 +391,6 @@ class paramWidget(gui.QWidget):
 
                 force_little = False
                 if ecu_request.endian == 'Little':
-                    print "little forced"
                     force_little = True
 
                 elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, force_little)
@@ -401,7 +401,7 @@ class paramWidget(gui.QWidget):
                     self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
                     return
                 widget.setStyleSheet("background-color: white")
-                
+
             # Manage delay
             time.sleep(request_delay / 1000.0)
             # Then show received values
