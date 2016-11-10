@@ -468,6 +468,7 @@ class Ecu_scanner:
 
     def scan(self):
         options.elm.init_can()
+        print "Scan"
 
         # Get CAN ECUs first
         # TODO : implement other protocols
@@ -476,11 +477,11 @@ class Ecu_scanner:
             options.elm.start_session_can('10C0')
 
             if options.simulation_mode:
-                if TXa == "745": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+                if TXa == "74B": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
                 elif TXa == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
                 else: can_response = "61 80 82 00 14 97 39 00 00 00 30 00 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
             else:
-                options.elm.request( req = '2180', positive = '41', cache = False )
+                can_response = options.elm.request( req = '2180', positive = '61', cache = False )
 
             if len(can_response)>59:
                 diagversion = str(int(can_response[21:23],16))
@@ -492,6 +493,7 @@ class Ecu_scanner:
                     if target.checkWith(diagversion, supplier, soft, version, addr):
                         self.ecus.append(target)
                         self.num_ecu_found += 1
+                        print "Found %i ecu" % self.num_ecu_found, TXa, RXa, target.href, addr
 
 
 if __name__ == '__main__':
