@@ -267,7 +267,11 @@ class paramWidget(gui.QWidget):
             qlabelval.setStyleSheet("background: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
-            qlabelval.setToolTip(req_name + u' : ' + text + u' NumBits=' + unicode(data.bitscount))
+            if data.comment:
+                infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+            else:
+                infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+            qlabelval.setToolTip(infos)
 
             ddata = displayData(data, qlabelval)
             if not req_name in self.displayDict:
@@ -364,6 +368,11 @@ class paramWidget(gui.QWidget):
                     qcombo.addItem(key)
                 qcombo.resize(rect['width'] - width, rect['height'])
                 qcombo.move(rect['left'] + width, rect['top'])
+                if data.comment:
+                    infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+                else:
+                    infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+                qcombo.setToolTip(infos)
                 ddata = displayData(data, qcombo, True)
             else:
                 qlineedit = gui.QLineEdit(self.panel)
@@ -373,6 +382,11 @@ class paramWidget(gui.QWidget):
                 qlineedit.setStyleSheet("background: " + self.colorConvert(color))
                 qlineedit.setStyleSheet("color: " + self.getFontColor(input))
                 qlineedit.move(rect['left'] + width, rect['top'])
+                if data.comment:
+                    infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+                else:
+                    infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+                qlineedit.setToolTip(infos)
                 ddata = displayData(data, qlineedit)
 
             if not req_name in self.inputDict:
@@ -436,7 +450,7 @@ class paramWidget(gui.QWidget):
                 if not elm_data_stream:
                     widget.setText("Invalide")
                     widget.setStyleSheet("background: red")
-                    self.logview.append("Abandon de requete, entree ligne incorrecte : " + input_value)
+                    self.logview.append("Abandon de requete, entree ligne incorrecte : " + str(input_value))
                     return
                 widget.setStyleSheet("background: white")
 

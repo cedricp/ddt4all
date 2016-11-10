@@ -125,6 +125,7 @@ class Ecu_data:
         self.lists      = {}
         self.description = ''
         self.unit       = ""
+        self.comment    = ''
 
         self.initData()
 
@@ -281,6 +282,10 @@ class Ecu_data:
         description = self.xmldoc.getElementsByTagName("Description")
         if description:
             self.description = description.item(0).firstChild.nodeValue.replace('<![CDATA[', '').replace(']]>', '')
+
+        comment = self.xmldoc.getElementsByTagName("Comment")
+        if comment:
+            self.comment = comment.item(0).firstChild.nodeValue.replace('<![CDATA[', '').replace(']]>', '')
 
         lst = self.xmldoc.getElementsByTagName("List")
         if lst:
