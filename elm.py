@@ -906,8 +906,8 @@ class ELM:
         if self.currentprotocol == "can" and self.currentaddress == addr:
             return
 
-        if len(ecu['idTx']): dnat[addr] = ecu['idTx']
-        if len(ecu['idRx']): snat[addr] = ecu['idRx']
+        #if len(ecu['idTx']): dnat[addr] = ecu['idTx']
+        #if len(ecu['idRx']): snat[addr] = ecu['idRx']
 
         if self.lf != 0:
             self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")

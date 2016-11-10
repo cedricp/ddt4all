@@ -74,7 +74,7 @@ class Main_widget(gui.QMainWindow):
 
         self.treeview_params.clear()
         
-        ecu_name = ecu_from_index[0]
+        ecu_name = ecu_from_index[0] # Here
         ecu = self.ecu_scan.ecus[ecu_name]
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr

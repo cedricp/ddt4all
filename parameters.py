@@ -5,7 +5,7 @@ import options
 from   xml.dom.minidom import parse
 import xml.dom.minidom
 
-import ecu
+import ecu, elm
 
 # TODO : 
 # figure out what are self.presend (<Send> in screen XML section) commands
@@ -47,8 +47,8 @@ class paramWidget(gui.QWidget):
         self.logview           = logview
         self.ddtfile           = ddtfile
         self.ecurequestsparser = None
-        self.can_send_id       = 0
-        self.can_rcv_id        = 0
+        self.can_send_id       = ''
+        self.can_rcv_id        = ''
         self.panel             = None
         self.uiscale           = 10
         self.ecu_address       = ecu_addr
@@ -57,12 +57,16 @@ class paramWidget(gui.QWidget):
         self.displayDict       = {}
         self.inputDict         = {}
         self.presend           = []
+        self.ecu_addr          = str(ecu_addr)
         self.startsession_command = '10C0'
         self.initXML()
                  
         if not options.simulation_mode:
-            ecu_conf = { 'idTx' : self.can_send_id, 'idRx' : self.can_rcv_id, 'ecuname' : ecu_name }
-            options.elm.set_can_addr(self.ecu_addr, ecu_conf)
+            ecu_conf = { 'idTx' : self.can_send_id, 'idRx' : self.can_rcv_id, 'ecuname' : str(ecu_name) }
+            txa, rxa = options.elm.set_can_addr(self.ecu_addr, ecu_conf)
+            print self.ecu_addr, txa, rxa
+        else:
+            print self.ecu_addr
                         
     def init(self, screen):
         if self.panel:
@@ -121,9 +125,9 @@ class paramWidget(gui.QWidget):
     def sendElm(self, command, auto=False):
         if not auto:
             self.logview.append('<font color=blue>Envoie requete ELM :</font>' + command)
-
+        print command
         if not options.simulation_mode:
-            elm_response = options.elm.request(command=command, cache=False)
+            elm_response = options.elm.request(command, cache=False)
         else:
             elm_response = '00 ' * 70
 
@@ -154,7 +158,8 @@ class paramWidget(gui.QWidget):
             for send in sends:
                 delay = send.getAttribute('Delay')
                 req_name = send.getAttribute('RequestName')
-                self.presend.append( (delay, req_name) )
+                print req_name
+                #self.presend.append( (delay, req_name) )
 
         self.drawLabels(screen)
         self.drawDisplays(screen)
@@ -433,6 +438,7 @@ class paramWidget(gui.QWidget):
 
         ecu_bytes_to_send = request.sentbytes.encode('ascii')
         elm_response = self.sendElm(ecu_bytes_to_send, True)
+
         # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
         for data_struct in request_data.data:
             qlabel = data_struct.widget
