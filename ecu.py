@@ -455,18 +455,24 @@ class Ecu_database:
 class Ecu_scanner:
     def __init__(self):
         self.totalecu = 0
-        self.ecus = []
+        self.ecus = {}
         self.ecu_database = Ecu_database()
         self.num_ecu_found = 0
-        if options.simulation_mode:
-            self.ecus.append(Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan"))
-            self.ecus.append(Ecu_ident("000", "000", "000", "00", "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan"))
-            self.ecus.append(Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan"))
 
     def getNumEcuDb(self):
         return self.ecu_database.numecu
 
     def scan(self):
+        self.totalecu = 0
+        self.ecus = {}
+        self.num_ecu_found = 0
+
+        if options.simulation_mode:
+            self.ecus["CH_84_J84_04_00"] = Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan")
+            self.ecus["Tdb_BCEKL84_serie_4emeRev."] = Ecu_ident("000", "000", "000", "00",
+                                                                "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan")
+            self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan")
+
         options.elm.init_can()
         print "Scan"
 
@@ -491,7 +497,7 @@ class Ecu_scanner:
 
                 for target in self.ecu_database.targets:
                     if target.checkWith(diagversion, supplier, soft, version, addr):
-                        self.ecus.append(target)
+                        self.ecus[target.name] = target
                         self.num_ecu_found += 1
                         print "Found %i ecu" % self.num_ecu_found, TXa, RXa, target.href, addr
 

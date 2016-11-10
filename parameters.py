@@ -63,10 +63,7 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             ecu_conf = { 'idTx' : self.can_send_id, 'idRx' : self.can_rcv_id, 'ecuname' : str(ecu_name) }
             txa, rxa = options.elm.set_can_addr(self.ecu_addr, ecu_conf)
-            print self.ecu_addr, txa, rxa
-        else:
-            print self.ecu_addr
-                        
+
     def init(self, screen):
         if self.panel:
             self.layout.removeWidget(self.panel)
@@ -136,19 +133,25 @@ class paramWidget(gui.QWidget):
             self.startsession_command = '10C0'
 
     def sendElm(self, command, auto=False):
-        if not auto or options.log_all:
-            self.logview.append('<font color=blue>Envoie requete ELM :</font>' + command)
-        print command
 
+        blocked_command = False
         elm_response = '00 ' * 70
         if not options.simulation_mode:
-            if options.promode:
+            if not options.promode:
                 # Allow read only modes
                 if command.startswith('10') or command.startswith('21') or command.startswith('22'):
                     elm_response = options.elm.request(command, cache=False)
+                    blocked_command = True
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
+
+        fontColor = 'blue'
+        if blocked_command:
+            fontColor = 'red'
+
+        if not auto or options.log_all:
+            self.logview.append('<font color=' + fontColor + '>Envoie requete ELM :</font>' + command)
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
@@ -183,7 +186,6 @@ class paramWidget(gui.QWidget):
             delay = elem.getAttribute('Delay')
             req_name = elem.getAttribute('RequestName')
             self.presend.append((delay, req_name))
-            print (delay, req_name)
 
         self.drawLabels(screen)
         self.drawLabels(screen)
@@ -504,7 +506,8 @@ class paramWidget(gui.QWidget):
         for request_name in self.displayDict.keys():
             self.updateDisplay(request_name, update_inputs)
 
-        self.timer.start(1000)
+        if options.auto_refresh:
+            self.timer.start(1000)
 
     def readDTC(self):
         if not options.simulation_mode:

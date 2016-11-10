@@ -9,3 +9,4 @@ log="ddt"
 opt_cfc0=False
 opt_n1c=True
 log_all=False
+auto_refresh=False

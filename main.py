@@ -13,9 +13,16 @@ class Main_widget(gui.QMainWindow):
         print "Scanning ECUs..."
         self.ecu_scan = ecu.Ecu_scanner()
         print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
+        self.initUI()
+
+    def scan(self):
         self.ecu_scan.scan()
         print "Scan finished, %i ECU(s) found on CAN" % self.ecu_scan.num_ecu_found
-        self.initUI()
+
+        self.treeview_ecu.clear()
+        for ecu in self.ecu_scan.ecus.keys():
+            item = gui.QListWidgetItem(ecu)
+            self.treeview_ecu.addItem(item)
         
     def initUI(self):
         self.paramview = None
@@ -36,34 +43,67 @@ class Main_widget(gui.QMainWindow):
         self.treedock_logs.setWidget(self.logview)
         
         self.treedock_ecu = gui.QDockWidget(self)
-        self.treeview_ecu = gui.QTreeWidget(self.treedock_ecu)
-        self.treeview_ecu.setHeaderLabels(["ECUs"])
+        self.treeview_ecu = gui.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.doubleClicked.connect(self.changeECU)
-        
-        i = 0
-        for ecu in self.ecu_scan.ecus:
-            item = gui.QTreeWidgetItem(self.treeview_ecu, [ecu.name])
-            item.setData(0, core.Qt.UserRole, str(i))
-            i += 1
         
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_ecu)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_params)
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
+
+        self.toolbar = self.addToolBar("File")
+        self.log = gui.QAction(gui.QIcon("icons/log.png"), "Full log", self)
+        self.log.setCheckable(True)
+        self.log.setChecked(options.log_all)
+        self.log.triggered.connect(self.changeLogMode)
+
+        self.expert = gui.QAction(gui.QIcon("icons/expert.png"), "Mode Expert", self)
+        self.expert.setCheckable(True)
+        self.expert.setChecked(options.promode)
+        self.expert.triggered.connect(self.changeUserMode)
+
+        self.autorefresh = gui.QAction(gui.QIcon("icons/autorefresh.png"), "Rafraichissement automatique", self)
+        self.autorefresh.setCheckable(True)
+        self.autorefresh.setChecked(options.auto_refresh)
+        self.autorefresh.triggered.connect(self.changeAutorefresh)
+
+        self.refresh = gui.QAction(gui.QIcon("icons/refresh.png"), "Rafraichir page", self)
+        self.refresh.triggered.connect(self.refreshParams)
+        self.refresh.setEnabled(not options.auto_refresh)
+
+        self.toolbar.addAction(self.log)
+        self.toolbar.addAction(self.expert)
+        self.toolbar.addAction(self.autorefresh)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.refresh)
         
         menu = self.menuBar()
         diagmenu = menu.addMenu("Diagnostic")
+        scanaction = diagmenu.addAction("Scanner ECUs")
+        scanaction.triggered.connect(self.scan)
+        menu.addSeparator()
         dtcaction = diagmenu.addAction("Lire DTC")
-        self.logaction = diagmenu.addAction("Log auto")
-        self.logaction.setCheckable(True)
-        self.logaction.setChecked(False)
-        options.log_all = False
 
         dtcaction.triggered.connect(self.readDTC)
-        self.logaction.toggled.connect(self.logToggle)
-        
-    def logToggle(self):
-        options.log_all = self.logaction.isChecked()
+
+    def changeAutorefresh(self):
+        options.auto_refresh = self.autorefresh.isChecked()
+        self.refresh.setEnabled(not options.auto_refresh)
+
+        if options.auto_refresh:
+            if self.paramview:
+                self.paramview.updateDisplays(True)
+
+    def refreshParams(self):
+        if self.paramview:
+            self.paramview.updateDisplays(True)
+
+    def changeUserMode(self):
+        options.promode = self.expert.isChecked()
+
+    def changeLogMode(self):
+        options.log_all = self.log.isChecked()
+        print options.log_all
 
     def readDTC(self):
         if self.paramview:
@@ -73,18 +113,12 @@ class Main_widget(gui.QMainWindow):
         item = self.treeview_params.model().itemData(index)
         screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
         self.paramview.init(screen)
-    
-    def changeECU(self, index):
-        item = self.treeview_params.model().itemData(index)
-        ecu_from_index = item[core.Qt.UserRole].toInt()
-        
-        if ecu_from_index[1] == False:
-            print "Changement ECU impossible"
-            return
 
+    def changeECU(self, index):
+        item = self.treeview_ecu.model().itemData(index)
+        ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
-        
-        ecu_name = ecu_from_index[0] # Here
+
         ecu = self.ecu_scan.ecus[ecu_name]
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr
@@ -117,35 +151,28 @@ class portChooser(gui.QDialog):
         layout.addWidget(self.listview)
         
         button_layout = gui.QHBoxLayout()
-        button_pro = gui.QPushButton("Mode PRO")
-        button_jnr = gui.QPushButton("Mode LECTURE")
+        button_con = gui.QPushButton("Mode CONNECTE")
         button_dmo = gui.QPushButton("Mode DEMO")
-        button_layout.addWidget(button_jnr)
-        button_layout.addWidget(button_pro)
+
+        button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
         layout.addLayout(button_layout)
-        
-        button_pro.clicked.connect(self.proMode)
-        button_jnr.clicked.connect(self.dumbMode)
+
+        button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
         
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
             item.setText(p)
-    
-    def proMode(self):
+
+    def connectedMode(self):
         self.port = self.listview.currentItem().text()
         self.mode = 1
         self.close()
 
-    def dumbMode(self):
-        self.port = self.listview.currentItem().text()
-        self.mode = 2    
-        self.close()
-
     def demoMode(self):
         self.port = ''
-        self.mode = 3    
+        self.mode = 2
         self.close()
         
 if __name__ == '__main__':
@@ -156,12 +183,9 @@ if __name__ == '__main__':
     if pc.mode == 0:
         exit(0)
     if pc.mode == 1:
-        options.promode = True
-        options.simulation_mode = False
-    if pc.mode == 2:
         options.promode = False
         options.simulation_mode = False
-    if pc.mode == 3:
+    if pc.mode == 2:
          options.promode = False
          options.simulation_mode = True
     options.port = str(pc.port)
