@@ -106,7 +106,7 @@ class Ecu_request:
                     self.sendbyte_dataitems[di.name] = di
 
 class Ecu_data:
-    def __init__(self, xml):
+    def __init__(self, xml, force_little):
         self.xmldoc     = xml
         self.name       = ''
         self.bitscount  = 8
@@ -126,158 +126,8 @@ class Ecu_data:
         self.description = ''
         self.unit       = ""
         self.comment    = ''
+        self.little_endian = force_little
 
-        self.initData()
-
-    def setValue(self, value, bytes_list, dataitem, force_little_endian = False):
-        start_byte      = dataitem.firstbyte - 1
-        start_bit       = dataitem.bitoffset
-        little_endian   = False
-
-        if dataitem.endian == "Little":
-            little_endian = True
-
-        if force_little_endian:
-            little_endian = True
-
-        if self.bytesascii:
-            if self.bytescount != len(value):
-                return None
-
-            for i in range(self.bytescount):
-                if not little_endian:
-                    bytes_list[i] = ord(value[i])
-                else:
-                    bytes_list[self.bytescount - i - 1] = ord(value[i])
-
-            return bytes_list
-
-        if self.scaled:
-            if not str(value).isdigit():
-                return None
-
-            value = float(value)
-            # Value is base 10
-            value = (value * float(self.divideby) - float(self.offset)) / float(self.step)
-        else:
-            if not all(c in string.hexdigits for c in value):
-                return None
-            # Value is base 16
-            value = int('0x' + str(value), 16)
-
-        value = int(value)
-        value = (value << start_bit) & (2**self.bitscount - 1)
-
-        hex_value = "{0:#0{1}x}".format(value, self.bytescount * 2 + 2)[2:].upper()
-        hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
-
-        n = 0
-        hex_len = len(hex_bytes) - 1
-        for h in hex_bytes:
-            original_byte  = int('0x' + bytes_list[n + start_byte], 16)
-            original_value = int('0x' + h, 16)
-            new = original_value #| original_byte
-
-            value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
-
-            if not little_endian:
-                bytes_list[start_byte + n] = value_formatted
-            else:
-                bytes_list[start_byte + hex_len - n] = value_formatted
-            n += 1
-
-        return bytes_list
-
-    def getDisplayValue(self, elm_data, dataitem):
-        value = self.getValue(elm_data, dataitem)
-        if value == None:
-            return None
-
-        if not self.scaled and not self.bytesascii:
-            val = int('0x' + value, 0)
-
-            # Manage signed values
-            if self.signed:
-                if len(value) == 2:
-                    val = s8(val)
-                elif len(value) == 4:
-                    val = s16(val)
-
-            # Manage text values
-            if val in self.lists:
-                return self.lists[val]
-
-            return str(val).zfill(self.bytescount * 2)
-
-        return value
-
-    def getValue(self, elm_data, dataitem):
-        hv = self.getHex( elm_data, dataitem )
-        if hv == None:
-            return None
-
-        assert hv is not None
-
-        if self.scaled:
-            res = (int(hv, 16) * float(self.step) + float(self.offset)) / float(self.divideby)
-            if len(self.format) and '.' in self.format:
-                acc = len(self.format.split('.')[1])
-                fmt = '%.' + str(acc) + 'f'
-                res = fmt % res
-            else:
-                res = int(res)
-            return str(res)
-
-        if self.bytesascii:
-            res = hv.decode('hex')
-            return res
-
-        return hv
-
-    def getHex(self, resp, dataitem):
-        resp = resp.strip().replace(' ','')
-        if not all(c in string.hexdigits for c in resp): resp = ''
-        resp = ' '.join(a + b for a, b in zip(resp[::2], resp[1::2]))
-
-        bits  = self.bitscount
-        bytes = bits/8
-        if bits % 8:
-            bytes += 1
-
-        startByte = dataitem.firstbyte
-        startBit  = dataitem.bitoffset
-
-        sb = startByte - 1
-        if ((sb * 3 + bytes * 3 - 1) > (len(resp))):
-            return None
-
-        hexval = resp[sb * 3:(sb + bytes) * 3 - 1]
-        hexval = hexval.replace(" ", "")
-        assert len(hexval) > 0
-
-        if dataitem.endian == "Little":
-            a = hexval
-            b = ''
-            if not len(a) % 2:
-                for i in range(0, len(a), 2):
-                    b = a[i:i + 2] + b
-                    hexval = b
-            else:
-                print "Warning, cannot convert little endian value"
-
-        exbits = bits % 8
-        if exbits:
-            val = int(hexval, 16)
-            val = (val << int(startBit) >> (8 - exbits)) & (2**bits - 1)
-            hexval = hex(val)[2:]
-            if hexval[-1:].upper() == 'L':
-                hexval = hexval[:-1]
-            if len(hexval) % 2:
-                hexval = '0' + hexval
-
-        return hexval
-
-    def initData(self):
         self.name = self.xmldoc.getAttribute("Name")
         description = self.xmldoc.getElementsByTagName("Description")
         if description:
@@ -352,6 +202,157 @@ class Ecu_data:
                 unit = sc.getAttribute("Unit")
                 if unit: self.unit = unit
 
+    def setValue(self, value, bytes_list, dataitem):
+        start_byte      = dataitem.firstbyte - 1
+        start_bit       = dataitem.bitoffset
+        little_endian   = False
+
+        if self.little_endian:
+            little_endian = True
+
+        if dataitem.endian == "Little":
+            little_endian = True
+
+        if self.bytesascii:
+            if self.bytescount != len(value):
+                return None
+
+            for i in range(self.bytescount):
+                if not little_endian:
+                    bytes_list[i] = ord(value[i])
+                else:
+                    bytes_list[self.bytescount - i - 1] = ord(value[i])
+
+            return bytes_list
+
+        if self.scaled:
+            if not str(value).isdigit():
+                return None
+
+            value = float(value)
+            # Value is base 10
+            value = (value * float(self.divideby) - float(self.offset)) / float(self.step)
+        else:
+            if not all(c in string.hexdigits for c in value):
+                return None
+            # Value is base 16
+            value = int('0x' + str(value), 16)
+
+        value = int(value)
+        value &= 2**self.bitscount - 1
+        value = (value << start_bit)
+        
+        hex_value = "{0:#0{1}x}".format(value, self.bytescount * 2 + 2)[2:].upper()
+        hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
+
+        n = 0
+        hex_len = len(hex_bytes) - 1
+        for h in hex_bytes:
+            original_byte  = int('0x' + bytes_list[n + start_byte], 16)
+            original_value = int('0x' + h, 16)
+            if self.bitscount < 8:
+                new = original_value | original_byte
+            else:
+                new = original_value
+            value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
+
+            if not little_endian:
+                bytes_list[start_byte + n] = value_formatted
+            else:
+                bytes_list[start_byte + hex_len - n] = value_formatted
+            n += 1
+
+        return bytes_list
+
+    def getDisplayValue(self, elm_data, dataitem):
+        value = self.getValue(elm_data, dataitem)
+        if value == None:
+            return None
+
+        if not self.scaled and not self.bytesascii:
+            val = int('0x' + value, 0)
+
+            # Manage signed values
+            if self.signed:
+                if len(value) == 2:
+                    val = s8(val)
+                elif len(value) == 4:
+                    val = s16(val)
+
+            # Manage text values
+            if val in self.lists:
+                return self.lists[val]
+
+            return str(val).zfill(self.bytescount * 2)
+
+        return value
+
+    def getValue(self, elm_data, dataitem):
+        hv = self.getHex( elm_data, dataitem )
+        if hv == None:
+            return None
+
+        assert hv is not None
+
+        if self.scaled:
+            res = (int(hv, 16) * float(self.step) + float(self.offset)) / float(self.divideby)
+            if len(self.format) and '.' in self.format:
+                acc = len(self.format.split('.')[1])
+                fmt = '%.' + str(acc) + 'f'
+                res = fmt % res
+            else:
+                res = int(res)
+            return str(res)
+
+        if self.bytesascii:
+            res = hv.decode('hex')
+            return res
+
+        return hv
+
+    def getHex(self, resp, dataitem):
+        resp = resp.strip().replace(' ','')
+        if not all(c in string.hexdigits for c in resp): resp = ''
+        resp.replace(' ', '')
+        
+        bits  = self.bitscount
+        bytes = bits/8
+        if bits % 8:
+            bytes += 1
+
+        startByte = dataitem.firstbyte
+        startBit  = dataitem.bitoffset
+
+        sb = startByte - 1
+        if ((sb * 2 + bytes * 2) > (len(resp))):
+            return None
+
+        hexval = resp[sb * 2:(sb + bytes) * 2]
+        if len(hexval) == 0:
+            return None
+
+        if dataitem.endian == "Little" or self.little_endian:
+            a = hexval
+            b = ''
+            if not len(a) % 2:
+                for i in range(0, len(a), 2):
+                    b = a[i:i + 2] + b
+                hexval = b
+            else:
+                print "Warning, cannot convert little endian value"
+
+        if bits % 8:
+            val = int(hexval, 16)
+            val = (val >> int(startBit)) & (2**bits - 1)
+            hexval = hex(val)[2:]
+            # Remove trailing L if exists
+            if hexval[-1:].upper() == 'L':
+                hexval = hexval[:-1]
+            # Resize to original length
+            hexval = hexval.zfill(bytes*2)
+
+        return hexval
+
 class Ecu_file:
     def __init__(self, xmldoc, isfile = False):
         self.requests = {}
@@ -378,9 +379,12 @@ class Ecu_file:
         if requests_tag:
             for request_tag in requests_tag:
                 endian = "Big"
+                little_endian = False
                 endian_attr = request_tag.getAttribute("Endian")
                 if endian_attr:
                     endian = endian_attr.encode('ascii')
+                    if endian == 'Little':
+                        little_endian = True
 
                 requests = request_tag.getElementsByTagName("Request")
                 for f in requests:
@@ -389,7 +393,7 @@ class Ecu_file:
 
                 data = self.xmldoc.getElementsByTagName("Data")
                 for f in data:
-                    ecu_data = Ecu_data(f)
+                    ecu_data = Ecu_data(f, little_endian)
                     self.data[ecu_data.name] = ecu_data
 
 # Protocols:

@@ -118,7 +118,7 @@ class Main_widget(gui.QMainWindow):
         diagmenu = menu.addMenu("Diagnostic")
         savevehicleaction = diagmenu.addAction("Sauvegarder ce vehicule")
         savevehicleaction.triggered.connect(self.saveEcus)
-        menu.addSeparator()
+        diagmenu.addSeparator()
 
         for ecu in ecu_files:
             ecuaction = diagmenu.addAction(ecu)
