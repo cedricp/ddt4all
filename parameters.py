@@ -53,6 +53,7 @@ class paramWidget(gui.QWidget):
         self.ecu_address       = ecu_addr
         self.ecu_name          = ecu_name
         self.button_requests   = {}
+        self.button_messages = {}
         self.displayDict       = {}
         self.inputDict         = {}
         self.presend           = []
@@ -91,35 +92,35 @@ class paramWidget(gui.QWidget):
             
         self.ecurequestsparser = ecu.Ecu_file(xdoc)
 
-        target = self.findChildNodesByName(xdoc, u"Target")[0]
+        target = self.getChildNodesByName(xdoc, u"Target")[0]
         if not target:
             self.logview.append("Invalid DDT file")
             return
 
-        can = self.findChildNodesByName(target, u"CAN")[0]
+        can = self.getChildNodesByName(target, u"CAN")[0]
         if can:
-            send_ids = self.findChildNodesByName(can, "SendId")
+            send_ids = self.getChildNodesByName(can, "SendId")
             if send_ids:
                 send_id = send_ids[0]
-                can_id = self.findChildNodesByName(send_id, "CANId")
+                can_id = self.getChildNodesByName(send_id, "CANId")
                 if can_id:
                     self.can_send_id = hex(int(can_id[0].getAttribute("Value")))
 
-            rcv_ids = self.findChildNodesByName(can, "ReceiveId")
+            rcv_ids = self.getChildNodesByName(can, "ReceiveId")
             if rcv_ids:
                 rcv_id = rcv_ids[0]
-                can_id = self.findChildNodesByName(rcv_id, "CANId")
+                can_id = self.getChildNodesByName(rcv_id, "CANId")
                 if can_id:
                     self.can_rcv_id = hex(int(can_id[0].getAttribute("Value")))
 
-        categories = self.findChildNodesByName(target, u"Categories")
+        categories = self.getChildNodesByName(target, u"Categories")
 
         for cats in categories:
-            xml_cats = self.findChildNodesByName(cats, u"Category")
+            xml_cats = self.getChildNodesByName(cats, u"Category")
             for category in xml_cats:
                 category_name = category.getAttribute(u"Name")
                 self.categories[category_name] = []
-                screens_name = self.findChildNodesByName(category, u"Screen")
+                screens_name = self.getChildNodesByName(category, u"Screen")
                 for screen in screens_name:
                     screen_name = screen.getAttribute(u"Name")
                     self.xmlscreen[screen_name] = screen
@@ -136,7 +137,7 @@ class paramWidget(gui.QWidget):
             self.startsession_command = '10C0'
 
     def sendElm(self, command, auto=False):
-        txt = '<font color=blue>Envoie requete ELM :</font>'
+        txt = ''
         elm_response = '00 ' * 70
 
         if not options.simulation_mode:
@@ -144,10 +145,11 @@ class paramWidget(gui.QWidget):
                 # Allow read only modes
                 if command.startswith('10') or command.startswith('21') or command.startswith('22'):
                     elm_response = options.elm.request(command, cache=False)
-                    txt = '<font color=red>Envoie requete bloquee ELM :</font>'
+                    txt = '<font color=blue>Envoie requete securisee ELM :</font>'
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
+                txt = '<font color=red>Envoie requete ELM :</font>'
         else:
             txt = '<font color=green>Envoie requete simulee ELM :</font>'
 
@@ -163,7 +165,7 @@ class paramWidget(gui.QWidget):
 
         return elm_response
 
-    def findChildNodesByName(self, parent, name):
+    def getChildNodesByName(self, parent, name):
         nodes = []
         for node in parent.childNodes:
             if node.nodeType == node.ELEMENT_NODE and node.localName == name:
@@ -185,7 +187,7 @@ class paramWidget(gui.QWidget):
         self.resize(self.screen_width+20, self.screen_height + 20)
         self.panel.resize(self.screen_width+40, self.screen_height + 40)
 
-        for elem in self.findChildNodesByName(screen, u"Send"):
+        for elem in self.getChildNodesByName(screen, u"Send"):
             delay = elem.getAttribute('Delay')
             req_name = elem.getAttribute('RequestName')
             self.presend.append((delay, req_name))
@@ -206,7 +208,7 @@ class paramWidget(gui.QWidget):
         return 'rgb(%i,%i,%i)' % (redcolor, greencolor, bluecolor)
 
     def getFontColor(self, xml):
-        font = self.findChildNodesByName(xml, "Font")[0]
+        font = self.getChildNodesByName(xml, "Font")[0]
         return self.colorConvert(font.getAttribute("Color"))
     
     def getRectangle(self, xml):
@@ -219,7 +221,7 @@ class paramWidget(gui.QWidget):
     
     def getFont(self, xml):
         data = {}
-        font = self.findChildNodesByName(xml, "Font")[0]
+        font = self.getChildNodesByName(xml, "Font")[0]
         font_name    = font.getAttribute("Name")
         font_size    = float(font.getAttribute("Size"))
         font_bold    = font.getAttribute("Bold")
@@ -239,14 +241,14 @@ class paramWidget(gui.QWidget):
     
     def drawDisplays(self, screen):
         self.displayDict = {}
-        displays = self.findChildNodesByName(screen, "Display")
+        displays = self.getChildNodesByName(screen, "Display")
 
         for display in displays:
             text      = display.getAttribute("DataName")
             req_name  = display.getAttribute("RequestName")
             color     = display.getAttribute("Color")
             width     = int(display.getAttribute("Width")) / self.uiscale
-            rect = self.getRectangle(self.findChildNodesByName(display, "Rectangle")[0])
+            rect = self.getRectangle(self.getChildNodesByName(display, "Rectangle")[0])
             qfnt = self.getFont(display)
             req = self.ecurequestsparser.requests[req_name]
             data = self.ecurequestsparser.data[text]
@@ -281,14 +283,18 @@ class paramWidget(gui.QWidget):
             dd.addData(ddata)
             
     def drawButtons(self, screen):
-        buttons = self.findChildNodesByName(screen, "Button")
+        self.button_requests = {}
+        self.button_messages = {}
+
+        buttons = self.getChildNodesByName(screen, "Button")
         button_count = 0
 
         for button in buttons:
             text = button.getAttribute("Text")
-            rect = self.getRectangle(self.findChildNodesByName(button, "Rectangle")[0])
+            rect = self.getRectangle(self.getChildNodesByName(button, "Rectangle")[0])
             qfnt = self.getFont(button)
-            
+            messages = self.getChildNodesByName(button, "Message")
+
             qbutton = gui.QPushButton(text, self.panel)
             qbutton.setFont(qfnt)
             qbutton.setText(text)
@@ -298,12 +304,22 @@ class paramWidget(gui.QWidget):
             butname = text + "_" + str(button_count)
             button_count += 1
 
-            send = self.findChildNodesByName(button, "Send")
+            # Get messages
+            for message in messages:
+                messagetext = message.getAttribute("Text")
+                if not messagetext:
+                    continue
+                if not butname in self.button_messages:
+                    self.button_messages[butname] = []
+                self.button_messages[butname].append(messagetext)
+
+            # Get requests to send
+            send = self.getChildNodesByName(button, "Send")
             if send:
                 sendlist = []
                 for snd in send:
                     smap = {}
-                    delay       = snd.getAttribute("Delay")
+                    delay  = snd.getAttribute("Delay")
                     reqname = snd.getAttribute("RequestName")
                     rq = self.ecurequestsparser.requests[reqname]
                     smap['Delay']       = delay
@@ -319,13 +335,13 @@ class paramWidget(gui.QWidget):
             qbutton.clicked.connect(lambda state, btn=butname: self.buttonClicked(btn))
     
     def drawLabels(self, screen):
-        labels = self.findChildNodesByName(screen, "Label")
+        labels = self.getChildNodesByName(screen, "Label")
         for label in labels:
-            text      = label.getAttribute("Text")
-            color     = label.getAttribute("Color")
+            text = label.getAttribute("Text")
+            color = label.getAttribute("Color")
             alignment = label.getAttribute("Alignment")
             
-            rect = self.getRectangle(self.findChildNodesByName(label, "Rectangle")[0])
+            rect = self.getRectangle(self.getChildNodesByName(label, "Rectangle")[0])
             qfnt = self.getFont(label)
                 
             qlabel = gui.QLabel(self.panel)
@@ -342,13 +358,13 @@ class paramWidget(gui.QWidget):
     
     def drawInputs(self,screen):
         self.inputDict = {}
-        inputs = self.findChildNodesByName(screen, "Input")
+        inputs = self.getChildNodesByName(screen, "Input")
         for input in inputs:
             text      = input.getAttribute("DataName")
             req_name  = input.getAttribute("RequestName")
             color     = input.getAttribute("Color")
             width     = int(input.getAttribute("Width")) / self.uiscale
-            rect = self.getRectangle(self.findChildNodesByName(input, "Rectangle")[0])
+            rect = self.getRectangle(self.getChildNodesByName(input, "Rectangle")[0])
             qfnt = self.getFont(input)  
 
             qlabel = gui.QLabel(self.panel)
@@ -398,14 +414,21 @@ class paramWidget(gui.QWidget):
 
     def buttonClicked(self, txt):
         if not txt in self.button_requests:
-            self.logview.append(u"Requete bouton non trouvee : " + txt)
+            self.logview.append(u"<font color=red>Requete bouton non trouvee : " + txt + u"</font>")
             return
+
+        if txt in self.button_messages:
+            messages = self.button_messages[txt]
+            for message in messages:
+                msgbox = gui.QMessageBox()
+                msgbox.setText(message)
+                msgbox.exec_()
 
         request_list = self.button_requests[txt]
         for req in request_list:
             request_delay = float(req['Delay'].encode('ascii'))
             request_name  = req['RequestName']
-            self.logview.append(u'Lancement requete : ' + request_name)
+            self.logview.append(u'<font color=purple>Lancement requete :</font>' + request_name)
 
             ecu_request = self.ecurequestsparser.requests[request_name]
             sendbytes_data_items = ecu_request.sendbyte_dataitems
@@ -435,23 +458,24 @@ class paramWidget(gui.QWidget):
                 is_combo_widget = data.is_combo
 
                 if not is_combo_widget:
+                    # Get input string from user line edit
                     input_value = widget.text().toAscii()
                 else:
+                    # Get value from user input combo box
                     combo_value = unicode(widget.currentText().toUtf8(), encoding="UTF-8")
                     items_ref = ecu_data.items
                     input_value = hex(items_ref[combo_value])[2:]
 
-                force_little = False
-                if ecu_request.endian == 'Little':
-                    force_little = True
-
-                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem)
+                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, ecu_request.endian)
 
                 if not elm_data_stream:
-                    widget.setText("Invalide")
+                    if not is_combo_widget:
+                        widget.setText("Invalide")
+
                     widget.setStyleSheet("background: red")
-                    self.logview.append("Abandon de requete, entree ligne incorrecte : " + str(input_value))
+                    self.logview.append("Abandon de requete, entree ligne incorrecte (voir entree en rouge marquee invalide): " + str(input_value))
                     return
+
                 widget.setStyleSheet("background: white")
 
             # Manage delay
@@ -462,19 +486,19 @@ class paramWidget(gui.QWidget):
             for key in rcvbytes_data_items.keys():
                 if request_name in self.displayDict:
                     data_item = rcvbytes_data_items[key]
-                    ecu_data = self.ecurequestsparser.data[key]
-                    value = ecu_data.getDisplayValue(elm_response, data_item)
-                    request_data = self.displayDict[request_name]
-                    data = request_data.getDataByName(key)
+                    dd_ecu_data = self.ecurequestsparser.data[key]
+                    value = dd_ecu_data.getDisplayValue(elm_response, data_item, ecu_request.endian)
+                    dd_request_data = self.displayDict[request_name]
+                    data = dd_request_data.getDataByName(key)
 
                     if value == None:
                         if data: data.widget.setStyleSheet("background: red")
-                        value = "ERREUR"
+                        value = "Invalide"
                     else:
                         if data: data.widget.setStyleSheet("background: white")
 
                     if data:
-                        data.widget.setText(value + ' ' + ecu_data.unit)
+                        data.widget.setText(value + ' ' + dd_ecu_data.unit)
 
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displayDict[request_name]
@@ -493,7 +517,7 @@ class paramWidget(gui.QWidget):
             qlabel = data_struct.widget
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
-            value = ecu_data.getDisplayValue(elm_response, data_item)
+            value = ecu_data.getDisplayValue(elm_response, data_item, request.endian)
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
@@ -512,10 +536,12 @@ class paramWidget(gui.QWidget):
                             data.widget.setText(value)
 
     def updateDisplays(self, update_inputs= False):
+        # Begin diag session
         if not options.simulation_mode:
             options.elm.start_session_can('10C0')
 
         # <Screen> <Send/> <Screen/> tag management
+        # Manage pre send commands
         for sendcom in self.presend:
             delay = float(sendcom[0])
             req_name = sendcom[1]
@@ -560,7 +586,7 @@ class paramWidget(gui.QWidget):
             for k in request.dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
-                value_hex = ecu_data.getValue(can_response, dataitem)
+                value_hex = ecu_data.getValue(can_response, dataitem, request.endian)
                 
                 if not dataitem.name in dtc_result:
                     dtc_result[dataitem.name] = []

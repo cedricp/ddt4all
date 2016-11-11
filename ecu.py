@@ -14,11 +14,12 @@ def s8(value):
 
 
 class Data_item:
-    def __init__(self, item):
+    def __init__(self, item, req_endian):
         self.firstbyte  = 0
         self.bitoffset  = 0
         self.ref        = None
-        self.endian     = "Big"
+        self.req_endian = req_endian
+        self.endian     = ''
         self.name       = item.getAttribute("Name")
 
         fb = item.getAttribute("FirstByte")
@@ -67,9 +68,6 @@ class Ecu_request:
         self.sendbyte_dataitems = {}
         self.name               = 'uninit'
         self.endian             = endian
-        self.initEcuReq()
-
-    def initEcuReq(self):
         self.name = self.xmldoc.getAttribute("Name")
 
         manualsenddata = self.xmldoc.getElementsByTagName("ManuelSend").item(0)
@@ -89,7 +87,7 @@ class Ecu_request:
             dataitems =  receiveddata.getElementsByTagName("DataItem")
             if dataitems:
                 for dataitem in dataitems:
-                    di = Data_item(dataitem)
+                    di = Data_item(dataitem, self.endian)
                     self.dataitems[di.name] = di
 
         sentdata = self.xmldoc.getElementsByTagName("Sent")
@@ -102,11 +100,11 @@ class Ecu_request:
             dataitems = sent.getElementsByTagName("DataItem")
             if dataitems:
                 for dataitem in dataitems:
-                    di = Data_item(dataitem)
+                    di = Data_item(dataitem, self.endian)
                     self.sendbyte_dataitems[di.name] = di
 
 class Ecu_data:
-    def __init__(self, xml, force_little):
+    def __init__(self, xml):
         self.xmldoc     = xml
         self.name       = ''
         self.bitscount  = 8
@@ -126,7 +124,6 @@ class Ecu_data:
         self.description = ''
         self.unit       = ""
         self.comment    = ''
-        self.little_endian = force_little
 
         self.name = self.xmldoc.getAttribute("Name")
         description = self.xmldoc.getElementsByTagName("Description")
@@ -202,14 +199,15 @@ class Ecu_data:
                 unit = sc.getAttribute("Unit")
                 if unit: self.unit = unit
 
-    def setValue(self, value, bytes_list, dataitem):
-        start_byte      = dataitem.firstbyte - 1
-        start_bit       = dataitem.bitoffset
-        little_endian   = False
+    def setValue(self, value, bytes_list, dataitem, request_endian):
+        start_byte = dataitem.firstbyte - 1
+        start_bit = dataitem.bitoffset
+        little_endian = False
 
-        if self.little_endian:
+        if request_endian == "Little":
             little_endian = True
 
+        # It seems that DataItem can override Request endianness
         if dataitem.endian == "Little":
             little_endian = True
 
@@ -230,18 +228,23 @@ class Ecu_data:
                 return None
 
             value = float(value)
-            # Value is base 10
-            value = (value * float(self.divideby) - float(self.offset)) / float(self.step)
+            # Input value must be base 10
+            value = int((value * float(self.divideby) - float(self.offset)) / float(self.step))
         else:
             if not all(c in string.hexdigits for c in value):
                 return None
             # Value is base 16
             value = int('0x' + str(value), 16)
 
-        value = int(value)
-        value &= 2**self.bitscount - 1
-        value = (value << start_bit)
-        
+        # We're working at bit level, we may need to OR these values
+        bit_operation = self.bitscount < 8
+
+        if bit_operation:
+            value_mask = 2 ** self.bitscount - 1
+            value = int(value)
+            value &= value_mask
+            value = (value << start_bit)
+
         hex_value = "{0:#0{1}x}".format(value, self.bytescount * 2 + 2)[2:].upper()
         hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
 
@@ -250,22 +253,25 @@ class Ecu_data:
         for h in hex_bytes:
             original_byte  = int('0x' + bytes_list[n + start_byte], 16)
             original_value = int('0x' + h, 16)
-            if self.bitscount < 8:
+
+            if bit_operation:
                 new = original_value | original_byte
             else:
                 new = original_value
+
             value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
 
             if not little_endian:
                 bytes_list[start_byte + n] = value_formatted
             else:
                 bytes_list[start_byte + hex_len - n] = value_formatted
+
             n += 1
 
         return bytes_list
 
-    def getDisplayValue(self, elm_data, dataitem):
-        value = self.getValue(elm_data, dataitem)
+    def getDisplayValue(self, elm_data, dataitem, req_endian):
+        value = self.getValue(elm_data, dataitem, req_endian)
         if value == None:
             return None
 
@@ -287,8 +293,8 @@ class Ecu_data:
 
         return value
 
-    def getValue(self, elm_data, dataitem):
-        hv = self.getHex( elm_data, dataitem )
+    def getValue(self, elm_data, dataitem, req_endian):
+        hv = self.getHex( elm_data, dataitem, req_endian)
         if hv == None:
             return None
 
@@ -310,7 +316,18 @@ class Ecu_data:
 
         return hv
 
-    def getHex(self, resp, dataitem):
+    def getHex(self, resp, dataitem, req_endian):
+        little_endian = False
+
+        if req_endian == "Little":
+            little_endian = True
+
+        if dataitem.endian == "Little":
+            little_endian = True
+
+        if dataitem.endian == "Big":
+            little_endian = False
+
         resp = resp.strip().replace(' ','')
         if not all(c in string.hexdigits for c in resp): resp = ''
         resp.replace(' ', '')
@@ -324,14 +341,14 @@ class Ecu_data:
         startBit  = dataitem.bitoffset
 
         sb = startByte - 1
-        if ((sb * 2 + bytes * 2) > (len(resp))):
+        if (sb * 2 + bytes * 2) > (len(resp)):
             return None
 
         hexval = resp[sb * 2:(sb + bytes) * 2]
         if len(hexval) == 0:
             return None
 
-        if dataitem.endian == "Little" or self.little_endian:
+        if little_endian:
             a = hexval
             b = ''
             if not len(a) % 2:
@@ -362,9 +379,7 @@ class Ecu_file:
             self.xmldoc = xdom.documentElement
         else:
             self.xmldoc = xmldoc
-        self.parseXML()
 
-    def parseXML(self):
         if not self.xmldoc:
             print("XML not found")
             return
@@ -378,13 +393,10 @@ class Ecu_file:
 
         if requests_tag:
             for request_tag in requests_tag:
-                endian = "Big"
-                little_endian = False
+                endian = ''
                 endian_attr = request_tag.getAttribute("Endian")
                 if endian_attr:
                     endian = endian_attr.encode('ascii')
-                    if endian == 'Little':
-                        little_endian = True
 
                 requests = request_tag.getElementsByTagName("Request")
                 for f in requests:
@@ -393,7 +405,7 @@ class Ecu_file:
 
                 data = self.xmldoc.getElementsByTagName("Data")
                 for f in data:
-                    ecu_data = Ecu_data(f, little_endian)
+                    ecu_data = Ecu_data(f)
                     self.data[ecu_data.name] = ecu_data
 
 # Protocols:
@@ -484,6 +496,7 @@ class Ecu_scanner:
                                                                 "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan")
             self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan")
 
+            self.ecus["Abs_X84_Bosch8.1_V1.3"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "Abs_X84_Bosch8.1_V1.3.xml", "DiagOnCan")
         # TODO : implement other protocols
 
         i = 0
