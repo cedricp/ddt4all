@@ -237,7 +237,7 @@ class donationWidget(gui.QLabel):
         url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>Merci pour votre contribution, si votre navigteur ne s'ouvre pas, contactez moi par email</center>")
+        msgbox.setText("<center>Merci pour votre contribution, si votre navigteur ne s'ouvre pas, vous pouvez le faire depuis la page https://github.com/cedricp/ddt4all</center>")
         msgbox.exec_()
 
 

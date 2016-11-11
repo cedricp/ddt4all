@@ -59,6 +59,7 @@ class Ecu_device:
                 failureflag = data.getAttribute("FailureFlag")
                 self.devicedata[name] = failureflag
 
+
 class Ecu_request:
     def __init__(self, xml, endian):
         self.xmldoc             = xml
