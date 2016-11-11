@@ -279,9 +279,9 @@ class Ecu_data:
         # Manage signed values
         if self.signed and self.scaled:
             if self.bytescount == 1:
-                value = hex8_tosigned(value)
-            elif dataitem.bytescount == 2:
-                value = hex16_tosigned(value)
+                value = str(hex8_tosigned(int(value)))
+            elif self.bytescount == 2:
+                value = str(hex16_tosigned(int(value)))
 
         if not self.scaled and not self.bytesascii:
             val = int('0x' + value, 16)

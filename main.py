@@ -217,6 +217,30 @@ class Main_widget(gui.QMainWindow):
                 param_item.setData(0, core.Qt.UserRole, param)
 
 
+class donationWidget(gui.QLabel):
+    def __init__(self):
+        super(donationWidget, self).__init__()
+        img = gui.QPixmap("icons/donate.png")
+        self.setPixmap(img)
+        self.setAlignment(core.Qt.AlignCenter)
+
+    def mousePressEvent(self, mousevent):
+        msgbox = gui.QMessageBox()
+        msgbox.setText("<center>Ce logiciel est entierement gratuit et peut etre utilise librement. Faire un don me permettra de pouvoir acquerir du materiel afin de faire evoluer cette application. Merci pour votre aide</center>")
+        okbutton = gui.QPushButton('Je fais un don')
+        msgbox.addButton(okbutton, gui.QMessageBox.YesRole)
+        msgbox.addButton(gui.QPushButton('Non merci'), gui.QMessageBox.NoRole)
+        okbutton.clicked.connect(self.donate)
+        msgbox.exec_()
+
+    def donate(self):
+        url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+        msgbox = gui.QMessageBox()
+        msgbox.setText("<center>Merci pour votre contribution, si votre navigteur ne s'ouvre pas, contactez moi par email</center>")
+        msgbox.exec_()
+
+
 class portChooser(gui.QDialog):
     def __init__(self):
         self.port = None
@@ -227,11 +251,12 @@ class portChooser(gui.QDialog):
         label = gui.QLabel(self)
         label.setText("Selection du port ELM")
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
-        
+        donationwidget = donationWidget()
         self.setLayout(layout)
         
         self.listview = gui.QListWidget(self)
-        
+
+        layout.addWidget(donationwidget)
         layout.addWidget(label)
         layout.addWidget(self.listview)
         
@@ -281,7 +306,7 @@ class portChooser(gui.QDialog):
         self.port = 'DUMMY'
         self.mode = 2
         self.close()
-        
+
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
