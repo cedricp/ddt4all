@@ -15,38 +15,34 @@ class Main_widget(gui.QMainWindow):
         print "Scanning ECUs..."
         self.ecu_scan = ecu.Ecu_scanner()
         print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
-        self.initUI()
 
-    def scan(self):
-        progressWidget = gui.QWidget(None)
-        progressLayout = gui.QVBoxLayout()
-        labelWidget = gui.QLabel()
-        progress = gui.QProgressBar()
-        progressLayout.addWidget(progress)
-        progressLayout.addWidget(labelWidget)
-        progressWidget.setLayout(progressLayout)
-        progress.setRange(0, self.ecu_scan.getNumAddr())
-        progressWidget.show()
-        progress.setValue(0)
-
-        self.ecu_scan.scan(progress, labelWidget)
-
-        self.treeview_ecu.clear()
-        self.treeview_params.clear()
-        if self.paramview:
-            self.paramview.init(None)
-
-        for ecu in self.ecu_scan.ecus.keys():
-            item = gui.QListWidgetItem(ecu)
-            self.treeview_ecu.addItem(item)
-        
-    def initUI(self):
         self.paramview = None
+
+        self.statusBar = gui.QStatusBar()
+        self.setStatusBar(self.statusBar)
+
+        self.connectedstatus = gui.QLabel()
+        self.connectedstatus.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
+        self.protocolstatus = gui.QLabel()
+        self.progressstatus = gui.QProgressBar()
+        self.infostatus = gui.QLabel()
+
+        self.connectedstatus.setFixedWidth(120)
+        self.protocolstatus.setFixedWidth(200)
+        self.progressstatus.setFixedWidth(150)
+        self.infostatus.setFixedWidth(400)
+
+        self.setConnected(True)
+
+        self.statusBar.addWidget(self.connectedstatus)
+        self.statusBar.addWidget(self.protocolstatus)
+        self.statusBar.addWidget(self.progressstatus)
+        self.statusBar.addWidget(self.infostatus)
 
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
         self.setCentralWidget(self.scrollview)
-        
+
         self.treedock_params = gui.QDockWidget(self)
         self.treeview_params = gui.QTreeWidget(self.treedock_params)
         self.treedock_params.setWidget(self.treeview_params)
@@ -54,15 +50,15 @@ class Main_widget(gui.QMainWindow):
         self.treeview_params.doubleClicked.connect(self.changeScreen)
 
         self.treedock_logs = gui.QDockWidget(self)
-        self.logview       = gui.QTextEdit()
+        self.logview = gui.QTextEdit()
         self.logview.setReadOnly(True)
         self.treedock_logs.setWidget(self.logview)
-        
+
         self.treedock_ecu = gui.QDockWidget(self)
         self.treeview_ecu = gui.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.doubleClicked.connect(self.changeECU)
-        
+
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_ecu)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_params)
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
@@ -115,14 +111,42 @@ class Main_widget(gui.QMainWindow):
                 ecu_files.append(basename)
 
         menu = self.menuBar()
-        diagmenu = menu.addMenu("Diagnostic")
+        diagmenu = menu.addMenu("Fichier")
         savevehicleaction = diagmenu.addAction("Sauvegarder ce vehicule")
         savevehicleaction.triggered.connect(self.saveEcus)
         diagmenu.addSeparator()
 
-        for ecu in ecu_files:
-            ecuaction = diagmenu.addAction(ecu)
-            ecuaction.triggered.connect(lambda state, a=ecu: self.loadEcu(a))
+        for ecuf in ecu_files:
+            ecuaction = diagmenu.addAction(ecuf)
+            ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
+
+    def scan(self):
+        progressWidget = gui.QWidget(None)
+        progressLayout = gui.QVBoxLayout()
+        progressWidget.setLayout(progressLayout)
+        self.progressstatus.setRange(0, self.ecu_scan.getNumAddr())
+        self.progressstatus.setValue(0)
+
+        self.ecu_scan.scan(self.progressstatus, self.infostatus)
+
+        self.treeview_ecu.clear()
+        self.treeview_params.clear()
+        if self.paramview:
+            self.paramview.init(None)
+
+        for ecu in self.ecu_scan.ecus.keys():
+            item = gui.QListWidgetItem(ecu)
+            self.treeview_ecu.addItem(item)
+
+        self.progressstatus.setValue(0)
+
+    def setConnected(self, on):
+        if on:
+            self.connectedstatus.setStyleSheet("background : green")
+            self.connectedstatus.setText("CONNECTE")
+        else:
+            self.connectedstatus.setStyleSheet("background : red")
+            self.connectedstatus.setText("DECONNECTE")
 
     def saveEcus(self):
         filename = gui.QFileDialog.getSaveFileName(self, "Sauvegarde vehicule (gardez l'extention .ecu)", "./vehicles/mycar.ecu", ".ecu")
@@ -182,7 +206,9 @@ class Main_widget(gui.QMainWindow):
         ecu_addr = ecu.addr
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
         self.scrollview.setWidget(self.paramview)
-        
+
+        self.protocolstatus.setText(ecu.protocol)
+
         screens = self.paramview.categories.keys()
         for screen in screens:
             item = gui.QTreeWidgetItem(self.treeview_params, [screen])
@@ -213,23 +239,43 @@ class portChooser(gui.QDialog):
         button_con = gui.QPushButton("Mode CONNECTE")
         button_dmo = gui.QPushButton("Mode DEMO")
 
+        wifilayout = gui.QHBoxLayout()
+        self.wifienable = gui.QCheckBox()
+        self.wifienable.setChecked(False)
+        wifilabel = gui.QLabel("WiFi port : ")
+        self.wifiinput = gui.QLineEdit()
+        self.wifiinput.setText("192.168.0.10:35000")
+        wifilayout.addWidget(self.wifienable)
+        wifilayout.addWidget(wifilabel)
+        wifilayout.addWidget(self.wifiinput)
+        layout.addLayout(wifilayout)
+
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
         layout.addLayout(button_layout)
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
+        self.wifienable.clicked.connect(self.wifiCheck)
         
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
             item.setText(p)
 
+    def wifiCheck(self):
+        self.listview.setEnabled(not self.wifienable.isChecked())
+
     def connectedMode(self):
-        currentitem = self.listview.currentItem()
-        if currentitem:
-            self.port = currentitem.text()
-        self.mode = 1
-        self.close()
+        if self.wifienable.isChecked():
+            self.port = str(self.wifiinput.text())
+            self.mode = 1
+            self.close()
+        else:
+            currentitem = self.listview.currentItem()
+            if currentitem:
+                self.port = currentitem.text()
+                self.mode = 1
+                self.close()
 
     def demoMode(self):
         self.port = 'DUMMY'

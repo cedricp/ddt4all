@@ -42,6 +42,7 @@ class displayDict:
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
         super(paramWidget, self).__init__(parent)
+        self.protocol          = ''
         self.layout            = gui.QHBoxLayout(self)
         self.logview           = logview
         self.ddtfile           = ddtfile
@@ -59,11 +60,9 @@ class paramWidget(gui.QWidget):
         self.presend           = []
         self.ecu_addr          = str(ecu_addr)
         self.startsession_command = '10C0'
+        self.timer = core.QTimer()
+        self.timer.setSingleShot(True)
         self.initXML()
-                 
-        if not options.simulation_mode:
-            ecu_conf = { 'idTx' : '', 'idRx' : '', 'ecuname' : str(ecu_name) }
-            txa, rxa = options.elm.set_can_addr(self.ecu_addr, ecu_conf)
 
     def init(self, screen):
         if self.panel:
@@ -71,15 +70,22 @@ class paramWidget(gui.QWidget):
             self.panel.close()
             self.panel.destroy()
 
-        self.panel              = gui.QWidget(self)
-        self.timer              = core.QTimer()
-        self.timer.setSingleShot(True)
+        self.panel = gui.QWidget(self)
+
         if not screen:
             return
 
         self.initScreen(screen)
         self.layout.addWidget(self.panel)
-         
+
+        if not options.simulation_mode:
+            if self.protocol == 'CAN':
+                ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
+                options.elm.init_can()
+                options.elm.set_can_addr(self.ecu_addr, ecu_conf)
+            else:
+                self.logview.append("Protocole " + self.protocol + " non supporte")
+
     def initXML(self):
         self.categories = {}
         self.xmlscreen = {}
@@ -99,6 +105,7 @@ class paramWidget(gui.QWidget):
 
         can = self.getChildNodesByName(target, u"CAN")[0]
         if can:
+            self.protocol = "CAN"
             send_ids = self.getChildNodesByName(can, "SendId")
             if send_ids:
                 send_id = send_ids[0]

@@ -1,15 +1,18 @@
 import math, string
-import options, elm
-from   xml.dom.minidom import parse
+import options
+import elm
+
+from xml.dom.minidom import parse
 import xml.dom.minidom
 
+
 # Returns signed value from 16 bits
-def s16(value):
+def hex16_tosigned(value):
     return -(value & 0x8000) | (value & 0x7fff)
 
 
 # Returns signed value from 8 bits
-def s8(value):
+def hex8_tosigned(value):
     return -(value & 0x80) | (value & 0x7f)
 
 
@@ -111,7 +114,6 @@ class Ecu_data:
         self.scaled     = False
         self.signed     = False
         self.byte       = False
-        self.bits       = False
         self.binary     = False
         self.bytescount = 1
         self.bytesascii = False
@@ -155,7 +157,6 @@ class Ecu_data:
 
         bits = self.xmldoc.getElementsByTagName("Bits")
         if bits:
-            self.bits = True
             bitscount = bits.item(0).getAttribute("count")
             if bitscount:
                 self.bitscount  = int(bitscount)
@@ -272,18 +273,18 @@ class Ecu_data:
 
     def getDisplayValue(self, elm_data, dataitem, req_endian):
         value = self.getValue(elm_data, dataitem, req_endian)
-        if value == None:
+        if value is None:
             return None
 
-        if not self.scaled and not self.bytesascii:
-            val = int('0x' + value, 0)
+        # Manage signed values
+        if self.signed and self.scaled:
+            if self.bytescount == 1:
+                value = hex8_tosigned(value)
+            elif dataitem.bytescount == 2:
+                value = hex16_tosigned(value)
 
-            # Manage signed values
-            if self.signed:
-                if len(value) == 2:
-                    val = s8(val)
-                elif len(value) == 4:
-                    val = s16(val)
+        if not self.scaled and not self.bytesascii:
+            val = int('0x' + value, 16)
 
             # Manage text values
             if val in self.lists:
@@ -294,8 +295,8 @@ class Ecu_data:
         return value
 
     def getValue(self, elm_data, dataitem, req_endian):
-        hv = self.getHex( elm_data, dataitem, req_endian)
-        if hv == None:
+        hv = self.getHex(elm_data, dataitem, req_endian)
+        if hv is None:
             return None
 
         assert hv is not None
@@ -332,8 +333,9 @@ class Ecu_data:
         if not all(c in string.hexdigits for c in resp): resp = ''
         resp.replace(' ', '')
         
-        bits  = self.bitscount
-        bytes = bits/8
+        bits = self.bitscount
+        bytes = bits / 8
+
         if bits % 8:
             bytes += 1
 
@@ -491,12 +493,11 @@ class Ecu_scanner:
         self.num_ecu_found = 0
 
         if options.simulation_mode:
-            self.ecus["CH_84_J84_04_00"] = Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan")
+            self.ecus["UCH_84_J84_04_00"] = Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan")
             self.ecus["Tdb_BCEKL84_serie_4emeRev."] = Ecu_ident("000", "000", "000", "00",
                                                                 "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan")
             self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan")
-
-            self.ecus["Abs_X84_Bosch8.1_V1.3"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "Abs_X84_Bosch8.1_V1.3.xml", "DiagOnCan")
+            self.ecus["Abs_X84_Bosch8.1"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "Abs_X84_Bosch8.1_V1.3.xml", "DiagOnCan")
         # TODO : implement other protocols
 
         i = 0

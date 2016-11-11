@@ -128,8 +128,11 @@ class Port:
             self.portType = 1
             self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-            self.hdr.connect((self.ipaddr, self.tcpprt))
-            self.hdr.setblocking(True)
+            try:
+                self.hdr.connect((self.ipaddr, self.tcpprt))
+                self.hdr.setblocking(True)
+            except:
+                options.elm_failed = True
 
         else:
             self.portName = portName
