@@ -103,8 +103,9 @@ class paramWidget(gui.QWidget):
             self.logview.append("Invalid DDT file")
             return
 
-        can = self.getChildNodesByName(target, u"CAN")[0]
+        can = self.getChildNodesByName(target, u"CAN")
         if can:
+            can = can[0]
             self.protocol = "CAN"
             send_ids = self.getChildNodesByName(can, "SendId")
             if send_ids:
@@ -476,11 +477,8 @@ class paramWidget(gui.QWidget):
                 elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, ecu_request.endian)
 
                 if not elm_data_stream:
-                    if not is_combo_widget:
-                        widget.setText("Invalide")
-
                     widget.setStyleSheet("background: red")
-                    self.logview.append("Abandon de requete, entree ligne incorrecte (voir entree en rouge marquee invalide): " + str(input_value))
+                    self.logview.append("Abandon de requete, entree ligne incorrecte (voir entree en rouge): " + str(input_value))
                     return
 
                 widget.setStyleSheet("background: white")

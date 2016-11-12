@@ -10,3 +10,4 @@ opt_n1c = True
 log_all = False
 auto_refresh = False
 elm_failed = False
+opt_si=True

@@ -233,6 +233,7 @@ class Ecu_data:
             # Input value must be base 10
             value = int((value * float(self.divideby) - float(self.offset)) / float(self.step))
         else:
+            # Check input length and validity
             if not all(c in string.hexdigits for c in value):
                 return None
             # Value is base 16
@@ -240,6 +241,10 @@ class Ecu_data:
 
         # We're working at bit level, we may need to OR these values
         bit_operation = self.bitscount < 8
+
+        if bit_operation and start_bit > 7:
+            print "bit operation on multiple bytes not implemented"
+            return None
 
         if bit_operation:
             value_mask = 2 ** self.bitscount - 1
@@ -277,14 +282,10 @@ class Ecu_data:
         if value is None:
             return None
 
-        # Manage signed values
-        if self.signed and self.scaled:
-            if self.bytescount == 1:
-                value = str(hex8_tosigned(int(value)))
-            elif self.bytescount == 2:
-                value = str(hex16_tosigned(int(value)))
+        if self.bytesascii:
+            return value
 
-        if not self.scaled and not self.bytesascii:
+        if not self.scaled:
             val = int('0x' + value, 16)
 
             # Manage text values
@@ -293,17 +294,23 @@ class Ecu_data:
 
             return str(val).zfill(self.bytescount * 2)
 
-        if self.scaled:
-            res = (int(value, 16) * float(self.step) + float(self.offset)) / float(self.divideby)
-            if len(self.format) and '.' in self.format:
-                acc = len(self.format.split('.')[1])
-                fmt = '%.' + str(acc) + 'f'
-                res = fmt % res
-            else:
-                res = int(res)
-            return str(res)
+        # Manage signed values
+        if self.signed:
+            if self.bytescount == 1:
+                value = str(hex8_tosigned(int(value)))
+            elif self.bytescount == 2:
+                value = str(hex16_tosigned(int(value)))
 
-        return value
+        res = (int(value, 16) * float(self.step) + float(self.offset)) / float(self.divideby)
+        if len(self.format) and '.' in self.format:
+            acc = len(self.format.split('.')[1])
+            fmt = '%.' + str(acc) + 'f'
+            res = fmt % res
+        else:
+            res = int(res)
+            
+        return str(res)
+
 
     def getValue(self, elm_data, dataitem, req_endian):
         hv = self.getHex(elm_data, dataitem, req_endian)
@@ -475,6 +482,12 @@ class Ecu_database:
                     ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol)
                     self.targets.append(ecu_ident)
 
+    def getTarget(self, name):
+        for t in self.targets:
+            if t.name == name:
+                return t
+        return None
+
 class Ecu_scanner:
     def __init__(self):
         self.totalecu = 0
@@ -487,6 +500,9 @@ class Ecu_scanner:
 
     def getNumAddr(self):
         return len(elm.dnat)
+        
+    def addTarget(self, target):
+        self.ecus[target.name] = target
 
     def scan(self, progress=None, label=None):
         self.totalecu = 0

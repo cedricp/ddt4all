@@ -8,6 +8,30 @@ import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options
 
+class Ecu_list(gui.QDialog):
+    def __init__(self, ecuscan):
+        super(Ecu_list, self).__init__()
+        self.selected = ''
+        layout = gui.QVBoxLayout()
+        self.setLayout(layout)
+        self.list = gui.QListWidget(self)
+        self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
+        layout.addWidget(self.list)
+        self.ecuscan = ecuscan
+
+        for ecu in self.ecuscan.ecu_database.targets:
+            self.list.addItem(ecu.name)
+            
+        self.list.doubleClicked.connect(self.ecuSel)
+
+    def ecuSel(self, index):
+        item = self.list.model().itemData(index)
+        self.selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
+        target = self.ecuscan.ecu_database.getTarget(self.selected)
+        if target:
+            self.ecuscan.addTarget(target)
+        self.close()
+    
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
@@ -111,6 +135,7 @@ class Main_widget(gui.QMainWindow):
                 ecu_files.append(basename)
 
         menu = self.menuBar()
+
         diagmenu = menu.addMenu("Fichier")
         savevehicleaction = diagmenu.addAction("Sauvegarder ce vehicule")
         savevehicleaction.triggered.connect(self.saveEcus)
@@ -119,6 +144,16 @@ class Main_widget(gui.QMainWindow):
         for ecuf in ecu_files:
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
+
+        ecumenu = menu.addMenu("Ecu")
+        selectecu = ecumenu.addAction("Selectionner ECU")
+        selectecu.triggered.connect(self.addEcu)
+
+    def addEcu(self):
+        eculist = Ecu_list(self.ecu_scan)
+        eculist.exec_()
+        if eculist.selected:
+            self.treeview_ecu.addItem(eculist.selected)
 
     def scan(self):
         progressWidget = gui.QWidget(None)
