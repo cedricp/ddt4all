@@ -77,7 +77,9 @@ class paramWidget(gui.QWidget):
 
         self.initScreen(screen)
         self.layout.addWidget(self.panel)
+        self.initELM()
 
+    def initELM(self):
         if not options.simulation_mode:
             if self.protocol == 'CAN':
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}

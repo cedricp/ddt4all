@@ -149,6 +149,33 @@ class Main_widget(gui.QMainWindow):
         selectecu = ecumenu.addAction("Selectionner ECU")
         selectecu.triggered.connect(self.addEcu)
 
+        iskmenu = menu.addMenu("ISK")
+        meg2isk = iskmenu.addAction("Megane II")
+        meg2isk.triggered.connect(lambda: self.getISK('megane2'))
+
+    def getISK(self, vehicle):
+        if vehicle == "megane2":
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': 'UCH'}
+            options.elm.init_can()
+            options.elm.set_can_addr('26', ecu_conf)
+            # Entering service session
+            resp = options.elm.request( req = '1086', positive = '50', cache = False )
+            if not resp.startswith("50"):
+                self.logview.append("Connection a l'UCH pour recuperation ISK impossible")
+                return
+            # Asking to dump parameters
+            isk_data_request =  options.elm.request( req = '21AB', positive = '61', cache = False )
+            if not resp.startswith("61"):
+                self.logview.append("Reponse UCH pour recuperation ISK invalide")
+                return
+            # Return to default session
+            options.elm.request( req = '1081', positive = '50', cache = False )
+            isk_data_split = isk_data_request.split(" ")
+            isk_bytes = " ".join(isk_data_split[19:25])
+            self.logview.append('Votre code ISK : <font color=red>' + isk_bytes + '</font>')
+            if self.paramview:
+                self.paramview.initELM()
+
     def addEcu(self):
         eculist = Ecu_list(self.ecu_scan)
         eculist.exec_()
