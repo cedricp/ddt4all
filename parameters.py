@@ -154,6 +154,8 @@ class paramWidget(gui.QWidget):
                 if command.startswith('10') or command.startswith('21') or command.startswith('22'):
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>Envoie requete securisee ELM :</font>'
+                else:
+                    txt = '<font color=green>Requete bloquee ELM :</font>'
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
