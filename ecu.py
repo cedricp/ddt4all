@@ -278,54 +278,43 @@ class Ecu_data:
         return bytes_list
 
     def getDisplayValue(self, elm_data, dataitem, req_endian):
-        value = self.getValue(elm_data, dataitem, req_endian)
+        value = self.getHexValue(elm_data, dataitem, req_endian)
         if value is None:
             return None
 
         if self.bytesascii:
-            return value
+            return value.decode('hex')
 
+        # I think we want Hex format for non scaled values
         if not self.scaled:
             val = int('0x' + value, 16)
 
-            # Manage text values
+            # Manage mapped values
             if val in self.lists:
                 return self.lists[val]
 
-            return str(val).zfill(self.bytescount * 2)
+            return value
+
+        value = int('0x' + value, 16)
 
         # Manage signed values
         if self.signed:
             if self.bytescount == 1:
-                value = str(hex8_tosigned(int(value)))
+                value = hex8_tosigned(value)
             elif self.bytescount == 2:
-                value = str(hex16_tosigned(int(value)))
+                value = hex16_tosigned(value)
 
-        res = (int(value, 16) * float(self.step) + float(self.offset)) / float(self.divideby)
+        res = (value * float(self.step) + float(self.offset)) / float(self.divideby)
         if len(self.format) and '.' in self.format:
             acc = len(self.format.split('.')[1])
             fmt = '%.' + str(acc) + 'f'
             res = fmt % res
         else:
             res = int(res)
-            
+
         return str(res)
 
-
-    def getValue(self, elm_data, dataitem, req_endian):
-        hv = self.getHex(elm_data, dataitem, req_endian)
-        if hv is None:
-            return None
-
-        assert hv is not None
-
-        if self.bytesascii:
-            res = hv.decode('hex')
-            return res
-
-        return hv
-
-    def getHex(self, resp, dataitem, req_endian):
+    def getHexValue(self, resp, dataitem, req_endian):
         little_endian = False
 
         if req_endian == "Little":
