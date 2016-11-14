@@ -384,6 +384,10 @@ class portChooser(gui.QDialog):
                 self.port = currentitem.text()
                 self.mode = 1
                 self.close()
+            else:
+                msgbox = gui.QMessageBox()
+                msgbox.setText("Vous devez selectionner un port communication")
+                msgbox.exec_()
 
     def demoMode(self):
         self.securitycheck = self.safetycheck.isChecked()
