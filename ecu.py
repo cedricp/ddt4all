@@ -6,30 +6,32 @@ from xml.dom.minidom import parse
 import xml.dom.minidom
 
 
-# Returns signed value from 16 bits
+# Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
     return -(value & 0x8000) | (value & 0x7fff)
 
 
-# Returns signed value from 8 bits
+# Returns signed value from 8 bits (1 byte)
 def hex8_tosigned(value):
     return -(value & 0x80) | (value & 0x7f)
 
 
 class Data_item:
     def __init__(self, item, req_endian):
-        self.firstbyte  = 0
-        self.bitoffset  = 0
-        self.ref        = None
+        self.firstbyte = 0
+        self.bitoffset = 0
+        self.ref = None
         self.req_endian = req_endian
-        self.endian     = ''
-        self.name       = item.getAttribute("Name")
+        self.endian = ''
+        self.name = item.getAttribute("Name")
 
         fb = item.getAttribute("FirstByte")
-        if fb: self.firstbyte = int(fb)
+        if fb:
+            self.firstbyte = int(fb)
 
         bo = item.getAttribute("BitOffset")
-        if bo: self.bitoffset = int(bo)
+        if bo:
+            self.bitoffset = int(bo)
 
         endian = item.getAttribute("Endian")
         if endian:
@@ -41,11 +43,11 @@ class Data_item:
 
 class Ecu_device:
      def __init__(self, dev):
-        self.xmldoc     = xml
-        self.dtc        = 0
-        self.dtctype    = 0
+        self.xmldoc = xml
+        self.dtc = 0
+        self.dtctype = 0
         self.devicedata = {}
-        self.name       = dev.getAttribute("Name")
+        self.name = dev.getAttribute("Name")
 
         dtc = dev.getAttribute("DTC")
         if dtc: self.dtc = int(dtc)
@@ -62,33 +64,37 @@ class Ecu_device:
 
 class Ecu_request:
     def __init__(self, xml, endian):
-        self.xmldoc             = xml
-        self.minbytes           = 0
-        self.shiftbytescount    = 0
-        self.replybytes         = ''
-        self.manualsend         = False
-        self.sentbytes          = 0
-        self.dataitems          = {}
+        self.xmldoc = xml
+        self.minbytes = 0
+        self.shiftbytescount = 0
+        self.replybytes = ''
+        self.manualsend = False
+        self.sentbytes = 0
+        self.dataitems = {}
         self.sendbyte_dataitems = {}
-        self.name               = 'uninit'
-        self.endian             = endian
+        self.name = 'uninit'
+        self.endian = endian
         self.name = self.xmldoc.getAttribute("Name")
 
         manualsenddata = self.xmldoc.getElementsByTagName("ManuelSend").item(0)
-        if manualsenddata: self.manualsend = True
+        if manualsenddata:
+            self.manualsend = True
 
         shiftbytescount = self.xmldoc.getElementsByTagName("ShiftBytesCount")
-        if shiftbytescount: self.shiftbytescount = int(shiftbytescount.item(0).firstChild.nodeValue)
+        if shiftbytescount:
+            self.shiftbytescount = int(shiftbytescount.item(0).firstChild.nodeValue)
 
         replybytes = self.xmldoc.getElementsByTagName("ReplyBytes")
-        if replybytes: self.replybytes = replybytes.item(0).firstChild.nodeValue
+        if replybytes:
+            self.replybytes = replybytes.item(0).firstChild.nodeValue
 
         receiveddata = self.xmldoc.getElementsByTagName("Received").item(0)
         if receiveddata:
             minbytes = receiveddata.getAttribute("MinBytes")
-            if minbytes: self.minbytes = int(minbytes)
+            if minbytes:
+                self.minbytes = int(minbytes)
 
-            dataitems =  receiveddata.getElementsByTagName("DataItem")
+            dataitems = receiveddata.getElementsByTagName("DataItem")
             if dataitems:
                 for dataitem in dataitems:
                     di = Data_item(dataitem, self.endian)
@@ -109,24 +115,24 @@ class Ecu_request:
 
 class Ecu_data:
     def __init__(self, xml):
-        self.xmldoc     = xml
-        self.name       = ''
-        self.bitscount  = 8
-        self.scaled     = False
-        self.signed     = False
-        self.byte       = False
-        self.binary     = False
+        self.xmldoc = xml
+        self.name = ''
+        self.bitscount = 8
+        self.scaled = False
+        self.signed = False
+        self.byte = False
+        self.binary = False
         self.bytescount = 1
         self.bytesascii = False
-        self.step       = 1.0
-        self.offset     = 0.0
-        self.divideby   = 1.0
-        self.format     = ""
-        self.items      = {}
-        self.lists      = {}
+        self.step = 1.0
+        self.offset = 0.0
+        self.divideby = 1.0
+        self.format = ""
+        self.items = {}
+        self.lists = {}
         self.description = ''
-        self.unit       = ""
-        self.comment    = ''
+        self.unit = ""
+        self.comment = ''
 
         self.name = self.xmldoc.getAttribute("Name")
         description = self.xmldoc.getElementsByTagName("Description")
@@ -373,7 +379,7 @@ class Ecu_file:
     def __init__(self, xmldoc, isfile = False):
         self.requests = {}
         self.data = {}
-        if isfile == True:
+        if isfile:
             xdom = xml.dom.minidom.parse(xmldoc)
             self.xmldoc = xdom.documentElement
         else:
@@ -422,15 +428,15 @@ class Ecu_ident:
                           u"CAN Messaging (125 kbps CAN)", u"KWP2000 FastInit MultiPoint",
                           u"KWP2000 FastInit MonoPoint", u"DiagOnCAN"]
         self.diagversion = diagversion
-        self.supplier    = supplier
-        self.soft        = soft
-        self.version     = version
-        self.name        = name
-        self.group       = group
-        self.href        = href
-        self.addr        = None
-        self.protocol    = protocol
-        self.hash        = diagversion + supplier + soft + version
+        self.supplier = supplier
+        self.soft = soft
+        self.version = version
+        self.name = name
+        self.group = group
+        self.href = href
+        self.addr = None
+        self.protocol = protocol
+        self.hash = diagversion + supplier + soft + version
 
     def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.hash != diagversion + supplier + soft + version: return False
@@ -456,8 +462,8 @@ class Ecu_database:
         targets = self.xmldoc.getElementsByTagName("Target")
 
         for target in targets:
-            href  = target.getAttribute("href")
-            name  = target.getAttribute("Name")
+            href = target.getAttribute("href")
+            name = target.getAttribute("Name")
             group = target.getAttribute("group")
             protocol = target.getAttribute("Protocol")
             autoidents = target.getElementsByTagName("AutoIdents")
@@ -465,9 +471,9 @@ class Ecu_database:
                 self.numecu += 1
                 for ai in autoident.getElementsByTagName("AutoIdent"):
                     diagversion = ai.getAttribute("DiagVersion")
-                    supplier    = ai.getAttribute("Supplier")
-                    soft        = ai.getAttribute("Soft")
-                    version     = ai.getAttribute("Version")
+                    supplier = ai.getAttribute("Supplier")
+                    soft = ai.getAttribute("Soft")
+                    version = ai.getAttribute("Version")
                     ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol)
                     self.targets.append(ecu_ident)
 
@@ -511,21 +517,24 @@ class Ecu_scanner:
         for addr in elm.snat.keys():
             progress.setValue(i)
             i += 1
-            TXa, RXa = options.elm.set_can_addr(addr, { 'idTx' : '', 'idRx' : '', 'ecuname' : 'SCAN' })
+            txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN'})
             options.elm.start_session_can('10C0')
 
             if options.simulation_mode:
-                if TXa == "74B": can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
-                elif TXa == "7E0": can_response =  "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
-                else: can_response =  "61 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+                if txa == "74B":
+                    can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+                elif txa == "7E0":
+                    can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
+                else:
+                    can_response = "61 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
             else:
-                can_response = options.elm.request( req = '2180', positive = '61', cache = False )
+                can_response = options.elm.request(req='2180', positive='61', cache=False)
 
             if len(can_response) > 59:
                 diagversion = str(int(can_response[21:23],16))
-                supplier    = can_response[24:32].replace(' ', '').decode('hex')
-                soft        = can_response[48:53].replace(' ', '')
-                version     = can_response[54:59].replace(' ', '')
+                supplier = can_response[24:32].replace(' ', '').decode('hex')
+                soft = can_response[48:53].replace(' ', '')
+                version = can_response[54:59].replace(' ', '')
 
                 for target in self.ecu_database.targets:
                     if target.checkWith(diagversion, supplier, soft, version, addr):

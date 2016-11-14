@@ -522,7 +522,7 @@ class paramWidget(gui.QWidget):
         # Test data for offline test, below is roof parameter misc timings and values
         # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
         # Test data for DAE_X84
-        elm_response = "61 01 0E 0E FF FF 70 00 00 00 00 01 11 64 00 00 EC 00 00 00"
+        # elm_response = "61 01 0E 0E FF FF 70 00 00 00 00 01 11 64 00 00 EC 00 00 00"
         for data_struct in request_data.data:
             qlabel = data_struct.widget
             ecu_data = data_struct.data
@@ -569,7 +569,7 @@ class paramWidget(gui.QWidget):
 
     def readDTC(self):
         if not options.simulation_mode:
-            options.elm.start_session_can(self.startsession_command)
+            options.elm.start_session_can('10C0')
             
         request = self.ecurequestsparser.requests["ReadDTC"]
         sendbyte_dataitems = request.sendbyte_dataitems
@@ -596,16 +596,16 @@ class paramWidget(gui.QWidget):
             for k in request.dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
-                value_hex = ecu_data.getValue(can_response, dataitem, request.endian)
+                value_hex = ecu_data.getHexValue(can_response, dataitem, request.endian)
                 
                 if not dataitem.name in dtc_result:
                     dtc_result[dataitem.name] = []
                 
-                if ecu_data.scaled:
-                    dtc_result[dataitem.name].append(str(value_hex))
-                    continue
+                value = int('0x' + value_hex, 16)
 
-                value = int('0x'+value_hex, 0)
+                if ecu_data.scaled:
+                    dtc_result[dataitem.name].append(str(value))
+                    continue
 
                 if len(ecu_data.items) > 0 and value in ecu_data.lists:
                     dtc_result[dataitem.name].append(ecu_data.lists[value])

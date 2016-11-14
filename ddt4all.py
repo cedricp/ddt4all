@@ -19,8 +19,11 @@ class Ecu_list(gui.QDialog):
         layout.addWidget(self.list)
         self.ecuscan = ecuscan
 
+        stored_ecus = []
         for ecu in self.ecuscan.ecu_database.targets:
-            self.list.addItem(ecu.name)
+            if not ecu.name in stored_ecus:
+                self.list.addItem(ecu.name)
+                stored_ecus.append(ecu.name)
             
         self.list.doubleClicked.connect(self.ecuSel)
 
@@ -31,7 +34,8 @@ class Ecu_list(gui.QDialog):
         if target:
             self.ecuscan.addTarget(target)
         self.close()
-    
+
+
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
