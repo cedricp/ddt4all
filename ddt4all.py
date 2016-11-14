@@ -307,6 +307,7 @@ class portChooser(gui.QDialog):
     def __init__(self):
         self.port = None
         self.mode = 0
+        self.securitycheck = False
         super(portChooser, self).__init__(None)
         ports = elm.get_available_ports()
         layout = gui.QVBoxLayout()
@@ -337,6 +338,14 @@ class portChooser(gui.QDialog):
         wifilayout.addWidget(self.wifiinput)
         layout.addLayout(wifilayout)
 
+        safetychecklayout = gui.QHBoxLayout()
+        self.safetycheck = gui.QCheckBox()
+        self.safetycheck.setChecked(False)
+        safetylabel = gui.QLabel("J'ai bien lu les recommandations")
+        safetychecklayout.addWidget(self.safetycheck)
+        safetychecklayout.addWidget(safetylabel)
+        layout.addLayout(safetychecklayout)
+
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
         layout.addLayout(button_layout)
@@ -353,6 +362,14 @@ class portChooser(gui.QDialog):
         self.listview.setEnabled(not self.wifienable.isChecked())
 
     def connectedMode(self):
+        self.securitycheck = self.safetycheck.isChecked()
+
+        if not pc.securitycheck:
+            msgbox = gui.QMessageBox()
+            msgbox.setText("Vous devez cocher la case vous demandant si vous avez pris connaissance des recommandations")
+            msgbox.exec_()
+            return
+
         if self.wifienable.isChecked():
             self.port = str(self.wifiinput.text())
             self.mode = 1
@@ -365,6 +382,7 @@ class portChooser(gui.QDialog):
                 self.close()
 
     def demoMode(self):
+        self.securitycheck = self.safetycheck.isChecked()
         self.port = 'DUMMY'
         self.mode = 2
         self.close()
