@@ -438,7 +438,9 @@ if __name__ == '__main__':
         exit(0)
 
     print "Initilizing ELM with speed %i..." % options.port_speed
-    options.elm = elm.ELM(options.port, options.port_speed)
+    options.elm = elm.ELM(options.port, 38400)
+    if options.port_speed != 38400:
+        elm.port.soft_baudrate(options.port_speed)
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()

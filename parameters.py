@@ -256,15 +256,16 @@ class paramWidget(gui.QWidget):
         displays = self.getChildNodesByName(screen, "Display")
 
         for display in displays:
-            text      = display.getAttribute("DataName")
-            req_name  = display.getAttribute("RequestName")
-            color     = display.getAttribute("Color")
-            width     = int(display.getAttribute("Width")) / self.uiscale
+            text = display.getAttribute("DataName")
+            req_name = display.getAttribute("RequestName")
+            color = display.getAttribute("Color")
+            width = int(display.getAttribute("Width")) / self.uiscale
             rect = self.getRectangle(self.getChildNodesByName(display, "Rectangle")[0])
             qfnt = self.getFont(display)
             req = self.ecurequestsparser.requests[req_name]
+            dataitem = req.dataitems[text]
             data = self.ecurequestsparser.data[text]
-            
+
             qlabel = gui.QLabel(self.panel)
             qlabel.setFont(qfnt)
             qlabel.setText(text)
@@ -281,10 +282,13 @@ class paramWidget(gui.QWidget):
             qlabelval.setStyleSheet("background: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
+            infos = req_name + u'\n'
             if data.comment:
-                infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-            else:
-                infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+                infos += data.comment + u'\n'
+            infos += u"Request=" + unicode(req.sentbytes) + u' ManualRequest=' + unicode(req.manualsend)
+            infos += u'\nNumBits=' + unicode(data.bitscount)
+            infos += u' FirstByte=' + unicode(dataitem.firstbyte)
+            infos += u' BitOffset=' + unicode(dataitem.bitoffset)
             qlabelval.setToolTip(infos)
 
             ddata = displayData(data, qlabelval)
