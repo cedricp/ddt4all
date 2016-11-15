@@ -519,7 +519,7 @@ class paramWidget(gui.QWidget):
         ecu_bytes_to_send = request.sentbytes.encode('ascii')
         elm_response = self.sendElm(ecu_bytes_to_send, True)
         
-        # Test data for offline test, below is roof parameter misc timings and values
+        # Test data for offline test, below is UCT_X84 (roof) parameter misc timings and values
         # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
         # Test data for DAE_X84
         # elm_response = "61 01 0E 0E FF FF 70 00 00 00 00 01 11 64 00 00 EC 00 00 00"

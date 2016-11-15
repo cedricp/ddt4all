@@ -361,7 +361,8 @@ class Ecu_data:
                     b = a[i:i + 2] + b
                 hexval = b
             else:
-                print "Warning, cannot convert little endian value"
+                print "Warning, cannot convert little endian value, report error please"
+                return None
 
         if bits % 8:
             val = int(hexval, 16)

@@ -309,9 +309,11 @@ class donationWidget(gui.QLabel):
 
 class portChooser(gui.QDialog):
     def __init__(self):
+        portSpeeds = [9600, 57600, 38400, 115200, 230400, 500000]
         self.port = None
         self.mode = 0
         self.securitycheck = False
+        self.selectedportspeed = 38400
         super(portChooser, self).__init__(None)
         ports = elm.get_available_ports()
         layout = gui.QVBoxLayout()
@@ -326,7 +328,20 @@ class portChooser(gui.QDialog):
         layout.addWidget(donationwidget)
         layout.addWidget(label)
         layout.addWidget(self.listview)
-        
+
+        speedlayout = gui.QHBoxLayout()
+        self.speedcombo = gui.QComboBox()
+        speedlabel = gui.QLabel("Vitesse du port")
+        speedlayout.addWidget(speedlabel)
+        speedlayout.addWidget(self.speedcombo)
+
+        for s in portSpeeds:
+            self.speedcombo.addItem(str(s))
+
+        self.speedcombo.setCurrentIndex(2)
+
+        layout.addLayout(speedlayout)
+
         button_layout = gui.QHBoxLayout()
         button_con = gui.QPushButton("Mode CONNECTE")
         button_dmo = gui.QPushButton("Mode DEMO")
@@ -367,7 +382,8 @@ class portChooser(gui.QDialog):
 
     def connectedMode(self):
         self.securitycheck = self.safetycheck.isChecked()
-
+        self.selectedportspeed = int(self.speedcombo.currentText())
+        print self.selectedportspeed
         if not pc.securitycheck:
             msgbox = gui.QMessageBox()
             msgbox.setText("Vous devez cocher la case vous demandant si vous avez pris connaissance des recommandations")
@@ -413,6 +429,7 @@ if __name__ == '__main__':
          options.simulation_mode = True
 
     options.port = str(pc.port)
+    options.port_speed = pc.selectedportspeed
 
     if not options.port:
         msgbox = gui.QMessageBox()
@@ -420,7 +437,7 @@ if __name__ == '__main__':
         msgbox.exec_()
         exit(0)
 
-    print "Initilizing ELM..."
+    print "Initilizing ELM with speed %i..." % options.port_speed
     options.elm = elm.ELM(options.port, options.port_speed)
 
     if options.elm_failed:
