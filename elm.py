@@ -104,7 +104,7 @@ class Port:
        else try to open serial port
     '''
 
-    portType = 0  # 0-serial 1-tcp 2-androidBlueTooth
+    portType = 0  # 0-serial 1-tcp
     ipaddr = '192.168.0.10'
     tcpprt = 35000
     portName = ""
@@ -305,7 +305,7 @@ class Port:
         # search ELM
         tb = time.time()  # start time
         self.buff = ""
-        while (True):
+        while True:
             if not options.simulation_mode:
                 byte = self.read()
             else:
@@ -341,7 +341,7 @@ class Port:
             if '>' in self.buff:
                 break
             if (tc - tb) > 1:
-                print "ERROR - something went wrong. Let's back."
+                print "ERROR - something went wrong. Let's get back."
                 self.hdr.timeout = self.portTimeout
                 self.hdr.baudrate = options.port_speed
                 return
@@ -393,7 +393,7 @@ class ELM:
     lastMessage = ""
 
     def __init__(self, portName, speed, startSession='10C0'):
-
+        self.sim_mode = options.simulation_mode
         self.portName = portName
 
         if not options.simulation_mode:
@@ -412,7 +412,7 @@ class ELM:
         self.ATCFC0 = options.opt_cfc0
 
     def __del__(self):
-        if not options.simulation_mode:
+        if not self.sim_mode:
             print '*' * 40
             print '*       RESETTING ELM'
             self.port.write("atz\r")

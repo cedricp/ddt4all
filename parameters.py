@@ -42,23 +42,24 @@ class displayDict:
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
         super(paramWidget, self).__init__(parent)
-        self.protocol          = ''
-        self.layout            = gui.QHBoxLayout(self)
-        self.logview           = logview
-        self.ddtfile           = ddtfile
+        self.refreshtime = 400
+        self.protocol = ''
+        self.layout = gui.QHBoxLayout(self)
+        self.logview = logview
+        self.ddtfile = ddtfile
         self.ecurequestsparser = None
-        self.can_send_id       = ''
-        self.can_rcv_id        = ''
-        self.panel             = None
-        self.uiscale           = 10
-        self.ecu_address       = ecu_addr
-        self.ecu_name          = ecu_name
-        self.button_requests   = {}
+        self.can_send_id = ''
+        self.can_rcv_id = ''
+        self.panel = None
+        self.uiscale = 10
+        self.ecu_address = ecu_addr
+        self.ecu_name = ecu_name
+        self.button_requests = {}
         self.button_messages = {}
-        self.displayDict       = {}
-        self.inputDict         = {}
-        self.presend           = []
-        self.ecu_addr          = str(ecu_addr)
+        self.displayDict = {}
+        self.inputDict = {}
+        self.presend = []
+        self.ecu_addr = str(ecu_addr)
         self.startsession_command = '10C0'
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
@@ -78,6 +79,9 @@ class paramWidget(gui.QWidget):
         self.initScreen(screen)
         self.layout.addWidget(self.panel)
         self.initELM()
+
+    def setRefreshTime(self, value):
+        self.refreshtime = value
 
     def initELM(self):
         if not options.simulation_mode:
@@ -569,7 +573,7 @@ class paramWidget(gui.QWidget):
             self.updateDisplay(request_name, update_inputs)
 
         if options.auto_refresh:
-            self.timer.start(1000)
+            self.timer.start(self.refreshtime)
 
     def readDTC(self):
         if not options.simulation_mode:
@@ -581,7 +585,7 @@ class paramWidget(gui.QWidget):
         
         if "MoreDTC" in sendbyte_dataitems:
             moredtcbyte = sendbyte_dataitems["MoreDTC"].firstbyte - 1
-        
+
         dtclist = [0]
         if moredtcbyte > 0:
             dtclist = [i for i in range(0, 10)]
@@ -591,7 +595,7 @@ class paramWidget(gui.QWidget):
         for dtcnum in dtclist:        
             bytestosend = list(request.sentbytes.encode('ascii'))
             if moredtcbyte != -1:
-                bytestosend[2*moredtcbyte+1] = hex(dtcnum)[-1:]
+                bytestosend[2 * moredtcbyte + 1] = hex(dtcnum)[-1:]
             dtcread_command = ''.join(bytestosend)
             can_response = self.sendElm(dtcread_command)
                 

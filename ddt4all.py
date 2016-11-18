@@ -62,9 +62,17 @@ class Main_widget(gui.QMainWindow):
 
         self.setConnected(True)
 
+        self.refreshtimebox = gui.QSpinBox()
+        self.refreshtimebox.setRange(100, 2000)
+        self.refreshtimebox.setSingleStep(100)
+        self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
+        refrestimelabel = gui.QLabel("Rafraichissement:")
+
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
         self.statusBar.addWidget(self.progressstatus)
+        self.statusBar.addWidget(refrestimelabel)
+        self.statusBar.addWidget(self.refreshtimebox)
         self.statusBar.addWidget(self.infostatus)
 
         self.scrollview = gui.QScrollArea()
@@ -157,23 +165,27 @@ class Main_widget(gui.QMainWindow):
         meg2isk = iskmenu.addAction("Megane II")
         meg2isk.triggered.connect(lambda: self.getISK('megane2'))
 
+    def changeRefreshTime(self):
+        if self.paramview:
+            self.paramview.setRefreshTime(self.refreshtimebox.value())
+
     def getISK(self, vehicle):
         if vehicle == "megane2":
             ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': 'UCH'}
             options.elm.init_can()
             options.elm.set_can_addr('26', ecu_conf)
             # Entering service session
-            resp = options.elm.request( req = '1086', positive = '50', cache = False )
+            resp = options.elm.request(req='1086', positive='50', cache=False)
             if not resp.startswith("50"):
                 self.logview.append("Connection a l'UCH pour recuperation ISK impossible")
                 return
             # Asking to dump parameters
-            isk_data_request =  options.elm.request( req = '21AB', positive = '61', cache = False )
+            isk_data_request =  options.elm.request(req='21AB', positive='61', cache=False)
             if not resp.startswith("61"):
                 self.logview.append("Reponse UCH pour recuperation ISK invalide")
                 return
             # Return to default session
-            options.elm.request( req = '1081', positive = '50', cache = False )
+            options.elm.request(req='1081', positive='50', cache=False)
             isk_data_split = isk_data_request.split(" ")
             isk_bytes = " ".join(isk_data_split[19:25])
             self.logview.append('Votre code ISK : <font color=red>' + isk_bytes + '</font>')
@@ -261,6 +273,7 @@ class Main_widget(gui.QMainWindow):
         item = self.treeview_params.model().itemData(index)
         screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
         self.paramview.init(screen)
+        self.paramview.setRefreshTime(self.refreshtimebox.value())
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
@@ -309,7 +322,7 @@ class donationWidget(gui.QLabel):
 
 class portChooser(gui.QDialog):
     def __init__(self):
-        portSpeeds = [9600, 57600, 38400, 115200, 230400, 500000]
+        portSpeeds = [38400, 57600, 115200, 230400, 500000]
         self.port = None
         self.mode = 0
         self.securitycheck = False
@@ -338,7 +351,7 @@ class portChooser(gui.QDialog):
         for s in portSpeeds:
             self.speedcombo.addItem(str(s))
 
-        self.speedcombo.setCurrentIndex(2)
+        self.speedcombo.setCurrentIndex(0)
 
         layout.addLayout(speedlayout)
 
@@ -429,7 +442,7 @@ if __name__ == '__main__':
          options.simulation_mode = True
 
     options.port = str(pc.port)
-    options.port_speed = pc.selectedportspeed
+    port_speed = pc.selectedportspeed
 
     if not options.port:
         msgbox = gui.QMessageBox()
@@ -438,9 +451,9 @@ if __name__ == '__main__':
         exit(0)
 
     print "Initilizing ELM with speed %i..." % options.port_speed
-    options.elm = elm.ELM(options.port, 38400)
-    if options.port_speed != 38400:
-        elm.port.soft_baudrate(options.port_speed)
+    options.elm = elm.ELM(options.port, options.port_speed)
+    if port_speed != options.port_speed:
+        options.elm.port.soft_baudrate(port_speed)
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()

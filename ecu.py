@@ -170,10 +170,12 @@ class Ecu_data:
                 self.bytescount = int(math.ceil(float(bitscount) / 8.0))
 
             signed = bits.item(0).getAttribute("signed")
-            if signed: self.signed = True
+            if signed:
+                self.signed = True
 
             binary = bits.item(0).getElementsByTagName("Binary")
-            if binary: self.binary = True
+            if binary:
+                self.binary = True
 
             self.items = {}
             items = bits.item(0).getElementsByTagName("Item")
@@ -205,7 +207,8 @@ class Ecu_data:
                     self.format = format
 
                 unit = sc.getAttribute("Unit")
-                if unit: self.unit = unit
+                if unit:
+                    self.unit = unit
 
     def setValue(self, value, bytes_list, dataitem, request_endian):
         start_byte = dataitem.firstbyte - 1
@@ -372,7 +375,7 @@ class Ecu_data:
             if hexval[-1:].upper() == 'L':
                 hexval = hexval[:-1]
             # Resize to original length
-            hexval = hexval.zfill(bytes*2)
+            hexval = hexval.zfill(bytes * 2)
 
         return hexval
 
