@@ -179,7 +179,7 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             if not options.promode:
                 # Allow read only modes
-                if command.startswith('10') or command.startswith('21') or command.startswith('22'):
+                if command.startswith('10') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>Envoie requete securisee ELM :</font>'
                 else:
@@ -628,9 +628,11 @@ class paramWidget(gui.QWidget):
                 bytestosend[2 * moredtcbyte + 1] = hex(dtcnum)[-1:]
             dtcread_command = ''.join(bytestosend)
             can_response = self.sendElm(dtcread_command)
-                
             dtc_num += 1
-            
+
+            if "WRONG RESPONSE" == can_response:
+                continue
+
             for k in request.dataitems.keys():
                 ecu_data  = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]

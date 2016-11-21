@@ -55,10 +55,10 @@ class Main_widget(gui.QMainWindow):
         self.progressstatus = gui.QProgressBar()
         self.infostatus = gui.QLabel()
 
-        self.connectedstatus.setFixedWidth(120)
+        self.connectedstatus.setFixedWidth(100)
         self.protocolstatus.setFixedWidth(200)
         self.progressstatus.setFixedWidth(150)
-        self.infostatus.setFixedWidth(400)
+        self.infostatus.setFixedWidth(200)
 
         self.setConnected(True)
 
