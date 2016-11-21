@@ -539,6 +539,8 @@ class paramWidget(gui.QWidget):
                     if data:
                         data.widget.setText(value + ' ' + dd_ecu_data.unit)
 
+        self.updateDisplays()
+
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displayDict[request_name]
         request = request_data.request
@@ -603,6 +605,10 @@ class paramWidget(gui.QWidget):
             self.timer.start(self.refreshtime)
 
     def readDTC(self):
+        if not "ReadDTC" in self.ecurequestsparser:
+            self.logview.append("Pas de fonction ReadDTC pour ce calculateur")
+            return
+
         if not options.simulation_mode:
             if self.protocol == "CAN":
                 options.elm.start_session_can('10C0')
