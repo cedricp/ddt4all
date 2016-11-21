@@ -20,7 +20,7 @@ class Data_item:
     def __init__(self, item, req_endian):
         self.firstbyte = 0
         self.bitoffset = 0
-        self.ref = None
+        self.ref = False
         self.req_endian = req_endian
         self.endian = ''
         self.name = item.getAttribute("Name")
@@ -503,18 +503,18 @@ class Ecu_scanner:
     def addTarget(self, target):
         self.ecus[target.name] = target
 
-    def scan(self, progress=None, label=None):
+    def clear(self):
         self.totalecu = 0
         self.ecus = {}
         self.num_ecu_found = 0
 
+    def scan(self, progress=None, label=None):
         if options.simulation_mode:
             self.ecus["UCH_84_J84_04_00"] = Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan")
             self.ecus["Tdb_BCEKL84_serie_4emeRev."] = Ecu_ident("000", "000", "000", "00",
                                                                 "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan")
             self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan")
             self.ecus["Abs_X84_Bosch8.1"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "Abs_X84_Bosch8.1_V1.3.xml", "DiagOnCan")
-        # TODO : implement other protocols
 
         i = 0
         options.elm.init_can()
@@ -546,6 +546,35 @@ class Ecu_scanner:
                         self.num_ecu_found += 1
                         label.setText("Found %i ecu" % self.num_ecu_found)
 
+    def scan_kwp(self, progress=None, label=None):
+        if options.simulation_mode:
+            self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.xml",
+                                                        "KWP2000 FastInit MonoPoint")
+
+        i = 0
+        options.elm.init_iso()
+        for addr in elm.snat.keys():
+            progress.setValue(i)
+            i += 1
+            txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
+            options.elm.start_session_iso('10C0')
+
+            if not options.simulation_mode:
+                can_response = options.elm.request(req='2180', positive='61', cache=False)
+            else:
+                continue
+
+            if len(can_response) > 59:
+                diagversion = str(int(can_response[21:23], 16))
+                supplier = can_response[24:32].replace(' ', '').decode('hex')
+                soft = can_response[48:53].replace(' ', '')
+                version = can_response[54:59].replace(' ', '')
+
+                for target in self.ecu_database.targets:
+                    if target.checkWith(diagversion, supplier, soft, version, addr):
+                        self.ecus[target.name] = target
+                        self.num_ecu_found += 1
+                        label.setText("Found %i ecu" % self.num_ecu_found)
 
 if __name__ == '__main__':
     ecur = Ecu_file("ecus/UCH_84_J84_04_00.xml", True)

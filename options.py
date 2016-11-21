@@ -10,4 +10,5 @@ opt_n1c = True
 log_all = False
 auto_refresh = False
 elm_failed = False
-opt_si=True
+# KWP2000 Slow init
+opt_si=False

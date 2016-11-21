@@ -50,6 +50,9 @@ class paramWidget(gui.QWidget):
         self.ecurequestsparser = None
         self.can_send_id = ''
         self.can_rcv_id = ''
+        self.iso_send_id = ''
+        self.iso_rcv_id = ''
+        self.iso_fastinit = False
         self.panel = None
         self.uiscale = 10
         self.ecu_address = ecu_addr
@@ -89,6 +92,11 @@ class paramWidget(gui.QWidget):
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
                 options.elm.set_can_addr(self.ecu_addr, ecu_conf)
+            elif self.protocol == 'KWP2000':
+                ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
+                options.elm.init_iso()
+                options.elm.set_iso_addr(self.iso_send_id, ecu_conf)
+                options.opt_si = not self.iso_fastinit
             else:
                 self.logview.append("Protocole " + self.protocol + " non supporte")
 
@@ -126,6 +134,20 @@ class paramWidget(gui.QWidget):
                 can_id = self.getChildNodesByName(rcv_id, "CANId")
                 if can_id:
                     self.can_rcv_id = hex(int(can_id[0].getAttribute("Value")))
+
+        k = self.getChildNodesByName(target, u"K")
+        if k:
+            kwp = self.getChildNodesByName(k[0], u"KWP")
+            if kwp:
+                kwp = kwp[0]
+                self.protocol = "KWP2000"
+                fastinit = self.getChildNodesByName(kwp, "FastInit")
+                if fastinit:
+                    self.iso_fastinit = True
+                    self.iso_rcv_id = hex(int(self.getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[2:].upper()
+                    self.iso_send_id = hex(int(self.getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[2:].upper()
+                else:
+                    self.logview.append("Determination protocol KWP2000 impossible")
 
         categories = self.getChildNodesByName(target, u"Categories")
 
@@ -535,6 +557,8 @@ class paramWidget(gui.QWidget):
             qlabel = data_struct.widget
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
+            #if not data_item.ref:
+            #    continue
             value = ecu_data.getDisplayValue(elm_response, data_item, request.endian)
 
             if value == None:
@@ -556,7 +580,10 @@ class paramWidget(gui.QWidget):
     def updateDisplays(self, update_inputs= False):
         # Begin diag session
         if not options.simulation_mode:
-            options.elm.start_session_can('10C0')
+            if self.protocol == "CAN":
+                options.elm.start_session_can('10C0')
+            elif self.protocol == "KWP2000":
+                options.elm.start_session_iso('10C0')
 
         # <Screen> <Send/> <Screen/> tag management
         # Manage pre send commands
@@ -577,7 +604,10 @@ class paramWidget(gui.QWidget):
 
     def readDTC(self):
         if not options.simulation_mode:
-            options.elm.start_session_can('10C0')
+            if self.protocol == "CAN":
+                options.elm.start_session_can('10C0')
+            elif self.protocol == "KWP2000":
+                options.elm.start_session_iso('10C0')
             
         request = self.ecurequestsparser.requests["ReadDTC"]
         sendbyte_dataitems = request.sendbyte_dataitems

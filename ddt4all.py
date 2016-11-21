@@ -175,7 +175,7 @@ class Main_widget(gui.QMainWindow):
             options.elm.init_can()
             options.elm.set_can_addr('26', ecu_conf)
             # Entering service session
-            resp = options.elm.request(req='1086', positive='50', cache=False)
+            resp = options.elm.start_session_can('1086')
             if not resp.startswith("50"):
                 self.logview.append("Connection a l'UCH pour recuperation ISK impossible")
                 return
@@ -205,7 +205,9 @@ class Main_widget(gui.QMainWindow):
         self.progressstatus.setRange(0, self.ecu_scan.getNumAddr())
         self.progressstatus.setValue(0)
 
+        self.ecu_scan.clear()
         self.ecu_scan.scan(self.progressstatus, self.infostatus)
+        self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()

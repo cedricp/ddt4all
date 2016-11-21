@@ -910,9 +910,6 @@ class ELM:
         if self.currentprotocol == "can" and self.currentaddress == addr:
             return
 
-        #if len(ecu['idTx']): dnat[addr] = ecu['idTx']
-        #if len(ecu['idRx']): snat[addr] = ecu['idRx']
-
         if self.lf != 0:
             self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
             self.lf.flush()
@@ -940,7 +937,7 @@ class ELM:
 
     def start_session_iso(self, start_session):
         self.startSession = start_session
-        # self.cmd("81")
+
         if len(self.startSession) > 0:
             self.lastinitrsp = self.cmd(self.startSession)
 
