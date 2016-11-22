@@ -606,7 +606,7 @@ class paramWidget(gui.QWidget):
             self.timer.start(self.refreshtime)
 
     def readDTC(self):
-        if not "ReadDTC" in self.ecurequestsparser:
+        if not "ReadDTC" in self.ecurequestsparser.requests:
             self.logview.append("Pas de fonction ReadDTC pour ce calculateur")
             return
 
@@ -637,13 +637,16 @@ class paramWidget(gui.QWidget):
             can_response = self.sendElm(dtcread_command)
             dtc_num += 1
 
-            if "WRONG RESPONSE" == can_response:
+            if "WRONG RESPONSE" in can_response:
                 continue
 
             for k in request.dataitems.keys():
-                ecu_data  = self.ecurequestsparser.data[k]
+                ecu_data = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
                 value_hex = ecu_data.getHexValue(can_response, dataitem, request.endian)
+
+                if value_hex is None:
+                    continue
                 
                 if not dataitem.name in dtc_result:
                     dtc_result[dataitem.name] = []

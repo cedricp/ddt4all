@@ -256,6 +256,8 @@ class Ecu_data:
             return None
 
         if bit_operation:
+            if little_endian:
+                value = int('0b' + bin(value)[:1:-1], 2)
             offset = 8 - start_bit - self.bitscount
             value_mask = 2 ** self.bitscount - 1
             value = int(value)
@@ -374,6 +376,9 @@ class Ecu_data:
         if bits % 8:
             offset = 8 - startBit - bits
             val = int(hexval, 16)
+            if little_endian:
+                # Reverse bits
+                val = int('0b' + bin(val)[:1:-1], 2)
             val = (val >> int(offset)) & (2**bits - 1)
             hexval = hex(val)[2:]
             # Remove trailing L if exists
