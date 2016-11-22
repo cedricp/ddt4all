@@ -170,6 +170,13 @@ class Main_widget(gui.QMainWindow):
             self.paramview.setRefreshTime(self.refreshtimebox.value())
 
     def getISK(self, vehicle):
+        if options.simulation_mode:
+            self.logview.append("Lecture ISK possible uniquement en mode connecte")
+            return
+
+        if self.paramview:
+            self.paramview.init(None)
+
         if vehicle == "megane2":
             ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': 'UCH'}
             options.elm.init_can()

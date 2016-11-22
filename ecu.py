@@ -256,16 +256,20 @@ class Ecu_data:
             return None
 
         if bit_operation:
+            offset = 8 - start_bit - self.bitscount
             value_mask = 2 ** self.bitscount - 1
             value = int(value)
             value &= value_mask
-            value = (value << start_bit)
+            value = (value << offset)
 
         hex_value = "{0:#0{1}x}".format(value, self.bytescount * 2 + 2)[2:].upper()
         hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
 
         n = 0
         hex_len = len(hex_bytes) - 1
+        if  len(hex_bytes) > self.bytescount:
+
+            return None
         for h in hex_bytes:
             original_byte  = int('0x' + bytes_list[n + start_byte], 16)
             original_value = int('0x' + h, 16)
@@ -368,8 +372,9 @@ class Ecu_data:
                 return None
 
         if bits % 8:
+            offset = 8 - startBit - bits
             val = int(hexval, 16)
-            val = (val >> int(startBit)) & (2**bits - 1)
+            val = (val >> int(offset)) & (2**bits - 1)
             hexval = hex(val)[2:]
             # Remove trailing L if exists
             if hexval[-1:].upper() == 'L':
