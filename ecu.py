@@ -561,7 +561,7 @@ class Ecu_scanner:
         for addr in elm.snat.keys():
             progress.setValue(i)
             i += 1
-            txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
+            txa, rxa = options.elm.set_iso_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
             options.elm.start_session_iso('10C0')
 
             if not options.simulation_mode:
