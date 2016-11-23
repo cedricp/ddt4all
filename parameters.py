@@ -214,6 +214,12 @@ class paramWidget(gui.QWidget):
     def initScreen(self, screen_name):
         self.presend = []
         self.timer.stop()
+        
+        try:
+            self.timer.timeout.disconnect()
+        except:
+            pass
+            
         if not screen_name in self.xmlscreen.keys():
             return False
 
