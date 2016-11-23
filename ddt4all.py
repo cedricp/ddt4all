@@ -104,8 +104,9 @@ class Main_widget(gui.QMainWindow):
         scanaction = gui.QAction(gui.QIcon("icons/scan.png"), "Scanner les ECUs", self)
         scanaction.triggered.connect(self.scan)
 
-        diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), "Lire les Codes defauts", self)
-        diagaction.triggered.connect(self.readDtc)
+        self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), "Lire les Codes defauts", self)
+        self.diagaction.triggered.connect(self.readDtc)
+        self.diagaction.setEnabled(False)
 
         self.log = gui.QAction(gui.QIcon("icons/log.png"), "Full log", self)
         self.log.setCheckable(True)
@@ -134,7 +135,7 @@ class Main_widget(gui.QMainWindow):
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.refresh)
         self.toolbar.addSeparator()
-        self.toolbar.addAction(diagaction)
+        self.toolbar.addAction(self.diagaction)
 
         vehicle_dir = "vehicles"
         if not os.path.exists(vehicle_dir):
@@ -281,7 +282,13 @@ class Main_widget(gui.QMainWindow):
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
         screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
-        self.paramview.init(screen)
+        inited = self.paramview.init(screen)
+        self.diagaction.setEnabled(inited)
+        self.expert.setChecked(False)
+        options.promode = False
+        self.autorefresh.setChecked(False)
+        options.auto_refresh = False
+        self.refresh.setEnabled(True)
         self.paramview.setRefreshTime(self.refreshtimebox.value())
 
     def changeECU(self, index):

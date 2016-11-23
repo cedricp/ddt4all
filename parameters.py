@@ -54,7 +54,7 @@ class paramWidget(gui.QWidget):
         self.iso_rcv_id = ''
         self.iso_fastinit = False
         self.panel = None
-        self.uiscale = 10
+        self.uiscale = 8
         self.ecu_address = ecu_addr
         self.ecu_name = ecu_name
         self.button_requests = {}
@@ -77,11 +77,12 @@ class paramWidget(gui.QWidget):
         self.panel = gui.QWidget(self)
 
         if not screen:
-            return
+            return False
 
-        self.initScreen(screen)
+        scr_init = self.initScreen(screen)
         self.layout.addWidget(self.panel)
         self.initELM()
+        return scr_init
 
     def setRefreshTime(self, value):
         self.refreshtime = value
@@ -214,7 +215,8 @@ class paramWidget(gui.QWidget):
         self.presend = []
         self.timer.stop()
         if not screen_name in self.xmlscreen.keys():
-            return
+            return False
+
         screen = self.xmlscreen[screen_name]
         
         self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale
@@ -237,6 +239,7 @@ class paramWidget(gui.QWidget):
         self.updateDisplays(True)
         self.timer.timeout.connect(self.updateDisplays)
         self.timer.start(1000)
+        return True
 
     def colorConvert(self, color):
         hexcolor = hex(int(color) & 0xFFFFFF).replace("0x", "").upper().zfill(6)
@@ -540,7 +543,7 @@ class paramWidget(gui.QWidget):
                         data.widget.setText(value + ' ' + dd_ecu_data.unit)
 
         # Give some time to ECU to refresh parameters
-        time.sleep(300)
+        time.sleep(0.1)
         self.updateDisplays()
 
     def updateDisplay(self, request_name, update_inputs=False):
@@ -631,7 +634,8 @@ class paramWidget(gui.QWidget):
         
         dtc_result = {}
         dtc_num = 0
-        for dtcnum in dtclist:        
+        for dtcnum in dtclist:
+            time.sleep(0.1)
             bytestosend = list(request.sentbytes.encode('ascii'))
             if moredtcbyte != -1:
                 bytestosend[2 * moredtcbyte + 1] = hex(dtcnum)[-1:]
