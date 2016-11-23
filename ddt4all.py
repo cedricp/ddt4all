@@ -184,9 +184,6 @@ class Main_widget(gui.QMainWindow):
             options.elm.set_can_addr('26', ecu_conf)
             # Entering service session
             resp = options.elm.start_session_can('1086')
-            if not resp.startswith("50"):
-                self.logview.append("Connection a l'UCH pour recuperation ISK impossible")
-                return
             # Asking to dump parameters
             isk_data_request =  options.elm.request(req='21AB', positive='61', cache=False)
             if not resp.startswith("61"):
