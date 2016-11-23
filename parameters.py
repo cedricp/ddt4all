@@ -543,7 +543,7 @@ class paramWidget(gui.QWidget):
                         data.widget.setText(value + ' ' + dd_ecu_data.unit)
 
         # Give some time to ECU to refresh parameters
-        time.sleep(0.1)
+        time.sleep(0.8)
         self.updateDisplays()
 
     def updateDisplay(self, request_name, update_inputs=False):
