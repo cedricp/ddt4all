@@ -378,7 +378,7 @@ class Ecu_data:
             if little_endian:
                 offset = startBit
             else:
-                offset = 8 - startBit - bits
+                offset = (self.bytescount * 8) - startBit - bits
 
             val = int(hexval, 16)
             val = (val >> int(offset)) & (2**bits - 1)
