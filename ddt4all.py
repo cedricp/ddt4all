@@ -207,6 +207,29 @@ class Main_widget(gui.QMainWindow):
             self.treeview_ecu.addItem(eculist.selected)
 
     def scan(self):
+        msgBox = gui.QMessageBox()
+        msgBox.setText('Options de scan')
+        scancan = False
+        scankwp = False
+
+        msgBox.addButton(gui.QPushButton('CAN'), gui.QMessageBox.YesRole)
+        msgBox.addButton(gui.QPushButton('KWP'), gui.QMessageBox.NoRole)
+        msgBox.addButton(gui.QPushButton('KWP&&CAN'), gui.QMessageBox.RejectRole)
+        role = msgBox.exec_()
+
+        if role == 0:
+            self.logview.append("Scanning CAN")
+            scancan = True
+
+        if role == 1:
+            self.logview.append("Scanning KWP")
+            scankwp = True
+
+        if role == 2:
+            self.logview.append("Scanning CAN&KWP")
+            scankwp = True
+            scancan = True
+
         progressWidget = gui.QWidget(None)
         progressLayout = gui.QVBoxLayout()
         progressWidget.setLayout(progressLayout)
@@ -214,8 +237,10 @@ class Main_widget(gui.QMainWindow):
         self.progressstatus.setValue(0)
 
         self.ecu_scan.clear()
-        self.ecu_scan.scan(self.progressstatus, self.infostatus)
-        self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
+        if scancan:
+            self.ecu_scan.scan(self.progressstatus, self.infostatus)
+        if scankwp:
+            self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()
