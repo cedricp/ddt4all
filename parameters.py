@@ -90,14 +90,16 @@ class paramWidget(gui.QWidget):
     def initELM(self):
         if not options.simulation_mode:
             if self.protocol == 'CAN':
+                self.logview.append("Initialisation ELM en mode CAN")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
                 options.elm.set_can_addr(self.ecu_addr, ecu_conf)
             elif self.protocol == 'KWP2000':
+                self.logview.append("Initialisation ELM en mode KWP2000")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
+                options.opt_si = not self.iso_fastinit
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.iso_send_id, ecu_conf)
-                options.opt_si = not self.iso_fastinit
             else:
                 self.logview.append("Protocole " + self.protocol + " non supporte")
 
@@ -633,45 +635,47 @@ class paramWidget(gui.QWidget):
         if "MoreDTC" in sendbyte_dataitems:
             moredtcbyte = sendbyte_dataitems["MoreDTC"].firstbyte - 1
 
-        dtclist = [0]
-        if moredtcbyte > 0:
-            dtclist = [i for i in range(0, 10)]
-        
+        shiftbytecount = request.shiftbytescount
         dtc_result = {}
         dtc_num = 0
-        for dtcnum in dtclist:
-            time.sleep(0.1)
-            bytestosend = list(request.sentbytes.encode('ascii'))
-            if moredtcbyte != -1:
-                bytestosend[2 * moredtcbyte + 1] = hex(dtcnum)[-1:]
+        bytestosend = map(''.join, zip(*[iter(request.sentbytes.encode('ascii'))]*2))
+
+        while 1:
             dtcread_command = ''.join(bytestosend)
+            # More DTC, pease
+            bytestosend[moredtcbyte] = "FF"
             can_response = self.sendElm(dtcread_command)
             dtc_num += 1
 
             if "WRONG RESPONSE" in can_response:
-                continue
+                break
 
-            for k in request.dataitems.keys():
-                ecu_data = self.ecurequestsparser.data[k]
-                dataitem = request.dataitems[k]
-                value_hex = ecu_data.getHexValue(can_response, dataitem, request.endian)
+            while len(can_response) >= shiftbytecount + 2:
+                for k in request.dataitems.keys():
+                    ecu_data = self.ecurequestsparser.data[k]
+                    dataitem = request.dataitems[k]
+                    value_hex = ecu_data.getHexValue(can_response, dataitem, request.endian)
 
-                if value_hex is None:
-                    continue
-                
-                if not dataitem.name in dtc_result:
-                    dtc_result[dataitem.name] = []
-                
-                value = int('0x' + value_hex, 16)
+                    if value_hex is None:
+                        continue
 
-                if ecu_data.scaled:
-                    dtc_result[dataitem.name].append(str(value))
-                    continue
+                    if not dataitem.name in dtc_result:
+                        dtc_result[dataitem.name] = []
 
-                if len(ecu_data.items) > 0 and value in ecu_data.lists:
-                    dtc_result[dataitem.name].append(ecu_data.lists[value])
-                else:
-                    dtc_result[dataitem.name].append(str(value))
+                    value = int('0x' + value_hex, 16)
+
+                    if ecu_data.scaled:
+                        dtc_result[dataitem.name].append(str(value))
+                        continue
+
+                    if len(ecu_data.items) > 0 and value in ecu_data.lists:
+                        dtc_result[dataitem.name].append(ecu_data.lists[value])
+                    else:
+                        dtc_result[dataitem.name].append(str(value))
+
+                can_response = can_response[shiftbytecount:]
+                if shiftbytecount == 0:
+                    break
                     
         columns = dtc_result.keys()
         self.table = gui.QTableWidget(None)
