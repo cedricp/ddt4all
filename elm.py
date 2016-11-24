@@ -638,10 +638,8 @@ class ELM:
         if result[:2] == '7F':
             noerrors = False
 
-        elm_error = 'NOT REGISTERED'
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F' and result[6:8] in negrsp.keys():
-            elm_error = negrsp[result[6:8]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
@@ -657,7 +655,7 @@ class ELM:
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE : " + elm_error
+            return "WRONG RESPONSE" 
 
     def send_can_cfc0(self, command):
 

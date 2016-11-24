@@ -177,7 +177,6 @@ class paramWidget(gui.QWidget):
 
     def sendElm(self, command, auto=False):
         txt = ''
-        elm_response = '00 ' * 70
 
         if not options.simulation_mode:
             if not options.promode:
@@ -192,6 +191,12 @@ class paramWidget(gui.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>Envoie requete ELM :</font>'
         else:
+            elm_response = '00 ' * 70
+            if "17FF00" in command:
+                elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40 "
+            if "17FFFF" in command:
+                elm_response = "WRONG RESPONSE"
+                
             txt = '<font color=green>Envoie requete simulee ELM :</font>'
 
         if not auto or options.log_all:
@@ -645,13 +650,13 @@ class paramWidget(gui.QWidget):
             # More DTC, please
             bytestosend[moredtcbyte] = "FF"
             can_response = self.sendElm(dtcread_command)
-            dtc_num += 1
 
-            if "WRONG RESPONSE" in can_response:
+            if "RESPONSE" in can_response:
                 break
-
+            
             can_response = can_response.split(' ')
             while len(can_response) >= shiftbytecount + 2:
+                print can_response
                 for k in request.dataitems.keys():
                     ecu_data = self.ecurequestsparser.data[k]
                     dataitem = request.dataitems[k]
@@ -675,6 +680,7 @@ class paramWidget(gui.QWidget):
                         dtc_result[dataitem.name].append(str(value))
 
                 can_response = can_response[shiftbytecount:]
+                dtc_num += 1
                 if shiftbytecount == 0:
                     break
                     
