@@ -459,6 +459,17 @@ class Ecu_ident:
         self.addr = addr
         return True
 
+    def checkApproximate(self, diagversion, supplier, soft, version, addr):
+        if self.diagversion != diagversion:
+            return False
+        if self.supplier != supplier:
+            return False
+        if self.soft != soft:
+            return False
+
+        self.addr = addr
+        return True
+
     def checkProtocol(self):
         if not self.protocol in self.protocols:
             print "Unknown protocol '", self.protocol, "' "
@@ -518,6 +529,7 @@ class Ecu_scanner:
     def clear(self):
         self.totalecu = 0
         self.ecus = {}
+        self.approximate_ecus = {}
         self.num_ecu_found = 0
 
     def scan(self, progress=None, label=None):
@@ -538,25 +550,19 @@ class Ecu_scanner:
 
             if options.simulation_mode:
                 if txa == "74B":
+                    #can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 06 00 00 00 00 00 00 01"
                     can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
                 elif txa == "7E0":
-                    can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
+                    # Test approximate case
+                    #can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
+                    can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
                 else:
                     can_response = "61 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
             else:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
 
-            if len(can_response) > 59:
-                diagversion = str(int(can_response[21:23],16))
-                supplier = can_response[24:32].replace(' ', '').decode('hex')
-                soft = can_response[48:53].replace(' ', '')
-                version = can_response[54:59].replace(' ', '')
-
-                for target in self.ecu_database.targets:
-                    if target.checkWith(diagversion, supplier, soft, version, addr):
-                        self.ecus[target.name] = target
-                        self.num_ecu_found += 1
-                        label.setText("Found %i ecu" % self.num_ecu_found)
+            self.check_ecu(can_response, label, addr)
+        options.elm.close_protocol()
 
     def scan_kwp(self, progress=None, label=None):
         if options.simulation_mode:
@@ -576,17 +582,45 @@ class Ecu_scanner:
             else:
                 continue
 
-            if len(can_response) > 59:
-                diagversion = str(int(can_response[21:23], 16))
-                supplier = can_response[24:32].replace(' ', '').decode('hex')
-                soft = can_response[48:53].replace(' ', '')
-                version = can_response[54:59].replace(' ', '')
+            self.check_ecu(can_response, label, addr)
 
-                for target in self.ecu_database.targets:
-                    if target.checkWith(diagversion, supplier, soft, version, addr):
-                        self.ecus[target.name] = target
-                        self.num_ecu_found += 1
-                        label.setText("Found %i ecu" % self.num_ecu_found)
+        options.elm.close_protocol()
+
+    def check_ecu(self, can_response, label, addr):
+        if len(can_response) > 59:
+            diagversion = str(int(can_response[21:23], 16))
+            supplier = can_response[24:32].replace(' ', '').decode('hex')
+            soft = can_response[48:53].replace(' ', '')
+            version = can_response[54:59].replace(' ', '')
+            approximate_ecu = []
+            found_exact = False
+            found_approximate = False
+
+            for target in self.ecu_database.targets:
+                if target.checkWith(diagversion, supplier, soft, version, addr):
+                    self.ecus[target.name] = target
+                    self.num_ecu_found += 1
+                    label.setText("Found %i ecu" % self.num_ecu_found)
+                    found_exact = True
+                    break
+                elif target.checkApproximate(diagversion, supplier, soft, version, addr):
+                    approximate_ecu.append(target)
+                    found_approximate = True
+
+            # Try to find the closest possible version of an ECU
+            if not found_exact and found_approximate:
+                min_delta_version = 0xFFFFFF
+                kept_ecu = None
+                for tgt in approximate_ecu:
+                    delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
+                    if delta < min_delta_version:
+                        min_delta_version = delta
+                        kept_ecu = tgt
+
+                if kept_ecu:
+                    self.approximate_ecus[kept_ecu.name] = kept_ecu
+                    self.num_ecu_found += 1
+                    label.setText("Found %i ecu" % self.num_ecu_found)
 
 if __name__ == '__main__':
     ecur = Ecu_file("ecus/UCH_84_J84_04_00.xml", True)

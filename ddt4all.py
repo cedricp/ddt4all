@@ -248,6 +248,11 @@ class Main_widget(gui.QMainWindow):
             item = gui.QListWidgetItem(ecu)
             self.treeview_ecu.addItem(item)
 
+        for ecu in self.ecu_scan.approximate_ecus.keys():
+            item = gui.QListWidgetItem(ecu)
+            item.setForeground(core.Qt.red)
+            self.treeview_ecu.addItem(item)
+
         self.progressstatus.setValue(0)
 
     def setConnected(self, on):
@@ -318,7 +323,11 @@ class Main_widget(gui.QMainWindow):
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
 
-        ecu = self.ecu_scan.ecus[ecu_name]
+        if ecu_name in self.ecu_scan.ecus:
+            ecu = self.ecu_scan.ecus[ecu_name]
+        else:
+            ecu = self.ecu_scan.approximate_ecus[ecu_name]
+
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)

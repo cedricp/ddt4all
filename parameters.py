@@ -90,14 +90,16 @@ class paramWidget(gui.QWidget):
     def initELM(self):
         if not options.simulation_mode:
             if self.protocol == 'CAN':
+                self.logview.append("Initialisation ELM en mode CAN")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
                 options.elm.set_can_addr(self.ecu_addr, ecu_conf)
             elif self.protocol == 'KWP2000':
+                self.logview.append("Initialisation ELM en mode KWP2000")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
+                options.opt_si = not self.iso_fastinit
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.iso_send_id, ecu_conf)
-                options.opt_si = not self.iso_fastinit
             else:
                 self.logview.append("Protocole " + self.protocol + " non supporte")
 
