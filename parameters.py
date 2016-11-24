@@ -240,7 +240,6 @@ class paramWidget(gui.QWidget):
         self.drawButtons(screen)
         self.updateDisplays(True)
         self.timer.timeout.connect(self.updateDisplays)
-        self.timer.start(1000)
         return True
 
     def colorConvert(self, color):
