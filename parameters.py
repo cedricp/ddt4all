@@ -642,7 +642,7 @@ class paramWidget(gui.QWidget):
 
         while 1:
             dtcread_command = ''.join(bytestosend)
-            # More DTC, pease
+            # More DTC, please
             bytestosend[moredtcbyte] = "FF"
             can_response = self.sendElm(dtcread_command)
             dtc_num += 1
@@ -650,11 +650,12 @@ class paramWidget(gui.QWidget):
             if "WRONG RESPONSE" in can_response:
                 break
 
+            can_response = can_response.split(' ')
             while len(can_response) >= shiftbytecount + 2:
                 for k in request.dataitems.keys():
                     ecu_data = self.ecurequestsparser.data[k]
                     dataitem = request.dataitems[k]
-                    value_hex = ecu_data.getHexValue(can_response, dataitem, request.endian)
+                    value_hex = ecu_data.getHexValue(' '.join(can_response), dataitem, request.endian)
 
                     if value_hex is None:
                         continue

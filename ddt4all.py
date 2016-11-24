@@ -186,7 +186,7 @@ class Main_widget(gui.QMainWindow):
             resp = options.elm.start_session_can('1086')
             # Asking to dump parameters
             isk_data_request =  options.elm.request(req='21AB', positive='61', cache=False)
-            if not resp.startswith("61"):
+            if not isk_data_request.startswith("61"):
                 self.logview.append("Reponse UCH pour recuperation ISK invalide")
                 return
             # Return to default session

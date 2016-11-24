@@ -635,14 +635,17 @@ class ELM:
                     noerrors = False
 
         # Check for negative
-        if result[:2] == '7F': noerrors = False
+        if result[:2] == '7F':
+            noerrors = False
 
+        elm_error = 'NOT REGISTERED'
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F' and result[6:8] in negrsp.keys():
+            elm_error = negrsp[result[6:8]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
-                    tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + ";" + negrsp[result[6:8]] + "\n")
+                    tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + negrsp[result[6:8]] + "\n")
                 self.vf.flush()
 
         # populate L1 cache
@@ -654,7 +657,7 @@ class ELM:
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE"
+            return "WRONG RESPONSE : " + elm_error
 
     def send_can_cfc0(self, command):
 
