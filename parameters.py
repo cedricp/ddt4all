@@ -193,7 +193,7 @@ class paramWidget(gui.QWidget):
         else:
             elm_response = '00 ' * 70
             if "17FF00" in command:
-                elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40 "
+                elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
             if "17FFFF" in command:
                 elm_response = "WRONG RESPONSE"
                 
@@ -653,10 +653,8 @@ class paramWidget(gui.QWidget):
 
             if "RESPONSE" in can_response:
                 break
-            
             can_response = can_response.split(' ')
             while len(can_response) >= shiftbytecount + 2:
-                print can_response
                 for k in request.dataitems.keys():
                     ecu_data = self.ecurequestsparser.data[k]
                     dataitem = request.dataitems[k]
