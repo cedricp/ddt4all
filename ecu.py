@@ -69,7 +69,7 @@ class Ecu_request:
         self.shiftbytescount = 0
         self.replybytes = ''
         self.manualsend = False
-        self.sentbytes = 0
+        self.sentbytes = ''
         self.dataitems = {}
         self.sendbyte_dataitems = {}
         self.name = 'uninit'
@@ -227,10 +227,7 @@ class Ecu_data:
                 return None
 
             for i in range(self.bytescount):
-                if not little_endian:
-                    bytes_list[i] = ord(value[i])
-                else:
-                    bytes_list[self.bytescount - i - 1] = ord(value[i])
+                bytes_list[self.bytescount - i - 1] = ord(value[i])
 
             return bytes_list
 
@@ -269,10 +266,9 @@ class Ecu_data:
         hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
 
         n = 0
-        hex_len = len(hex_bytes) - 1
-        if  len(hex_bytes) > self.bytescount:
-
+        if len(hex_bytes) > self.bytescount:
             return None
+
         for h in hex_bytes:
             original_byte  = int('0x' + bytes_list[n + start_byte], 16)
             original_value = int('0x' + h, 16)
@@ -284,10 +280,7 @@ class Ecu_data:
 
             value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
 
-            if not little_endian:
-                bytes_list[start_byte + n] = value_formatted
-            else:
-                bytes_list[start_byte + hex_len - n] = value_formatted
+            bytes_list[start_byte + n] = value_formatted
 
             n += 1
 
@@ -363,16 +356,16 @@ class Ecu_data:
         if len(hexval) == 0:
             return None
 
-        if little_endian:
-            a = hexval
-            b = ''
-            if not len(a) % 2:
-                for i in range(0, len(a), 2):
-                    b = a[i:i + 2] + b
-                hexval = b
-            else:
-                print "Warning, cannot convert little endian value, report error please"
-                return None
+        # if little_endian:
+        #     a = hexval
+        #     b = ''
+        #     if not len(a) % 2:
+        #         for i in range(0, len(a), 2):
+        #             b = a[i:i + 2] + b
+        #         hexval = b
+        #     else:
+        #         print "Warning, cannot convert little endian value, report error please"
+        #         return None
 
         if bits % 8:
             if little_endian:
