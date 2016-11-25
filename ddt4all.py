@@ -6,7 +6,7 @@ import pickle
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
-import elm, options
+import elm, options, locale
 
 class Ecu_list(gui.QDialog):
     def __init__(self, ecuscan):
@@ -22,9 +22,12 @@ class Ecu_list(gui.QDialog):
         stored_ecus = []
         for ecu in self.ecuscan.ecu_database.targets:
             if not ecu.name in stored_ecus:
-                self.list.addItem(ecu.name)
                 stored_ecus.append(ecu.name)
-            
+
+        stored_ecus.sort(cmp=locale.strcoll)
+        for e in stored_ecus:
+            self.list.addItem(e)
+
         self.list.doubleClicked.connect(self.ecuSel)
 
     def ecuSel(self, index):

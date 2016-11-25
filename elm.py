@@ -593,7 +593,7 @@ class ELM:
                         continue
                     responses.append(s)
 
-        # analise response (2 phase)
+        # analyse response (2 phases)
         result = ""
         noerrors = True
         cfarame = 0  # frame counter
