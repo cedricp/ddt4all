@@ -479,6 +479,14 @@ if __name__ == '__main__':
 
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
+
+    if not os.path.exists('ecus/eculist.xml'):
+        msgbox = gui.QMessageBox()
+        msgbox.setText("Veuillez installer la base de donnee dans le dossier 'ecus'")
+        msgbox.exec_()
+        exit(0)
+
+
     pc = portChooser()
     pc.exec_()
 
