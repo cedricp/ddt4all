@@ -266,19 +266,18 @@ class paramWidget(gui.QWidget):
     
     def getRectangle(self, xml):
         rect = {}
-        rect['left']    = int(xml.getAttribute("Left"))  / self.uiscale
-        rect['top']     = int(xml.getAttribute("Top"))  / self.uiscale
-        rect['height']  = int(xml.getAttribute("Height"))  / self.uiscale
-        rect['width']   = int(xml.getAttribute("Width"))  / self.uiscale
+        rect['left'] = int(xml.getAttribute("Left")) / self.uiscale
+        rect['top'] = int(xml.getAttribute("Top")) / self.uiscale
+        rect['height'] = int(xml.getAttribute("Height")) / self.uiscale
+        rect['width'] = int(xml.getAttribute("Width")) / self.uiscale
         return rect
     
     def getFont(self, xml):
-        data = {}
         font = self.getChildNodesByName(xml, "Font")[0]
-        font_name    = font.getAttribute("Name")
-        font_size    = float(font.getAttribute("Size"))
-        font_bold    = font.getAttribute("Bold")
-        font_italic  = font.getAttribute("Italic")
+        font_name = font.getAttribute("Name")
+        font_size = float(font.getAttribute("Size"))
+        font_bold = font.getAttribute("Bold")
+        font_italic = font.getAttribute("Italic")
         
         if font_bold == '1':
             fnt_flags = gui.QFont.Bold
