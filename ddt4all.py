@@ -47,6 +47,7 @@ class Main_widget(gui.QMainWindow):
         self.ecu_scan = ecu.Ecu_scanner()
         print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
 
+        self.ecu_scan.send_report()
         self.paramview = None
 
         self.statusBar = gui.QStatusBar()
@@ -86,7 +87,7 @@ class Main_widget(gui.QMainWindow):
         self.treeview_params = gui.QTreeWidget(self.treedock_params)
         self.treedock_params.setWidget(self.treeview_params)
         self.treeview_params.setHeaderLabels(["Screens"])
-        self.treeview_params.doubleClicked.connect(self.changeScreen)
+        self.treeview_params.clicked.connect(self.changeScreen)
 
         self.treedock_logs = gui.QDockWidget(self)
         self.logview = gui.QTextEdit()
@@ -96,7 +97,7 @@ class Main_widget(gui.QMainWindow):
         self.treedock_ecu = gui.QDockWidget(self)
         self.treeview_ecu = gui.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
-        self.treeview_ecu.doubleClicked.connect(self.changeECU)
+        self.treeview_ecu.clicked.connect(self.changeECU)
 
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_ecu)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_params)
@@ -130,6 +131,10 @@ class Main_widget(gui.QMainWindow):
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
+        self.hexinput = gui.QAction(gui.QIcon("icons/hex.png"), "Commande manuelle", self)
+        self.hexinput.triggered.connect(self.hexeditor)
+        self.hexinput.setEnabled(False)
+
         self.toolbar.addAction(scanaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
@@ -139,6 +144,8 @@ class Main_widget(gui.QMainWindow):
         self.toolbar.addAction(self.refresh)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.diagaction)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.hexinput)
 
         vehicle_dir = "vehicles"
         if not os.path.exists(vehicle_dir):
@@ -168,6 +175,13 @@ class Main_widget(gui.QMainWindow):
         iskmenu = menu.addMenu("ISK")
         meg2isk = iskmenu.addAction("Megane II")
         meg2isk.triggered.connect(lambda: self.getISK('megane2'))
+
+    def hexeditor(self):
+        if self.paramview:
+            # Stop auto refresh
+            options.auto_refresh = False
+            self.refresh.setEnabled(False)
+            self.paramview.hexeditor()
 
     def changeRefreshTime(self):
         if self.paramview:
@@ -258,6 +272,10 @@ class Main_widget(gui.QMainWindow):
 
         self.progressstatus.setValue(0)
 
+        if options.report_data:
+            self.logview.append("Envoie des infos ECUs en cours, merci pour votre participation")
+            self.ecu_scan.send_report()
+
     def setConnected(self, on):
         if on:
             self.connectedstatus.setStyleSheet("background : green")
@@ -314,6 +332,7 @@ class Main_widget(gui.QMainWindow):
         screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
         inited = self.paramview.init(screen)
         self.diagaction.setEnabled(inited)
+        self.hexinput.setEnabled(inited)
         self.expert.setChecked(False)
         options.promode = False
         self.autorefresh.setChecked(False)
@@ -428,6 +447,14 @@ class portChooser(gui.QDialog):
         safetychecklayout.addWidget(safetylabel)
         layout.addLayout(safetychecklayout)
 
+        reportchecklayout = gui.QHBoxLayout()
+        self.reportcheck = gui.QCheckBox()
+        self.reportcheck.setChecked(True)
+        reportlabel = gui.QLabel("J'accepte le report d'info de mes ECUs")
+        reportchecklayout.addWidget(self.reportcheck)
+        reportchecklayout.addWidget(reportlabel)
+        layout.addLayout(reportchecklayout)
+
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
         layout.addLayout(button_layout)
@@ -453,6 +480,11 @@ class portChooser(gui.QDialog):
             msgbox.exec_()
             return
 
+        if self.reportcheck.isChecked():
+            options.report_data = True
+        else:
+            options.report_data = False
+
         if self.wifienable.isChecked():
             self.port = str(self.wifiinput.text())
             self.mode = 1
@@ -472,6 +504,7 @@ class portChooser(gui.QDialog):
         self.securitycheck = self.safetycheck.isChecked()
         self.port = 'DUMMY'
         self.mode = 2
+        options.report_data = False
         self.close()
 
 if __name__ == '__main__':
@@ -510,6 +543,7 @@ if __name__ == '__main__':
 
     print "Initilizing ELM with speed %i..." % options.port_speed
     options.elm = elm.ELM(options.port, options.port_speed)
+
     if port_speed != options.port_speed:
         options.elm.port.soft_baudrate(port_speed)
 

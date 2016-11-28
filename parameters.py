@@ -84,6 +84,31 @@ class paramWidget(gui.QWidget):
         self.initELM()
         return scr_init
 
+    def hexeditor(self):
+        self.dialogbox = gui.QWidget()
+        wlayout = gui.QVBoxLayout()
+        inputlabel = gui.QLabel("Entree")
+        outputlabel = gui.QLabel("Sortie")
+        self.input = gui.QLineEdit()
+        self.input.returnPressed.connect(self.send_manual_cmd)
+        self.output = gui.QLineEdit()
+        self.output.setReadOnly(True)
+        hexvalidaor = core.QRegExp(("^[\s0-9a-fA-F]+"))
+        rev = gui.QRegExpValidator(hexvalidaor, self)
+        self.input.setValidator(rev)
+        wlayout.addWidget(inputlabel)
+        wlayout.addWidget(self.input)
+        wlayout.addWidget(outputlabel)
+        wlayout.addWidget(self.output)
+        self.dialogbox.setLayout(wlayout)
+        self.dialogbox.show()
+
+    def send_manual_cmd(self):
+        command = self.input.text()
+        ascii_cmd = str(command).upper().replace(" ", "")
+        output = self.sendElm(ascii_cmd)
+        self.output.setText(output)
+
     def setRefreshTime(self, value):
         self.refreshtime = value
 

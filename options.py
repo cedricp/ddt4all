@@ -12,3 +12,4 @@ auto_refresh = False
 elm_failed = False
 # KWP2000 Slow init
 opt_si=False
+report_data=True

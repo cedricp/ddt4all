@@ -1,6 +1,7 @@
 import math, string
 import options
 import elm
+import report
 
 from xml.dom.minidom import parse
 import xml.dom.minidom
@@ -509,6 +510,7 @@ class Ecu_scanner:
         self.ecus = {}
         self.ecu_database = Ecu_database()
         self.num_ecu_found = 0
+        self.report_data = []
 
     def getNumEcuDb(self):
         return self.ecu_database.numecu
@@ -524,6 +526,13 @@ class Ecu_scanner:
         self.ecus = {}
         self.approximate_ecus = {}
         self.num_ecu_found = 0
+        self.report_data = []
+
+    def send_report(self):
+        if options.report_data:
+            # order : diagversion, supplier, soft, addr, can_response, version, href
+            for reportdata in self.report_data:
+                report.report_ecu(reportdata[1], reportdata[2], reportdata[5], reportdata[0], reportdata[3], reportdata[4], reportdata[6])
 
     def scan(self, progress=None, label=None):
         if options.simulation_mode:
@@ -550,7 +559,7 @@ class Ecu_scanner:
                     #can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
                 else:
-                    can_response = "61 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+                    can_response = "7F 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
             else:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
 
@@ -588,6 +597,7 @@ class Ecu_scanner:
             approximate_ecu = []
             found_exact = False
             found_approximate = False
+            href = ""
 
             for target in self.ecu_database.targets:
                 if target.checkWith(diagversion, supplier, soft, version, addr):
@@ -595,6 +605,8 @@ class Ecu_scanner:
                     self.num_ecu_found += 1
                     label.setText("Found %i ecu" % self.num_ecu_found)
                     found_exact = True
+                    href = target.href
+
                     break
                 elif target.checkApproximate(diagversion, supplier, soft, version, addr):
                     approximate_ecu.append(target)
@@ -613,7 +625,11 @@ class Ecu_scanner:
                 if kept_ecu:
                     self.approximate_ecus[kept_ecu.name] = kept_ecu
                     self.num_ecu_found += 1
+                    href = "-->" + kept_ecu.href + "<--"
                     label.setText("Found %i ecu" % self.num_ecu_found)
+
+            if can_response.startswith('61'):
+                self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href))
 
 if __name__ == '__main__':
     ecur = Ecu_file("ecus/UCH_84_J84_04_00.xml", True)
