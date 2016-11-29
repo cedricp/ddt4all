@@ -411,6 +411,37 @@ class portChooser(gui.QDialog):
         layout.addWidget(label)
         layout.addWidget(self.listview)
 
+        medialayout = gui.QHBoxLayout()
+        self.usbbutton = gui.QPushButton()
+        self.usbbutton.setIcon(gui.QIcon("icons/usb.png"))
+        self.usbbutton.setIconSize(core.QSize(60, 60))
+        self.usbbutton.setFixedHeight(64)
+        self.usbbutton.setFixedWidth(64)
+        self.usbbutton.setCheckable(True)
+        medialayout.addWidget(self.usbbutton)
+
+        self.wifibutton = gui.QPushButton()
+        self.wifibutton.setIcon(gui.QIcon("icons/wifi.png"))
+        self.wifibutton.setIconSize(core.QSize(60, 60))
+        self.wifibutton.setFixedHeight(64)
+        self.wifibutton.setFixedWidth(64)
+        self.wifibutton.setCheckable(True)
+        medialayout.addWidget(self.wifibutton)
+
+        self.btbutton = gui.QPushButton()
+        self.btbutton.setIcon(gui.QIcon("icons/bt.png"))
+        self.btbutton.setIconSize(core.QSize(60, 60))
+        self.btbutton.setFixedHeight(64)
+        self.btbutton.setFixedWidth(64)
+        self.btbutton.setCheckable(True)
+        medialayout.addWidget(self.btbutton)
+
+        layout.addLayout(medialayout)
+
+        self.btbutton.toggled.connect(self.bt)
+        self.wifibutton.toggled.connect(self.wifi)
+        self.usbbutton.toggled.connect(self.usb)
+
         speedlayout = gui.QHBoxLayout()
         self.speedcombo = gui.QComboBox()
         speedlabel = gui.QLabel("Vitesse du port")
@@ -429,12 +460,9 @@ class portChooser(gui.QDialog):
         button_dmo = gui.QPushButton("Mode DEMO")
 
         wifilayout = gui.QHBoxLayout()
-        self.wifienable = gui.QCheckBox()
-        self.wifienable.setChecked(False)
         wifilabel = gui.QLabel("WiFi port : ")
         self.wifiinput = gui.QLineEdit()
         self.wifiinput.setText("192.168.0.10:35000")
-        wifilayout.addWidget(self.wifienable)
         wifilayout.addWidget(wifilabel)
         wifilayout.addWidget(self.wifiinput)
         layout.addLayout(wifilayout)
@@ -461,14 +489,57 @@ class portChooser(gui.QDialog):
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
-        self.wifienable.clicked.connect(self.wifiCheck)
         
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
             item.setText(p)
 
-    def wifiCheck(self):
-        self.listview.setEnabled(not self.wifienable.isChecked())
+    def bt(self):
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+
+        self.speedcombo.setCurrentIndex(2)
+        self.btbutton.setChecked(True)
+        self.wifibutton.setChecked(False)
+        self.usbbutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+
+    def wifi(self):
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+
+        self.wifibutton.setChecked(True)
+        self.btbutton.setChecked(False)
+        self.usbbutton.setChecked(False)
+        self.wifiinput.setEnabled(True)
+        self.speedcombo.setEnabled(False)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+
+    def usb(self):
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+
+        self.usbbutton.setChecked(True)
+        self.speedcombo.setCurrentIndex(0)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
 
     def connectedMode(self):
         self.securitycheck = self.safetycheck.isChecked()
@@ -485,7 +556,7 @@ class portChooser(gui.QDialog):
         else:
             options.report_data = False
 
-        if self.wifienable.isChecked():
+        if self.wifibutton.isChecked():
             self.port = str(self.wifiinput.text())
             self.mode = 1
             self.close()
@@ -544,8 +615,8 @@ if __name__ == '__main__':
     print "Initilizing ELM with speed %i..." % options.port_speed
     options.elm = elm.ELM(options.port, options.port_speed)
 
-    if port_speed != options.port_speed:
-        options.elm.port.soft_baudrate(port_speed)
+    #if port_speed != options.port_speed:
+    #    options.elm.port.soft_baudrate(port_speed)
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()
