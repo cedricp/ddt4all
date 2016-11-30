@@ -42,6 +42,7 @@ class displayDict:
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
         super(paramWidget, self).__init__(parent)
+        self.scrollarea = parent
         self.refreshtime = 400
         self.protocol = ''
         self.layout = gui.QHBoxLayout(self)
@@ -67,6 +68,28 @@ class paramWidget(gui.QWidget):
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
         self.initXML()
+        self.sliding = False
+        self.mouseOldX = 0
+        self.mouseOldY = 0
+
+    def mousePressEvent(self, event):
+        if event.button() == core.Qt.LeftButton:
+            self.sliding = True
+            self.mouseOldX = event.globalX()
+            self.mouseOldY = event.globalY()
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == core.Qt.LeftButton:
+            self.sliding = False
+
+    def mouseMoveEvent(self, event):
+        if self.sliding:
+            mouseX = event.globalX() - self.mouseOldX
+            mouseY = event.globalY() - self.mouseOldY
+            self.mouseOldX = event.globalX()
+            self.mouseOldY = event.globalY()
+            self.scrollarea.verticalScrollBar().setValue(self.scrollarea.verticalScrollBar().value() - mouseY)
+            self.scrollarea.horizontalScrollBar().setValue(self.scrollarea.horizontalScrollBar().value() - mouseX)
 
     def init(self, screen):
         if self.panel:

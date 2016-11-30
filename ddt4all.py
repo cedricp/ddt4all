@@ -341,6 +341,8 @@ class Main_widget(gui.QMainWindow):
         self.paramview.setRefreshTime(self.refreshtimebox.value())
 
     def changeECU(self, index):
+        self.diagaction.setEnabled(False)
+        self.hexinput.setEnabled(False)
         item = self.treeview_ecu.model().itemData(index)
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
