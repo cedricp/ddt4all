@@ -8,6 +8,8 @@ import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options, locale
 
+app = None
+
 class Ecu_list(gui.QDialog):
     def __init__(self, ecuscan):
         super(Ecu_list, self).__init__()
@@ -45,6 +47,7 @@ class Main_widget(gui.QMainWindow):
         self.setWindowTitle("DDT4all")
         print "Scanning ECUs..."
         self.ecu_scan = ecu.Ecu_scanner()
+        self.ecu_scan.qapp = app
         print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
 
         self.ecu_scan.send_report()

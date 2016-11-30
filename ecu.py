@@ -511,6 +511,7 @@ class Ecu_scanner:
         self.ecu_database = Ecu_database()
         self.num_ecu_found = 0
         self.report_data = []
+        self.qapp = None
 
     def getNumEcuDb(self):
         return self.ecu_database.numecu
@@ -546,6 +547,7 @@ class Ecu_scanner:
         options.elm.init_can()
         for addr in elm.snat.keys():
             progress.setValue(i)
+            self.qapp.processEvents()
             i += 1
             txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN'})
             options.elm.start_session_can('10C0')
@@ -575,6 +577,7 @@ class Ecu_scanner:
         options.elm.init_iso()
         for addr in elm.snat.keys():
             progress.setValue(i)
+            self.qapp.processEvents()
             i += 1
             options.elm.set_iso_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
             options.elm.start_session_iso('10C0')

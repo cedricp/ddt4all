@@ -71,6 +71,7 @@ class paramWidget(gui.QWidget):
         self.sliding = False
         self.mouseOldX = 0
         self.mouseOldY = 0
+        self.current_screen = ''
 
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
@@ -90,6 +91,23 @@ class paramWidget(gui.QWidget):
             self.mouseOldY = event.globalY()
             self.scrollarea.verticalScrollBar().setValue(self.scrollarea.verticalScrollBar().value() - mouseY)
             self.scrollarea.horizontalScrollBar().setValue(self.scrollarea.horizontalScrollBar().value() - mouseX)
+
+    def wheelEvent(self, event):
+        if event.delta() > 0:
+            self.zoomin_page()
+        else:
+            self.zoomout_page()
+        self.init(self.current_screen)
+
+    def zoomin_page(self):
+        self.uiscale -= 1
+        if self.uiscale < 4:
+            self.uiscale = 4
+
+    def zoomout_page(self):
+        self.uiscale += 1
+        if self.uiscale > 20:
+            self.uiscale = 20
 
     def init(self, screen):
         if self.panel:
@@ -267,6 +285,7 @@ class paramWidget(gui.QWidget):
         return nodes
 
     def initScreen(self, screen_name):
+        self.current_screen = screen_name
         self.presend = []
         self.timer.stop()
         
@@ -276,6 +295,7 @@ class paramWidget(gui.QWidget):
             pass
             
         if not screen_name in self.xmlscreen.keys():
+            self.current_screen = ''
             return False
 
         screen = self.xmlscreen[screen_name]
@@ -285,8 +305,8 @@ class paramWidget(gui.QWidget):
         screencolor = screen.getAttribute("Color")
         self.setStyleSheet("background-color: %s" % self.colorConvert(screencolor))
 
-        self.resize(self.screen_width+20, self.screen_height + 20)
-        self.panel.resize(self.screen_width+40, self.screen_height + 40)
+        self.resize(self.screen_width, self.screen_height)
+        self.panel.resize(self.screen_width, self.screen_height)
 
         for elem in self.getChildNodesByName(screen, u"Send"):
             delay = elem.getAttribute('Delay')
