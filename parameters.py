@@ -112,6 +112,7 @@ class paramWidget(gui.QWidget):
     def init(self, screen):
         if self.panel:
             self.layout.removeWidget(self.panel)
+            self.panel.setParent(None)
             self.panel.close()
             self.panel.destroy()
 
@@ -300,11 +301,12 @@ class paramWidget(gui.QWidget):
 
         screen = self.xmlscreen[screen_name]
         
-        self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale
-        self.screen_height = int(screen.getAttribute("Height")) / self.uiscale
+        self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale + 40
+        self.screen_height = int(screen.getAttribute("Height")) / self.uiscale + 40
         screencolor = screen.getAttribute("Color")
         self.setStyleSheet("background-color: %s" % self.colorConvert(screencolor))
-
+        self.panel.setContentsMargins(0, 0, 0, 0)
+        self.setContentsMargins(0, 0, 0, 0)
         self.resize(self.screen_width, self.screen_height)
         self.panel.resize(self.screen_width, self.screen_height)
 
@@ -445,7 +447,6 @@ class paramWidget(gui.QWidget):
                     smap = {}
                     delay  = snd.getAttribute("Delay")
                     reqname = snd.getAttribute("RequestName")
-                    rq = self.ecurequestsparser.requests[reqname]
                     smap['Delay']       = delay
                     smap['RequestName'] = reqname
                     sendlist.append(smap)

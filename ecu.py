@@ -433,7 +433,7 @@ class Ecu_file:
 # ISO8                                  ?ATSP 3?
 
 class Ecu_ident:
-    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol):
+    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol, projects):
         self.protocols = [u"KWP2000 Init 5 Baud Type I and II", u"ISO8",
                           u"CAN Messaging (125 kbps CAN)", u"KWP2000 FastInit MultiPoint",
                           u"KWP2000 FastInit MonoPoint", u"DiagOnCAN"]
@@ -443,6 +443,7 @@ class Ecu_ident:
         self.version = version
         self.name = name
         self.group = group
+        self.projects = projects
         self.href = href
         self.addr = None
         self.protocol = protocol
@@ -488,6 +489,11 @@ class Ecu_database:
             group = target.getAttribute("group")
             protocol = target.getAttribute("Protocol")
             autoidents = target.getElementsByTagName("AutoIdents")
+            projectselems = target.getElementsByTagName("Projects")
+            projects = []
+            if projectselems:
+                for c in projectselems[0].childNodes:
+                    projects.append(c.nodeName)
             for autoident in autoidents:
                 self.numecu += 1
                 for ai in autoident.getElementsByTagName("AutoIdent"):
@@ -495,7 +501,7 @@ class Ecu_database:
                     supplier = ai.getAttribute("Supplier")
                     soft = ai.getAttribute("Soft")
                     version = ai.getAttribute("Version")
-                    ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol)
+                    ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol, projects)
                     self.targets.append(ecu_ident)
 
     def getTarget(self, name):

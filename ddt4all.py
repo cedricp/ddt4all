@@ -16,20 +16,35 @@ class Ecu_list(gui.QDialog):
         self.selected = ''
         layout = gui.QVBoxLayout()
         self.setLayout(layout)
-        self.list = gui.QListWidget(self)
+        self.list = gui.QTreeWidget(self)
         self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         layout.addWidget(self.list)
         self.ecuscan = ecuscan
+        self.list.setColumnCount(2)
+        self.list.model().setHeaderData(0, core.Qt.Horizontal, 'Nom ECU')
+        self.list.model().setHeaderData(1, core.Qt.Horizontal, 'Projets')
 
-        stored_ecus = []
+        stored_ecus = {}
         for ecu in self.ecuscan.ecu_database.targets:
-            if not ecu.name in stored_ecus:
-                stored_ecus.append(ecu.name)
+            grp = ecu.group
+            if not grp:
+                grp = "000 - No group"
+            if not grp in stored_ecus:
+                stored_ecus[grp] = []
+            projects = "/".join(ecu.projects)
+            name = u' (' + projects + u')'
 
-        stored_ecus.sort(cmp=locale.strcoll)
-        for e in stored_ecus:
-            self.list.addItem(e)
+            if not [ecu.name, name] in stored_ecus[grp]:
+                stored_ecus[grp].append([ecu.name, name])
 
+        keys = stored_ecus.keys()
+        keys.sort(cmp=locale.strcoll)
+        for e in keys:
+            item = gui.QTreeWidgetItem(self.list, [e])
+            #stored_ecus[e].sort(cmp=locale.strcoll)
+            for t in stored_ecus[e]:
+                gui.QTreeWidgetItem(item, t)
+        self.list.sortItems(0, core.Qt.AscendingOrder)
         self.list.doubleClicked.connect(self.ecuSel)
 
     def ecuSel(self, index):
@@ -352,8 +367,10 @@ class Main_widget(gui.QMainWindow):
 
         if ecu_name in self.ecu_scan.ecus:
             ecu = self.ecu_scan.ecus[ecu_name]
-        else:
+        elif ecu_name in self.ecu_scan.approximate_ecus:
             ecu = self.ecu_scan.approximate_ecus[ecu_name]
+        else:
+            return
 
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr
