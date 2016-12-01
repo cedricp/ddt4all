@@ -384,7 +384,7 @@ class Main_widget(gui.QMainWindow):
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
         self.paramview.uiscale = uiscale_mem
-        
+
         self.scrollview.setWidget(self.paramview)
 
         self.protocolstatus.setText(ecu.protocol)

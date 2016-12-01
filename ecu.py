@@ -543,11 +543,10 @@ class Ecu_scanner:
 
     def scan(self, progress=None, label=None):
         if options.simulation_mode:
-            self.ecus["UCH_84_J84_04_00"] = Ecu_ident("000", "000", "000", "00", "UCH", "GRP", "UCH_84_J84_04_00.xml", "DiagOnCan")
             self.ecus["Tdb_BCEKL84_serie_4emeRev."] = Ecu_ident("000", "000", "000", "00",
-                                                                "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan")
-            self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan")
-            self.ecus["Abs_X84_Bosch8.1"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "Abs_X84_Bosch8.1_V1.3.xml", "DiagOnCan")
+                                                                "TdB", "GRP", "Tdb_BCEKL84_serie_4emeRev.xml", "DiagOnCan", [])
+            self.ecus["ACU4_X84_MK2"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "ACU4_X84_MK2.xml", "DiagOnCan", [])
+            self.ecus["Abs_X84_Bosch8.1"] = Ecu_ident("000", "000", "000", "00", "ACU", "GRP", "Abs_X84_Bosch8.1_V1.3.xml", "DiagOnCan", [])
 
         i = 0
         options.elm.init_can()
@@ -559,7 +558,9 @@ class Ecu_scanner:
             options.elm.start_session_can('10C0')
 
             if options.simulation_mode:
-                if txa == "74B":
+                if txa == "742":
+                    can_response = "61 80 82 00 30 64 35 48 30 30 31 00 00 32 03 00 03 22 03 60 00 00 2D 32 14 00 60"
+                elif txa == "74B":
                     #can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 06 00 00 00 00 00 00 01"
                     can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
                 elif txa == "7E0":
@@ -577,7 +578,7 @@ class Ecu_scanner:
     def scan_kwp(self, progress=None, label=None):
         if options.simulation_mode:
             self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.xml",
-                                                        "KWP2000 FastInit MonoPoint")
+                                                        "KWP2000 FastInit MonoPoint", [])
 
         i = 0
         options.elm.init_iso()
