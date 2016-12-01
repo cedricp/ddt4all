@@ -64,7 +64,6 @@ class paramWidget(gui.QWidget):
         self.inputDict = {}
         self.presend = []
         self.ecu_addr = str(ecu_addr)
-        self.startsession_command = '10C0'
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
         self.initXML()
@@ -232,16 +231,6 @@ class paramWidget(gui.QWidget):
                     self.xmlscreen[screen_name] = screen
                     self.categories[category_name].append(screen_name)
 
-        if "Start Diagnostic Session" in self.ecurequestsparser.requests:
-            diag_request = self.ecurequestsparser.requests["Start Diagnostic Session"]
-            self.startsession_command = diag_request.sentbytes
-        elif "StartDiagnosticSession" in self.ecurequestsparser.requests:
-            diag_request = self.ecurequestsparser.requests["StartDiagnosticSession"]
-            self.startsession_command = diag_request.sentbytes
-        else:
-            print "Cannot find a valid StartDiagnoticSession entry, using default"
-            self.startsession_command = '10C0'
-
     def sendElm(self, command, auto=False):
         txt = ''
         elm_response = '00 ' * 70
@@ -373,7 +362,21 @@ class paramWidget(gui.QWidget):
             rect = self.getRectangle(self.getChildNodesByName(display, "Rectangle")[0])
             qfnt = self.getFont(display)
             req = self.ecurequestsparser.requests[req_name]
-            dataitem = req.dataitems[text]
+            dataitem = None
+            if text in req.dataitems:
+                dataitem = req.dataitems[text]
+            else:
+                keys = req.dataitems.keys()
+                for k in keys:
+                    if k.upper() == text.upper():
+                        dataitem = req.dataitems[k]
+                        print "Found similar", k, " vs ", text
+                        break
+
+            if not dataitem:
+                print "DataItem not found", text
+                continue
+
             data = self.ecurequestsparser.data[text]
 
             qlabel = gui.QLabel(self.panel)

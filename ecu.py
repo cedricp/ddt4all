@@ -314,6 +314,10 @@ class Ecu_data:
             elif self.bytescount == 2:
                 value = hex16_tosigned(value)
 
+        if self.divideby == 0:
+            print "Division by zero : ", dataitem.name
+            return None
+
         res = (value * float(self.step) + float(self.offset)) / float(self.divideby)
         if len(self.format) and '.' in self.format:
             acc = len(self.format.split('.')[1])
@@ -349,6 +353,9 @@ class Ecu_data:
         startByte = dataitem.firstbyte
         startBit  = dataitem.bitoffset
 
+        if startBit + bits > (bytes * 8):
+            bytes += 1
+
         sb = startByte - 1
         if (sb * 2 + bytes * 2) > (len(resp)):
             return None
@@ -372,7 +379,11 @@ class Ecu_data:
             if little_endian:
                 offset = startBit
             else:
-                offset = (self.bytescount * 8) - startBit - bits
+                offset = (bytes * 8) - startBit - bits
+
+            if (offset < 0):
+                print "negative offset : ", dataitem.name, bits, offset, little_endian, hexval
+                return None
 
             val = int(hexval, 16)
             val = (val >> int(offset)) & (2**bits - 1)

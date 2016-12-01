@@ -10,10 +10,11 @@ import elm, options, locale
 
 app = None
 
-class Ecu_list(gui.QDialog):
-    def __init__(self, ecuscan):
+class Ecu_list(gui.QWidget):
+    def __init__(self, ecuscan, treeview_ecu):
         super(Ecu_list, self).__init__()
         self.selected = ''
+        self.treeview_ecu = treeview_ecu
         layout = gui.QVBoxLayout()
         self.setLayout(layout)
         self.list = gui.QTreeWidget(self)
@@ -41,7 +42,6 @@ class Ecu_list(gui.QDialog):
         keys.sort(cmp=locale.strcoll)
         for e in keys:
             item = gui.QTreeWidgetItem(self.list, [e])
-            #stored_ecus[e].sort(cmp=locale.strcoll)
             for t in stored_ecus[e]:
                 gui.QTreeWidgetItem(item, t)
         self.list.sortItems(0, core.Qt.AscendingOrder)
@@ -49,11 +49,12 @@ class Ecu_list(gui.QDialog):
 
     def ecuSel(self, index):
         item = self.list.model().itemData(index)
-        self.selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
-        target = self.ecuscan.ecu_database.getTarget(self.selected)
+        selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
+        target = self.ecuscan.ecu_database.getTarget(selected)
         if target:
             self.ecuscan.addTarget(target)
-        self.close()
+        if selected:
+            self.treeview_ecu.addItem(selected)
 
 
 class Main_widget(gui.QMainWindow):
@@ -107,6 +108,7 @@ class Main_widget(gui.QMainWindow):
         self.treeview_params.setHeaderLabels(["Screens"])
         self.treeview_params.clicked.connect(self.changeScreen)
 
+
         self.treedock_logs = gui.QDockWidget(self)
         self.logview = gui.QTextEdit()
         self.logview.setReadOnly(True)
@@ -117,6 +119,11 @@ class Main_widget(gui.QMainWindow):
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.clicked.connect(self.changeECU)
 
+        self.eculistwidget = Ecu_list(self.ecu_scan, self.treeview_ecu)
+        self.treeview_eculist = gui.QDockWidget(self)
+        self.treeview_eculist.setWidget(self.eculistwidget)
+
+        self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treeview_eculist)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_ecu)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_params)
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
@@ -186,10 +193,6 @@ class Main_widget(gui.QMainWindow):
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
 
-        ecumenu = menu.addMenu("Ecu")
-        selectecu = ecumenu.addAction("Selectionner ECU")
-        selectecu.triggered.connect(self.addEcu)
-
         iskmenu = menu.addMenu("ISK")
         meg2isk = iskmenu.addAction("Megane II")
         meg2isk.triggered.connect(lambda: self.getISK('megane2'))
@@ -231,12 +234,6 @@ class Main_widget(gui.QMainWindow):
             self.logview.append('Votre code ISK : <font color=red>' + isk_bytes + '</font>')
             if self.paramview:
                 self.paramview.initELM()
-
-    def addEcu(self):
-        eculist = Ecu_list(self.ecu_scan)
-        eculist.exec_()
-        if eculist.selected:
-            self.treeview_ecu.addItem(eculist.selected)
 
     def scan(self):
         msgBox = gui.QMessageBox()
