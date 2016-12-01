@@ -374,7 +374,17 @@ class Main_widget(gui.QMainWindow):
 
         ecu_file = "ecus/" + ecu.href
         ecu_addr = ecu.addr
+        uiscale_mem = 8
+
+        if self.paramview:
+            uiscale_mem = self.paramview.uiscale
+            self.paramview.setParent(None)
+            self.paramview.close()
+            self.paramview.destroy()
+
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
+        self.paramview.uiscale = uiscale_mem
+        
         self.scrollview.setWidget(self.paramview)
 
         self.protocolstatus.setText(ecu.protocol)
