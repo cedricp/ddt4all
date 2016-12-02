@@ -71,6 +71,7 @@ class paramWidget(gui.QWidget):
         self.mouseOldX = 0
         self.mouseOldY = 0
         self.current_screen = ''
+        self.main_protocol_status =  None
 
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
@@ -168,6 +169,11 @@ class paramWidget(gui.QWidget):
                 options.elm.set_iso_addr(self.iso_send_id, ecu_conf)
             else:
                 self.logview.append("Protocole " + self.protocol + " non supporte")
+        if self.main_protocol_status:
+            if self.protocol == "CAN":
+                self.main_protocol_status.setText("DiagOnCan @ " + options.elm.getcandnat(self.ecu_addr))
+            else:
+                self.main_protocol_status.setText("KWP @ " + self.ecu_addr)
 
     def initXML(self):
         self.categories = {}
@@ -195,14 +201,15 @@ class paramWidget(gui.QWidget):
                 send_id = send_ids[0]
                 can_id = self.getChildNodesByName(send_id, "CANId")
                 if can_id:
-                    self.can_send_id = hex(int(can_id[0].getAttribute("Value")))
+                    self.can_send_id = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
+                    self.ecu_addr = options.elm.get_can_addr(self.can_send_id)
 
             rcv_ids = self.getChildNodesByName(can, "ReceiveId")
             if rcv_ids:
                 rcv_id = rcv_ids[0]
                 can_id = self.getChildNodesByName(rcv_id, "CANId")
                 if can_id:
-                    self.can_rcv_id = hex(int(can_id[0].getAttribute("Value")))
+                    self.can_rcv_id = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
 
         k = self.getChildNodesByName(target, u"K")
         if k:
@@ -215,6 +222,7 @@ class paramWidget(gui.QWidget):
                     self.iso_fastinit = True
                     self.iso_rcv_id = hex(int(self.getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[2:].upper()
                     self.iso_send_id = hex(int(self.getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[2:].upper()
+                    self.ecu_addr = self.iso_send_id
                 else:
                     self.logview.append("Determination protocol KWP2000 impossible")
 
@@ -671,6 +679,14 @@ class paramWidget(gui.QWidget):
                         if not data.is_combo:
                             data.widget.setText(value)
 
+    def getRequest(self, requests, reqname):
+        if reqname in requests:
+            return requests[reqname]
+        for req in requests:
+            if req.upper() == reqname.upper():
+                return requests[req]
+        return None
+
     def updateDisplays(self, update_inputs= False):
         # Begin diag session
         if not options.simulation_mode:
@@ -686,7 +702,9 @@ class paramWidget(gui.QWidget):
             req_name = sendcom[1]
 
             time.sleep(delay / 1000.)
-            request = self.ecurequestsparser.requests[req_name]
+            request = self.getRequest(self.ecurequestsparser.requests, req_name)
+            if not request:
+                self.logview.append(u"Cannot call request " + req_name)
 
             self.sendElm(request.sentbytes, True)
 

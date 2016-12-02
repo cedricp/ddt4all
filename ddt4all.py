@@ -381,11 +381,9 @@ class Main_widget(gui.QMainWindow):
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
         self.paramview.uiscale = uiscale_mem
+        self.paramview.main_protocol_status = self.protocolstatus
 
         self.scrollview.setWidget(self.paramview)
-
-        self.protocolstatus.setText(ecu.protocol)
-
         screens = self.paramview.categories.keys()
         for screen in screens:
             item = gui.QTreeWidgetItem(self.treeview_params, [screen])

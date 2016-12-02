@@ -878,6 +878,9 @@ class ELM:
         self.startSession = start_session
         self.cmd(self.startSession)
 
+    def getcandnat(self, addr):
+        return dnat[addr]
+
     def init_can(self):
 
         self.currentprotocol = "can"
@@ -905,6 +908,12 @@ class ELM:
         # self.cmd("at sp 6")
         # self.cmd("at at 1")
         self.lastCMDtime = 0
+
+    def get_can_addr(self, txa):
+        for d in dnat.keys():
+            if dnat[d] == txa:
+                return d
+        return None
 
     def set_can_addr(self, addr, ecu):
 
