@@ -379,11 +379,14 @@ class paramWidget(gui.QWidget):
 
             data = self.ecurequestsparser.data[text]
 
+            if not color:
+                color = 0xAAAAAA
+
             qlabel = gui.QLabel(self.panel)
             qlabel.setFont(qfnt)
             qlabel.setText(text)
             qlabel.resize(width, rect['height'])
-            qlabel.setStyleSheet("background: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
+            qlabel.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(display)))
             qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabel.setAlignment(core.Qt.AlignLeft)
             qlabel.move(rect['left'], rect['top'])
@@ -392,7 +395,7 @@ class paramWidget(gui.QWidget):
             qlabelval.setFont(qfnt)
             qlabelval.setText("")
             qlabelval.resize(rect['width'] - width, rect['height'])
-            qlabelval.setStyleSheet("background: %s; color: %s" % ( self.colorConvert(color), self.getFontColor(display) ) )
+            qlabelval.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(display)))
             qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
             qlabelval.move(rect['left'] + width, rect['top'])
             infos = req_name + u'\n'
