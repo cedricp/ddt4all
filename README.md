@@ -9,6 +9,7 @@ Dependencies:
 * Python 2.6 or 2.7
 * PyQt 4.6 to 4.8
 * An ELM327 (usb preferable WiFi not tested yet)
+* The DDT2000 database (you must own it) - Copy the 'ecus' directory from your DDT2000 db (from C:\DDT2000data) to the ddt4all root directory
 
 Copy the  <ecus> directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py
 

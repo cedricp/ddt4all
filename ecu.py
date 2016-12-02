@@ -482,7 +482,7 @@ class Ecu_ident:
 
 class Ecu_database:
     def __init__(self):
-        xmlfile = "ecus/eculist.xml"
+        xmlfile = options.ecus_dir + "/eculist.xml"
         xdom = xml.dom.minidom.parse(xmlfile)
         self.xmldoc = xdom.documentElement
         self.targets = []

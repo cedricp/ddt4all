@@ -611,7 +611,11 @@ if __name__ == '__main__':
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
 
-    if not os.path.exists('ecus/eculist.xml'):
+    if os.path.exists("C:\DDT2000data\ecus"):
+        print "Found DDT2000 install"
+        options.ecus_dir = "C:\DDT2000data\ecus"
+
+    if not os.path.exists(options.ecus_dir + '/eculist.xml'):
         msgbox = gui.QMessageBox()
         msgbox.setText("Veuillez installer la base de donnee dans le dossier 'ecus'")
         msgbox.exec_()

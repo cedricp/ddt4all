@@ -8,9 +8,9 @@ from xml.dom.minidom import parse
 import xml.dom.minidom
 
 # TODO :
-# Delay unit (second, milliseconds ?) // Seems ms
+# Delay unit (second, milliseconds ?) // OK -> ms (from builderX)
 # little endian requests // Done needs check
-# Read freezeframe data
+# Read freezeframe data // Done (partially)
 # Check ELM response validity (mode + 0x40)
 
 class displayData:
