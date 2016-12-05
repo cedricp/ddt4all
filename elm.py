@@ -534,9 +534,8 @@ class ELM:
         for l in cmdrsp.split('\n'):
             l = l.strip().upper()
             if l.startswith("7F") and len(l) == 8 and l[6:8] in negrsp.keys():
-                if not options.state_scan: print l, negrsp[l[6:8]]
+                print l, negrsp[l[6:8]]
                 if self.lf != 0:
-                    tm = str(time.time())
                     self.lf.write("#[" + str(tc - tb) + "] rsp:" + l + ":" + negrsp[l[6:8]] + "\n")
                     self.lf.flush()
         return cmdrsp

@@ -329,7 +329,10 @@ class paramWidget(gui.QWidget):
 
     def getFontColor(self, xml):
         font = self.getChildNodesByName(xml, "Font")[0]
-        return self.colorConvert(font.getAttribute("Color"))
+        if font.getAttribute("Color"):
+            return self.colorConvert(font.getAttribute("Color"))
+        else:
+            return 0xFFFFFF
     
     def getRectangle(self, xml):
         rect = {}
@@ -504,14 +507,16 @@ class paramWidget(gui.QWidget):
             color     = input.getAttribute("Color")
             width     = int(input.getAttribute("Width")) / self.uiscale
             rect = self.getRectangle(self.getChildNodesByName(input, "Rectangle")[0])
-            qfnt = self.getFont(input)  
+            qfnt = self.getFont(input)
+
+            if not color:
+                color = 0xAAAAAA
 
             qlabel = gui.QLabel(self.panel)
             qlabel.setFont(qfnt)
             qlabel.setText(text)
-            qlabel.setStyleSheet("background: " + self.colorConvert(color))
-            qlabel.setStyleSheet("color: " + self.getFontColor(input))
-            qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
+            qlabel.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
+            qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
             qlabel.resize(rect['width'], rect['height'])
             qlabel.move(rect['left'], rect['top'])
             data = self.ecurequestsparser.data[text]
@@ -528,14 +533,14 @@ class paramWidget(gui.QWidget):
                 else:
                     infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
                 qcombo.setToolTip(infos)
+                qcombo.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
                 ddata = displayData(data, qcombo, True)
             else:
                 qlineedit = gui.QLineEdit(self.panel)
                 qlineedit.setFont(qfnt)
                 qlineedit.setText("No Value")
                 qlineedit.resize(rect['width'] - width, rect['height'])
-                qlineedit.setStyleSheet("background: " + self.colorConvert(color))
-                qlineedit.setStyleSheet("color: " + self.getFontColor(input))
+                qlineedit.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
                 qlineedit.move(rect['left'] + width, rect['top'])
                 if data.comment:
                     infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)

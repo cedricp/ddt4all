@@ -351,7 +351,7 @@ class Ecu_data:
             bytes += 1
 
         startByte = dataitem.firstbyte
-        startBit  = dataitem.bitoffset
+        startBit = dataitem.bitoffset
 
         if startBit + bits > (bytes * 8):
             bytes += 1
@@ -397,7 +397,7 @@ class Ecu_data:
         return hexval
 
 class Ecu_file:
-    def __init__(self, xmldoc, isfile = False):
+    def __init__(self, xmldoc, isfile=False):
         self.requests = {}
         self.data = {}
         if isfile:
