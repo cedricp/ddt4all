@@ -498,7 +498,9 @@ class Ecu_database:
             href = target.getAttribute("href")
             name = target.getAttribute("Name")
             group = target.getAttribute("group")
-            protocol = target.getAttribute("Protocol")
+            protnode = target.getElementsByTagName("Protocol")
+            if protnode:
+                protocol = protnode[0].firstChild.nodeValue
             autoidents = target.getElementsByTagName("AutoIdents")
             projectselems = target.getElementsByTagName("Projects")
             projects = []

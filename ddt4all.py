@@ -21,9 +21,10 @@ class Ecu_list(gui.QWidget):
         self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         layout.addWidget(self.list)
         self.ecuscan = ecuscan
-        self.list.setColumnCount(2)
+        self.list.setColumnCount(3)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, 'Nom ECU')
         self.list.model().setHeaderData(1, core.Qt.Horizontal, 'Projets')
+        self.list.model().setHeaderData(2, core.Qt.Horizontal, 'Protocol')
 
         stored_ecus = {}
         for ecu in self.ecuscan.ecu_database.targets:
@@ -36,7 +37,7 @@ class Ecu_list(gui.QWidget):
             name = u' (' + projects + u')'
 
             if not [ecu.name, name] in stored_ecus[grp]:
-                stored_ecus[grp].append([ecu.name, name])
+                stored_ecus[grp].append([ecu.name, name, ecu.protocol])
 
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
