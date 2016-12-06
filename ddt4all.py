@@ -31,8 +31,10 @@ class Ecu_list(gui.QWidget):
             grp = ecu.group
             if not grp:
                 grp = "000 - No group"
+
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
+
             projects = "/".join(ecu.projects)
             name = u' (' + projects + u')'
 
@@ -45,11 +47,14 @@ class Ecu_list(gui.QWidget):
             item = gui.QTreeWidgetItem(self.list, [e])
             for t in stored_ecus[e]:
                 gui.QTreeWidgetItem(item, t)
+
         self.list.sortItems(0, core.Qt.AscendingOrder)
         self.list.doubleClicked.connect(self.ecuSel)
 
     def ecuSel(self, index):
-        item = self.list.model().itemData(index)
+        if index.parent() == core.QModelIndex():
+            return
+        item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
         selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
         target = self.ecuscan.ecu_database.getTarget(selected)
         if target:
