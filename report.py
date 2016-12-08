@@ -5,7 +5,7 @@ import json
 report_url = 'https://api.ragic.com/ddt4all/office-manager1/3'
 
 
-def report_ecu(supplier, soft, version, diagversion, address, can_bytes, href):
+def report_ecu(supplier, soft, version, diagversion, address, can_bytes, href, protocol):
     form_data = {}
     form_data['1000275'] = supplier
     form_data['1000276'] = diagversion
@@ -14,6 +14,7 @@ def report_ecu(supplier, soft, version, diagversion, address, can_bytes, href):
     form_data['1000280'] = can_bytes
     form_data['1000281'] = address
     form_data['1000282'] = href
+    form_data['1000283'] = protocol
 
     params = urllib.urlencode(form_data)
     response = urllib2.urlopen(report_url, params)

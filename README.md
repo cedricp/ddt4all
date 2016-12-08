@@ -13,6 +13,8 @@ Dependencies:
 
 Copy the  <ecus> directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py
 
+NB : If you have a local DDT2000 installation, you don't need to copy the 'ecus' directory, DDT4ALL will use it instead
+
 Bugtracking here : https://github.com/cedricp/ddt4all
 
 Happy CAN-Hacking :)

@@ -552,7 +552,7 @@ class Ecu_scanner:
         if options.report_data:
             # order : diagversion, supplier, soft, addr, can_response, version, href
             for reportdata in self.report_data:
-                report.report_ecu(reportdata[1], reportdata[2], reportdata[5], reportdata[0], reportdata[3], reportdata[4], reportdata[6])
+                report.report_ecu(reportdata[1], reportdata[2], reportdata[5], reportdata[0], reportdata[3], reportdata[4], reportdata[6], reportdata[7])
 
     def scan(self, progress=None, label=None):
         if options.simulation_mode:
@@ -585,7 +585,7 @@ class Ecu_scanner:
             else:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
 
-            self.check_ecu(can_response, label, addr)
+            self.check_ecu(can_response, label, addr, "CAN")
         options.elm.close_protocol()
 
     def scan_kwp(self, progress=None, label=None):
@@ -607,11 +607,11 @@ class Ecu_scanner:
             else:
                 continue
 
-            self.check_ecu(can_response, label, addr)
+            self.check_ecu(can_response, label, addr, "KWP")
 
         options.elm.close_protocol()
 
-    def check_ecu(self, can_response, label, addr):
+    def check_ecu(self, can_response, label, addr, protocol):
         if len(can_response) > 59:
             diagversion = str(int(can_response[21:23], 16))
             supplier = can_response[24:32].replace(' ', '').decode('hex')
@@ -652,7 +652,7 @@ class Ecu_scanner:
                     label.setText("Found %i ecu" % self.num_ecu_found)
 
             if can_response.startswith('61'):
-                self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href))
+                self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
 
 if __name__ == '__main__':
     ecur = Ecu_file("ecus/UCH_84_J84_04_00.xml", True)

@@ -38,7 +38,7 @@ class Ecu_list(gui.QWidget):
             projects = "/".join(ecu.projects)
             name = u' (' + projects + u')'
 
-            if not [ecu.name, name] in stored_ecus[grp]:
+            if not [ecu.name, name, ecu.protocol] in stored_ecus[grp]:
                 stored_ecus[grp].append([ecu.name, name, ecu.protocol])
 
         keys = stored_ecus.keys()
@@ -616,17 +616,22 @@ if __name__ == '__main__':
 
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
+    ecudirfound = False
 
-    if os.path.exists("C:\DDT2000data\ecus"):
-        print "Found DDT2000 install"
+    if os.path.exists(options.ecus_dir + '/eculist.xml'):
+        print "Using custom DDT database"
+        ecudirfound = True
+
+    if not ecudirfound and os.path.exists("C:\DDT2000data\ecus"):
+        print "Using DDT2000 default installation"
         options.ecus_dir = "C:\DDT2000data\ecus"
+        ecudirfound = True
 
-    if not os.path.exists(options.ecus_dir + '/eculist.xml'):
+    if not ecudirfound:
         msgbox = gui.QMessageBox()
         msgbox.setText("Veuillez installer la base de donnee dans le dossier 'ecus'")
         msgbox.exec_()
         exit(0)
-
 
     pc = portChooser()
     pc.exec_()
