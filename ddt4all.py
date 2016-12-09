@@ -66,7 +66,7 @@ class Ecu_list(gui.QWidget):
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
-        self.setWindowTitle("DDT4all")
+        self.setWindowTitle("DDT4All")
         print "Scanning ECUs..."
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
@@ -95,7 +95,7 @@ class Main_widget(gui.QMainWindow):
         self.refreshtimebox.setRange(100, 2000)
         self.refreshtimebox.setSingleStep(100)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
-        refrestimelabel = gui.QLabel("Rafraichissement:")
+        refrestimelabel = gui.QLabel("Refresh rate:")
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -136,10 +136,10 @@ class Main_widget(gui.QMainWindow):
 
         self.toolbar = self.addToolBar("File")
 
-        scanaction = gui.QAction(gui.QIcon("icons/scan.png"), "Scanner les ECUs", self)
+        scanaction = gui.QAction(gui.QIcon("icons/scan.png"), "Scan ECUs", self)
         scanaction.triggered.connect(self.scan)
 
-        self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), "Lire les Codes defauts", self)
+        self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), "Read DTC", self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
@@ -148,21 +148,21 @@ class Main_widget(gui.QMainWindow):
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
 
-        self.expert = gui.QAction(gui.QIcon("icons/expert.png"), "Mode Expert", self)
+        self.expert = gui.QAction(gui.QIcon("icons/expert.png"), "Expert mode (enable writing)", self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = gui.QAction(gui.QIcon("icons/autorefresh.png"), "Rafraichissement automatique", self)
+        self.autorefresh = gui.QAction(gui.QIcon("icons/autorefresh.png"), "Auto refresh", self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = gui.QAction(gui.QIcon("icons/refresh.png"), "Rafraichir page", self)
+        self.refresh = gui.QAction(gui.QIcon("icons/refresh.png"), "Refresh (one shot)", self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = gui.QAction(gui.QIcon("icons/hex.png"), "Commande manuelle", self)
+        self.hexinput = gui.QAction(gui.QIcon("icons/hex.png"), "Manual command", self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
@@ -191,7 +191,7 @@ class Main_widget(gui.QMainWindow):
         menu = self.menuBar()
 
         diagmenu = menu.addMenu("Fichier")
-        savevehicleaction = diagmenu.addAction("Sauvegarder ce vehicule")
+        savevehicleaction = diagmenu.addAction("Save this vehicle")
         savevehicleaction.triggered.connect(self.saveEcus)
         diagmenu.addSeparator()
 
@@ -216,7 +216,7 @@ class Main_widget(gui.QMainWindow):
 
     def getISK(self, vehicle):
         if options.simulation_mode:
-            self.logview.append("Lecture ISK possible uniquement en mode connecte")
+            self.logview.append("Cannot read ISK in demo mode")
             return
 
         if self.paramview:
@@ -231,19 +231,19 @@ class Main_widget(gui.QMainWindow):
             # Asking to dump parameters
             isk_data_request =  options.elm.request(req='21AB', positive='61', cache=False)
             if not isk_data_request.startswith("61"):
-                self.logview.append("Reponse UCH pour recuperation ISK invalide")
+                self.logview.append("Cannot read ISK : Bad reply")
                 return
             # Return to default session
             options.elm.request(req='1081', positive='50', cache=False)
             isk_data_split = isk_data_request.split(" ")
             isk_bytes = " ".join(isk_data_split[19:25])
-            self.logview.append('Votre code ISK : <font color=red>' + isk_bytes + '</font>')
+            self.logview.append('Your ISK code : <font color=red>' + isk_bytes + '</font>')
             if self.paramview:
                 self.paramview.initELM()
 
     def scan(self):
         msgBox = gui.QMessageBox()
-        msgBox.setText('Options de scan')
+        msgBox.setText('Scan options')
         scancan = False
         scankwp = False
 
@@ -294,7 +294,7 @@ class Main_widget(gui.QMainWindow):
         self.progressstatus.setValue(0)
 
         if options.report_data:
-            self.logview.append("Envoie des infos ECUs en cours, merci pour votre participation")
+            self.logview.append("Sending ECU informations to database, thank you for your paticipation")
             self.ecu_scan.send_report()
 
     def setConnected(self, on):
@@ -306,7 +306,7 @@ class Main_widget(gui.QMainWindow):
             self.connectedstatus.setText("DECONNECTE")
 
     def saveEcus(self):
-        filename = gui.QFileDialog.getSaveFileName(self, "Sauvegarde vehicule (gardez l'extention .ecu)", "./vehicles/mycar.ecu", ".ecu")
+        filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)", "./vehicles/mycar.ecu", ".ecu")
         pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
 
     def loadEcu(self, name):
@@ -407,7 +407,7 @@ class donationWidget(gui.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>Ce logiciel est entierement gratuit et peut etre utilise librement. Faire un don me permettra de pouvoir acquerir du materiel afin de faire evoluer cette application. Merci pour votre aide</center>")
+        msgbox.setText("<center>Thuis Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>")
         okbutton = gui.QPushButton('Je fais un don')
         msgbox.addButton(okbutton, gui.QMessageBox.YesRole)
         msgbox.addButton(gui.QPushButton('Non merci'), gui.QMessageBox.NoRole)
@@ -418,7 +418,7 @@ class donationWidget(gui.QLabel):
         url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>Merci pour votre contribution, si votre navigteur ne s'ouvre pas, vous pouvez le faire depuis la page https://github.com/cedricp/ddt4all</center>")
+        msgbox.setText("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>")
         msgbox.exec_()
 
 
@@ -433,7 +433,7 @@ class portChooser(gui.QDialog):
         ports = elm.get_available_ports()
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
-        label.setText("Selection du port ELM")
+        label.setText("ELM port selection")
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = donationWidget()
         self.setLayout(layout)
@@ -477,7 +477,7 @@ class portChooser(gui.QDialog):
 
         speedlayout = gui.QHBoxLayout()
         self.speedcombo = gui.QComboBox()
-        speedlabel = gui.QLabel("Vitesse du port")
+        speedlabel = gui.QLabel("Port speed")
         speedlayout.addWidget(speedlabel)
         speedlayout.addWidget(self.speedcombo)
 
@@ -489,8 +489,8 @@ class portChooser(gui.QDialog):
         layout.addLayout(speedlayout)
 
         button_layout = gui.QHBoxLayout()
-        button_con = gui.QPushButton("Mode CONNECTE")
-        button_dmo = gui.QPushButton("Mode DEMO")
+        button_con = gui.QPushButton("Connected mode")
+        button_dmo = gui.QPushButton("Demo mode")
 
         wifilayout = gui.QHBoxLayout()
         wifilabel = gui.QLabel("WiFi port : ")
@@ -503,7 +503,7 @@ class portChooser(gui.QDialog):
         safetychecklayout = gui.QHBoxLayout()
         self.safetycheck = gui.QCheckBox()
         self.safetycheck.setChecked(False)
-        safetylabel = gui.QLabel("J'ai bien lu les recommandations")
+        safetylabel = gui.QLabel("I'm aware that I can harm my car if badly used")
         safetychecklayout.addWidget(self.safetycheck)
         safetychecklayout.addWidget(safetylabel)
         layout.addLayout(safetychecklayout)
@@ -511,7 +511,7 @@ class portChooser(gui.QDialog):
         reportchecklayout = gui.QHBoxLayout()
         self.reportcheck = gui.QCheckBox()
         self.reportcheck.setChecked(True)
-        reportlabel = gui.QLabel("J'accepte le report d'info de mes ECUs")
+        reportlabel = gui.QLabel("I accept to share ECU informations")
         reportchecklayout.addWidget(self.reportcheck)
         reportchecklayout.addWidget(reportlabel)
         layout.addLayout(reportchecklayout)
@@ -580,7 +580,7 @@ class portChooser(gui.QDialog):
         print self.selectedportspeed
         if not pc.securitycheck:
             msgbox = gui.QMessageBox()
-            msgbox.setText("Vous devez cocher la case vous demandant si vous avez pris connaissance des recommandations")
+            msgbox.setText("You must check the recommandations")
             msgbox.exec_()
             return
 
@@ -601,7 +601,7 @@ class portChooser(gui.QDialog):
                 self.close()
             else:
                 msgbox = gui.QMessageBox()
-                msgbox.setText("Vous devez selectionner un port communication")
+                msgbox.setText("Please select a communication port")
                 msgbox.exec_()
 
     def demoMode(self):
@@ -629,7 +629,7 @@ if __name__ == '__main__':
 
     if not ecudirfound:
         msgbox = gui.QMessageBox()
-        msgbox.setText("Veuillez installer la base de donnee dans le dossier 'ecus'")
+        msgbox.setText("You must install DDT database in 'ecus' directory")
         msgbox.exec_()
         exit(0)
 
@@ -650,7 +650,7 @@ if __name__ == '__main__':
 
     if not options.port:
         msgbox = gui.QMessageBox()
-        msgbox.setText("Pas de port de communication selectionne")
+        msgbox.setText("No COM port selected")
         msgbox.exec_()
         exit(0)
 
@@ -662,7 +662,7 @@ if __name__ == '__main__':
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()
-        msgbox.setText("Pas d'ELM327 sur le port communication selectionne")
+        msgbox.setText("No ELM327 on selected COM port")
         msgbox.exec_()
         exit(0)
 

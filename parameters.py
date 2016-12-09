@@ -129,8 +129,8 @@ class paramWidget(gui.QWidget):
     def hexeditor(self):
         self.dialogbox = gui.QWidget()
         wlayout = gui.QVBoxLayout()
-        inputlabel = gui.QLabel("Entree")
-        outputlabel = gui.QLabel("Sortie")
+        inputlabel = gui.QLabel("Input")
+        outputlabel = gui.QLabel("Output")
         self.input = gui.QLineEdit()
         self.input.returnPressed.connect(self.send_manual_cmd)
         self.output = gui.QLineEdit()
@@ -157,18 +157,18 @@ class paramWidget(gui.QWidget):
     def initELM(self):
         if not options.simulation_mode:
             if self.protocol == 'CAN':
-                self.logview.append("Initialisation ELM en mode CAN")
+                self.logview.append("Initializing CAN mode")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
                 options.elm.set_can_addr(self.ecu_addr, ecu_conf)
             elif self.protocol == 'KWP2000':
-                self.logview.append("Initialisation ELM en mode KWP2000")
+                self.logview.append("Initializing KWP2000 mode")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
                 options.opt_si = not self.iso_fastinit
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.iso_send_id, ecu_conf)
             else:
-                self.logview.append("Protocole " + self.protocol + " non supporte")
+                self.logview.append("Protocol " + self.protocol + " not supported")
         if self.main_protocol_status:
             if self.protocol == "CAN":
                 self.main_protocol_status.setText("DiagOnCan @ " + options.elm.getcandnat(self.ecu_addr))
@@ -224,7 +224,7 @@ class paramWidget(gui.QWidget):
                     self.iso_send_id = hex(int(self.getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[2:].upper()
                     self.ecu_addr = self.iso_send_id
                 else:
-                    self.logview.append("Determination protocol KWP2000 impossible")
+                    self.logview.append("Cannot init KWP2000 protocol")
 
         categories = self.getChildNodesByName(target, u"Categories")
 
@@ -248,30 +248,30 @@ class paramWidget(gui.QWidget):
                 # Allow read only modes
                 if command.startswith('10') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
                     elm_response = options.elm.request(command, cache=False)
-                    txt = '<font color=blue>Envoie requete securisee ELM :</font>'
+                    txt = '<font color=blue>Sending simulated ELM request :</font>'
                 else:
-                    txt = '<font color=green>Requete bloquee ELM :</font>'
+                    txt = '<font color=green>Blocked ELM request :</font>'
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
-                txt = '<font color=red>Envoie requete ELM :</font>'
+                txt = '<font color=red>Sending ELM request:</font>'
         else:
 
             if "17FF00" in command:
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
             if "17FFFF" in command:
                 elm_response = "WRONG RESPONSE"
-            txt = '<font color=green>Envoie requete simulee ELM :</font>'
+            txt = '<font color=green>Sending simulated ELM request :</font>'
 
         if not auto or options.log_all:
             self.logview.append(txt + command)
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
-            self.logview.append("<font color=red>Mauvaise reponse ELM :</font> " + nrsp)
+            self.logview.append("<font color=red>Bad ELM response:</font> " + nrsp)
 
         if not auto or options.log_all:
-            self.logview.append('Reception ELM : ' + elm_response)
+            self.logview.append('ELM response: ' + elm_response)
 
         return elm_response
 
@@ -558,7 +558,7 @@ class paramWidget(gui.QWidget):
 
     def buttonClicked(self, txt):
         if not txt in self.button_requests:
-            self.logview.append(u"<font color=red>Requete bouton non trouvee : " + txt + u"</font>")
+            self.logview.append(u"<font color=red>Button request not found : " + txt + u"</font>")
             return
 
         if txt in self.button_messages:
@@ -572,7 +572,7 @@ class paramWidget(gui.QWidget):
         for req in request_list:
             request_delay = float(req['Delay'].encode('ascii'))
             request_name  = req['RequestName']
-            self.logview.append(u'<font color=purple>Lancement requete :</font>' + request_name)
+            self.logview.append(u'<font color=purple>Sending request :</font>' + request_name)
 
             ecu_request = self.ecurequestsparser.requests[request_name]
             sendbytes_data_items = ecu_request.sendbyte_dataitems
@@ -614,7 +614,7 @@ class paramWidget(gui.QWidget):
 
                 if not elm_data_stream:
                     widget.setStyleSheet("background: red")
-                    self.logview.append("Abandon de requete, entree ligne incorrecte (voir entree en rouge): " + str(input_value))
+                    self.logview.append("Request aborted (look at red paramters enties): " + str(input_value))
                     return
 
                 widget.setStyleSheet("background: white")
@@ -634,7 +634,7 @@ class paramWidget(gui.QWidget):
 
                     if value == None:
                         if data: data.widget.setStyleSheet("background: red")
-                        value = "Invalide"
+                        value = "Invalid"
                     else:
                         if data: data.widget.setStyleSheet("background: white")
 
@@ -721,7 +721,7 @@ class paramWidget(gui.QWidget):
 
     def readDTC(self):
         if not "ReadDTC" in self.ecurequestsparser.requests:
-            self.logview.append("Pas de fonction ReadDTC pour ce calculateur")
+            self.logview.append("No ReadDTC request for that ECU")
             return
 
         if not options.simulation_mode:
@@ -755,7 +755,7 @@ class paramWidget(gui.QWidget):
             if len(can_response) == 2:
                 #No errors
                 msgbox = gui.QMessageBox()
-                msgbox.setText("Pas de defaut detecte")
+                msgbox.setText("No DTC")
                 msgbox.exec_()
                 return
 
