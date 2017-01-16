@@ -15,14 +15,34 @@ class Ecu_list(gui.QWidget):
         super(Ecu_list, self).__init__()
         self.selected = ''
         self.treeview_ecu = treeview_ecu
+        self.vehicle_combo = gui.QComboBox()
+        vehicles = [
+        "ALL", "X06 - TWINGO", "X07 - TWINGO3", "X09 - TWIZY", "X10 - ZOE",
+        "X24 - MASTER II", "X33 - WIND", "X35 - SYMBOL/THALIA", "X44 - TWINGO II",
+        "X45 - KOLEOS", "X52 - LOGAN II", "X56 - LAGUNA I", "X61 - KANGOO II",
+        "X62 - MASTER III", "X64 - MEGANE/SCENIC I", "X65 - CLIO II", "X66 - ESPACE III"
+        "X67 - AVANTIME/KANGOO II", "X70 - MASTER II", "X73 - VELSATIS", "X74 - LAGUNA II"
+        "X76 - KANGO I/EXPRESS", "X77 - MODUS", "X79 - DUSTER", "X82 - TRAFFIC III",
+        "X83 - TRAFFIC II", "X84 - MEGANE/SCENIC II", "X85 - CLIO III", "X87 - CAPTUR"
+        "X90 - LOGAN", "X91 - LAGUNA III", "X92 - LOGAN", "X95 - MEGANE III",
+        "X98 - CLIO IV", "xFA - SCENIC IV", "xFB - MEGANE IV", "xFC - ESPACE IV"
+        "xFD - TALISMAN", "xFE - KADJAR", "xFF - FLUENCE II", "xZG - KOLEOS II"
+        ]
+
+        for v in vehicles:
+            self.vehicle_combo.addItem(v)
+
+        self.vehicle_combo.activated.connect(self.filterProject)
+
         layout = gui.QVBoxLayout()
+        layout.addWidget(self.vehicle_combo)
         self.setLayout(layout)
         self.list = gui.QTreeWidget(self)
         self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         layout.addWidget(self.list)
         self.ecuscan = ecuscan
         self.list.setColumnCount(3)
-        self.list.model().setHeaderData(0, core.Qt.Horizontal, 'Nom ECU')
+        self.list.model().setHeaderData(0, core.Qt.Horizontal, 'ECU name')
         self.list.model().setHeaderData(1, core.Qt.Horizontal, 'Projets')
         self.list.model().setHeaderData(2, core.Qt.Horizontal, 'Protocol')
 
@@ -50,6 +70,23 @@ class Ecu_list(gui.QWidget):
 
         self.list.sortItems(0, core.Qt.AscendingOrder)
         self.list.doubleClicked.connect(self.ecuSel)
+
+    def filterProject(self):
+        project = str(self.vehicle_combo.currentText()[0:3])
+        root = self.list.invisibleRootItem()
+        root_items = [root.child(i) for i in range(root.childCount())]
+
+        for root_item in root_items:
+            root_hidden = True
+
+            items = [root_item.child(i) for i in range(root_item.childCount())]
+            for item in items:
+                if (project.upper() in str(item.text(1).toAscii()).upper()) or project == "ALL":
+                    item.setHidden(False)
+                    root_hidden = False
+                else:
+                    item.setHidden(True)
+            root_item.setHidden(root_hidden)
 
     def ecuSel(self, index):
         if index.parent() == core.QModelIndex():
@@ -95,7 +132,7 @@ class Main_widget(gui.QMainWindow):
         self.refreshtimebox.setRange(100, 2000)
         self.refreshtimebox.setSingleStep(100)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
-        refrestimelabel = gui.QLabel("Refresh rate:")
+        refrestimelabel = gui.QLabel("Refresh rate (ms):")
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -113,7 +150,6 @@ class Main_widget(gui.QMainWindow):
         self.treedock_params.setWidget(self.treeview_params)
         self.treeview_params.setHeaderLabels(["Screens"])
         self.treeview_params.clicked.connect(self.changeScreen)
-
 
         self.treedock_logs = gui.QDockWidget(self)
         self.logview = gui.QTextEdit()
@@ -622,9 +658,9 @@ if __name__ == '__main__':
         print "Using custom DDT database"
         ecudirfound = True
 
-    if not ecudirfound and os.path.exists("C:\DDT2000data\ecus"):
+    if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
         print "Using DDT2000 default installation"
-        options.ecus_dir = "C:\DDT2000data\ecus"
+        options.ecus_dir = "C:/DDT2000data/ecus"
         ecudirfound = True
 
     if not ecudirfound:
@@ -662,7 +698,7 @@ if __name__ == '__main__':
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()
-        msgbox.setText("No ELM327 on selected COM port")
+        msgbox.setText("No ELM327 or OBDLINK-SX on selected COM port")
         msgbox.exec_()
         exit(0)
 

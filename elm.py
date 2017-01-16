@@ -137,6 +137,7 @@ class Port:
         else:
             self.portName = portName
             self.portType = 0
+            self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
             except:  # serial.SerialException:
@@ -913,6 +914,36 @@ class ELM:
             if dnat[d] == txa:
                 return d
         return None
+
+    def set_can_addr_inv(self, addr, ecu):
+
+        if self.currentprotocol == "can" and self.currentaddress == addr:
+            return
+
+        if self.lf != 0:
+            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
+            self.lf.flush()
+
+        self.currentprotocol = "can"
+        self.currentaddress = addr
+        self.startSession = ""
+        self.lastCMDtime = 0
+        self.l1_cache = {}
+
+        RXa = dnat[addr]
+        TXa = snat[addr]
+
+        self.cmd("at sh " + TXa)
+        self.cmd("at cra " + RXa)
+        self.cmd("at fc sh " + TXa)
+        self.cmd("at fc sd 30 00 00")  # status BS STmin
+        self.cmd("at fc sm 1")
+        if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
+            self.cmd("at sp 8")
+        else:
+            self.cmd("at sp 6")
+        # self.cmd("at al")
+        return (TXa, RXa)
 
     def set_can_addr(self, addr, ecu):
 
