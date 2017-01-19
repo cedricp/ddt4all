@@ -902,11 +902,7 @@ class ELM:
         self.cmd("at caf0")
         if self.ATCFC0:
             self.cmd("at cfc0")
-            # else:
-        # self.cmd("at st ff")
-        #  self.cmd("at at 0")
-        # self.cmd("at sp 6")
-        # self.cmd("at at 1")
+
         self.lastCMDtime = 0
 
     def get_can_addr(self, txa):

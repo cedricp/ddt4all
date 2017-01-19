@@ -71,7 +71,16 @@ class paramWidget(gui.QWidget):
         self.mouseOldX = 0
         self.mouseOldY = 0
         self.current_screen = ''
-        self.main_protocol_status =  None
+        self.main_protocol_status = 'Undefined'
+
+    def __del__(self):
+        # Return to default session
+        self.logview.append("<font color=blue>Returning to defaut session...</font>")
+        if not options.simulation_mode:
+            if self.protocol == "CAN":
+                options.elm.start_session_can('1081')
+            elif self.protocol == "KWP2000":
+                options.elm.start_session_iso('1081')
 
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
@@ -304,7 +313,7 @@ class paramWidget(gui.QWidget):
         self.setStyleSheet("background-color: %s" % self.colorConvert(screencolor))
         self.panel.setContentsMargins(0, 0, 0, 0)
         self.setContentsMargins(0, 0, 0, 0)
-        self.resize(self.screen_width, self.screen_height)
+        self.resize(self.screen_width + 100, self.screen_height + 100)
         self.panel.resize(self.screen_width, self.screen_height)
 
         for elem in self.getChildNodesByName(screen, u"Send"):

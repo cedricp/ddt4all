@@ -3,12 +3,109 @@
 import sys
 import os
 import pickle
+import time
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options, locale
 
 app = None
+
+
+class ByteChecker():
+    def __init__(self, ecuaddr, cmd, numbyte, virginState, codedState, sessioncmd='10C0'):
+        self.cmd = cmd
+        self.numbyte = numbyte
+        self.virginState = virginState
+        self.codedState = codedState
+        self.sessioncmd = sessioncmd
+        self.ecuaddr = ecuaddr
+
+    def check(self):
+        if options.simultation_mode:
+            return 'coded'
+        options.elm.init_can()
+        options.elm.set_can_addr(self.ecuaddr, {})
+        options.elm.start_session_can(self.sessioncmd)
+        data = options.elm.request(self.cmd, cache=False)
+        datalist = data.split(' ')
+
+        if len(datalist) < self.numbyte-1:
+            return None
+
+        strbyte = datalist[self.numbyte-1]
+        byte = int(strbyte, 16)
+
+        if byte == self.virginState:
+            return 'virgin'
+        if byte == self.codedState:
+            return 'coded'
+
+        return None
+
+class BitChecker():
+    def __init__(self, ecuaddr, cmd, numbyte, numbit, sessioncmd='10C0'):
+        self.cmd = cmd
+        self.numbyte = numbyte
+        self.numbits = numbit
+        self.sessioncmd = sessioncmd
+        self.ecuaddr = ecuaddr
+
+    def check(self):
+        if options.simultation_mode:
+            return 'coded'
+        options.elm.init_can()
+        options.elm.set_can_addr(self.ecuaddr, {})
+        options.elm.start_session_can(self.sessioncmd)
+        data = options.elm.request(self.cmd, cache=False)
+        datalist = data.split(' ')
+
+        if len(datalist) < self.numbyte-1:
+            return None
+
+        strbyte = datalist[self.numbyte-1]
+        byte = int(strbyte, 16)
+        bit = (byte >> self.numbit) & 1
+
+        if bit:
+            return 'virgin'
+        else:
+            return 'coded'
+
+class Virginizer(gui.QDialog):
+    def __init__(self, sessioncmd, blankingcmd, bitchecker):
+        super(Virginizer, self).__init__()
+        self.blankingcmd = blankingcmd
+        self.sessioncmd = sessioncmd
+        self.bitchecker = bitchecker
+        vlayout = gui.QVBoxLayout()
+        self.virginlabel = gui.QLabel()
+        self.virginlabel.setMinimumWidth(200)
+        self.virginlabel.setAlignment(core.Qt.AlignCenter);
+        self.checkbutton = gui.QPushButton("Check immo status")
+        self.virginizebutton = gui.QPushButton("Clear Immo")
+        self.virginizebutton.clicked.connect(self.virginize)
+        self.checkbutton.clicked.connect(self.checkVirgin)
+        vlayout.addWidget(self.virginlabel)
+        vlayout.addWidget(self.checkbutton)
+        vlayout.addWidget(self.virginizebutton)
+        self.setLayout(vlayout)
+        self.checkVirgin()
+
+    def checkVirgin(self):
+        self.virginlabel.setText("<font color='black'>TESTING ECU...<font>")
+        core.QCoreApplication.processEvents()
+        time.sleep(2)
+        virginstatus = self.bitchecker.check()
+        if virginstatus == 'virgin':
+            self.virginlabel.setText("<font color='green'>ECU Virgin<font>")
+        elif virginstatus == 'coded':
+            self.virginlabel.setText("<font color='red'>ECU Coded<font>")
+        else:
+            self.virginlabel.setText("<font color='red'>Cannot probe ECU<font>")
+
+    def virginize(self):
+        pass
 
 class Ecu_list(gui.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
@@ -17,15 +114,16 @@ class Ecu_list(gui.QWidget):
         self.treeview_ecu = treeview_ecu
         self.vehicle_combo = gui.QComboBox()
         vehicles = [
-        "ALL", "X06 - TWINGO", "X07 - TWINGO3", "X09 - TWIZY", "X10 - ZOE",
-        "X24 - MASTER II", "X33 - WIND", "X35 - SYMBOL/THALIA", "X44 - TWINGO II",
-        "X45 - KOLEOS", "X52 - LOGAN II", "X56 - LAGUNA I", "X61 - KANGOO II",
-        "X62 - MASTER III", "X64 - MEGANE/SCENIC I", "X65 - CLIO II", "X66 - ESPACE III"
-        "X67 - AVANTIME/KANGOO II", "X70 - MASTER II", "X73 - VELSATIS", "X74 - LAGUNA II"
+        "ALL", "X02 - MICRA(NISSAN)", "X06 - TWINGO", "X07 - TWINGO3", "X09 - TWIZY", "X10 - ZOE",
+        "X21 - NOTE(NISSAN)", "X24 - MASTER II", "X33 - WIND", "X35 - SYMBOL/THALIA",
+        "X38 - FLUENCE", "X44 - TWINGO II", "X47 - LAGUNA III(tricorps)",
+        "H45 - KOLEOS", "X45 - KOLEOS", "X52 - LOGAN II", "X56 - LAGUNA", "X61 - KANGOO II",
+        "X62 - MASTER III", "X64 - MEGANE/SCENIC I", "X65 - CLIO II", "X66 - ESPACE III",
+        "X67 - AVANTIME/KANGOO II", "X70 - MASTER II", "X73 - VELSATIS", "X74 - LAGUNA II",
         "X76 - KANGO I/EXPRESS", "X77 - MODUS", "X79 - DUSTER", "X82 - TRAFFIC III",
-        "X83 - TRAFFIC II", "X84 - MEGANE/SCENIC II", "X85 - CLIO III", "X87 - CAPTUR"
-        "X90 - LOGAN", "X91 - LAGUNA III", "X92 - LOGAN", "X95 - MEGANE III",
-        "X98 - CLIO IV", "xFA - SCENIC IV", "xFB - MEGANE IV", "xFC - ESPACE IV"
+        "X83 - TRAFFIC II", "X84 - MEGANE/SCENIC II", "X85 - CLIO III", "X87 - CAPTUR",
+        "X90 - LOGAN/SANDERO", "X91 - LAGUNA III", "X92 - LOGAN", "X95 - MEGANE/SCENIC III",
+        "X98 - CLIO IV", "xFA - SCENIC IV", "xFB - MEGANE IV", "xFC - ESPACE IV",
         "xFD - TALISMAN", "xFE - KADJAR", "xFF - FLUENCE II", "xZG - KOLEOS II"
         ]
 
@@ -235,9 +333,21 @@ class Main_widget(gui.QMainWindow):
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
 
-        iskmenu = menu.addMenu("ISK")
-        meg2isk = iskmenu.addAction("Megane II")
+        iskmenu = menu.addMenu("ISK Tools")
+        meg2isk = iskmenu.addAction("Megane/Scenic II")
         meg2isk.triggered.connect(lambda: self.getISK('megane2'))
+
+        uchvirginmenu = menu.addMenu("UCH Tools")
+        meg2vir = uchvirginmenu.addAction("Megane2/Scenic2/Clio3 Virgin")
+        meg2vir.triggered.connect(lambda: self.virginECU('megane2UCH'))
+
+        epsvirginmenu = menu.addMenu("EPS(DAE) Tools")
+        m3ev = epsvirginmenu.addAction("Megane3/Zoe/Fluence Virgin")
+        c4ev = epsvirginmenu.addAction("Clio4/Captur Virgin")
+        c3ev = epsvirginmenu.addAction("Clio3 Virgin")
+        m3ev.triggered.connect(lambda: self.virginECU('megane3EPS'))
+        c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
+        c3ev.triggered.connect(lambda: self.virginECU('clio3EPS'))
 
     def hexeditor(self):
         if self.paramview:
@@ -250,11 +360,44 @@ class Main_widget(gui.QMainWindow):
         if self.paramview:
             self.paramview.setRefreshTime(self.refreshtimebox.value())
 
+    def virginECU(self, vehicle):
+        #if options.simulation_mode:
+        #    self.logview.append("Cannot virginize in demo mode")
+        #    return
+        # Reset parameter view to not alter ECU settings
+        if self.paramview:
+            self.paramview.init(None)
+
+        if vehicle == "megane2UCH":
+            checker = BitChecker('26', '2106', 12, 7, '10C0')
+            virg = Virginizer('1086', '3B92', checker)
+            virg.setWindowTitle("UCH MEGANE/SCENIC II")
+            virg.exec_()
+
+        if vehicle == "megane3EPS":
+            checker = ByteChecker('04', '220164', 4, 2, 1, '10C0')
+            virg = Virginizer('10FA', '310201F12E', checker)
+            virg.setWindowTitle("EPS MEGANE/SCENIC III")
+            virg.exec_()
+
+        if vehicle == "clio4EPS":
+            checker = ByteChecker('04', '220164', 4, 2, 1, '10C0')
+            virg = Virginizer('10FA', ' 3102001976', checker)
+            virg.setWindowTitle("EPS CLIO IV")
+            virg.exec_()
+
+        if vehicle == "clio3EPS":
+            checker = BitChecker('04', '2101', 23, 7, '10C0')
+            virg = Virginizer('10FB', ' 3B05', checker)
+            virg.setWindowTitle("EPS CLIO III")
+            virg.exec_()
+
     def getISK(self, vehicle):
         if options.simulation_mode:
             self.logview.append("Cannot read ISK in demo mode")
             return
 
+        # Reset parameter view to not alter ECU settings
         if self.paramview:
             self.paramview.init(None)
 
