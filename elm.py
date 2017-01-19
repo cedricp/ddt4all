@@ -116,7 +116,7 @@ class Port:
     hdr = None
 
     def __init__(self, portName, speed, portTimeout):
-
+        options.elm_failed = False
         self.portTimeout = portTimeout
 
         portName = portName.strip()
@@ -137,22 +137,19 @@ class Port:
         else:
             self.portName = portName
             self.portType = 0
-            self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
+                return
             except:  # serial.SerialException:
-                print "ELM not connected or wrong COM port defined."
+                print "ELM not connected or wrong COM port ", portName
                 iterator = sorted(list(list_ports.comports()))
                 print ""
                 print "Available COM ports:"
                 for port, desc, hwid in iterator:
                     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
                 print ""
-                options.elm_failed = True
-                return
-            # print self.hdr.BAUDRATES
-            if options.port_speed == 38400:
-                self.check_elm()
+				
+            options.elm_failed = self.check_elm()
 
     def read(self):
         try:
@@ -244,11 +241,11 @@ class Port:
                     options.port_speed = s
                     print "\nStart COM speed: ", s
                     self.hdr.timeout = self.portTimeout
-                    return
+                    return True
                 if (tc - tb) > 1:
                     break
         print "\nELM not responding"
-        sys.exit()
+        return False
 
     def soft_baudrate(self, baudrate):
 
