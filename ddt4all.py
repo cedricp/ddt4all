@@ -563,6 +563,7 @@ class Main_widget(gui.QMainWindow):
     def changeECU(self, index):
         self.diagaction.setEnabled(False)
         self.hexinput.setEnabled(False)
+
         item = self.treeview_ecu.model().itemData(index)
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
@@ -595,7 +596,6 @@ class Main_widget(gui.QMainWindow):
             for param in self.paramview.categories[screen]:
                 param_item = gui.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
-
 
 class donationWidget(gui.QLabel):
     def __init__(self):

@@ -533,14 +533,17 @@ class paramWidget(gui.QWidget):
             if len(self.ecurequestsparser.data[text].items) > 0:
                 qcombo = gui.QComboBox(self.panel)
                 items_ref = self.ecurequestsparser.data[text].items
+
                 for key in items_ref.keys():
                     qcombo.addItem(key)
+
                 qcombo.resize(rect['width'] - width, rect['height'])
                 qcombo.move(rect['left'] + width, rect['top'])
                 if data.comment:
                     infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
                 else:
                     infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
+                #infos += u' bitOffset=' + unicode(items_ref.bitoffset)
                 qcombo.setToolTip(infos)
                 qcombo.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
                 ddata = displayData(data, qcombo, True)
@@ -679,7 +682,7 @@ class paramWidget(gui.QWidget):
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
-                value = "ERREUR"
+                value = "ERROR"
             else:
                 qlabel.setStyleSheet("background: white")
 
@@ -728,73 +731,98 @@ class paramWidget(gui.QWidget):
         if options.auto_refresh:
             self.timer.start(self.refreshtime)
 
-    def readDTC(self):
-        if not "ReadDTC" in self.ecurequestsparser.requests:
-            self.logview.append("No ReadDTC request for that ECU")
-            return
-
+    def clearDTC(self):
         if not options.simulation_mode:
             if self.protocol == "CAN":
                 options.elm.start_session_can('10C0')
             elif self.protocol == "KWP2000":
                 options.elm.start_session_iso('10C0')
-            
-        request = self.ecurequestsparser.requests["ReadDTC"]
-        sendbyte_dataitems = request.sendbyte_dataitems
-        moredtcbyte = -1
-        
-        if "MoreDTC" in sendbyte_dataitems:
-            moredtcbyte = sendbyte_dataitems["MoreDTC"].firstbyte - 1
+
+        if "ClearDiagnosticInformation.All" in self.ecurequestsparser.requests:
+            request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"]
+        elif "ClearDTC" in self.ecurequestsparser.requests:
+            request = self.ecurequestsparser.requests["ClearDTC"]
+        else:
+            self.logview.append("No ClearDTC request for that ECU")
+
+        msgbox = gui.QMessageBox()
+        msgbox.setText("<center>You are about to clear diagnostic troubles codes</center>"
+                       "<center>Ae you sure this is what you want.</center>")
+
+        msgbox.setStandardButtons(gui.QMessageBox.Yes)
+        msgbox.addButton(gui.QMessageBox.Abort)
+        msgbox.setDefaultButton(gui.QMessageBox.Abort)
+        userreply = msgbox.exec_()
+
+        if userreply == gui.QMessageBox.Abort:
+            return
+
+        print "OK"
+
+
+    def readDTC(self):
+        if not options.simulation_mode:
+            if self.protocol == "CAN":
+                options.elm.start_session_can('10C0')
+            elif self.protocol == "KWP2000":
+                options.elm.start_session_iso('10C0')
+
+        if "ReadDTCInformation.ReportDTC" in self.ecurequestsparser.requests:
+            request = self.ecurequestsparser.requests["ReadDTCInformation.ReportDTC"]
+        elif "ReadDTC" in self.ecurequestsparser.requests:
+            request = self.ecurequestsparser.requests["ReadDTC"]
+        else:
+            self.logview.append("No ReadDTC request for that ECU")
+            return
 
         shiftbytecount = request.shiftbytescount
         dtc_result = {}
         dtc_num = 0
         bytestosend = map(''.join, zip(*[iter(request.sentbytes.encode('ascii'))]*2))
 
-        while 1:
-            dtcread_command = ''.join(bytestosend)
-            # More DTC, please
-            bytestosend[moredtcbyte] = "FF"
-            can_response = self.sendElm(dtcread_command)
+        dtcread_command = ''.join(bytestosend)
+        can_response = self.sendElm(dtcread_command)
 
-            if "RESPONSE" in can_response:
-                break
-            can_response = can_response.split(' ')
+        if "RESPONSE" in can_response:
+            msgbox = gui.QMessageBox()
+            msgbox.setText("Invalid response for ReadDTC command")
+            msgbox.exec_()
+            return
 
-            if len(can_response) == 2:
-                #No errors
-                msgbox = gui.QMessageBox()
-                msgbox.setText("No DTC")
-                msgbox.exec_()
-                return
+        can_response = can_response.split(' ')
 
-            while len(can_response) >= shiftbytecount + 1:
-                for k in request.dataitems.keys():
-                    ecu_data = self.ecurequestsparser.data[k]
-                    dataitem = request.dataitems[k]
-                    value_hex = ecu_data.getHexValue(' '.join(can_response), dataitem, request.endian)
+        if len(can_response) == 2:
+            #No errors
+            msgbox = gui.QMessageBox()
+            msgbox.setText("No DTC")
+            msgbox.exec_()
+            return
 
-                    if value_hex is None:
-                        continue
+        while len(can_response) >= shiftbytecount:
+            for k in request.dataitems.keys():
+                ecu_data = self.ecurequestsparser.data[k]
+                dataitem = request.dataitems[k]
+                value_hex = ecu_data.getHexValue(' '.join(can_response), dataitem, request.endian)
 
-                    if not dataitem.name in dtc_result:
-                        dtc_result[dataitem.name] = []
+                if value_hex is None:
+                    continue
 
-                    value = int('0x' + value_hex, 16)
+                if not dataitem.name in dtc_result:
+                    dtc_result[dataitem.name] = []
 
-                    if ecu_data.scaled:
-                        dtc_result[dataitem.name].append(str(value))
-                        continue
+                value = int('0x' + value_hex, 16)
 
-                    if len(ecu_data.items) > 0 and value in ecu_data.lists:
-                        dtc_result[dataitem.name].append(ecu_data.lists[value])
-                    else:
-                        dtc_result[dataitem.name].append(str(value))
+                if ecu_data.scaled:
+                    dtc_result[dataitem.name].append(str(value))
+                    continue
 
-                can_response = can_response[shiftbytecount:]
-                dtc_num += 1
-                if shiftbytecount == 0:
-                    break
+                if len(ecu_data.items) > 0 and value in ecu_data.lists:
+                    dtc_result[dataitem.name].append(ecu_data.lists[value])
+                else:
+                    dtc_result[dataitem.name].append(str(value))
+
+            can_response = can_response[shiftbytecount:]
+            dtc_num += 1
                     
         columns = dtc_result.keys()
         self.table = gui.QTableWidget(None)

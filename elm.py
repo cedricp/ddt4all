@@ -148,7 +148,7 @@ class Port:
                 for port, desc, hwid in iterator:
                     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
                 print ""
-				
+
             options.elm_failed = self.check_elm()
 
     def read(self):
