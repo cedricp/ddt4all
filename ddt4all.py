@@ -776,7 +776,6 @@ class portChooser(gui.QDialog):
     def connectedMode(self):
         self.securitycheck = self.safetycheck.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
-        print self.selectedportspeed
         if not pc.securitycheck:
             msgbox = gui.QMessageBox()
             msgbox.setText("You must check the recommandations")
@@ -853,8 +852,8 @@ if __name__ == '__main__':
         msgbox.exec_()
         exit(0)
 
-    print "Initilizing ELM with speed %i..." % options.port_speed
-    options.elm = elm.ELM(options.port, options.port_speed)
+    print "Initilizing ELM with speed %i..." % port_speed
+    options.elm = elm.ELM(options.port, port_speed)
 
     #if port_speed != options.port_speed:
     #    options.elm.port.soft_baudrate(port_speed)
