@@ -554,7 +554,7 @@ class Main_widget(gui.QMainWindow):
         else:
             return
 
-        ecu_file = "ecus/" + ecu.href
+        ecu_file = options.ecus_dir + ecu.href
         ecu_addr = ecu.addr
         uiscale_mem = 8
 
@@ -802,7 +802,7 @@ if __name__ == '__main__':
 
     if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
         print "Using DDT2000 default installation"
-        options.ecus_dir = "C:/DDT2000data/ecus"
+        options.ecus_dir = "C:/DDT2000data/ecus/"
         ecudirfound = True
 
     if not ecudirfound:

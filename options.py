@@ -13,4 +13,4 @@ elm_failed = False
 # KWP2000 Slow init
 opt_si=False
 report_data=True
-ecus_dir="ecus"
+ecus_dir="ecus/"
