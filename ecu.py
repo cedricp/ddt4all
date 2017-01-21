@@ -156,9 +156,11 @@ class Ecu_data:
         if bytes:
             self.byte = True
             bytescount = bytes.item(0).getAttribute("count")
+            if '.' in bytescount:
+                bytescount = bytescount.split('.')[0]
             if bytescount:
                 self.bytescount = int(bytescount)
-                self.bitscount  = self.bytescount * 8
+                self.bitscount = self.bytescount * 8
 
             bytesascii = bytes.item(0).getAttribute("ascii")
             if bytesascii and bytesascii == '1': self.bytesascii = True
@@ -253,12 +255,22 @@ class Ecu_data:
             print "bit operation on multiple bytes not implemented"
             return None
 
+        value_mask_shifted_inv = 0xFF
         if bit_operation:
             if little_endian:
                 offset = start_bit
             else:
                 offset = 8 - start_bit - self.bitscount
+
             value_mask = 2 ** self.bitscount - 1
+
+            value_mask_shifted = value_mask << offset
+            value_mask_shifted_str = bin(value_mask_shifted)[2:].zfill(self.bytescount * 8)
+            value_mask_shifted_str_inv = value_mask_shifted_str.replace('0', 'O')
+            value_mask_shifted_str_inv = value_mask_shifted_str_inv.replace('1', '0')
+            value_mask_shifted_str_inv = value_mask_shifted_str_inv.replace('O', '1')
+            value_mask_shifted_inv = int('0b' + value_mask_shifted_str_inv, 2)
+
             value = int(value)
             value &= value_mask
             value = (value << offset)
@@ -275,6 +287,8 @@ class Ecu_data:
             original_value = int('0x' + h, 16)
 
             if bit_operation:
+                # Need to clear bits before or'ing
+                original_byte &= value_mask_shifted_inv
                 new = original_value | original_byte
             else:
                 new = original_value

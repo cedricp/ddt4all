@@ -44,12 +44,13 @@ class ByteChecker():
         return None
 
 class BitChecker():
-    def __init__(self, ecuaddr, cmd, numbyte, numbit, sessioncmd='10C0'):
+    def __init__(self, ecuaddr, cmd, numbyte, numbit, virginstate=1, sessioncmd='10C0'):
         self.cmd = cmd
         self.numbyte = numbyte
         self.numbits = numbit
         self.sessioncmd = sessioncmd
         self.ecuaddr = ecuaddr
+        self.virginstate = virginstate
 
     def check(self):
         if options.simultation_mode:
@@ -67,7 +68,7 @@ class BitChecker():
         byte = int(strbyte, 16)
         bit = (byte >> self.numbit) & 1
 
-        if bit:
+        if bit == self.virginstate:
             return 'virgin'
         else:
             return 'coded'
@@ -342,8 +343,8 @@ class Main_widget(gui.QMainWindow):
         meg2vir.triggered.connect(lambda: self.virginECU('megane2UCH'))
 
         epsvirginmenu = menu.addMenu("EPS(DAE) Tools")
-        m3ev = epsvirginmenu.addAction("Megane3/Zoe/Fluence Virgin")
-        c4ev = epsvirginmenu.addAction("Clio4/Captur Virgin")
+        m3ev = epsvirginmenu.addAction("Megane3 Virgin")
+        c4ev = epsvirginmenu.addAction("Clio4 Virgin")
         c3ev = epsvirginmenu.addAction("Clio3 Virgin")
         m3ev.triggered.connect(lambda: self.virginECU('megane3EPS'))
         c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
@@ -364,12 +365,31 @@ class Main_widget(gui.QMainWindow):
         #if options.simulation_mode:
         #    self.logview.append("Cannot virginize in demo mode")
         #    return
+        if not options.promode:
+            msgbox = gui.QMessageBox()
+            msgbox.setText("<center>Enable expert mode to access this menu</center>")
+            msgbox.exec_()
+            return
+
+        msgbox = gui.QMessageBox()
+        msgbox.setText("<center>I'm aware that this operation will clear the selected control unit.</center>"
+                       "<center>If you have no idea of what it means, please get out of here.</center>"
+                       "<center>/!\\This part is highly experimental/!\\</center>")
+
+        msgbox.setStandardButtons(gui.QMessageBox.Yes)
+        msgbox.addButton(gui.QMessageBox.Abort)
+        msgbox.setDefaultButton(gui.QMessageBox.Abort)
+        userreply = msgbox.exec_()
+
+        if userreply == gui.QMessageBox.No:
+            return
+
         # Reset parameter view to not alter ECU settings
         if self.paramview:
             self.paramview.init(None)
 
         if vehicle == "megane2UCH":
-            checker = BitChecker('26', '2106', 12, 7, '10C0')
+            checker = BitChecker('26', '2106', 12, 7, 1, '10C0')
             virg = Virginizer('1086', '3B92', checker)
             virg.setWindowTitle("UCH MEGANE/SCENIC II")
             virg.exec_()
@@ -387,7 +407,7 @@ class Main_widget(gui.QMainWindow):
             virg.exec_()
 
         if vehicle == "clio3EPS":
-            checker = BitChecker('04', '2101', 23, 7, '10C0')
+            checker = BitChecker('04', '2101', 23, 7, 0, '10C0')
             virg = Virginizer('10FB', ' 3B05', checker)
             virg.setWindowTitle("EPS CLIO III")
             virg.exec_()
@@ -543,6 +563,7 @@ class Main_widget(gui.QMainWindow):
     def changeECU(self, index):
         self.diagaction.setEnabled(False)
         self.hexinput.setEnabled(False)
+
         item = self.treeview_ecu.model().itemData(index)
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
@@ -575,7 +596,6 @@ class Main_widget(gui.QMainWindow):
             for param in self.paramview.categories[screen]:
                 param_item = gui.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
-
 
 class donationWidget(gui.QLabel):
     def __init__(self):
