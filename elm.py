@@ -90,7 +90,7 @@ def get_available_ports():
     try:
         iterator = sorted(list(list_ports.comports()))
         for port, desc, hwid in iterator:
-            ports.append(port)
+            ports.append((port, desc))
     except:
         pass
 
@@ -149,7 +149,7 @@ class Port:
                     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
                 print ""
 
-            options.elm_failed = self.check_elm()
+            options.elm_failed = True
 
     def read(self):
         try:
@@ -410,37 +410,17 @@ class ELM:
         self.ATCFC0 = options.opt_cfc0
 
     def __del__(self):
-        if not self.sim_mode:
-            print '*' * 40
-            print '*       RESETTING ELM'
-            self.port.write("atz\r")
-        print '*' * 40
-        print '* '
-        print '*       ERRORS STATISTIC'
-        print '* '
-        print '* error_frame      = ', self.error_frame
-        print '* error_bufferfull = ', self.error_bufferfull
-        print '* error_question   = ', self.error_question
-        print '* error_nodata     = ', self.error_nodata
-        print '* error_timeout    = ', self.error_timeout
-        print '* error_rx         = ', self.error_rx
-        print '* error_can        = ', self.error_can
-        print '*'
-        print '*       RESPONSE TIME (Average)'
-        print '* '
-        print '* response_time    = ', self.response_time
-        print '* '
-        print '*' * 40
-        print self.lastMessage
+        try:
+            if not self.sim_mode:
+                self.port.write("atz\r")
+        except:
+            pass
 
     def clear_cache(self):
         ''' Clear L2 cache before screen update
         '''
-        # print 'Clearing L2 cache'
         self.rsp_cache = {}
 
-        # if not options.simulation_mode:
-        #  self.rsp_cache = {}
 
     def request(self, req, positive='', cache=True, serviceDelay="0"):
         ''' Check if request is saved in L2 cache.
@@ -464,13 +444,8 @@ class ELM:
             else:  # response consists only of one frame
                 if s.replace(' ', '').startswith(positive.replace(' ', '')):
                     res += s.strip() + ' '
-                    # elif s.replace(' ','')[2:].startswith(positive.replace(' ','')):
-                    #  res += s[2:].strip()+' '
 
         rsp = res
-
-        # if '1902' in req:  #debug
-        #  rsp = '59 02 B9 01 00 16 11 15 46 98 11 '
 
         # populate L2 cache
         self.rsp_cache[req] = rsp
@@ -600,7 +575,7 @@ class ELM:
         if len(responses) == 0:  # no data in response
             return ""
 
-        if len(responses) == 1:  # single freme response
+        if len(responses) == 1:  # single frame response
             if responses[0][:1] == '0':
                 nbytes = int(responses[0][1:2], 16)
                 nframes = 1
@@ -749,7 +724,7 @@ class ELM:
                 tb = tc
 
                 frsp = self.send_raw(raw_command[Fc])
-                Fc = Fc + 1
+                Fc += 1
 
         # now we are going to receive data. st or ff should be in responses[0]
         if len(responses) != 1:
@@ -1008,13 +983,12 @@ class ELM:
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("at sh 81 " + addr + " f1")  # set address
-        self.cmd("at sw 96")  # wakeup message period 3 seconds
+        self.cmd("at sh 81 " + addr + " f1")     # set address
+        self.cmd("at sw 96")                     # wakeup message period 3 seconds
         self.cmd("at wm 81 " + addr + " f1 3E")  # set wakeup message
-        # self.cmd("at wm 82 "+addr+" f1 3E01")       #set wakeup message
-        self.cmd("at ib10")  # baud rate 10400
-        self.cmd("at st ff")  # set timeout to 1 second
-        self.cmd("at at 0")  # disable adaptive timing
+        self.cmd("at ib10")                      # baud rate 10400
+        self.cmd("at st ff")                     # set timeout to 1 second
+        self.cmd("at at 0")                      # disable adaptive timing
 
         if 'PRNA2000' in ecu['protocol'].upper() or options.opt_si:
             self.cmd("at sp 4")  # slow init mode 4

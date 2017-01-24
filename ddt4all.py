@@ -115,17 +115,18 @@ class Ecu_list(gui.QWidget):
         self.treeview_ecu = treeview_ecu
         self.vehicle_combo = gui.QComboBox()
         vehicles = [
-        "ALL", "X02 - MICRA(NISSAN)", "X06 - TWINGO", "X07 - TWINGO3", "X09 - TWIZY", "X10 - ZOE",
-        "X21 - NOTE(NISSAN)", "X24 - MASTER II", "X33 - WIND", "X35 - SYMBOL/THALIA",
+        "ALL", "X02 - MICRA(NISSAN)", "X06 - TWINGO", "X07 - EDISON", "X09 - TWIZY", "X10 - ZOE",
+        "X21 - NOTE(NISSAN)", "X24 - MASCOTT", "X33 - WIND", "X35 - SYMBOL/THALIA",
         "X38 - FLUENCE", "X44 - TWINGO II", "X47 - LAGUNA III(tricorps)",
         "H45 - KOLEOS", "X45 - KOLEOS", "X52 - LOGAN II", "X56 - LAGUNA", "X61 - KANGOO II",
         "X62 - MASTER III", "X64 - MEGANE/SCENIC I", "X65 - CLIO II", "X66 - ESPACE III",
-        "X67 - AVANTIME/KANGOO II", "X70 - MASTER II", "X73 - VELSATIS", "X74 - LAGUNA II",
+        "X67 - DOKKER/STEPWAY", "X70 - MASTER II", "X73 - VELSATIS", "X74 - LAGUNA II",
         "X76 - KANGO I/EXPRESS", "X77 - MODUS", "X79 - DUSTER", "X82 - TRAFFIC III",
         "X83 - TRAFFIC II", "X84 - MEGANE/SCENIC II", "X85 - CLIO III", "X87 - CAPTUR",
-        "X90 - LOGAN/SANDERO", "X91 - LAGUNA III", "X92 - LOGAN", "X95 - MEGANE/SCENIC III",
+        "X90 - LOGAN/SANDERO", "X91 - LAGUNA III", "X92 - LODGY", "X95 - MEGANE/SCENIC III",
         "X98 - CLIO IV", "xFA - SCENIC IV", "xFB - MEGANE IV", "xFC - ESPACE IV",
-        "xFD - TALISMAN", "xFE - KADJAR", "xFF - FLUENCE II", "xZG - KOLEOS II"
+        "xFD - TALISMAN", "xFE - KADJAR", "xFF - FLUENCE II", "xZG - KOLEOS II",
+        "xJD - DUSTER Ph3"
         ]
 
         for v in vehicles:
@@ -629,7 +630,7 @@ class portChooser(gui.QDialog):
         self.securitycheck = False
         self.selectedportspeed = 38400
         super(portChooser, self).__init__(None)
-        ports = elm.get_available_ports()
+        ports = None
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
         label.setText("ELM port selection")
@@ -721,10 +722,25 @@ class portChooser(gui.QDialog):
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
-        
+
+        self.timer = core.QTimer()
+        self.timer.timeout.connect(self.rescan_ports)
+        self.timer.start(200)
+        self.portcount = -1
+
+    def rescan_ports(self):
+        ports = elm.get_available_ports()
+        if len(ports) == self.portcount:
+            return
+
+        self.listview.clear()
+        self.portcount = len(ports)
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
-            item.setText(p)
+            item.setText(p[0] + "[" + p[1] + "]")
+
+        self.timer.start(1000)
+        print "rescan"
 
     def bt(self):
         self.wifibutton.blockSignals(True)
@@ -774,6 +790,7 @@ class portChooser(gui.QDialog):
         self.usbbutton.blockSignals(False)
 
     def connectedMode(self):
+        self.timer.stop()
         self.securitycheck = self.safetycheck.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
@@ -794,7 +811,7 @@ class portChooser(gui.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                self.port = currentitem.text()
+                self.port = str(currentitem.text()).split('[')[0]
                 self.mode = 1
                 self.close()
             else:
@@ -803,6 +820,7 @@ class portChooser(gui.QDialog):
                 msgbox.exec_()
 
     def demoMode(self):
+        self.timer.stop()
         self.securitycheck = self.safetycheck.isChecked()
         self.port = 'DUMMY'
         self.mode = 2
@@ -860,9 +878,8 @@ if __name__ == '__main__':
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()
-        msgbox.setText("No ELM327 or OBDLINK-SX on selected COM port")
+        msgbox.setText("No ELM327 or OBDLINK-SX detected on COM port " +  options.port)
         msgbox.exec_()
-        exit(0)
 
     w = Main_widget()
     w.show()
