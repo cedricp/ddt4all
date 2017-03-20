@@ -73,6 +73,7 @@ class BitChecker():
         else:
             return 'coded'
 
+
 class Virginizer(gui.QDialog):
     def __init__(self, sessioncmd, blankingcmd, bitchecker):
         super(Virginizer, self).__init__()
@@ -578,7 +579,7 @@ class Main_widget(gui.QMainWindow):
 
         ecu_file = options.ecus_dir + ecu.href
         ecu_addr = ecu.addr
-        uiscale_mem = 8
+        uiscale_mem = 16
 
         if self.paramview:
             uiscale_mem = self.paramview.uiscale
@@ -608,9 +609,9 @@ class donationWidget(gui.QLabel):
     def mousePressEvent(self, mousevent):
         msgbox = gui.QMessageBox()
         msgbox.setText("<center>Thuis Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>")
-        okbutton = gui.QPushButton('Je fais un don')
+        okbutton = gui.QPushButton('Yes I contribute')
         msgbox.addButton(okbutton, gui.QMessageBox.YesRole)
-        msgbox.addButton(gui.QPushButton('Non merci'), gui.QMessageBox.NoRole)
+        msgbox.addButton(gui.QPushButton("No, I don't"), gui.QMessageBox.NoRole)
         okbutton.clicked.connect(self.donate)
         msgbox.exec_()
 
@@ -740,7 +741,6 @@ class portChooser(gui.QDialog):
             item.setText(p[0] + "[" + p[1] + "]")
 
         self.timer.start(1000)
-        print "rescan"
 
     def bt(self):
         self.wifibutton.blockSignals(True)
@@ -858,8 +858,8 @@ if __name__ == '__main__':
         options.promode = False
         options.simulation_mode = False
     if pc.mode == 2:
-         options.promode = False
-         options.simulation_mode = True
+        options.promode = False
+        options.simulation_mode = True
 
     options.port = str(pc.port)
     port_speed = pc.selectedportspeed
@@ -878,7 +878,7 @@ if __name__ == '__main__':
 
     if options.elm_failed:
         msgbox = gui.QMessageBox()
-        msgbox.setText("No ELM327 or OBDLINK-SX detected on COM port " +  options.port)
+        msgbox.setText("No ELM327 or OBDLINK-SX detected on COM port " + options.port)
         msgbox.exec_()
 
     w = Main_widget()

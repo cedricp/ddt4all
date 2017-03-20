@@ -87,12 +87,14 @@ negrsp = {"10": "NR: General Reject",
 
 def get_available_ports():
     ports = []
-    try:
-        iterator = sorted(list(list_ports.comports()))
-        for port, desc, hwid in iterator:
-            ports.append((port, desc))
-    except:
-        pass
+    #try:
+    portlist = list_ports.comports()
+    if len(portlist) == 0: return
+    iterator = sorted(list(portlist))
+    for port, desc, hwid in iterator:
+        ports.append((port, desc))
+    #except:
+    #    print "Problem while scanning ports"
 
     return ports
 
