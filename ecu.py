@@ -1,14 +1,11 @@
 import math, string
-from math import fabs
-
 import options
 import elm
 import report
 import zipfile
-
 from xml.dom.minidom import parse
 import xml.dom.minidom
-import json, os, sys
+import json, os
 import unicodedata
 import re
 import glob
@@ -27,13 +24,13 @@ def hex8_tosigned(value):
     return -(value & 0x80) | (value & 0x7f)
 
 
-def remove_accents(input_str):
+def to_nfkd(input_str):
     nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
     return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
 
 
 def toascii(str):
-    return remove_accents(str).encode('ascii', 'ignore')
+    return to_nfkd(str).encode('ascii', 'ignore')
 
 
 def cleanhtml(raw_html):
