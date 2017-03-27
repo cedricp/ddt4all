@@ -14,3 +14,11 @@ elm_failed = False
 opt_si=False
 report_data=True
 ecus_dir="ecus/"
+last_error=""
+
+
+def get_last_error():
+    global last_error
+    err = last_error
+    last_error = ""
+    return err

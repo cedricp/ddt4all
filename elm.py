@@ -259,7 +259,7 @@ class Port:
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
                 return
-            except Exception as e:  # serial.SerialException:
+            except Exception as e:
                 print "Error: %s" % str(e)
                 print "ELM not connected or wrong COM port ", portName
                 iterator = sorted(list(list_ports.comports()))
@@ -270,6 +270,7 @@ class Port:
                 print ""
 
             options.elm_failed = True
+            options.last_error = "Error: %s" % str(e)
 
     def read(self):
         try:
@@ -292,7 +293,7 @@ class Port:
             print '*' * 40
             print '*       Connection to ELM was lost'
             options.simulation_mode = True
-            exit(2)
+
         return byte
 
     def write(self, data):
@@ -308,7 +309,6 @@ class Port:
             print '*' * 40
             print '*       Connection to ELM was lost'
             options.simulation_mode = True
-            exit(2)
 
     def expect(self, pattern, time_out=1):
         tb = time.time()  # start time
@@ -1137,6 +1137,8 @@ def elm_checker(port, speed, logview, app):
     vers = ''
 
     elm = ELM(port, speed)
+    if options.elm_failed:
+        return False
     elm.portTimeout = 5
 
     for st in cmdb.split('#'):
@@ -1169,3 +1171,4 @@ def elm_checker(port, speed, logview, app):
     if pycom > 0:
         logview.append('<font color=red>Uncompatible adapter on ARM core</font> \n')
     logview.append('Result: ' + str(good) + ' succeeded from ' + str(total) + '\nELM Max version:' + vers + '\n')
+    return True

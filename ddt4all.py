@@ -741,7 +741,9 @@ class portChooser(gui.QDialog):
             self.logview.show()
             port = str(currentitem.text()).split('[')[0]
             speed = int(self.speedcombo.currentText())
-            elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
+            res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
+            if res == False:
+                self.logview.append(options.get_last_error())
 
     def rescan_ports(self):
         ports = elm.get_available_ports()
@@ -821,13 +823,13 @@ class portChooser(gui.QDialog):
         if self.wifibutton.isChecked():
             self.port = str(self.wifiinput.text())
             self.mode = 1
-            self.close()
+            self.done(True)
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
                 self.port = str(currentitem.text()).split('[')[0]
                 self.mode = 1
-                self.close()
+                self.done(True)
             else:
                 msgbox = gui.QMessageBox()
                 msgbox.setText("Please select a communication port")
@@ -839,7 +841,7 @@ class portChooser(gui.QDialog):
         self.port = 'DUMMY'
         self.mode = 2
         options.report_data = False
-        self.close()
+        self.done(True)
 
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
@@ -864,36 +866,38 @@ if __name__ == '__main__':
         exit(0)
 
     pc = portChooser()
-    pc.exec_()
+    nok = True
+    while nok:
+        pcres = pc.exec_()
 
-    if pc.mode == 0:
-        exit(0)
-    if pc.mode == 1:
-        options.promode = False
-        options.simulation_mode = False
-    if pc.mode == 2:
-        options.promode = False
-        options.simulation_mode = True
+        if pc.mode == 0 or pcres == gui.QDialog.Rejected:
+            exit(0)
+        if pc.mode == 1:
+            options.promode = False
+            options.simulation_mode = False
+        if pc.mode == 2:
+            options.promode = False
+            options.simulation_mode = True
 
-    options.port = str(pc.port)
-    port_speed = pc.selectedportspeed
+        options.port = str(pc.port)
+        port_speed = pc.selectedportspeed
 
-    if not options.port:
-        msgbox = gui.QMessageBox()
-        msgbox.setText("No COM port selected")
-        msgbox.exec_()
-        exit(0)
+        if not options.port:
+            msgbox = gui.QMessageBox()
+            msgbox.setText("No COM port selected")
+            msgbox.exec_()
 
-    print "Initilizing ELM with speed %i..." % port_speed
-    options.elm = elm.ELM(options.port, port_speed)
+        print "Initilizing ELM with speed %i..." % port_speed
+        options.elm = elm.ELM(options.port, port_speed)
 
-    #if port_speed != options.port_speed:
-    #    options.elm.port.soft_baudrate(port_speed)
-
-    if options.elm_failed:
-        msgbox = gui.QMessageBox()
-        msgbox.setText("No ELM327 or OBDLINK-SX detected on COM port " + options.port)
-        msgbox.exec_()
+        if options.elm_failed:
+            pc.show()
+            pc.logview.append(options.get_last_error())
+            msgbox = gui.QMessageBox()
+            msgbox.setText("No ELM327 or OBDLINK-SX detected on COM port " + options.port)
+            msgbox.exec_()
+        else:
+            nok = False
 
     w = Main_widget()
     w.show()
