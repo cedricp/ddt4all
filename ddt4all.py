@@ -631,7 +631,6 @@ class portChooser(gui.QDialog):
         self.securitycheck = False
         self.selectedportspeed = 38400
         super(portChooser, self).__init__(None)
-        ports = None
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
         label.setText("ELM port selection")
@@ -692,6 +691,7 @@ class portChooser(gui.QDialog):
         button_layout = gui.QHBoxLayout()
         button_con = gui.QPushButton("Connected mode")
         button_dmo = gui.QPushButton("Demo mode")
+        button_elm_chk = gui.QPushButton("ELM benchmark")
 
         wifilayout = gui.QHBoxLayout()
         wifilabel = gui.QLabel("WiFi port : ")
@@ -719,19 +719,33 @@ class portChooser(gui.QDialog):
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
+        button_layout.addWidget(button_elm_chk)
         layout.addLayout(button_layout)
+
+        self.logview = gui.QTextEdit()
+        layout.addWidget(self.logview)
+        self.logview.hide()
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
+        button_elm_chk.clicked.connect(self.check_elm)
 
         self.timer = core.QTimer()
         self.timer.timeout.connect(self.rescan_ports)
         self.timer.start(200)
         self.portcount = -1
 
+    def check_elm(self):
+        currentitem = self.listview.currentItem()
+        if currentitem:
+            self.logview.show()
+            port = str(currentitem.text()).split('[')[0]
+            speed = int(self.speedcombo.currentText())
+            elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
+
     def rescan_ports(self):
         ports = elm.get_available_ports()
-        if len(ports) == self.portcount:
+        if ports == None or len(ports) == self.portcount:
             return
 
         self.listview.clear()
