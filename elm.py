@@ -529,6 +529,11 @@ class ELM:
         self.lastCMDtime = 0
         self.ATCFC0 = options.opt_cfc0
 
+        res = self.send_raw("atz")
+        if not 'ELM' in res:
+            options.elm_failed = True
+            options.last_error = "No ELM interface on port %s" % portName
+
     def __del__(self):
         try:
             if not self.sim_mode:
@@ -1160,6 +1165,8 @@ def elm_checker(port, speed, logview, app):
                     chre = '<font color=red>[FAIL]</font>'
                     if 'P' in cm[1].upper():
                         pycom += 1
+                elif 'TIMEOUT' in res:
+                    chre = '<font color=orange>[TIMEOUT]</font>'
                 else:
                     chre = '<font color=green>[OK]</font>'
                     good += 1
@@ -1169,6 +1176,6 @@ def elm_checker(port, speed, logview, app):
                 app.processEvents()
 
     if pycom > 0:
-        logview.append('<font color=red>Uncompatible adapter on ARM core</font> \n')
+        logview.append('<font color=red>Incompatible adapter on ARM core</font> \n')
     logview.append('Result: ' + str(good) + ' succeeded from ' + str(total) + '\nELM Max version:' + vers + '\n')
     return True
