@@ -188,10 +188,11 @@ class paramWidget(gui.QWidget):
             else:
                 self.logview.append("Protocol " + self.protocol + " not supported")
         if self.main_protocol_status:
-            if self.protocol == "CAN":
-                self.main_protocol_status.setText("DiagOnCan @ " + options.elm.getcandnat(self.ecu_addr))
-            else:
-                self.main_protocol_status.setText("KWP @ " + self.ecu_addr)
+            if not options.simulation_mode:
+                if self.protocol == "CAN":
+                    self.main_protocol_status.setText("DiagOnCan @ " + options.elm.getcandnat(self.ecu_addr))
+                else:
+                    self.main_protocol_status.setText("KWP @ " + self.ecu_addr)
 
     def initJSON(self):
         self.layoutdict = None
@@ -247,7 +248,10 @@ class paramWidget(gui.QWidget):
                     can_id = self.getChildNodesByName(send_id, "CANId")
                     if can_id:
                         self.can_send_id = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
-                        self.ecu_addr = options.elm.get_can_addr(self.can_send_id)
+                        if not options.simulation_mode:
+                            self.ecu_addr = options.elm.get_can_addr(self.can_send_id)
+                        else:
+                            self.ecu_addr = "000"
 
                 rcv_ids = self.getChildNodesByName(can, "ReceiveId")
                 if rcv_ids:
