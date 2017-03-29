@@ -512,7 +512,7 @@ class ELM:
 
     def __init__(self, portName, speed, startSession='10C0'):
         for s in [speed, 38400, 115200, 230400, 57600, 9600, 500000]:
-            print "Try opening port %s at %i" % (portName,s)
+            print "Tryi opening port %s at %i" % (portName, s)
             self.sim_mode = options.simulation_mode
             self.portName = portName
 
@@ -535,6 +535,7 @@ class ELM:
                 options.last_error = "No ELM interface on port %s" % portName
             else:
                 options.last_error = ""
+                options.elm_failed = False
                 break
 
     def __del__(self):
