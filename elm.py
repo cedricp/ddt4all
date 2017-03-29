@@ -511,28 +511,31 @@ class ELM:
     lastMessage = ""
 
     def __init__(self, portName, speed, startSession='10C0'):
-        self.sim_mode = options.simulation_mode
-        self.portName = portName
+        for s in [speed, 38400, 115200, 230400, 57600, 9600, 500000]:
+            print "Try opening port %s at %i" % (portName,s)
+            self.sim_mode = options.simulation_mode
+            self.portName = portName
 
-        if not options.simulation_mode:
-            self.port = Port(portName, speed, self.portTimeout)
-            if options.elm_failed:
-                return
+            if not options.simulation_mode:
+                self.port = Port(portName, s, self.portTimeout)
 
-        if not os.path.exists("./logs"):
-            os.mkdir("./logs")
+            if not os.path.exists("./logs"):
+                os.mkdir("./logs")
 
-        if len(options.log) > 0:
-            self.lf = open("./logs/elm_" + options.log, "at")
-            self.vf = open("./logs/ecu_" + options.log, "at")
+            if len(options.log) > 0:
+                self.lf = open("./logs/elm_" + options.log, "at")
+                self.vf = open("./logs/ecu_" + options.log, "at")
 
-        self.lastCMDtime = 0
-        self.ATCFC0 = options.opt_cfc0
+            self.lastCMDtime = 0
+            self.ATCFC0 = options.opt_cfc0
 
-        res = self.send_raw("atz")
-        if not 'ELM' in res:
-            options.elm_failed = True
-            options.last_error = "No ELM interface on port %s" % portName
+            res = self.send_raw("atz")
+            if not 'ELM' in res:
+                options.elm_failed = True
+                options.last_error = "No ELM interface on port %s" % portName
+            else:
+                options.last_error = ""
+                break
 
     def __del__(self):
         try:
@@ -1165,8 +1168,11 @@ def elm_checker(port, speed, logview, app):
                     chre = '<font color=red>[FAIL]</font>'
                     if 'P' in cm[1].upper():
                         pycom += 1
+                # Timeout is not an error
                 elif 'TIMEOUT' in res:
-                    chre = '<font color=orange>[TIMEOUT]</font>'
+                    chre = '<font color=green>[OK/TIMEOUT]</font>'
+                    good += 1
+                    vers = cm[0]
                 else:
                     chre = '<font color=green>[OK]</font>'
                     good += 1
