@@ -966,6 +966,7 @@ class paramWidget(gui.QWidget):
             self.timer.start(self.refreshtime)
 
     def clearDTC(self):
+        request = None
         if not options.simulation_mode:
             if self.protocol == "CAN":
                 options.elm.start_session_can('10C0')
@@ -974,10 +975,12 @@ class paramWidget(gui.QWidget):
 
         if "ClearDiagnosticInformation.All" in self.ecurequestsparser.requests:
             request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"]
+            self.logview.append("Clearing DTC information")
         elif "ClearDTC" in self.ecurequestsparser.requests:
+            self.logview.append("Clearing DTC information")
             request = self.ecurequestsparser.requests["ClearDTC"]
         else:
-            self.logview.append("No ClearDTC request for that ECU")
+            self.logview.append("No ClearDTC request for that ECU Try manual send 14FFFFFF")
 
         msgbox = gui.QMessageBox()
         msgbox.setText("<center>You are about to clear diagnostic troubles codes</center>"
@@ -990,8 +993,9 @@ class paramWidget(gui.QWidget):
 
         if userreply == gui.QMessageBox.Abort:
             return
+        if not request:
+            return
 
-        print "OK"
 
 
     def readDTC(self):
@@ -1032,7 +1036,22 @@ class paramWidget(gui.QWidget):
             msgbox.exec_()
             return
 
+        self.view = gui.QWidget(None)
+        self.dtc_view = gui.QTextEdit(None)
+        self.dtc_view.setReadOnly(True)
+        self.layout = gui.QVBoxLayout()
+        self.view.setLayout(self.layout)
+        self.clearbutton = gui.QPushButton("Clear ALL DTC")
+        self.layout.addWidget(self.clearbutton)
+        self.layout.addWidget(self.dtc_view)
+
+        self.clearbutton.clicked.connect(self.clearDTC)
+
+        html = '<h1 style="color:red">ECU trouble codes</color></h1>'
+
         while len(can_response) >= shiftbytecount:
+            html += '<h2 style="color:orange">DTC #%i' % dtc_num + "</h2>"
+            html += "<p>"
             for k in request.dataitems.keys():
                 ecu_data = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
@@ -1041,39 +1060,42 @@ class paramWidget(gui.QWidget):
                 if value_hex is None:
                     continue
 
-                if not dataitem.name in dtc_result:
-                    dtc_result[dataitem.name] = []
-
                 value = int('0x' + value_hex, 16)
 
                 if ecu_data.scaled:
-                    dtc_result[dataitem.name].append(str(value))
+                    html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
                     continue
 
                 if len(ecu_data.items) > 0 and value in ecu_data.lists:
-                    dtc_result[dataitem.name].append(ecu_data.lists[value])
+                    html += "<u>" + dataitem.name + "</u> : " + ecu_data.lists[value] + "<br>"
                 else:
-                    dtc_result[dataitem.name].append(str(value))
-
+                    html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
+            html += "</p>"
             can_response = can_response[shiftbytecount:]
             dtc_num += 1
-                    
-        columns = dtc_result.keys()
-        self.table = gui.QTableWidget(None)
-        self.table.setColumnCount(len(columns))
-        self.table.setRowCount(dtc_num)
-        
-        self.table.setHorizontalHeaderLabels(dtc_result.keys())
-        i = 0
-        for dtc_key in columns:
-            j = 0
-            for dtc_val in dtc_result[dtc_key]:
-                self.table.setItem(j, i, gui.QTableWidgetItem(dtc_val))
-                j += 1
-            i += 1
-        self.table.resizeColumnsToContents()
-        self.table.setFixedSize(self.table.horizontalHeader().length() + 40, self.table.verticalHeader().length() + 50);
-        self.table.show()
+
+
+        self.dtc_view.setHtml(html)
+        self.view.show()
+
+
+
+        # columns = dtc_result.keys()
+        # self.table = gui.QTableWidget(None)
+        # self.table.setColumnCount(len(columns))
+        # self.table.setRowCount(dtc_num)
+        #
+        # self.table.setHorizontalHeaderLabels(dtc_result.keys())
+        # i = 0
+        # for dtc_key in columns:
+        #     j = 0
+        #     for dtc_val in dtc_result[dtc_key]:
+        #         self.table.setItem(j, i, gui.QTableWidgetItem(dtc_val))
+        #         j += 1
+        #     i += 1
+        # self.table.resizeColumnsToContents()
+        # self.table.setFixedSize(self.table.horizontalHeader().length() + 40, self.table.verticalHeader().length() + 50);
+        # self.table.show()
 
 
 def getChildNodesByName(parent, name):
