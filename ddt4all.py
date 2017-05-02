@@ -502,10 +502,10 @@ class Main_widget(gui.QMainWindow):
     def setConnected(self, on):
         if on:
             self.connectedstatus.setStyleSheet("background : green")
-            self.connectedstatus.setText("CONNECTE")
+            self.connectedstatus.setText("CONNECTED")
         else:
             self.connectedstatus.setStyleSheet("background : red")
-            self.connectedstatus.setText("DECONNECTE")
+            self.connectedstatus.setText("DISCONNECTED")
 
     def saveEcus(self):
         filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)", "./vehicles/mycar.ecu", ".ecu")
@@ -828,7 +828,7 @@ class portChooser(gui.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                self.port = str(currentitem.text()).split('[')[0]
+                self.port = currentitem.text().toAscii().split('[')[0]
                 self.mode = 1
                 self.done(True)
             else:
@@ -879,6 +879,7 @@ if __name__ == '__main__':
         if pc.mode == 2:
             options.promode = False
             options.simulation_mode = True
+            break
 
         options.port = str(pc.port)
         port_speed = pc.selectedportspeed

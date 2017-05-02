@@ -96,11 +96,7 @@ cmdb = '''
 #V1.0 ;ACH ; ATSP4                 ; SP h               ; Set Protocol to h and save it
 #v1.0 ;AC  ; ATBI                  ; BI                 ; Bypass the Initialization sequence
 #v1.0 ;AC P; ATCAF0                ; CAF0, CAF1         ; Automatic Formatting off, or on*
-#v1.0 ;AC  ; ATCF 123              ; CF hhh             ; set the ID Filter to hhh
-#v1.0 ;AC  ; ATCF 12345678         ; CF hhhhhhhh        ; set the ID Filter to hhhhhhhh
 #v1.0 ;AC  ; ATCFC1                ; CFC0, CFC1         ; Flow Controls off, or on*
-#v1.0 ;AC  ; ATCM 123              ; CM hhh             ; set the ID Mask to hhh
-#v1.0 ;AC  ; ATCM 12345678         ; CM hhhhhhhh        ; set the ID Mask to hhhhhhhh
 #v1.0 ;AC  ; ATCP 01               ; CP hh              ; set CAN Priority to hh (29 bit)
 #v1.0 ;AC  ; ATCS                  ; CS                 ; show the CAN Status counts
 #v1.0 ;AC  ; ATCV 1250             ; CV dddd            ; Calibrate the Voltage to dd.dd volts
@@ -126,6 +122,10 @@ cmdb = '''
 #v1.0 ;AC P; ATSH 012              ; SH xyz             ; Set Header to xyz
 #v1.0 ;AC  ; ATSP A6               ; SP Ah              ; Set Protocol to Auto, h and save it
 #v1.0 ;AC  ; ATSP 6                ; SP h               ; Set Protocol to h and save it
+#v1.0 ;AC  ; ATCM 123              ; CM hhh             ; set the ID Mask to hhh
+#v1.0 ;AC  ; ATCM 12345678         ; CM hhhhhhhh        ; set the ID Mask to hhhhhhhh
+#v1.0 ;AC  ; ATCF 123              ; CF hhh             ; set the ID Filter to hhh
+#v1.0 ;AC  ; ATCF 12345678         ; CF hhhhhhhh        ; set the ID Filter to hhhhhhhh
 #v1.0 ;AC P; ATST FF               ; ST hh              ; Set Timeout to hh x 4 msec
 #v1.0 ;AC P; ATSW 96               ; SW 00              ; Stop sending Wakeup messages
 #v1.0 ;AC P; ATSW 34               ; SW hh              ; Set Wakeup interval to hh x 20 msec
@@ -511,23 +511,32 @@ class ELM:
     lastMessage = ""
 
     def __init__(self, portName, speed, startSession='10C0'):
-        self.sim_mode = options.simulation_mode
-        self.portName = portName
+        for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
+            print "Tryi opening port %s at %i" % (portName, s)
+            self.sim_mode = options.simulation_mode
+            self.portName = portName
 
-        if not options.simulation_mode:
-            self.port = Port(portName, speed, self.portTimeout)
-            if options.elm_failed:
-                return
+            if not options.simulation_mode:
+                self.port = Port(portName, s, self.portTimeout)
 
-        if not os.path.exists("./logs"):
-            os.mkdir("./logs")
+            if not os.path.exists("./logs"):
+                os.mkdir("./logs")
 
-        if len(options.log) > 0:
-            self.lf = open("./logs/elm_" + options.log, "at")
-            self.vf = open("./logs/ecu_" + options.log, "at")
+            if len(options.log) > 0:
+                self.lf = open("./logs/elm_" + options.log, "at")
+                self.vf = open("./logs/ecu_" + options.log, "at")
 
-        self.lastCMDtime = 0
-        self.ATCFC0 = options.opt_cfc0
+            self.lastCMDtime = 0
+            self.ATCFC0 = options.opt_cfc0
+
+            res = self.send_raw("atz")
+            if not 'ELM' in res:
+                options.elm_failed = True
+                options.last_error = "No ELM interface on port %s" % portName
+            else:
+                options.last_error = ""
+                options.elm_failed = False
+                break
 
     def __del__(self):
         try:
@@ -1155,11 +1164,16 @@ def elm_checker(port, speed, logview, app):
                 if 'H' in cm[1].upper():
                     continue
                 total += 1
-
+                print cm[2] + " " + res.strip()
                 if '?' in res:
                     chre = '<font color=red>[FAIL]</font>'
                     if 'P' in cm[1].upper():
                         pycom += 1
+                # Timeout is not an error
+                elif 'TIMEOUT' in res:
+                    chre = '<font color=green>[OK/TIMEOUT]</font>'
+                    good += 1
+                    vers = cm[0]
                 else:
                     chre = '<font color=green>[OK]</font>'
                     good += 1
@@ -1169,6 +1183,6 @@ def elm_checker(port, speed, logview, app):
                 app.processEvents()
 
     if pycom > 0:
-        logview.append('<font color=red>Uncompatible adapter on ARM core</font> \n')
+        logview.append('<font color=red>Incompatible adapter on ARM core</font> \n')
     logview.append('Result: ' + str(good) + ' succeeded from ' + str(total) + '\nELM Max version:' + vers + '\n')
     return True
