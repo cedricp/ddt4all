@@ -15,12 +15,15 @@ from StringIO import StringIO
 # Read freezeframe data // Done (partially)
 # Check ELM response validity (mode + 0x40)
 
-def remove_accents(input_str):
+
+def to_nfkd(input_str):
     nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
     return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
 
+
 def toascii(str):
-    return remove_accents(str).encode('ascii', 'ignore')
+    return to_nfkd(str).encode('ascii', 'ignore')
+
 
 class displayData:
     def __init__(self, data, widget, is_combo=False):
@@ -147,8 +150,16 @@ class paramWidget(gui.QWidget):
     def hexeditor(self):
         self.dialogbox = gui.QWidget()
         wlayout = gui.QVBoxLayout()
+        diaglabel = gui.QLabel("Diagnotic session")
         inputlabel = gui.QLabel("Input")
         outputlabel = gui.QLabel("Output")
+        self.diagsession = gui.QComboBox()
+        rqsts = self.ecurequestsparser.requests.keys()
+
+        for diag in rqsts:
+            if "start" in diag.lower() and "session" in diag.lower():
+                self.diagsession.addItem(diag)
+
         self.input = gui.QLineEdit()
         self.input.returnPressed.connect(self.send_manual_cmd)
         self.output = gui.QLineEdit()
@@ -156,6 +167,8 @@ class paramWidget(gui.QWidget):
         hexvalidaor = core.QRegExp(("^[\s0-9a-fA-F]+"))
         rev = gui.QRegExpValidator(hexvalidaor, self)
         self.input.setValidator(rev)
+        wlayout.addWidget(diaglabel)
+        wlayout.addWidget(self.diagsession)
         wlayout.addWidget(inputlabel)
         wlayout.addWidget(self.input)
         wlayout.addWidget(outputlabel)
@@ -164,6 +177,11 @@ class paramWidget(gui.QWidget):
         self.dialogbox.show()
 
     def send_manual_cmd(self):
+        diagmode = self.diagsession.currentText()
+        if diagmode:
+            rq = self.ecurequestsparser.requests[str(diagmode.toUtf8()).decode("utf-8")].sentbytes
+            self.sendElm(rq)
+
         command = self.input.text()
         ascii_cmd = str(command).upper().replace(" ", "")
         output = self.sendElm(ascii_cmd)
@@ -291,6 +309,16 @@ class paramWidget(gui.QWidget):
     def sendElm(self, command, auto=False):
         txt = ''
         elm_response = '00 ' * 70
+
+        if command.startswith('10'):
+            self.logview.append('<font color=blue>Switching to session mode %s</font>' % command)
+            if not options.simulation_mode:
+                if self.protocol == "CAN":
+                    options.elm.start_session_can(command)
+                    return
+                elif self.protocol == "KWP2000":
+                    options.elm.start_session_iso(command)
+                    return
 
         if not options.simulation_mode:
             if not options.promode:
@@ -485,13 +513,19 @@ class paramWidget(gui.QWidget):
                 qlabelval.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(display)))
                 qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
                 qlabelval.move(rect['left'] + width, rect['top'])
+                endianess = req.endian
+                if dataitem.endian != "":
+                    endianess = dataitem.endian
                 infos = req_name + u'\n'
+
                 if data.comment:
                     infos += data.comment + u'\n'
+
                 infos += u"Request=" + unicode(req.sentbytes) + u' ManualRequest=' + unicode(req.manualsend)
                 infos += u'\nNumBits=' + unicode(data.bitscount)
                 infos += u' FirstByte=' + unicode(dataitem.firstbyte)
                 infos += u' BitOffset=' + unicode(dataitem.bitoffset)
+                infos += u' Endianess=' + unicode(endianess)
                 qlabelval.setToolTip(infos)
 
                 ddata = displayData(data, qlabelval)
@@ -974,13 +1008,14 @@ class paramWidget(gui.QWidget):
                 options.elm.start_session_iso('10C0')
 
         if "ClearDiagnosticInformation.All" in self.ecurequestsparser.requests:
-            request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"]
+            request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"].sentbytes
             self.logview.append("Clearing DTC information")
         elif "ClearDTC" in self.ecurequestsparser.requests:
             self.logview.append("Clearing DTC information")
-            request = self.ecurequestsparser.requests["ClearDTC"]
+            request = self.ecurequestsparser.requests["ClearDTC"].sentbytes
         else:
-            self.logview.append("No ClearDTC request for that ECU Try manual send 14FFFFFF")
+            self.logview.append("No ClearDTC request for that ECU, will send default 14FFFFFF")
+            request = "14FFFFFF"
 
         msgbox = gui.QMessageBox()
         msgbox.setText("<center>You are about to clear diagnostic troubles codes</center>"
@@ -991,12 +1026,13 @@ class paramWidget(gui.QWidget):
         msgbox.setDefaultButton(gui.QMessageBox.Abort)
         userreply = msgbox.exec_()
 
-        if userreply == gui.QMessageBox.Abort:
-            return
         if not request:
             return
 
+        if userreply == gui.QMessageBox.Abort:
+            return
 
+        self.sendElm(request)
 
     def readDTC(self):
         if not options.simulation_mode:
@@ -1014,7 +1050,6 @@ class paramWidget(gui.QWidget):
             return
 
         shiftbytecount = request.shiftbytescount
-        dtc_result = {}
         dtc_num = 0
         bytestosend = map(''.join, zip(*[iter(request.sentbytes.encode('ascii'))]*2))
 
@@ -1036,16 +1071,16 @@ class paramWidget(gui.QWidget):
             msgbox.exec_()
             return
 
-        self.view = gui.QWidget(None)
-        self.dtc_view = gui.QTextEdit(None)
-        self.dtc_view.setReadOnly(True)
-        self.layout = gui.QVBoxLayout()
-        self.view.setLayout(self.layout)
-        self.clearbutton = gui.QPushButton("Clear ALL DTC")
-        self.layout.addWidget(self.clearbutton)
-        self.layout.addWidget(self.dtc_view)
+        dtcdialog = gui.QDialog(None)
+        dtc_view = gui.QTextEdit(None)
+        dtc_view.setReadOnly(True)
+        layout = gui.QVBoxLayout()
+        dtcdialog.setLayout(layout)
+        clearbutton = gui.QPushButton("Clear ALL DTC")
+        layout.addWidget(clearbutton)
+        layout.addWidget(dtc_view)
 
-        self.clearbutton.clicked.connect(self.clearDTC)
+        clearbutton.clicked.connect(self.clearDTC)
 
         html = '<h1 style="color:red">ECU trouble codes</color></h1>'
 
@@ -1075,27 +1110,8 @@ class paramWidget(gui.QWidget):
             dtc_num += 1
 
 
-        self.dtc_view.setHtml(html)
-        self.view.show()
-
-
-
-        # columns = dtc_result.keys()
-        # self.table = gui.QTableWidget(None)
-        # self.table.setColumnCount(len(columns))
-        # self.table.setRowCount(dtc_num)
-        #
-        # self.table.setHorizontalHeaderLabels(dtc_result.keys())
-        # i = 0
-        # for dtc_key in columns:
-        #     j = 0
-        #     for dtc_val in dtc_result[dtc_key]:
-        #         self.table.setItem(j, i, gui.QTableWidgetItem(dtc_val))
-        #         j += 1
-        #     i += 1
-        # self.table.resizeColumnsToContents()
-        # self.table.setFixedSize(self.table.horizontalHeader().length() + 40, self.table.verticalHeader().length() + 50);
-        # self.table.show()
+        dtc_view.setHtml(html)
+        dtcdialog.exec_()
 
 
 def getChildNodesByName(parent, name):

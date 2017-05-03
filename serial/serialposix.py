@@ -265,7 +265,7 @@ class Serial(SerialBase, PlatformSpecific):
             self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
         except OSError as msg:
             self.fd = None
-            raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+            raise SerialException(msg.errno, "could not open port {0}: {1}".format(self._port, msg))
         #~ fcntl.fcntl(self.fd, fcntl.F_SETFL, 0)  # set blocking
 
         try:
@@ -331,7 +331,7 @@ class Serial(SerialBase, PlatformSpecific):
 
         # setup baud rate
         try:
-            ispeed = ospeed = getattr(termios, 'B{}'.format(self._baudrate))
+            ispeed = ospeed = getattr(termios, 'B{0}'.format(self._baudrate))
         except AttributeError:
             try:
                 ispeed = ospeed = self.BAUDRATE_CONSTANTS[self._baudrate]
