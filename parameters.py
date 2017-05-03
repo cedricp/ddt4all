@@ -745,7 +745,7 @@ class paramWidget(gui.QWidget):
                     for key in items_ref.keys():
                         qcombo.addItem(key)
 
-                    qcombo.resize(rect['width'] + width, rect['height'])
+                    qcombo.resize(rect['width'] - width, rect['height'])
                     qcombo.move(rect['left'] + width, rect['top'])
                     if data.comment:
                         infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
