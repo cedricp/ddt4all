@@ -1,6 +1,6 @@
 import sys
 import time
-import ecu
+import ecu, elm
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options, os
@@ -52,8 +52,9 @@ class displayDict:
 
 
 class paramWidget(gui.QWidget):
-    def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview):
+    def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
+        self.main_protocol_status = prot_status
         self.scrollarea = parent
         self.refreshtime = 400
         self.protocol = ''
@@ -83,7 +84,6 @@ class paramWidget(gui.QWidget):
         self.mouseOldX = 0
         self.mouseOldY = 0
         self.current_screen = ''
-        self.main_protocol_status = 'Undefined'
 
     def __del__(self):
         # Return to default session
@@ -206,11 +206,13 @@ class paramWidget(gui.QWidget):
             else:
                 self.logview.append("Protocol " + self.protocol + " not supported")
         if self.main_protocol_status:
-            if not options.simulation_mode:
-                if self.protocol == "CAN":
-                    self.main_protocol_status.setText("DiagOnCan @ " + options.elm.getcandnat(self.ecu_addr))
-                else:
-                    self.main_protocol_status.setText("KWP @ " + self.ecu_addr)
+            if self.protocol == "CAN":
+                if self.ecu_addr:
+                    txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
+                                                  self.ecurequestsparser.ecu_recv_id)
+                    self.main_protocol_status.setText("DiagOnCan " + txrx)
+            else:
+                self.main_protocol_status.setText("KWP @ " + self.ecu_addr)
 
     def initJSON(self):
         self.layoutdict = None
@@ -268,8 +270,6 @@ class paramWidget(gui.QWidget):
                         self.can_send_id = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
                         if not options.simulation_mode:
                             self.ecu_addr = options.elm.get_can_addr(self.can_send_id)
-                        else:
-                            self.ecu_addr = "000"
 
                 rcv_ids = self.getChildNodesByName(can, "ReceiveId")
                 if rcv_ids:
@@ -305,6 +305,7 @@ class paramWidget(gui.QWidget):
                         screen_name = screen.getAttribute(u"Name")
                         self.xmlscreen[screen_name] = screen
                         self.categories[category_name].append(screen_name)
+            self.initELM()
 
     def sendElm(self, command, auto=False):
         txt = ''

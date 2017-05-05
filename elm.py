@@ -202,6 +202,21 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
+
+def getcandnat(addr):
+    a = str(addr)
+    if a in dnat:
+        return dnat[a]
+    return "??"
+
+
+def getcansnat(addr):
+    a = str(addr)
+    if a in snat:
+        return snat[a]
+    return "??"
+
+
 def get_available_ports():
     ports = []
     #try:
@@ -978,9 +993,6 @@ class ELM:
     def start_session_can(self, start_session):
         self.startSession = start_session
         self.cmd(self.startSession)
-
-    def getcandnat(self, addr):
-        return dnat[addr]
 
     def init_can(self):
 

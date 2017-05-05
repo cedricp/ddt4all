@@ -508,6 +508,10 @@ class Main_widget(gui.QMainWindow):
             self.ecu_scan.send_report()
 
     def setConnected(self, on):
+        if options.simultation_mode:
+            self.connectedstatus.setStyleSheet("background : orange")
+            self.connectedstatus.setText("DEMO MODE")
+            return
         if on:
             self.connectedstatus.setStyleSheet("background : green")
             self.connectedstatus.setText("CONNECTED")
@@ -596,10 +600,9 @@ class Main_widget(gui.QMainWindow):
             self.paramview.close()
             self.paramview.destroy()
 
-        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
+        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus)
         self.dataeditor.set_ecu_file(ecu_file)
         self.paramview.uiscale = uiscale_mem
-        self.paramview.main_protocol_status = self.protocolstatus
 
         self.scrollview.setWidget(self.paramview)
         screens = self.paramview.categories.keys()
@@ -858,11 +861,12 @@ if __name__ == '__main__':
 
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
-    print sys.platform[:3]
+
     if sys.platform[:3] != "win":
         font = gui.QFont("Arial", 9)
         font.setBold(False)
         app.setFont(font)
+
     ecudirfound = False
 
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
