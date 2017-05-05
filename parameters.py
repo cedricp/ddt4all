@@ -894,7 +894,7 @@ class paramWidget(gui.QWidget):
 
                 if not elm_data_stream:
                     widget.setStyleSheet("background: red")
-                    self.logview.append("Request aborted (look at red paramters enties): " + str(input_value))
+                    self.logview.append("Request aborted (look at red paramters entries): " + str(input_value))
                     return
 
                 widget.setStyleSheet("background: white")
@@ -1102,7 +1102,7 @@ class paramWidget(gui.QWidget):
                     continue
 
                 if len(ecu_data.items) > 0 and value in ecu_data.lists:
-                    html += "<u>" + dataitem.name + "</u> : " + ecu_data.lists[value] + "<br>"
+                    html += "<u>" + dataitem.name + "</u> : [" + str(value_hex) + "] " + ecu_data.lists[value] + "<br>"
                 else:
                     html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
             html += "</p>"

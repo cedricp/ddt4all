@@ -8,6 +8,7 @@ import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options, locale
+import dataeditor
 
 app = None
 
@@ -123,8 +124,7 @@ class Ecu_list(gui.QWidget):
         "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
         "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "XFC - ESPACE V",
         "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS",
-        "XZG - KOLEOS II", "XFE - KADJAR", "X33 - WIND", "X09 - TWIZY",
-        "X10 - ZOE",
+        "XZG - KOLEOS II", "XFE - KADJAR", "X33 - WIND", "X09 - TWIZY", "X10 - ZOE",
         "X76 - KANGOO I", "X61 - KANGOO II", "X24 - MASCOTT", "X83 - TRAFFIC II",
         "X82 - TRAFFIC III", "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN / SANDERO",
         "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
@@ -243,9 +243,17 @@ class Main_widget(gui.QMainWindow):
         self.statusBar.addWidget(self.refreshtimebox)
         self.statusBar.addWidget(self.infostatus)
 
+        self.tabbedview = gui.QTabWidget()
+        self.setCentralWidget(self.tabbedview)
+
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
-        self.setCentralWidget(self.scrollview)
+
+        self.dataeditor = dataeditor.dataEditor()
+
+        self.tabbedview.addTab(self.scrollview, "Screen")
+        self.tabbedview.addTab(self.dataeditor, "Requests")
+
 
         self.treedock_params = gui.QDockWidget(self)
         self.treeview_params = gui.QTreeWidget(self.treedock_params)
@@ -589,6 +597,7 @@ class Main_widget(gui.QMainWindow):
             self.paramview.destroy()
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview)
+        self.dataeditor.set_ecu_file(ecu_file)
         self.paramview.uiscale = uiscale_mem
         self.paramview.main_protocol_status = self.protocolstatus
 
@@ -849,6 +858,11 @@ if __name__ == '__main__':
 
     options.simultation_mode = True
     app = gui.QApplication(sys.argv)
+    print sys.platform[:3]
+    if sys.platform[:3] != "win":
+        font = gui.QFont("Arial", 9)
+        font.setBold(False)
+        app.setFont(font)
     ecudirfound = False
 
     if os.path.exists(options.ecus_dir + '/eculist.xml'):

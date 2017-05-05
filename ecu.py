@@ -89,7 +89,7 @@ class Data_item:
 class Ecu_device:
     def __init__(self, dev):
         self.dtc = 0
-        self. dtctype = 0
+        self.dtctype = 0
         self.devicedata = {}
         self.name = ''
 
@@ -133,7 +133,6 @@ class Ecu_request:
         self.sendbyte_dataitems = {}
         self.name = ''
         self.endian = endian
-        self.name = ''
 
         if isinstance(data, dict):
             if data.has_key('minbytes'): self.minbytes = data['minbytes']
@@ -595,6 +594,7 @@ class Ecu_data:
 class Ecu_file:
     def __init__(self, data, isfile=False):
         self.requests = {}
+        self.devices = {}
         self.data = {}
         self.endianness = ''
         self.ecu_protocol = ''
@@ -610,10 +610,11 @@ class Ecu_file:
 
             if ecudict.has_key('endian'):
                 self.endianness = ecudict['endian']
+
             devices = ecudict['devices']
             for device in devices:
                 ecu_dev = Ecu_device(device)
-                self.requests[ecu_dev.name] = ecu_dev
+                self.devices[ecu_dev.name] = ecu_dev
 
             requests = ecudict['requests']
             for request in requests:
@@ -672,7 +673,7 @@ class Ecu_file:
             devices = self.xmldoc.getElementsByTagName("Device")
             for d in devices:
                 ecu_dev = Ecu_device(d)
-                self.requests[ecu_dev.name] = ecu_dev
+                self.devices[ecu_dev.name] = ecu_dev
 
             requests_tag = self.xmldoc.getElementsByTagName("Requests")
 
@@ -714,10 +715,10 @@ class Ecu_file:
             js['data'][toascii(name)] = d
 
         for key, value in self.requests.iteritems():
-            if isinstance(value, Ecu_device):
-                js['devices'].append(value.dump())
-            else:
-                js['requests'].append(value.dump())
+            js['requests'].append(value.dump())
+
+        for key, value in self.devices.iteritems():
+            js['devices'].append(value.dump())
 
         dump = json.dumps(js, indent=1)
         return re.sub('\n +', lambda match: '\n' + '\t' * (len(match.group().strip('\n')) / 2), dump)
