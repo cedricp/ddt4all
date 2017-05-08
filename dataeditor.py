@@ -1,18 +1,11 @@
 import time
+
+
 import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options, os
 
-# self.minbytes = 0
-# self.shiftbytescount = 0
-# self.replybytes = ''
-# self.manualsend = False
-# self.sentbytes = ''
-# self.dataitems = {}
-# self.sendbyte_dataitems = {}
-# self.name = ''
-# self.endian = endian'
 
 class requestTable(gui.QTableWidget):
     def __init__(self,  parent=None):
@@ -177,11 +170,11 @@ class paramEditor(gui.QFrame):
         self.table.setRowCount(count)
 
 
-class dataEditor(gui.QWidget):
+class requestEditor(gui.QWidget):
     """Main container for reauest editor"""
     def __init__(self, parent=None):
-        super(dataEditor, self).__init__(parent)
-        self.ecurequest = None
+        super(requestEditor, self).__init__(parent)
+        self.ecurequestsparser = None
         self.layh = gui.QHBoxLayout()
         self.requesttable = requestTable()
         self.layh.addWidget(self.requesttable)
@@ -209,3 +202,267 @@ class dataEditor(gui.QWidget):
         self.sendbyteeditor.set_ecufile(self.ecurequestsparser)
         self.receivebyteeditor.set_ecufile(self.ecurequestsparser)
 
+
+class numericListPanel(gui.QFrame):
+    def __init__(self, dataitem, parent=None):
+        super(numericListPanel, self).__init__(parent)
+        self.setFrameStyle(gui.QFrame.Sunken)
+        self.setFrameShape(gui.QFrame.Box)
+        self.data = dataitem
+
+        layoutv = gui.QVBoxLayout()
+        layout = gui.QGridLayout()
+        labelnob = gui.QLabel("Number of bits")
+        lablelsigned = gui.QLabel("Signed")
+
+        layout.addWidget(labelnob, 0, 0)
+        layout.addWidget(lablelsigned, 1, 0)
+
+        self.inputnob = gui.QSpinBox()
+        self.inputnob.setRange(1, 32)
+        self.inputsigned = gui.QCheckBox()
+
+        layout.addWidget(self.inputnob, 0, 1)
+        layout.addWidget(self.inputsigned, 1, 1)
+
+        layoutv.addLayout(layout)
+
+        self.itemtable = gui.QTableWidget()
+        self.itemtable.setRowCount(1)
+        self.itemtable.setColumnCount(2)
+        self.itemtable.verticalHeader().hide()
+        self.itemtable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
+        self.itemtable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
+
+        layoutv.addWidget(self.itemtable)
+
+        self.setLayout(layoutv)
+        self.init()
+
+    def init(self):
+        keys = self.data.items.keys()
+        self.itemtable.setRowCount(len(keys))
+
+        self.inputsigned.setChecked(self.data.signed)
+        self.inputnob.setValue(self.data.bitscount)
+
+        count = 0
+        for k in keys:
+            currentitem = self.data.items[k]
+            self.itemtable.setItem(count, 0, gui.QTableWidgetItem(str(currentitem)))
+            self.itemtable.setItem(count, 1, gui.QTableWidgetItem(k))
+            count += 1
+
+
+        headerstrings = core.QString("Value;Text").split(";")
+        self.itemtable.setHorizontalHeaderLabels(headerstrings)
+        self.itemtable.resizeColumnsToContents()
+        self.itemtable.sortItems(core.Qt.AscendingOrder)
+
+
+
+class otherPanel(gui.QFrame):
+    def __init__(self, dataitem, parent=None):
+        super(otherPanel, self).__init__(parent)
+        self.setFrameStyle(gui.QFrame.Sunken)
+        self.setFrameShape(gui.QFrame.Box)
+        self.data = dataitem
+
+        layout = gui.QGridLayout()
+        labelnob = gui.QLabel("Number of bytes")
+        lableunit = gui.QLabel("Unit")
+
+        layout.addWidget(labelnob, 0, 0)
+        layout.addWidget(lableunit, 1, 0)
+        layout.setRowStretch(2, 1)
+
+        self.inputnob = gui.QSpinBox()
+        self.inputnob.setRange(1, 10240)
+        self.inputtype = gui.QComboBox()
+        self.inputtype.addItem("ASCII")
+        self.inputtype.addItem("BCD/HEX")
+
+        layout.addWidget(self.inputnob, 0, 1)
+        layout.addWidget(self.inputtype, 1, 1)
+
+        self.setLayout(layout)
+        self.init()
+
+    def init(self):
+        self.inputnob.setValue(self.data.bytescount)
+        if self.data.bytesascii:
+            self.inputtype.setCurrentIndex(0)
+        else:
+            self.inputtype.setCurrentIndex(1)
+
+class numericPanel(gui.QFrame):
+    def __init__(self, dataitem, parent=None):
+        super(numericPanel, self).__init__(parent)
+        self.setFrameStyle(gui.QFrame.Sunken)
+        self.setFrameShape(gui.QFrame.Box)
+        self.data = dataitem
+
+        layout = gui.QGridLayout()
+        labelnob = gui.QLabel("Number of bit")
+        lableunit = gui.QLabel("Unit")
+        labelsigned = gui.QLabel("Signed")
+        labelformat = gui.QLabel("Format")
+        labeldoc = gui.QLabel("Value = (AX+B) / C")
+        labela = gui.QLabel("A")
+        labelb = gui.QLabel("B")
+        labelc = gui.QLabel("C")
+
+        layout.addWidget(labelnob, 0, 0)
+        layout.addWidget(lableunit, 1, 0)
+        layout.addWidget(labelsigned, 2, 0)
+        layout.addWidget(labelformat, 3, 0)
+        layout.addWidget(labeldoc, 4, 0)
+        layout.addWidget(labela, 5, 0)
+        layout.addWidget(labelb, 6, 0)
+        layout.addWidget(labelc, 7, 0)
+        layout.setRowStretch(8, 1)
+
+        self.inputnob = gui.QSpinBox()
+        self.inputnob.setRange(1, 32)
+        self.inputunit = gui.QLineEdit()
+        self.inputsigned = gui.QCheckBox()
+        self.inputformat = gui.QLineEdit()
+        self.inputa = gui.QDoubleSpinBox()
+        self.inputb = gui.QDoubleSpinBox()
+        self.inputc = gui.QDoubleSpinBox()
+        self.inputc.setRange(-1000000, 1000000)
+        self.inputb.setRange(-1000000, 1000000)
+        self.inputa.setRange(-1000000, 1000000)
+        self.inputa.setDecimals(4)
+        self.inputb.setDecimals(4)
+        self.inputc.setDecimals(4)
+
+        layout.addWidget(self.inputnob, 0, 1)
+        layout.addWidget(self.inputunit, 1, 1)
+        layout.addWidget(self.inputsigned, 2, 1)
+        layout.addWidget(self.inputformat, 3, 1)
+        layout.addWidget(self.inputa, 5, 1)
+        layout.addWidget(self.inputb, 6, 1)
+        layout.addWidget(self.inputc, 7, 1)
+
+        self.setLayout(layout)
+
+        self.init()
+
+    def init(self):
+        self.inputnob.setValue(self.data.bitscount)
+        self.inputunit.setText(self.data.unit)
+        self.inputsigned.setChecked(self.data.signed)
+        self.inputformat.setText(self.data.format)
+        self.inputa.setValue(self.data.step)
+        self.inputb.setValue(self.data.offset)
+        self.inputc.setValue(self.data.divideby)
+
+class dataEditor(gui.QWidget):
+    """Main container for data item editor"""
+    def __init__(self, parent=None):
+        super(dataEditor, self).__init__(parent)
+        self.ecurequestsparser = None
+        self.currentecudata = None
+
+        self.layouth = gui.QHBoxLayout()
+        self.datatable = gui.QTableWidget()
+        self.datatable.setFixedWidth(350)
+        self.datatable.setRowCount(1)
+        self.datatable.setColumnCount(2)
+        self.datatable.verticalHeader().hide()
+        self.datatable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
+        self.datatable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
+        self.datatable.setShowGrid(False)
+        self.layouth.addWidget(self.datatable)
+
+        self.editorcontent = gui.QFrame()
+        self.editorcontent.setFrameStyle(gui.QFrame.Sunken)
+        self.editorcontent.setFrameShape(gui.QFrame.Box)
+
+        self.layoutv = gui.QVBoxLayout()
+        self.layouth.addLayout(self.layoutv)
+
+        desclayout = gui.QHBoxLayout()
+        labeldescr = gui.QLabel("Description")
+        self.descpriptioneditor = gui.QLineEdit()
+        desclayout.addWidget(labeldescr)
+        desclayout.addWidget(self.descpriptioneditor)
+
+        typelayout = gui.QHBoxLayout()
+        typelabel = gui.QLabel("Data type")
+        self.typecombo = gui.QComboBox()
+        self.typecombo.addItem("Numeric")
+        self.typecombo.addItem("Numeric items")
+        self.typecombo.addItem("Hex")
+        typelayout.addWidget(typelabel)
+        typelayout.addWidget(self.typecombo)
+
+        self.layoutv.addLayout(desclayout)
+        self.layoutv.addLayout(typelayout)
+
+        nonepanel = gui.QWidget()
+        self.layoutv.addWidget(nonepanel)
+        self.currentWidget = nonepanel
+
+        self.setLayout(self.layouth)
+
+        self.typecombo.currentIndexChanged.connect(self.switchType)
+
+        self.datatable.cellClicked.connect(self.changeData)
+
+    def changeData(self, r, c):
+        dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        self.currentecudata = self.ecurequestsparser.data[dataname]
+        self.descpriptioneditor.setText(self.currentecudata.comment)
+        if self.currentecudata.scaled:
+            self.switchType(0)
+        elif len(self.currentecudata.items):
+            self.switchType(1)
+        else:
+            self.switchType(2)
+
+    def switchType(self, num):
+        if num == 0:
+            self.layoutv.removeWidget(self.currentWidget)
+            self.currentWidget.hide()
+            self.currentWidget.destroy()
+            self.currentWidget = numericPanel(self.currentecudata)
+            self.layoutv.addWidget(self.currentWidget)
+
+        if num == 1:
+            self.layoutv.removeWidget(self.currentWidget)
+            self.currentWidget.hide()
+            self.currentWidget.destroy()
+            self.currentWidget = numericListPanel(self.currentecudata)
+            self.layoutv.addWidget(self.currentWidget)
+
+        if num == 2:
+            self.layoutv.removeWidget(self.currentWidget)
+            self.currentWidget.hide()
+            self.currentWidget.destroy()
+            self.currentWidget = otherPanel(self.currentecudata)
+            self.layoutv.addWidget(self.currentWidget)
+
+
+
+    def init_table(self):
+        dataItems = self.ecurequestsparser.data.keys()
+        self.datatable.setRowCount(len(dataItems))
+
+        count = 0
+        for k in dataItems:
+            data = self.ecurequestsparser.data[k]
+            self.datatable.setItem(count, 0, gui.QTableWidgetItem(k))
+            self.datatable.setItem(count, 1, gui.QTableWidgetItem(data.comment))
+            count += 1
+
+        self.datatable.sortItems(core.Qt.AscendingOrder)
+
+        headerstrings = core.QString("Data name;Description").split(";")
+        self.datatable.setHorizontalHeaderLabels(headerstrings)
+        self.datatable.resizeColumnsToContents()
+
+    def set_ecu_file(self, ecu_file):
+        self.ecurequestsparser = ecu.Ecu_file(ecu_file, True)
+        self.init_table()

@@ -249,10 +249,12 @@ class Main_widget(gui.QMainWindow):
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
 
-        self.dataeditor = dataeditor.dataEditor()
+        self.requesteditor = dataeditor.requestEditor()
+        self.dataitemeditor = dataeditor.dataEditor()
 
         self.tabbedview.addTab(self.scrollview, "Screen")
-        self.tabbedview.addTab(self.dataeditor, "Requests")
+        self.tabbedview.addTab(self.requesteditor, "Requests")
+        self.tabbedview.addTab(self.dataitemeditor, "Data")
 
 
         self.treedock_params = gui.QDockWidget(self)
@@ -601,7 +603,8 @@ class Main_widget(gui.QMainWindow):
             self.paramview.destroy()
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus)
-        self.dataeditor.set_ecu_file(ecu_file)
+        self.requesteditor.set_ecu_file(ecu_file)
+        self.dataitemeditor.set_ecu_file(ecu_file)
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)
