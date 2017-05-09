@@ -1,11 +1,6 @@
-import time
-
-
 import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import options, os
-
 
 class requestTable(gui.QTableWidget):
     def __init__(self,  parent=None):
@@ -106,11 +101,51 @@ class paramEditor(gui.QFrame):
         self.table.setShowGrid(False)
         self.layoutv.addWidget(self.table)
         self.ecufile = None
+        self.current_request = None
+
+    def set_data(self):
+        if self.send:
+            try:
+                request = str(self.inputreq.text())
+                self.current_request.sentbytes = request
+            except:
+                errortxt = unicode(self.inputreq.text().toUtf8(), encoding="UTF-8")
+                msgbox = gui.QMessageBox()
+                msgbox.setText("<center>Send request error '%s'</center>" % errortxt)
+                msgbox.exec_()
+                return
+
+        else:
+            try:
+                request = str(self.inputreq.text())
+                self.current_request.replybytes = request
+            except:
+                errortxt = unicode(self.inputreq.text().toUtf8(), encoding="UTF-8")
+                msgbox = gui.QMessageBox()
+                msgbox.setText("<center>Receive request error '%s'</center>" % errortxt)
+                msgbox.exec_()
+                return
+
+        for i in range(self.table.rowCount()):
+            rowname = unicode(self.table.item(i, 0).text().toUtf8(), "UTF-8")
+            rowsb = self.table.cellWidget(i, 1).value()
+            rowbo = self.table.cellWidget(i, 2).value()
+            if self.send:
+                dataitem = self.current_request.sendbyte_dataitems[rowname]
+            else:
+                dataitem = self.current_request.dataitems[rowname]
+            dataitem.bitoffset = rowbo
+            dataitem.firstbyte = rowsb
+
+            self.init(self.current_request)
 
     def set_ecufile(self, ef):
         self.ecufile = ef
+        self.table.clear()
+        self.inputreq.clear()
 
     def set_request(self, req):
+        self.current_request = req
         self.init(req)
 
     def init(self, req):
@@ -150,17 +185,22 @@ class paramEditor(gui.QFrame):
             else:
                 endian_combo.setCurrentIndex(0)
 
-            item_sb = gui.QTableWidgetItem(str(dataitem.firstbyte))
-            item_boff = gui.QTableWidgetItem(str(dataitem.bitoffset))
+            item_sb = gui.QSpinBox()
+            item_sb.setRange(0, 100000)
+            item_sb.setValue(dataitem.firstbyte)
+            item_boff = gui.QSpinBox()
+            item_boff.setRange(0, 7)
+            item_boff.setValue(dataitem.bitoffset)
             item_bc = gui.QTableWidgetItem(str(ecudata.bitscount))
+            item_name = gui.QTableWidgetItem(dataitem.name)
+            item_name.setFlags(item_name.flags() ^ core.Qt.ItemIsEditable)
+            item_bc.setFlags(item_bc.flags() ^ core.Qt.ItemIsEditable)
 
-            item_sb.setTextAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
-            item_boff.setTextAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
             item_bc.setTextAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
 
-            self.table.setItem(count, 0, gui.QTableWidgetItem(dataitem.name))
-            self.table.setItem(count, 1, item_sb)
-            self.table.setItem(count, 2, item_boff)
+            self.table.setItem(count, 0, item_name)
+            self.table.setCellWidget(count, 1, item_sb)
+            self.table.setCellWidget(count, 2, item_boff)
             self.table.setItem(count, 3, item_bc)
 
             self.table.setCellWidget(count, 4, endian_combo)
@@ -175,6 +215,17 @@ class requestEditor(gui.QWidget):
     def __init__(self, parent=None):
         super(requestEditor, self).__init__(parent)
         self.ecurequestsparser = None
+
+        layout_action = gui.QHBoxLayout()
+        button_reload = gui.QPushButton("Reload")
+        button_set = gui.QPushButton("Validate changes")
+        layout_action.addWidget(button_reload)
+        layout_action.addWidget(button_set)
+        layout_action.addStretch()
+
+        button_reload.clicked.connect(self.reload)
+        button_set.clicked.connect(self.set)
+
         self.layh = gui.QHBoxLayout()
         self.requesttable = requestTable()
         self.layh.addWidget(self.requesttable)
@@ -188,6 +239,7 @@ class requestEditor(gui.QWidget):
         self.tabs.addTab(self.sendbyteeditor, "Send bytes")
         self.tabs.addTab(self.receivebyteeditor, "Receive bytes")
 
+        self.layv.addLayout(layout_action)
         self.layv.addWidget(self.tabs)
 
         self.layh.addLayout(self.layv)
@@ -196,11 +248,26 @@ class requestEditor(gui.QWidget):
         self.requesttable.setSendByteEditor(self.sendbyteeditor)
         self.requesttable.setReceiveByteEditor(self.receivebyteeditor)
 
-    def set_ecu_file(self, ecu_file):
-        self.ecurequestsparser = ecu.Ecu_file(ecu_file, True)
+    def set(self):
+        if not self.ecurequestsparser:
+            return
+
+        self.sendbyteeditor.set_data()
+        self.receivebyteeditor.set_data()
+
+    def reload(self):
+        if not self.ecurequestsparser:
+            return
+        self.init()
+
+    def init(self):
         self.requesttable.init(self.ecurequestsparser.requests)
         self.sendbyteeditor.set_ecufile(self.ecurequestsparser)
         self.receivebyteeditor.set_ecufile(self.ecurequestsparser)
+
+    def set_ecu(self, ecu):
+        self.ecurequestsparser = ecu
+        self.init()
 
 
 class numericListPanel(gui.QFrame):
@@ -239,6 +306,9 @@ class numericListPanel(gui.QFrame):
         self.setLayout(layoutv)
         self.init()
 
+    def validate(self):
+        pass
+
     def init(self):
         keys = self.data.items.keys()
         self.itemtable.setRowCount(len(keys))
@@ -258,8 +328,6 @@ class numericListPanel(gui.QFrame):
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
         self.itemtable.sortItems(core.Qt.AscendingOrder)
-
-
 
 class otherPanel(gui.QFrame):
     def __init__(self, dataitem, parent=None):
@@ -287,6 +355,23 @@ class otherPanel(gui.QFrame):
 
         self.setLayout(layout)
         self.init()
+
+    def validate(self):
+        type = self.inputtype.currentIndex()
+        self.data.scaled = False
+        self.data.bytescount = self.inputnob.value()
+        self.data.unit = ""
+        self.data.signed = False
+        self.data.format = ""
+        self.data.step = 1
+        self.data.offset = 0
+        self.data.divideby = 1
+        if type == 0:
+            self.data.bytesascii = True
+        else:
+            self.data.bytesascii = False
+        self.data.items = {}
+        self.data.lists = {}
 
     def init(self):
         self.inputnob.setValue(self.data.bytescount)
@@ -349,6 +434,19 @@ class numericPanel(gui.QFrame):
 
         self.init()
 
+    def validate(self):
+        self.data.scaled = True
+        self.data.bitscount = self.inputnob.value()
+        self.data.unit = unicode(self.inputunit.text().toUtf8(), encoding="UTF-8")
+        self.data.signed = self.inputsigned.isChecked()
+        self.data.format = unicode(self.inputformat.text().toUtf8(), encoding="UTF-8")
+        self.data.step = self.inputa.value()
+        self.data.offset = self.inputb.value()
+        self.data.divideby = self.inputc.value()
+        self.data.bytesascii = False
+        self.data.items = {}
+        self.data.lists = {}
+
     def init(self):
         self.inputnob.setValue(self.data.bitscount)
         self.inputunit.setText(self.data.unit)
@@ -365,7 +463,18 @@ class dataEditor(gui.QWidget):
         self.ecurequestsparser = None
         self.currentecudata = None
 
+        layout_action = gui.QHBoxLayout()
+        button_reload = gui.QPushButton("Reload")
+        button_validate = gui.QPushButton("Validate changes")
+        layout_action.addWidget(button_reload)
+        layout_action.addWidget(button_validate)
+        layout_action.addStretch()
+
+        button_reload.clicked.connect(self.reload)
+        button_validate.clicked.connect(self.validate)
+
         self.layouth = gui.QHBoxLayout()
+
         self.datatable = gui.QTableWidget()
         self.datatable.setFixedWidth(350)
         self.datatable.setRowCount(1)
@@ -382,6 +491,7 @@ class dataEditor(gui.QWidget):
 
         self.layoutv = gui.QVBoxLayout()
         self.layouth.addLayout(self.layoutv)
+        self.layoutv.addLayout(layout_action)
 
         desclayout = gui.QHBoxLayout()
         labeldescr = gui.QLabel("Description")
@@ -401,15 +511,29 @@ class dataEditor(gui.QWidget):
         self.layoutv.addLayout(desclayout)
         self.layoutv.addLayout(typelayout)
 
-        nonepanel = gui.QWidget()
-        self.layoutv.addWidget(nonepanel)
-        self.currentWidget = nonepanel
+        self.nonePanel = gui.QWidget()
+        self.layoutv.addWidget(self.nonePanel)
+        self.currentWidget = self.nonePanel
 
         self.setLayout(self.layouth)
 
         self.typecombo.currentIndexChanged.connect(self.switchType)
 
         self.datatable.cellClicked.connect(self.changeData)
+
+    def clear(self):
+        self.datatable.clear()
+        self.switchType(3)
+
+    def reload(self):
+        self.init_table()
+
+    def validate(self):
+        if not "validate" in dir(self.currentWidget):
+            return
+        comment = unicode(self.descpriptioneditor.text().toUtf8(), encoding="UTF-8")
+        self.currentecudata.comment = comment
+        self.currentWidget.validate()
 
     def changeData(self, r, c):
         dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
@@ -423,6 +547,8 @@ class dataEditor(gui.QWidget):
             self.switchType(2)
 
     def switchType(self, num):
+        self.descpriptioneditor.setEnabled(True)
+        self.typecombo.setEnabled(True)
         if num == 0:
             self.layoutv.removeWidget(self.currentWidget)
             self.currentWidget.hide()
@@ -444,9 +570,18 @@ class dataEditor(gui.QWidget):
             self.currentWidget = otherPanel(self.currentecudata)
             self.layoutv.addWidget(self.currentWidget)
 
+        if num == 3:
+            self.layoutv.removeWidget(self.currentWidget)
+            self.currentWidget.hide()
+            self.currentWidget.destroy()
+            self.currentWidget = gui.QWidget()
+            self.layoutv.addWidget(self.currentWidget)
+            self.descpriptioneditor.setEnabled(False)
+            self.typecombo.setEnabled(False)
 
 
     def init_table(self):
+        self.datatable.clear()
         dataItems = self.ecurequestsparser.data.keys()
         self.datatable.setRowCount(len(dataItems))
 
@@ -463,6 +598,7 @@ class dataEditor(gui.QWidget):
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
 
-    def set_ecu_file(self, ecu_file):
-        self.ecurequestsparser = ecu.Ecu_file(ecu_file, True)
+    def set_ecu(self, ecu):
+        self.ecurequestsparser = ecu
+        self.switchType(3)
         self.init_table()

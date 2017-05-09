@@ -559,17 +559,6 @@ class Ecu_data:
         if len(hexval) == 0:
             return None
 
-        # if little_endian:
-        #     a = hexval
-        #     b = ''
-        #     if not len(a) % 2:
-        #         for i in range(0, len(a), 2):
-        #             b = a[i:i + 2] + b
-        #         hexval = b
-        #     else:
-        #         print "Warning, cannot convert little endian value, report error please"
-        #         return None
-
         if bits % 8:
             if little_endian:
                 offset = startBit
