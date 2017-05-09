@@ -56,7 +56,7 @@ class paramWidget(gui.QWidget):
         super(paramWidget, self).__init__(parent)
         self.main_protocol_status = prot_status
         self.scrollarea = parent
-        self.refreshtime = 400
+        self.refreshtime = 100
         self.protocol = ''
         self.layout = gui.QHBoxLayout(self)
         self.logview = logview
@@ -79,6 +79,12 @@ class paramWidget(gui.QWidget):
         self.ecu_addr = str(ecu_addr)
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
+        self.tester_timer = core.QTimer()
+        self.tester_timer.setSingleShot(False)
+        self.tester_timer.setInterval(1500)
+        self.tester_timer.timeout.connect(self.tester_send)
+        self.tester_timer.start()
+        self.tester_presend_command = ""
         self.initXML()
         self.sliding = False
         self.mouseOldX = 0
@@ -93,6 +99,12 @@ class paramWidget(gui.QWidget):
                 options.elm.start_session_can('1081')
             elif self.protocol == "KWP2000":
                 options.elm.start_session_iso('1081')
+
+    def tester_send(self):
+        if self.tester_presend_command == "":
+            return
+
+        self.sendElm(self.tester_presend_command, True)
 
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
@@ -306,6 +318,14 @@ class paramWidget(gui.QWidget):
                         self.xmlscreen[screen_name] = screen
                         self.categories[category_name].append(screen_name)
             self.initELM()
+        reqk = self.ecurequestsparser.requests.keys()
+
+        if self.protocol == "CAN":
+            self.tester_presend_command = '3E'
+            for k in reqk:
+                if "testerpresent" in k.lower() or "tester_present" in k.lower():
+                    self.tester_presend_command = self.ecurequestsparser.requests[k].sentbytes
+                    break
 
     def sendElm(self, command, auto=False):
         txt = ''
@@ -324,7 +344,7 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             if not options.promode:
                 # Allow read only modes
-                if command.startswith('10') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
+                if command.startswith('3E') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>Sending simulated ELM request :</font>'
                 else:

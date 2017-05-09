@@ -946,7 +946,7 @@ class ELM:
         if not options.simulation_mode:
             self.port.write(str(command + "\r").encode("utf-8"))  # send command
 
-        # receive and parse responce
+        # receive and parse response
         while (True):
             tc = time.time()
             if options.simulation_mode:
