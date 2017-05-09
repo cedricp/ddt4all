@@ -362,7 +362,21 @@ class otherPanel(gui.QFrame):
         self.init()
 
     def validate(self):
-        pass
+        type = self.inputtype.currentIndex()
+        self.data.scaled = False
+        self.data.bytescount = self.inputnob.value()
+        self.data.unit = ""
+        self.data.signed = False
+        self.data.format = ""
+        self.data.step = 1
+        self.data.offset = 0
+        self.data.divideby = 1
+        if type == 0:
+            self.data.bytesascii = True
+        else:
+            self.data.bytesascii = False
+        self.data.items = {}
+        self.data.lists = {}
 
     def init(self):
         self.inputnob.setValue(self.data.bytescount)
@@ -426,6 +440,7 @@ class numericPanel(gui.QFrame):
         self.init()
 
     def validate(self):
+        self.data.scaled = True
         self.data.bitscount = self.inputnob.value()
         self.data.unit = unicode(self.inputunit.text().toUtf8(), encoding="UTF-8")
         self.data.signed = self.inputsigned.isChecked()

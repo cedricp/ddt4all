@@ -324,9 +324,11 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             if not options.promode:
                 # Allow read only modes
-                if command.startswith('10') or command.startswith('14') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
+                if command.startswith('10') or command.startswith('14')\
+                        or command.startswith('21') or command.startswith('22')\
+                        or command.startswith('17'):
                     elm_response = options.elm.request(command, cache=False)
-                    txt = '<font color=blue>Sending simulated ELM request :</font>'
+                    txt = '<font color=blue>Sending ELM request :</font>'
                 else:
                     txt = '<font color=green>Blocked ELM request :</font>'
             else:
@@ -334,14 +336,11 @@ class paramWidget(gui.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>Sending ELM request:</font>'
         else:
-
             if "17FF00" in command:
                 # Test for ACU4
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
                 # Test for EDC16
                 #elm_response = "57 03 05 34 68 06 70 4F 09 A4 09 A4 17"
-            if "17FFFF" in command:
-                elm_response = "WRONG RESPONSE"
             txt = '<font color=green>Sending simulated ELM request :</font>'
 
         if not auto or options.log_all:
@@ -349,10 +348,10 @@ class paramWidget(gui.QWidget):
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
-            self.logview.append("<font color=red>Bad ELM response:</font> " + nrsp)
+            self.logview.append("<font color=red>Bad ELM response :</font> " + nrsp)
 
         if not auto or options.log_all:
-            self.logview.append('ELM response: ' + elm_response)
+            self.logview.append('ELM response : ' + elm_response)
 
         return elm_response
 
