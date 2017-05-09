@@ -603,8 +603,8 @@ class Main_widget(gui.QMainWindow):
             self.paramview.destroy()
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus)
-        self.requesteditor.set_ecu_file(ecu_file)
-        self.dataitemeditor.set_ecu_file(ecu_file)
+        self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
+        self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)

@@ -324,7 +324,7 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             if not options.promode:
                 # Allow read only modes
-                if command.startswith('10') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
+                if command.startswith('10') or command.startswith('14') or command.startswith('21') or command.startswith('22') or command.startswith('17'):
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>Sending simulated ELM request :</font>'
                 else:
@@ -336,7 +336,10 @@ class paramWidget(gui.QWidget):
         else:
 
             if "17FF00" in command:
+                # Test for ACU4
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
+                # Test for EDC16
+                #elm_response = "57 03 05 34 68 06 70 4F 09 A4 09 A4 17"
             if "17FFFF" in command:
                 elm_response = "WRONG RESPONSE"
             txt = '<font color=green>Sending simulated ELM request :</font>'
@@ -1014,9 +1017,12 @@ class paramWidget(gui.QWidget):
         elif "ClearDTC" in self.ecurequestsparser.requests:
             self.logview.append("Clearing DTC information")
             request = self.ecurequestsparser.requests["ClearDTC"].sentbytes
+        elif "Clear Diagnostic Information" in self.ecurequestsparser.requests:
+            self.logview.append("Clearing DTC information")
+            request = self.ecurequestsparser.requests["Clear Diagnostic Information"].sentbytes
         else:
-            self.logview.append("No ClearDTC request for that ECU, will send default 14FFFFFF")
-            request = "14FFFFFF"
+            self.logview.append("No ClearDTC request for that ECU, will send default 14FF00")
+            request = "14FF00"
 
         msgbox = gui.QMessageBox()
         msgbox.setText("<center>You are about to clear diagnostic troubles codes</center>"
@@ -1085,7 +1091,7 @@ class paramWidget(gui.QWidget):
 
         html = '<h1 style="color:red">ECU trouble codes</color></h1>'
 
-        while len(can_response) >= shiftbytecount:
+        while len(can_response) >= shiftbytecount + 2:
             html += '<h2 style="color:orange">DTC #%i' % dtc_num + "</h2>"
             html += "<p>"
             for k in request.dataitems.keys():
@@ -1108,8 +1114,8 @@ class paramWidget(gui.QWidget):
                     html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
             html += "</p>"
             can_response = can_response[shiftbytecount:]
-            dtc_num += 1
 
+            dtc_num += 1
 
         dtc_view.setHtml(html)
         dtcdialog.exec_()
