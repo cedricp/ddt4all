@@ -1,9 +1,8 @@
-import sys
 import time
-import ecu, elm
+import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import options, os
+import options
 from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, unicodedata, argparse, zipfile, glob
@@ -90,6 +89,7 @@ class paramWidget(gui.QWidget):
         self.mouseOldX = 0
         self.mouseOldY = 0
         self.current_screen = ''
+        self.movingwidget = None
 
     def __del__(self):
         # Return to default session
@@ -104,6 +104,10 @@ class paramWidget(gui.QWidget):
         if self.tester_presend_command == "":
             return
 
+        # No need to send "tester_present" command if we're updating
+        if options.auto_refresh:
+            return
+
         self.sendElm(self.tester_presend_command, True)
 
     def mousePressEvent(self, event):
@@ -111,12 +115,22 @@ class paramWidget(gui.QWidget):
             self.sliding = True
             self.mouseOldX = event.globalX()
             self.mouseOldY = event.globalY()
+            return
+
+        if event.button() == core.Qt.RightButton:
+            self.movingwidget = gui.QApplication.widgetAt(gui.QCursor.pos())
+            gui.QCursor.setPos(self.mapToGlobal(self.movingwidget.pos()))
 
     def mouseReleaseEvent(self, event):
+        if event.button() == core.Qt.RightButton:
+            self.movingwidget = None
+
         if event.button() == core.Qt.LeftButton:
             self.sliding = False
 
     def mouseMoveEvent(self, event):
+        if self.movingwidget:
+            self.movingwidget.move(event.pos())
         if self.sliding:
             mouseX = event.globalX() - self.mouseOldX
             mouseY = event.globalY() - self.mouseOldY
@@ -249,6 +263,7 @@ class paramWidget(gui.QWidget):
         self.categories = {}
         self.xmlscreen = {}
         self.parser = ''
+        self.tester_presend_command = ""
 
         if '.json' in self.ddtfile:
             self.parser = 'json'
@@ -996,7 +1011,7 @@ class paramWidget(gui.QWidget):
                 return requests[req]
         return None
 
-    def updateDisplays(self, update_inputs= False):
+    def updateDisplays(self, update_inputs=False):
         # Begin diag session
         if not options.simulation_mode:
             if self.protocol == "CAN":
@@ -1031,14 +1046,13 @@ class paramWidget(gui.QWidget):
             elif self.protocol == "KWP2000":
                 options.elm.start_session_iso('10C0')
 
+        self.logview.append("Clearing DTC information")
+
         if "ClearDiagnosticInformation.All" in self.ecurequestsparser.requests:
             request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"].sentbytes
-            self.logview.append("Clearing DTC information")
         elif "ClearDTC" in self.ecurequestsparser.requests:
-            self.logview.append("Clearing DTC information")
             request = self.ecurequestsparser.requests["ClearDTC"].sentbytes
         elif "Clear Diagnostic Information" in self.ecurequestsparser.requests:
-            self.logview.append("Clearing DTC information")
             request = self.ecurequestsparser.requests["Clear Diagnostic Information"].sentbytes
         else:
             self.logview.append("No ClearDTC request for that ECU, will send default 14FF00")

@@ -2,8 +2,27 @@ import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 
+
+class checkBox(gui.QCheckBox):
+    def __init__(self, data, parent=None):
+        super(checkBox, self).__init__(parent)
+        self.data = data
+        if data.manualsend:
+            self.setChecked(True)
+        else:
+            self.setChecked(False)
+
+        self.stateChanged.connect(self.change)
+
+    def change(self, state):
+        print state
+        if state:
+            self.data.manualsend = True
+        else:
+            self.data.manualsend = False
+
 class requestTable(gui.QTableWidget):
-    def __init__(self,  parent=None):
+    def __init__(self, parent=None):
         super(requestTable, self).__init__(parent)
         self.ecureq = None
         self.sendbyteeditor = None
@@ -14,21 +33,37 @@ class requestTable(gui.QTableWidget):
         self.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         self.verticalHeader().hide()
         self.setShowGrid(False)
+        self.currentreq = None
+
+    def cellModified(self, r, c):
+        if not self.ecureq:
+            return
+
+        if c == 0:
+            newname = unicode(self.item(r, c).text().toUtf8(), encoding="UTF-8")
+            self.ecureq[self.currentreq].name = newname
+            self.ecureq[newname] = self.ecureq.pop(self.currentreq)
 
     def setSendByteEditor(self, sbe):
         self.sendbyteeditor = sbe
-        self.cellClicked.connect(self.cell_clicked)
+        self.cellClicked.connect(self.cellSel)
 
     def setReceiveByteEditor(self, rbe):
         self.rcvbyteeditor = rbe
-        self.cellClicked.connect(self.cell_clicked)
+        self.cellClicked.connect(self.cellSel)
 
-    def cell_clicked(self, x, y):
+    def cellSel(self, x, y):
         currenttext = unicode(self.item(x, 0).text().toUtf8(), encoding="UTF-8")
         self.sendbyteeditor.set_request(self.ecureq[currenttext])
         self.rcvbyteeditor.set_request(self.ecureq[currenttext])
+        self.currentreq = currenttext
 
     def init(self, ecureq):
+        try:
+            self.cellChanged.disconnect()
+        except:
+            pass
+
         self.clear()
         self.ecureq = ecureq
 
@@ -42,13 +77,10 @@ class requestTable(gui.QTableWidget):
         count = 0
         for req in requestsk:
             request_inst = self.ecureq[req]
-            if not isinstance(request_inst, ecu.Ecu_request):
-                continue
-            bytes = request_inst.sentbytes
-            manual = gui.QCheckBox()
-            manual.setChecked(False)
-            if request_inst.manualsend:
-                manual.setChecked(True)
+            #if not isinstance(request_inst, ecu.Ecu_request):
+            #    continue
+
+            manual = checkBox(request_inst)
 
             self.setItem(count, 0, gui.QTableWidgetItem(req))
             self.setCellWidget(count, 1, manual)
@@ -58,7 +90,7 @@ class requestTable(gui.QTableWidget):
         self.setRowCount(count)
         self.sortItems(core.Qt.AscendingOrder)
         self.resizeColumnsToContents()
-
+        self.cellChanged.connect(self.cellModified)
 
 class paramEditor(gui.QFrame):
     """Manages send/receive requests"""
@@ -307,7 +339,21 @@ class numericListPanel(gui.QFrame):
         self.init()
 
     def validate(self):
-        pass
+        self.data.scaled = False
+        self.data.bitscount = self.inputnob.value()
+        self.data.unit = ""
+        self.data.signed = self.inputsigned.isChecked()
+        self.data.format = ""
+        self.data.step = 1
+        self.data.offset = 0
+        self.data.divideby = 1
+        self.data.bytesascii = False
+        self.data.items = {}
+        self.data.lists = {}
+        for i in range(self.itemtable.rowCount()):
+            key = unicode(self.itemtable.item(i, 1).text().toUtf8(), encoding="UTF-8")
+            val = self.itemtable.cellWidget(i, 0).value()
+            self.data.items[key] = val
 
     def init(self):
         keys = self.data.items.keys()
@@ -319,8 +365,11 @@ class numericListPanel(gui.QFrame):
         count = 0
         for k in keys:
             currentitem = self.data.items[k]
-            self.itemtable.setItem(count, 0, gui.QTableWidgetItem(str(currentitem)))
+            spinvalue = gui.QSpinBox()
+            spinvalue.setRange(-1000000,1000000)
+            spinvalue.setValue(int(currentitem))
             self.itemtable.setItem(count, 1, gui.QTableWidgetItem(k))
+            self.itemtable.setCellWidget(count, 0, spinvalue)
             count += 1
 
 
@@ -483,7 +532,9 @@ class dataEditor(gui.QWidget):
         self.datatable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.datatable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         self.datatable.setShowGrid(False)
+
         self.layouth.addWidget(self.datatable)
+
 
         self.editorcontent = gui.QFrame()
         self.editorcontent.setFrameStyle(gui.QFrame.Sunken)
@@ -521,6 +572,31 @@ class dataEditor(gui.QWidget):
 
         self.datatable.cellClicked.connect(self.changeData)
 
+    def cellModified(self, r, c):
+        if c != 0:
+            return
+
+        currentecudata = self.currentecudata
+        oldname = currentecudata.name
+        self.ecurequestsparser.data.pop(oldname)
+        item = self.datatable.item(r, c)
+        newname = unicode(item.text().toUtf8(), encoding="UTF-8")
+        currentecudata.name = newname
+        self.ecurequestsparser.data[newname] = currentecudata
+
+        # Change requests data items name too
+        for reqk, req in self.ecurequestsparser.requests.iteritems():
+            sbdata = req.sendbyte_dataitems
+            rbdata = req.dataitems
+
+            if oldname in sbdata.keys():
+                sbdata[oldname].name = newname
+                sbdata[newname] = sbdata.pop(oldname)
+
+            if oldname in rbdata.keys():
+                rbdata[oldname].name = newname
+                rbdata[newname] = rbdata.pop(oldname)
+
     def clear(self):
         self.datatable.clear()
         self.switchType(3)
@@ -529,8 +605,9 @@ class dataEditor(gui.QWidget):
         self.init_table()
 
     def validate(self):
-        if not "validate" in dir(self.currentWidget):
+        if "validate" not in dir(self.currentWidget):
             return
+
         comment = unicode(self.descpriptioneditor.text().toUtf8(), encoding="UTF-8")
         self.currentecudata.comment = comment
         self.currentWidget.validate()
@@ -581,6 +658,10 @@ class dataEditor(gui.QWidget):
 
 
     def init_table(self):
+        try:
+            self.datatable.cellChanged.disconnect()
+        except:
+            pass
         self.datatable.clear()
         dataItems = self.ecurequestsparser.data.keys()
         self.datatable.setRowCount(len(dataItems))
@@ -588,8 +669,15 @@ class dataEditor(gui.QWidget):
         count = 0
         for k in dataItems:
             data = self.ecurequestsparser.data[k]
-            self.datatable.setItem(count, 0, gui.QTableWidgetItem(k))
-            self.datatable.setItem(count, 1, gui.QTableWidgetItem(data.comment))
+
+            itemk = gui.QTableWidgetItem(k)
+            itemc = gui.QTableWidgetItem(data.comment)
+
+            itemc.setFlags(itemc.flags() ^ core.Qt.ItemIsEditable)
+
+            self.datatable.setItem(count, 0, itemk)
+            self.datatable.setItem(count, 1, itemc)
+
             count += 1
 
         self.datatable.sortItems(core.Qt.AscendingOrder)
@@ -597,6 +685,7 @@ class dataEditor(gui.QWidget):
         headerstrings = core.QString("Data name;Description").split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
+        self.datatable.cellChanged.connect(self.cellModified)
 
     def set_ecu(self, ecu):
         self.ecurequestsparser = ecu
