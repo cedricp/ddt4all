@@ -251,9 +251,14 @@ class Ecu_data:
         self.description = ''
         self.unit = ""
         self.comment = ''
+        self.name = name
+
+        if data:
+            self.init(data)
+
+    def init(self, data):
 
         if isinstance(data, dict):
-            self.name = name
             if data.has_key('bitscount'): self.bitscount = data['bitscount']
             if data.has_key('scaled'): self.scaled = data['scaled']
             if data.has_key('signed'): self.signed = data['signed']

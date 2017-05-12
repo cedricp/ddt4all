@@ -513,12 +513,15 @@ class dataEditor(gui.QWidget):
         self.currentecudata = None
 
         layout_action = gui.QHBoxLayout()
+        button_new = gui.QPushButton("New")
         button_reload = gui.QPushButton("Reload")
         button_validate = gui.QPushButton("Validate changes")
+        layout_action.addWidget(button_new)
         layout_action.addWidget(button_reload)
         layout_action.addWidget(button_validate)
         layout_action.addStretch()
 
+        button_new.clicked.connect(self.new_request)
         button_reload.clicked.connect(self.reload)
         button_validate.clicked.connect(self.validate)
 
@@ -571,6 +574,24 @@ class dataEditor(gui.QWidget):
         self.typecombo.currentIndexChanged.connect(self.switchType)
 
         self.datatable.cellClicked.connect(self.changeData)
+
+    def new_request(self):
+        if not self.ecurequestsparser:
+            return
+
+        new_data_name = "New data"
+
+        while new_data_name in self.ecurequestsparser.data.keys():
+            new_data_name += "_"
+
+        new_data = ecu.Ecu_data(None, new_data_name)
+        new_data.comment = "Replace me with request description"
+        self.ecurequestsparser.data[new_data_name] = new_data
+
+        self.reload()
+
+        new_item = self.datatable.findItems(new_data_name, core.Qt.MatchExactly)
+        self.datatable.selectRow(new_item[0].row())
 
     def cellModified(self, r, c):
         if c != 0:
@@ -656,12 +677,18 @@ class dataEditor(gui.QWidget):
             self.descpriptioneditor.setEnabled(False)
             self.typecombo.setEnabled(False)
 
-
-    def init_table(self):
+    def disconnect_table(self):
         try:
             self.datatable.cellChanged.disconnect()
         except:
             pass
+
+    def connect_table(self):
+        self.datatable.cellChanged.connect(self.cellModified)
+
+    def init_table(self):
+        self.disconnect_table()
+
         self.datatable.clear()
         dataItems = self.ecurequestsparser.data.keys()
         self.datatable.setRowCount(len(dataItems))
@@ -685,7 +712,7 @@ class dataEditor(gui.QWidget):
         headerstrings = core.QString("Data name;Description").split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
-        self.datatable.cellChanged.connect(self.cellModified)
+        self.connect_table()
 
     def set_ecu(self, ecu):
         self.ecurequestsparser = ecu
