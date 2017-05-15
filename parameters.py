@@ -372,7 +372,9 @@ class paramWidget(gui.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>Sending ELM request:</font>'
         else:
-            if "17FF00" in command:
+            if "210A" in command:
+                elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
+            elif "17FF00" in command:
                 # Test for ACU4
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
                 # Test for EDC16

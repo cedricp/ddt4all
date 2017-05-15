@@ -412,11 +412,14 @@ class Ecu_data:
             little_endian = True
 
         if self.bytesascii:
-            if self.bytescount != len(value):
-                return None
+            value = str(value)
+            if self.bytescount > len(value):
+                value = value.ljust(self.bytescount)
+            if self.bytescount < len(value):
+                value = value[0:self.bytescount]
 
             for i in range(self.bytescount):
-                bytes_list[self.bytescount - i - 1] = ord(value[i])
+                bytes_list[start_byte + i] = hex(ord(value[i]))[2:].upper()
 
             return bytes_list
 
@@ -434,56 +437,64 @@ class Ecu_data:
             # Value is base 16
             value = int('0x' + str(value), 16)
 
-        # We're working at bit level, we may need to OR these values
-        bit_operation = self.bitscount < 8
+        valueasbin = bin(value)[2:].zfill(self.bitscount)
 
-        if bit_operation and start_bit > 7:
-            print "bit operation on multiple bytes not implemented"
-            return None
+        numreqbytes = int(math.ceil(float(self.bitscount + start_bit) / 8.))
+        request_bytes = bytes_list[start_byte:start_byte + numreqbytes]
+        requestasbin = ""
 
-        value_mask_shifted_inv = 0xFF
-        if bit_operation:
-            if little_endian:
-                offset = start_bit
-            else:
-                offset = 8 - start_bit - self.bitscount
+        for r in request_bytes:
+            requestasbin += bin(int(r, 16))[2:].zfill(8)
+        requestasbin = list(requestasbin)
 
-            value_mask = 2 ** self.bitscount - 1
+        if little_endian:
+            # Little endian coding is really weird :/
+            # Cannot figure out why it's being used
+            # But tried to do my best to mimic the read/write process
+            # Actually, need to do it in 3 steps
 
-            value_mask_shifted = value_mask << offset
-            value_mask_shifted_str = bin(value_mask_shifted)[2:].zfill(self.bytescount * 8)
-            value_mask_shifted_str_inv = value_mask_shifted_str.replace('0', 'O')
-            value_mask_shifted_str_inv = value_mask_shifted_str_inv.replace('1', '0')
-            value_mask_shifted_str_inv = value_mask_shifted_str_inv.replace('O', '1')
-            value_mask_shifted_inv = int('0b' + value_mask_shifted_str_inv, 2)
+            remainingbits = self.bitscount
 
-            value = int(value)
-            value &= value_mask
-            value = (value << offset)
+            # Pass 1
+            lastbit = 7 - start_bit + 1
+            firstbit = lastbit - self.bitscount
+            if firstbit < 0:
+                firstbit = 0
 
-        hex_value = "{0:#0{1}x}".format(value, self.bytescount * 2 + 2)[2:].upper()
-        hex_bytes = [hex_value[i:i + 2] for i in range(0, len(hex_value), 2)]
+            count = 0
+            for i in range(firstbit, lastbit):
+                requestasbin[i] = valueasbin[count]
+                count += 1
 
-        n = 0
-        if len(hex_bytes) > self.bytescount:
-            return None
+            remainingbits -= count
 
-        for h in hex_bytes:
-            original_byte  = int('0x' + bytes_list[n + start_byte], 16)
-            original_value = int('0x' + h, 16)
+            # Pass 2
+            currentbyte = 1
+            while remainingbits > 8:
+                for i in range(0, 8):
+                    requestasbin[currentbyte * 8 + i] = valueasbin[count]
+                    count += 1
+                remainingbits -= 8
+                currentbyte += 1
 
-            if bit_operation:
-                # Need to clear bits before or'ing
-                original_byte &= value_mask_shifted_inv
-                new = original_value | original_byte
-            else:
-                new = original_value
+            # Pass 3
+            firstbit = 8 - remainingbits
+            lastbit = firstbit + remainingbits
 
-            value_formatted = "{0:#0{1}x}".format(new, 4)[2:].upper()
+            for i in range(firstbit, lastbit):
+                requestasbin[currentbyte * 8 + i] = valueasbin[count]
+                count += 1
 
-            bytes_list[start_byte + n] = value_formatted
+        else:
+            for i in range(self.bitscount):
+                requestasbin[i + start_bit] = valueasbin[i]
 
-            n += 1
+        requestasbin = "".join(requestasbin)
+        valueasint = int("0b" + requestasbin, 2)
+        valueashex = hex(valueasint)[2:].zfill(numreqbytes * 2).upper()
+
+        for i in range(numreqbytes):
+            bytes_list[i + start_byte] = valueashex[i * 2:i * 2 + 2].zfill(2)
 
         return bytes_list
 
@@ -540,48 +551,64 @@ class Ecu_data:
         if dataitem.endian == "Big":
             little_endian = False
 
+        # Data cleaning
         resp = resp.strip().replace(' ','')
         if not all(c in string.hexdigits for c in resp): resp = ''
         resp.replace(' ', '')
-        
-        bits = self.bitscount
-        bytes = bits / 8
 
-        if bits % 8:
-            bytes += 1
+        res_bytes = [resp[i:i+2] for i in range(0,len(resp), 2)]
 
+        # Data count
         startByte = dataitem.firstbyte
         startBit = dataitem.bitoffset
+        bits = self.bitscount
 
-        if startBit + bits > (bytes * 8):
-            bytes += 1
+        databytelen = int(math.ceil(float(self.bitscount) / 8.0))
+        reqdatabytelen = int(math.ceil(float(self.bitscount + startBit) / 8.0))
 
         sb = startByte - 1
-        if (sb * 2 + bytes * 2) > (len(resp)):
+        if (sb * 2 + databytelen * 2) > (len(resp)):
             return None
 
-        hexval = resp[sb * 2:(sb + bytes) * 2]
+        hexval = resp[sb * 2:(sb + reqdatabytelen) * 2]
+
+        hextobin = ""
+        for b in res_bytes[sb:sb + reqdatabytelen]:
+            hextobin += bin(int(b, 16))[2:].zfill(8)
+
         if len(hexval) == 0:
             return None
 
-        if bits % 8:
-            if little_endian:
-                offset = startBit
-            else:
-                offset = (bytes * 8) - startBit - bits
+        if little_endian:
+            # Don't like this method
 
-            if (offset < 0):
-                print "negative offset : ", dataitem.name, bits, offset, little_endian, hexval
-                return None
+            totalremainingbits = bits
+            lastbit = 7 - startBit + 1
+            firstbit = lastbit - bits
+            if firstbit < 0:
+                firstbit = 0
 
-            val = int(hexval, 16)
-            val = (val >> int(offset)) & (2**bits - 1)
-            hexval = hex(val)[2:]
-            # Remove trailing L if exists
-            if hexval[-1:].upper() == 'L':
-                hexval = hexval[:-1]
-            # Resize to original length
-            hexval = hexval.zfill(bytes * 2)
+            tmp_bin = hextobin[firstbit:lastbit]
+            totalremainingbits -= lastbit - firstbit
+
+            if totalremainingbits > 8:
+                offset1 = 8
+                offset2 = offset1 + ((reqdatabytelen - 2) * 8)
+                tmp_bin += hextobin[offset1:offset2]
+                totalremainingbits -= offset2 - offset1
+
+            if totalremainingbits > 0:
+                offset1 = (reqdatabytelen - 1) * 8
+                offset2 = offset1 - totalremainingbits
+                tmp_bin += hextobin[offset2:offset1]
+
+            hexval = hex(int("0b" + tmp_bin, 2))[2:]
+        else:
+            valtmp = "0b" + hextobin[startBit:startBit + bits]
+            hexval = hex(int(valtmp, 2))[2:]
+
+        # Resize to original length
+        hexval = hexval.zfill(databytelen * 2)
 
         return hexval
 
