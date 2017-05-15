@@ -166,6 +166,7 @@ class paramEditor(gui.QFrame):
             rowname = unicode(self.table.item(i, 0).text().toUtf8(), "UTF-8")
             rowsb = self.table.cellWidget(i, 1).value()
             rowbo = self.table.cellWidget(i, 2).value()
+            rowen = self.table.cellWidget(i, 4).currentText()
             if self.send:
                 dataitem = self.current_request.sendbyte_dataitems[rowname]
             else:
@@ -173,6 +174,7 @@ class paramEditor(gui.QFrame):
 
             dataitem.bitoffset = rowbo
             dataitem.firstbyte = rowsb
+            dataitem.endian = str(rowen)
 
         self.init(self.current_request)
 

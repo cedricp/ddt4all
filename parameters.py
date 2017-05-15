@@ -533,7 +533,11 @@ class paramWidget(gui.QWidget):
                     print "DataItem not found", text
                     continue
 
-                data = self.ecurequestsparser.data[text]
+                try:
+                    data = self.ecurequestsparser.data[text]
+                except:
+                    print "Cannot find data ", text
+                    continue
 
                 if not color:
                     color = 0xAAAAAA
@@ -777,7 +781,11 @@ class paramWidget(gui.QWidget):
                 qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
                 qlabel.resize(rect['width'], rect['height'])
                 qlabel.move(rect['left'], rect['top'])
-                data = self.ecurequestsparser.data[text]
+                try:
+                    data = self.ecurequestsparser.data[text]
+                except:
+                    print "Cannot draw input ", text
+                    continue
 
                 if len(self.ecurequestsparser.data[text].items) > 0:
                     qcombo = gui.QComboBox(self.panel)
