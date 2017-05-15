@@ -455,7 +455,7 @@ class Ecu_data:
 
             remainingbits = self.bitscount
 
-            # Pass 1
+            # Step 1
             lastbit = 7 - start_bit + 1
             firstbit = lastbit - self.bitscount
             if firstbit < 0:
@@ -468,22 +468,23 @@ class Ecu_data:
 
             remainingbits -= count
 
-            # Pass 2
+            # Step 2
             currentbyte = 1
-            while remainingbits > 8:
+            while remainingbits >= 8:
                 for i in range(0, 8):
                     requestasbin[currentbyte * 8 + i] = valueasbin[count]
                     count += 1
                 remainingbits -= 8
                 currentbyte += 1
 
-            # Pass 3
-            firstbit = 8 - remainingbits
-            lastbit = firstbit + remainingbits
+            # Step 3
+            if remainingbits > 0:
+                lastbit = 8
+                firstbit = lastbit - remainingbits
 
-            for i in range(firstbit, lastbit):
-                requestasbin[currentbyte * 8 + i] = valueasbin[count]
-                count += 1
+                for i in range(firstbit, lastbit):
+                    requestasbin[currentbyte * 8 + i] = valueasbin[count]
+                    count += 1
 
         else:
             for i in range(self.bitscount):
