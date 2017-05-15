@@ -2,7 +2,6 @@ import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 
-
 class checkBox(gui.QCheckBox):
     def __init__(self, data, parent=None):
         super(checkBox, self).__init__(parent)
@@ -88,7 +87,7 @@ class requestTable(gui.QTableWidget):
             count += 1
 
         self.setRowCount(count)
-        self.sortItems(core.Qt.AscendingOrder)
+        self.sortItems(0, core.Qt.AscendingOrder)
         self.resizeColumnsToContents()
         self.cellChanged.connect(self.cellModified)
 
@@ -158,6 +157,11 @@ class paramEditor(gui.QFrame):
                 msgbox.exec_()
                 return
 
+            datalen = self.spin_data_len.value()
+            shiftbytes = self.spin_shift_byte.value()
+            self.current_request.shiftbytescount = shiftbytes
+            self.current_request.minbytes = datalen
+
         for i in range(self.table.rowCount()):
             rowname = unicode(self.table.item(i, 0).text().toUtf8(), "UTF-8")
             rowsb = self.table.cellWidget(i, 1).value()
@@ -166,10 +170,11 @@ class paramEditor(gui.QFrame):
                 dataitem = self.current_request.sendbyte_dataitems[rowname]
             else:
                 dataitem = self.current_request.dataitems[rowname]
+
             dataitem.bitoffset = rowbo
             dataitem.firstbyte = rowsb
 
-            self.init(self.current_request)
+        self.init(self.current_request)
 
     def set_ecufile(self, ef):
         self.ecufile = ef
@@ -368,15 +373,18 @@ class numericListPanel(gui.QFrame):
             spinvalue = gui.QSpinBox()
             spinvalue.setRange(-1000000,1000000)
             spinvalue.setValue(int(currentitem))
-            self.itemtable.setItem(count, 1, gui.QTableWidgetItem(k))
             self.itemtable.setCellWidget(count, 0, spinvalue)
+            self.itemtable.setItem(count, 0, gui.QTableWidgetItem(str(currentitem).zfill(5)))
+            self.itemtable.setItem(count, 1, gui.QTableWidgetItem(k))
             count += 1
 
 
         headerstrings = core.QString("Value;Text").split(";")
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
-        self.itemtable.sortItems(core.Qt.AscendingOrder)
+        self.itemtable.sortItems(0, core.Qt.AscendingOrder)
+        self.itemtable.setSortingEnabled(True)
+
 
 class otherPanel(gui.QFrame):
     def __init__(self, dataitem, parent=None):
@@ -504,6 +512,7 @@ class numericPanel(gui.QFrame):
         self.inputa.setValue(self.data.step)
         self.inputb.setValue(self.data.offset)
         self.inputc.setValue(self.data.divideby)
+
 
 class dataEditor(gui.QWidget):
     """Main container for data item editor"""
@@ -707,11 +716,12 @@ class dataEditor(gui.QWidget):
 
             count += 1
 
-        self.datatable.sortItems(core.Qt.AscendingOrder)
+        self.datatable.sortItems(0, core.Qt.AscendingOrder)
 
         headerstrings = core.QString("Data name;Description").split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
+        self.datatable.sortByColumn(0)
         self.connect_table()
 
     def set_ecu(self, ecu):

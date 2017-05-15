@@ -602,7 +602,10 @@ class Ecu_data:
                 offset1 = (reqdatabytelen - 1) * 8
                 offset2 = offset1 - totalremainingbits
                 tmp_bin += hextobin[offset2:offset1]
+                totalremainingbits -= offset1 - offset2
 
+            if totalremainingbits != 0:
+                print ">>", bits, totalremainingbits
             hexval = hex(int("0b" + tmp_bin, 2))[2:]
         else:
             valtmp = "0b" + hextobin[startBit:startBit + bits]
