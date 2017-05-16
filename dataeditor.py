@@ -1,4 +1,4 @@
-import ecu
+import ecu, math, string
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 
@@ -9,7 +9,7 @@ class Bit_container(gui.QFrame):
         self.data = data
         self.setFrameStyle(gui.QFrame.Sunken)
         self.setFrameShape(gui.QFrame.Box)
-        self.setFixedWidth(120)
+        self.setFixedWidth(130)
 
         self.layout = gui.QVBoxLayout()
         cblayout = gui.QHBoxLayout()
@@ -21,41 +21,61 @@ class Bit_container(gui.QFrame):
         self.checkboxes = []
         for i in range(8):
             cb = gui.QCheckBox()
+            cb.setEnabled(False)
             if databin[i] == "1":
                 cb.setChecked(True)
             self.checkboxes.append(cb)
             cblayout.addWidget(cb)
             cb.setStyleSheet("color: green")
 
-        label = gui.QLabel(str(num))
+        label = gui.QLabel(str(num+1).zfill(2))
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
 
         self.layout.addWidget(label)
         self.layout.addLayout(cblayout)
         self.setLayout(self.layout)
 
+    def set_byte(self, byte):
+        binary = bin(int("0x" + byte, 16))[2:].zfill(8)
+        for i in range(8):
+            if binary[i] == "1":
+                self.checkboxes[i].setChecked(True)
+            else:
+                self.checkboxes[i].setChecked(False)
+
 
 class Bit_viewer(gui.QScrollArea):
     def __init__(self, parent=None):
         super(Bit_viewer, self).__init__(parent)
-        self.mainwidget = gui.QWidget()
-        self.layout = gui.QHBoxLayout()
+        self.bc = []
+        self.mainwidget = None
 
-        self.mainwidget.setLayout(self.layout)
-        self.setWidget(self.mainwidget)
+    def init(self, num):
+        if self.mainwidget:
+            self.mainwidget.setParent(None)
+            self.mainwidget.deleteLater()
 
-    def set_bytes(self, bytes):
-        num = len(bytes)
         self.mainwidget = gui.QWidget()
         self.layout = gui.QHBoxLayout()
         self.layout.setSpacing(2)
+        self.bc = []
 
         for i in range(num):
-            bc = Bit_container(bytes[i], i)
+            bc = Bit_container("00", i)
+            self.bc.append(bc)
             self.layout.addWidget(bc)
 
         self.mainwidget.setLayout(self.layout)
         self.setWidget(self.mainwidget)
+
+    def set_bytes(self, byte_list):
+        num = len(byte_list)
+
+        for i in range(num):
+            self.bc[i].set_byte(byte_list[i])
+
+        for i in range(num, len(self.bc)):
+            self.bc[i].set_byte("00")
 
 
 class checkBox(gui.QCheckBox):
@@ -161,6 +181,7 @@ class paramEditor(gui.QFrame):
         else:
             self.labelreq = gui.QLabel("Receive bytes (HEX)")
         self.inputreq = gui.QLineEdit()
+        self.inputreq.textChanged.connect(self.request_changed)
 
         self.layoutv.addWidget(self.labelreq)
         self.layoutv.addWidget(self.inputreq)
@@ -176,6 +197,9 @@ class paramEditor(gui.QFrame):
             rcv_lay.addWidget(self.label_shift_bytes)
             rcv_lay.addWidget(self.spin_shift_byte)
             self.layoutv.addLayout(rcv_lay)
+
+            self.spin_shift_byte.valueChanged.connect(self.shift_bytes_change)
+            self.spin_data_len.valueChanged.connect(self.data_len_change)
 
         self.setLayout(self.layoutv)
 
@@ -197,6 +221,9 @@ class paramEditor(gui.QFrame):
 
     def cell_clicked(self, r, c):
         dataname = unicode(self.table.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        self.update_bitview(dataname)
+
+    def update_bitview(self, dataname):
         bytes = self.current_request.minbytes
         if self.send:
             dataitem = self.current_request.sendbyte_dataitems[dataname]
@@ -217,54 +244,6 @@ class paramEditor(gui.QFrame):
         bytesarray = ["00" for a in range(bytes)]
         bytesarray = ecudata.setValue(valuetosend, bytesarray, dataitem, self.current_request.endian, True)
         self.bitviewer.set_bytes(bytesarray)
-
-
-    def set_data(self):
-        if self.send:
-            try:
-                request = str(self.inputreq.text())
-                self.current_request.sentbytes = request
-            except:
-                errortxt = unicode(self.inputreq.text().toUtf8(), encoding="UTF-8")
-                msgbox = gui.QMessageBox()
-                msgbox.setText("<center>Send request error '%s'</center>" % errortxt)
-                msgbox.exec_()
-                return
-
-        else:
-            try:
-                request = str(self.inputreq.text())
-                self.current_request.replybytes = request
-            except:
-                errortxt = unicode(self.inputreq.text().toUtf8(), encoding="UTF-8")
-                msgbox = gui.QMessageBox()
-                msgbox.setText("<center>Receive request error '%s'</center>" % errortxt)
-                msgbox.exec_()
-                return
-
-            datalen = self.spin_data_len.value()
-            shiftbytes = self.spin_shift_byte.value()
-            self.current_request.shiftbytescount = shiftbytes
-            self.current_request.minbytes = datalen
-
-        for i in range(self.table.rowCount()):
-            rowname = unicode(self.table.item(i, 0).text().toUtf8(), "UTF-8")
-            rowsb = self.table.cellWidget(i, 1).value()
-            rowbo = self.table.cellWidget(i, 2).value()
-            rowen = self.table.cellWidget(i, 4).currentText()
-            if self.send:
-                dataitem = self.current_request.sendbyte_dataitems[rowname]
-            else:
-                dataitem = self.current_request.dataitems[rowname]
-
-            dataitem.bitoffset = rowbo
-            dataitem.firstbyte = rowsb
-            if rowen == "Inherits globals":
-                dataitem.endian = ""
-            else:
-                dataitem.endian = str(rowen)
-
-        self.init(self.current_request)
 
     def set_ecufile(self, ef):
         self.ecufile = ef
@@ -295,11 +274,17 @@ class paramEditor(gui.QFrame):
         headerstrings = core.QString("Data name;Start byte;Bit offset;Bit count;Endianess").split(";")
         self.table.setHorizontalHeaderLabels(headerstrings)
 
+        bytescount = 0
+
         count = 0
         for k in datak:
             dataitem = data[k]
             ecudata = self.ecufile.data[dataitem.name]
             endian = dataitem.endian
+
+            ln = dataitem.firstbyte + math.ceil(float(ecudata.bitscount) / 8.)
+            if ln > bytescount:
+                bytescount = ln
 
             endian_combo = gui.QComboBox()
             endian_combo.addItem("Little")
@@ -326,9 +311,12 @@ class paramEditor(gui.QFrame):
 
             item_bc.setTextAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
 
-            item_sb.valueChanged.connect(lambda state, di=dataitem, slf=item_sb: self.start_byte_changed(di, slf))
-            item_boff.valueChanged.connect(lambda state, di=dataitem, slf=item_sb: self.bit_offset_changed(di, slf))
-            endian_combo.activated.connect(lambda state, di=dataitem, slf=item_sb: self.endian_changed(di, slf))
+            item_sb.valueChanged.connect(lambda state,
+                                                di=dataitem, slf=item_sb: self.start_byte_changed(di, slf))
+            item_boff.valueChanged.connect(lambda state,
+                                                  di=dataitem, slf=item_boff: self.bit_offset_changed(di, slf))
+            endian_combo.activated.connect(lambda state,
+                                                  di=dataitem, slf=endian_combo: self.endian_changed(di, slf))
 
             self.table.setItem(count, 0, item_name)
             self.table.setCellWidget(count, 1, item_sb)
@@ -340,15 +328,58 @@ class paramEditor(gui.QFrame):
 
         self.table.resizeColumnsToContents()
         self.table.setRowCount(count)
+        self.bitviewer.init(int(bytescount)+2)
+
+    def shift_bytes_change(self):
+        if not self.current_request:
+            return
+
+        self.current_request.shiftbytescount = self.spin_shift_byte.value()
+
+    def data_len_change(self):
+        if not self.current_request:
+            return
+
+        self.current_request.minbytes = self.spin_data_len.value()
 
     def endian_changed(self, di, slf):
-        print di, slf
+        if slf.currentText() == "Inherits globals":
+            di.endian = ""
+        elif slf.currentText() == "Little":
+            di.endian = "Little"
+        elif slf.currentText() == "Big":
+            di.endian = "Big"
 
     def start_byte_changed(self, di, slf):
-        print di, slf
+        di.firstbyte = slf.value()
+        self.update_bitview(di.name)
 
     def bit_offset_changed(self, di, slf):
-        pass
+        di.bitoffset = slf.value()
+        self.update_bitview(di.name)
+
+    def request_changed(self):
+        if not self.current_request:
+            return
+
+        self.inputreq.setStyleSheet("background-color: red")
+
+        try:
+            text = str(self.inputreq.text())
+        except:
+            return
+
+        if not all(c in string.hexdigits for c in text):
+            return
+
+        if len(text) % 2 == 1:
+            return
+
+        self.inputreq.setStyleSheet("background-color: green")
+        if self.send:
+            self.current_request.sentbytes = text
+        else:
+            self.current_request.replybytes = text
 
 class requestEditor(gui.QWidget):
     """Main container for reauest editor"""
@@ -358,13 +389,10 @@ class requestEditor(gui.QWidget):
 
         layout_action = gui.QHBoxLayout()
         button_reload = gui.QPushButton("Reload")
-        button_set = gui.QPushButton("Validate changes")
         layout_action.addWidget(button_reload)
-        layout_action.addWidget(button_set)
         layout_action.addStretch()
 
         button_reload.clicked.connect(self.reload)
-        button_set.clicked.connect(self.set)
 
         self.layh = gui.QHBoxLayout()
         self.requesttable = requestTable()
@@ -387,13 +415,6 @@ class requestEditor(gui.QWidget):
 
         self.requesttable.setSendByteEditor(self.sendbyteeditor)
         self.requesttable.setReceiveByteEditor(self.receivebyteeditor)
-
-    def set(self):
-        if not self.ecurequestsparser:
-            return
-
-        self.sendbyteeditor.set_data()
-        self.receivebyteeditor.set_data()
 
     def reload(self):
         if not self.ecurequestsparser:
