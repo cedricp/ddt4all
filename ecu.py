@@ -411,6 +411,9 @@ class Ecu_data:
         if dataitem.endian == "Little":
             little_endian = True
 
+        if dataitem.endian == "Big":
+            little_endian = False
+
         if self.bytesascii:
             value = str(value)
             if self.bytescount > len(value):

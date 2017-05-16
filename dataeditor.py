@@ -36,6 +36,9 @@ class Bit_container(gui.QFrame):
         self.setLayout(self.layout)
 
     def set_byte(self, byte):
+        if 'L' in byte:
+            byte = byte.replace('L', '')
+
         binary = bin(int("0x" + byte, 16))[2:].zfill(8)
         for i in range(8):
             if binary[i] == "1":
@@ -319,6 +322,7 @@ class paramEditor(gui.QFrame):
                                                   di=dataitem, slf=endian_combo: self.endian_changed(di, slf))
 
             self.table.setItem(count, 0, item_name)
+            self.table.setItem(count, 1, gui.QTableWidgetItem(str(dataitem.firstbyte).zfill(5)))
             self.table.setCellWidget(count, 1, item_sb)
             self.table.setCellWidget(count, 2, item_boff)
             self.table.setItem(count, 3, item_bc)
@@ -327,6 +331,7 @@ class paramEditor(gui.QFrame):
             count += 1
 
         self.table.resizeColumnsToContents()
+        self.table.sortItems(1)
         self.table.setRowCount(count)
         self.bitviewer.init(int(bytescount)+2)
 
@@ -349,6 +354,7 @@ class paramEditor(gui.QFrame):
             di.endian = "Little"
         elif slf.currentText() == "Big":
             di.endian = "Big"
+        self.update_bitview(di.name)
 
     def start_byte_changed(self, di, slf):
         di.firstbyte = slf.value()
