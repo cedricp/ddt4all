@@ -399,7 +399,7 @@ class Ecu_data:
             js['comment'] = cleanhtml(self.comment)
         return self.name, js
 
-    def setValue(self, value, bytes_list, dataitem, request_endian):
+    def setValue(self, value, bytes_list, dataitem, request_endian, test_mode=False):
         start_byte = dataitem.firstbyte - 1
         start_bit = dataitem.bitoffset
         little_endian = False
@@ -419,23 +419,32 @@ class Ecu_data:
                 value = value[0:self.bytescount]
 
             for i in range(self.bytescount):
-                bytes_list[start_byte + i] = hex(ord(value[i]))[2:].upper()
+                if not test_mode:
+                    bytes_list[start_byte + i] = hex(ord(value[i]))[2:].upper()
+                else:
+                    bytes_list[start_byte + i] = "FF"
 
             return bytes_list
 
         if self.scaled:
-            if not str(value).isdigit():
-                return None
+            if not test_mode:
+                if not str(value).isdigit():
+                    return None
 
-            value = float(value)
-            # Input value must be base 10
-            value = int((value * float(self.divideby) - float(self.offset)) / float(self.step))
+                value = float(value)
+                # Input value must be base 10
+                value = int((value * float(self.divideby) - float(self.offset)) / float(self.step))
+            else:
+                value = int("0x" + value, 16)
         else:
-            # Check input length and validity
-            if not all(c in string.hexdigits for c in value):
-                return None
-            # Value is base 16
-            value = int('0x' + str(value), 16)
+            if not test_mode:
+                # Check input length and validity
+                if not all(c in string.hexdigits for c in value):
+                    return None
+                # Value is base 16
+                value = int('0x' + str(value), 16)
+            else:
+                value = int("0x" + value, 16)
 
         valueasbin = bin(value)[2:].zfill(self.bitscount)
 
@@ -605,7 +614,7 @@ class Ecu_data:
                 totalremainingbits -= offset1 - offset2
 
             if totalremainingbits != 0:
-                print ">>", bits, totalremainingbits
+                print "getHexValue >> abnormal remaining bytes ", bits, totalremainingbits
             hexval = hex(int("0b" + tmp_bin, 2))[2:]
         else:
             valtmp = "0b" + hextobin[startBit:startBit + bits]

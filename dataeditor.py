@@ -2,6 +2,62 @@ import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 
+
+class Bit_container(gui.QFrame):
+    def __init__(self, data, num, parent=None):
+        super(Bit_container, self).__init__(parent)
+        self.data = data
+        self.setFrameStyle(gui.QFrame.Sunken)
+        self.setFrameShape(gui.QFrame.Box)
+        self.setFixedWidth(120)
+
+        self.layout = gui.QVBoxLayout()
+        cblayout = gui.QHBoxLayout()
+        cblayout.setContentsMargins(0, 0, 0, 0)
+        cblayout.setSpacing(0)
+        data = int("0x" + data, 16)
+        databin = bin(data)[2:].zfill(8)
+
+        self.checkboxes = []
+        for i in range(8):
+            cb = gui.QCheckBox()
+            if databin[i] == "1":
+                cb.setChecked(True)
+            self.checkboxes.append(cb)
+            cblayout.addWidget(cb)
+            cb.setStyleSheet("color: green")
+
+        label = gui.QLabel(str(num))
+        label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
+
+        self.layout.addWidget(label)
+        self.layout.addLayout(cblayout)
+        self.setLayout(self.layout)
+
+
+class Bit_viewer(gui.QScrollArea):
+    def __init__(self, parent=None):
+        super(Bit_viewer, self).__init__(parent)
+        self.mainwidget = gui.QWidget()
+        self.layout = gui.QHBoxLayout()
+
+        self.mainwidget.setLayout(self.layout)
+        self.setWidget(self.mainwidget)
+
+    def set_bytes(self, bytes):
+        num = len(bytes)
+        self.mainwidget = gui.QWidget()
+        self.layout = gui.QHBoxLayout()
+        self.layout.setSpacing(2)
+
+        for i in range(num):
+            bc = Bit_container(bytes[i], i)
+            self.layout.addWidget(bc)
+
+        self.mainwidget.setLayout(self.layout)
+        self.setWidget(self.mainwidget)
+
+
 class checkBox(gui.QCheckBox):
     def __init__(self, data, parent=None):
         super(checkBox, self).__init__(parent)
@@ -133,6 +189,35 @@ class paramEditor(gui.QFrame):
         self.layoutv.addWidget(self.table)
         self.ecufile = None
         self.current_request = None
+        self.table.cellClicked.connect(self.cell_clicked)
+
+        self.bitviewer = Bit_viewer()
+        self.bitviewer.setFixedHeight(90)
+        self.layoutv.addWidget(self.bitviewer)
+
+    def cell_clicked(self, r, c):
+        dataname = unicode(self.table.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        bytes = self.current_request.minbytes
+        if self.send:
+            dataitem = self.current_request.sendbyte_dataitems[dataname]
+        else:
+            dataitem = self.current_request.dataitems[dataname]
+
+        ecudata = self.ecufile.data[dataname]
+        minbytes = dataitem.firstbyte + ecudata.bytescount
+        if bytes < minbytes:
+            bytes = minbytes
+
+        bitscount = ecudata.bitscount
+        valuetosend = hex(int("0b" + str("1" * bitscount), 2))[2:]
+
+        if "L" in valuetosend:
+            valuetosend = valuetosend.replace("L", "")
+
+        bytesarray = ["00" for a in range(bytes)]
+        bytesarray = ecudata.setValue(valuetosend, bytesarray, dataitem, self.current_request.endian, True)
+        self.bitviewer.set_bytes(bytesarray)
+
 
     def set_data(self):
         if self.send:
@@ -174,7 +259,10 @@ class paramEditor(gui.QFrame):
 
             dataitem.bitoffset = rowbo
             dataitem.firstbyte = rowsb
-            dataitem.endian = str(rowen)
+            if rowen == "Inherits globals":
+                dataitem.endian = ""
+            else:
+                dataitem.endian = str(rowen)
 
         self.init(self.current_request)
 
@@ -211,18 +299,19 @@ class paramEditor(gui.QFrame):
         for k in datak:
             dataitem = data[k]
             ecudata = self.ecufile.data[dataitem.name]
-            endian = req.endian
-            if dataitem.endian:
-                endian = dataitem.endian
+            endian = dataitem.endian
 
             endian_combo = gui.QComboBox()
             endian_combo.addItem("Little")
             endian_combo.addItem("Big")
+            endian_combo.addItem("Inherits globals")
 
             if endian == "Big":
                 endian_combo.setCurrentIndex(1)
-            else:
+            elif endian == "Little":
                 endian_combo.setCurrentIndex(0)
+            else:
+                endian_combo.setCurrentIndex(2)
 
             item_sb = gui.QSpinBox()
             item_sb.setRange(0, 100000)
@@ -237,6 +326,10 @@ class paramEditor(gui.QFrame):
 
             item_bc.setTextAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
 
+            item_sb.valueChanged.connect(lambda state, di=dataitem, slf=item_sb: self.start_byte_changed(di, slf))
+            item_boff.valueChanged.connect(lambda state, di=dataitem, slf=item_sb: self.bit_offset_changed(di, slf))
+            endian_combo.activated.connect(lambda state, di=dataitem, slf=item_sb: self.endian_changed(di, slf))
+
             self.table.setItem(count, 0, item_name)
             self.table.setCellWidget(count, 1, item_sb)
             self.table.setCellWidget(count, 2, item_boff)
@@ -248,6 +341,14 @@ class paramEditor(gui.QFrame):
         self.table.resizeColumnsToContents()
         self.table.setRowCount(count)
 
+    def endian_changed(self, di, slf):
+        print di, slf
+
+    def start_byte_changed(self, di, slf):
+        print di, slf
+
+    def bit_offset_changed(self, di, slf):
+        pass
 
 class requestEditor(gui.QWidget):
     """Main container for reauest editor"""
