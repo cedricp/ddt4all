@@ -72,6 +72,8 @@ class Bit_viewer(gui.QScrollArea):
         num = len(byte_list)
 
         for i in range(num):
+            if i >= len(self.bc):
+                break
             self.bc[i].set_byte(byte_list[i])
 
         for i in range(num, len(self.bc)):

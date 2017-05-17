@@ -867,9 +867,10 @@ if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
-        font = gui.QFont("Arial", 9)
+        font = gui.QFont("Sans", 8)
         font.setBold(False)
         app.setFont(font)
+        app.setStyle("windowsxp")
 
     ecudirfound = False
 
