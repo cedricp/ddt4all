@@ -339,9 +339,11 @@ class Main_widget(gui.QMainWindow):
 
         menu = self.menuBar()
 
-        diagmenu = menu.addMenu("Fichier")
-        savevehicleaction = diagmenu.addAction("Save this vehicle")
+        diagmenu = menu.addMenu("File")
+        savevehicleaction = diagmenu.addAction("Save ECU list")
+        savevecuaction = diagmenu.addAction("Export current ECU")
         savevehicleaction.triggered.connect(self.saveEcus)
+        savevecuaction.triggered.connect(self.saveEcu)
         diagmenu.addSeparator()
 
         for ecuf in ecu_files:
@@ -525,6 +527,10 @@ class Main_widget(gui.QMainWindow):
     def saveEcus(self):
         filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)", "./vehicles/mycar.ecu", ".ecu")
         pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
+
+    def saveEcu(self):
+        if self.paramview:
+            self.paramview.saveEcu()
 
     def loadEcu(self, name):
         vehicle_file = "vehicles/" + name + ".ecu"

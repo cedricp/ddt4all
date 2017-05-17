@@ -110,6 +110,18 @@ class paramWidget(gui.QWidget):
 
         self.sendElm(self.tester_presend_command, True)
 
+    def saveEcu(self):
+        filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json", ".json")
+        if self.parser == 'xml':
+            layoutjs = dumpXML(self.ddtfile)
+            js = self.ecurequestsparser.dumpJson()
+            jsfile = open(filename, "w")
+            jsfile.write(js)
+            jsfile.close()
+            jsfile = open(filename + ".layout", "w")
+            jsfile.write(layoutjs)
+            jsfile.close()
+
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
             self.sliding = True
@@ -131,6 +143,7 @@ class paramWidget(gui.QWidget):
     def mouseMoveEvent(self, event):
         if self.movingwidget:
             self.movingwidget.move(event.pos())
+            return
         if self.sliding:
             mouseX = event.globalX() - self.mouseOldX
             mouseY = event.globalY() - self.mouseOldY
@@ -1209,7 +1222,9 @@ def getFont(xml):
 def dumpXML(xmlname):
     xdom = xml.dom.minidom.parse(xmlname)
     xdoc = xdom.documentElement
+    return dumpDOC(xdoc)
 
+def dumpDOC(xdoc):
     target = getChildNodesByName(xdoc, u"Target")
     if not target:
         return None
