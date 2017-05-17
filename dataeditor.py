@@ -487,9 +487,12 @@ class numericListPanel(gui.QFrame):
         self.data.bytesascii = False
         self.data.items = {}
         self.data.lists = {}
+
         for i in range(self.itemtable.rowCount()):
             key = unicode(self.itemtable.item(i, 1).text().toUtf8(), encoding="UTF-8")
             val = self.itemtable.cellWidget(i, 0).value()
+            while key in self.data.items:
+                key += u"_"
             self.data.items[key] = val
 
     def init(self):

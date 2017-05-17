@@ -421,13 +421,14 @@ class Ecu_data:
             if self.bytescount < len(value):
                 value = value[0:self.bytescount]
 
+            asciival = ""
             for i in range(self.bytescount):
                 if not test_mode:
-                    bytes_list[start_byte + i] = hex(ord(value[i]))[2:].upper()
+                    asciival += hex(ord(value[i]))[2:].upper()
                 else:
-                    bytes_list[start_byte + i] = "FF"
+                    asciival += "FF"
 
-            return bytes_list
+            value = asciival
 
         if self.scaled:
             if not test_mode:
@@ -504,7 +505,7 @@ class Ecu_data:
 
         requestasbin = "".join(requestasbin)
         valueasint = int("0b" + requestasbin, 2)
-        valueashex = hex(valueasint)[2:].zfill(numreqbytes * 2).upper()
+        valueashex = hex(valueasint)[2:].replace("L", "").zfill(numreqbytes * 2).upper()
 
         for i in range(numreqbytes):
             bytes_list[i + start_byte] = valueashex[i * 2:i * 2 + 2].zfill(2)
@@ -539,7 +540,7 @@ class Ecu_data:
                 value = hex16_tosigned(value)
 
         if self.divideby == 0:
-            print "Division by zero : ", dataitem.name
+            print "Division by zero, please check data item : ", dataitem.name
             return None
 
         res = (value * float(self.step) + float(self.offset)) / float(self.divideby)
