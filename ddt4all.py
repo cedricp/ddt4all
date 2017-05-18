@@ -397,6 +397,10 @@ class Main_widget(gui.QMainWindow):
         c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
         c3ev.triggered.connect(lambda: self.virginECU('clio3EPS'))
 
+    def showDataTab(self, name):
+        self.tabbedview.setCurrentIndex(2)
+        self.dataitemeditor.edititem(name)
+
     def hexeditor(self):
         if self.paramview:
             # Stop auto refresh
@@ -968,5 +972,6 @@ if __name__ == '__main__':
             nok = False
 
     w = Main_widget()
+    options.main_window = w
     w.show()
     app.exec_()

@@ -1,4 +1,4 @@
-import ecu, math, string
+import ecu, math, string, options
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 
@@ -100,6 +100,40 @@ class checkBox(gui.QCheckBox):
             self.data.manualsend = True
         else:
             self.data.manualsend = False
+
+
+class dataTable(gui.QTableWidget):
+    gotoitem = core.pyqtSignal(object)
+
+    def __init__(self, parent=None):
+        super(dataTable, self).__init__(parent)
+
+    def goto_item(self, item):
+        self.gotoitem.emit(item)
+
+    def addscreen(self, item):
+        pass
+
+    def contextMenuEvent(self, event):
+        handled = False
+        pos = event.pos()
+        index = self.indexAt(pos)
+        menu = gui.QMenu()
+
+        if index.column() == 0:
+            item_name = self.itemAt(pos).text()
+            if not item_name:
+                return
+            action_1 = gui.QAction("Goto data", menu)
+            action_2 = gui.QAction("Add to screen", menu)
+
+            action_1.triggered.connect(lambda state,
+                                          it=item_name:
+                                          self.goto_item(it))
+            menu.addActions([action_1, action_2])
+
+            menu.exec_(event.globalPos())
+            event.accept()
 
 class requestTable(gui.QTableWidget):
     def __init__(self, parent=None):
@@ -208,7 +242,8 @@ class paramEditor(gui.QFrame):
 
         self.setLayout(self.layoutv)
 
-        self.table = gui.QTableWidget()
+        self.table = dataTable()
+        self.table.gotoitem.connect(self.gotoitem)
         self.table.setRowCount(50)
         self.table.setColumnCount(5)
         self.table.verticalHeader().hide()
@@ -223,6 +258,9 @@ class paramEditor(gui.QFrame):
         self.bitviewer = Bit_viewer()
         self.bitviewer.setFixedHeight(90)
         self.layoutv.addWidget(self.bitviewer)
+
+    def gotoitem(self, name):
+        options.main_window.showDataTab(name)
 
     def cell_clicked(self, r, c):
         dataname = unicode(self.table.item(r, 0).text().toUtf8(), encoding="UTF-8")
@@ -718,6 +756,12 @@ class dataEditor(gui.QWidget):
         self.typecombo.currentIndexChanged.connect(self.switchType)
 
         self.datatable.cellClicked.connect(self.changeData)
+
+    def edititem(self, name):
+        items = self.datatable.findItems(name, core.Qt.MatchExactly)
+        if len(items):
+            self.datatable.selectRow(items[0].row())
+            self.changeData(items[0].row(), 0)
 
     def new_request(self):
         if not self.ecurequestsparser:
