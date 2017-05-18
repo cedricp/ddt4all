@@ -1,4 +1,5 @@
 import time
+import os
 import ecu
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
@@ -9,11 +10,8 @@ import json, unicodedata, argparse, zipfile, glob
 from StringIO import StringIO
 
 # TODO :
-# Delay unit (second, milliseconds ?) // OK -> ms (from builderX)
-# little endian requests // Done needs check
 # Read freezeframe data // Done (partially)
 # Check ELM response validity (mode + 0x40)
-
 
 def to_nfkd(input_str):
     nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
@@ -56,26 +54,18 @@ class paramWidget(gui.QWidget):
         self.main_protocol_status = prot_status
         self.scrollarea = parent
         self.refreshtime = 100
-        self.protocol = ''
         self.layout = gui.QHBoxLayout(self)
         self.logview = logview
         self.ddtfile = ddtfile
         self.ecurequestsparser = None
-        self.can_send_id = ''
-        self.can_rcv_id = ''
-        self.iso_send_id = ''
-        self.iso_rcv_id = ''
-        self.iso_fastinit = False
         self.panel = None
         self.uiscale = 8
-        self.ecu_address = ecu_addr
         self.ecu_name = ecu_name
         self.button_requests = {}
         self.button_messages = {}
         self.displayDict = {}
         self.inputDict = {}
         self.presend = []
-        self.ecu_addr = str(ecu_addr)
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
         self.tester_timer = core.QTimer()
@@ -95,9 +85,9 @@ class paramWidget(gui.QWidget):
         # Return to default session
         self.logview.append("<font color=blue>Returning to defaut session...</font>")
         if not options.simulation_mode:
-            if self.protocol == "CAN":
+            if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('1081')
-            elif self.protocol == "KWP2000":
+            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                 options.elm.start_session_iso('1081')
 
     def tester_send(self):
@@ -231,43 +221,46 @@ class paramWidget(gui.QWidget):
 
     def initELM(self):
         if not options.simulation_mode:
-            if self.protocol == 'CAN':
+            if self.ecurequestsparser.ecu_protocol == 'CAN':
                 self.logview.append("Initializing CAN mode")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
-                options.elm.set_can_addr(self.ecu_addr, ecu_conf)
-            elif self.protocol == 'KWP2000':
+                options.elm.set_can_addr(self.ecurequestsparser.ecu_send_id, ecu_conf)
+            elif self.ecurequestsparser.ecu_protocol == 'KWP2000':
                 self.logview.append("Initializing KWP2000 mode")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
-                options.opt_si = not self.iso_fastinit
+                options.opt_si = not self.ecurequestsparser.fastinit
                 options.elm.init_iso()
-                options.elm.set_iso_addr(self.iso_send_id, ecu_conf)
+                options.elm.set_iso_addr(self.ecurequestsparser.ecu_send_id, ecu_conf)
             else:
-                self.logview.append("Protocol " + self.protocol + " not supported")
+                self.logview.append("Protocol " + self.ecurequestsparser.ecu_protocol + " not supported")
         if self.main_protocol_status:
-            if self.protocol == "CAN":
-                if self.ecu_addr:
-                    txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
-                                                  self.ecurequestsparser.ecu_recv_id)
-                    self.main_protocol_status.setText("DiagOnCan " + txrx)
-            else:
-                self.main_protocol_status.setText("KWP @ " + self.ecu_addr)
+            if self.ecurequestsparser.ecu_protocol == "CAN":
+                txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
+                                              self.ecurequestsparser.ecu_recv_id)
+                self.main_protocol_status.setText("DiagOnCan " + txrx)
+            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
+                self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.ecu_send_id)
+            elif self.ecurequestsparser.ecu_protocol == "ISO8":
+                self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.ecu_send_id)
+                print "Protocol not yet supported : " + self.ecurequestsparser.ecu_protocol
+
 
     def initJSON(self):
         self.layoutdict = None
-        zf = zipfile.ZipFile("json/layouts.zip", mode='r')
-        jsondata = zf.read(self.ddtfile)
+        layoutfile = self.ddtfile + ".layout"
+        if os.path.exists(layoutfile):
+            jsfile = open(layoutfile, "r")
+            jsondata = jsfile.read()
+            jsfile.close()
+        else:
+            zf = zipfile.ZipFile("json/layouts.zip", mode='r')
+            jsondata = zf.read(self.ddtfile)
+
         self.layoutdict = json.loads(jsondata)
 
         if self.layoutdict is None:
             return
-
-        protocoldict = self.layoutdict['proto']
-        if protocoldict.has_key('fastinit'):
-            self.iso_fastinit = protocoldict['fastinit']
-        self.iso_rcv_id = protocoldict['recv_id']
-        self.iso_send_id = protocoldict['send_id']
-        self.ecu_addr = self.iso_send_id
 
         self.categories = self.layoutdict['categories']
         self.xmlscreen = self.layoutdict['screens']
@@ -282,6 +275,7 @@ class paramWidget(gui.QWidget):
             self.parser = 'json'
             self.ecurequestsparser = ecu.Ecu_file(self.ddtfile, True)
             self.initJSON()
+            self.initELM()
         else:
             self.parser = 'xml'
             xdom = xml.dom.minidom.parse(self.ddtfile)
@@ -298,41 +292,6 @@ class paramWidget(gui.QWidget):
                 self.logview.append("Invalid DDT file")
                 return
 
-            can = self.getChildNodesByName(target, u"CAN")
-            if can:
-                can = can[0]
-                self.protocol = "CAN"
-                send_ids = self.getChildNodesByName(can, "SendId")
-                if send_ids:
-                    send_id = send_ids[0]
-                    can_id = self.getChildNodesByName(send_id, "CANId")
-                    if can_id:
-                        self.can_send_id = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
-                        if not options.simulation_mode:
-                            self.ecu_addr = options.elm.get_can_addr(self.can_send_id)
-
-                rcv_ids = self.getChildNodesByName(can, "ReceiveId")
-                if rcv_ids:
-                    rcv_id = rcv_ids[0]
-                    can_id = self.getChildNodesByName(rcv_id, "CANId")
-                    if can_id:
-                        self.can_rcv_id = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
-
-            k = self.getChildNodesByName(target, u"K")
-            if k:
-                kwp = self.getChildNodesByName(k[0], u"KWP")
-                if kwp:
-                    kwp = kwp[0]
-                    self.protocol = "KWP2000"
-                    fastinit = self.getChildNodesByName(kwp, "FastInit")
-                    if fastinit:
-                        self.iso_fastinit = True
-                        self.iso_rcv_id = hex(int(self.getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[2:].upper()
-                        self.iso_send_id = hex(int(self.getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[2:].upper()
-                        self.ecu_addr = self.iso_send_id
-                    else:
-                        self.logview.append("Cannot init KWP2000 protocol")
-
             categories = self.getChildNodesByName(target, u"Categories")
 
             for cats in categories:
@@ -348,10 +307,10 @@ class paramWidget(gui.QWidget):
             self.initELM()
         reqk = self.ecurequestsparser.requests.keys()
 
-        if self.protocol == "CAN":
+        if self.ecurequestsparser.ecu_protocol == "CAN":
             self.tester_presend_command = '3E'
             for k in reqk:
-                if "testerpresent" in k.lower() or "tester_present" in k.lower():
+                if "tester" in k.lower() and "present" in k.lower():
                     self.tester_presend_command = self.ecurequestsparser.requests[k].sentbytes
                     break
 
@@ -362,10 +321,10 @@ class paramWidget(gui.QWidget):
         if command.startswith('10'):
             self.logview.append('<font color=blue>Switching to session mode %s</font>' % command)
             if not options.simulation_mode:
-                if self.protocol == "CAN":
+                if self.ecurequestsparser.ecu_protocol == "CAN":
                     options.elm.start_session_can(command)
                     return
-                elif self.protocol == "KWP2000":
+                elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                     options.elm.start_session_iso(command)
                     return
 
@@ -495,7 +454,8 @@ class paramWidget(gui.QWidget):
 
         if font_italic == '1':
             fnt_flags |= gui.QFont.StyleItalic
-        
+
+        font_size = font_size / float(self.uiscale) * 10.
         qfnt = gui.QFont(font_name, font_size, fnt_flags);
         
         return qfnt
@@ -530,6 +490,9 @@ class paramWidget(gui.QWidget):
                 width = int(display.getAttribute("Width")) / self.uiscale
                 rect = self.getRectangle(self.getChildNodesByName(display, "Rectangle")[0])
                 qfnt = self.getFont(display)
+                if req_name not in self.ecurequestsparser.requests:
+                    print "No request named ", req_name
+                    continue
                 req = self.ecurequestsparser.requests[req_name]
                 dataitem = None
                 if text in req.dataitems:
@@ -777,10 +740,10 @@ class paramWidget(gui.QWidget):
         if self.parser == 'xml':
             inputs = self.getChildNodesByName(screen, "Input")
             for input in inputs:
-                text      = input.getAttribute("DataName")
-                req_name  = input.getAttribute("RequestName")
-                color     = input.getAttribute("Color")
-                width     = int(input.getAttribute("Width")) / self.uiscale
+                text = input.getAttribute("DataName")
+                req_name = input.getAttribute("RequestName")
+                color = input.getAttribute("Color")
+                width = int(input.getAttribute("Width")) / self.uiscale
                 rect = self.getRectangle(self.getChildNodesByName(input, "Rectangle")[0])
                 qfnt = self.getFont(input)
 
@@ -813,7 +776,7 @@ class paramWidget(gui.QWidget):
                         infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
                     else:
                         infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                    #infos += u' bitOffset=' + unicode(items_ref.bitoffset)
+
                     qcombo.setToolTip(infos)
                     qcombo.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
                     ddata = displayData(data, qcombo, True)
@@ -1037,9 +1000,9 @@ class paramWidget(gui.QWidget):
     def updateDisplays(self, update_inputs=False):
         # Begin diag session
         if not options.simulation_mode:
-            if self.protocol == "CAN":
+            if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('10C0')
-            elif self.protocol == "KWP2000":
+            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                 options.elm.start_session_iso('10C0')
 
         # <Screen> <Send/> <Screen/> tag management
@@ -1064,9 +1027,9 @@ class paramWidget(gui.QWidget):
     def clearDTC(self):
         request = None
         if not options.simulation_mode:
-            if self.protocol == "CAN":
+            if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('10C0')
-            elif self.protocol == "KWP2000":
+            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                 options.elm.start_session_iso('10C0')
 
         self.logview.append("Clearing DTC information")
@@ -1100,9 +1063,9 @@ class paramWidget(gui.QWidget):
 
     def readDTC(self):
         if not options.simulation_mode:
-            if self.protocol == "CAN":
+            if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('10C0')
-            elif self.protocol == "KWP2000":
+            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                 options.elm.start_session_iso('10C0')
 
         if "ReadDTCInformation.ReportDTC" in self.ecurequestsparser.requests:
@@ -1232,39 +1195,6 @@ def dumpDOC(xdoc):
     target = target[0]
     js_proto = {}
     js_screens = {}
-
-    can = getChildNodesByName(target, u"CAN")
-    if can:
-        js_proto['protocol'] = "CAN"
-        send_ids = getChildNodesByName(can[0], "SendId")
-        if send_ids:
-            send_id = send_ids[0]
-            can_id = getChildNodesByName(send_id, "CANId")
-            if can_id:
-                js_proto['send_id'] = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
-
-        rcv_ids = getChildNodesByName(can[0], "ReceiveId")
-        if rcv_ids:
-            rcv_id = rcv_ids[0]
-            can_id = getChildNodesByName(rcv_id, "CANId")
-            if can_id:
-                js_proto['recv_id'] = hex(int(can_id[0].getAttribute("Value")))[2:].upper()
-
-    k = getChildNodesByName(target, u"K")
-    if k:
-        kwp = getChildNodesByName(k[0], u"KWP")
-        if kwp:
-            kwp = kwp[0]
-            js_proto['protocol'] = "KWP2000"
-            fastinit = getChildNodesByName(kwp, "FastInit")
-            if fastinit:
-                js_proto['fastinit'] = True
-            else:
-                return None
-            js_proto['recv_id'] = hex(int(getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[
-                                  2:].upper()
-            js_proto['send_id'] = hex(int(getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[
-                                  2:].upper()
 
     xml_categories = getChildNodesByName(target, u"Categories")
 

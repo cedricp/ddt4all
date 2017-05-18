@@ -641,10 +641,21 @@ class Ecu_file:
         self.fastinit = False
 
         if isfile and '.json' in str(data):
-            # Json here
-            zf = zipfile.ZipFile('json/ecus.zip', mode='r')
-            jsdata = zf.read(data)
+            if os.path.exists(data):
+                jsfile = open(data, "r")
+                jsdata = jsfile.read()
+                jsfile.close()
+            else:
+                # Zipped json here
+                zf = zipfile.ZipFile('json/ecus.zip', mode='r')
+                jsdata = zf.read(data)
             ecudict = json.loads(jsdata)
+
+            if ecudict.has_key("obd"):
+                self.ecu_protocol = ecudict['obd']['protocol']
+                self.ecu_send_id = ecudict['obd']['send_id']
+                self.ecu_recv_id = ecudict['obd']['recv_id']
+                self.fastinit = ecudict['obd']['fastinit']
 
             if ecudict.has_key('endian'):
                 self.endianness = ecudict['endian']
@@ -674,6 +685,7 @@ class Ecu_file:
                 return
 
             target = getChildNodesByName(self.xmldoc, u"Target")
+
             if target:
                 can = getChildNodesByName(target[0], u"CAN")
                 if can:
@@ -701,12 +713,26 @@ class Ecu_file:
                         fastinit = getChildNodesByName(kwp, "FastInit")
                         if fastinit:
                             self.fastinit = True
+
+                            self.ecu_recv_id = hex(
+                                int(getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[
+                                               2:].upper()
+                            self.ecu_send_id = hex(
+                                int(getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[
+                                               2:].upper()
                         else:
-                            return None
-                        self.ecu_recv_id = hex(int(getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[
-                                              2:].upper()
-                        self.ecu_send_id = hex(int(getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[
-                                              2:].upper()
+                            self.fastinit = False
+
+                            iso8 = getChildNodesByName(kwp, "ISO8")
+                            if iso8:
+                                self.ecu_protocol = "ISO8"
+                                self.ecu_recv_id = hex(
+                                    int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[
+                                                   2:].upper()
+                                self.ecu_send_id = hex(
+                                    int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[
+                                                   2:].upper()
+
 
             devices = self.xmldoc.getElementsByTagName("Device")
             for d in devices:
@@ -770,7 +796,7 @@ class Ecu_file:
 # ISO8                                  ?ATSP 3?
 
 class Ecu_ident:
-    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol, projects):
+    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
         self.protocols = [u"KWP2000 Init 5 Baud Type I and II", u"ISO8",
                           u"CAN Messaging (125 kbps CAN)", u"KWP2000 FastInit MultiPoint",
                           u"KWP2000 FastInit MonoPoint", u"DiagOnCAN"]
@@ -782,7 +808,7 @@ class Ecu_ident:
         self.group = group
         self.projects = projects
         self.href = href
-        self.addr = None
+        self.addr = address
         self.protocol = protocol
         self.hash = diagversion + supplier + soft + version
 
@@ -817,6 +843,7 @@ class Ecu_ident:
         js['projects'] = [toascii(p) for p in self.projects]
         js['href'] = toascii(self.href.replace('.xml', '.json'))
         js['protocol'] = toascii(self.protocol)
+        js['address'] = toascii(self.address)
         return js
 
 class Ecu_database:
@@ -845,30 +872,35 @@ class Ecu_database:
                 print "Unable to find eculist"
                 return
 
-            targets = self.xmldoc.getElementsByTagName("Target")
+            functions = self.xmldoc.getElementsByTagName("Function")
+            for function in functions:
+                targets = function.getElementsByTagName("Target")
+                address = function.getAttribute("Address")
+                group = function.getAttribute("Name")
+                address = hex(int(address))[2:].zfill(2).upper()
 
-            for target in targets:
-                href = target.getAttribute("href")
-                name = target.getAttribute("Name")
-                group = target.getAttribute("group")
-                protnode = target.getElementsByTagName("Protocol")
-                if protnode:
-                    protocol = protnode[0].firstChild.nodeValue
-                autoidents = target.getElementsByTagName("AutoIdents")
-                projectselems = target.getElementsByTagName("Projects")
-                projects = []
-                if projectselems:
-                    for c in projectselems[0].childNodes:
-                        projects.append(c.nodeName)
-                for autoident in autoidents:
-                    self.numecu += 1
-                    for ai in autoident.getElementsByTagName("AutoIdent"):
-                        diagversion = ai.getAttribute("DiagVersion")
-                        supplier = ai.getAttribute("Supplier")
-                        soft = ai.getAttribute("Soft")
-                        version = ai.getAttribute("Version")
-                        ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol, projects)
-                        self.targets.append(ecu_ident)
+                for target in targets:
+                    href = target.getAttribute("href")
+                    name = target.getAttribute("Name")
+                    #group = target.getAttribute("group")
+                    protnode = target.getElementsByTagName("Protocol")
+                    if protnode:
+                        protocol = protnode[0].firstChild.nodeValue
+                    autoidents = target.getElementsByTagName("AutoIdents")
+                    projectselems = target.getElementsByTagName("Projects")
+                    projects = []
+                    if projectselems:
+                        for c in projectselems[0].childNodes:
+                            projects.append(c.nodeName)
+                    for autoident in autoidents:
+                        self.numecu += 1
+                        for ai in autoident.getElementsByTagName("AutoIdent"):
+                            diagversion = ai.getAttribute("DiagVersion")
+                            supplier = ai.getAttribute("Supplier")
+                            soft = ai.getAttribute("Soft")
+                            version = ai.getAttribute("Version")
+                            ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol, projects, address)
+                            self.targets.append(ecu_ident)
 
     def getTarget(self, name):
         for t in self.targets:

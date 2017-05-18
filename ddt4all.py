@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import sys
-import os
+import os, glob
 import pickle
 import time
 import PyQt4.QtGui as gui
@@ -116,6 +116,31 @@ class Ecu_list(gui.QWidget):
         self.selected = ''
         self.treeview_ecu = treeview_ecu
         self.vehicle_combo = gui.QComboBox()
+
+        ecu_map = {
+            "01" : "ABS-VDC [$01]",
+            "2C" : "Airbag-SRS [$2C]",
+            "0D" : "Automatic Parking Brake [$0D]",
+            "6E" : "Automatic Transmission [$6E]",
+            "13" : "Audio [$13]",
+            "00" : "CAN Primary network [$00]",
+            "7A" : "ECM Engine Control Module [$7A]",
+            "04" : "EPS Electric Power Steering [$04]",
+            "07" : "HLS Hi Beam Lighting System [$07]",
+            "29" : "HVAC Climate Control [$29]",
+            "70" : "Head Light [$70]",
+            "72" : "Head Light Right [$72]",
+            "71" : "Head Light Left [$71]",
+            "79" : "LNG [$79]",
+            "3F" : "Navigation [$3F]",
+            "58" : "Navigation [$58]",
+            "0E" : "Parking Sonar [$0E]",
+            "51" : "Cluster Meter [$51]",
+            "1C" : "RCU Roof Control Unit [$1C]",
+            "26" : "UCH - BCM [$26]",
+            "27" : "UPC - USM [$27]"
+        }
+
         vehicles = [
             "ALL", "X06 - TWINGO", "X44 - TWINGO II", "X07 - TWINGO III", "X77 - MODUS",
             "X35 - SYMBOL/THALIA", "X65 - CLIO II", "X85 - CLIO III", "X98 - CLIO IV",
@@ -149,11 +174,18 @@ class Ecu_list(gui.QWidget):
         self.list.model().setHeaderData(1, core.Qt.Horizontal, 'Projets')
         self.list.model().setHeaderData(2, core.Qt.Horizontal, 'Protocol')
 
-        stored_ecus = {}
+        stored_ecus = {"Custom" : []}
+
+        custom_files = glob.glob("./json/*.json")
+
+        for cs in custom_files:
+            stored_ecus["Custom"].append([cs, "", ""])
+
         for ecu in self.ecuscan.ecu_database.targets:
-            grp = ecu.group
-            if not grp:
-                grp = "000 - No group"
+            if ecu.addr not in ecu_map:
+                grp = ecu.group
+            else:
+                grp = ecu_map[ecu.addr]
 
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
@@ -171,7 +203,6 @@ class Ecu_list(gui.QWidget):
             for t in stored_ecus[e]:
                 gui.QTreeWidgetItem(item, t)
 
-        self.list.sortItems(0, core.Qt.AscendingOrder)
         self.list.doubleClicked.connect(self.ecuSel)
 
     def filterProject(self):
@@ -250,12 +281,12 @@ class Main_widget(gui.QMainWindow):
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
 
-        self.requesteditor = dataeditor.requestEditor()
-        self.dataitemeditor = dataeditor.dataEditor()
-
         self.tabbedview.addTab(self.scrollview, "Screen")
-        self.tabbedview.addTab(self.requesteditor, "Requests")
-        self.tabbedview.addTab(self.dataitemeditor, "Data")
+        if options.simulation_mode:
+            self.requesteditor = dataeditor.requestEditor()
+            self.dataitemeditor = dataeditor.dataEditor()
+            self.tabbedview.addTab(self.requesteditor, "Requests")
+            self.tabbedview.addTab(self.dataitemeditor, "Data")
 
 
         self.treedock_params = gui.QDockWidget(self)
@@ -341,9 +372,9 @@ class Main_widget(gui.QMainWindow):
 
         diagmenu = menu.addMenu("File")
         savevehicleaction = diagmenu.addAction("Save ECU list")
-        savevecuaction = diagmenu.addAction("Export current ECU")
+        saveecuaction = diagmenu.addAction("Export (JSON) current ECU")
         savevehicleaction.triggered.connect(self.saveEcus)
-        savevecuaction.triggered.connect(self.saveEcu)
+        saveecuaction.triggered.connect(self.saveEcu)
         diagmenu.addSeparator()
 
         for ecuf in ecu_files:
@@ -515,7 +546,7 @@ class Main_widget(gui.QMainWindow):
     def setConnected(self, on):
         if options.simultation_mode:
             self.connectedstatus.setStyleSheet("background : orange")
-            self.connectedstatus.setText("DEMO MODE")
+            self.connectedstatus.setText("EDITION MODE")
             return
         if on:
             self.connectedstatus.setStyleSheet("background : green")
@@ -592,15 +623,20 @@ class Main_widget(gui.QMainWindow):
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
 
-        if ecu_name in self.ecu_scan.ecus:
+        ecu_file = None
+        if ".json" in ecu_name:
+            ecu_file = ecu_name
+            ecu_addr = ""
+        elif ecu_name in self.ecu_scan.ecus:
             ecu = self.ecu_scan.ecus[ecu_name]
         elif ecu_name in self.ecu_scan.approximate_ecus:
             ecu = self.ecu_scan.approximate_ecus[ecu_name]
         else:
             return
 
-        ecu_file = options.ecus_dir + ecu.href
-        ecu_addr = ecu.addr
+        if not ecu_file:
+            ecu_file = options.ecus_dir + ecu.href
+            ecu_addr = ecu.addr
         uiscale_mem = 16
 
         if self.paramview:
@@ -610,8 +646,9 @@ class Main_widget(gui.QMainWindow):
             self.paramview.destroy()
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus)
-        self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
-        self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
+        if options.simulation_mode:
+            self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
+            self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)
@@ -713,7 +750,7 @@ class portChooser(gui.QDialog):
 
         button_layout = gui.QHBoxLayout()
         button_con = gui.QPushButton("Connected mode")
-        button_dmo = gui.QPushButton("Demo mode")
+        button_dmo = gui.QPushButton("Edition mode")
         button_elm_chk = gui.QPushButton("ELM benchmark")
 
         wifilayout = gui.QHBoxLayout()
