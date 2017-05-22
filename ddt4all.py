@@ -641,7 +641,7 @@ class Main_widget(gui.QMainWindow):
         if not ecu_file:
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
-        uiscale_mem = 16
+        uiscale_mem = 12
 
         if self.paramview:
             uiscale_mem = self.paramview.uiscale

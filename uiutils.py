@@ -16,7 +16,7 @@ def colorConvert(color):
     return 'rgb(%i,%i,%i)' % (bluecolor, greencolor, redcolor)
 
 
-def getRectangleXML(xml, scale = 1):
+def getRectangleXML(xml, scale=1):
     rect = {}
     rect['left'] = int(float(xml.getAttribute("Left")) / float(scale))
     rect['top'] = int(float(xml.getAttribute("Top")) / float(scale))

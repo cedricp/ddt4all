@@ -619,14 +619,13 @@ class Ecu_data:
 
             if totalremainingbits != 0:
                 print "getHexValue >> abnormal remaining bytes ", bits, totalremainingbits
-            hexval = hex(int("0b" + tmp_bin, 2))[2:]
+            hexval = hex(int("0b" + tmp_bin, 2))[2:].replace("L", "")
         else:
             valtmp = "0b" + hextobin[startBit:startBit + bits]
-            hexval = hex(int(valtmp, 2))[2:]
+            hexval = hex(int(valtmp, 2))[2:].replace("L", "")
 
         # Resize to original length
         hexval = hexval.zfill(databytelen * 2)
-
         return hexval
 
 class Ecu_file:

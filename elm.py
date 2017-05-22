@@ -203,6 +203,12 @@ cmdb = '''
 '''
 
 
+def get_can_addr(txa):
+    for d in dnat.keys():
+        if dnat[d] == txa:
+            return d
+    return None
+
 def getcandnat(addr):
     a = str(addr)
     if a in dnat:

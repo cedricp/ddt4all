@@ -3,6 +3,54 @@ import PyQt4.QtCore as core
 import options
 from uiutils import *
 
+class screenWidget(gui.QWidget):
+    def __init__(self, parent, uiscale):
+        super(screenWidget, self).__init__(parent)
+        self.jsdata = None
+        self.ismovable = True
+        self.uiscale = uiscale
+        self.jsondata = None
+        self.setContentsMargins(0, 0, 0, 0)
+        self.screen_height = 0
+        self.screen_width = 0
+
+
+    def change_ratio(self, x):
+        pass
+
+    def initXML(self, xmldata):
+        screencolor = xmldata.getAttribute("Color")
+        self.screen_width = int(xmldata.getAttribute("Width")) / self.uiscale + 40
+        self.screen_height = int(xmldata.getAttribute("Height")) / self.uiscale + 40
+        super(screenWidget, self).resize(self.screen_width, self.screen_height)
+        self.setStyleSheet("background-color: %s" % colorConvert(screencolor))
+
+        for elem in getChildNodesByName(xmldata, u"Send"):
+            delay = elem.getAttribute('Delay')
+            req_name = elem.getAttribute('RequestName')
+            self.presend.append((delay, req_name))
+
+
+    def initJson(self, jsdata):
+        self.screen_width = int(jsdata['width']) / self.uiscale + 40
+        self.screen_height = int(jsdata['height']) / self.uiscale + 40
+        super(screenWidget, self).resize(self.screen_width, self.screen_height)
+        self.setStyleSheet("background-color: %s" % jsdata['color'])
+        self.presend = jsdata['presend']
+        self.jsondata = jsdata
+
+    def resize(self, x, y):
+        super(buttonRequest, self).resize(x, y)
+        self.update_json()
+
+    def move(self, x, y):
+        return
+
+    def update_json(self):
+        if self.jsondata:
+            # TODO : Manage colors and presend commands
+            self.jsondata['width'] = (self.width() - 40) / self.uiscale
+            self.jsondata['height'] = (self.height() - 40) / self.uiscale
 
 class buttonRequest(gui.QPushButton):
     def __init__(self, parent, uiscale, ecureq, count):
@@ -71,19 +119,20 @@ class displayValue(gui.QWidget):
         self.jsondata = None
 
     def resize(self,x ,y):
-        if not self.qlabelval or not self.qlabel:
-            return
-
         oldwidth = self.width()
         super(displayValue, self).resize(x, y)
         newwidth = self.width()
+
+        if not self.qlabelval or not self.qlabel:
+            return
+
         diff = newwidth - oldwidth
         self.qlabel.resize(self.qlabel.width() + diff, self.height())
         self.qlabelval.resize(self.qlabelval.width(), self.height())
         self.qlabelval.move(self.qlabelval.pos().x() + diff, 0)
         self.update_json()
 
-    def move(self, x ,y):
+    def move(self, x, y):
         super(displayValue, self).move(x, y)
         self.update_json()
 
@@ -99,8 +148,9 @@ class displayValue(gui.QWidget):
         valnewx = self.qlabelval.pos().x() + x
         if valnewx < 0:
             return
-        if valnewx > self.width() - 20:
+        if valnewx > self.width():
             return
+
         oldlabelsize = self.qlabel.width()
         oldvalsize = self.qlabelval.width()
         self.qlabel.resize(oldlabelsize + x, self.height())
@@ -144,7 +194,7 @@ class displayValue(gui.QWidget):
             color = 0xAAAAAA
 
         self.move(rect['left'], rect['top'])
-        self.resize(width, rect['height'])
+        self.resize(rect['width'], rect['height'])
 
         self.qlabel = gui.QLabel(self)
         self.qlabel.setFont(qfnt)
@@ -212,7 +262,7 @@ class displayValue(gui.QWidget):
         data = self.ecurequestsparser.data[text]
 
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-        self.resize(width, rect['height'] / self.uiscale)
+        self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
 
         self.qlabel = gui.QLabel(self)
         self.qlabel.setFont(qfnt)
@@ -252,17 +302,18 @@ class inputValue(gui.QWidget):
         self.uiscale = uiscale
         self.ecurequestsparser = ecureq
         self.ismovable = True
-        self.label = None
+        self.qlabel = None
         self.editwidget = None
         self.jsondata = None
 
-    def resize(self, x , y):
-        if not self.editwidget or not self.qlabel:
-            return
-
+    def resize(self, x, y):
         oldwidth = self.width()
         super(inputValue, self).resize(x, y)
         newwidth = self.width()
+
+        if not self.qlabel or not self.editwidget:
+            return
+
         diff = newwidth - oldwidth
         self.qlabel.resize(self.qlabel.width() + diff, self.height())
         self.editwidget.resize(self.editwidget.width(), self.height())
@@ -275,17 +326,16 @@ class inputValue(gui.QWidget):
 
     def update_json(self):
         if self.jsondata:
-            self.jsondata['width'] = self.qlabel.width() * self.uiscale
-            self.jsondata['rect']['left'] = self.pos().x() * self.uiscale
-            self.jsondata['rect']['top'] = self.pos().y() * self.uiscale
-            self.jsondata['rect']['height'] = self.height() * self.uiscale
-            self.jsondata['rect']['width'] = self.width() * self.uiscale
-            print self.jsondata['width']
-            print self.jsondata['rect']
+            scale = float(self.uiscale)
+            self.jsondata['width'] = int(self.qlabel.width() * scale)
+            self.jsondata['rect']['left'] = int(self.pos().x() * scale)
+            self.jsondata['rect']['top'] = int(self.pos().y() * scale)
+            self.jsondata['rect']['height'] = int(self.height() * scale)
+            self.jsondata['rect']['width'] = int(self.width() * scale)
 
     def change_ratio(self, x):
         valnewx = self.editwidget.pos().x() + x
-        if valnewx <= 0:
+        if valnewx < 0:
             return
         if valnewx > self.width():
             return
@@ -308,13 +358,13 @@ class inputValue(gui.QWidget):
         if not color:
             color = 0xAAAAAA
 
-        self.resize(width, rect['height'])
+        self.resize(rect['width'], rect['height'])
         self.qlabel = gui.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
         self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
-        self.qlabel.resize(rect['width'], rect['height'])
+        self.qlabel.resize(width, rect['height'])
         self.move(rect['left'], rect['top'])
 
         try:
@@ -353,7 +403,7 @@ class inputValue(gui.QWidget):
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
             else:
                 infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                self.editwidget.setToolTip(infos)
+            self.editwidget.setToolTip(infos)
             ddata = displayData(data, self.editwidget)
 
         if not req_name in inputdict:
@@ -373,14 +423,15 @@ class inputValue(gui.QWidget):
         fntcolor = jsoninput['fontcolor']
 
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-        self.resize(width, rect['height'] / self.uiscale)
+        self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
 
         self.qlabel = gui.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
         self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
-        self.qlabel.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
+        self.qlabel.resize(width, rect['height'] / self.uiscale)
+
         data = self.ecurequestsparser.data[text]
 
         if len(self.ecurequestsparser.data[text].items) > 0:
@@ -390,28 +441,26 @@ class inputValue(gui.QWidget):
             for key in items_ref.keys():
                 self.editwidget.addItem(key)
 
-            self.editwidget.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
+
             self.editwidget.move(width, 0)
             if data.comment:
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(
                     data.bitscount)
             else:
                 infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-            # infos += u' bitOffset=' + unicode(items_ref.bitoffset)
+
             self.editwidget.setToolTip(infos)
             self.editwidget.setStyleSheet(
                 "background:%s; color:%s" % (color, fntcolor))
+
             ddata = displayData(data, self.editwidget, True)
         else:
             self.editwidget = gui.QLineEdit(self)
-            if options.simulation_mode:
-                self.editwidget.setEnabled(False)
+
             self.editwidget.setFont(qfnt)
             self.editwidget.setText("No Value")
-            self.editwidget.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
             self.editwidget.setStyleSheet(
                 "background:%s; color:%s" % (color, fntcolor))
-            self.editwidget.move(width, 0)
             if data.comment:
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(
                     data.bitscount)
@@ -420,10 +469,17 @@ class inputValue(gui.QWidget):
             self.editwidget.setToolTip(infos)
             ddata = displayData(data, self.editwidget)
 
+        if options.simulation_mode:
+            self.editwidget.setEnabled(False)
+
+        self.editwidget.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
+        self.editwidget.move(width, 0)
+
         if not req_name in inputdict:
             req = self.ecurequestsparser.requests[req_name]
             inputdict[req_name] = displayDict(req_name, req)
 
         dd = inputdict[req_name]
         dd.addData(ddata)
+
         self.jsondata = jsoninput

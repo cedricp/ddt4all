@@ -1,6 +1,8 @@
 import time
 import os
-import ecu
+import ecu, elm
+import displaymod
+from uiutils import *
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options
@@ -13,6 +15,7 @@ from StringIO import StringIO
 # Read freezeframe data // Done (partially)
 # Check ELM response validity (mode + 0x40)
 
+
 def to_nfkd(input_str):
     nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
     return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
@@ -20,32 +23,6 @@ def to_nfkd(input_str):
 
 def toascii(str):
     return to_nfkd(str).encode('ascii', 'ignore')
-
-
-class displayData:
-    def __init__(self, data, widget, is_combo=False):
-        self.data    = data
-        self.widget  = widget
-        self.is_combo = is_combo
-
-
-class displayDict:
-    def __init__(self, request_name, request):
-        self.request = request
-        self.request_name = request_name
-        self.data    = []
-        self.datadict = {}
-
-    def addData(self, displaydata):
-        self.data.append(displaydata)
-        if not displaydata.data.name in self.datadict:
-            self.datadict[displaydata.data.name] = displaydata
-
-    def getDataByName(self, name):
-        for data in self.data:
-            if data.data.name == name:
-                return data
-        return None
 
 
 class paramWidget(gui.QWidget):
@@ -63,8 +40,8 @@ class paramWidget(gui.QWidget):
         self.ecu_name = ecu_name
         self.button_requests = {}
         self.button_messages = {}
-        self.displayDict = {}
-        self.inputDict = {}
+        self.displaydict = {}
+        self.inputdict = {}
         self.presend = []
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
@@ -111,6 +88,14 @@ class paramWidget(gui.QWidget):
             jsfile = open(filename + ".layout", "w")
             jsfile.write(layoutjs)
             jsfile.close()
+        elif self.parser == 'json':
+            js = self.ecurequestsparser.dumpJson()
+            jsfile = open(filename, "w")
+            jsfile.write(js)
+            jsfile.close()
+            jsfile = open(filename + ".layout", "w")
+            jsfile.write(json.dumps(self.layoutdict))
+            jsfile.close()
 
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
@@ -119,21 +104,50 @@ class paramWidget(gui.QWidget):
             self.mouseOldY = event.globalY()
             return
 
-        if event.button() == core.Qt.RightButton:
-            self.movingwidget = gui.QApplication.widgetAt(gui.QCursor.pos())
-            gui.QCursor.setPos(self.mapToGlobal(self.movingwidget.pos()))
+        if options.simulation_mode:
+            if event.button() == core.Qt.RightButton:
+                widget = gui.QApplication.widgetAt(gui.QCursor.pos())
+
+                found = False
+                while widget.parent():
+                    if "ismovable" in dir(widget):
+                        found = True
+                        break
+                    widget = widget.parent()
+
+                if not found:
+                    self.movingwidget = None
+                    return
+
+                self.mouseOldX = event.globalX()
+                self.mouseOldY = event.globalY()
+                self.movingwidget = widget
 
     def mouseReleaseEvent(self, event):
-        if event.button() == core.Qt.RightButton:
-            self.movingwidget = None
+        if options.simulation_mode:
+            if event.button() == core.Qt.RightButton:
+                self.movingwidget = None
 
         if event.button() == core.Qt.LeftButton:
             self.sliding = False
 
     def mouseMoveEvent(self, event):
-        if self.movingwidget:
-            self.movingwidget.move(event.pos())
-            return
+        if options.simulation_mode:
+            if self.movingwidget:
+                sizemodifier = gui.QApplication.keyboardModifiers() == core.Qt.ControlModifier
+                ratiomodifier = gui.QApplication.keyboardModifiers() == core.Qt.ShiftModifier
+                mouseX = event.globalX() - self.mouseOldX
+                mouseY = event.globalY() - self.mouseOldY
+                self.mouseOldX = event.globalX()
+                self.mouseOldY = event.globalY()
+                if sizemodifier:
+                    self.movingwidget.resize(self.movingwidget.width() + mouseX, self.movingwidget.height() + mouseY)
+                elif ratiomodifier and 'change_ratio' in dir(self.movingwidget):
+                    self.movingwidget.change_ratio(mouseX)
+                else:
+                    self.movingwidget.move(self.movingwidget.pos().x() + mouseX, self.movingwidget.pos().y() + mouseY)
+                return
+
         if self.sliding:
             mouseX = event.globalX() - self.mouseOldX
             mouseY = event.globalY() - self.mouseOldY
@@ -166,7 +180,7 @@ class paramWidget(gui.QWidget):
             self.panel.close()
             self.panel.destroy()
 
-        self.panel = gui.QWidget(self)
+        self.panel = displaymod.screenWidget(self, self.uiscale)
 
         if not screen:
             return False
@@ -223,9 +237,11 @@ class paramWidget(gui.QWidget):
         if not options.simulation_mode:
             if self.ecurequestsparser.ecu_protocol == 'CAN':
                 self.logview.append("Initializing CAN mode")
-                ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name)}
+                short_addr = options.elm.get_can_addr(self.ecurequestsparser.ecu_send_id)
+                ecu_conf = {'idTx': self.ecurequestsparser.ecu_send_id, 'idRx':
+                    self.ecurequestsparser.ecu_recv_id, 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
-                options.elm.set_can_addr(self.ecurequestsparser.ecu_send_id, ecu_conf)
+                options.elm.set_can_addr(short_addr, ecu_conf)
             elif self.ecurequestsparser.ecu_protocol == 'KWP2000':
                 self.logview.append("Initializing KWP2000 mode")
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
@@ -389,26 +405,12 @@ class paramWidget(gui.QWidget):
         screen = self.xmlscreen[screen_name]
 
         if self.parser == 'xml':
-            self.screen_width  = int(screen.getAttribute("Width")) / self.uiscale + 40
-            self.screen_height = int(screen.getAttribute("Height")) / self.uiscale + 40
-            screencolor = screen.getAttribute("Color")
-            self.setStyleSheet("background-color: %s" % self.colorConvert(screencolor))
-
-            for elem in self.getChildNodesByName(screen, u"Send"):
-                delay = elem.getAttribute('Delay')
-                req_name = elem.getAttribute('RequestName')
-                self.presend.append((delay, req_name))
+            self.panel.initXML(screen)
         else:
-            self.screen_width = int(screen['width']) / self.uiscale + 40
-            self.screen_height = int(screen['height']) / self.uiscale + 40
-            self.setStyleSheet("background-color: %s" % screen['color'])
+            self.panel.initJson(screen)
 
-            self.presend = screen['presend']
-
-        self.panel.setContentsMargins(0, 0, 0, 0)
         self.setContentsMargins(0, 0, 0, 0)
-        self.resize(self.screen_width + 100, self.screen_height + 100)
-        self.panel.resize(self.screen_width, self.screen_height)
+        self.resize(self.panel.screen_width + 100, self.panel.screen_height + 100)
 
         self.drawLabels(screen)
         self.drawDisplays(screen)
@@ -418,203 +420,19 @@ class paramWidget(gui.QWidget):
         self.timer.timeout.connect(self.updateDisplays)
         return True
 
-    def colorConvert(self, color):
-        hexcolor = hex(int(color) & 0xFFFFFF).replace("0x", "").upper().zfill(6)
-        redcolor = int('0x' + hexcolor[0:2], 16)
-        greencolor = int('0x' + hexcolor[2:4], 16)
-        bluecolor = int('0x' + hexcolor[4:6], 16)
-        return 'rgb(%i,%i,%i)' % (bluecolor, greencolor, redcolor)
-
-    def getFontColor(self, xml):
-        font = self.getChildNodesByName(xml, "Font")[0]
-        if font.getAttribute("Color"):
-            return self.colorConvert(font.getAttribute("Color"))
-        else:
-            return self.colorConvert(0xFFFFFF)
-    
-    def getRectangle(self, xml):
-        rect = {}
-        rect['left'] = int(xml.getAttribute("Left")) / self.uiscale
-        rect['top'] = int(xml.getAttribute("Top")) / self.uiscale
-        rect['height'] = int(xml.getAttribute("Height")) / self.uiscale
-        rect['width'] = int(xml.getAttribute("Width")) / self.uiscale
-        return rect
-    
-    def getFont(self, xml):
-        font = self.getChildNodesByName(xml, "Font")[0]
-        font_name = font.getAttribute("Name")
-        font_size = float(font.getAttribute("Size"))
-        font_bold = font.getAttribute("Bold")
-        font_italic = font.getAttribute("Italic")
-        
-        if font_bold == '1':
-            fnt_flags = gui.QFont.Bold
-        else:
-            fnt_flags = gui.QFont.Normal
-
-        if font_italic == '1':
-            fnt_flags |= gui.QFont.StyleItalic
-
-        font_size = font_size / float(self.uiscale) * 10.
-        qfnt = gui.QFont(font_name, font_size, fnt_flags);
-        
-        return qfnt
-
-    def jsonFont(self, fnt):
-        font_name = fnt['name']
-        font_size = fnt['size']
-        font_bold = fnt['bold']
-        font_italic = fnt['italic']
-
-        if font_bold == '1':
-            fnt_flags = gui.QFont.Bold
-        else:
-            fnt_flags = gui.QFont.Normal
-
-        if font_italic == '1':
-            fnt_flags |= gui.QFont.StyleItalic
-
-        qfnt = gui.QFont(font_name, font_size, fnt_flags);
-
-        return qfnt
-
     def drawDisplays(self, screen):
-        self.displayDict = {}
+        self.displaydict = {}
         if self.parser == 'xml':
             displays = self.getChildNodesByName(screen, "Display")
 
-            for display in displays:
-                text = display.getAttribute("DataName")
-                req_name = display.getAttribute("RequestName")
-                color = display.getAttribute("Color")
-                width = int(display.getAttribute("Width")) / self.uiscale
-                rect = self.getRectangle(self.getChildNodesByName(display, "Rectangle")[0])
-                qfnt = self.getFont(display)
-                if req_name not in self.ecurequestsparser.requests:
-                    print "No request named ", req_name
-                    continue
-                req = self.ecurequestsparser.requests[req_name]
-                dataitem = None
-                if text in req.dataitems:
-                    dataitem = req.dataitems[text]
-                else:
-                    keys = req.dataitems.keys()
-                    for k in keys:
-                        if k.upper() == text.upper():
-                            dataitem = req.dataitems[k]
-                            print "Found similar", k, " vs ", text
-                            break
-
-                if not dataitem:
-                    print "DataItem not found", text
-                    continue
-
-                try:
-                    data = self.ecurequestsparser.data[text]
-                except:
-                    print "Cannot find data ", text
-                    continue
-
-                if not color:
-                    color = 0xAAAAAA
-
-                qlabel = gui.QLabel(self.panel)
-                qlabel.setFont(qfnt)
-                qlabel.setText(text)
-                qlabel.resize(width, rect['height'])
-                qlabel.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(display)))
-                qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
-                qlabel.setAlignment(core.Qt.AlignLeft)
-                qlabel.move(rect['left'], rect['top'])
-
-                qlabelval = gui.QLabel(self.panel)
-                qlabelval.setFont(qfnt)
-                qlabelval.setText("")
-                qlabelval.resize(rect['width'] - width, rect['height'])
-                qlabelval.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(display)))
-                qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
-                qlabelval.move(rect['left'] + width, rect['top'])
-                endianess = req.endian
-                if dataitem.endian != "":
-                    endianess = dataitem.endian
-                infos = req_name + u'\n'
-
-                if data.comment:
-                    infos += data.comment + u'\n'
-
-                infos += u"Request=" + unicode(req.sentbytes) + u' ManualRequest=' + unicode(req.manualsend)
-                infos += u'\nNumBits=' + unicode(data.bitscount)
-                infos += u' FirstByte=' + unicode(dataitem.firstbyte)
-                infos += u' BitOffset=' + unicode(dataitem.bitoffset)
-                infos += u' Endianess=' + unicode(endianess)
-                qlabelval.setToolTip(infos)
-
-                ddata = displayData(data, qlabelval)
-                if not req_name in self.displayDict:
-                    self.displayDict[req_name] = displayDict(req_name, req)
-
-                dd = self.displayDict[req_name]
-                dd.addData(ddata)
+            for disp in displays:
+                displaywidget = displaymod.displayValue(self.panel, self.uiscale, self.ecurequestsparser)
+                displaywidget.initXML(disp, self.displaydict)
         else:
             displays = screen['displays']
-            for display in displays:
-                text = display['text']
-                req_name = display['request']
-                color = display['color']
-                width = display['width'] / self.uiscale
-                rect = display['rect']
-                qfnt = self.jsonFont(display['font'])
-                fontcolor = display['fontcolor']
-
-                req = self.ecurequestsparser.requests[req_name]
-                dataitem = None
-                if text in req.dataitems:
-                    dataitem = req.dataitems[text]
-                else:
-                    keys = req.dataitems.keys()
-                    for k in keys:
-                        if k.upper() == text.upper():
-                            dataitem = req.dataitems[k]
-                            print "Found similar", k, " vs ", text
-                            break
-
-                if not dataitem:
-                    print "DataItem not found", text
-                    continue
-
-                data = self.ecurequestsparser.data[text]
-
-                qlabel = gui.QLabel(self.panel)
-                qlabel.setFont(qfnt)
-                qlabel.setText(text)
-                qlabel.resize(width, rect['height'] / self.uiscale)
-                qlabel.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
-                qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
-                qlabel.setAlignment(core.Qt.AlignLeft)
-                qlabel.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-
-                qlabelval = gui.QLabel(self.panel)
-                qlabelval.setFont(qfnt)
-                qlabelval.setText("")
-                qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
-                qlabelval.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
-                qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
-                qlabelval.move(rect['left'] / self.uiscale + width, rect['top'] / self.uiscale)
-                infos = req_name + u'\n'
-                if data.comment:
-                    infos += data.comment + u'\n'
-                infos += u"Request=" + unicode(req.sentbytes) + u' ManualRequest=' + unicode(req.manualsend)
-                infos += u'\nNumBits=' + unicode(data.bitscount)
-                infos += u' FirstByte=' + unicode(dataitem.firstbyte)
-                infos += u' BitOffset=' + unicode(dataitem.bitoffset)
-                qlabelval.setToolTip(infos)
-
-                ddata = displayData(data, qlabelval)
-                if not req_name in self.displayDict:
-                    self.displayDict[req_name] = displayDict(req_name, req)
-
-                dd = self.displayDict[req_name]
-                dd.addData(ddata)
+            for disp in displays:
+                displaywidget = displaymod.displayValue(self.panel, self.uiscale, self.ecurequestsparser)
+                displaywidget.initJson(disp, self.displaydict)
 
     def drawButtons(self, screen):
         self.button_requests = {}
@@ -624,28 +442,18 @@ class paramWidget(gui.QWidget):
             button_count = 0
 
             for button in buttons:
-                text = button.getAttribute("Text")
-                rect = self.getRectangle(self.getChildNodesByName(button, "Rectangle")[0])
-                qfnt = self.getFont(button)
-                messages = self.getChildNodesByName(button, "Message")
-
-                qbutton = gui.QPushButton(text, self.panel)
-                qbutton.setFont(qfnt)
-                qbutton.setText(text)
-                qbutton.resize(rect['width'], rect['height'])
-                qbutton.setStyleSheet("background: red; color: black")
-                qbutton.move(rect['left'], rect['top'])
-                butname = text + "_" + str(button_count)
+                qbutton = displaymod.buttonRequest(self.panel, self.uiscale, self.ecurequestsparser, button_count)
+                qbutton.initXML(button)
                 button_count += 1
 
                 # Get messages
-                for message in messages:
+                for message in qbutton.messages:
                     messagetext = message.getAttribute("Text")
                     if not messagetext:
                         continue
-                    if not butname in self.button_messages:
-                        self.button_messages[butname] = []
-                    self.button_messages[butname].append(messagetext)
+                    if not qbutton.butname in self.button_messages:
+                        self.button_messages[qbutton.butname] = []
+                    self.button_messages[qbutton.butname].append(messagetext)
 
                 # Get requests to send
                 send = self.getChildNodesByName(button, "Send")
@@ -655,41 +463,31 @@ class paramWidget(gui.QWidget):
                         smap = {}
                         delay  = snd.getAttribute("Delay")
                         reqname = snd.getAttribute("RequestName")
-                        smap['Delay']       = delay
+                        smap['Delay'] = delay
                         smap['RequestName'] = reqname
                         sendlist.append(smap)
-                    self.button_requests[butname] = sendlist
+                    self.button_requests[qbutton.butname] = sendlist
                     tooltiptext = ''
                     for k in smap.keys():
                         tooltiptext += smap[k] + '\n'
                     tooltiptext = tooltiptext[0:-1]
                     qbutton.setToolTip(tooltiptext)
 
-                qbutton.clicked.connect(lambda state, btn=butname: self.buttonClicked(btn))
+                qbutton.clicked.connect(lambda state, btn=qbutton.butname: self.buttonClicked(btn))
         else:
             button_count = 0
             for button in screen['buttons']:
-                text = button['text']
-                rect = button['rect']
-                qfnt = self.jsonFont(button['font'])
-                self.button_messages = button['messages']
-
-                qbutton = gui.QPushButton(text, self.panel)
-                qbutton.setFont(qfnt)
-                qbutton.setText(text)
-                qbutton.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
-                qbutton.setStyleSheet("background: red; color: black")
-                qbutton.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-                butname = text + "_" + str(button_count)
+                qbutton = displaymod.buttonRequest(self.panel, self.uiscale, self.ecurequestsparser, button_count)
+                qbutton.initJson(button)
                 button_count += 1
 
-                self.button_messages = button['messages']
+                self.button_messages = qbutton.messages
 
                 if 'send' in button:
                     sendlist = button['send']
-                    self.button_requests[butname] = sendlist
+                    self.button_requests[qbutton.butname] = sendlist
 
-                qbutton.clicked.connect(lambda state, btn=butname: self.buttonClicked(btn))
+                qbutton.clicked.connect(lambda state, btn=qbutton.butname: self.buttonClicked(btn))
 
     def drawLabels(self, screen):
         if self.parser == 'xml':
@@ -699,14 +497,15 @@ class paramWidget(gui.QWidget):
                 color = label.getAttribute("Color")
                 alignment = label.getAttribute("Alignment")
 
-                rect = self.getRectangle(self.getChildNodesByName(label, "Rectangle")[0])
-                qfnt = self.getFont(label)
+                rect = getRectangleXML(self.getChildNodesByName(label, "Rectangle")[0], self.uiscale)
+                qfnt = getXMLFont(label, self.uiscale)
 
                 qlabel = gui.QLabel(self.panel)
+                qlabel.ismovable = True
                 qlabel.setFont(qfnt)
                 qlabel.setText(text)
                 qlabel.resize(rect['width'], rect['height'])
-                qlabel.setStyleSheet("background: %s; color: %s" % (self.colorConvert(color), self.getFontColor(label)))
+                qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(label)))
 
                 qlabel.move(rect['left'], rect['top'])
                 if alignment == '2':
@@ -721,9 +520,10 @@ class paramWidget(gui.QWidget):
                 fontcolor = label['fontcolor']
 
                 rect = label['bbox']
-                qfnt = self.jsonFont(label['font'])
+                qfnt = jsonFont(label['font'])
 
                 qlabel = gui.QLabel(self.panel)
+                qlabel.ismovable = True
                 qlabel.setFont(qfnt)
                 qlabel.setText(text)
                 qlabel.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
@@ -736,130 +536,16 @@ class paramWidget(gui.QWidget):
                     qlabel.setAlignment(core.Qt.AlignLeft)
     
     def drawInputs(self,screen):
-        self.inputDict = {}
+        self.inputdict = {}
         if self.parser == 'xml':
             inputs = self.getChildNodesByName(screen, "Input")
-            for input in inputs:
-                text = input.getAttribute("DataName")
-                req_name = input.getAttribute("RequestName")
-                color = input.getAttribute("Color")
-                width = int(input.getAttribute("Width")) / self.uiscale
-                rect = self.getRectangle(self.getChildNodesByName(input, "Rectangle")[0])
-                qfnt = self.getFont(input)
-
-                if not color:
-                    color = 0xAAAAAA
-
-                qlabel = gui.QLabel(self.panel)
-                qlabel.setFont(qfnt)
-                qlabel.setText(text)
-                qlabel.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
-                qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
-                qlabel.resize(rect['width'], rect['height'])
-                qlabel.move(rect['left'], rect['top'])
-                try:
-                    data = self.ecurequestsparser.data[text]
-                except:
-                    print "Cannot draw input ", text
-                    continue
-
-                if len(self.ecurequestsparser.data[text].items) > 0:
-                    qcombo = gui.QComboBox(self.panel)
-                    items_ref = self.ecurequestsparser.data[text].items
-
-                    for key in items_ref.keys():
-                        qcombo.addItem(key)
-
-                    qcombo.resize(rect['width'] - width, rect['height'])
-                    qcombo.move(rect['left'] + width, rect['top'])
-                    if data.comment:
-                        infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                    else:
-                        infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-
-                    qcombo.setToolTip(infos)
-                    qcombo.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
-                    ddata = displayData(data, qcombo, True)
-                else:
-                    qlineedit = gui.QLineEdit(self.panel)
-                    qlineedit.setFont(qfnt)
-                    qlineedit.setText("No Value")
-                    qlineedit.resize(rect['width'] - width, rect['height'])
-                    qlineedit.setStyleSheet("background:%s; color:%s" % (self.colorConvert(color), self.getFontColor(input)))
-                    qlineedit.move(rect['left'] + width, rect['top'])
-                    if data.comment:
-                        infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                    else:
-                        infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                    qlineedit.setToolTip(infos)
-                    ddata = displayData(data, qlineedit)
-
-                if not req_name in self.inputDict:
-                    req = self.ecurequestsparser.requests[req_name]
-                    self.inputDict[req_name] = displayDict(req_name, req)
-
-                dd = self.inputDict[req_name]
-                dd.addData(ddata)
+            for inp in inputs:
+                inputwidget = displaymod.inputValue(self.panel, self.uiscale, self.ecurequestsparser)
+                inputwidget.initXML(inp, self.inputdict)
         else:
-            for input in screen['inputs']:
-                text = input['text']
-                req_name = input['request']
-                color = input['color']
-                width = input['width'] / self.uiscale
-                rect = input['rect']
-                qfnt = self.jsonFont(input['font'])
-                fntcolor = input['fontcolor']
-
-                qlabel = gui.QLabel(self.panel)
-                qlabel.setFont(qfnt)
-                qlabel.setText(text)
-                qlabel.setStyleSheet("background:%s; color:%s" % (color, input))
-                qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
-                qlabel.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
-                qlabel.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-                data = self.ecurequestsparser.data[text]
-
-                if len(self.ecurequestsparser.data[text].items) > 0:
-                    qcombo = gui.QComboBox(self.panel)
-                    items_ref = self.ecurequestsparser.data[text].items
-
-                    for key in items_ref.keys():
-                        qcombo.addItem(key)
-
-                    qcombo.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
-                    qcombo.move(rect['left'] / self.uiscale + width, rect['top'] / self.uiscale)
-                    if data.comment:
-                        infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(
-                            data.bitscount)
-                    else:
-                        infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                    # infos += u' bitOffset=' + unicode(items_ref.bitoffset)
-                    qcombo.setToolTip(infos)
-                    qcombo.setStyleSheet(
-                        "background:%s; color:%s" % (color, fntcolor))
-                    ddata = displayData(data, qcombo, True)
-                else:
-                    qlineedit = gui.QLineEdit(self.panel)
-                    qlineedit.setFont(qfnt)
-                    qlineedit.setText("No Value")
-                    qlineedit.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
-                    qlineedit.setStyleSheet(
-                        "background:%s; color:%s" % (color, fntcolor))
-                    qlineedit.move(rect['left'] / self.uiscale + width, rect['top'] / self.uiscale)
-                    if data.comment:
-                        infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(
-                            data.bitscount)
-                    else:
-                        infos = req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
-                    qlineedit.setToolTip(infos)
-                    ddata = displayData(data, qlineedit)
-
-                if not req_name in self.inputDict:
-                    req = self.ecurequestsparser.requests[req_name]
-                    self.inputDict[req_name] = displayDict(req_name, req)
-
-                dd = self.inputDict[req_name]
-                dd.addData(ddata)
+            for inp in screen['inputs']:
+                inputwidget = displaymod.inputValue(self.panel, self.uiscale, self.ecurequestsparser)
+                inputwidget.initJson(inp, self.inputdict)
 
     def buttonClicked(self, txt):
         if not txt in self.button_requests:
@@ -890,11 +576,11 @@ class paramWidget(gui.QWidget):
             for k in sendbytes_data_items.keys():
                 dataitem = sendbytes_data_items[k]
 
-                if not request_name in self.inputDict:
+                if not request_name in self.inputdict:
                     # Simple command with no user parameters
                     continue
 
-                inputdict = self.inputDict[request_name]
+                inputdict = self.inputdict[request_name]
                 data = inputdict.getDataByName(k)
 
                 if data == None:
@@ -930,11 +616,11 @@ class paramWidget(gui.QWidget):
             elm_response = self.sendElm(' '.join(elm_data_stream))
 
             for key in rcvbytes_data_items.keys():
-                if request_name in self.displayDict:
+                if request_name in self.displaydict:
                     data_item = rcvbytes_data_items[key]
                     dd_ecu_data = self.ecurequestsparser.data[key]
                     value = dd_ecu_data.getDisplayValue(elm_response, data_item, ecu_request.endian)
-                    dd_request_data = self.displayDict[request_name]
+                    dd_request_data = self.displaydict[request_name]
                     data = dd_request_data.getDataByName(key)
 
                     if value == None:
@@ -951,7 +637,7 @@ class paramWidget(gui.QWidget):
         self.updateDisplays()
 
     def updateDisplay(self, request_name, update_inputs=False):
-        request_data = self.displayDict[request_name]
+        request_data = self.displaydict[request_name]
         request = request_data.request
 
         if request.manualsend:
@@ -982,8 +668,8 @@ class paramWidget(gui.QWidget):
             qlabel.setText(value + ' ' + ecu_data.unit)
 
             if update_inputs:
-                for inputkey in self.inputDict:
-                    input = self.inputDict[inputkey]
+                for inputkey in self.inputdict:
+                    input = self.inputdict[inputkey]
                     if ecu_data.name in input.datadict:
                         data = input.datadict[ecu_data.name]
                         if not data.is_combo:
@@ -1018,7 +704,7 @@ class paramWidget(gui.QWidget):
 
             self.sendElm(request.sentbytes, True)
 
-        for request_name in self.displayDict.keys():
+        for request_name in self.displaydict.keys():
             self.updateDisplay(request_name, update_inputs)
 
         if options.auto_refresh:
@@ -1141,47 +827,6 @@ class paramWidget(gui.QWidget):
         dtcdialog.exec_()
 
 
-def getChildNodesByName(parent, name):
-    nodes = []
-    for node in parent.childNodes:
-        if node.nodeType == node.ELEMENT_NODE and node.localName == name:
-            nodes.append(node)
-    return nodes
-
-
-def colorConvert(color):
-    hexcolor = hex(int(color) & 0xFFFFFF).replace("0x", "").upper().zfill(6)
-    redcolor = int('0x' + hexcolor[0:2], 16)
-    greencolor = int('0x' + hexcolor[2:4], 16)
-    bluecolor = int('0x' + hexcolor[4:6], 16)
-    return 'rgb(%i,%i,%i)' % (bluecolor, greencolor, redcolor)
-
-
-def getRectangle(xml):
-    rect = {}
-    rect['left'] = int(xml.getAttribute("Left"))
-    rect['top'] = int(xml.getAttribute("Top"))
-    rect['height'] = int(xml.getAttribute("Height"))
-    rect['width'] = int(xml.getAttribute("Width"))
-    return rect
-
-def getFontColor(xml):
-    font = getChildNodesByName(xml, "Font")[0]
-    if font.getAttribute("Color"):
-        return colorConvert(font.getAttribute("Color"))
-    else:
-        return colorConvert(0xAAAAAA)
-
-
-def getFont(xml):
-    f = {}
-    font = getChildNodesByName(xml, "Font")[0]
-    f['name'] = font.getAttribute("Name")
-    f['size'] = float(font.getAttribute("Size"))
-    f['bold'] = font.getAttribute("Bold")
-    f['italic'] = font.getAttribute("Italic")
-    return f
-
 def dumpXML(xmlname):
     xdom = xml.dom.minidom.parse(xmlname)
     xdoc = xdom.documentElement
@@ -1235,8 +880,8 @@ def dumpDOC(xdoc):
             label_dict['color'] = colorConvert(label.getAttribute("Color"))
             label_dict['alignment'] = label.getAttribute("Alignment")
             label_dict['fontcolor'] = getFontColor(label)
-            label_dict['bbox'] = getRectangle(getChildNodesByName(label, "Rectangle")[0])
-            label_dict['font'] = getFont(label)
+            label_dict['bbox'] = getRectangleXML(getChildNodesByName(label, "Rectangle")[0])
+            label_dict['font'] = getFontXML(label)
             js_screens[screen_name]['labels'].append(label_dict)
 
         displays = getChildNodesByName(screen, "Display")
@@ -1247,8 +892,8 @@ def dumpDOC(xdoc):
             display_dict['request'] = toascii(display.getAttribute("RequestName"))
             display_dict['color'] = colorConvert(display.getAttribute("Color"))
             display_dict['width'] = int(display.getAttribute("Width"))
-            display_dict['rect'] = getRectangle(getChildNodesByName(display, "Rectangle")[0])
-            display_dict['font'] = getFont(display)
+            display_dict['rect'] = getRectangleXML(getChildNodesByName(display, "Rectangle")[0])
+            display_dict['font'] = getFontXML(display)
             display_dict['fontcolor'] = getFontColor(display)
             js_screens[screen_name]['displays'].append(display_dict)
 
@@ -1257,8 +902,8 @@ def dumpDOC(xdoc):
         for button in buttons:
             button_dict = {}
             button_dict['text'] = toascii(button.getAttribute("Text"))
-            button_dict['rect'] = getRectangle(getChildNodesByName(button, "Rectangle")[0])
-            button_dict['font'] = getFont(button)
+            button_dict['rect'] = getRectangleXML(getChildNodesByName(button, "Rectangle")[0])
+            button_dict['font'] = getFontXML(button)
 
             xmlmessages = getChildNodesByName(button, "Message")
             messages = []
@@ -1294,8 +939,8 @@ def dumpDOC(xdoc):
             input_dict['color'] = colorConvert(color)
             input_dict['fontcolor'] = getFontColor(input)
             input_dict['width'] = int(input.getAttribute("Width"))
-            input_dict['rect'] = getRectangle(getChildNodesByName(input, "Rectangle")[0])
-            input_dict['font'] = getFont(input)
+            input_dict['rect'] = getRectangleXML(getChildNodesByName(input, "Rectangle")[0])
+            input_dict['font'] = getFontXML(input)
             js_screens[screen_name]['inputs'].append(input_dict)
 
     return json.dumps({'proto': js_proto, 'screens': js_screens, 'categories': js_categories}, indent=1)
