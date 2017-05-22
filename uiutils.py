@@ -9,7 +9,7 @@ def getChildNodesByName(parent, name):
 
 
 def colorConvert(color):
-    hexcolor = hex(int(color) & 0xFFFFFF).replace("0x", "").upper().zfill(6)
+    hexcolor = hex(int(color) & 0xFFFFFF)[2:].upper().zfill(6)
     redcolor = int('0x' + hexcolor[0:2], 16)
     greencolor = int('0x' + hexcolor[2:4], 16)
     bluecolor = int('0x' + hexcolor[4:6], 16)
@@ -62,14 +62,6 @@ def getXMLFont(xml, scale = 1):
     qfnt = gui.QFont(font_name, font_size, fnt_flags);
 
     return qfnt
-
-
-def colorConvert(color):
-    hexcolor = hex(int(color) & 0xFFFFFF).replace("0x", "").upper().zfill(6)
-    redcolor = int('0x' + hexcolor[0:2], 16)
-    greencolor = int('0x' + hexcolor[2:4], 16)
-    bluecolor = int('0x' + hexcolor[4:6], 16)
-    return 'rgb(%i,%i,%i)' % (bluecolor, greencolor, redcolor)
 
 
 def getFontColor(xml):

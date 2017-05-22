@@ -180,8 +180,6 @@ class paramWidget(gui.QWidget):
             self.panel.close()
             self.panel.destroy()
 
-        self.panel = displaymod.screenWidget(self, self.uiscale)
-
         if not screen:
             return False
 
@@ -392,17 +390,19 @@ class paramWidget(gui.QWidget):
         self.current_screen = screen_name
         self.presend = []
         self.timer.stop()
-        
+
         try:
             self.timer.timeout.disconnect()
         except:
             pass
-            
+
         if not screen_name in self.xmlscreen.keys():
             self.current_screen = ''
             return False
 
         screen = self.xmlscreen[screen_name]
+
+        self.panel = displaymod.screenWidget(self, self.uiscale)
 
         if self.parser == 'xml':
             self.panel.initXML(screen)
@@ -410,7 +410,7 @@ class paramWidget(gui.QWidget):
             self.panel.initJson(screen)
 
         self.setContentsMargins(0, 0, 0, 0)
-        self.resize(self.panel.screen_width + 100, self.panel.screen_height + 100)
+        self.resize(self.panel.screen_width + 50, self.panel.screen_height + 50)
 
         self.drawLabels(screen)
         self.drawDisplays(screen)
@@ -693,7 +693,7 @@ class paramWidget(gui.QWidget):
 
         # <Screen> <Send/> <Screen/> tag management
         # Manage pre send commands
-        for sendcom in self.presend:
+        for sendcom in self.panel.presend:
             delay = float(sendcom[0])
             req_name = sendcom[1]
 

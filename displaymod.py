@@ -3,44 +3,46 @@ import PyQt4.QtCore as core
 import options
 from uiutils import *
 
-class screenWidget(gui.QWidget):
+class screenWidget(gui.QFrame):
     def __init__(self, parent, uiscale):
         super(screenWidget, self).__init__(parent)
-        self.jsdata = None
+        self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+
+        self.setStyleSheet("background-color: red")
+        self.jsondata = None
         self.ismovable = True
         self.uiscale = uiscale
-        self.jsondata = None
         self.setContentsMargins(0, 0, 0, 0)
         self.screen_height = 0
         self.screen_width = 0
-
+        self.presend = []
 
     def change_ratio(self, x):
-        pass
+        return
 
     def initXML(self, xmldata):
-        screencolor = xmldata.getAttribute("Color")
-        self.screen_width = int(xmldata.getAttribute("Width")) / self.uiscale + 40
-        self.screen_height = int(xmldata.getAttribute("Height")) / self.uiscale + 40
-        super(screenWidget, self).resize(self.screen_width, self.screen_height)
-        self.setStyleSheet("background-color: %s" % colorConvert(screencolor))
+        screencolorxml = xmldata.getAttribute("Color")
+        self.screencolor = colorConvert(screencolorxml)
+        self.screen_width = int(xmldata.getAttribute("Width")) / self.uiscale
+        self.screen_height = int(xmldata.getAttribute("Height")) / self.uiscale
+        self.setStyleSheet("background-color: %s" % self.screencolor)
+        self.resize(self.screen_width, self.screen_height)
 
         for elem in getChildNodesByName(xmldata, u"Send"):
             delay = elem.getAttribute('Delay')
             req_name = elem.getAttribute('RequestName')
             self.presend.append((delay, req_name))
 
-
     def initJson(self, jsdata):
-        self.screen_width = int(jsdata['width']) / self.uiscale + 40
-        self.screen_height = int(jsdata['height']) / self.uiscale + 40
-        super(screenWidget, self).resize(self.screen_width, self.screen_height)
+        self.screen_width = int(jsdata['width']) / self.uiscale
+        self.screen_height = int(jsdata['height']) / self.uiscale
         self.setStyleSheet("background-color: %s" % jsdata['color'])
+        self.resize(self.screen_width, self.screen_height)
         self.presend = jsdata['presend']
         self.jsondata = jsdata
 
     def resize(self, x, y):
-        super(buttonRequest, self).resize(x, y)
+        super(screenWidget, self).resize(x, y)
         self.update_json()
 
     def move(self, x, y):
@@ -49,8 +51,8 @@ class screenWidget(gui.QWidget):
     def update_json(self):
         if self.jsondata:
             # TODO : Manage colors and presend commands
-            self.jsondata['width'] = (self.width() - 40) / self.uiscale
-            self.jsondata['height'] = (self.height() - 40) / self.uiscale
+            self.jsondata['width'] = self.width() * self.uiscale
+            self.jsondata['height'] = self.height() * self.uiscale
 
 class buttonRequest(gui.QPushButton):
     def __init__(self, parent, uiscale, ecureq, count):
@@ -201,7 +203,7 @@ class displayValue(gui.QWidget):
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'])
         self.qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
-        self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
+        self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.setAlignment(core.Qt.AlignLeft)
 
         self.qlabelval = gui.QLabel(self)
@@ -209,7 +211,7 @@ class displayValue(gui.QWidget):
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] - width, rect['height'])
         self.qlabelval.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
-        self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
+        self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabelval.move(width, 0)
 
         endianess = req.endian
