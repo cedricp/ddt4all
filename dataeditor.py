@@ -28,7 +28,7 @@ class Bit_container(gui.QFrame):
             cblayout.addWidget(cb)
             cb.setStyleSheet("color: green")
 
-        label = gui.QLabel(str(num+1).zfill(2))
+        label = gui.QLabel(str(num + 1).zfill(2))
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
 
         self.layout.addWidget(label)
@@ -95,7 +95,6 @@ class checkBox(gui.QCheckBox):
         self.stateChanged.connect(self.change)
 
     def change(self, state):
-        print state
         if state:
             self.data.manualsend = True
         else:
@@ -107,15 +106,23 @@ class dataTable(gui.QTableWidget):
 
     def __init__(self, parent=None):
         super(dataTable, self).__init__(parent)
+        self.issend = None
+        self.requestname = None
 
     def goto_item(self, item):
         self.gotoitem.emit(item)
 
-    def addscreen(self, item):
-        pass
+    def add_to_screen(self, name, item):
+        if not options.main_window.paramview:
+            return
+
+        options.main_window.paramview.addParameter(self.requestname, self.issend, name, item)
+
+    def init(self, issend, requestname):
+        self.issend = issend
+        self.requestname = requestname
 
     def contextMenuEvent(self, event):
-        handled = False
         pos = event.pos()
         index = self.indexAt(pos)
         menu = gui.QMenu()
@@ -124,13 +131,18 @@ class dataTable(gui.QTableWidget):
             item_name = self.itemAt(pos).text()
             if not item_name:
                 return
-            action_1 = gui.QAction("Goto data", menu)
-            action_2 = gui.QAction("Add to screen", menu)
+            action_goto = gui.QAction("Goto data", menu)
 
-            action_1.triggered.connect(lambda state,
-                                          it=item_name:
-                                          self.goto_item(it))
-            menu.addActions([action_1, action_2])
+            action_goto.triggered.connect(lambda state, it=item_name: self.goto_item(it))
+
+            screenMenu = gui.QMenu("Add to screen")
+            for sn in options.main_window.screennames:
+                sa = gui.QAction(sn, screenMenu)
+                sa.triggered.connect(lambda state, name=sn, it=item_name: self.add_to_screen(name, it))
+                screenMenu.addAction(sa)
+
+            menu.addActions([action_goto])
+            menu.addMenu(screenMenu)
 
             menu.exec_(event.globalPos())
             event.accept()
@@ -155,22 +167,45 @@ class requestTable(gui.QTableWidget):
 
         if c == 0:
             newname = unicode(self.item(r, c).text().toUtf8(), encoding="UTF-8")
+
+            # Avoid name clashes
+            while newname in self.ecureq:
+                newname += u"_"
+
             self.ecureq[self.currentreq].name = newname
             self.ecureq[newname] = self.ecureq.pop(self.currentreq)
 
+            self.init(self.ecureq)
+            self.select(newname)
+
+    def select(self, name):
+        items = self.findItems(name, core.Qt.MatchExactly)
+        if len(items):
+            self.selectRow(items[0].row())
+
     def setSendByteEditor(self, sbe):
         self.sendbyteeditor = sbe
-        self.cellClicked.connect(self.cellSel)
+        self.itemSelectionChanged.connect(self.onCellChanged)
 
     def setReceiveByteEditor(self, rbe):
         self.rcvbyteeditor = rbe
-        self.cellClicked.connect(self.cellSel)
+        self.itemSelectionChanged.connect(self.onCellChanged)
 
-    def cellSel(self, x, y):
-        currenttext = unicode(self.item(x, 0).text().toUtf8(), encoding="UTF-8")
+    def onCellChanged(self):
+        if len(self.selectedItems()) == 0:
+            return
+
+        currentItem = self.selectedItems()[-1]
+
+        if not currentItem:
+            return
+
+        currenttext = unicode(currentItem.text().toUtf8(), encoding="UTF-8")
+        self.currentreq = currenttext
+        if currenttext == "":
+            return
         self.sendbyteeditor.set_request(self.ecureq[currenttext])
         self.rcvbyteeditor.set_request(self.ecureq[currenttext])
-        self.currentreq = currenttext
 
     def init(self, ecureq):
         try:
@@ -191,17 +226,14 @@ class requestTable(gui.QTableWidget):
         count = 0
         for req in requestsk:
             request_inst = self.ecureq[req]
-            #if not isinstance(request_inst, ecu.Ecu_request):
-            #    continue
 
             manual = checkBox(request_inst)
 
             self.setItem(count, 0, gui.QTableWidgetItem(req))
             self.setCellWidget(count, 1, manual)
-
             count += 1
 
-        self.setRowCount(count)
+
         self.sortItems(0, core.Qt.AscendingOrder)
         self.resizeColumnsToContents()
         self.cellChanged.connect(self.cellModified)
@@ -215,13 +247,23 @@ class paramEditor(gui.QFrame):
         self.setFrameShape(gui.QFrame.Box)
         self.layoutv = gui.QVBoxLayout()
 
+        add_layout = gui.QHBoxLayout()
+        self.data_list = gui.QComboBox()
+        self.button_add = gui.QPushButton("Add")
+        self.button_add.setFixedWidth(50)
+        add_layout.addWidget(self.data_list)
+        add_layout.addWidget(self.button_add)
+
+
         if issend:
             self.labelreq = gui.QLabel("Send request bytes (HEX)")
         else:
             self.labelreq = gui.QLabel("Receive bytes (HEX)")
         self.inputreq = gui.QLineEdit()
         self.inputreq.textChanged.connect(self.request_changed)
+        self.button_add.clicked.connect(self.add_data)
 
+        self.layoutv.addLayout(add_layout)
         self.layoutv.addWidget(self.labelreq)
         self.layoutv.addWidget(self.inputreq)
 
@@ -259,11 +301,29 @@ class paramEditor(gui.QFrame):
         self.bitviewer.setFixedHeight(90)
         self.layoutv.addWidget(self.bitviewer)
 
+    def add_data(self):
+        current_data_name = unicode(self.data_list.currentText().toUtf8(), encoding="UTF-8")
+
+        data = {}
+        data['firstbyte'] = 2
+        data['bitoffset'] = 0
+        data['ref'] = False
+        data['endian'] = ''
+
+        if self.send:
+            self.current_request.sendbyte_dataitems[current_data_name] = ecu.Data_item(data, '', current_data_name)
+        else:
+            self.current_request.dataitems[current_data_name] = ecu.Data_item(data, '', current_data_name)
+
+        self.init(self.current_request)
+
     def gotoitem(self, name):
         options.main_window.showDataTab(name)
 
     def cell_clicked(self, r, c):
-        dataname = unicode(self.table.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        item = self.table.item(r, 0)
+        if not item: return
+        dataname = unicode(item.text().toUtf8(), encoding="UTF-8")
         self.update_bitview(dataname)
 
     def update_bitview(self, dataname):
@@ -299,6 +359,8 @@ class paramEditor(gui.QFrame):
 
     def init(self, req):
         self.table.clear()
+        self.data_list.clear()
+
         if self.send:
             self.inputreq.setText(req.sentbytes)
         else:
@@ -310,15 +372,20 @@ class paramEditor(gui.QFrame):
             data = req.dataitems
         datak = data.keys()
 
+        for k in self.ecufile.data:
+            self.data_list.addItem(k)
+
         if not self.send:
             self.spin_shift_byte.setValue(req.shiftbytescount)
             self.spin_data_len.setValue(req.minbytes)
 
         headerstrings = core.QString("Data name;Start byte;Bit offset;Bit count;Endianess").split(";")
         self.table.setHorizontalHeaderLabels(headerstrings)
+        self.table.init(self.send, self.current_request.name)
 
         bytescount = 0
 
+        self.table.setRowCount(len(datak))
         count = 0
         for k in datak:
             dataitem = data[k]
@@ -342,7 +409,7 @@ class paramEditor(gui.QFrame):
                 endian_combo.setCurrentIndex(2)
 
             item_sb = gui.QSpinBox()
-            item_sb.setRange(0, 100000)
+            item_sb.setRange(1, 100000)
             item_sb.setValue(dataitem.firstbyte)
             item_boff = gui.QSpinBox()
             item_boff.setRange(0, 7)
@@ -372,7 +439,6 @@ class paramEditor(gui.QFrame):
 
         self.table.resizeColumnsToContents()
         self.table.sortItems(1)
-        self.table.setRowCount(count)
         self.bitviewer.init(int(bytescount)+2)
 
     def shift_bytes_change(self):
@@ -434,11 +500,14 @@ class requestEditor(gui.QWidget):
         self.ecurequestsparser = None
 
         layout_action = gui.QHBoxLayout()
-        button_reload = gui.QPushButton("Reload")
+        button_reload = gui.QPushButton("Reload requests")
+        button_add = gui.QPushButton("Add request")
         layout_action.addWidget(button_reload)
+        layout_action.addWidget(button_add)
         layout_action.addStretch()
 
         button_reload.clicked.connect(self.reload)
+        button_add.clicked.connect(self.add_request)
 
         self.layh = gui.QHBoxLayout()
         self.requesttable = requestTable()
@@ -461,6 +530,19 @@ class requestEditor(gui.QWidget):
 
         self.requesttable.setSendByteEditor(self.sendbyteeditor)
         self.requesttable.setReceiveByteEditor(self.receivebyteeditor)
+
+    def add_request(self):
+        ecu_datareq = {}
+        ecu_datareq['minbytes'] = 2
+        ecu_datareq['shiftbytescount'] = 0
+        ecu_datareq['replybytes'] = ''
+        ecu_datareq['manualsend'] = False
+        ecu_datareq['sentbytes'] = ''
+        ecu_datareq['endian'] = ''
+        ecu_datareq['name'] = u'New request'
+        self.ecurequestsparser.requests[ecu_datareq['name'] ] = ecu.Ecu_request(ecu_datareq, '')
+        self.init()
+        self.requesttable.select(ecu_datareq['name'])
 
     def reload(self):
         if not self.ecurequestsparser:

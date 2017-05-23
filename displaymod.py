@@ -3,12 +3,80 @@ import PyQt4.QtCore as core
 import options
 from uiutils import *
 
+class labelWidget(gui.QLabel):
+    def __init__(self, parent, uiscale):
+        super(labelWidget, self).__init__(parent)
+        self.jsondata = None
+        self.ismovable = True
+        self.uiscale = uiscale
+
+
+    def change_ratio(self, x):
+        return
+
+    def initXML(self, xmldata):
+        text = xmldata.getAttribute("Text")
+        color = xmldata.getAttribute("Color")
+        alignment = xmldata.getAttribute("Alignment")
+
+        rect = getRectangleXML(getChildNodesByName(xmldata, "Rectangle")[0], self.uiscale)
+        qfnt = getXMLFont(xmldata, self.uiscale)
+
+        self.setFont(qfnt)
+        self.setText(text)
+        self.resize(rect['width'], rect['height'])
+        self.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(xmldata)))
+
+        self.move(rect['left'], rect['top'])
+        if alignment == '2':
+            self.setAlignment(core.Qt.AlignHCenter)
+        else:
+            self.setAlignment(core.Qt.AlignLeft)
+
+    def initJson(self, jsdata):
+        text = jsdata['text']
+        color = jsdata['color']
+        alignment = jsdata['alignment']
+        fontcolor = jsdata['fontcolor']
+
+        rect = jsdata['bbox']
+        qfnt = jsonFont(jsdata['font'])
+
+        self.ismovable = True
+        self.setFont(qfnt)
+        self.setText(text)
+        self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
+        self.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
+
+        self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
+        if alignment == '2':
+            self.setAlignment(core.Qt.AlignHCenter)
+        else:
+            self.setAlignment(core.Qt.AlignLeft)
+
+        self.jsondata = jsdata
+
+    def resize(self, x, y):
+        super(labelWidget, self).resize(x, y)
+        self.update_json()
+
+    def move(self, x, y):
+        super(labelWidget, self).move(x, y)
+        self.update_json()
+
+    def update_json(self):
+        if self.jsondata:
+            # TODO : Manage colors and presend commands
+            self.jsondata['bbox']['width'] = self.width() * self.uiscale
+            self.jsondata['bbox']['height'] = self.height() * self.uiscale
+            self.jsondata['bbox']['left'] = self.pos().x() * self.uiscale
+            self.jsondata['bbox']['top'] = self.pos().y() * self.uiscale
+
+
 class screenWidget(gui.QFrame):
     def __init__(self, parent, uiscale):
         super(screenWidget, self).__init__(parent)
         self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
-
-        self.setStyleSheet("background-color: red")
         self.jsondata = None
         self.ismovable = True
         self.uiscale = uiscale

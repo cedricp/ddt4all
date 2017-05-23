@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
 import sys
-import os, glob
+import os
+import glob
 import pickle
 import time
 import PyQt4.QtGui as gui
@@ -241,10 +242,12 @@ class Main_widget(gui.QMainWindow):
         print "Scanning ECUs..."
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
+        options.ecu_scanner = self.ecu_scan
         print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
 
         self.ecu_scan.send_report()
         self.paramview = None
+        self.screennames = []
 
         self.statusBar = gui.QStatusBar()
         self.setStatusBar(self.statusBar)
@@ -287,7 +290,6 @@ class Main_widget(gui.QMainWindow):
             self.dataitemeditor = dataeditor.dataEditor()
             self.tabbedview.addTab(self.requesteditor, "Requests")
             self.tabbedview.addTab(self.dataitemeditor, "Data")
-
 
         self.treedock_params = gui.QDockWidget(self)
         self.treeview_params = gui.QTreeWidget(self.treedock_params)
@@ -413,9 +415,6 @@ class Main_widget(gui.QMainWindow):
             self.paramview.setRefreshTime(self.refreshtimebox.value())
 
     def virginECU(self, vehicle):
-        #if options.simulation_mode:
-        #    self.logview.append("Cannot virginize in demo mode")
-        #    return
         if not options.promode:
             msgbox = gui.QMessageBox()
             msgbox.setText("<center>Enable expert mode to access this menu</center>")
@@ -580,6 +579,7 @@ class Main_widget(gui.QMainWindow):
             item = gui.QListWidgetItem(ecu)
             self.treeview_ecu.addItem(item)
 
+
     def readDtc(self):
         if self.paramview:
             self.paramview.readDTC()
@@ -605,7 +605,7 @@ class Main_widget(gui.QMainWindow):
     def readDTC(self):
         if self.paramview:
             self.paramview.readDTC()
-        
+
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
         screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
@@ -657,11 +657,13 @@ class Main_widget(gui.QMainWindow):
 
         self.scrollview.setWidget(self.paramview)
         screens = self.paramview.categories.keys()
+        self.screennames = []
         for screen in screens:
             item = gui.QTreeWidgetItem(self.treeview_params, [screen])
             for param in self.paramview.categories[screen]:
                 param_item = gui.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
+                self.screennames.append(param)
 
 class donationWidget(gui.QLabel):
     def __init__(self):

@@ -97,6 +97,47 @@ class paramWidget(gui.QWidget):
             jsfile.write(json.dumps(self.layoutdict))
             jsfile.close()
 
+        target_name = filename + ".targets"
+        ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
+        print ecu_ident
+
+        js_targets = []
+        for ecui in ecu_ident:
+            js_targets.append(ecui.dump())
+
+        js = json.dumps(js_targets, indent=1)
+        jsfile = open(target_name, "w")
+        jsfile.write(js)
+        jsfile.close()
+
+    def addParameter(self, requestname, issend, screenname, item):
+        if self.parser != "json":
+            self.logview.append("<font color=red>To be able to edit your screen, first export it in JSON format</font>")
+            return
+
+        self.init(screenname)
+        if issend:
+            input_dict = {}
+            input_dict['text'] = toascii(item)
+            input_dict['request'] = toascii(requestname)
+            input_dict['color'] = "rgb(200,200,200)"
+            input_dict['fontcolor'] = "rgb(10,10,10)"
+            input_dict['width'] = 3000
+            input_dict['rect'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
+            input_dict['font'] = {'name': "Arial", 'size':12, 'bold': False, 'italic': False}
+            self.layoutdict['screens'][screenname]['inputs'].append(input_dict)
+        else:
+            display_dict = {}
+            display_dict['text'] = toascii(item)
+            display_dict['request'] = toascii(requestname)
+            display_dict['color'] = "rgb(200,200,200)"
+            display_dict['width'] = 3000
+            display_dict['rect'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
+            display_dict['font'] =  {'name': "Arial", 'size':12, 'bold': False, 'italic': False}
+            display_dict['fontcolor'] = "rgb(10,10,10)"
+            self.layoutdict['screens'][screenname]['displays'].append(display_dict)
+        self.init(screenname)
+
     def mousePressEvent(self, event):
         if event.button() == core.Qt.LeftButton:
             self.sliding = True
@@ -493,47 +534,13 @@ class paramWidget(gui.QWidget):
         if self.parser == 'xml':
             labels = self.getChildNodesByName(screen, "Label")
             for label in labels:
-                text = label.getAttribute("Text")
-                color = label.getAttribute("Color")
-                alignment = label.getAttribute("Alignment")
+                qlabel = displaymod.labelWidget(self.panel, self.uiscale)
+                qlabel.initXML(label)
 
-                rect = getRectangleXML(self.getChildNodesByName(label, "Rectangle")[0], self.uiscale)
-                qfnt = getXMLFont(label, self.uiscale)
-
-                qlabel = gui.QLabel(self.panel)
-                qlabel.ismovable = True
-                qlabel.setFont(qfnt)
-                qlabel.setText(text)
-                qlabel.resize(rect['width'], rect['height'])
-                qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(label)))
-
-                qlabel.move(rect['left'], rect['top'])
-                if alignment == '2':
-                    qlabel.setAlignment(core.Qt.AlignHCenter)
-                else:
-                    qlabel.setAlignment(core.Qt.AlignLeft)
         else:
             for label in screen['labels']:
-                text = label['text']
-                color = label['color']
-                alignment = label['alignment']
-                fontcolor = label['fontcolor']
-
-                rect = label['bbox']
-                qfnt = jsonFont(label['font'])
-
-                qlabel = gui.QLabel(self.panel)
-                qlabel.ismovable = True
-                qlabel.setFont(qfnt)
-                qlabel.setText(text)
-                qlabel.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
-                qlabel.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
-
-                qlabel.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-                if alignment == '2':
-                    qlabel.setAlignment(core.Qt.AlignHCenter)
-                else:
-                    qlabel.setAlignment(core.Qt.AlignLeft)
+                qlabel = displaymod.labelWidget(self.panel, self.uiscale)
+                qlabel.initJson(label)
     
     def drawInputs(self,screen):
         self.inputdict = {}
@@ -838,7 +845,6 @@ def dumpDOC(xdoc):
         return None
 
     target = target[0]
-    js_proto = {}
     js_screens = {}
 
     xml_categories = getChildNodesByName(target, u"Categories")
@@ -929,6 +935,7 @@ def dumpDOC(xdoc):
 
         inputs = getChildNodesByName(screen, "Input")
         js_screens[screen_name]['inputs'] = []
+
         for input in inputs:
             input_dict = {}
             input_dict['text'] = toascii(input.getAttribute("DataName"))
@@ -943,7 +950,7 @@ def dumpDOC(xdoc):
             input_dict['font'] = getFontXML(input)
             js_screens[screen_name]['inputs'].append(input_dict)
 
-    return json.dumps({'proto': js_proto, 'screens': js_screens, 'categories': js_categories}, indent=1)
+    return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
 
 def make_zipfs():
     options.ecus_dir = "./ecus"

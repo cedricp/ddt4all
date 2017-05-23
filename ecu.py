@@ -155,6 +155,9 @@ class Ecu_request:
                 for k, v in rbdi.iteritems():
                     di = Data_item(v, self.endian, k)
                     self.dataitems[k] = di
+        elif isinstance(data, unicode):
+            # Create a blank, new on
+            self.name = data
         else:
             self.xmldoc = data
             self.name = self.xmldoc.getAttribute("Name")
@@ -842,7 +845,7 @@ class Ecu_ident:
         js['projects'] = [toascii(p) for p in self.projects]
         js['href'] = toascii(self.href.replace('.xml', '.json'))
         js['protocol'] = toascii(self.protocol)
-        js['address'] = toascii(self.address)
+        js['address'] = toascii(self.addr)
         return js
 
 class Ecu_database:
@@ -906,6 +909,13 @@ class Ecu_database:
             if t.name == name:
                 return t
         return None
+
+    def getTargets(self, name):
+        tgt = []
+        for t in self.targets:
+            if t.name == name:
+                tgt.append(t)
+        return tgt
 
     def dump(self):
         js = []

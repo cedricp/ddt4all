@@ -643,13 +643,6 @@ class ELM:
         cmdrsp = self.send_cmd(command)
         self.lastCMDtime = tc = time.time()
 
-        # check for shifted responce
-        # if ('AT' in command.upper()) and (command.upper() not in cmdrsp.upper()) and not options.simulation_mode:
-        #  #try to wait a bit moere
-        #  delayedrsp = self.port.expect('>')
-        #  if command.upper() in delayedrsp.upper():
-        #    cmdrsp = delayedrsp
-
         # add srvsDelay to time gap before send next command
         self.srvsDelay = float(serviceDelay) / 1000.
 
@@ -718,9 +711,10 @@ class ELM:
         # analyse response (2 phases)
         result = ""
         noerrors = True
-        cfarame = 0  # frame counter
+        cframe = 0  # frame counter
         nbytes = 0  # number bytes in response
-        nfarmes = 0  # numer frames in response
+        nframes = 0
+
 
         if len(responses) == 0:  # no data in response
             return ""
@@ -797,9 +791,9 @@ class ELM:
             command = command[12:]
             # consecutive frames
             frame_number = 1
-            while (len(command)):
+            while len(command):
                 raw_command.append("2" + ("%X" % frame_number)[-1:] + command[:14])
-                frame_number = frame_number + 1
+                frame_number += 1
                 command = command[14:]
 
         responses = []
@@ -865,7 +859,7 @@ class ELM:
                     self.ATR1 = False
 
             while cf > 0:
-                cf = cf - 1
+                cf -= 1
 
                 # Ensure time gap between frames according to FlowControl
                 tc = time.time()  # current time
@@ -878,18 +872,14 @@ class ELM:
 
         # now we are going to receive data. st or ff should be in responses[0]
         if len(responses) != 1:
-            # print "Something went wrong. len responces != 1"
             return "WRONG RESPONSE"
 
         result = ""
         noerrors = True
-        cfarame = 0  # frame counter
         nbytes = 0  # number bytes in response
-        nfarmes = 0  # numer frames in response
 
         if responses[0][:1] == '0':  # single frame (sf)
             nbytes = int(responses[0][1:2], 16)
-            nframes = 1
             result = responses[0][2:2 + nbytes * 2]
 
         elif responses[0][:1] == '1':  # first frame (ff)
@@ -953,7 +943,7 @@ class ELM:
             self.port.write(str(command + "\r").encode("utf-8"))  # send command
 
         # receive and parse response
-        while (True):
+        while True:
             tc = time.time()
             if options.simulation_mode:
                 break
@@ -985,9 +975,8 @@ class ELM:
 
         self.response_time = ((self.response_time * 9) + (tc - tb)) / 10
 
-        # save responce to log
+        # save response to log
         if self.lf != 0:
-            # tm = str(time.time())
             self.lf.write("<[" + str(round(tc - tb, 3)) + "]" + self.buff + "\n")
             self.lf.flush()
 
@@ -1030,36 +1019,6 @@ class ELM:
                 return d
         return None
 
-    def set_can_addr_inv(self, addr, ecu):
-
-        if self.currentprotocol == "can" and self.currentaddress == addr:
-            return
-
-        if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
-            self.lf.flush()
-
-        self.currentprotocol = "can"
-        self.currentaddress = addr
-        self.startSession = ""
-        self.lastCMDtime = 0
-        self.l1_cache = {}
-
-        RXa = dnat[addr]
-        TXa = snat[addr]
-
-        self.cmd("at sh " + TXa)
-        self.cmd("at cra " + RXa)
-        self.cmd("at fc sh " + TXa)
-        self.cmd("at fc sd 30 00 00")  # status BS STmin
-        self.cmd("at fc sm 1")
-        if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-            self.cmd("at sp 8")
-        else:
-            self.cmd("at sp 6")
-        # self.cmd("at al")
-        return (TXa, RXa)
-
     def set_can_addr(self, addr, ecu):
 
         if self.currentprotocol == "can" and self.currentaddress == addr:
@@ -1087,7 +1046,7 @@ class ELM:
             self.cmd("at sp 8")
         else:
             self.cmd("at sp 6")
-        # self.cmd("at al")
+
         return (TXa, RXa)
 
     def start_session_iso(self, start_session):
