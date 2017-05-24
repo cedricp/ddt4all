@@ -642,6 +642,9 @@ class Ecu_file:
         self.ecu_recv_id = 0
         self.fastinit = False
 
+        if not data:
+            return
+
         if isfile and '.json' in str(data):
             if os.path.exists(data):
                 jsfile = open(data, "r")

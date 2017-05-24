@@ -103,6 +103,7 @@ class checkBox(gui.QCheckBox):
 
 class dataTable(gui.QTableWidget):
     gotoitem = core.pyqtSignal(object)
+    removeitem = core.pyqtSignal(object)
 
     def __init__(self, parent=None):
         super(dataTable, self).__init__(parent)
@@ -111,6 +112,9 @@ class dataTable(gui.QTableWidget):
 
     def goto_item(self, item):
         self.gotoitem.emit(item)
+
+    def remove_item(self, item):
+        self.removeitem.emit(item)
 
     def add_to_screen(self, name, item):
         if not options.main_window.paramview:
@@ -132,8 +136,10 @@ class dataTable(gui.QTableWidget):
             if not item_name:
                 return
             action_goto = gui.QAction("Goto data", menu)
+            action_remove = gui.QAction("Remove", menu)
 
             action_goto.triggered.connect(lambda state, it=item_name: self.goto_item(it))
+            action_remove.triggered.connect(lambda state, it=item_name: self.remove_item(it))
 
             screenMenu = gui.QMenu("Add to screen")
             for sn in options.main_window.screennames:
@@ -141,7 +147,7 @@ class dataTable(gui.QTableWidget):
                 sa.triggered.connect(lambda state, name=sn, it=item_name: self.add_to_screen(name, it))
                 screenMenu.addAction(sa)
 
-            menu.addActions([action_goto])
+            menu.addActions([action_goto, action_remove])
             menu.addMenu(screenMenu)
 
             menu.exec_(event.globalPos())
@@ -202,8 +208,10 @@ class requestTable(gui.QTableWidget):
 
         currenttext = unicode(currentItem.text().toUtf8(), encoding="UTF-8")
         self.currentreq = currenttext
-        if currenttext == "":
+
+        if not currenttext:
             return
+
         self.sendbyteeditor.set_request(self.ecureq[currenttext])
         self.rcvbyteeditor.set_request(self.ecureq[currenttext])
 
@@ -250,10 +258,12 @@ class paramEditor(gui.QFrame):
         add_layout = gui.QHBoxLayout()
         self.data_list = gui.QComboBox()
         self.button_add = gui.QPushButton("Add")
+        self.refresh = gui.QPushButton("Refresh")
         self.button_add.setFixedWidth(50)
+        self.refresh.setFixedWidth(80)
         add_layout.addWidget(self.data_list)
+        add_layout.addWidget(self.refresh)
         add_layout.addWidget(self.button_add)
-
 
         if issend:
             self.labelreq = gui.QLabel("Send request bytes (HEX)")
@@ -262,6 +272,7 @@ class paramEditor(gui.QFrame):
         self.inputreq = gui.QLineEdit()
         self.inputreq.textChanged.connect(self.request_changed)
         self.button_add.clicked.connect(self.add_data)
+        self.refresh.clicked.connect(self.refresh_combo)
 
         self.layoutv.addLayout(add_layout)
         self.layoutv.addWidget(self.labelreq)
@@ -286,6 +297,7 @@ class paramEditor(gui.QFrame):
 
         self.table = dataTable()
         self.table.gotoitem.connect(self.gotoitem)
+        self.table.removeitem.connect(self.removeitem)
         self.table.setRowCount(50)
         self.table.setColumnCount(5)
         self.table.verticalHeader().hide()
@@ -301,6 +313,12 @@ class paramEditor(gui.QFrame):
         self.bitviewer.setFixedHeight(90)
         self.layoutv.addWidget(self.bitviewer)
 
+    def refresh_combo(self):
+        self.data_list.clear()
+
+        for k in sorted(self.ecufile.data):
+            self.data_list.addItem(k)
+
     def add_data(self):
         current_data_name = unicode(self.data_list.currentText().toUtf8(), encoding="UTF-8")
 
@@ -315,6 +333,14 @@ class paramEditor(gui.QFrame):
         else:
             self.current_request.dataitems[current_data_name] = ecu.Data_item(data, '', current_data_name)
 
+        self.init(self.current_request)
+
+    def removeitem(self, name):
+        name = unicode(name.toUtf8(), encoding="UTF-8")
+        if self.send:
+            self.current_request.sendbyte_dataitems.pop(name)
+        else:
+            self.current_request.dataitems.pop(name)
         self.init(self.current_request)
 
     def gotoitem(self, name):
@@ -372,7 +398,7 @@ class paramEditor(gui.QFrame):
             data = req.dataitems
         datak = data.keys()
 
-        for k in self.ecufile.data:
+        for k in sorted(self.ecufile.data):
             self.data_list.addItem(k)
 
         if not self.send:
@@ -570,9 +596,16 @@ class numericListPanel(gui.QFrame):
         layout = gui.QGridLayout()
         labelnob = gui.QLabel("Number of bits")
         lablelsigned = gui.QLabel("Signed")
+        newitem = gui.QPushButton("Add item")
+        delitem = gui.QPushButton("Del item")
+
+        newitem.clicked.connect(self.add_item)
+        delitem.clicked.connect(self.def_item)
 
         layout.addWidget(labelnob, 0, 0)
         layout.addWidget(lablelsigned, 1, 0)
+        layout.addWidget(newitem, 2, 0)
+        layout.addWidget(delitem, 2, 1)
 
         self.inputnob = gui.QSpinBox()
         self.inputnob.setRange(1, 32)
@@ -595,6 +628,24 @@ class numericListPanel(gui.QFrame):
         self.setLayout(layoutv)
         self.init()
 
+    def add_item(self):
+        value = -999
+        self.itemtable.setRowCount(self.itemtable.rowCount() + 1)
+        newrow = self.itemtable.rowCount() - 1
+        spinvalue = gui.QSpinBox()
+        spinvalue.setRange(-1000000, 1000000)
+        spinvalue.setValue(value)
+        self.itemtable.setCellWidget(newrow, 0, spinvalue)
+        self.itemtable.setItem(newrow, 1, gui.QTableWidgetItem("New item"))
+        self.itemtable.setItem(newrow, 0, gui.QTableWidgetItem(str(value).zfill(5)))
+
+    def def_item(self):
+        currentrow = self.itemtable.currentRow()
+        if currentrow < 0:
+            return
+
+        self.itemtable.removeRow(currentrow)
+
     def validate(self):
         self.data.scaled = False
         self.data.bitscount = self.inputnob.value()
@@ -616,6 +667,11 @@ class numericListPanel(gui.QFrame):
             self.data.items[key] = val
 
     def init(self):
+        if not self.data:
+            return
+
+        self.itemtable.clear()
+
         keys = self.data.items.keys()
         self.itemtable.setRowCount(len(keys))
 
@@ -623,22 +679,20 @@ class numericListPanel(gui.QFrame):
         self.inputnob.setValue(self.data.bitscount)
 
         count = 0
-        for k in keys:
-            currentitem = self.data.items[k]
+        for k, v in self.data.items.iteritems():
             spinvalue = gui.QSpinBox()
             spinvalue.setRange(-1000000,1000000)
-            spinvalue.setValue(int(currentitem))
+            spinvalue.setValue(int(v))
             self.itemtable.setCellWidget(count, 0, spinvalue)
-            self.itemtable.setItem(count, 0, gui.QTableWidgetItem(str(currentitem).zfill(5)))
+            self.itemtable.setItem(count, 0, gui.QTableWidgetItem(str(v).zfill(5)))
             self.itemtable.setItem(count, 1, gui.QTableWidgetItem(k))
             count += 1
-
 
         headerstrings = core.QString("Value;Text").split(";")
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
         self.itemtable.sortItems(0, core.Qt.AscendingOrder)
-        self.itemtable.setSortingEnabled(True)
+        #self.itemtable.setSortingEnabled(True)
 
 
 class otherPanel(gui.QFrame):
@@ -918,6 +972,7 @@ class dataEditor(gui.QWidget):
         self.descpriptioneditor.setEnabled(True)
         self.typecombo.setEnabled(True)
         if num == 0:
+            self.typecombo.setCurrentIndex(0)
             self.layoutv.removeWidget(self.currentWidget)
             self.currentWidget.hide()
             self.currentWidget.destroy()
@@ -925,6 +980,7 @@ class dataEditor(gui.QWidget):
             self.layoutv.addWidget(self.currentWidget)
 
         if num == 1:
+            self.typecombo.setCurrentIndex(1)
             self.layoutv.removeWidget(self.currentWidget)
             self.currentWidget.hide()
             self.currentWidget.destroy()
@@ -932,6 +988,7 @@ class dataEditor(gui.QWidget):
             self.layoutv.addWidget(self.currentWidget)
 
         if num == 2:
+            self.typecombo.setCurrentIndex(2)
             self.layoutv.removeWidget(self.currentWidget)
             self.currentWidget.hide()
             self.currentWidget.destroy()

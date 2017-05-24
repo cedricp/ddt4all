@@ -98,7 +98,7 @@ class displayDict:
         return None
 
 
-def jsonFont(fnt):
+def jsonFont(fnt, scale):
     font_name = fnt['name']
     font_size = fnt['size']
     if 'bold' in fnt:
@@ -117,6 +117,8 @@ def jsonFont(fnt):
 
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
+
+    font_size = font_size / float(scale) * 10.
 
     qfnt = gui.QFont(font_name, font_size, fnt_flags);
 

@@ -40,7 +40,7 @@ class labelWidget(gui.QLabel):
         fontcolor = jsdata['fontcolor']
 
         rect = jsdata['bbox']
-        qfnt = jsonFont(jsdata['font'])
+        qfnt = jsonFont(jsdata['font'], self.uiscale)
 
         self.ismovable = True
         self.setFont(qfnt)
@@ -152,7 +152,7 @@ class buttonRequest(gui.QPushButton):
     def initJson(self, jsdata):
         text = jsdata['text']
         rect = jsdata['rect']
-        qfnt = jsonFont(jsdata['font'])
+        qfnt = jsonFont(jsdata['font'], self.uiscale)
         self.messages = jsdata['messages']
 
         self.setFont(qfnt)
@@ -310,7 +310,7 @@ class displayValue(gui.QWidget):
         color = display['color']
         width = display['width'] / self.uiscale
         rect = display['rect']
-        qfnt = jsonFont(display['font'])
+        qfnt = jsonFont(display['font'], self.uiscale)
         fontcolor = display['fontcolor']
 
         req = self.ecurequestsparser.requests[req_name]
@@ -489,7 +489,7 @@ class inputValue(gui.QWidget):
         color = jsoninput['color']
         width = jsoninput['width'] / self.uiscale
         rect = jsoninput['rect']
-        qfnt = jsonFont(jsoninput['font'])
+        qfnt = jsonFont(jsoninput['font'], self.uiscale)
         fntcolor = jsoninput['fontcolor']
 
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)

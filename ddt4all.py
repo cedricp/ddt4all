@@ -291,11 +291,28 @@ class Main_widget(gui.QMainWindow):
             self.tabbedview.addTab(self.requesteditor, "Requests")
             self.tabbedview.addTab(self.dataitemeditor, "Data")
 
-        self.treedock_params = gui.QDockWidget(self)
-        self.treeview_params = gui.QTreeWidget(self.treedock_params)
-        self.treedock_params.setWidget(self.treeview_params)
+        screen_widget = gui.QWidget()
+        self.treedock_widget = gui.QDockWidget(self)
+        self.treedock_widget.setWidget(screen_widget)
+        self.treeview_params = gui.QTreeWidget()
+        self.screenmenu = gui.QMenuBar()
+        treedock_layout = gui.QVBoxLayout()
+        treedock_layout.addWidget(self.screenmenu)
+        treedock_layout.addWidget(self.treeview_params)
+        screen_widget.setLayout(treedock_layout)
         self.treeview_params.setHeaderLabels(["Screens"])
         self.treeview_params.clicked.connect(self.changeScreen)
+
+        actionmenu = self.screenmenu.addMenu("Action")
+        cat_action = gui.QAction("New Category", actionmenu)
+        screen_action = gui.QAction("New Screen", actionmenu)
+        rename_action = gui.QAction("Rename", actionmenu)
+        actionmenu.addAction(cat_action)
+        actionmenu.addAction(screen_action)
+        actionmenu.addAction(rename_action)
+        cat_action.triggered.connect(self.newCategory)
+        screen_action.triggered.connect(self.newScreen)
+        rename_action.triggered.connect(self.screenRename)
 
         self.treedock_logs = gui.QDockWidget(self)
         self.logview = gui.QTextEdit()
@@ -313,7 +330,7 @@ class Main_widget(gui.QMainWindow):
 
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treeview_eculist)
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_ecu)
-        self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_params)
+        self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_widget)
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
 
         self.toolbar = self.addToolBar("File")
@@ -373,10 +390,12 @@ class Main_widget(gui.QMainWindow):
         menu = self.menuBar()
 
         diagmenu = menu.addMenu("File")
+        newecuction = diagmenu.addAction("Create New ECU")
         savevehicleaction = diagmenu.addAction("Save ECU list")
         saveecuaction = diagmenu.addAction("Export (JSON) current ECU")
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
+        newecuction.triggered.connect(self.newEcu)
         diagmenu.addSeparator()
 
         for ecuf in ecu_files:
@@ -398,6 +417,61 @@ class Main_widget(gui.QMainWindow):
         m3ev.triggered.connect(lambda: self.virginECU('megane3EPS'))
         c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
         c3ev.triggered.connect(lambda: self.virginECU('clio3EPS'))
+
+    def screenRename(self):
+        item = self.treeview_params.currentItem()
+        if not item:
+            return
+
+        itemname = unicode(item.text(0).toUtf8(), encoding="UTF-8")
+        nin = gui.QInputDialog.getText(self, 'DDT4All', 'Enter new name')
+
+        if not nin[1]:
+            return
+
+        newitemname = unicode(nin[0].toUtf8(), encoding="UTF-8")
+
+        if newitemname == itemname:
+            return
+
+        if item.parent():
+            self.screennames.remove(itemname)
+            self.screennames.append(newitemname)
+            self.paramview.renameScreen(itemname, newitemname)
+        else:
+            self.paramview.renameCategory(itemname, newitemname)
+
+        item.setText(0, newitemname)
+
+    def newCategory(self):
+        ncn = gui.QInputDialog.getText(self, 'DDT4All', 'Enter screen name')
+        necatname = unicode(ncn[0].toUtf8(), encoding="UTF-8")
+        if necatname:
+            self.paramview.createCategory(necatname)
+            self.treeview_params.addTopLevelItem(gui.QTreeWidgetItem([necatname]))
+
+    def newScreen(self):
+        item = self.treeview_params.currentItem()
+
+        if not item:
+            self.logview.append("<font color=red>Please select a category before creating new screen</font>")
+            return
+
+        if item.parent() != None:
+            item = item.parent()
+
+        category = unicode(item.text(0).toUtf8(), encoding="UTF-8")
+        nsn = gui.QInputDialog.getText(self, 'DDT4All', 'Enter screen name')
+
+        if not nsn[1]:
+            return
+
+        newscreenname = unicode(nsn[0].toUtf8(), encoding="UTF-8")
+        if newscreenname:
+            self.paramview.createScreen(newscreenname, category)
+
+            item.addChild(gui.QTreeWidgetItem([newscreenname]))
+            self.screennames.append(newscreenname)
 
     def showDataTab(self, name):
         self.tabbedview.setCurrentIndex(2)
@@ -431,7 +505,7 @@ class Main_widget(gui.QMainWindow):
         msgbox.setDefaultButton(gui.QMessageBox.Abort)
         userreply = msgbox.exec_()
 
-        if userreply == gui.QMessageBox.No:
+        if userreply == gui.QMessageBox.Abort:
             return
 
         # Reset parameter view to not alter ECU settings
@@ -559,8 +633,25 @@ class Main_widget(gui.QMainWindow):
             self.connectedstatus.setText("DISCONNECTED")
 
     def saveEcus(self):
-        filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)", "./vehicles/mycar.ecu", ".ecu")
+        filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)",
+                                                   "./vehicles/mycar.ecu", ".ecu")
         pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
+
+    def newEcu(self):
+        filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json",
+                                                   "*.json")
+        filename = unicode(filename.toUtf8(), encoding="UTF-8")
+        ecufile = ecu.Ecu_file(None)
+        layout = open(filename + ".layout", "w")
+        layout.write('{"screens": {}, "categories":{"Category":[]} }')
+        layout.close()
+
+        layout = open(filename, "w")
+        layout.write(ecufile.dumpJson())
+        layout.close()
+
+        item = gui.QListWidgetItem(filename)
+        self.treeview_ecu.addItem(item)
 
     def saveEcu(self):
         if self.paramview:
@@ -919,7 +1010,7 @@ if __name__ == '__main__':
         font = gui.QFont("Sans", 8)
         font.setBold(False)
         app.setFont(font)
-        app.setStyle("windowsxp")
+        app.setStyle("windows")
 
     ecudirfound = False
 

@@ -77,8 +77,12 @@ class paramWidget(gui.QWidget):
 
         self.sendElm(self.tester_presend_command, True)
 
-    def saveEcu(self):
-        filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json", ".json")
+    def saveEcu(self, name = None):
+        if not name:
+            filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json", "*.json")
+        else:
+            filename = name
+
         if self.parser == 'xml':
             layoutjs = dumpXML(self.ddtfile)
             js = self.ecurequestsparser.dumpJson()
@@ -109,6 +113,41 @@ class paramWidget(gui.QWidget):
         jsfile = open(target_name, "w")
         jsfile.write(js)
         jsfile.close()
+
+    def renameCategory(self, oldname, newname):
+        if oldname not in self.categories:
+            print "Err, cannot rename ", oldname
+            return
+
+        self.categories[newname] = self.categories.pop(oldname)
+
+    def renameScreen(self, oldname, newname):
+        if oldname not in self.xmlscreen:
+            print "Err, cannot rename ", oldname
+            return
+
+        self.xmlscreen[newname] = self.xmlscreen.pop(oldname)
+        for key, cat in self.categories.iteritems():
+            if oldname in cat:
+                cat.remove(oldname)
+                cat.append(newname)
+                break
+
+
+    def createCategory(self, name):
+        self.categories[name] = []
+
+    def createScreen(self, name, category):
+        self.categories[category].append(name)
+        self.xmlscreen[name] = {}
+        self.xmlscreen[name]['inputs'] = []
+        self.xmlscreen[name]['buttons'] = []
+        self.xmlscreen[name]['displays'] = []
+        self.xmlscreen[name]['labels'] = []
+        self.xmlscreen[name]['width'] = 8000
+        self.xmlscreen[name]['height'] = 8000
+        self.xmlscreen[name]['color'] = "rgb(0,0,30)"
+        self.xmlscreen[name]['presend'] = []
 
     def addParameter(self, requestname, issend, screenname, item):
         if self.parser != "json":
@@ -320,11 +359,14 @@ class paramWidget(gui.QWidget):
         self.categories = self.layoutdict['categories']
         self.xmlscreen = self.layoutdict['screens']
 
-    def initXML(self):
+    def clearAll(self):
         self.categories = {}
         self.xmlscreen = {}
         self.parser = ''
         self.tester_presend_command = ""
+
+    def initXML(self):
+        self.clearAll()
 
         if '.json' in self.ddtfile:
             self.parser = 'json'
