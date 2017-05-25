@@ -5,6 +5,7 @@ import os
 import glob
 import pickle
 import time
+import json
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
@@ -119,27 +120,27 @@ class Ecu_list(gui.QWidget):
         self.vehicle_combo = gui.QComboBox()
 
         ecu_map = {
-            "01" : "ABS-VDC [$01]",
-            "2C" : "Airbag-SRS [$2C]",
-            "0D" : "Automatic Parking Brake [$0D]",
-            "6E" : "Automatic Transmission [$6E]",
-            "13" : "Audio [$13]",
-            "00" : "CAN Primary network [$00]",
-            "7A" : "ECM Engine Control Module [$7A]",
-            "04" : "EPS Electric Power Steering [$04]",
-            "07" : "HLS Hi Beam Lighting System [$07]",
-            "29" : "HVAC Climate Control [$29]",
-            "70" : "Head Light [$70]",
-            "72" : "Head Light Right [$72]",
-            "71" : "Head Light Left [$71]",
-            "79" : "LNG [$79]",
-            "3F" : "Navigation [$3F]",
-            "58" : "Navigation [$58]",
-            "0E" : "Parking Sonar [$0E]",
-            "51" : "Cluster Meter [$51]",
-            "1C" : "RCU Roof Control Unit [$1C]",
-            "26" : "UCH - BCM [$26]",
-            "27" : "UPC - USM [$27]"
+            "01": "ABS-VDC [$01]",
+            "2C": "Airbag-SRS [$2C]",
+            "0D": "Automatic Parking Brake [$0D]",
+            "6E": "Automatic Transmission [$6E]",
+            "13": "Audio [$13]",
+            "00": "CAN Primary network [$00]",
+            "7A": "ECM Engine Control Module [$7A]",
+            "04": "EPS Electric Power Steering [$04]",
+            "07": "HLS Hi Beam Lighting System [$07]",
+            "29": "HVAC Climate Control [$29]",
+            "70": "Head Light [$70]",
+            "72": "Head Light Right [$72]",
+            "71": "Head Light Left [$71]",
+            "79": "LNG [$79]",
+            "3F": "Navigation [$3F]",
+            "58": "Navigation [$58]",
+            "0E": "Parking Sonar [$0E]",
+            "51": "Cluster Meter [$51]",
+            "1C": "RCU Roof Control Unit [$1C]",
+            "26": "UCH - BCM [$26]",
+            "27": "UPC - USM [$27]"
         }
 
         vehicles = [
@@ -177,10 +178,32 @@ class Ecu_list(gui.QWidget):
 
         stored_ecus = {"Custom" : []}
 
-        custom_files = glob.glob("./json/*.json")
+        custom_files = glob.glob("./json/*.json.targets")
 
         for cs in custom_files:
-            stored_ecus["Custom"].append([cs, "", ""])
+            f = open(cs, "r")
+            jsoncontent = f.read()
+            f.close()
+
+            target = json.loads(jsoncontent)
+
+            if not target:
+                continue
+
+            target = target[0]
+
+            if target['address'] not in ecu_map:
+                grp = "Custom"
+            else:
+                grp = ecu_map[target['address']]
+
+            if not grp in stored_ecus:
+                stored_ecus[grp] = []
+
+            projects = "/".join(target['projects'])
+            name = u' (' + projects + u')'
+
+            stored_ecus[grp].append([cs[:-8][7:], name, target['protocol']])
 
         for ecu in self.ecuscan.ecu_database.targets:
             if ecu.addr not in ecu_map:
@@ -718,10 +741,12 @@ class Main_widget(gui.QMainWindow):
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
         self.treeview_params.clear()
 
+        isxml = True
         ecu_file = None
         if ".json" in ecu_name:
             ecu_file = ecu_name
             ecu_addr = ""
+            isxml = False
         elif ecu_name in self.ecu_scan.ecus:
             ecu = self.ecu_scan.ecus[ecu_name]
         elif ecu_name in self.ecu_scan.approximate_ecus:
@@ -744,6 +769,9 @@ class Main_widget(gui.QMainWindow):
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
+        if isxml:
+            self.requesteditor.enable_view(False)
+            self.dataitemeditor.enable_view(False)
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)

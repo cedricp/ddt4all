@@ -178,9 +178,9 @@ class buttonRequest(gui.QPushButton):
             self.jsondata['rect']['height'] = self.height() * self.uiscale
             self.jsondata['rect']['width'] = self.width() * self.uiscale
 
-class displayValue(gui.QWidget):
+class displayWidget(gui.QWidget):
     def __init__(self, parent, uiscale, ecureq):
-        super(displayValue, self).__init__(parent)
+        super(displayWidget, self).__init__(parent)
         self.uiscale = uiscale
         self.ecurequestsparser = ecureq
         self.ismovable = True
@@ -190,7 +190,7 @@ class displayValue(gui.QWidget):
 
     def resize(self,x ,y):
         oldwidth = self.width()
-        super(displayValue, self).resize(x, y)
+        super(displayWidget, self).resize(x, y)
         newwidth = self.width()
 
         if not self.qlabelval or not self.qlabel:
@@ -203,7 +203,7 @@ class displayValue(gui.QWidget):
         self.update_json()
 
     def move(self, x, y):
-        super(displayValue, self).move(x, y)
+        super(displayWidget, self).move(x, y)
         self.update_json()
 
     def update_json(self):
@@ -366,9 +366,9 @@ class displayValue(gui.QWidget):
         dd.addData(ddata)
         self.jsondata = display
 
-class inputValue(gui.QWidget):
+class inputWidget(gui.QWidget):
     def __init__(self, parent, uiscale, ecureq):
-        super(inputValue, self).__init__(parent)
+        super(inputWidget, self).__init__(parent)
         self.uiscale = uiscale
         self.ecurequestsparser = ecureq
         self.ismovable = True
@@ -378,7 +378,7 @@ class inputValue(gui.QWidget):
 
     def resize(self, x, y):
         oldwidth = self.width()
-        super(inputValue, self).resize(x, y)
+        super(inputWidget, self).resize(x, y)
         newwidth = self.width()
 
         if not self.qlabel or not self.editwidget:
@@ -391,7 +391,7 @@ class inputValue(gui.QWidget):
         self.update_json()
 
     def move(self, x, y):
-        super(inputValue, self).move(x, y)
+        super(inputWidget, self).move(x, y)
         self.update_json()
 
     def update_json(self):

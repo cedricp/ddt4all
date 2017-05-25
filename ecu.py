@@ -646,6 +646,7 @@ class Ecu_file:
             return
 
         if isfile and '.json' in str(data):
+            data = "./json/" + data
             if os.path.exists(data):
                 jsfile = open(data, "r")
                 jsdata = jsfile.read()
@@ -654,6 +655,7 @@ class Ecu_file:
                 # Zipped json here
                 zf = zipfile.ZipFile('json/ecus.zip', mode='r')
                 jsdata = zf.read(data)
+
             ecudict = json.loads(jsdata)
 
             if ecudict.has_key("obd"):
@@ -843,10 +845,10 @@ class Ecu_ident:
         js['supplier_code'] = toascii(self.supplier)
         js['soft_version'] = toascii(self.soft)
         js['version'] = toascii(self.version)
-        js['name'] = toascii(self.name)
+        #js['name'] = toascii(self.name)
         js['group'] = toascii(self.group)
         js['projects'] = [toascii(p) for p in self.projects]
-        js['href'] = toascii(self.href.replace('.xml', '.json'))
+        #js['href'] = toascii(self.href.replace('.xml', '.json'))
         js['protocol'] = toascii(self.protocol)
         js['address'] = toascii(self.addr)
         return js
@@ -887,7 +889,6 @@ class Ecu_database:
                 for target in targets:
                     href = target.getAttribute("href")
                     name = target.getAttribute("Name")
-                    #group = target.getAttribute("group")
                     protnode = target.getElementsByTagName("Protocol")
                     if protnode:
                         protocol = protnode[0].firstChild.nodeValue
@@ -960,14 +961,19 @@ class Ecu_scanner:
 
     def scan(self, progress=None, label=None):
         i = 0
-        options.elm.init_can()
+        if not options.simulation_mode:
+            options.elm.init_can()
         for addr in elm.snat.keys():
             progress.setValue(i)
             self.qapp.processEvents()
             i += 1
-            txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN'})
-            options.elm.start_session_can('10C0')
-
+            if not options.simulation_mode:
+                txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN'})
+                options.elm.start_session_can('10C0')
+            else:
+                txa = addr
+                if addr == "7A": txa = "7E0"
+                rxa = ""
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if txa == "742":
@@ -985,24 +991,27 @@ class Ecu_scanner:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
 
             self.check_ecu(can_response, label, addr, "CAN")
-        options.elm.close_protocol()
+        if not options.simulation_mode:
+            options.elm.close_protocol()
 
     def scan_kwp(self, progress=None, label=None):
         if options.simulation_mode:
             # Test data..
+            # diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
             self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.xml",
-                                                        "KWP2000 FastInit MonoPoint", [])
+                                                        "KWP2000 FastInit MonoPoint", [], "7A")
 
         i = 0
-        options.elm.init_iso()
+        if not options.simulation_mode:
+            options.elm.init_iso()
         for addr in elm.snat.keys():
             progress.setValue(i)
             self.qapp.processEvents()
             i += 1
-            options.elm.set_iso_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
-            options.elm.start_session_iso('10C0')
 
             if not options.simulation_mode:
+                options.elm.set_iso_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
+                options.elm.start_session_iso('10C0')
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
                 continue

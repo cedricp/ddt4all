@@ -57,6 +57,8 @@ class paramWidget(gui.QWidget):
         self.mouseOldY = 0
         self.current_screen = ''
         self.movingwidget = None
+        self.allow_parameters_update = True
+        self.layoutdict = None
 
     def __del__(self):
         # Return to default session
@@ -103,7 +105,6 @@ class paramWidget(gui.QWidget):
 
         target_name = filename + ".targets"
         ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
-        print ecu_ident
 
         js_targets = []
         for ecui in ecu_ident:
@@ -241,7 +242,9 @@ class paramWidget(gui.QWidget):
             self.zoomin_page()
         else:
             self.zoomout_page()
+        self.allow_parameters_update = False
         self.init(self.current_screen)
+        self.allow_parameters_update = True
 
     def zoomin_page(self):
         self.uiscale -= 1
@@ -339,10 +342,9 @@ class paramWidget(gui.QWidget):
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.ecu_send_id)
                 print "Protocol not yet supported : " + self.ecurequestsparser.ecu_protocol
 
-
     def initJSON(self):
         self.layoutdict = None
-        layoutfile = self.ddtfile + ".layout"
+        layoutfile = "./json/" + self.ddtfile + ".layout"
         if os.path.exists(layoutfile):
             jsfile = open(layoutfile, "r")
             jsondata = jsfile.read()
@@ -412,7 +414,6 @@ class paramWidget(gui.QWidget):
                     break
 
     def sendElm(self, command, auto=False):
-        txt = ''
         elm_response = '00 ' * 70
 
         if command.startswith('10'):
@@ -509,12 +510,12 @@ class paramWidget(gui.QWidget):
             displays = self.getChildNodesByName(screen, "Display")
 
             for disp in displays:
-                displaywidget = displaymod.displayValue(self.panel, self.uiscale, self.ecurequestsparser)
+                displaywidget = displaymod.displayWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 displaywidget.initXML(disp, self.displaydict)
         else:
             displays = screen['displays']
             for disp in displays:
-                displaywidget = displaymod.displayValue(self.panel, self.uiscale, self.ecurequestsparser)
+                displaywidget = displaymod.displayWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 displaywidget.initJson(disp, self.displaydict)
 
     def drawButtons(self, screen):
@@ -589,11 +590,11 @@ class paramWidget(gui.QWidget):
         if self.parser == 'xml':
             inputs = self.getChildNodesByName(screen, "Input")
             for inp in inputs:
-                inputwidget = displaymod.inputValue(self.panel, self.uiscale, self.ecurequestsparser)
+                inputwidget = displaymod.inputWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 inputwidget.initXML(inp, self.inputdict)
         else:
             for inp in screen['inputs']:
-                inputwidget = displaymod.inputValue(self.panel, self.uiscale, self.ecurequestsparser)
+                inputwidget = displaymod.inputWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 inputwidget.initJson(inp, self.inputdict)
 
     def buttonClicked(self, txt):
@@ -733,6 +734,9 @@ class paramWidget(gui.QWidget):
         return None
 
     def updateDisplays(self, update_inputs=False):
+        if not self.allow_parameters_update:
+            return
+
         # Begin diag session
         if not options.simulation_mode:
             if self.ecurequestsparser.ecu_protocol == "CAN":
@@ -993,6 +997,7 @@ def dumpDOC(xdoc):
             js_screens[screen_name]['inputs'].append(input_dict)
 
     return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
+
 
 def make_zipfs():
     options.ecus_dir = "./ecus"

@@ -307,7 +307,7 @@ class paramEditor(gui.QFrame):
         self.layoutv.addWidget(self.table)
         self.ecufile = None
         self.current_request = None
-        self.table.cellClicked.connect(self.cell_clicked)
+        self.table.itemSelectionChanged.connect(self.cell_clicked)
 
         self.bitviewer = Bit_viewer()
         self.bitviewer.setFixedHeight(90)
@@ -346,7 +346,12 @@ class paramEditor(gui.QFrame):
     def gotoitem(self, name):
         options.main_window.showDataTab(name)
 
-    def cell_clicked(self, r, c):
+    def cell_clicked(self):
+        if len(self.table.selectedItems()) == 0:
+            return
+
+        r = self.table.selectedItems()[-1].row()
+
         item = self.table.item(r, 0)
         if not item: return
         dataname = unicode(item.text().toUtf8(), encoding="UTF-8")
@@ -556,6 +561,13 @@ class requestEditor(gui.QWidget):
 
         self.requesttable.setSendByteEditor(self.sendbyteeditor)
         self.requesttable.setReceiveByteEditor(self.receivebyteeditor)
+        self.enable_view(False)
+
+    def enable_view(self, enable):
+        children = self.children()
+        for c in children:
+            if isinstance(c, gui.QWidget):
+                c.setEnabled(enable)
 
     def add_request(self):
         ecu_datareq = {}
@@ -583,6 +595,7 @@ class requestEditor(gui.QWidget):
     def set_ecu(self, ecu):
         self.ecurequestsparser = ecu
         self.init()
+        self.enable_view(True)
 
 
 class numericListPanel(gui.QFrame):
@@ -891,13 +904,20 @@ class dataEditor(gui.QWidget):
 
         self.typecombo.currentIndexChanged.connect(self.switchType)
 
-        self.datatable.cellClicked.connect(self.changeData)
+        self.datatable.itemSelectionChanged.connect(self.changeData)
+        self.enable_view(False)
+
+    def enable_view(self, enable):
+        children = self.children()
+        for c in children:
+            if isinstance(c, gui.QWidget):
+                c.setEnabled(enable)
 
     def edititem(self, name):
         items = self.datatable.findItems(name, core.Qt.MatchExactly)
         if len(items):
             self.datatable.selectRow(items[0].row())
-            self.changeData(items[0].row(), 0)
+            self.changeData()
 
     def new_request(self):
         if not self.ecurequestsparser:
@@ -957,7 +977,13 @@ class dataEditor(gui.QWidget):
         self.currentecudata.comment = comment
         self.currentWidget.validate()
 
-    def changeData(self, r, c):
+    def changeData(self):
+        if len(self.datatable.selectedItems()) == 0:
+            return
+
+        r = self.datatable.selectedItems()[-1].row()
+
+
         dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
         self.currentecudata = self.ecurequestsparser.data[dataname]
         self.descpriptioneditor.setText(self.currentecudata.comment)
@@ -1046,3 +1072,5 @@ class dataEditor(gui.QWidget):
         self.ecurequestsparser = ecu
         self.switchType(3)
         self.init_table()
+        self.enable_view(True)
+
