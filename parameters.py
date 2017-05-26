@@ -28,6 +28,7 @@ def toascii(str):
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
+        self.layoutdict = None
         self.main_protocol_status = prot_status
         self.scrollarea = parent
         self.refreshtime = 100
@@ -58,7 +59,6 @@ class paramWidget(gui.QWidget):
         self.current_screen = ''
         self.movingwidget = None
         self.allow_parameters_update = True
-        self.layoutdict = None
 
     def __del__(self):
         # Return to default session
@@ -178,15 +178,42 @@ class paramWidget(gui.QWidget):
             self.layoutdict['screens'][screenname]['displays'].append(display_dict)
         self.init(screenname)
 
-    def mousePressEvent(self, event):
-        if event.button() == core.Qt.LeftButton:
-            self.sliding = True
-            self.mouseOldX = event.globalX()
-            self.mouseOldY = event.globalY()
+    def addButton(self):
+        if self.parser != "json":
+            self.logview.append("<font color=red>To be able to edit your screen, first export it in JSON format</font>")
             return
 
+        button_dict = {}
+        button_dict['text'] = "Newbutton"
+        button_dict['color'] = "rgb(200,200,200)"
+        button_dict['width'] = 3000
+        button_dict['rect'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
+        button_dict['font'] = {'name': "Arial", 'size': 12, 'bold': False, 'italic': False}
+        button_dict['messages'] = []
+
+        self.layoutdict['screens'][self.current_screen]['buttons'].append(button_dict)
+
+        self.init(self.current_screen)
+
+    def addLabel(self):
+        pass
+
+    def mousePressEvent(self, event):
         if options.simulation_mode:
             if event.button() == core.Qt.RightButton:
+                popmenu = gui.QMenu(self)
+                addbuttonaction = gui.QAction("Add button", popmenu)
+                addlabelaction = gui.QAction("Add label", popmenu)
+
+                popmenu.addAction(addbuttonaction)
+                popmenu.addAction(addlabelaction)
+
+                addbuttonaction.triggered.connect(self.addButton)
+                addlabelaction.triggered.connect(self.addLabel)
+
+                popmenu.exec_(gui.QCursor.pos())
+
+            if event.button() == core.Qt.LeftButton:
                 widget = gui.QApplication.widgetAt(gui.QCursor.pos())
 
                 found = False
@@ -203,6 +230,13 @@ class paramWidget(gui.QWidget):
                 self.mouseOldX = event.globalX()
                 self.mouseOldY = event.globalY()
                 self.movingwidget = widget
+
+        else:
+            if event.button() == core.Qt.LeftButton:
+                self.sliding = True
+                self.mouseOldX = event.globalX()
+                self.mouseOldY = event.globalY()
+                return
 
     def mouseReleaseEvent(self, event):
         if options.simulation_mode:

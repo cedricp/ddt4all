@@ -10,7 +10,6 @@ class labelWidget(gui.QLabel):
         self.ismovable = True
         self.uiscale = uiscale
 
-
     def change_ratio(self, x):
         return
 
@@ -113,6 +112,9 @@ class screenWidget(gui.QFrame):
         super(screenWidget, self).resize(x, y)
         self.update_json()
 
+    def lock(self, lock):
+        pass
+
     def move(self, x, y):
         return
 
@@ -161,7 +163,14 @@ class buttonRequest(gui.QPushButton):
         self.setStyleSheet("background: red; color: black")
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         self.butname = text + "_" + str(self.count)
+        jsdata['uniquename'] = self.butname
         self.jsondata = jsdata
+
+    def mousePressEvent(self, event):
+        if options.simulation_mode:
+            self.parent().mousePressEvent(event)
+            return
+        return super(buttonRequest, self).mousePressEvent(event)
 
     def resize(self, x, y):
         super(buttonRequest, self).resize(x, y)
@@ -187,6 +196,9 @@ class displayWidget(gui.QWidget):
         self.qlabel = None
         self.qlabelval = None
         self.jsondata = None
+
+    def lock(self, lock):
+        pass
 
     def resize(self,x ,y):
         oldwidth = self.width()
@@ -375,6 +387,10 @@ class inputWidget(gui.QWidget):
         self.qlabel = None
         self.editwidget = None
         self.jsondata = None
+        self.locked = False
+
+    def lock(self, lock):
+        self.locked = lock
 
     def resize(self, x, y):
         oldwidth = self.width()

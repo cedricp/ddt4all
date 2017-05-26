@@ -1074,3 +1074,104 @@ class dataEditor(gui.QWidget):
         self.init_table()
         self.enable_view(True)
 
+class buttonData(gui.QFrame):
+    def __init__(self, parent=None):
+        super(buttonData, self).__init__(parent)
+        self.setFrameStyle(gui.QFrame.Sunken)
+        self.setFrameShape(gui.QFrame.Box)
+
+        layout = gui.QVBoxLayout()
+        self.requesttable = gui.QTableWidget()
+        layout.addWidget(self.requesttable)
+
+        layoutbar = gui.QHBoxLayout()
+        self.requestcombo = gui.QComboBox()
+        self.requestaddbutton = gui.QPushButton("Add request")
+        layoutbar.addWidget(self.requestcombo)
+        layoutbar.addWidget(self.requestaddbutton)
+
+        layout.addLayout(layoutbar)
+
+        self.setLayout(layout)
+
+        self.requesttable.setColumnCount(2)
+        self.requesttable.verticalHeader().hide()
+        self.requesttable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
+        self.requesttable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
+        self.requesttable.setShowGrid(False)
+
+    def init(self, ecureq):
+        num_reqs = len(ecureq.requests)
+        self.requestcombo.clear()
+
+        for req in sorted(ecureq.requests.keys()):
+            if ecureq.requests[req].manualsend:
+                self.requestcombo.addItem(req)
+
+
+class buttonEditor(gui.QWidget):
+    """Main container for button editor"""
+    def __init__(self, parent=None):
+        super(buttonEditor, self).__init__(parent)
+        self.ecurequestsparser = None
+
+        self.layout = None
+        self.layouth = gui.QHBoxLayout()
+        self.buttontable = gui.QTableWidget()
+        self.layoutv = gui.QVBoxLayout()
+
+        self.layouth.addWidget(self.buttontable)
+        self.layouth.addLayout(self.layoutv)
+
+        self.buttondata = buttonData()
+        self.layoutv.addWidget(self.buttondata)
+
+        self.setLayout(self.layouth)
+
+        self.buttontable.setFixedWidth(250)
+        self.buttontable.setColumnCount(2)
+        self.buttontable.verticalHeader().hide()
+        self.buttontable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
+        self.buttontable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
+        self.buttontable.setShowGrid(False)
+        self.buttontable.itemSelectionChanged.connect(self.button_changed)
+
+    def button_changed(self):
+        selitems = self.buttontable.selectedItems()
+        if not len(selitems):
+            return
+
+        current_row = selitems[-1].row()
+        current_item_name = unicode(self.buttontable.item(current_row, 1).text().toUtf8(), encoding="UTF-8")
+        print current_item_name
+
+    def set_ecu(self, ecu):
+        self.ecurequestsparser = ecu
+        self.enable_view(True)
+
+    def enable_view(self, enable):
+        children = self.children()
+        for c in children:
+            if isinstance(c, gui.QWidget):
+                c.setEnabled(enable)
+
+    def set_layout(self, layout):
+        self.layout = layout
+        self.init()
+
+    def init(self):
+        if self.ecurequestsparser:
+            self.buttondata.init(self.ecurequestsparser)
+
+        num_buttons = len(self.layout['buttons'])
+        self.buttontable.setRowCount(num_buttons)
+
+        count = 0
+        for button in self.layout['buttons']:
+            self.buttontable.setItem(count, 0, gui.QTableWidgetItem(button['text']))
+            self.buttontable.setItem(count, 1, gui.QTableWidgetItem(button['uniquename']))
+            count += 1
+
+        headerstrings = core.QString("Button name;Unique name").split(";")
+        self.buttontable.setHorizontalHeaderLabels(headerstrings)
+        self.buttontable.resizeColumnsToContents()

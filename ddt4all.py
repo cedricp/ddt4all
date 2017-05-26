@@ -309,10 +309,12 @@ class Main_widget(gui.QMainWindow):
 
         self.tabbedview.addTab(self.scrollview, "Screen")
         if options.simulation_mode:
+            self.buttonEditor = dataeditor.buttonEditor()
             self.requesteditor = dataeditor.requestEditor()
             self.dataitemeditor = dataeditor.dataEditor()
             self.tabbedview.addTab(self.requesteditor, "Requests")
             self.tabbedview.addTab(self.dataitemeditor, "Data")
+            self.tabbedview.addTab(self.buttonEditor, "Buttons")
 
         screen_widget = gui.QWidget()
         self.treedock_widget = gui.QDockWidget(self)
@@ -731,7 +733,12 @@ class Main_widget(gui.QMainWindow):
         self.autorefresh.setChecked(False)
         options.auto_refresh = False
         self.refresh.setEnabled(True)
+
+        if options.simulation_mode and self.paramview.layoutdict:
+            self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
+
         self.paramview.setRefreshTime(self.refreshtimebox.value())
+
 
     def changeECU(self, index):
         self.diagaction.setEnabled(False)
@@ -769,9 +776,11 @@ class Main_widget(gui.QMainWindow):
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
+            self.buttonEditor.set_ecu(self.paramview.ecurequestsparser)
         if isxml:
             self.requesteditor.enable_view(False)
             self.dataitemeditor.enable_view(False)
+            self.buttonEditor.enable_view(False)
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)
