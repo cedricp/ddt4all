@@ -244,6 +244,7 @@ class requestTable(gui.QTableWidget):
 
         self.sortItems(0, core.Qt.AscendingOrder)
         self.resizeColumnsToContents()
+        self.resizeRowsToContents()
         self.cellChanged.connect(self.cellModified)
 
 class paramEditor(gui.QFrame):
@@ -469,6 +470,7 @@ class paramEditor(gui.QFrame):
             count += 1
 
         self.table.resizeColumnsToContents()
+        self.table.resizeRowsToContents()
         self.table.sortItems(1)
         self.bitviewer.init(int(bytescount)+2)
 
@@ -704,6 +706,7 @@ class numericListPanel(gui.QFrame):
         headerstrings = core.QString("Value;Text").split(";")
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
+        self.itemtable.resizeRowsToContents()
         self.itemtable.sortItems(0, core.Qt.AscendingOrder)
         #self.itemtable.setSortingEnabled(True)
 
@@ -1065,6 +1068,7 @@ class dataEditor(gui.QWidget):
         headerstrings = core.QString("Data name;Description").split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
+        self.datatable.resizeRowsToContents()
         self.datatable.sortByColumn(0)
         self.connect_table()
 
@@ -1074,21 +1078,49 @@ class dataEditor(gui.QWidget):
         self.init_table()
         self.enable_view(True)
 
+
 class buttonData(gui.QFrame):
     def __init__(self, parent=None):
         super(buttonData, self).__init__(parent)
         self.setFrameStyle(gui.QFrame.Sunken)
         self.setFrameShape(gui.QFrame.Box)
+        self.buttonlayout = None
+        self.ecurequests = None
+        self.currentbuttonparams = None
+        self.currentbuttonuniquename = None
+        self.is_screen = None
+        self.layout = None
 
         layout = gui.QVBoxLayout()
         self.requesttable = gui.QTableWidget()
         layout.addWidget(self.requesttable)
 
         layoutbar = gui.QHBoxLayout()
+        self.delaybox = gui.QSpinBox()
+        self.delaybox.setRange(0, 100000)
+        self.delaybox.setSingleStep(50)
+        self.delaybox.setFixedWidth(80)
         self.requestcombo = gui.QComboBox()
-        self.requestaddbutton = gui.QPushButton("Add request")
+        self.requestaddbutton = gui.QPushButton("Add")
+        self.requestdelbutton = gui.QPushButton("Del")
+        self.requestrefbutton = gui.QPushButton("Refresh")
+        self.requestmoveupbutton = gui.QPushButton("Move up")
+        layoutbar.addWidget(self.delaybox)
         layoutbar.addWidget(self.requestcombo)
+        layoutbar.addWidget(self.requestmoveupbutton)
         layoutbar.addWidget(self.requestaddbutton)
+        layoutbar.addWidget(self.requestdelbutton)
+        layoutbar.addWidget(self.requestrefbutton)
+
+        self.requestrefbutton.setFixedWidth(80)
+        self.requestdelbutton.setFixedWidth(60)
+        self.requestaddbutton.setFixedWidth(60)
+        self.requestmoveupbutton.setFixedWidth(70)
+
+        self.requestrefbutton.clicked.connect(self.refresh_request)
+        self.requestdelbutton.clicked.connect(self.delete_request)
+        self.requestaddbutton.clicked.connect(self.add_request)
+        self.requestmoveupbutton.clicked.connect(self.move_up)
 
         layout.addLayout(layoutbar)
 
@@ -1100,13 +1132,104 @@ class buttonData(gui.QFrame):
         self.requesttable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         self.requesttable.setShowGrid(False)
 
-    def init(self, ecureq):
-        num_reqs = len(ecureq.requests)
+    def clear(self):
+        self.requesttable.clear()
+
+    def refresh_request(self):
+        if not self.ecurequests or not self.buttonlayout:
+            return
+        self.init(self.ecurequests, self.buttonlayout)
+
+    def init(self, ecureq, layout):
+        self.buttonlayout = layout['buttons']
+        self.layout = layout
+        self.ecurequests = ecureq
         self.requestcombo.clear()
 
         for req in sorted(ecureq.requests.keys()):
             if ecureq.requests[req].manualsend:
                 self.requestcombo.addItem(req)
+
+    def move_up(self):
+        items = self.requesttable.selectedItems()
+        if len(items) == 0:
+            return
+
+        currentrowidx = items[-1].row()
+
+        if currentrowidx < 1:
+            return
+
+        params = self.currentbuttonparams.pop(currentrowidx)
+        self.currentbuttonparams.insert(currentrowidx - 1, params)
+        self.init_table(self.currentbuttonuniquename, self.is_screen)
+        self.requesttable.selectRow(currentrowidx - 1)
+
+    def delete_request(self):
+        items = self.requesttable.selectedItems()
+        if len(items) == 0:
+            return
+
+        currentrowidx = items[-1].row()
+        self.currentbuttonparams.pop(currentrowidx)
+        self.init_table(self.currentbuttonuniquename, self.is_screen)
+
+    def add_request(self):
+        if self.currentbuttonparams is None:
+            return
+
+        delay = self.delaybox.value()
+        request = unicode(self.requestcombo.currentText().toUtf8(), encoding="UTF-8")
+
+        smap = {
+            'Delay': str(delay),
+            'RequestName': request
+        }
+
+        self.currentbuttonparams.append(smap)
+        self.init_table(self.currentbuttonuniquename, self.is_screen)
+
+    def init_table(self, itemname, is_screen):
+        self.is_screen = is_screen
+        self.requesttable.clearSelection()
+        self.requesttable.clear()
+        self.currentbuttonparams = None
+        self.currentbuttonuniquename = None
+
+        if not self.is_screen:
+            count = 0
+            for butreq in self.buttonlayout:
+                if butreq['uniquename'] == itemname:
+                    self.currentbuttonuniquename = itemname
+                    sendparams = butreq['send']
+                    self.requesttable.setRowCount(len(sendparams))
+                    self.currentbuttonparams = sendparams
+                    for sendparam in sendparams:
+                        itemreq = gui.QTableWidgetItem(sendparam['RequestName'])
+                        itemdelay = gui.QTableWidgetItem(sendparam['Delay'])
+                        self.requesttable.setItem(count, 1, itemreq)
+                        self.requesttable.setItem(count, 0, itemdelay)
+                        itemreq.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
+                        itemdelay.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
+                        count += 1
+        else:
+            count = 0
+            sendparams = self.layout['presend']
+            self.requesttable.setRowCount(len(sendparams))
+            self.currentbuttonparams = sendparams
+            for sendparam in sendparams:
+                itemreq = gui.QTableWidgetItem(sendparam['RequestName'])
+                itemdelay = gui.QTableWidgetItem(sendparam['Delay'])
+                self.requesttable.setItem(count, 1, itemreq)
+                self.requesttable.setItem(count, 0, itemdelay)
+                itemreq.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
+                itemdelay.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
+                count += 1
+
+        headerstrings = core.QString("Delay;Request").split(";")
+        self.requesttable.setHorizontalHeaderLabels(headerstrings)
+        self.requesttable.resizeColumnsToContents()
+        self.requesttable.resizeRowsToContents()
 
 
 class buttonEditor(gui.QWidget):
@@ -1134,16 +1257,37 @@ class buttonEditor(gui.QWidget):
         self.buttontable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.buttontable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         self.buttontable.setShowGrid(False)
-        self.buttontable.itemSelectionChanged.connect(self.button_changed)
+        self.buttontable.itemSelectionChanged.connect(self.selection_changed)
+        self.enable_view(False)
 
-    def button_changed(self):
+    def name_changed(self, r, c):
+        if r == 0:
+            return
+
+        currentitem = self.buttontable.item(r, 0)
+
+        if not currentitem:
+            return
+
+        idx = currentitem.row() - 1
+        buttondata = self.layout['buttons'][idx]
+        textdata = unicode(currentitem.text().toUtf8(), encoding="UTF-8")
+
+        buttondata['text'] = textdata
+        buttondata['uniquename'] = textdata + u"_" + unicode(str(idx))
+        self.init()
+        if options.main_window:
+            options.main_window.paramview.reinitScreen()
+
+    def selection_changed(self):
         selitems = self.buttontable.selectedItems()
         if not len(selitems):
             return
 
         current_row = selitems[-1].row()
+        is_screen = current_row == 0
         current_item_name = unicode(self.buttontable.item(current_row, 1).text().toUtf8(), encoding="UTF-8")
-        print current_item_name
+        self.buttondata.init_table(current_item_name, is_screen)
 
     def set_ecu(self, ecu):
         self.ecurequestsparser = ecu
@@ -1160,18 +1304,38 @@ class buttonEditor(gui.QWidget):
         self.init()
 
     def init(self):
+        try:
+            self.buttontable.cellChanged.disconnect(self.name_changed)
+        except:
+            pass
+
+        self.buttontable.clearSelection()
+        self.buttondata.clear()
+
         if self.ecurequestsparser:
-            self.buttondata.init(self.ecurequestsparser)
+            self.buttondata.init(self.ecurequestsparser, self.layout)
 
         num_buttons = len(self.layout['buttons'])
-        self.buttontable.setRowCount(num_buttons)
+        self.buttontable.setRowCount(num_buttons + 1)
 
-        count = 0
+        scitem = gui.QTableWidgetItem("Screen initialization")
+        noitem = gui.QTableWidgetItem("Requests to send before screen drawing")
+        self.buttontable.setItem(0, 0, scitem)
+        self.buttontable.setItem(0, 1, noitem)
+        scitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
+        noitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
+
+        count = 1
         for button in self.layout['buttons']:
+            uniquenameitem = gui.QTableWidgetItem(button['uniquename'])
             self.buttontable.setItem(count, 0, gui.QTableWidgetItem(button['text']))
-            self.buttontable.setItem(count, 1, gui.QTableWidgetItem(button['uniquename']))
+            self.buttontable.setItem(count, 1, uniquenameitem)
+            uniquenameitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
             count += 1
 
         headerstrings = core.QString("Button name;Unique name").split(";")
         self.buttontable.setHorizontalHeaderLabels(headerstrings)
         self.buttontable.resizeColumnsToContents()
+        self.buttontable.resizeRowsToContents()
+        self.buttontable.selectRow(0)
+        self.buttontable.cellChanged.connect(self.name_changed)

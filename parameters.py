@@ -29,6 +29,7 @@ class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
         self.layoutdict = None
+        self.targetsdata = None
         self.main_protocol_status = prot_status
         self.scrollarea = parent
         self.refreshtime = 100
@@ -104,16 +105,22 @@ class paramWidget(gui.QWidget):
             jsfile.close()
 
         target_name = filename + ".targets"
-        ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
+        if self.targetsdata:
+            js = json.dumps(self.targetsdata, indent=1)
+            jsfile = open(target_name, "w")
+            jsfile.write(js)
+            jsfile.close()
+        else:
+            ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
 
-        js_targets = []
-        for ecui in ecu_ident:
-            js_targets.append(ecui.dump())
+            js_targets = []
+            for ecui in ecu_ident:
+                js_targets.append(ecui.dump())
 
-        js = json.dumps(js_targets, indent=1)
-        jsfile = open(target_name, "w")
-        jsfile.write(js)
-        jsfile.close()
+            js = json.dumps(js_targets, indent=1)
+            jsfile = open(target_name, "w")
+            jsfile.write(js)
+            jsfile.close()
 
     def renameCategory(self, oldname, newname):
         if oldname not in self.categories:
@@ -133,7 +140,6 @@ class paramWidget(gui.QWidget):
                 cat.remove(oldname)
                 cat.append(newname)
                 break
-
 
     def createCategory(self, name):
         self.categories[name] = []
@@ -185,15 +191,17 @@ class paramWidget(gui.QWidget):
 
         button_dict = {}
         button_dict['text'] = "Newbutton"
+        button_dict['uniquename'] = "Newbutton_0"
         button_dict['color'] = "rgb(200,200,200)"
         button_dict['width'] = 3000
         button_dict['rect'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
         button_dict['font'] = {'name': "Arial", 'size': 12, 'bold': False, 'italic': False}
         button_dict['messages'] = []
+        button_dict['send'] = []
 
         self.layoutdict['screens'][self.current_screen]['buttons'].append(button_dict)
 
-        self.init(self.current_screen)
+        self.reinitScreen()
 
     def addLabel(self):
         pass
@@ -379,6 +387,7 @@ class paramWidget(gui.QWidget):
     def initJSON(self):
         self.layoutdict = None
         layoutfile = "./json/" + self.ddtfile + ".layout"
+        targetsfile = "./json/" + self.ddtfile + ".targets"
         if os.path.exists(layoutfile):
             jsfile = open(layoutfile, "r")
             jsondata = jsfile.read()
@@ -386,6 +395,13 @@ class paramWidget(gui.QWidget):
         else:
             zf = zipfile.ZipFile("json/layouts.zip", mode='r')
             jsondata = zf.read(self.ddtfile)
+
+        if os.path.exists(targetsfile):
+            jsfile = open(targetsfile, "r")
+            self.targetsdata = json.loads(jsfile.read())
+            jsfile.close()
+        else:
+            self.targetsdata = None
 
         self.layoutdict = json.loads(jsondata)
 
@@ -504,6 +520,9 @@ class paramWidget(gui.QWidget):
                 nodes.append(node)
         return nodes
 
+    def reinitScreen(self):
+        self.init(self.current_screen)
+
     def initScreen(self, screen_name):
         self.current_screen = screen_name
         self.presend = []
@@ -603,9 +622,9 @@ class paramWidget(gui.QWidget):
 
                 if 'send' in button:
                     sendlist = button['send']
-                    self.button_requests[qbutton.butname] = sendlist
+                    self.button_requests[qbutton.uniquename] = sendlist
 
-                qbutton.clicked.connect(lambda state, btn=qbutton.butname: self.buttonClicked(btn))
+                qbutton.clicked.connect(lambda state, btn=qbutton.uniquename: self.buttonClicked(btn))
 
     def drawLabels(self, screen):
         if self.parser == 'xml':
@@ -781,8 +800,8 @@ class paramWidget(gui.QWidget):
         # <Screen> <Send/> <Screen/> tag management
         # Manage pre send commands
         for sendcom in self.panel.presend:
-            delay = float(sendcom[0])
-            req_name = sendcom[1]
+            delay = float(sendcom['Delay'])
+            req_name = sendcom['RequestName']
 
             time.sleep(delay / 1000.)
             request = self.getRequest(self.ecurequestsparser.requests, req_name)
@@ -955,7 +974,7 @@ def dumpDOC(xdoc):
         for elem in getChildNodesByName(screen, u"Send"):
             delay = elem.getAttribute('Delay')
             req_name = toascii(elem.getAttribute('RequestName'))
-            presend.append((delay, req_name))
+            presend.append({"Delay": delay, "RequestName": req_name})
         js_screens[screen_name]['presend'] = presend
 
         labels = getChildNodesByName(screen, "Label")
@@ -985,9 +1004,12 @@ def dumpDOC(xdoc):
 
         buttons = getChildNodesByName(screen, "Button")
         js_screens[screen_name]['buttons'] = []
+        count = 0
         for button in buttons:
             button_dict = {}
-            button_dict['text'] = toascii(button.getAttribute("Text"))
+            txt = toascii(button.getAttribute("Text"))
+            button_dict['text'] = txt
+            button_dict['uniquename'] = txt + "_%i" % count
             button_dict['rect'] = getRectangleXML(getChildNodesByName(button, "Rectangle")[0])
             button_dict['font'] = getFontXML(button)
 
@@ -1012,6 +1034,7 @@ def dumpDOC(xdoc):
                 button_dict['send'] = sendlist
 
             js_screens[screen_name]['buttons'].append(button_dict)
+            count += 1
 
         inputs = getChildNodesByName(screen, "Input")
         js_screens[screen_name]['inputs'] = []

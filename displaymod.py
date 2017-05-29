@@ -98,7 +98,7 @@ class screenWidget(gui.QFrame):
         for elem in getChildNodesByName(xmldata, u"Send"):
             delay = elem.getAttribute('Delay')
             req_name = elem.getAttribute('RequestName')
-            self.presend.append((delay, req_name))
+            self.presend.append({'Delay': delay, 'RequestName': req_name})
 
     def initJson(self, jsdata):
         self.screen_width = int(jsdata['width']) / self.uiscale
@@ -134,6 +134,7 @@ class buttonRequest(gui.QPushButton):
         self.count = count
         self.messages = []
         self.butname = ""
+        self.uniquename = ""
         self.jsondata = None
 
     def change_ratio(self, x):
@@ -162,8 +163,8 @@ class buttonRequest(gui.QPushButton):
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
         self.setStyleSheet("background: red; color: black")
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-        self.butname = text + "_" + str(self.count)
-        jsdata['uniquename'] = self.butname
+        self.butname = jsdata['text']
+        self.uniquename = jsdata['uniquename']
         self.jsondata = jsdata
 
     def mousePressEvent(self, event):

@@ -188,22 +188,25 @@ class Ecu_list(gui.QWidget):
             target = json.loads(jsoncontent)
 
             if not target:
-                continue
-
-            target = target[0]
-
-            if target['address'] not in ecu_map:
                 grp = "Custom"
+                projects_list = []
+                protocol = ''
             else:
-                grp = ecu_map[target['address']]
+                target = target[0]
+                protocol = target['protocol']
+                projects_list = target['projects']
+                if target['address'] not in ecu_map:
+                    grp = "Custom"
+                else:
+                    grp = ecu_map[target['address']]
 
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
 
-            projects = "/".join(target['projects'])
+            projects = "/".join(projects_list)
             name = u' (' + projects + u')'
 
-            stored_ecus[grp].append([cs[:-8][7:], name, target['protocol']])
+            stored_ecus[grp].append([cs[:-8][7:], name, protocol])
 
         for ecu in self.ecuscan.ecu_database.targets:
             if ecu.addr not in ecu_map:
@@ -665,17 +668,23 @@ class Main_widget(gui.QMainWindow):
     def newEcu(self):
         filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json",
                                                    "*.json")
-        filename = unicode(filename.toUtf8(), encoding="UTF-8")
+
+        basename = os.path.basename(unicode(filename.toUtf8(), encoding="UTF-8"))
+        filename = os.path.join("./json", basename)
         ecufile = ecu.Ecu_file(None)
         layout = open(filename + ".layout", "w")
         layout.write('{"screens": {}, "categories":{"Category":[]} }')
         layout.close()
 
+        targets = open(filename + ".targets", "w")
+        targets.write('[]')
+        targets.close()
+
         layout = open(filename, "w")
         layout.write(ecufile.dumpJson())
         layout.close()
 
-        item = gui.QListWidgetItem(filename)
+        item = gui.QListWidgetItem(basename)
         self.treeview_ecu.addItem(item)
 
     def saveEcu(self):
@@ -735,7 +744,8 @@ class Main_widget(gui.QMainWindow):
         self.refresh.setEnabled(True)
 
         if options.simulation_mode and self.paramview.layoutdict:
-            self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
+            if screen in self.paramview.layoutdict['screens']:
+                self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
 
         self.paramview.setRefreshTime(self.refreshtimebox.value())
 
