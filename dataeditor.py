@@ -35,7 +35,7 @@ class Bit_container(gui.QFrame):
         self.layout.addLayout(cblayout)
         self.setLayout(self.layout)
 
-    def set_byte(self, byte):
+    def set_byte_value(self, byte):
         if 'L' in byte:
             byte = byte.replace('L', '')
 
@@ -45,6 +45,17 @@ class Bit_container(gui.QFrame):
                 self.checkboxes[i].setChecked(True)
             else:
                 self.checkboxes[i].setChecked(False)
+
+    def set_byte(self, byte):
+        if 'L' in byte:
+            byte = byte.replace('L', '')
+
+        binary = bin(int("0x" + byte, 16))[2:].zfill(8)
+        for i in range(8):
+            if binary[i] == "1":
+                self.checkboxes[i].setStyleSheet("background-color:#00FF00;")
+            else:
+                self.checkboxes[i].setStyleSheet("background-color:#FFFFFF;")
 
 
 class Bit_viewer(gui.QScrollArea):
@@ -70,6 +81,17 @@ class Bit_viewer(gui.QScrollArea):
 
         self.mainwidget.setLayout(self.layout)
         self.setWidget(self.mainwidget)
+
+    def set_bytes_value(self, byte_list):
+        num = len(byte_list)
+
+        for i in range(num):
+            if i >= len(self.bc):
+                break
+            self.bc[i].set_byte_value(byte_list[i])
+
+        for i in range(num, len(self.bc)):
+            self.bc[i].set_byte_value("00")
 
     def set_bytes(self, byte_list):
         num = len(byte_list)
@@ -164,7 +186,7 @@ class requestTable(gui.QTableWidget):
         self.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         self.verticalHeader().hide()
-        self.setShowGrid(False)
+        #self.setShowGrid(False)
         self.currentreq = None
 
     def cellModified(self, r, c):
@@ -252,6 +274,7 @@ class paramEditor(gui.QFrame):
     def __init__(self, issend=True, parent=None):
         super(paramEditor, self).__init__(parent)
         self.send = issend
+        self.currentdataitem = None
         self.setFrameStyle(gui.QFrame.Sunken)
         self.setFrameShape(gui.QFrame.Box)
         self.layoutv = gui.QVBoxLayout()
@@ -304,7 +327,7 @@ class paramEditor(gui.QFrame):
         self.table.verticalHeader().hide()
         self.table.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.table.setSelectionMode(gui.QAbstractItemView.SingleSelection)
-        self.table.setShowGrid(False)
+        #self.table.setShowGrid(False)
         self.layoutv.addWidget(self.table)
         self.ecufile = None
         self.current_request = None
@@ -356,7 +379,9 @@ class paramEditor(gui.QFrame):
         item = self.table.item(r, 0)
         if not item: return
         dataname = unicode(item.text().toUtf8(), encoding="UTF-8")
+        self.currentdataitem = dataname
         self.update_bitview(dataname)
+        self.update_bitview_value(dataname)
 
     def update_bitview(self, dataname):
         bytes = self.current_request.minbytes
@@ -372,13 +397,16 @@ class paramEditor(gui.QFrame):
 
         bitscount = ecudata.bitscount
         valuetosend = hex(int("0b" + str("1" * bitscount), 2))[2:]
-
-        if "L" in valuetosend:
-            valuetosend = valuetosend.replace("L", "")
+        valuetosend = valuetosend.replace("L", "")
 
         bytesarray = ["00" for a in range(bytes)]
         bytesarray = ecudata.setValue(valuetosend, bytesarray, dataitem, self.current_request.endian, True)
         self.bitviewer.set_bytes(bytesarray)
+
+    def update_bitview_value(self, dataname):
+        bytestosend = str(unicode(self.inputreq.text().toUtf8(), encoding="UTF8"))
+        byteslisttosend = [bytestosend[a*2:a*2+2] for a in range(len(bytestosend ) / 2)]
+        self.bitviewer.set_bytes_value(byteslisttosend)
 
     def set_ecufile(self, ef):
         self.ecufile = ef
@@ -392,6 +420,7 @@ class paramEditor(gui.QFrame):
     def init(self, req):
         self.table.clear()
         self.data_list.clear()
+        self.currentdataitem = None
 
         if self.send:
             self.inputreq.setText(req.sentbytes)
@@ -493,15 +522,21 @@ class paramEditor(gui.QFrame):
             di.endian = "Little"
         elif slf.currentText() == "Big":
             di.endian = "Big"
-        self.update_bitview(di.name)
+        self.currentdataitem = di.name
+        self.update_bitview(self.currentdataitem)
+        self.update_bitview_value(self.currentdataitem)
 
     def start_byte_changed(self, di, slf):
         di.firstbyte = slf.value()
-        self.update_bitview(di.name)
+        self.currentdataitem = di.name
+        self.update_bitview(self.currentdataitem)
+        self.update_bitview_value(self.currentdataitem)
 
     def bit_offset_changed(self, di, slf):
         di.bitoffset = slf.value()
-        self.update_bitview(di.name)
+        self.currentdataitem = di.name
+        self.update_bitview(self.currentdataitem)
+        self.update_bitview_value(self.currentdataitem)
 
     def request_changed(self):
         if not self.current_request:
@@ -519,6 +554,9 @@ class paramEditor(gui.QFrame):
 
         if len(text) % 2 == 1:
             return
+
+        if self.currentdataitem:
+            self.update_bitview_value(self.currentdataitem)
 
         self.inputreq.setStyleSheet("background-color: green")
         if self.send:
@@ -868,7 +906,7 @@ class dataEditor(gui.QWidget):
         self.datatable.verticalHeader().hide()
         self.datatable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.datatable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
-        self.datatable.setShowGrid(False)
+        #self.datatable.setShowGrid(False)
 
         self.layouth.addWidget(self.datatable)
 
@@ -1105,22 +1143,27 @@ class buttonData(gui.QFrame):
         self.requestdelbutton = gui.QPushButton("Del")
         self.requestrefbutton = gui.QPushButton("Refresh")
         self.requestmoveupbutton = gui.QPushButton("Move up")
+        self.requestcheckbutton = gui.QPushButton("Check")
+
         layoutbar.addWidget(self.delaybox)
         layoutbar.addWidget(self.requestcombo)
         layoutbar.addWidget(self.requestmoveupbutton)
         layoutbar.addWidget(self.requestaddbutton)
         layoutbar.addWidget(self.requestdelbutton)
         layoutbar.addWidget(self.requestrefbutton)
+        layoutbar.addWidget(self.requestcheckbutton)
 
         self.requestrefbutton.setFixedWidth(80)
         self.requestdelbutton.setFixedWidth(60)
         self.requestaddbutton.setFixedWidth(60)
         self.requestmoveupbutton.setFixedWidth(70)
+        self.requestcheckbutton.setFixedWidth(80)
 
         self.requestrefbutton.clicked.connect(self.refresh_request)
         self.requestdelbutton.clicked.connect(self.delete_request)
         self.requestaddbutton.clicked.connect(self.add_request)
         self.requestmoveupbutton.clicked.connect(self.move_up)
+        self.requestcheckbutton.clicked.connect(self.check_data)
 
         layout.addLayout(layoutbar)
 
@@ -1130,7 +1173,46 @@ class buttonData(gui.QFrame):
         self.requesttable.verticalHeader().hide()
         self.requesttable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.requesttable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
-        self.requesttable.setShowGrid(False)
+        #self.requesttable.setShowGrid(False)
+
+    def check_data(self):
+        if not self.ecurequests or not self.buttonlayout:
+            return
+
+        items = self.requesttable.selectedItems()
+        if len(items) == 0:
+            return
+
+        currentrowidx = items[-1].row()
+        requestname = self.currentbuttonparams[currentrowidx]['RequestName']
+
+        if requestname not in self.ecurequests.requests.keys():
+            options.main_window.logview.append("Request %s not found" % requestname)
+            return
+
+        request = self.ecurequests.requests[requestname]
+        datasenditems = request.sendbyte_dataitems
+        inputlayout = self.layout['inputs']
+
+        itemsfound = {}
+        numfound = 0
+        for dataitemname in datasenditems.keys():
+            for inp in inputlayout:
+                itemsfound[dataitemname] = False
+                if dataitemname == inp['text']:
+                    if requestname == inp['request']:
+                        itemsfound[dataitemname] = True
+                        numfound += 1
+                        break
+
+        if len(itemsfound) == numfound:
+            options.main_window.logview.append("<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>" % requestname)
+            return
+
+        options.main_window.logview.append("<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>" % requestname)
+        for k, v in itemsfound.iteritems():
+            if not v:
+                options.main_window.logview.append("<font color=orange> - '%s'</font>" % k)
 
     def clear(self):
         self.requesttable.clear()
@@ -1138,7 +1220,7 @@ class buttonData(gui.QFrame):
     def refresh_request(self):
         if not self.ecurequests or not self.buttonlayout:
             return
-        self.init(self.ecurequests, self.buttonlayout)
+        self.init(self.ecurequests, self.layout)
 
     def init(self, ecureq, layout):
         self.buttonlayout = layout['buttons']
@@ -1256,7 +1338,7 @@ class buttonEditor(gui.QWidget):
         self.buttontable.verticalHeader().hide()
         self.buttontable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.buttontable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
-        self.buttontable.setShowGrid(False)
+        #self.buttontable.setShowGrid(False)
         self.buttontable.itemSelectionChanged.connect(self.selection_changed)
         self.enable_view(False)
 

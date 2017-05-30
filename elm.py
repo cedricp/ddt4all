@@ -533,7 +533,7 @@ class ELM:
 
     def __init__(self, portName, speed, startSession='10C0'):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
-            print "Tryi opening port %s at %i" % (portName, s)
+            print "Trying to open port %s at %i" % (portName, s)
             self.sim_mode = options.simulation_mode
             self.portName = portName
 

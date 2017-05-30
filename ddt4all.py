@@ -289,8 +289,6 @@ class Main_widget(gui.QMainWindow):
         self.progressstatus.setFixedWidth(150)
         self.infostatus.setFixedWidth(200)
 
-        self.setConnected(True)
-
         self.refreshtimebox = gui.QSpinBox()
         self.refreshtimebox.setRange(100, 2000)
         self.refreshtimebox.setSingleStep(100)
@@ -311,6 +309,7 @@ class Main_widget(gui.QMainWindow):
         self.scrollview.setWidgetResizable(False)
 
         self.tabbedview.addTab(self.scrollview, "Screen")
+
         if options.simulation_mode:
             self.buttonEditor = dataeditor.buttonEditor()
             self.requesteditor = dataeditor.requestEditor()
@@ -445,6 +444,8 @@ class Main_widget(gui.QMainWindow):
         m3ev.triggered.connect(lambda: self.virginECU('megane3EPS'))
         c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
         c3ev.triggered.connect(lambda: self.virginECU('clio3EPS'))
+
+        self.setConnected(True)
 
     def screenRename(self):
         item = self.treeview_params.currentItem()
@@ -649,7 +650,7 @@ class Main_widget(gui.QMainWindow):
             self.ecu_scan.send_report()
 
     def setConnected(self, on):
-        if options.simultation_mode:
+        if options.simulation_mode:
             self.connectedstatus.setStyleSheet("background : orange")
             self.connectedstatus.setText("EDITION MODE")
             return
@@ -787,10 +788,11 @@ class Main_widget(gui.QMainWindow):
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
             self.buttonEditor.set_ecu(self.paramview.ecurequestsparser)
-        if isxml:
-            self.requesteditor.enable_view(False)
-            self.dataitemeditor.enable_view(False)
-            self.buttonEditor.enable_view(False)
+            if isxml:
+                self.requesteditor.enable_view(False)
+                self.dataitemeditor.enable_view(False)
+                self.buttonEditor.enable_view(False)
+
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)
