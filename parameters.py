@@ -204,7 +204,21 @@ class paramWidget(gui.QWidget):
         self.reinitScreen()
 
     def addLabel(self):
-        pass
+        if self.parser != "json":
+            self.logview.append("<font color=red>To be able to edit your screen, first export it in JSON format</font>")
+            return
+
+        label_dict = {}
+        label_dict['text'] = "NewLabel"
+        label_dict['color'] = "rgb(200,150,200)"
+        label_dict['bbox'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
+        label_dict['font'] = {'name': "Arial", 'size': 12, 'bold': False, 'italic': False}
+        label_dict['fontcolor'] = "rgb(0,0,0)"
+        label_dict['alignment'] = '2'
+
+        self.layoutdict['screens'][self.current_screen]['labels'].append(label_dict)
+
+        self.reinitScreen()
 
     def mousePressEvent(self, event):
         if options.simulation_mode:

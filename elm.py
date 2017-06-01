@@ -715,7 +715,6 @@ class ELM:
         nbytes = 0  # number bytes in response
         nframes = 0
 
-
         if len(responses) == 0:  # no data in response
             return ""
 

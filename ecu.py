@@ -845,10 +845,8 @@ class Ecu_ident:
         js['supplier_code'] = toascii(self.supplier)
         js['soft_version'] = toascii(self.soft)
         js['version'] = toascii(self.version)
-        #js['name'] = toascii(self.name)
         js['group'] = toascii(self.group)
         js['projects'] = [toascii(p) for p in self.projects]
-        #js['href'] = toascii(self.href.replace('.xml', '.json'))
         js['protocol'] = toascii(self.protocol)
         js['address'] = toascii(self.addr)
         return js

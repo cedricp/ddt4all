@@ -211,6 +211,7 @@ class Ecu_list(gui.QWidget):
         for ecu in self.ecuscan.ecu_database.targets:
             if ecu.addr not in ecu_map:
                 grp = ecu.group
+                grp += " [$" + str(ecu.addr).zfill(2) + "]"
             else:
                 grp = ecu_map[ecu.addr]
 
@@ -314,9 +315,11 @@ class Main_widget(gui.QMainWindow):
             self.buttonEditor = dataeditor.buttonEditor()
             self.requesteditor = dataeditor.requestEditor()
             self.dataitemeditor = dataeditor.dataEditor()
+            self.ecuparameditor = dataeditor.ecuParamEditor()
             self.tabbedview.addTab(self.requesteditor, "Requests")
             self.tabbedview.addTab(self.dataitemeditor, "Data")
             self.tabbedview.addTab(self.buttonEditor, "Buttons")
+            self.tabbedview.addTab(self.ecuparameditor, "Ecu parameters")
 
         screen_widget = gui.QWidget()
         self.treedock_widget = gui.QDockWidget(self)
@@ -418,8 +421,9 @@ class Main_widget(gui.QMainWindow):
 
         diagmenu = menu.addMenu("File")
         newecuction = diagmenu.addAction("Create New ECU")
+        saveecuaction = diagmenu.addAction("Save current ECU")
+        diagmenu.addSeparator()
         savevehicleaction = diagmenu.addAction("Save ECU list")
-        saveecuaction = diagmenu.addAction("Export (JSON) current ECU")
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
         newecuction.triggered.connect(self.newEcu)
@@ -752,12 +756,8 @@ class Main_widget(gui.QMainWindow):
 
 
     def changeECU(self, index):
-        self.diagaction.setEnabled(False)
-        self.hexinput.setEnabled(False)
-
         item = self.treeview_ecu.model().itemData(index)
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
-        self.treeview_params.clear()
 
         isxml = True
         ecu_file = None
@@ -775,6 +775,15 @@ class Main_widget(gui.QMainWindow):
         if not ecu_file:
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
+
+        if self.paramview:
+            if ecu_file == self.paramview.ddtfile:
+                return
+
+        self.diagaction.setEnabled(False)
+        self.hexinput.setEnabled(False)
+        self.treeview_params.clear()
+
         uiscale_mem = 12
 
         if self.paramview:
@@ -788,10 +797,13 @@ class Main_widget(gui.QMainWindow):
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
             self.buttonEditor.set_ecu(self.paramview.ecurequestsparser)
+            self.ecuparameditor.set_ecu(self.paramview.ecurequestsparser)
+            self.ecuparameditor.set_targets(self.paramview.targetsdata)
             if isxml:
                 self.requesteditor.enable_view(False)
                 self.dataitemeditor.enable_view(False)
                 self.buttonEditor.enable_view(False)
+                self.ecuparameditor.enable_view(False)
 
         self.paramview.uiscale = uiscale_mem
 
