@@ -6,7 +6,6 @@ import zipfile
 from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, os
-import unicodedata
 import re
 import glob
 import argparse
@@ -23,20 +22,10 @@ def hex16_tosigned(value):
 def hex8_tosigned(value):
     return -(value & 0x80) | (value & 0x7f)
 
-
-def to_nfkd(input_str):
-    nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
-    return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
-
-
-def toascii(str):
-    return to_nfkd(str).encode('ascii', 'ignore')
-
-
 def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
-    return toascii(cleantext)
+    return cleantext
 
 def getChildNodesByName(parent, name):
     nodes = []
@@ -119,7 +108,7 @@ class Ecu_device:
         js['dtc'] = self.dtc
         js['dtctype'] = self.dtctype
         js['devicedata'] = self.devicedata
-        js['name'] = toascii(self.name)
+        js['name'] = self.name
         return js
 
 class Ecu_request:
@@ -209,17 +198,17 @@ class Ecu_request:
         if self.sentbytes != '': js['sentbytes'] = self.sentbytes
 
         js['endian'] = self.endian
-        js['name'] = toascii(self.name)
+        js['name'] = self.name
 
         sdi = {}
         for key, value in self.sendbyte_dataitems.iteritems():
-            sdi[toascii(key)] = value.dump()
+            sdi[key] = value.dump()
         if len(sdi):
             js['sendbyte_dataitems'] = sdi
 
         rdi = {}
         for key, value in self.dataitems.iteritems():
-            rdi[toascii(key)] = value.dump()
+            rdi[key] = value.dump()
         if len(rdi):
             js['receivebyte_dataitems'] = rdi
         return js
@@ -227,13 +216,13 @@ class Ecu_request:
     def dump_dataitems(self):
         di = {}
         for key, value in self.dataitems.iteritems():
-            di[toascii(key)] = value.dump()
+            di[key] = value.dump()
         return di
 
     def dump_sentdataitems(self):
         di = {}
         for key, value in self.sendbyte_dataitems.iteritems():
-            di[toascii(key)] = value.dump()
+            di[key] = value.dump()
         return di
 
 class Ecu_data:
@@ -385,19 +374,19 @@ class Ecu_data:
         if self.divideby != 1:
             js['divideby'] = self.divideby
         if self.format != '':
-            js['format'] = toascii(self.format)
+            js['format'] = self.format
         if len(self.items) > 0:
             itms = {}
             for k, v in self.items.iteritems():
-                itms[toascii(k)] = toascii(v)
+                itms[k] = v
             js['items'] = itms
         if len(self.lists) > 0:
             itms = {}
             for k, v in self.lists.iteritems():
-                itms[toascii(k)] = toascii(v)
+                itms[k] = v
             js['lists'] = itms
         if self.unit != '':
-            js['unit'] = toascii(self.unit)
+            js['unit'] = self.unit
         if self.comment != '':
             js['comment'] = cleanhtml(self.comment)
         return self.name, js
@@ -638,9 +627,13 @@ class Ecu_file:
         self.data = {}
         self.endianness = ''
         self.ecu_protocol = ''
-        self.ecu_send_id = 0
-        self.ecu_recv_id = 0
+        self.ecu_send_id = "00"
+        self.ecu_recv_id = "00"
         self.fastinit = False
+        self.kw1 = ""
+        self.kw2 = ""
+        self.funcname = ""
+        self.funcaddr = ""
 
         if not data:
             return
@@ -658,13 +651,20 @@ class Ecu_file:
 
             ecudict = json.loads(jsdata)
 
-            if ecudict.has_key("obd"):
+            if "obd" in ecudict:
                 self.ecu_protocol = ecudict['obd']['protocol']
-                self.ecu_send_id = ecudict['obd']['send_id']
-                self.ecu_recv_id = ecudict['obd']['recv_id']
-                self.fastinit = ecudict['obd']['fastinit']
+                if self.ecu_protocol == "CAN":
+                    self.ecu_send_id = ecudict['obd']['send_id']
+                    self.ecu_recv_id = ecudict['obd']['recv_id']
+                if self.ecu_protocol == "KWP2000":
+                    self.fastinit = ecudict['obd']['fastinit']
+                self.funcaddr = ecudict['obd']['funcaddr']
+                self.funcname = ecudict['obd']['funcname']
+                if "kw1" in ecudict['obd']:
+                    self.kw1 = ecudict['obd']['kw1']
+                    self.kw2 = ecudict['obd']['kw2']
 
-            if ecudict.has_key('endian'):
+            if 'endian' in ecudict:
                 self.endianness = ecudict['endian']
 
             devices = ecudict['devices']
@@ -694,6 +694,11 @@ class Ecu_file:
             target = getChildNodesByName(self.xmldoc, u"Target")
 
             if target:
+                functions = getChildNodesByName(target[0], u"Function")
+                if functions:
+                    self.funcaddr = hex(int(functions[0].getAttribute("Address")))[2:].upper()
+                    self.funcname = functions[0].getAttribute("Name")
+
                 can = getChildNodesByName(target[0], u"CAN")
                 if can:
                     self.ecu_protocol = "CAN"
@@ -714,31 +719,31 @@ class Ecu_file:
                 k = getChildNodesByName(target[0], u"K")
                 if k:
                     kwp = getChildNodesByName(k[0], u"KWP")
+                    iso8 = getChildNodesByName(k[0], u"ISO8")
                     if kwp:
                         kwp = kwp[0]
-                        self.ecu_protocol = "KWP2000"
-                        fastinit = getChildNodesByName(kwp, "FastInit")
+                        self.ecu_protocol = u"KWP2000"
+                        fastinit = getChildNodesByName(kwp, u"FastInit")
                         if fastinit:
                             self.fastinit = True
 
-                            self.ecu_recv_id = hex(
+                            self.kw1 = hex(
                                 int(getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[
                                                2:].upper()
-                            self.ecu_send_id = hex(
+                            self.kw2 = hex(
                                 int(getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[
                                                2:].upper()
-                        else:
-                            self.fastinit = False
+                    elif iso8:
+                        self.fastinit = False
 
-                            iso8 = getChildNodesByName(kwp, "ISO8")
-                            if iso8:
-                                self.ecu_protocol = "ISO8"
-                                self.ecu_recv_id = hex(
-                                    int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[
-                                                   2:].upper()
-                                self.ecu_send_id = hex(
-                                    int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[
-                                                   2:].upper()
+                        if iso8:
+                            self.ecu_protocol = "ISO8"
+                            self.kw1 = hex(
+                                int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[
+                                               2:].upper()
+                            self.kw2 = hex(
+                                int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[
+                                               2:].upper()
 
 
             devices = self.xmldoc.getElementsByTagName("Device")
@@ -770,20 +775,29 @@ class Ecu_file:
         js = {}
         js['obd'] = {}
         js['obd']['protocol'] = self.ecu_protocol
-        js['obd']['send_id'] = self.ecu_send_id
-        js['obd']['recv_id'] = self.ecu_recv_id
-        js['obd']['fastinit'] = self.fastinit
+        if self.ecu_protocol == "CAN":
+            js['obd']['send_id'] = self.ecu_send_id
+            js['obd']['recv_id'] = self.ecu_recv_id
+        if self.ecu_protocol == "KWP2000":
+            js['obd']['fastinit'] = self.fastinit
+        js['obd']['funcaddr'] = self.funcaddr
+        js['obd']['funcname'] = self.funcname
 
         js['data'] = {}
         js['requests'] = []
         js['devices'] = []
+
+        if self.kw1:
+            js['obd']['kw1'] = self.kw1
+        if self.kw2:
+            js['obd']['kw2'] = self.kw2
 
         if self.endianness:
             js['endian'] = self.endianness
 
         for key, value in self.data.iteritems():
             name, d = value.dump()
-            js['data'][toascii(name)] = d
+            js['data'][name] = d
 
         for key, value in self.requests.iteritems():
             js['requests'].append(value.dump())
@@ -841,14 +855,14 @@ class Ecu_ident:
 
     def dump(self):
         js = {}
-        js['diagnotic_version'] = toascii(self.diagversion)
-        js['supplier_code'] = toascii(self.supplier)
-        js['soft_version'] = toascii(self.soft)
-        js['version'] = toascii(self.version)
-        js['group'] = toascii(self.group)
-        js['projects'] = [toascii(p) for p in self.projects]
-        js['protocol'] = toascii(self.protocol)
-        js['address'] = toascii(self.addr)
+        js['diagnotic_version'] = self.diagversion
+        js['supplier_code'] = self.supplier
+        js['soft_version'] = self.soft
+        js['version'] = self.version
+        js['group'] = self.group
+        js['projects'] = [p for p in self.projects]
+        js['protocol'] = self.protocol
+        js['address'] = self.addr
         return js
 
 class Ecu_database:
@@ -898,6 +912,10 @@ class Ecu_database:
                             projects.append(c.nodeName)
                     for autoident in autoidents:
                         self.numecu += 1
+                        if len(autoident.getElementsByTagName("AutoIdent")) == 0:
+                            ecu_ident = Ecu_ident("00", "??????", "0000", "0000", name, group, href, protocol,
+                                                  projects, address)
+                            self.targets.append(ecu_ident)
                         for ai in autoident.getElementsByTagName("AutoIdent"):
                             diagversion = ai.getAttribute("DiagVersion")
                             supplier = ai.getAttribute("Supplier")
@@ -922,7 +940,7 @@ class Ecu_database:
     def dump(self):
         js = []
         for t in self.targets:
-            if t.protocol == u'DiagOnCAN' or u'KWP' in t.protocol:
+            if t.protocol == u'DiagOnCAN' or u'KWP' in t.protocol or u'ISO8' == t.protocol:
                 js.append(t.dump())
         return json.dumps(js, indent=1)
 
@@ -1075,7 +1093,7 @@ def make_zipfs():
         zf.writestr("db.json", str(db.dump()))
 
         for target in ecus:
-            name = toascii(target)
+            name = target
             print "Starting zipping " + target + " " + str(i) + "/" + str(len(ecus))
             fileout = name.replace('.xml', '.json')
             ecur = Ecu_file(name, True)

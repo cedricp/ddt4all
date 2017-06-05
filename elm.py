@@ -1019,7 +1019,6 @@ class ELM:
         return None
 
     def set_can_addr(self, addr, ecu):
-
         if self.currentprotocol == "can" and self.currentaddress == addr:
             return
 
@@ -1033,8 +1032,12 @@ class ELM:
         self.lastCMDtime = 0
         self.l1_cache = {}
 
-        TXa = dnat[addr]
-        RXa = snat[addr]
+        if 'idTx' in ecu and 'idRx' in ecu:
+            TXa = ecu['idTx']
+            RXa = ecu['idRx']
+        else:
+            TXa = dnat[addr]
+            RXa = snat[addr]
 
         self.cmd("at sh " + TXa)
         self.cmd("at cra " + RXa)
@@ -1046,7 +1049,7 @@ class ELM:
         else:
             self.cmd("at sp 6")
 
-        return (TXa, RXa)
+        return TXa, RXa
 
     def start_session_iso(self, start_session):
         self.startSession = start_session
@@ -1071,8 +1074,7 @@ class ELM:
         self.cmd("at l1")
         self.cmd("at d1")
 
-    def set_iso_addr(self, addr, ecu):
-
+    def set_iso8_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
             return
 
@@ -1088,14 +1090,38 @@ class ELM:
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("at sh 81 " + addr + " f1")     # set address
+        self.cmd("at sh 81 " + addr + " F1")     # set address
         self.cmd("at sw 96")                     # wakeup message period 3 seconds
-        self.cmd("at wm 81 " + addr + " f1 3E")  # set wakeup message
+        self.cmd("at wm 81 " + addr + " F1 3E")  # set wakeup message
         self.cmd("at ib10")                      # baud rate 10400
         self.cmd("at st ff")                     # set timeout to 1 second
+        self.cmd("at sp 3")
+        self.cmd("at at 1")  # enable adaptive timing
+
+    def set_iso_addr(self, addr, ecu):
+        if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
+            return
+
+        if self.lf != 0:
+            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
+                'protocol'] + "\n" + '#' * 60 + "\n")
+            self.lf.flush()
+
+        self.currentprotocol = "iso"
+        self.currentsubprotocol = ecu['protocol']
+        self.currentaddress = addr
+        self.startSession = ""
+        self.lastCMDtime = 0
+        self.lastinitrsp = ""
+
+        self.cmd("at sh 81 " + addr + " F1")     # set address
+        self.cmd("at sw 96")                     # wakeup message period 3 seconds
+        self.cmd("at wm 81 " + addr + " F1 3E")  # set wakeup message
+        self.cmd("at ib10")                      # baud rate 10400
+        self.cmd("at st FF")                     # set timeout to 1 second
         self.cmd("at at 0")                      # disable adaptive timing
 
-        if 'PRNA2000' in ecu['protocol'].upper() or options.opt_si:
+        if options.opt_si:
             self.cmd("at sp 4")  # slow init mode 4
             if len(ecu['slowInit']) > 0:
                 self.cmd("at iia " + ecu['slowInit'])  # address for slow init
@@ -1106,11 +1132,9 @@ class ELM:
                     self.lf.write('### Try fast init\n')
                     self.lf.flush()
 
-                    # if 'PRNA2000' not in ecu['protocol'].upper() :
         if 'OK' not in self.lastinitrsp:
             self.cmd("at sp 5")  # fast init mode 5
             self.lastinitrsp = self.cmd("at fi")  # perform fast init mode 5
-            # self.lastinitrsp = self.cmd("81")         #init bus
 
         self.cmd("at at 1")  # enable adaptive timing
 

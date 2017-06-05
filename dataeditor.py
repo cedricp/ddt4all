@@ -1478,26 +1478,31 @@ class ecuParamEditor(gui.QFrame):
 
         gridlayout = gui.QGridLayout()
         self.protocolcombo = gui.QComboBox()
+        self.funcadressedit = hexSpinBox(False)
 
         self.protocolcombo.addItem("CAN")
         self.protocolcombo.addItem("KWP2000 Slow Init")
         self.protocolcombo.addItem("KWP2000 Fast Init")
-        gridlayout.addWidget(gui.QLabel("ECU Protocol"), 3, 0)
-        gridlayout.addWidget(self.protocolcombo, 3, 1)
+        self.protocolcombo.addItem("ISO8")
+        gridlayout.addWidget(gui.QLabel("ECU Function address"), 0, 0)
+        gridlayout.addWidget(self.funcadressedit, 0, 1)
+
+        gridlayout.addWidget(gui.QLabel("ECU Protocol"), 4, 0)
+        gridlayout.addWidget(self.protocolcombo, 4, 1)
         self.addr1label = gui.QLabel("Tool > Ecu ID (Hex)")
-        gridlayout.addWidget(self.addr1label, 0, 0)
+        gridlayout.addWidget(self.addr1label, 1, 0)
         self.addr2label = gui.QLabel("Ecu > Tool ID (Hex)")
-        gridlayout.addWidget(self.addr2label, 1, 0)
-        gridlayout.addWidget(gui.QLabel("Coding"), 2, 0)
+        gridlayout.addWidget(self.addr2label, 2, 0)
+        gridlayout.addWidget(gui.QLabel("Coding"), 3, 0)
         self.toolecuidbox = hexSpinBox()
         self.ecutoolidbox = hexSpinBox()
         self.codingcombo = gui.QComboBox()
         self.codingcombo.addItem("Big Endian")
         self.codingcombo.addItem("Little Endian")
-        gridlayout.addWidget(self.toolecuidbox, 0, 1)
-        gridlayout.addWidget(self.ecutoolidbox, 1, 1)
-        gridlayout.addWidget(self.codingcombo, 2, 1)
-        gridlayout.setColumnStretch(2, 1)
+        gridlayout.addWidget(self.toolecuidbox, 1, 1)
+        gridlayout.addWidget(self.ecutoolidbox, 2, 1)
+        gridlayout.addWidget(self.codingcombo, 3, 1)
+        gridlayout.setColumnStretch(3, 1)
         layoutv.addLayout(gridlayout)
 
         self.identtable = gui.QTableWidget()
@@ -1541,8 +1546,12 @@ class ecuParamEditor(gui.QFrame):
         self.protocolcombo.activated.connect(self.protcol_changed)
         self.addbutton.clicked.connect(self.add_ident)
         self.delbutton.clicked.connect(self.del_ident)
+        self.funcadressedit.valueChanged.connect(self.funcadress_changed)
 
         self.enable_view(False)
+
+    def funcadress_changed(self):
+        self.ecurequestsparser.funcaddr = hex(self.funcadressedit.value())[2:]
 
     def del_ident(self):
         selitems = self.identtable.selectedItems()
@@ -1568,6 +1577,8 @@ class ecuParamEditor(gui.QFrame):
             protocol = u"KWP2000 FastInit MonoPoint"
         elif self.protocolcombo.currentIndex() == 2:
             protocol = u"KWP2000 Init 5 Baud Type I and II"
+        elif self.protocolcombo.currentIndex() == 3:
+            protocol = u"ISO8"
 
         ident = {
             "diagnotic_version": diagversion,
@@ -1612,12 +1623,25 @@ class ecuParamEditor(gui.QFrame):
             self.addr2label.setText("KW2")
             self.toolecuidbox.set_can(False)
             self.ecutoolidbox.set_can(False)
+        elif self.protocolcombo.currentIndex() == 3:
+            self.ecurequestsparser.ecu_protocol = "ISO8"
+            self.ecurequestsparser.fastinit = False
+            self.addr1label.setText("KW1")
+            self.addr2label.setText("KW2")
+            self.toolecuidbox.set_can(False)
+            self.ecutoolidbox.set_can(False)
 
     def toolecu_changed(self):
-        self.ecurequestsparser.ecu_send_id = hex(self.toolecuidbox.value())[2:]
+        if self.ecurequestsparser.ecu_protocol == "CAN":
+            self.ecurequestsparser.ecu_send_id = hex(self.toolecuidbox.value())[2:]
+        else:
+            self.ecurequestsparser.kw1 = hex(self.toolecuidbox.value())[2:]
 
     def ecutool_changed(self):
-        self.ecurequestsparser.ecu_recv_id = hex(self.ecutoolidbox.value())[2:]
+        if self.ecurequestsparser.ecu_protocol == "CAN":
+            self.ecurequestsparser.ecu_recv_id = hex(self.ecutoolidbox.value())[2:]
+        else:
+            self.ecurequestsparser.kw2 = hex(self.ecutoolidbox.value())[2:]
 
     def set_ecu(self, ecu):
         self.ecurequestsparser = ecu
@@ -1661,23 +1685,33 @@ class ecuParamEditor(gui.QFrame):
             self.toolecuidbox.set_can(True)
             self.ecutoolidbox.set_can(True)
             self.protocolcombo.setCurrentIndex(0)
-        else:
+        elif self.ecurequestsparser.ecu_protocol == "KWP2000":
             self.toolecuidbox.set_can(False)
             self.ecutoolidbox.set_can(False)
             if self.ecurequestsparser.fastinit:
                 self.protocolcombo.setCurrentIndex(2)
             else:
                 self.protocolcombo.setCurrentIndex(1)
+        elif self.ecurequestsparser.ecu_protocol == "ISO8":
+            self.toolecuidbox.set_can(False)
+            self.ecutoolidbox.set_can(False)
+            self.protocolcombo.setCurrentIndex(3)
 
         self.protcol_changed()
+
+        self.funcadressedit.setValue(int("0x" + self.ecurequestsparser.funcaddr, 16))
 
         if self.ecurequestsparser.endianness == 'Little':
             self.codingcombo.setCurrentIndex(1)
         else:
             self.codingcombo.setCurrentIndex(0)
 
-        self.toolecuidbox.setValue(int("0x" + self.ecurequestsparser.ecu_send_id, 16))
-        self.ecutoolidbox.setValue(int("0x" + self.ecurequestsparser.ecu_recv_id, 16))
+        if self.ecurequestsparser.ecu_protocol == "CAN":
+            self.toolecuidbox.setValue(int("0x" + str(self.ecurequestsparser.ecu_send_id), 16))
+            self.ecutoolidbox.setValue(int("0x" + str(self.ecurequestsparser.ecu_recv_id), 16))
+        else:
+            self.toolecuidbox.setValue(int("0x" + str(self.ecurequestsparser.kw1), 16))
+            self.ecutoolidbox.setValue(int("0x" + str(self.ecurequestsparser.kw2), 16))
 
         self.identtable.clearContents()
 

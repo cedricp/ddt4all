@@ -16,15 +16,6 @@ from StringIO import StringIO
 # Check ELM response validity (mode + 0x40)
 
 
-def to_nfkd(input_str):
-    nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
-    return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
-
-
-def toascii(str):
-    return to_nfkd(str).encode('ascii', 'ignore')
-
-
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
@@ -45,6 +36,7 @@ class paramWidget(gui.QWidget):
         self.displaydict = {}
         self.inputdict = {}
         self.presend = []
+        self.currentwidget = None
         self.timer = core.QTimer()
         self.timer.setSingleShot(True)
         self.tester_timer = core.QTimer()
@@ -80,7 +72,7 @@ class paramWidget(gui.QWidget):
 
         self.sendElm(self.tester_presend_command, True)
 
-    def saveEcu(self, name = None):
+    def saveEcu(self, name=None):
         if not name:
             filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json", "*.json")
         else:
@@ -164,8 +156,8 @@ class paramWidget(gui.QWidget):
         self.init(screenname)
         if issend:
             input_dict = {}
-            input_dict['text'] = toascii(item)
-            input_dict['request'] = toascii(requestname)
+            input_dict['text'] = item
+            input_dict['request'] = requestname
             input_dict['color'] = "rgb(200,200,200)"
             input_dict['fontcolor'] = "rgb(10,10,10)"
             input_dict['width'] = 3000
@@ -174,8 +166,8 @@ class paramWidget(gui.QWidget):
             self.layoutdict['screens'][screenname]['inputs'].append(input_dict)
         else:
             display_dict = {}
-            display_dict['text'] = toascii(item)
-            display_dict['request'] = toascii(requestname)
+            display_dict['text'] = item
+            display_dict['request'] = requestname
             display_dict['color'] = "rgb(200,200,200)"
             display_dict['width'] = 3000
             display_dict['rect'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
@@ -220,31 +212,101 @@ class paramWidget(gui.QWidget):
 
         self.reinitScreen()
 
+    def renameLabel(self):
+        if self.currentwidget is None:
+            return
+
+        if isinstance(self.currentwidget, displaymod.labelWidget):
+            for label in self.layoutdict['screens'][self.current_screen]['labels']:
+                txt = label['text']
+                if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
+                    nln = gui.QInputDialog.getText(self, 'DDT4All', 'Enter label name')
+                    if not nln[1]:
+                        return
+                    newlabelname = unicode(nln[0].toUtf8(), encoding="UTF-8")
+                    label['text'] = newlabelname
+                    break
+
+        self.reinitScreen()
+
+    def removeElement(self):
+        if self.currentwidget is None:
+            return
+
+        if isinstance(self.currentwidget, displaymod.labelWidget):
+            count = 0
+            for label in self.layoutdict['screens'][self.current_screen]['labels']:
+                txt = label['text']
+                if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
+                    self.layoutdict['screens'][self.current_screen]['labels'].pop(count)
+                    break
+                count += 1
+
+        if isinstance(self.currentwidget, displaymod.inputWidget):
+            count = 0
+            for inp in self.layoutdict['screens'][self.current_screen]['inputs']:
+                txt = inp['text']
+                if txt == unicode(self.currentwidget.qlabel.text().toUtf8(), encoding="UTF-8"):
+                    self.layoutdict['screens'][self.current_screen]['inputs'].pop(count)
+                    break
+                count += 1
+
+        if isinstance(self.currentwidget, displaymod.displayWidget):
+            count = 0
+            for display in self.layoutdict['screens'][self.current_screen]['displays']:
+                txt = display['text']
+                if txt == unicode(self.currentwidget.qlabel.text().toUtf8(), encoding="UTF-8"):
+                    self.layoutdict['screens'][self.current_screen]['displays'].pop(count)
+                    break
+                count += 1
+
+        if isinstance(self.currentwidget, displaymod.buttonRequest):
+            count = 0
+            for button in self.layoutdict['screens'][self.current_screen]['buttons']:
+                txt = button['uniquename']
+                if txt == self.currentwidget.uniquename:
+                    self.layoutdict['screens'][self.current_screen]['buttons'].pop(count)
+                    break
+                count += 1
+
+        self.reinitScreen()
+
     def mousePressEvent(self, event):
         if options.simulation_mode:
+            self.currentwidget = None
+            widget = gui.QApplication.widgetAt(gui.QCursor.pos())
+
+            found = False
+            while widget.parent():
+                if "ismovable" in dir(widget):
+                    found = True
+                    break
+                widget = widget.parent()
+
             if event.button() == core.Qt.RightButton:
+                self.currentwidget = widget
                 popmenu = gui.QMenu(self)
                 addbuttonaction = gui.QAction("Add button", popmenu)
                 addlabelaction = gui.QAction("Add label", popmenu)
 
                 popmenu.addAction(addbuttonaction)
                 popmenu.addAction(addlabelaction)
-
                 addbuttonaction.triggered.connect(self.addButton)
                 addlabelaction.triggered.connect(self.addLabel)
+
+                if isinstance(widget, displaymod.labelWidget):
+                    renamelabelaction = gui.QAction("Rename label", popmenu)
+                    popmenu.addAction(renamelabelaction)
+                    renamelabelaction.triggered.connect(self.renameLabel)
+                if found:
+                    removeaction = gui.QAction("Remove element", popmenu)
+                    popmenu.addSeparator()
+                    popmenu.addAction(removeaction)
+                    removeaction.triggered.connect(self.removeElement)
 
                 popmenu.exec_(gui.QCursor.pos())
 
             if event.button() == core.Qt.LeftButton:
-                widget = gui.QApplication.widgetAt(gui.QCursor.pos())
-
-                found = False
-                while widget.parent():
-                    if "ismovable" in dir(widget):
-                        found = True
-                        break
-                    widget = widget.parent()
-
                 if not found:
                     self.movingwidget = None
                     return
@@ -384,7 +446,12 @@ class paramWidget(gui.QWidget):
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
                 options.opt_si = not self.ecurequestsparser.fastinit
                 options.elm.init_iso()
-                options.elm.set_iso_addr(self.ecurequestsparser.ecu_send_id, ecu_conf)
+                options.elm.set_iso_addr(self.ecurequestsparser.funcaddr, ecu_conf)
+            elif self.ecurequestsparser.ecu_protocol == 'ISO8':
+                self.logview.append("Initializing ISO8 mode")
+                ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'ISO8'}
+                options.elm.init_iso()
+                options.elm.set_iso8_addr(self.ecurequestsparser.funcaddr, ecu_conf)
             else:
                 self.logview.append("Protocol " + self.ecurequestsparser.ecu_protocol + " not supported")
         if self.main_protocol_status:
@@ -393,10 +460,12 @@ class paramWidget(gui.QWidget):
                                               self.ecurequestsparser.ecu_recv_id)
                 self.main_protocol_status.setText("DiagOnCan " + txrx)
             elif self.ecurequestsparser.ecu_protocol == "KWP2000":
-                self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.ecu_send_id)
+                self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.funcaddr)
             elif self.ecurequestsparser.ecu_protocol == "ISO8":
-                self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.ecu_send_id)
-                print "Protocol not yet supported : " + self.ecurequestsparser.ecu_protocol
+                self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
+            else:
+                self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
+                print "Protocol not supported : " + self.ecurequestsparser.ecu_protocol
 
     def initJSON(self):
         self.layoutdict = None
@@ -804,8 +873,8 @@ class paramWidget(gui.QWidget):
         if not self.allow_parameters_update:
             return
 
-        # Begin diag session
-        if not options.simulation_mode:
+        # Begin default diag session if not already done
+        if not options.simulation_mode and not diagsessionstarted:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('10C0')
             elif self.ecurequestsparser.ecu_protocol == "KWP2000":
@@ -832,6 +901,7 @@ class paramWidget(gui.QWidget):
 
     def clearDTC(self):
         request = None
+
         if not options.simulation_mode:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('10C0')
@@ -968,16 +1038,16 @@ def dumpDOC(xdoc):
     for cats in xml_categories:
         xml_cats = getChildNodesByName(cats, u"Category")
         for category in xml_cats:
-            category_name = toascii(category.getAttribute(u"Name"))
+            category_name = category.getAttribute(u"Name")
             js_categories[category_name] = []
             screens_name = getChildNodesByName(category, u"Screen")
             for screen in screens_name:
-                screen_name = toascii(screen.getAttribute(u"Name"))
+                screen_name = screen.getAttribute(u"Name")
                 xmlscreens[screen_name] = screen
                 js_categories[category_name].append(screen_name)
 
     for scrname, screen in xmlscreens.iteritems():
-        screen_name = toascii(scrname)
+        screen_name = scrname
         js_screens[screen_name] = {}
         js_screens[screen_name]['width'] = int(screen.getAttribute("Width"))
         js_screens[screen_name]['height'] = int(screen.getAttribute("Height"))
@@ -987,7 +1057,7 @@ def dumpDOC(xdoc):
         presend = []
         for elem in getChildNodesByName(screen, u"Send"):
             delay = elem.getAttribute('Delay')
-            req_name = toascii(elem.getAttribute('RequestName'))
+            req_name = elem.getAttribute('RequestName')
             presend.append({"Delay": delay, "RequestName": req_name})
         js_screens[screen_name]['presend'] = presend
 
@@ -1007,8 +1077,8 @@ def dumpDOC(xdoc):
         js_screens[screen_name]['displays'] = []
         for display in displays:
             display_dict = {}
-            display_dict['text'] = toascii(display.getAttribute("DataName"))
-            display_dict['request'] = toascii(display.getAttribute("RequestName"))
+            display_dict['text'] = display.getAttribute("DataName")
+            display_dict['request'] = display.getAttribute("RequestName")
             display_dict['color'] = colorConvert(display.getAttribute("Color"))
             display_dict['width'] = int(display.getAttribute("Width"))
             display_dict['rect'] = getRectangleXML(getChildNodesByName(display, "Rectangle")[0])
@@ -1021,7 +1091,7 @@ def dumpDOC(xdoc):
         count = 0
         for button in buttons:
             button_dict = {}
-            txt = toascii(button.getAttribute("Text"))
+            txt = button.getAttribute("Text")
             button_dict['text'] = txt
             button_dict['uniquename'] = txt + "_%i" % count
             button_dict['rect'] = getRectangleXML(getChildNodesByName(button, "Rectangle")[0])
@@ -1031,7 +1101,7 @@ def dumpDOC(xdoc):
             messages = []
             # Get messages
             for message in xmlmessages:
-                messages.append(toascii(message.getAttribute("Text")))
+                messages.append(message.getAttribute("Text"))
 
             button_dict['messages'] = messages
 
@@ -1041,7 +1111,7 @@ def dumpDOC(xdoc):
                 for snd in send:
                     smap = {}
                     delay = snd.getAttribute("Delay")
-                    reqname = toascii(snd.getAttribute("RequestName"))
+                    reqname = snd.getAttribute("RequestName")
                     smap['Delay'] = delay
                     smap['RequestName'] = reqname
                     sendlist.append(smap)
@@ -1055,8 +1125,8 @@ def dumpDOC(xdoc):
 
         for input in inputs:
             input_dict = {}
-            input_dict['text'] = toascii(input.getAttribute("DataName"))
-            input_dict['request']  = toascii(input.getAttribute("RequestName"))
+            input_dict['text'] = input.getAttribute("DataName")
+            input_dict['request']  = input.getAttribute("RequestName")
             color     = input.getAttribute("Color")
             if not color:
                 color = 0xAAAAAA
@@ -1079,7 +1149,7 @@ def make_zipfs():
 
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
         for target in ecus:
-            name = toascii(target)
+            name = target
             print "Starting zipping " + target + " " + str(i) + "/" + str(len(ecus))
             fileout = name.replace('.xml', '.json')
             dump = dumpXML(name)
