@@ -849,7 +849,7 @@ class ELM:
 
             # sending consequent farmes according to FlowControl
 
-            cf = min(BS - 1, (Fn - Fc) - 1)  # number of frames to send without responce
+            cf = min(BS - 1, (Fn - Fc) - 1)  # number of frames to send without response
 
             # disable responses
             if cf > 0:

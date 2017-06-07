@@ -558,11 +558,11 @@ class Ecu_data:
             little_endian = False
 
         # Data cleaning
-        resp = resp.strip().replace(' ','')
+        resp = resp.strip().replace(' ', '')
         if not all(c in string.hexdigits for c in resp): resp = ''
         resp.replace(' ', '')
 
-        res_bytes = [resp[i:i+2] for i in range(0,len(resp), 2)]
+        res_bytes = [resp[i:i + 2] for i in range(0,len(resp), 2)]
 
         # Data count
         startByte = dataitem.firstbyte
@@ -948,6 +948,7 @@ class Ecu_scanner:
     def __init__(self):
         self.totalecu = 0
         self.ecus = {}
+        self.approximate_ecus = {}
         self.ecu_database = Ecu_database()
         self.num_ecu_found = 0
         self.report_data = []
@@ -989,14 +990,16 @@ class Ecu_scanner:
             else:
                 txa = addr
                 if addr == "7A": txa = "7E0"
+                if addr == "04": txa = "742"
                 rxa = ""
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if txa == "742":
                     can_response = "61 80 82 00 30 64 35 48 30 30 31 00 00 32 03 00 03 22 03 60 00 00 2D 32 14 00 60"
-                elif txa == "74B":
+                elif txa == "742":
                     #can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 06 00 00 00 00 00 00 01"
                     can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
+                    print can_response
                 elif txa == "7E0":
                     # Test approximate case
                     #can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
@@ -1033,8 +1036,8 @@ class Ecu_scanner:
                 continue
 
             self.check_ecu(can_response, label, addr, "KWP")
-
-        options.elm.close_protocol()
+        if not options.simulation_mode:
+            options.elm.close_protocol()
 
     def check_ecu(self, can_response, label, addr, protocol):
         if len(can_response) > 59:

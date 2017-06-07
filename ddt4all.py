@@ -119,7 +119,7 @@ class Ecu_list(gui.QWidget):
         self.treeview_ecu = treeview_ecu
         self.vehicle_combo = gui.QComboBox()
 
-        ecu_map = {
+        self.ecu_map = {
             "01": "ABS-VDC [$01]",
             "2C": "Airbag-SRS [$2C]",
             "0D": "Automatic Parking Brake [$0D]",
@@ -171,12 +171,17 @@ class Ecu_list(gui.QWidget):
         self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         layout.addWidget(self.list)
         self.ecuscan = ecuscan
+        self.list.doubleClicked.connect(self.ecuSel)
+        self.init()
+
+    def init(self):
+        self.list.clear()
         self.list.setColumnCount(3)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, 'ECU name')
         self.list.model().setHeaderData(1, core.Qt.Horizontal, 'Projets')
         self.list.model().setHeaderData(2, core.Qt.Horizontal, 'Protocol')
 
-        stored_ecus = {"Custom" : []}
+        stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
 
@@ -195,10 +200,10 @@ class Ecu_list(gui.QWidget):
                 target = target[0]
                 protocol = target['protocol']
                 projects_list = target['projects']
-                if target['address'] not in ecu_map:
+                if target['address'] not in self.ecu_map:
                     grp = "Custom"
                 else:
-                    grp = ecu_map[target['address']]
+                    grp = self.ecu_map[target['address']]
 
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
@@ -209,11 +214,11 @@ class Ecu_list(gui.QWidget):
             stored_ecus[grp].append([cs[:-8][7:], name, protocol])
 
         for ecu in self.ecuscan.ecu_database.targets:
-            if ecu.addr not in ecu_map:
+            if ecu.addr not in self.ecu_map:
                 grp = ecu.group
                 grp += " [$" + str(ecu.addr).zfill(2) + "]"
             else:
-                grp = ecu_map[ecu.addr]
+                grp = self.ecu_map[ecu.addr]
 
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
@@ -230,8 +235,6 @@ class Ecu_list(gui.QWidget):
             item = gui.QTreeWidgetItem(self.list, [e])
             for t in stored_ecus[e]:
                 gui.QTreeWidgetItem(item, t)
-
-        self.list.doubleClicked.connect(self.ecuSel)
 
     def filterProject(self):
         project = str(self.vehicle_combo.currentText()[0:3])
@@ -667,8 +670,20 @@ class Main_widget(gui.QMainWindow):
 
     def saveEcus(self):
         filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)",
-                                                   "./vehicles/mycar.ecu", ".ecu")
-        pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
+                                                    "./vehicles/mycar.ecu", "*.ecu")
+        # pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
+        if filename == "":
+            return
+
+        eculist = []
+        numecus = self.treeview_ecu.count()
+        for i in range(numecus):
+            item = self.treeview_ecu.item(i)
+            eculist.append(unicode(item.text().toUtf8(), encoding="UTF-8"))
+
+        jsonfile = open(filename, "w")
+        jsonfile.write(json.dumps(eculist))
+        jsonfile.close()
 
     def newEcu(self):
         filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json",
@@ -695,20 +710,26 @@ class Main_widget(gui.QMainWindow):
     def saveEcu(self):
         if self.paramview:
             self.paramview.saveEcu()
+        self.eculistwidget.init()
+        self.eculistwidget.filterProject()
 
     def loadEcu(self, name):
         vehicle_file = "vehicles/" + name + ".ecu"
-        self.ecu_scan.ecus = pickle.load(open(vehicle_file, "rb"))
+        # self.ecu_scan.ecus = pickle.load(open(vehicle_file, "rb"))
+        #
+
+        jsonfile = open(vehicle_file, "r")
+        eculist = json.loads(jsonfile.read())
+        jsonfile.close()
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()
         if self.paramview:
             self.paramview.init(None)
 
-        for ecu in self.ecu_scan.ecus.keys():
+        for ecu in eculist:
             item = gui.QListWidgetItem(ecu)
             self.treeview_ecu.addItem(item)
-
 
     def readDtc(self):
         if self.paramview:
@@ -761,6 +782,7 @@ class Main_widget(gui.QMainWindow):
 
         isxml = True
         ecu_file = None
+
         if ".json" in ecu_name:
             ecu_file = ecu_name
             ecu_addr = ""
@@ -770,7 +792,7 @@ class Main_widget(gui.QMainWindow):
         elif ecu_name in self.ecu_scan.approximate_ecus:
             ecu = self.ecu_scan.approximate_ecus[ecu_name]
         else:
-            return
+            ecu = self.ecu_scan.ecu_database.getTarget(ecu_name)
 
         if not ecu_file:
             ecu_file = options.ecus_dir + ecu.href
