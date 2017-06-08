@@ -874,7 +874,7 @@ class paramWidget(gui.QWidget):
             return
 
         # Begin default diag session if not already done
-        if not options.simulation_mode and not diagsessionstarted:
+        if not options.simulation_mode:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('10C0')
             elif self.ecurequestsparser.ecu_protocol == "KWP2000":
