@@ -1,6 +1,6 @@
 # DDT4all
 
-DDT4all is a DDT2000 clone able to parse DDT2000's database and connect to your vehicle to read/write ECU parameters with an ELM327 cable.
+DDT4all is a DDT2000 clone able to parse DDT2000's database, create/modifiy your own ECU parameters screens and connect to your with an ELM327 cable.
 
 This application is work in progress, so be very carful when using expert mode. If you're brave enough to use it and it's working (or not), please tell me so I can update the tested ECUs database.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
@@ -13,7 +13,10 @@ Dependencies:
 
 Copy the  <ecus> directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py
 
-NB : If you have a local DDT2000 installation, you don't need to copy the 'ecus' directory, DDT4ALL will use it instead
+NB :
+* If you have a local DDT2000 installation, you don't need to copy the 'ecus' directory, DDT4ALL will use it instead
+* You can edit an original DDT2000 XML file after having saved it in JSON format.
+* You can create your own ECU screens.
 
 Bugtracking here : https://github.com/cedricp/ddt4all
 
