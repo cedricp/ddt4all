@@ -871,7 +871,7 @@ class Ecu_database:
     def __init__(self, forceXML = False):
         self.targets = []
         self.numecu = 0
-
+        xmlfile = options.ecus_dir + "/eculist.xml"
         if os.path.exists(self.jsonfile) and not forceXML:
             zf = zipfile.ZipFile(self.jsonfile, mode='r')
             jsdb = zf.read("db.json")
@@ -882,8 +882,7 @@ class Ecu_database:
                                       target['name'], target['group'], target['href'], target['protocol'],
                                       target['projects'])
                 self.targets.append(ecu_ident)
-        else:
-            xmlfile = options.ecus_dir + "/eculist.xml"
+        elif os.path.exists(xmlfile):
             xdom = xml.dom.minidom.parse(xmlfile)
             self.xmldoc = xdom.documentElement
 

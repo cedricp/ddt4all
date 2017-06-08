@@ -1106,12 +1106,6 @@ if __name__ == '__main__':
         options.ecus_dir = "C:/DDT2000data/ecus/"
         ecudirfound = True
 
-    if not ecudirfound:
-        msgbox = gui.QMessageBox()
-        msgbox.setText("You must install DDT database in 'ecus' directory")
-        msgbox.exec_()
-        exit(0)
-
     pc = portChooser()
     nok = True
     while nok:

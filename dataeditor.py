@@ -200,11 +200,13 @@ class requestTable(gui.QTableWidget):
             while newname in self.ecureq:
                 newname += u"_"
 
+            oldname = self.ecureq[self.currentreq].name
             self.ecureq[self.currentreq].name = newname
             self.ecureq[newname] = self.ecureq.pop(self.currentreq)
 
             self.init(self.ecureq)
             self.select(newname)
+            options.main_window.paramview.requestNameChanged(oldname, newname)
 
     def select(self, name):
         items = self.findItems(name, core.Qt.MatchExactly)
@@ -1002,6 +1004,8 @@ class dataEditor(gui.QWidget):
             if oldname in rbdata.keys():
                 rbdata[oldname].name = newname
                 rbdata[newname] = rbdata.pop(oldname)
+
+        options.main_window.paramview.dataNameChanged(oldname, newname)
 
     def clear(self):
         self.datatable.clear()

@@ -1016,6 +1016,42 @@ class paramWidget(gui.QWidget):
         dtc_view.setHtml(html)
         dtcdialog.exec_()
 
+    def requestNameChanged(self, oldname, newname):
+        for screen_k, screen_data in self.layoutdict['screens'].iteritems():
+            print "Parsing screen ", screen_k
+            for input_data in screen_data['inputs']:
+                if oldname == input_data['request']:
+                    print "found request in input ", screen_k
+                    input_data['request'] = newname
+
+            for display_data in screen_data['displays']:
+                if oldname == display_data['request']:
+                    print "found in display ", screen_k
+                    display_data['request'] = newname
+
+            for button_data in screen_data['buttons']:
+                if 'send' in button_data.keys():
+                    for send in button_data['send']:
+                        if send['RequestName'] == oldname:
+                            print "found in button ", screen_k
+                            send['RequestName'] = newname
+
+        self.reinitScreen()
+
+    def dataNameChanged(self, oldname, newname):
+        for screen_k, screen_data in self.layoutdict['screens'].iteritems():
+            print "Parsing screen ", screen_k
+            for input_data in screen_data['inputs']:
+                if oldname == input_data['text']:
+                    print "found data in input ", screen_k
+                    input_data['text'] = newname
+
+            for display_data in screen_data['displays']:
+                if oldname == display_data['text']:
+                    print "found data in display ", screen_k
+                    display_data['text'] = newname
+
+        self.reinitScreen()
 
 def dumpXML(xmlname):
     xdom = xml.dom.minidom.parse(xmlname)
