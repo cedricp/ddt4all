@@ -11,6 +11,11 @@ import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options, locale
 import dataeditor
+import gettext
+
+# Set up message catalog access
+t = gettext.translation('ddt4all_main', 'locale', fallback=True)
+_ = t.ugettext
 
 app = None
 
@@ -177,9 +182,9 @@ class Ecu_list(gui.QWidget):
     def init(self):
         self.list.clear()
         self.list.setColumnCount(3)
-        self.list.model().setHeaderData(0, core.Qt.Horizontal, 'ECU name')
-        self.list.model().setHeaderData(1, core.Qt.Horizontal, 'Projets')
-        self.list.model().setHeaderData(2, core.Qt.Horizontal, 'Protocol')
+        self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
+        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('Projets'))
+        self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
 
         stored_ecus = {"Custom": []}
 
@@ -269,11 +274,11 @@ class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
         self.setWindowTitle("DDT4All")
-        print "Scanning ECUs..."
+        print _("Scanning ECUs...")
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
-        print "Done, %i loaded ECUs in database." % self.ecu_scan.getNumEcuDb()
+        print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
 
         self.ecu_scan.send_report()
         self.paramview = None
@@ -297,7 +302,7 @@ class Main_widget(gui.QMainWindow):
         self.refreshtimebox.setRange(100, 2000)
         self.refreshtimebox.setSingleStep(100)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
-        refrestimelabel = gui.QLabel("Refresh rate (ms):")
+        refrestimelabel = gui.QLabel(_("Refresh rate (ms):"))
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -312,17 +317,17 @@ class Main_widget(gui.QMainWindow):
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
 
-        self.tabbedview.addTab(self.scrollview, "Screen")
+        self.tabbedview.addTab(self.scrollview, _("Screen"))
 
         if options.simulation_mode:
             self.buttonEditor = dataeditor.buttonEditor()
             self.requesteditor = dataeditor.requestEditor()
             self.dataitemeditor = dataeditor.dataEditor()
             self.ecuparameditor = dataeditor.ecuParamEditor()
-            self.tabbedview.addTab(self.requesteditor, "Requests")
-            self.tabbedview.addTab(self.dataitemeditor, "Data")
-            self.tabbedview.addTab(self.buttonEditor, "Buttons")
-            self.tabbedview.addTab(self.ecuparameditor, "Ecu parameters")
+            self.tabbedview.addTab(self.requesteditor, _("Requests"))
+            self.tabbedview.addTab(self.dataitemeditor, _("Data"))
+            self.tabbedview.addTab(self.buttonEditor, _("Buttons"))
+            self.tabbedview.addTab(self.ecuparameditor, _("Ecu parameters"))
 
         screen_widget = gui.QWidget()
         self.treedock_widget = gui.QDockWidget(self)
@@ -333,13 +338,13 @@ class Main_widget(gui.QMainWindow):
         treedock_layout.addWidget(self.screenmenu)
         treedock_layout.addWidget(self.treeview_params)
         screen_widget.setLayout(treedock_layout)
-        self.treeview_params.setHeaderLabels(["Screens"])
+        self.treeview_params.setHeaderLabels([_("Screens")])
         self.treeview_params.clicked.connect(self.changeScreen)
 
-        actionmenu = self.screenmenu.addMenu("Action")
-        cat_action = gui.QAction("New Category", actionmenu)
-        screen_action = gui.QAction("New Screen", actionmenu)
-        rename_action = gui.QAction("Rename", actionmenu)
+        actionmenu = self.screenmenu.addMenu(_("Action"))
+        cat_action = gui.QAction(_("New Category"), actionmenu)
+        screen_action = gui.QAction(_("New Screen"), actionmenu)
+        rename_action = gui.QAction(_("Rename"), actionmenu)
         actionmenu.addAction(cat_action)
         actionmenu.addAction(screen_action)
         actionmenu.addAction(rename_action)
@@ -366,35 +371,35 @@ class Main_widget(gui.QMainWindow):
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_widget)
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
 
-        self.toolbar = self.addToolBar("File")
+        self.toolbar = self.addToolBar(_("File"))
 
-        scanaction = gui.QAction(gui.QIcon("icons/scan.png"), "Scan ECUs", self)
+        scanaction = gui.QAction(gui.QIcon("icons/scan.png"), _("Scan ECUs"), self)
         scanaction.triggered.connect(self.scan)
 
-        self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), "Read DTC", self)
+        self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
-        self.log = gui.QAction(gui.QIcon("icons/log.png"), "Full log", self)
+        self.log = gui.QAction(gui.QIcon("icons/log.png"), _("Full log"), self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
 
-        self.expert = gui.QAction(gui.QIcon("icons/expert.png"), "Expert mode (enable writing)", self)
+        self.expert = gui.QAction(gui.QIcon("icons/expert.png"), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = gui.QAction(gui.QIcon("icons/autorefresh.png"), "Auto refresh", self)
+        self.autorefresh = gui.QAction(gui.QIcon("icons/autorefresh.png"), _("Auto refresh"), self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = gui.QAction(gui.QIcon("icons/refresh.png"), "Refresh (one shot)", self)
+        self.refresh = gui.QAction(gui.QIcon("icons/refresh.png"), _("Refresh (one shot)"), self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = gui.QAction(gui.QIcon("icons/hex.png"), "Manual command", self)
+        self.hexinput = gui.QAction(gui.QIcon("icons/hex.png"), _("Manual command"), self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
@@ -422,11 +427,11 @@ class Main_widget(gui.QMainWindow):
 
         menu = self.menuBar()
 
-        diagmenu = menu.addMenu("File")
-        newecuction = diagmenu.addAction("Create New ECU")
-        saveecuaction = diagmenu.addAction("Save current ECU")
+        diagmenu = menu.addMenu(_("File"))
+        newecuction = diagmenu.addAction(_("Create New ECU"))
+        saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
-        savevehicleaction = diagmenu.addAction("Save ECU list")
+        savevehicleaction = diagmenu.addAction(_("Save ECU list"))
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
         newecuction.triggered.connect(self.newEcu)
@@ -436,18 +441,18 @@ class Main_widget(gui.QMainWindow):
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
 
-        iskmenu = menu.addMenu("ISK Tools")
+        iskmenu = menu.addMenu(_("ISK Tools"))
         meg2isk = iskmenu.addAction("Megane/Scenic II")
         meg2isk.triggered.connect(lambda: self.getISK('megane2'))
 
-        uchvirginmenu = menu.addMenu("UCH Tools")
-        meg2vir = uchvirginmenu.addAction("Megane2/Scenic2/Clio3 Virgin")
+        uchvirginmenu = menu.addMenu(_("UCH Tools"))
+        meg2vir = uchvirginmenu.addAction(_("Megane2/Scenic2/Clio3 Virgin"))
         meg2vir.triggered.connect(lambda: self.virginECU('megane2UCH'))
 
-        epsvirginmenu = menu.addMenu("EPS(DAE) Tools")
-        m3ev = epsvirginmenu.addAction("Megane3 Virgin")
-        c4ev = epsvirginmenu.addAction("Clio4 Virgin")
-        c3ev = epsvirginmenu.addAction("Clio3 Virgin")
+        epsvirginmenu = menu.addMenu(_("EPS(DAE) Tools"))
+        m3ev = epsvirginmenu.addAction(_("Megane3 Virgin"))
+        c4ev = epsvirginmenu.addAction(_("Clio4 Virgin"))
+        c3ev = epsvirginmenu.addAction(_("Clio3 Virgin"))
         m3ev.triggered.connect(lambda: self.virginECU('megane3EPS'))
         c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
         c3ev.triggered.connect(lambda: self.virginECU('clio3EPS'))
@@ -460,7 +465,7 @@ class Main_widget(gui.QMainWindow):
             return
 
         itemname = unicode(item.text(0).toUtf8(), encoding="UTF-8")
-        nin = gui.QInputDialog.getText(self, 'DDT4All', 'Enter new name')
+        nin = gui.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
@@ -480,7 +485,7 @@ class Main_widget(gui.QMainWindow):
         item.setText(0, newitemname)
 
     def newCategory(self):
-        ncn = gui.QInputDialog.getText(self, 'DDT4All', 'Enter screen name')
+        ncn = gui.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
         necatname = unicode(ncn[0].toUtf8(), encoding="UTF-8")
         if necatname:
             self.paramview.createCategory(necatname)
@@ -490,14 +495,14 @@ class Main_widget(gui.QMainWindow):
         item = self.treeview_params.currentItem()
 
         if not item:
-            self.logview.append("<font color=red>Please select a category before creating new screen</font>")
+            self.logview.append("<font color=red>" + _("Please select a category before creating new screen") + "</font>")
             return
 
         if item.parent() != None:
             item = item.parent()
 
         category = unicode(item.text(0).toUtf8(), encoding="UTF-8")
-        nsn = gui.QInputDialog.getText(self, 'DDT4All', 'Enter screen name')
+        nsn = gui.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
@@ -527,14 +532,14 @@ class Main_widget(gui.QMainWindow):
     def virginECU(self, vehicle):
         if not options.promode:
             msgbox = gui.QMessageBox()
-            msgbox.setText("<center>Enable expert mode to access this menu</center>")
+            msgbox.setText("<center>" + _("Enable expert mode to access this menu") +"</center>")
             msgbox.exec_()
             return
 
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>I'm aware that this operation will clear the selected control unit.</center>"
+        msgbox.setText(_("<center>I'm aware that this operation will clear the selected control unit.</center>"
                        "<center>If you have no idea of what it means, please get out of here.</center>"
-                       "<center>/!\\This part is highly experimental/!\\</center>")
+                       "<center>/!\\This part is highly experimental/!\\</center>"))
 
         msgbox.setStandardButtons(gui.QMessageBox.Yes)
         msgbox.addButton(gui.QMessageBox.Abort)
@@ -574,7 +579,7 @@ class Main_widget(gui.QMainWindow):
 
     def getISK(self, vehicle):
         if options.simulation_mode:
-            self.logview.append("Cannot read ISK in demo mode")
+            self.logview.append(_("Cannot read ISK in demo mode"))
             return
 
         # Reset parameter view to not alter ECU settings
@@ -590,19 +595,19 @@ class Main_widget(gui.QMainWindow):
             # Asking to dump parameters
             isk_data_request =  options.elm.request(req='21AB', positive='61', cache=False)
             if not isk_data_request.startswith("61"):
-                self.logview.append("Cannot read ISK : Bad reply")
+                self.logview.append(_("Cannot read ISK : Bad reply"))
                 return
             # Return to default session
             options.elm.request(req='1081', positive='50', cache=False)
             isk_data_split = isk_data_request.split(" ")
             isk_bytes = " ".join(isk_data_split[19:25])
-            self.logview.append('Your ISK code : <font color=red>' + isk_bytes + '</font>')
+            self.logview.append(_('Your ISK code') +' : <font color=red>' + isk_bytes + '</font>')
             if self.paramview:
                 self.paramview.initELM()
 
     def scan(self):
         msgBox = gui.QMessageBox()
-        msgBox.setText('Scan options')
+        msgBox.setText(_('Scan options'))
         scancan = False
         scankwp = False
 
@@ -612,15 +617,15 @@ class Main_widget(gui.QMainWindow):
         role = msgBox.exec_()
 
         if role == 0:
-            self.logview.append("Scanning CAN")
+            self.logview.append(_("Scanning CAN"))
             scancan = True
 
         if role == 1:
-            self.logview.append("Scanning KWP")
+            self.logview.append(_("Scanning KWP"))
             scankwp = True
 
         if role == 2:
-            self.logview.append("Scanning CAN&KWP")
+            self.logview.append(_("Scanning CAN&KWP"))
             scankwp = True
             scancan = True
 
@@ -653,23 +658,23 @@ class Main_widget(gui.QMainWindow):
         self.progressstatus.setValue(0)
 
         if options.report_data:
-            self.logview.append("Sending ECU informations to database, thank you for your paticipation")
+            self.logview.append(_("Sending ECU informations to database, thank you for your paticipation"))
             self.ecu_scan.send_report()
 
     def setConnected(self, on):
         if options.simulation_mode:
             self.connectedstatus.setStyleSheet("background : orange")
-            self.connectedstatus.setText("EDITION MODE")
+            self.connectedstatus.setText(_("EDITION MODE"))
             return
         if on:
             self.connectedstatus.setStyleSheet("background : green")
-            self.connectedstatus.setText("CONNECTED")
+            self.connectedstatus.setText(_("CONNECTED"))
         else:
             self.connectedstatus.setStyleSheet("background : red")
-            self.connectedstatus.setText("DISCONNECTED")
+            self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
-        filename = gui.QFileDialog.getSaveFileName(self, "Save vehicule (keep '.ecu' extension)",
+        filename = gui.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
         # pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
         if filename == "":
@@ -686,7 +691,7 @@ class Main_widget(gui.QMainWindow):
         jsonfile.close()
 
     def newEcu(self):
-        filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json",
+        filename = gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
 
         basename = os.path.basename(unicode(filename.toUtf8(), encoding="UTF-8"))
@@ -848,10 +853,10 @@ class donationWidget(gui.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>Thuis Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>")
-        okbutton = gui.QPushButton('Yes I contribute')
+        msgbox.setText(_("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
+        okbutton = gui.QPushButton(_('Yes I contribute'))
         msgbox.addButton(okbutton, gui.QMessageBox.YesRole)
-        msgbox.addButton(gui.QPushButton("No, I don't"), gui.QMessageBox.NoRole)
+        msgbox.addButton(gui.QPushButton(_("No, I don't")), gui.QMessageBox.NoRole)
         okbutton.clicked.connect(self.donate)
         msgbox.exec_()
 
@@ -859,7 +864,7 @@ class donationWidget(gui.QLabel):
         url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>")
+        msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
 
 
@@ -873,7 +878,7 @@ class portChooser(gui.QDialog):
         super(portChooser, self).__init__(None)
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
-        label.setText("ELM port selection")
+        label.setText(_("ELM port selection"))
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = donationWidget()
         self.setLayout(layout)
@@ -917,7 +922,7 @@ class portChooser(gui.QDialog):
 
         speedlayout = gui.QHBoxLayout()
         self.speedcombo = gui.QComboBox()
-        speedlabel = gui.QLabel("Port speed")
+        speedlabel = gui.QLabel(_("Port speed"))
         speedlayout.addWidget(speedlabel)
         speedlayout.addWidget(self.speedcombo)
 
@@ -929,12 +934,12 @@ class portChooser(gui.QDialog):
         layout.addLayout(speedlayout)
 
         button_layout = gui.QHBoxLayout()
-        button_con = gui.QPushButton("Connected mode")
-        button_dmo = gui.QPushButton("Edition mode")
-        button_elm_chk = gui.QPushButton("ELM benchmark")
+        button_con = gui.QPushButton(_("Connected mode"))
+        button_dmo = gui.QPushButton(_("Edition mode"))
+        button_elm_chk = gui.QPushButton(_("ELM benchmark"))
 
         wifilayout = gui.QHBoxLayout()
-        wifilabel = gui.QLabel("WiFi port : ")
+        wifilabel = gui.QLabel(_("WiFi port : "))
         self.wifiinput = gui.QLineEdit()
         self.wifiinput.setText("192.168.0.10:35000")
         wifilayout.addWidget(wifilabel)
@@ -944,7 +949,7 @@ class portChooser(gui.QDialog):
         safetychecklayout = gui.QHBoxLayout()
         self.safetycheck = gui.QCheckBox()
         self.safetycheck.setChecked(False)
-        safetylabel = gui.QLabel("I'm aware that I can harm my car if badly used")
+        safetylabel = gui.QLabel(_("I'm aware that I can harm my car if badly used"))
         safetychecklayout.addWidget(self.safetycheck)
         safetychecklayout.addWidget(safetylabel)
         layout.addLayout(safetychecklayout)
@@ -952,7 +957,7 @@ class portChooser(gui.QDialog):
         reportchecklayout = gui.QHBoxLayout()
         self.reportcheck = gui.QCheckBox()
         self.reportcheck.setChecked(True)
-        reportlabel = gui.QLabel("I accept to share ECU informations")
+        reportlabel = gui.QLabel(_("I accept to share ECU informations"))
         reportchecklayout.addWidget(self.reportcheck)
         reportchecklayout.addWidget(reportlabel)
         layout.addLayout(reportchecklayout)
@@ -1051,7 +1056,7 @@ class portChooser(gui.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
             msgbox = gui.QMessageBox()
-            msgbox.setText("You must check the recommandations")
+            msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
 
@@ -1072,7 +1077,7 @@ class portChooser(gui.QDialog):
                 self.done(True)
             else:
                 msgbox = gui.QMessageBox()
-                msgbox.setText("Please select a communication port")
+                msgbox.setText(_("Please select a communication port"))
                 msgbox.exec_()
 
     def demoMode(self):
@@ -1098,11 +1103,11 @@ if __name__ == '__main__':
     ecudirfound = False
 
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
-        print "Using custom DDT database"
+        print _("Using custom DDT database")
         ecudirfound = True
 
     if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
-        print "Using DDT2000 default installation"
+        print _("Using DDT2000 default installation")
         options.ecus_dir = "C:/DDT2000data/ecus/"
         ecudirfound = True
 
@@ -1126,17 +1131,17 @@ if __name__ == '__main__':
 
         if not options.port:
             msgbox = gui.QMessageBox()
-            msgbox.setText("No COM port selected")
+            msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print "Initilizing ELM with speed %i..." % port_speed
+        print _("Initilizing ELM with speed %i...") % port_speed
         options.elm = elm.ELM(options.port, port_speed)
 
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = gui.QMessageBox()
-            msgbox.setText("No ELM327 or OBDLINK-SX detected on COM port " + options.port)
+            msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:
             nok = False

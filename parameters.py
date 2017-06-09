@@ -10,6 +10,11 @@ from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, unicodedata, argparse, zipfile, glob
 from StringIO import StringIO
+import gettext
+
+# Set up message catalog access
+t = gettext.translation('ddt4all', 'locale', fallback=True)
+_ = t.ugettext
 
 # TODO :
 # Read freezeframe data // Done (partially)
@@ -392,9 +397,9 @@ class paramWidget(gui.QWidget):
     def hexeditor(self):
         self.dialogbox = gui.QWidget()
         wlayout = gui.QVBoxLayout()
-        diaglabel = gui.QLabel("Diagnotic session")
-        inputlabel = gui.QLabel("Input")
-        outputlabel = gui.QLabel("Output")
+        diaglabel = gui.QLabel(_("Diagnotic session"))
+        inputlabel = gui.QLabel(_("Input"))
+        outputlabel = gui.QLabel(_("Output"))
         self.diagsession = gui.QComboBox()
         rqsts = self.ecurequestsparser.requests.keys()
 
