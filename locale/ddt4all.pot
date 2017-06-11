@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:27+0200\n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,38 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: parameters.py:64
+msgid "Returning to defaut session..."
+msgstr ""
+
+#: parameters.py:83
+msgid "Save ECU (keep '.json' extension)"
+msgstr ""
+
+#: parameters.py:159 parameters.py:187 parameters.py:206
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr ""
+
+#: parameters.py:229
+msgid "Enter label name"
+msgstr ""
+
+#: parameters.py:295
+msgid "Add button"
+msgstr ""
+
+#: parameters.py:296
+msgid "Add label"
+msgstr ""
+
+#: parameters.py:304
+msgid "Rename label"
+msgstr ""
+
+#: parameters.py:308
+msgid "Remove element"
+msgstr ""
 
 #: parameters.py:401
 msgid "Diagnotic session"
@@ -27,4 +59,112 @@ msgstr ""
 
 #: parameters.py:403
 msgid "Output"
+msgstr ""
+
+#: parameters.py:444
+msgid "Initializing CAN mode"
+msgstr ""
+
+#: parameters.py:451
+msgid "Initializing KWP2000 mode"
+msgstr ""
+
+#: parameters.py:457
+msgid "Initializing ISO8 mode"
+msgstr ""
+
+#: parameters.py:462
+msgid "Protocol "
+msgstr ""
+
+#: parameters.py:462
+msgid " not supported"
+msgstr ""
+
+#: parameters.py:523
+msgid "XML file not found : "
+msgstr ""
+
+#: parameters.py:530
+msgid "Invalid DDT file"
+msgstr ""
+
+#: parameters.py:559
+msgid "Switching to session mode"
+msgstr ""
+
+#: parameters.py:576
+msgid "Sending ELM request :"
+msgstr ""
+
+#: parameters.py:578
+msgid "Blocked ELM request :"
+msgstr ""
+
+#: parameters.py:582
+msgid "Sending ELM request:"
+msgstr ""
+
+#: parameters.py:591
+msgid "Sending simulated ELM request :"
+msgstr ""
+
+#: parameters.py:601
+msgid "ELM response : "
+msgstr ""
+
+#: parameters.py:744
+msgid "Button request not found : "
+msgstr ""
+
+#: parameters.py:758
+msgid "Sending request :"
+msgstr ""
+
+#: parameters.py:800
+msgid "Request aborted (look at red paramters entries): "
+msgstr ""
+
+#: parameters.py:820
+msgid "Invalid"
+msgstr ""
+
+#: parameters.py:898
+msgid "Cannot call request "
+msgstr ""
+
+#: parameters.py:917
+msgid "Clearing DTC information"
+msgstr ""
+
+#: parameters.py:926
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr ""
+
+#: parameters.py:930
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr ""
+
+#: parameters.py:931
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr ""
+
+#: parameters.py:970
+msgid "Invalid response for ReadDTC command"
+msgstr ""
+
+#: parameters.py:979
+msgid "No DTC"
+msgstr ""
+
+#: parameters.py:988
+msgid "Clear ALL DTC"
+msgstr ""
+
+#: parameters.py:994
+msgid "ECU trouble codes"
+msgstr ""
+
+#: parameters.py:1027
+msgid "Parsing screen "
 msgstr ""

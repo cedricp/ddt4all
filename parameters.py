@@ -61,7 +61,7 @@ class paramWidget(gui.QWidget):
 
     def __del__(self):
         # Return to default session
-        self.logview.append("<font color=blue>Returning to defaut session...</font>")
+        self.logview.append("<font color=blue>" + _("Returning to defaut session...") + "</font>")
         if not options.simulation_mode:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 options.elm.start_session_can('1081')
@@ -80,7 +80,7 @@ class paramWidget(gui.QWidget):
 
     def saveEcu(self, name=None):
         if not name:
-            filename = gui.QFileDialog.getSaveFileName(self, "Save ECU (keep '.json' extension)", "./json/myecu.json", "*.json")
+            filename = gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
         else:
             filename = name
 
@@ -156,7 +156,7 @@ class paramWidget(gui.QWidget):
 
     def addParameter(self, requestname, issend, screenname, item):
         if self.parser != "json":
-            self.logview.append("<font color=red>To be able to edit your screen, first export it in JSON format</font>")
+            self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
         self.init(screenname)
@@ -184,7 +184,7 @@ class paramWidget(gui.QWidget):
 
     def addButton(self):
         if self.parser != "json":
-            self.logview.append("<font color=red>To be able to edit your screen, first export it in JSON format</font>")
+            self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
         button_dict = {}
@@ -203,7 +203,7 @@ class paramWidget(gui.QWidget):
 
     def addLabel(self):
         if self.parser != "json":
-            self.logview.append("<font color=red>To be able to edit your screen, first export it in JSON format</font>")
+            self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
         label_dict = {}
@@ -226,7 +226,7 @@ class paramWidget(gui.QWidget):
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
                 if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
-                    nln = gui.QInputDialog.getText(self, 'DDT4All', 'Enter label name')
+                    nln = gui.QInputDialog.getText(self, 'DDT4All', _('Enter label name'))
                     if not nln[1]:
                         return
                     newlabelname = unicode(nln[0].toUtf8(), encoding="UTF-8")
@@ -292,8 +292,8 @@ class paramWidget(gui.QWidget):
             if event.button() == core.Qt.RightButton:
                 self.currentwidget = widget
                 popmenu = gui.QMenu(self)
-                addbuttonaction = gui.QAction("Add button", popmenu)
-                addlabelaction = gui.QAction("Add label", popmenu)
+                addbuttonaction = gui.QAction(_("Add button"), popmenu)
+                addlabelaction = gui.QAction(_("Add label"), popmenu)
 
                 popmenu.addAction(addbuttonaction)
                 popmenu.addAction(addlabelaction)
@@ -301,11 +301,11 @@ class paramWidget(gui.QWidget):
                 addlabelaction.triggered.connect(self.addLabel)
 
                 if isinstance(widget, displaymod.labelWidget):
-                    renamelabelaction = gui.QAction("Rename label", popmenu)
+                    renamelabelaction = gui.QAction(_("Rename label"), popmenu)
                     popmenu.addAction(renamelabelaction)
                     renamelabelaction.triggered.connect(self.renameLabel)
                 if found:
-                    removeaction = gui.QAction("Remove element", popmenu)
+                    removeaction = gui.QAction(_("Remove element"), popmenu)
                     popmenu.addSeparator()
                     popmenu.addAction(removeaction)
                     removeaction.triggered.connect(self.removeElement)
@@ -441,25 +441,25 @@ class paramWidget(gui.QWidget):
     def initELM(self):
         if not options.simulation_mode:
             if self.ecurequestsparser.ecu_protocol == 'CAN':
-                self.logview.append("Initializing CAN mode")
+                self.logview.append(_("Initializing CAN mode"))
                 short_addr = options.elm.get_can_addr(self.ecurequestsparser.ecu_send_id)
                 ecu_conf = {'idTx': self.ecurequestsparser.ecu_send_id, 'idRx':
                     self.ecurequestsparser.ecu_recv_id, 'ecuname': str(self.ecu_name)}
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf)
             elif self.ecurequestsparser.ecu_protocol == 'KWP2000':
-                self.logview.append("Initializing KWP2000 mode")
+                self.logview.append(_("Initializing KWP2000 mode"))
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
                 options.opt_si = not self.ecurequestsparser.fastinit
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.ecurequestsparser.funcaddr, ecu_conf)
             elif self.ecurequestsparser.ecu_protocol == 'ISO8':
-                self.logview.append("Initializing ISO8 mode")
+                self.logview.append(_("Initializing ISO8 mode"))
                 ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'ISO8'}
                 options.elm.init_iso()
                 options.elm.set_iso8_addr(self.ecurequestsparser.funcaddr, ecu_conf)
             else:
-                self.logview.append("Protocol " + self.ecurequestsparser.ecu_protocol + " not supported")
+                self.logview.append(_("Protocol ") + self.ecurequestsparser.ecu_protocol + _(" not supported"))
         if self.main_protocol_status:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
@@ -520,14 +520,14 @@ class paramWidget(gui.QWidget):
             xdoc = xdom.documentElement
 
             if not xdoc:
-                print("XML file not found : " + self.ddtfile)
+                print(_("XML file not found : ") + self.ddtfile)
                 return
 
             self.ecurequestsparser = ecu.Ecu_file(xdoc)
 
             target = self.getChildNodesByName(xdoc, u"Target")[0]
             if not target:
-                self.logview.append("Invalid DDT file")
+                self.logview.append(_("Invalid DDT file"))
                 return
 
             categories = self.getChildNodesByName(target, u"Categories")
@@ -556,7 +556,7 @@ class paramWidget(gui.QWidget):
         elm_response = '00 ' * 70
 
         if command.startswith('10'):
-            self.logview.append('<font color=blue>Switching to session mode %s</font>' % command)
+            self.logview.append('<font color=blue>' +_('Switching to session mode') + '%s</font>' % command)
             if not options.simulation_mode:
                 if self.ecurequestsparser.ecu_protocol == "CAN":
                     options.elm.start_session_can(command)
@@ -573,13 +573,13 @@ class paramWidget(gui.QWidget):
                         or command.startswith('17'):
 
                     elm_response = options.elm.request(command, cache=False)
-                    txt = '<font color=blue>Sending ELM request :</font>'
+                    txt = '<font color=blue>' + _('Sending ELM request :') + '</font>'
                 else:
-                    txt = '<font color=green>Blocked ELM request :</font>'
+                    txt = '<font color=green>' + _('Blocked ELM request :') + '</font>'
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
-                txt = '<font color=red>Sending ELM request:</font>'
+                txt = '<font color=red>' + _('Sending ELM request:') + '</font>'
         else:
             if "210A" in command:
                 elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
@@ -588,17 +588,17 @@ class paramWidget(gui.QWidget):
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
                 # Test for EDC16
                 #elm_response = "57 03 05 34 68 06 70 4F 09 A4 09 A4 17"
-            txt = '<font color=green>Sending simulated ELM request :</font>'
+            txt = '<font color=green>' + _('Sending simulated ELM request :') + '</font>'
 
         if not auto or options.log_all:
             self.logview.append(txt + command)
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
-            self.logview.append("<font color=red>Bad ELM response :</font> " + nrsp)
+            self.logview.append("<font color=red>' + _('Bad ELM response :') + '</font> " + nrsp)
 
         if not auto or options.log_all:
-            self.logview.append('ELM response : ' + elm_response)
+            self.logview.append(_('ELM response : ') + elm_response)
 
         return elm_response
 
@@ -741,7 +741,7 @@ class paramWidget(gui.QWidget):
 
     def buttonClicked(self, txt):
         if not txt in self.button_requests:
-            self.logview.append(u"<font color=red>Button request not found : " + txt + u"</font>")
+            self.logview.append(u"<font color=red>" + _("Button request not found : ") + txt + u"</font>")
             return
 
         if txt in self.button_messages:
@@ -755,7 +755,7 @@ class paramWidget(gui.QWidget):
         for req in request_list:
             request_delay = float(req['Delay'].encode('ascii'))
             request_name  = req['RequestName']
-            self.logview.append(u'<font color=purple>Sending request :</font>' + request_name)
+            self.logview.append(u'<font color=purple>' + _('Sending request :') + '</font>' + request_name)
 
             ecu_request = self.ecurequestsparser.requests[request_name]
             sendbytes_data_items = ecu_request.sendbyte_dataitems
@@ -797,7 +797,7 @@ class paramWidget(gui.QWidget):
 
                 if not elm_data_stream:
                     widget.setStyleSheet("background: red")
-                    self.logview.append("Request aborted (look at red paramters entries): " + str(input_value))
+                    self.logview.append(_("Request aborted (look at red paramters entries): ") + str(input_value))
                     return
 
                 widget.setStyleSheet("background: white")
@@ -817,7 +817,7 @@ class paramWidget(gui.QWidget):
 
                     if value == None:
                         if data: data.widget.setStyleSheet("background: red")
-                        value = "Invalid"
+                        value = _("Invalid")
                     else:
                         if data: data.widget.setStyleSheet("background: white")
 
@@ -895,7 +895,7 @@ class paramWidget(gui.QWidget):
             time.sleep(delay / 1000.)
             request = self.getRequest(self.ecurequestsparser.requests, req_name)
             if not request:
-                self.logview.append(u"Cannot call request " + req_name)
+                self.logview.append(_("Cannot call request ") + req_name)
 
             self.sendElm(request.sentbytes, True)
 
@@ -914,7 +914,7 @@ class paramWidget(gui.QWidget):
             elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                 options.elm.start_session_iso('10C0')
 
-        self.logview.append("Clearing DTC information")
+        self.logview.append(_("Clearing DTC information"))
 
         if "ClearDiagnosticInformation.All" in self.ecurequestsparser.requests:
             request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"].sentbytes
@@ -923,12 +923,12 @@ class paramWidget(gui.QWidget):
         elif "Clear Diagnostic Information" in self.ecurequestsparser.requests:
             request = self.ecurequestsparser.requests["Clear Diagnostic Information"].sentbytes
         else:
-            self.logview.append("No ClearDTC request for that ECU, will send default 14FF00")
+            self.logview.append(_("No ClearDTC request for that ECU, will send default 14FF00"))
             request = "14FF00"
 
         msgbox = gui.QMessageBox()
-        msgbox.setText("<center>You are about to clear diagnostic troubles codes</center>"
-                       "<center>Ae you sure this is what you want.</center>")
+        msgbox.setText(_("<center>You are about to clear diagnostic troubles codes</center>") +
+                       _("<center>Ae you sure this is what you want.</center>"))
 
         msgbox.setStandardButtons(gui.QMessageBox.Yes)
         msgbox.addButton(gui.QMessageBox.Abort)
@@ -967,7 +967,7 @@ class paramWidget(gui.QWidget):
 
         if "RESPONSE" in can_response:
             msgbox = gui.QMessageBox()
-            msgbox.setText("Invalid response for ReadDTC command")
+            msgbox.setText(_("Invalid response for ReadDTC command"))
             msgbox.exec_()
             return
 
@@ -976,7 +976,7 @@ class paramWidget(gui.QWidget):
         if len(can_response) == 2:
             #No errors
             msgbox = gui.QMessageBox()
-            msgbox.setText("No DTC")
+            msgbox.setText(_("No DTC"))
             msgbox.exec_()
             return
 
@@ -985,13 +985,13 @@ class paramWidget(gui.QWidget):
         dtc_view.setReadOnly(True)
         layout = gui.QVBoxLayout()
         dtcdialog.setLayout(layout)
-        clearbutton = gui.QPushButton("Clear ALL DTC")
+        clearbutton = gui.QPushButton(_("Clear ALL DTC"))
         layout.addWidget(clearbutton)
         layout.addWidget(dtc_view)
 
         clearbutton.clicked.connect(self.clearDTC)
 
-        html = '<h1 style="color:red">ECU trouble codes</color></h1>'
+        html = '<h1 style="color:red">' + _('ECU trouble codes') + '</color></h1>'
 
         while len(can_response) >= shiftbytecount + 2:
             html += '<h2 style="color:orange">DTC #%i' % dtc_num + "</h2>"
@@ -1024,7 +1024,7 @@ class paramWidget(gui.QWidget):
 
     def requestNameChanged(self, oldname, newname):
         for screen_k, screen_data in self.layoutdict['screens'].iteritems():
-            print "Parsing screen ", screen_k
+            print _("Parsing screen "), screen_k
             for input_data in screen_data['inputs']:
                 if oldname == input_data['request']:
                     print "found request in input ", screen_k
