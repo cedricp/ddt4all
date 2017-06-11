@@ -5,7 +5,7 @@ import PyQt4.QtCore as core
 import gettext
 
 # Set up message catalog access
-t = gettext.translation('dataedit', 'locale', fallback=True)
+t = gettext.translation('dataeditor', 'locale', fallback=True)
 _ = t.ugettext
 
 class Bit_container(gui.QFrame):
