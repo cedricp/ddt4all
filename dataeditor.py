@@ -168,7 +168,7 @@ class dataTable(gui.QTableWidget):
             action_goto.triggered.connect(lambda state, it=item_name: self.goto_item(it))
             action_remove.triggered.connect(lambda state, it=item_name: self.remove_item(it))
 
-            screenMenu = gui.QMenu("_(Add to screen")
+            screenMenu = gui.QMenu(_("Add to screen"))
             for sn in options.main_window.screennames:
                 sa = gui.QAction(sn, screenMenu)
                 sa.triggered.connect(lambda state, name=sn, it=item_name: self.add_to_screen(name, it))

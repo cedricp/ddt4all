@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:11+0200\n"
-"PO-Revision-Date: 2017-06-11 21:11+0200\n"
+"POT-Creation-Date: 2017-06-11 21:28+0200\n"
+"PO-Revision-Date: 2017-06-11 21:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -24,6 +24,10 @@ msgstr "Aller à la donnée"
 #: dataeditor.py:166
 msgid "Remove"
 msgstr "Supprimer"
+
+#: dataeditor.py:171
+msgid "Add to screen"
+msgstr "Ajouter à l'écran"
 
 #: dataeditor.py:261
 msgid "Request name;Manual"
