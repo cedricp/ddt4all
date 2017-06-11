@@ -424,10 +424,11 @@ class Ecu_data:
 
         if self.scaled:
             if not test_mode:
-                if not str(value).isdigit():
+                try:
+                    value = float(value)
+                except:
                     return None
 
-                value = float(value)
                 # Input value must be base 10
                 value = int((value * float(self.divideby) - float(self.offset)) / float(self.step))
             else:
