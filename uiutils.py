@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import PyQt4.QtGui as gui
 
 def getChildNodesByName(parent, name):

@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 simulation_mode = False
 port_speed = 38400
 port = ""

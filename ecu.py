@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import math, string
 import options
 import elm

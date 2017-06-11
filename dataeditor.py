@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
 import ecu, math, string, options
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
+import gettext
 
+# Set up message catalog access
+t = gettext.translation('dataedit', 'locale', fallback=True)
+_ = t.ugettext
 
 class Bit_container(gui.QFrame):
     def __init__(self, data, num, parent=None):
@@ -157,13 +162,13 @@ class dataTable(gui.QTableWidget):
             item_name = self.itemAt(pos).text()
             if not item_name:
                 return
-            action_goto = gui.QAction("Goto data", menu)
-            action_remove = gui.QAction("Remove", menu)
+            action_goto = gui.QAction(_("Goto data"), menu)
+            action_remove = gui.QAction(_("Remove"), menu)
 
             action_goto.triggered.connect(lambda state, it=item_name: self.goto_item(it))
             action_remove.triggered.connect(lambda state, it=item_name: self.remove_item(it))
 
-            screenMenu = gui.QMenu("Add to screen")
+            screenMenu = gui.QMenu("_(Add to screen")
             for sn in options.main_window.screennames:
                 sa = gui.QAction(sn, screenMenu)
                 sa.triggered.connect(lambda state, name=sn, it=item_name: self.add_to_screen(name, it))
@@ -253,7 +258,7 @@ class requestTable(gui.QTableWidget):
         self.setRowCount(numrows)
         self.setColumnCount(2)
 
-        self.setHorizontalHeaderLabels(core.QString("Request name;Manual").split(";"))
+        self.setHorizontalHeaderLabels(core.QString(_("Request name;Manual")).split(";"))
 
         count = 0
         for req in requestsk:
@@ -283,8 +288,8 @@ class paramEditor(gui.QFrame):
 
         add_layout = gui.QHBoxLayout()
         self.data_list = gui.QComboBox()
-        self.button_add = gui.QPushButton("Add")
-        self.refresh = gui.QPushButton("Refresh")
+        self.button_add = gui.QPushButton(_("Add"))
+        self.refresh = gui.QPushButton(_("Refresh"))
         self.button_add.setFixedWidth(50)
         self.refresh.setFixedWidth(80)
         add_layout.addWidget(self.data_list)
@@ -292,9 +297,9 @@ class paramEditor(gui.QFrame):
         add_layout.addWidget(self.button_add)
 
         if issend:
-            self.labelreq = gui.QLabel("Send request bytes (HEX)")
+            self.labelreq = gui.QLabel(_("Send request bytes (HEX)"))
         else:
-            self.labelreq = gui.QLabel("Receive bytes (HEX)")
+            self.labelreq = gui.QLabel(_("Receive bytes (HEX)"))
         self.inputreq = gui.QLineEdit()
         self.inputreq.textChanged.connect(self.request_changed)
         self.button_add.clicked.connect(self.add_data)
@@ -442,7 +447,7 @@ class paramEditor(gui.QFrame):
             self.spin_shift_byte.setValue(req.shiftbytescount)
             self.spin_data_len.setValue(req.minbytes)
 
-        headerstrings = core.QString("Data name;Start byte;Bit offset;Bit count;Endianess").split(";")
+        headerstrings = core.QString(_("Data name;Start byte;Bit offset;Bit count;Endianess")).split(";")
         self.table.setHorizontalHeaderLabels(headerstrings)
         self.table.init(self.send, self.current_request.name)
 
@@ -460,9 +465,9 @@ class paramEditor(gui.QFrame):
                 bytescount = ln
 
             endian_combo = gui.QComboBox()
-            endian_combo.addItem("Little")
-            endian_combo.addItem("Big")
-            endian_combo.addItem("Inherits globals")
+            endian_combo.addItem(_("Little"))
+            endian_combo.addItem(_("Big"))
+            endian_combo.addItem(_("Inherits globals"))
 
             if endian == "Big":
                 endian_combo.setCurrentIndex(1)
@@ -518,11 +523,11 @@ class paramEditor(gui.QFrame):
         self.current_request.minbytes = self.spin_data_len.value()
 
     def endian_changed(self, di, slf):
-        if slf.currentText() == "Inherits globals":
+        if slf.currentText() == _("Inherits globals"):
             di.endian = ""
-        elif slf.currentText() == "Little":
+        elif slf.currentText() == _("Little"):
             di.endian = "Little"
-        elif slf.currentText() == "Big":
+        elif slf.currentText() == _("Big"):
             di.endian = "Big"
         self.currentdataitem = di.name
         self.update_bitview(self.currentdataitem)
@@ -573,8 +578,8 @@ class requestEditor(gui.QWidget):
         self.ecurequestsparser = None
 
         layout_action = gui.QHBoxLayout()
-        button_reload = gui.QPushButton("Reload requests")
-        button_add = gui.QPushButton("Add request")
+        button_reload = gui.QPushButton(_("Reload requests"))
+        button_add = gui.QPushButton(_("Add request"))
         layout_action.addWidget(button_reload)
         layout_action.addWidget(button_add)
         layout_action.addStretch()
@@ -592,8 +597,8 @@ class requestEditor(gui.QWidget):
         self.receivebyteeditor = paramEditor(False)
         self.tabs = gui.QTabWidget()
 
-        self.tabs.addTab(self.sendbyteeditor, "Send bytes")
-        self.tabs.addTab(self.receivebyteeditor, "Receive bytes")
+        self.tabs.addTab(self.sendbyteeditor, _("Send bytes"))
+        self.tabs.addTab(self.receivebyteeditor, _("Receive bytes"))
 
         self.layv.addLayout(layout_action)
         self.layv.addWidget(self.tabs)
@@ -649,10 +654,10 @@ class numericListPanel(gui.QFrame):
 
         layoutv = gui.QVBoxLayout()
         layout = gui.QGridLayout()
-        labelnob = gui.QLabel("Number of bits")
-        lablelsigned = gui.QLabel("Signed")
-        newitem = gui.QPushButton("Add item")
-        delitem = gui.QPushButton("Del item")
+        labelnob = gui.QLabel(_("Number of bits"))
+        lablelsigned = gui.QLabel(_("Signed"))
+        newitem = gui.QPushButton(_("Add item"))
+        delitem = gui.QPushButton(_("Del item"))
 
         newitem.clicked.connect(self.add_item)
         delitem.clicked.connect(self.def_item)
@@ -691,7 +696,7 @@ class numericListPanel(gui.QFrame):
         spinvalue.setRange(-1000000, 1000000)
         spinvalue.setValue(value)
         self.itemtable.setCellWidget(newrow, 0, spinvalue)
-        self.itemtable.setItem(newrow, 1, gui.QTableWidgetItem("New item"))
+        self.itemtable.setItem(newrow, 1, gui.QTableWidgetItem(_("New item")))
         self.itemtable.setItem(newrow, 0, gui.QTableWidgetItem(str(value).zfill(5)))
 
     def def_item(self):
@@ -743,7 +748,7 @@ class numericListPanel(gui.QFrame):
             self.itemtable.setItem(count, 1, gui.QTableWidgetItem(k))
             count += 1
 
-        headerstrings = core.QString("Value;Text").split(";")
+        headerstrings = core.QString(_("Value;Text")).split(";")
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
         self.itemtable.resizeRowsToContents()
@@ -759,8 +764,8 @@ class otherPanel(gui.QFrame):
         self.data = dataitem
 
         layout = gui.QGridLayout()
-        labelnob = gui.QLabel("Number of bytes")
-        lableunit = gui.QLabel("Unit")
+        labelnob = gui.QLabel(_("Number of bytes"))
+        lableunit = gui.QLabel(_("Unit"))
 
         layout.addWidget(labelnob, 0, 0)
         layout.addWidget(lableunit, 1, 0)
@@ -810,11 +815,11 @@ class numericPanel(gui.QFrame):
         self.data = dataitem
 
         layout = gui.QGridLayout()
-        labelnob = gui.QLabel("Number of bit")
-        lableunit = gui.QLabel("Unit")
-        labelsigned = gui.QLabel("Signed")
-        labelformat = gui.QLabel("Format")
-        labeldoc = gui.QLabel("Value = (AX+B) / C")
+        labelnob = gui.QLabel(_("Number of bit"))
+        lableunit = gui.QLabel(_("Unit"))
+        labelsigned = gui.QLabel(_("Signed"))
+        labelformat = gui.QLabel(_("Format"))
+        labeldoc = gui.QLabel(_("Value = (AX+B) / C"))
         labela = gui.QLabel("A")
         labelb = gui.QLabel("B")
         labelc = gui.QLabel("C")
@@ -887,9 +892,9 @@ class dataEditor(gui.QWidget):
         self.currentecudata = None
 
         layout_action = gui.QHBoxLayout()
-        button_new = gui.QPushButton("New")
-        button_reload = gui.QPushButton("Reload")
-        button_validate = gui.QPushButton("Validate changes")
+        button_new = gui.QPushButton(_("New"))
+        button_reload = gui.QPushButton(_("Reload"))
+        button_validate = gui.QPushButton(_("Validate changes"))
         layout_action.addWidget(button_new)
         layout_action.addWidget(button_reload)
         layout_action.addWidget(button_validate)
@@ -922,17 +927,17 @@ class dataEditor(gui.QWidget):
         self.layoutv.addLayout(layout_action)
 
         desclayout = gui.QHBoxLayout()
-        labeldescr = gui.QLabel("Description")
+        labeldescr = gui.QLabel(_("Description"))
         self.descpriptioneditor = gui.QLineEdit()
         desclayout.addWidget(labeldescr)
         desclayout.addWidget(self.descpriptioneditor)
 
         typelayout = gui.QHBoxLayout()
-        typelabel = gui.QLabel("Data type")
+        typelabel = gui.QLabel(_("Data type"))
         self.typecombo = gui.QComboBox()
-        self.typecombo.addItem("Numeric")
-        self.typecombo.addItem("Numeric items")
-        self.typecombo.addItem("Hex")
+        self.typecombo.addItem(_("Numeric"))
+        self.typecombo.addItem(_("Numeric items"))
+        self.typecombo.addItem(_("Hex"))
         typelayout.addWidget(typelabel)
         typelayout.addWidget(self.typecombo)
 
@@ -966,13 +971,13 @@ class dataEditor(gui.QWidget):
         if not self.ecurequestsparser:
             return
 
-        new_data_name = "New data"
+        new_data_name = _("New data")
 
         while new_data_name in self.ecurequestsparser.data.keys():
             new_data_name += "_"
 
         new_data = ecu.Ecu_data(None, new_data_name)
-        new_data.comment = "Replace me with request description"
+        new_data.comment = _("Replace me with request description")
         self.ecurequestsparser.data[new_data_name] = new_data
 
         self.reload()
@@ -1107,7 +1112,7 @@ class dataEditor(gui.QWidget):
 
         self.datatable.sortItems(0, core.Qt.AscendingOrder)
 
-        headerstrings = core.QString("Data name;Description").split(";")
+        headerstrings = core.QString(_("Data name;Description")).split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
         self.datatable.resizeRowsToContents()
@@ -1143,11 +1148,11 @@ class buttonData(gui.QFrame):
         self.delaybox.setSingleStep(50)
         self.delaybox.setFixedWidth(80)
         self.requestcombo = gui.QComboBox()
-        self.requestaddbutton = gui.QPushButton("Add")
-        self.requestdelbutton = gui.QPushButton("Del")
-        self.requestrefbutton = gui.QPushButton("Refresh")
-        self.requestmoveupbutton = gui.QPushButton("Move up")
-        self.requestcheckbutton = gui.QPushButton("Check")
+        self.requestaddbutton = gui.QPushButton(_("Add"))
+        self.requestdelbutton = gui.QPushButton(_("Del"))
+        self.requestrefbutton = gui.QPushButton(_("Refresh"))
+        self.requestmoveupbutton = gui.QPushButton(_("Move up"))
+        self.requestcheckbutton = gui.QPushButton(_("Check"))
 
         layoutbar.addWidget(self.delaybox)
         layoutbar.addWidget(self.requestcombo)
@@ -1191,7 +1196,7 @@ class buttonData(gui.QFrame):
         requestname = self.currentbuttonparams[currentrowidx]['RequestName']
 
         if requestname not in self.ecurequests.requests.keys():
-            options.main_window.logview.append("Request %s not found" % requestname)
+            options.main_window.logview.append(_("Request %s not found") % requestname)
             return
 
         request = self.ecurequests.requests[requestname]
@@ -1210,13 +1215,13 @@ class buttonData(gui.QFrame):
                         break
 
         if len(itemsfound) == numfound:
-            options.main_window.logview.append("<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>" % requestname)
+            options.main_window.logview.append(_("<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>") % requestname)
             return
 
-        options.main_window.logview.append("<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>" % requestname)
+        options.main_window.logview.append(_("<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>") % requestname)
         for k, v in itemsfound.iteritems():
             if not v:
-                options.main_window.logview.append("<font color=orange> - '%s'</font>" % k)
+                options.main_window.logview.append(_("<font color=orange> - '%s'</font>") % k)
 
     def clear(self):
         self.requesttable.clear()
@@ -1312,7 +1317,7 @@ class buttonData(gui.QFrame):
                 itemdelay.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
                 count += 1
 
-        headerstrings = core.QString("Delay;Request").split(";")
+        headerstrings = core.QString(_("Delay;Request")).split(";")
         self.requesttable.setHorizontalHeaderLabels(headerstrings)
         self.requesttable.resizeColumnsToContents()
         self.requesttable.resizeRowsToContents()
@@ -1404,8 +1409,8 @@ class buttonEditor(gui.QWidget):
         num_buttons = len(self.layout['buttons'])
         self.buttontable.setRowCount(num_buttons + 1)
 
-        scitem = gui.QTableWidgetItem("Screen initialization")
-        noitem = gui.QTableWidgetItem("Requests to send before screen drawing")
+        scitem = gui.QTableWidgetItem(_("Screen initialization"))
+        noitem = gui.QTableWidgetItem(_("Requests to send before screen drawing"))
         self.buttontable.setItem(0, 0, scitem)
         self.buttontable.setItem(0, 1, noitem)
         scitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
@@ -1419,7 +1424,7 @@ class buttonEditor(gui.QWidget):
             uniquenameitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
             count += 1
 
-        headerstrings = core.QString("Button name;Unique name").split(";")
+        headerstrings = core.QString(_("Button name;Unique name")).split(";")
         self.buttontable.setHorizontalHeaderLabels(headerstrings)
         self.buttontable.resizeColumnsToContents()
         self.buttontable.resizeRowsToContents()
@@ -1488,21 +1493,21 @@ class ecuParamEditor(gui.QFrame):
         self.protocolcombo.addItem("KWP2000 Slow Init")
         self.protocolcombo.addItem("KWP2000 Fast Init")
         self.protocolcombo.addItem("ISO8")
-        gridlayout.addWidget(gui.QLabel("ECU Function address"), 0, 0)
+        gridlayout.addWidget(gui.QLabel(_("ECU Function address")), 0, 0)
         gridlayout.addWidget(self.funcadressedit, 0, 1)
 
-        gridlayout.addWidget(gui.QLabel("ECU Protocol"), 4, 0)
+        gridlayout.addWidget(gui.QLabel(_("ECU Protocol")), 4, 0)
         gridlayout.addWidget(self.protocolcombo, 4, 1)
-        self.addr1label = gui.QLabel("Tool > Ecu ID (Hex)")
+        self.addr1label = gui.QLabel(_("Tool > Ecu ID (Hex)"))
         gridlayout.addWidget(self.addr1label, 1, 0)
-        self.addr2label = gui.QLabel("Ecu > Tool ID (Hex)")
+        self.addr2label = gui.QLabel(_("Ecu > Tool ID (Hex)"))
         gridlayout.addWidget(self.addr2label, 2, 0)
-        gridlayout.addWidget(gui.QLabel("Coding"), 3, 0)
+        gridlayout.addWidget(gui.QLabel(_("Coding")), 3, 0)
         self.toolecuidbox = hexSpinBox()
         self.ecutoolidbox = hexSpinBox()
         self.codingcombo = gui.QComboBox()
-        self.codingcombo.addItem("Big Endian")
-        self.codingcombo.addItem("Little Endian")
+        self.codingcombo.addItem(_("Big Endian"))
+        self.codingcombo.addItem(_("Little Endian"))
         gridlayout.addWidget(self.toolecuidbox, 1, 1)
         gridlayout.addWidget(self.ecutoolidbox, 2, 1)
         gridlayout.addWidget(self.codingcombo, 3, 1)
@@ -1517,7 +1522,7 @@ class ecuParamEditor(gui.QFrame):
         self.identtable.itemSelectionChanged.connect(self.selection_changed)
         layoutv.addWidget(self.identtable)
 
-        headerstrings = core.QString("Diag version;Supplier;Soft;Version").split(";")
+        headerstrings = core.QString(_("Diag version;Supplier;Soft;Version")).split(";")
         self.identtable.setHorizontalHeaderLabels(headerstrings)
 
         inputayout = gui.QHBoxLayout()
@@ -1525,18 +1530,18 @@ class ecuParamEditor(gui.QFrame):
         self.inputsupplier = hexLineEdit(6, True)
         self.inputsoft = hexLineEdit(4, False)
         self.inputversion = hexLineEdit(4, False)
-        self.addbutton = gui.QPushButton("Add new")
-        self.delbutton = gui.QPushButton("Delete selected")
-        inputayout.addWidget(gui.QLabel("Diag version"))
+        self.addbutton = gui.QPushButton(_("Add new"))
+        self.delbutton = gui.QPushButton(_("Delete selected"))
+        inputayout.addWidget(gui.QLabel(_("Diag version")))
         inputayout.addWidget(self.inputdiag)
 
-        inputayout.addWidget(gui.QLabel("Supplier"))
+        inputayout.addWidget(gui.QLabel(_("Supplier")))
         inputayout.addWidget(self.inputsupplier)
 
-        inputayout.addWidget(gui.QLabel("Soft"))
+        inputayout.addWidget(gui.QLabel(_("Soft")))
         inputayout.addWidget(self.inputsoft)
 
-        inputayout.addWidget(gui.QLabel("Version"))
+        inputayout.addWidget(gui.QLabel(_("Version")))
         inputayout.addWidget(self.inputversion)
 
         inputayout.addWidget(self.addbutton)
@@ -1611,8 +1616,8 @@ class ecuParamEditor(gui.QFrame):
             self.ecurequestsparser.ecu_protocol = "CAN"
             self.toolecuidbox.set_can(True)
             self.ecutoolidbox.set_can(True)
-            self.addr1label.setText("Tool > Ecu ID (Hex)")
-            self.addr2label.setText("Ecu > Tool ID (Hex)")
+            self.addr1label.setText(_("Tool > Ecu ID (Hex)"))
+            self.addr2label.setText(_("Ecu > Tool ID (Hex)"))
         elif self.protocolcombo.currentIndex() == 1:
             self.ecurequestsparser.ecu_protocol = "KWP2000"
             self.ecurequestsparser.fastinit = False

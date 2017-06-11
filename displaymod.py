@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import options

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 '''module contains class for working with ELM327
    version: 160829
    Borrowed from PyRen (modified for this use)
@@ -14,6 +16,11 @@ import re
 import time
 import string
 from datetime import datetime
+import gettext
+
+# Set up message catalog access
+t = gettext.translation('elm', 'locale', fallback=True)
+_ = t.ugettext
 
 snat = {"01": "760", "02": "724", "04": "762", "07": "771", "08": "778", "0D": "775", "0E": "76E", "0F": "770",
         "13": "732", "1B": "7AC", "1C": "76B", "1E": "768", "23": "773", "24": "77D", "26": "765", "27": "76D",
@@ -281,17 +288,17 @@ class Port:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
                 return
             except Exception as e:
-                print "Error: %s" % str(e)
-                print "ELM not connected or wrong COM port ", portName
+                print _("Error:") + str(e)
+                print _("ELM not connected or wrong COM port"), portName
                 iterator = sorted(list(list_ports.comports()))
                 print ""
-                print "Available COM ports:"
+                print _("Available COM ports:")
                 for port, desc, hwid in iterator:
                     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
                 print ""
 
             options.elm_failed = True
-            options.last_error = "Error: %s" % str(e)
+            options.last_error = _("Error:") + str(e)
 
     def read(self):
         try:
@@ -312,7 +319,7 @@ class Port:
                     byte = self.hdr.read()
         except:
             print '*' * 40
-            print '*       Connection to ELM was lost'
+            print '*       ' + _('Connection to ELM was lost')
             options.simulation_mode = True
 
         return byte
@@ -328,7 +335,7 @@ class Port:
                 return self.hdr.write(data)
         except:
             print '*' * 40
-            print '*       Connection to ELM was lost'
+            print '*       ' + _('Connection to ELM was lost')
             options.simulation_mode = True
 
     def expect(self, pattern, time_out=1):
@@ -348,7 +355,7 @@ class Port:
                 if pattern in self.buff:
                     return self.buff
                 if (tc - tb) > time_out:
-                    return self.buff + "TIMEOUT"
+                    return self.buff + _("TIMEOUT")
         except:
             pass
         return ''
@@ -361,7 +368,7 @@ class Port:
         self.hdr.timeout = 2
 
         for s in [38400, 115200, 230400, 57600, 9600, 500000]:
-            print "\r\t\t\t\t\rChecking port speed:", s,
+            print "\r\t\t\t\t\r" + _("Checking port speed:"), s,
             sys.stdout.flush()
 
             self.hdr.baudrate = s
@@ -380,12 +387,12 @@ class Port:
                 tc = time.time()
                 if '>' in self.buff:
                     options.port_speed = s
-                    print "\nStart COM speed: ", s
+                    print "\n" + _("Start COM speed :"), s
                     self.hdr.timeout = self.portTimeout
                     return True
                 if (tc - tb) > 1:
                     break
-        print "\nELM not responding"
+        print "\n" + _("ELM not responding")
         return False
 
     def soft_baudrate(self, baudrate):
@@ -394,10 +401,10 @@ class Port:
             return
 
         if self.portType == 1:  # wifi is not supported
-            print "ERROR - wifi do not support changing baud rate"
+            print _("ERROR - wifi do not support changing baud rate")
             return
 
-        print "Changing baud rate to:", baudrate,
+        print _("Changing baud rate to:"), baudrate,
 
         if baudrate == 38400:
             self.write("at brd 68\r")
@@ -426,7 +433,7 @@ class Port:
             if 'OK' in self.buff:
                 break
             if (tc - tb) > 1:
-                print "ERROR - command not supported"
+                print _("ERROR - command not supported")
                 sys.exit()
 
         self.hdr.timeout = 1
@@ -457,7 +464,7 @@ class Port:
             if 'ELM' in self.buff:
                 break
             if (tc - tb) > 1:
-                print "ERROR - rate not supported. Let's go back."
+                print _("ERROR - rate not supported. Let's go back.")
                 self.hdr.timeout = self.portTimeout
                 self.hdr.baudrate = options.port_speed
                 return
@@ -480,7 +487,7 @@ class Port:
             if '>' in self.buff:
                 break
             if (tc - tb) > 1:
-                print "ERROR - something went wrong. Let's get back."
+                print _("ERROR - something went wrong. Let's get back.")
                 self.hdr.timeout = self.portTimeout
                 self.hdr.baudrate = options.port_speed
                 return
@@ -533,7 +540,7 @@ class ELM:
 
     def __init__(self, portName, speed, startSession='10C0'):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
-            print "Trying to open port %s at %i" % (portName, s)
+            print _("Trying to open port") + "%s @ %i" % (portName, s)
             self.sim_mode = options.simulation_mode
             self.portName = portName
 
@@ -553,7 +560,7 @@ class ELM:
             res = self.send_raw("atz")
             if not 'ELM' in res:
                 options.elm_failed = True
-                options.last_error = "No ELM interface on port %s" % portName
+                options.last_error = _("No ELM interface on port") + " %s" % portName
             else:
                 options.last_error = ""
                 options.elm_failed = False
@@ -1166,16 +1173,16 @@ def elm_checker(port, speed, logview, app):
                 total += 1
                 print cm[2] + " " + res.strip()
                 if '?' in res:
-                    chre = '<font color=red>[FAIL]</font>'
+                    chre = '<font color=red>[' + _('FAIL') + ']</font>'
                     if 'P' in cm[1].upper():
                         pycom += 1
                 # Timeout is not an error
                 elif 'TIMEOUT' in res:
-                    chre = '<font color=green>[OK/TIMEOUT]</font>'
+                    chre = '<font color=green>[' + _('OK/TIMEOUT') + ']</font>'
                     good += 1
                     vers = cm[0]
                 else:
-                    chre = '<font color=green>[OK]</font>'
+                    chre = '<font color=green>[' + _('OK') + ']</font>'
                     good += 1
                     vers = cm[0]
 
@@ -1183,6 +1190,6 @@ def elm_checker(port, speed, logview, app):
                 app.processEvents()
 
     if pycom > 0:
-        logview.append('<font color=red>Incompatible adapter on ARM core</font> \n')
-    logview.append('Result: ' + str(good) + ' succeeded from ' + str(total) + '\nELM Max version:' + vers + '\n')
+        logview.append('<font color=red>' + _('Incompatible adapter on ARM core') + '</font> \n')
+    logview.append(_('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n' + _('ELM Max version:') + vers + '\n')
     return True
