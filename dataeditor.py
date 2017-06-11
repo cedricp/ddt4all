@@ -311,9 +311,9 @@ class paramEditor(gui.QFrame):
 
         if not issend:
             rcv_lay = gui.QHBoxLayout()
-            self.label_data_len = gui.QLabel("Data length")
+            self.label_data_len = gui.QLabel(_("Data length"))
             self.spin_data_len = gui.QSpinBox()
-            self.label_shift_bytes = gui.QLabel("Shift byte count")
+            self.label_shift_bytes = gui.QLabel(_("Shift byte count"))
             self.spin_shift_byte = gui.QSpinBox()
             rcv_lay.addWidget(self.label_data_len)
             rcv_lay.addWidget(self.spin_data_len)
