@@ -13,6 +13,14 @@ import argparse
 
 from StringIO import StringIO
 
+__author__ = "Cedric PAILLE"
+__copyright__ = "Copyright 2016-2017"
+__credits__ = []
+__license__ = "GPL"
+__version__ = "1.0.0"
+__maintainer__ = "Cedric PAILLE"
+__email__ = "cedricpaille@gmail.com"
+__status__ = "Beta"
 
 # Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
