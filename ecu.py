@@ -994,7 +994,7 @@ class Ecu_scanner:
             self.qapp.processEvents()
             i += 1
             if not options.simulation_mode:
-                txa, rxa = options.elm.set_can_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN'})
+                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
                 options.elm.start_session_can('10C0')
             else:
                 txa = addr

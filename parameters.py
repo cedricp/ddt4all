@@ -66,7 +66,7 @@ class paramWidget(gui.QWidget):
         self.mouseOldX = 0
         self.mouseOldY = 0
         self.current_screen = ''
-        self.movingwidget = None
+        self.movingwidgets = []
         self.allow_parameters_update = True
 
     def __del__(self):
@@ -324,12 +324,17 @@ class paramWidget(gui.QWidget):
 
             if event.button() == core.Qt.LeftButton:
                 if not found:
-                    self.movingwidget = None
+                    print "Erasing"
+                    for mv in self.movingwidgets:
+                        mv.toggle_selected(False)
+                    self.movingwidgets = []
                     return
 
                 self.mouseOldX = event.globalX()
                 self.mouseOldY = event.globalY()
-                self.movingwidget = widget
+                if not widget in self.movingwidgets:
+                    self.movingwidgets.append(widget)
+                widget.toggle_selected(True)
 
         else:
             if event.button() == core.Qt.LeftButton:
@@ -341,28 +346,30 @@ class paramWidget(gui.QWidget):
     def mouseReleaseEvent(self, event):
         if options.simulation_mode:
             if event.button() == core.Qt.RightButton:
-                self.movingwidget = None
+                self.movingwidgets = []
 
         if event.button() == core.Qt.LeftButton:
+            #for mw in self.movingwidget:
+                #mw.toggle_selected(False)
             self.sliding = False
 
     def mouseMoveEvent(self, event):
         if options.simulation_mode:
-            if self.movingwidget:
+            if len(self.movingwidgets):
                 sizemodifier = gui.QApplication.keyboardModifiers() == core.Qt.ControlModifier
                 ratiomodifier = gui.QApplication.keyboardModifiers() == core.Qt.ShiftModifier
                 mouseX = event.globalX() - self.mouseOldX
                 mouseY = event.globalY() - self.mouseOldY
                 self.mouseOldX = event.globalX()
                 self.mouseOldY = event.globalY()
-                if sizemodifier:
-                    self.movingwidget.resize(self.movingwidget.width() + mouseX, self.movingwidget.height() + mouseY)
-                elif ratiomodifier and 'change_ratio' in dir(self.movingwidget):
-                    self.movingwidget.change_ratio(mouseX)
-                else:
-                    self.movingwidget.move(self.movingwidget.pos().x() + mouseX, self.movingwidget.pos().y() + mouseY)
-                return
-
+                for mw in self.movingwidgets:
+                    if sizemodifier:
+                        mw.resize(mw.width() + mouseX, mw.height() + mouseY)
+                    elif ratiomodifier and 'change_ratio' in dir(mw):
+                        mw.change_ratio(mouseX)
+                    else:
+                        mw.move(mw.pos().x() + mouseX, mw.pos().y() + mouseY)
+            return
         if self.sliding:
             mouseX = event.globalX() - self.mouseOldX
             mouseY = event.globalY() - self.mouseOldY
@@ -515,6 +522,8 @@ class paramWidget(gui.QWidget):
         self.xmlscreen = {}
         self.parser = ''
         self.tester_presend_command = ""
+        self.movingwidgets = []
+        self.sliding = False
 
     def initXML(self):
         self.clearAll()
@@ -623,6 +632,8 @@ class paramWidget(gui.QWidget):
         self.init(self.current_screen)
 
     def initScreen(self, screen_name):
+        self.movingwidgets = []
+        self.sliding = False
         self.current_screen = screen_name
         self.presend = []
         self.timer.stop()

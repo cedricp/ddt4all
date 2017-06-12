@@ -1,0 +1,290 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"PO-Revision-Date: 2017-06-12 11:35+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: dataeditor.py:165
+msgid "Goto data"
+msgstr "Goto data"
+
+#: dataeditor.py:166
+msgid "Remove"
+msgstr "Remove"
+
+#: dataeditor.py:171
+msgid "Add to screen"
+msgstr "Add to screen"
+
+#: dataeditor.py:261
+msgid "Request name;Manual"
+msgstr "Request name;Manual"
+
+#: dataeditor.py:291 dataeditor.py:1151
+msgid "Add"
+msgstr "Add"
+
+#: dataeditor.py:292 dataeditor.py:1153
+msgid "Refresh"
+msgstr "Refresh"
+
+#: dataeditor.py:300
+msgid "Send request bytes (HEX)"
+msgstr "Send request bytes (HEX)"
+
+#: dataeditor.py:302
+msgid "Receive bytes (HEX)"
+msgstr "Receive bytes (HEX)"
+
+#: dataeditor.py:314
+msgid "Data length"
+msgstr "Data length"
+
+#: dataeditor.py:316
+msgid "Shift byte count"
+msgstr "Shift byte count"
+
+#: dataeditor.py:450
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "Data name;Start byte;Bit offset;Bit count;Endianess"
+
+#: dataeditor.py:468 dataeditor.py:528
+msgid "Little"
+msgstr "Little"
+
+#: dataeditor.py:469 dataeditor.py:530
+msgid "Big"
+msgstr "Big"
+
+#: dataeditor.py:470 dataeditor.py:526
+msgid "Inherits globals"
+msgstr "Inherits globals"
+
+#: dataeditor.py:581
+msgid "Reload requests"
+msgstr "Reload requests"
+
+#: dataeditor.py:582
+msgid "Add request"
+msgstr "Add request"
+
+#: dataeditor.py:600
+msgid "Send bytes"
+msgstr "Send bytes"
+
+#: dataeditor.py:601
+msgid "Receive bytes"
+msgstr "Receive bytes"
+
+#: dataeditor.py:657
+msgid "Number of bits"
+msgstr "Number of bits"
+
+#: dataeditor.py:658 dataeditor.py:820
+msgid "Signed"
+msgstr "Signed"
+
+#: dataeditor.py:659
+msgid "Add item"
+msgstr "Add item"
+
+#: dataeditor.py:660
+msgid "Del item"
+msgstr "Del item"
+
+#: dataeditor.py:699
+msgid "New item"
+msgstr "New item"
+
+#: dataeditor.py:751
+msgid "Value;Text"
+msgstr "Value;Text"
+
+#: dataeditor.py:767
+msgid "Number of bytes"
+msgstr "Number of bytes"
+
+#: dataeditor.py:768 dataeditor.py:819
+msgid "Unit"
+msgstr "Unit"
+
+#: dataeditor.py:818
+msgid "Number of bit"
+msgstr "Number of bit"
+
+#: dataeditor.py:821
+msgid "Format"
+msgstr "Format"
+
+#: dataeditor.py:822
+msgid "Value = (AX+B) / C"
+msgstr "Value = (AX+B) / C"
+
+#: dataeditor.py:895
+msgid "New"
+msgstr "New"
+
+#: dataeditor.py:896
+msgid "Reload"
+msgstr "Reload"
+
+#: dataeditor.py:897
+msgid "Validate changes"
+msgstr "Validate changes"
+
+#: dataeditor.py:930
+msgid "Description"
+msgstr "Description"
+
+#: dataeditor.py:936
+msgid "Data type"
+msgstr "Data type"
+
+#: dataeditor.py:938
+msgid "Numeric"
+msgstr "Numeric"
+
+#: dataeditor.py:939
+msgid "Numeric items"
+msgstr "Numeric items"
+
+#: dataeditor.py:940
+msgid "Hex"
+msgstr "Hex"
+
+#: dataeditor.py:974
+msgid "New data"
+msgstr "New data"
+
+#: dataeditor.py:980
+msgid "Replace me with request description"
+msgstr "Replace me with request description"
+
+#: dataeditor.py:1115
+msgid "Data name;Description"
+msgstr "Data name;Description"
+
+#: dataeditor.py:1152
+msgid "Del"
+msgstr "Del"
+
+#: dataeditor.py:1154
+msgid "Move up"
+msgstr "Move up"
+
+#: dataeditor.py:1155
+msgid "Check"
+msgstr "Check"
+
+#: dataeditor.py:1199
+#, python-format
+msgid "Request %s not found"
+msgstr "Request %s not found"
+
+#: dataeditor.py:1218
+#, python-format
+msgid ""
+"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
+"values</font>"
+msgstr ""
+"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
+"values</font>"
+
+#: dataeditor.py:1221
+#, python-format
+msgid ""
+"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
+"font>"
+msgstr ""
+"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
+"font>"
+
+#: dataeditor.py:1224
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#: dataeditor.py:1320
+msgid "Delay;Request"
+msgstr "Delay;Request"
+
+#: dataeditor.py:1412
+msgid "Screen initialization"
+msgstr "Screen initialization"
+
+#: dataeditor.py:1413
+msgid "Requests to send before screen drawing"
+msgstr "Requests to send before screen drawing"
+
+#: dataeditor.py:1427
+msgid "Button name;Unique name"
+msgstr "Button name;Unique name"
+
+#: dataeditor.py:1496
+msgid "ECU Function address"
+msgstr "ECU Function address"
+
+#: dataeditor.py:1499
+msgid "ECU Protocol"
+msgstr "ECU Protocol"
+
+#: dataeditor.py:1501 dataeditor.py:1619
+msgid "Tool > Ecu ID (Hex)"
+msgstr "Tool > Ecu ID (Hex)"
+
+#: dataeditor.py:1503 dataeditor.py:1620
+msgid "Ecu > Tool ID (Hex)"
+msgstr "Ecu > Tool ID (Hex)"
+
+#: dataeditor.py:1505
+msgid "Coding"
+msgstr "Coding"
+
+#: dataeditor.py:1509
+msgid "Big Endian"
+msgstr "Big Endian"
+
+#: dataeditor.py:1510
+msgid "Little Endian"
+msgstr "Little Endian"
+
+#: dataeditor.py:1525
+msgid "Diag version;Supplier;Soft;Version"
+msgstr "Diag version;Supplier;Soft;Version"
+
+#: dataeditor.py:1533
+msgid "Add new"
+msgstr "Add new"
+
+#: dataeditor.py:1534
+msgid "Delete selected"
+msgstr "Delete selected"
+
+#: dataeditor.py:1535
+msgid "Diag version"
+msgstr "Diag version"
+
+#: dataeditor.py:1538
+msgid "Supplier"
+msgstr "Supplier"
+
+#: dataeditor.py:1541
+msgid "Soft"
+msgstr "Soft"
+
+#: dataeditor.py:1544
+msgid "Version"
+msgstr "Version"

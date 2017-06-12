@@ -1,0 +1,321 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"PO-Revision-Date: 2017-06-12 11:35+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ddt4all.py:186
+msgid "ECU name"
+msgstr "Название ЭБУ"
+
+#: ddt4all.py:187
+msgid "Projets"
+msgstr "Проекты"
+
+#: ddt4all.py:188
+msgid "Protocol"
+msgstr "Протокол"
+
+#: ddt4all.py:278
+msgid "Scanning ECUs..."
+msgstr "Считывание списка ЭБУ..."
+
+#: ddt4all.py:282
+msgid "loaded ECUs in database."
+msgstr "ЭБУ загружено."
+
+#: ddt4all.py:306
+msgid "Refresh rate (ms):"
+msgstr "Частота обновления (ms):"
+
+#: ddt4all.py:321
+msgid "Screen"
+msgstr "Экран"
+
+#: ddt4all.py:328
+msgid "Requests"
+msgstr "Запросы"
+
+#: ddt4all.py:329
+msgid "Data"
+msgstr "Данные"
+
+#: ddt4all.py:330
+msgid "Buttons"
+msgstr "Кнопки"
+
+#: ddt4all.py:331
+msgid "Ecu parameters"
+msgstr "Параметры ЭБУ"
+
+#: ddt4all.py:342
+msgid "Screens"
+msgstr "Экраны"
+
+#: ddt4all.py:345
+msgid "Action"
+msgstr "Действия"
+
+#: ddt4all.py:346
+msgid "New Category"
+msgstr "Новая категория"
+
+#: ddt4all.py:347
+msgid "New Screen"
+msgstr "Новый экран"
+
+#: ddt4all.py:348
+msgid "Rename"
+msgstr "Переименовать"
+
+#: ddt4all.py:375 ddt4all.py:431
+msgid "File"
+msgstr "Файл"
+
+#: ddt4all.py:377
+msgid "Scan ECUs"
+msgstr "Сканировать ЭБУ"
+
+#: ddt4all.py:380
+msgid "Read DTC"
+msgstr "Чтение ошибок DTC"
+
+#: ddt4all.py:384
+msgid "Full log"
+msgstr "Полный лог"
+
+#: ddt4all.py:389
+msgid "Expert mode (enable writing)"
+msgstr "Экспертный режим (включает запись)"
+
+#: ddt4all.py:394
+msgid "Auto refresh"
+msgstr "Авто-обновление"
+
+#: ddt4all.py:399
+msgid "Refresh (one shot)"
+msgstr "Обновить (один раз)"
+
+#: ddt4all.py:403
+msgid "Manual command"
+msgstr "Ручной ввод команды"
+
+#: ddt4all.py:432
+msgid "Create New ECU"
+msgstr "Создать новый ЭБУ"
+
+#: ddt4all.py:433
+msgid "Save current ECU"
+msgstr "Сохранить ЭБУ"
+
+#: ddt4all.py:435
+msgid "Save ECU list"
+msgstr "Сохранить список ЭБУ"
+
+#: ddt4all.py:445
+msgid "ISK Tools"
+msgstr "ISK Tools"
+
+#: ddt4all.py:449
+msgid "UCH Tools"
+msgstr "UCH Tools"
+
+#: ddt4all.py:450
+msgid "Megane2/Scenic2/Clio3 Virgin"
+msgstr "Megane2/Scenic2/Clio3 Virgin"
+
+#: ddt4all.py:453
+msgid "EPS(DAE) Tools"
+msgstr "EPS(DAE) Tools"
+
+#: ddt4all.py:454
+msgid "Megane3 Virgin"
+msgstr "Megane3 Virgin"
+
+#: ddt4all.py:455
+msgid "Clio4 Virgin"
+msgstr "Clio4 Virgin"
+
+#: ddt4all.py:456
+msgid "Clio3 Virgin"
+msgstr "Clio3 Virgin"
+
+#: ddt4all.py:469
+msgid "Enter new name"
+msgstr "Введите новое название"
+
+#: ddt4all.py:489
+msgid "Enter category name"
+msgstr "Введите название категории"
+
+#: ddt4all.py:499
+msgid "Please select a category before creating new screen"
+msgstr "Выберите категорию перед созданием нового экрана"
+
+#: ddt4all.py:506
+msgid "Enter screen name"
+msgstr "Введите название экрана"
+
+#: ddt4all.py:536
+msgid "Enable expert mode to access this menu"
+msgstr "Для доступа в это меню включите экспертный режим"
+
+#: ddt4all.py:541
+msgid ""
+"<center>I'm aware that this operation will clear the selected control unit.</"
+"center><center>If you have no idea of what it means, please get out of here."
+"</center><center>/!\\This part is highly experimental/!\\</center>"
+msgstr ""
+"<center>Эта процедура экспериментальная. Она полностью сбросит настройки выбранного ЭБУ.</"
+"center><center>Результаты могут быть не обратимы и привести к полной неработоспособности автомобиля"
+"</center><center>ВЫ УВЕРЕНЫ В СВОИХ ДЕЙСТВИЯХ?</center>"
+
+#: ddt4all.py:583
+msgid "Cannot read ISK in demo mode"
+msgstr "В демо режиме невозможно считать ISK"
+
+#: ddt4all.py:599
+msgid "Cannot read ISK : Bad reply"
+msgstr "Ошибка чтения ISK"
+
+#: ddt4all.py:605
+msgid "Your ISK code"
+msgstr "Ваш ISK код"
+
+#: ddt4all.py:611
+msgid "Scan options"
+msgstr "Опции сканирования"
+
+#: ddt4all.py:621
+msgid "Scanning CAN"
+msgstr "Сканирование CAN"
+
+#: ddt4all.py:625
+msgid "Scanning KWP"
+msgstr "Сканирование KWP"
+
+#: ddt4all.py:629
+msgid "Scanning CAN&KWP"
+msgstr "Сканирование CAN&KWP"
+
+#: ddt4all.py:662
+msgid "Sending ECU informations to database, thank you for your paticipation"
+msgstr "Отправка информации об ЭБУ в базу данных, спасибо за участие"
+
+#: ddt4all.py:668
+msgid "EDITION MODE"
+msgstr "РЕДАКТОР"
+
+#: ddt4all.py:672
+msgid "CONNECTED"
+msgstr "ПОДКЛЮЧЕН"
+
+#: ddt4all.py:675
+msgid "DISCONNECTED"
+msgstr "ОТКЛЮЧЕН"
+
+#: ddt4all.py:678
+msgid "Save vehicule (keep '.ecu' extension)"
+msgstr "Сохранить список моих ЭБУ (.ecu)"
+
+#: ddt4all.py:695
+msgid "Save ECU (keep '.json' extension)"
+msgstr "Создание нового ЭБУ (.json)"
+
+#: ddt4all.py:857
+msgid ""
+"<center>This Software is free, but I need money to buy cables/ECUs and make "
+"this application more reliable</center>"
+msgstr ""
+"<center>Эта программа бесплатна, но мне нужны деньги для покупки тестовых ЭБУ, "
+"развития её функциональности и надежности</center>"
+
+#: ddt4all.py:858
+msgid "Yes I contribute"
+msgstr "Да, Я заплачу"
+
+#: ddt4all.py:860
+msgid "No, I don't"
+msgstr "Нет, не сейчас"
+
+#: ddt4all.py:868
+msgid ""
+"<center>Thank you for you contribution, if nothing happens, please go to : "
+"https://github.com/cedricp/ddt4all</center>"
+msgstr ""
+"<center>Спасибо за платеж, если не получилось, пожалуйста зайдите на : "
+"https://github.com/cedricp/ddt4all</center>"
+
+#: ddt4all.py:882
+msgid "ELM port selection"
+msgstr "Выберите порт ELM"
+
+#: ddt4all.py:926
+msgid "Port speed"
+msgstr "Скорость порта"
+
+#: ddt4all.py:938
+msgid "Connected mode"
+msgstr "Подключиться"
+
+#: ddt4all.py:939
+msgid "Edition mode"
+msgstr "Редактор"
+
+#: ddt4all.py:940
+msgid "ELM benchmark"
+msgstr "Проверка ELM"
+
+#: ddt4all.py:943
+msgid "WiFi port : "
+msgstr "WiFi порт : "
+
+#: ddt4all.py:953
+msgid "I'm aware that I can harm my car if badly used"
+msgstr "Я понимаю, что могу навредить моему автомобилю"
+
+#: ddt4all.py:961
+msgid "I accept to share ECU informations"
+msgstr "Я разрешаю поделиться информацией о моих ЭБУ"
+
+#: ddt4all.py:1060
+msgid "You must check the recommandations"
+msgstr "Вы должны согласиться с условиями"
+
+#: ddt4all.py:1081
+msgid "Please select a communication port"
+msgstr "Выберите нужный порт"
+
+#: ddt4all.py:1107
+msgid "Using custom DDT database"
+msgstr "Используем альтернативную базу DDT"
+
+#: ddt4all.py:1111
+msgid "Using DDT2000 default installation"
+msgstr "Используем базу из инсталированного DDT2000"
+
+#: ddt4all.py:1135
+msgid "No COM port selected"
+msgstr "Не выбран COM порт"
+
+#: ddt4all.py:1138
+#, python-format
+msgid "Initilizing ELM with speed %i..."
+msgstr "Инициализация ELM на скорости %i..."
+
+#: ddt4all.py:1145
+msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr "ELM327 или OBDLINK-SX не обнаружены на COM порту "

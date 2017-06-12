@@ -20,6 +20,13 @@ class labelWidget(gui.QLabel):
         self.jsondata = None
         self.ismovable = True
         self.uiscale = uiscale
+        self.toggle_selected(False)
+
+    def toggle_selected(self, sel):
+        if sel:
+            self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+        else:
+            self.setFrameStyle(gui.QFrame.NoFrame)
 
     def change_ratio(self, x):
         return
@@ -86,7 +93,6 @@ class labelWidget(gui.QLabel):
 class screenWidget(gui.QFrame):
     def __init__(self, parent, uiscale):
         super(screenWidget, self).__init__(parent)
-        self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.jsondata = None
         self.ismovable = True
         self.uiscale = uiscale
@@ -94,6 +100,13 @@ class screenWidget(gui.QFrame):
         self.screen_height = 0
         self.screen_width = 0
         self.presend = []
+        self.toggle_selected(False)
+
+    def toggle_selected(self, sel):
+        if sel:
+            self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+        else:
+            self.setFrameStyle(gui.QFrame.NoFrame)
 
     def change_ratio(self, x):
         return
@@ -147,6 +160,15 @@ class buttonRequest(gui.QPushButton):
         self.butname = ""
         self.uniquename = ""
         self.jsondata = None
+        self.toggle_selected(False)
+
+    def toggle_selected(self, sel):
+        if sel:
+            #self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            pass
+        else:
+            #self.setFrameStyle(0)
+            pass
 
     def change_ratio(self, x):
         pass
@@ -199,6 +221,7 @@ class buttonRequest(gui.QPushButton):
             self.jsondata['rect']['height'] = self.height() * self.uiscale
             self.jsondata['rect']['width'] = self.width() * self.uiscale
 
+
 class displayWidget(gui.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(displayWidget, self).__init__(parent)
@@ -209,10 +232,18 @@ class displayWidget(gui.QWidget):
         self.qlabelval = None
         self.jsondata = None
 
+    def toggle_selected(self, sel):
+        if sel:
+            self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+        else:
+            self.qlabel.setFrameStyle(gui.QFrame.NoFrame)
+            self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+
     def lock(self, lock):
         pass
 
-    def resize(self,x ,y):
+    def resize(self, x ,y):
         oldwidth = self.width()
         super(displayWidget, self).resize(x, y)
         newwidth = self.width()
@@ -295,7 +326,6 @@ class displayWidget(gui.QWidget):
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'])
         self.qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
-        self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.setAlignment(core.Qt.AlignLeft)
 
         self.qlabelval = gui.QLabel(self)
@@ -303,7 +333,6 @@ class displayWidget(gui.QWidget):
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] - width, rect['height'])
         self.qlabelval.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
-        self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabelval.move(width, 0)
 
         endianess = req.endian
@@ -327,6 +356,7 @@ class displayWidget(gui.QWidget):
 
         dd = displaydict[req_name]
         dd.addData(ddata)
+        self.toggle_selected(False)
 
     def initJson(self, display, displaydict):
         text = display['text']
@@ -363,7 +393,6 @@ class displayWidget(gui.QWidget):
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
         self.qlabel.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
-        self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
         self.qlabel.setAlignment(core.Qt.AlignLeft)
 
         self.qlabelval = gui.QLabel(self)
@@ -371,7 +400,6 @@ class displayWidget(gui.QWidget):
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
         self.qlabelval.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
-        self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken);
         self.qlabelval.move(width, 0)
         infos = req_name + u'\n'
         if data.comment:
@@ -389,6 +417,7 @@ class displayWidget(gui.QWidget):
         dd = displaydict[req_name]
         dd.addData(ddata)
         self.jsondata = display
+        self.toggle_selected(False)
 
 class inputWidget(gui.QWidget):
     def __init__(self, parent, uiscale, ecureq):
@@ -400,6 +429,14 @@ class inputWidget(gui.QWidget):
         self.editwidget = None
         self.jsondata = None
         self.locked = False
+
+    def toggle_selected(self, sel):
+        if sel:
+            self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            #self.editwidget.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+        else:
+            self.qlabel.setFrameStyle(gui.QFrame.NoFrame)
+            #self.editwidget.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
 
     def lock(self, lock):
         self.locked = lock
@@ -461,7 +498,7 @@ class inputWidget(gui.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-        self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+        #self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'])
         self.move(rect['left'], rect['top'])
 
@@ -510,6 +547,7 @@ class inputWidget(gui.QWidget):
 
         dd = inputdict[req_name]
         dd.addData(ddata)
+        self.toggle_selected(False)
 
     def initJson(self, jsoninput, inputdict):
         text = jsoninput['text']
@@ -527,7 +565,7 @@ class inputWidget(gui.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
-        self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+        #self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
         data = self.ecurequestsparser.data[text]
@@ -581,3 +619,4 @@ class inputWidget(gui.QWidget):
         dd.addData(ddata)
 
         self.jsondata = jsoninput
+        self.toggle_selected(False)
