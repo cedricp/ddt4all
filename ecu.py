@@ -968,7 +968,7 @@ class Ecu_scanner:
 
     def getNumAddr(self):
         return len(elm.dnat)
-        
+
     def addTarget(self, target):
         self.ecus[target.name] = target
 

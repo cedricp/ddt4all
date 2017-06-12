@@ -669,7 +669,11 @@ class ELM:
         if self.ATCFC0:
             return self.send_can_cfc0(command)
         else:
-            return self.send_can(command)
+            rsp = self.send_can(command)
+            if self.error_frame>0:  #then fallback to cfc0
+                self.ATCFC0 = True
+                rsp = self.send_can_cfc0(command)
+            return rsp
 
     def send_can(self, command):
         command = command.strip().replace(' ', '')
@@ -724,6 +728,9 @@ class ELM:
 
         if len(responses) == 0:  # no data in response
             return ""
+
+        if len(responses)>1 and responses[0].startswith('037F') and responses[0][6:8]=='78':
+            responses = responses[1:]
 
         if len(responses) == 1:  # single frame response
             if responses[0][:1] == '0':
