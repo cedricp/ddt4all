@@ -18,6 +18,7 @@ NB :
 * You can edit an original DDT2000 XML file after having saved it in JSON format.
 * You can create your own ECU screens.
 
+[Windows archive with installed Python]Windows archive with embedded Python(https://drive.google.com/file/d/0B2LgdbfJUsUZejBVbGlaM25sQ2M/view?usp=sharing)
 Bugtracking here : https://github.com/cedricp/ddt4all
 
 Happy CAN-Hacking :)

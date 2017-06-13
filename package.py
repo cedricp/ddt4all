@@ -35,6 +35,7 @@ zipdir("./importlib")
 zipdir("./serial")
 zipdir("./icons")
 zipdir("./json")
+zipdir("./locale")
 
 
 zip.write("logs/")
