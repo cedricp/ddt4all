@@ -198,6 +198,10 @@ class Ecu_request:
                         di = Data_item(dataitem, self.endian)
                         self.sendbyte_dataitems[di.name] = di
 
+    def get_formatted_sentbytes(self):
+        bytes_to_send_ascii = self.sentbytes.encode('ascii', 'ignore')
+        return [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
+
     def dump(self):
         js = {}
         if self.minbytes != 0: js['minbytes'] = self.minbytes
@@ -550,8 +554,6 @@ class Ecu_data:
             acc = len(self.format.split('.')[1])
             fmt = '%.' + str(acc) + 'f'
             res = fmt % res
-        else:
-            res = int(res)
 
         return str(res)
 

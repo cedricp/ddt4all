@@ -4,7 +4,6 @@
 import sys
 import os
 import glob
-import pickle
 import time
 import json
 import PyQt4.QtGui as gui
@@ -13,6 +12,8 @@ import parameters, ecu
 import elm, options, locale
 import dataeditor
 import gettext
+import imp
+import traceback
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -30,103 +31,6 @@ _ = t.ugettext
 
 app = None
 
-
-class ByteChecker():
-    def __init__(self, ecuaddr, cmd, numbyte, virginState, codedState, sessioncmd='10C0'):
-        self.cmd = cmd
-        self.numbyte = numbyte
-        self.virginState = virginState
-        self.codedState = codedState
-        self.sessioncmd = sessioncmd
-        self.ecuaddr = ecuaddr
-
-    def check(self):
-        if options.simultation_mode:
-            return 'coded'
-        options.elm.init_can()
-        options.elm.set_can_addr(self.ecuaddr, {})
-        options.elm.start_session_can(self.sessioncmd)
-        data = options.elm.request(self.cmd, cache=False)
-        datalist = data.split(' ')
-
-        if len(datalist) < self.numbyte-1:
-            return None
-
-        strbyte = datalist[self.numbyte-1]
-        byte = int(strbyte, 16)
-
-        if byte == self.virginState:
-            return 'virgin'
-        if byte == self.codedState:
-            return 'coded'
-
-        return None
-
-class BitChecker():
-    def __init__(self, ecuaddr, cmd, numbyte, numbit, virginstate=1, sessioncmd='10C0'):
-        self.cmd = cmd
-        self.numbyte = numbyte
-        self.numbits = numbit
-        self.sessioncmd = sessioncmd
-        self.ecuaddr = ecuaddr
-        self.virginstate = virginstate
-
-    def check(self):
-        if options.simultation_mode:
-            return 'coded'
-        options.elm.init_can()
-        options.elm.set_can_addr(self.ecuaddr, {})
-        options.elm.start_session_can(self.sessioncmd)
-        data = options.elm.request(self.cmd, cache=False)
-        datalist = data.split(' ')
-
-        if len(datalist) < self.numbyte-1:
-            return None
-
-        strbyte = datalist[self.numbyte-1]
-        byte = int(strbyte, 16)
-        bit = (byte >> self.numbit) & 1
-
-        if bit == self.virginstate:
-            return 'virgin'
-        else:
-            return 'coded'
-
-
-class Virginizer(gui.QDialog):
-    def __init__(self, sessioncmd, blankingcmd, bitchecker):
-        super(Virginizer, self).__init__()
-        self.blankingcmd = blankingcmd
-        self.sessioncmd = sessioncmd
-        self.bitchecker = bitchecker
-        vlayout = gui.QVBoxLayout()
-        self.virginlabel = gui.QLabel()
-        self.virginlabel.setMinimumWidth(200)
-        self.virginlabel.setAlignment(core.Qt.AlignCenter);
-        self.checkbutton = gui.QPushButton("Check immo status")
-        self.virginizebutton = gui.QPushButton("Clear Immo")
-        self.virginizebutton.clicked.connect(self.virginize)
-        self.checkbutton.clicked.connect(self.checkVirgin)
-        vlayout.addWidget(self.virginlabel)
-        vlayout.addWidget(self.checkbutton)
-        vlayout.addWidget(self.virginizebutton)
-        self.setLayout(vlayout)
-        self.checkVirgin()
-
-    def checkVirgin(self):
-        self.virginlabel.setText("<font color='black'>TESTING ECU...<font>")
-        core.QCoreApplication.processEvents()
-        time.sleep(2)
-        virginstatus = self.bitchecker.check()
-        if virginstatus == 'virgin':
-            self.virginlabel.setText("<font color='green'>ECU Virgin<font>")
-        elif virginstatus == 'coded':
-            self.virginlabel.setText("<font color='red'>ECU Coded<font>")
-        else:
-            self.virginlabel.setText("<font color='red'>Cannot probe ECU<font>")
-
-    def virginize(self):
-        pass
 
 class Ecu_list(gui.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
@@ -284,6 +188,7 @@ class Ecu_list(gui.QWidget):
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
+        self.plugins = {}
         self.setWindowTitle("DDT4All")
         print _("Scanning ECUs...")
         self.ecu_scan = ecu.Ecu_scanner()
@@ -452,23 +357,33 @@ class Main_widget(gui.QMainWindow):
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
 
-        iskmenu = menu.addMenu(_("ISK Tools"))
-        meg2isk = iskmenu.addAction("Megane/Scenic II")
-        meg2isk.triggered.connect(lambda: self.getISK('megane2'))
+        plugins_menu = menu.addMenu(_("Plugins"))
+        category_menus = {}
+        plugins = glob.glob("./plugins/*.py")
+        for plugin in plugins:
+            try:
+                modulename = os.path.basename(plugin).replace(".py", "")
+                plug = imp.load_source(modulename, plugin)
 
-        uchvirginmenu = menu.addMenu(_("UCH Tools"))
-        meg2vir = uchvirginmenu.addAction(_("Megane2/Scenic2/Clio3 Virgin"))
-        meg2vir.triggered.connect(lambda: self.virginECU('megane2UCH'))
+                category = plug.category
+                name = plug.plugin_name
 
-        epsvirginmenu = menu.addMenu(_("EPS(DAE) Tools"))
-        m3ev = epsvirginmenu.addAction(_("Megane3 Virgin"))
-        c4ev = epsvirginmenu.addAction(_("Clio4 Virgin"))
-        c3ev = epsvirginmenu.addAction(_("Clio3 Virgin"))
-        m3ev.triggered.connect(lambda: self.virginECU('megane3EPS'))
-        c4ev.triggered.connect(lambda: self.virginECU('clio4EPS'))
-        c3ev.triggered.connect(lambda: self.virginECU('clio3EPS'))
+                if not category in category_menus:
+                    category_menus[category] = plugins_menu.addMenu(category)
+
+                plug_action = category_menus[category].addAction(name)
+                plug_action.triggered.connect(lambda state, a=plug.plugin_entry: self.launchPlugin(a))
+
+                self.plugins[modulename] = plug
+            except Exception as e:
+                print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def launchPlugin(self, pim):
+        if self.paramview:
+            self.paramview.init('')
+        pim()
 
     def screenRename(self):
         item = self.treeview_params.currentItem()
@@ -539,82 +454,6 @@ class Main_widget(gui.QMainWindow):
     def changeRefreshTime(self):
         if self.paramview:
             self.paramview.setRefreshTime(self.refreshtimebox.value())
-
-    def virginECU(self, vehicle):
-        if not options.promode:
-            msgbox = gui.QMessageBox()
-            msgbox.setText("<center>" + _("Enable expert mode to access this menu") +"</center>")
-            msgbox.exec_()
-            return
-
-        msgbox = gui.QMessageBox()
-        msgbox.setText(_("<center>I'm aware that this operation will clear the selected control unit.</center>"
-                       "<center>If you have no idea of what it means, please get out of here.</center>"
-                       "<center>/!\\This part is highly experimental/!\\</center>"))
-
-        msgbox.setStandardButtons(gui.QMessageBox.Yes)
-        msgbox.addButton(gui.QMessageBox.Abort)
-        msgbox.setDefaultButton(gui.QMessageBox.Abort)
-        userreply = msgbox.exec_()
-
-        if userreply == gui.QMessageBox.Abort:
-            return
-
-        # Reset parameter view to not alter ECU settings
-        if self.paramview:
-            self.paramview.init(None)
-
-        if vehicle == "megane2UCH":
-            checker = BitChecker('26', '2106', 12, 7, 1, '10C0')
-            virg = Virginizer('1086', '3B92', checker)
-            virg.setWindowTitle("UCH MEGANE/SCENIC II")
-            virg.exec_()
-
-        if vehicle == "megane3EPS":
-            checker = ByteChecker('04', '220164', 4, 2, 1, '10C0')
-            virg = Virginizer('10FA', '310201F12E', checker)
-            virg.setWindowTitle("EPS MEGANE/SCENIC III")
-            virg.exec_()
-
-        if vehicle == "clio4EPS":
-            checker = ByteChecker('04', '220164', 4, 2, 1, '10C0')
-            virg = Virginizer('10FA', ' 3102001976', checker)
-            virg.setWindowTitle("EPS CLIO IV")
-            virg.exec_()
-
-        if vehicle == "clio3EPS":
-            checker = BitChecker('04', '2101', 23, 7, 0, '10C0')
-            virg = Virginizer('10FB', ' 3B05', checker)
-            virg.setWindowTitle("EPS CLIO III")
-            virg.exec_()
-
-    def getISK(self, vehicle):
-        if options.simulation_mode:
-            self.logview.append(_("Cannot read ISK in demo mode"))
-            return
-
-        # Reset parameter view to not alter ECU settings
-        if self.paramview:
-            self.paramview.init(None)
-
-        if vehicle == "megane2":
-            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': 'UCH'}
-            options.elm.init_can()
-            options.elm.set_can_addr('26', ecu_conf)
-            # Entering service session
-            resp = options.elm.start_session_can('1086')
-            # Asking to dump parameters
-            isk_data_request =  options.elm.request(req='21AB', positive='61', cache=False)
-            if not isk_data_request.startswith("61"):
-                self.logview.append(_("Cannot read ISK : Bad reply"))
-                return
-            # Return to default session
-            options.elm.request(req='1081', positive='50', cache=False)
-            isk_data_split = isk_data_request.split(" ")
-            isk_bytes = " ".join(isk_data_split[19:25])
-            self.logview.append(_('Your ISK code') +' : <font color=red>' + isk_bytes + '</font>')
-            if self.paramview:
-                self.paramview.initELM()
 
     def scan(self):
         msgBox = gui.QMessageBox()

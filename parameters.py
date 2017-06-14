@@ -638,6 +638,8 @@ class paramWidget(gui.QWidget):
         self.presend = []
         self.timer.stop()
 
+        self.initELM()
+
         try:
             self.timer.timeout.disconnect()
         except:
@@ -782,9 +784,7 @@ class paramWidget(gui.QWidget):
             sendbytes_data_items = ecu_request.sendbyte_dataitems
             rcvbytes_data_items = ecu_request.dataitems
 
-            bytes_to_send_ascii = ecu_request.sentbytes.encode('ascii', 'ignore')
-            bytes_to_send = [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
-            elm_data_stream = bytes_to_send
+            elm_data_stream = ecu_request.get_formatted_sentbytes()
 
             for k in sendbytes_data_items.keys():
                 dataitem = sendbytes_data_items[k]

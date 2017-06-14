@@ -797,6 +797,7 @@ class otherPanel(gui.QFrame):
         type = self.inputtype.currentIndex()
         self.data.scaled = False
         self.data.bytescount = self.inputnob.value()
+        self.data.bitscount = self.data.bytescount * 8
         self.data.unit = ""
         self.data.signed = False
         self.data.format = ""
