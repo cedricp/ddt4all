@@ -189,7 +189,7 @@ class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
         self.plugins = {}
-        self.setWindowTitle("DDT4All")
+        self.setWindowTitle(_("DDT4All"))
         print _("Scanning ECUs...")
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
