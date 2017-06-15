@@ -672,6 +672,7 @@ class ELM:
             rsp = self.send_can(command)
             if self.error_frame>0:  #then fallback to cfc0
                 self.ATCFC0 = True
+                self.cmd("at cfc0")
                 rsp = self.send_can_cfc0(command)
             return rsp
 
