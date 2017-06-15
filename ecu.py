@@ -530,10 +530,20 @@ class Ecu_data:
         if not self.scaled:
             val = int('0x' + value, 16)
 
-            # Manage mapped values
+            # Manage signed values
+            if self.signed:
+                if self.bytescount == 1:
+                    val = hex8_tosigned(value)
+                elif self.bytescount == 2:
+                    val = hex16_tosigned(value)
+                else:
+                    print "Warning, cannot get signed value for %s" % dataitem.name
+
+            # Manage mapped values if exists
             if val in self.lists:
                 return self.lists[val]
 
+            # Return default hex value
             return value
 
         value = int('0x' + value, 16)
@@ -549,7 +559,7 @@ class Ecu_data:
             print "Division by zero, please check data item : ", dataitem.name
             return None
 
-        res = (value * float(self.step) + float(self.offset)) / float(self.divideby)
+        res = (float(value) * float(self.step) + float(self.offset)) / float(self.divideby)
         if len(self.format) and '.' in self.format:
             acc = len(self.format.split('.')[1])
             fmt = '%.' + str(acc) + 'f'
@@ -884,17 +894,34 @@ class Ecu_database:
         self.targets = []
         self.numecu = 0
         xmlfile = options.ecus_dir + "/eculist.xml"
-        if os.path.exists(self.jsonfile) and not forceXML:
-            zf = zipfile.ZipFile(self.jsonfile, mode='r')
-            jsdb = zf.read("db.json")
-            dbdict = json.loads(jsdb)
-            for target in dbdict:
-                ecu_ident = Ecu_ident(target['diagnotic_version'], target['supplier_code'],
-                                      target['soft_version'], target['version'],
-                                      target['name'], target['group'], target['href'], target['protocol'],
-                                      target['projects'])
+
+        jsonecu_files = glob.glob("json/*.json.targets")
+        for jsonecu_file in jsonecu_files:
+            json_file = open(jsonecu_file, "r")
+            json_data = json_file.read()
+            json_file.close()
+            ecus_dict = json.loads(json_data)
+            for ecu_dict in ecus_dict:
+                href = jsonecu_file.replace(".targets", "")
+                name = os.path.basename(href)
+                ecu_ident = Ecu_ident(ecu_dict['diagnotic_version'], ecu_dict['supplier_code'],
+                                      ecu_dict['soft_version'], ecu_dict['version'],
+                                      name, ecu_dict['group'], href, ecu_dict['protocol'],
+                                      ecu_dict['projects'], ecu_dict['address'])
                 self.targets.append(ecu_ident)
-        elif os.path.exists(xmlfile):
+
+        # if os.path.exists(self.jsonfile) and not forceXML:
+        #     zf = zipfile.ZipFile(self.jsonfile, mode='r')
+        #     jsdb = zf.read("db.json")
+        #     dbdict = json.loads(jsdb)
+        #     for target in dbdict:
+        #         ecu_ident = Ecu_ident(target['diagnotic_version'], target['supplier_code'],
+        #                               target['soft_version'], target['version'],
+        #                               target['name'], target['group'], target['href'], target['protocol'],
+        #                               target['projects'], target['address'])
+        #         self.targets.append(ecu_ident)
+
+        if os.path.exists(xmlfile):
             xdom = xml.dom.minidom.parse(xmlfile)
             self.xmldoc = xdom.documentElement
 
@@ -992,26 +1019,19 @@ class Ecu_scanner:
         if not options.simulation_mode:
             options.elm.init_can()
         for addr in elm.snat.keys():
-            progress.setValue(i)
+            if progress:
+                progress.setValue(i)
             self.qapp.processEvents()
             i += 1
             if not options.simulation_mode:
                 txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
                 options.elm.start_session_can('10C0')
-            else:
-                txa = addr
-                if addr == "7A": txa = "7E0"
-                if addr == "04": txa = "742"
-                rxa = ""
+
             if options.simulation_mode:
                 # Give scanner something to eat...
-                if txa == "742":
+                if addr == "04":
                     can_response = "61 80 82 00 30 64 35 48 30 30 31 00 00 32 03 00 03 22 03 60 00 00 2D 32 14 00 60"
-                elif txa == "742":
-                    #can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 06 00 00 00 00 00 00 01"
-                    can_response = "61 80 82 00 14 97 39 04 33 33 30 40 50 54 87 04 00 05 00 01 00 00 00 00 00 00 01"
-                    print can_response
-                elif txa == "7E0":
+                elif addr == "7A":
                     # Test approximate case
                     #can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
@@ -1068,8 +1088,6 @@ class Ecu_scanner:
                     label.setText("Found %i ecu" % self.num_ecu_found)
                     found_exact = True
                     href = target.href
-
-                    break
                 elif target.checkApproximate(diagversion, supplier, soft, version, addr):
                     approximate_ecu.append(target)
                     found_approximate = True

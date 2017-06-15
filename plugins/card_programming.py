@@ -42,7 +42,6 @@ def plugin_entry():
     tester_present_request = megane_ecu.requests[u'Tester present']
 
     # Data items gathering
-
     code_apv_data = after_sale_request.sendbyte_dataitems[apv_data_name]
     code_apv_ecu_data = megane_ecu.data[apv_data_name]
 
@@ -50,4 +49,4 @@ def plugin_entry():
     # A template of it is available in the 'sentbytes' member of an 'Ecu_request' class
     elm_data_stream = after_sale_request.get_formatted_sentbytes()
     print code_apv_ecu_data.setValue("001122334455", elm_data_stream, code_apv_data, after_sale_request.endian)
-    print get_isk(megane_ecu, "61AB02FC0D08514C86555400000000000000008EE8EE1679D3C9A7A7CCF6AC0000000000002A")
+    print get_isk(megane_ecu, "61AB02FC0D08514C86555400000000000000008DE8EE1679D3C9A7A7CCF6AC0000000000002A")

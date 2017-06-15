@@ -94,7 +94,7 @@ class screenWidget(gui.QFrame):
     def __init__(self, parent, uiscale):
         super(screenWidget, self).__init__(parent)
         self.jsondata = None
-        self.ismovable = True
+        self.ismovable = False
         self.uiscale = uiscale
         self.setContentsMargins(0, 0, 0, 0)
         self.screen_height = 0

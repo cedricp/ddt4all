@@ -323,8 +323,7 @@ class paramWidget(gui.QWidget):
                 popmenu.exec_(gui.QCursor.pos())
 
             if event.button() == core.Qt.LeftButton:
-                if not found:
-                    print "Erasing"
+                if not found or widget == self.panel:
                     for mv in self.movingwidgets:
                         mv.toggle_selected(False)
                     self.movingwidgets = []
@@ -335,7 +334,6 @@ class paramWidget(gui.QWidget):
                 if not widget in self.movingwidgets:
                     self.movingwidgets.append(widget)
                 widget.toggle_selected(True)
-
         else:
             if event.button() == core.Qt.LeftButton:
                 self.sliding = True
@@ -349,8 +347,6 @@ class paramWidget(gui.QWidget):
                 self.movingwidgets = []
 
         if event.button() == core.Qt.LeftButton:
-            #for mw in self.movingwidget:
-                #mw.toggle_selected(False)
             self.sliding = False
 
     def mouseMoveEvent(self, event):
