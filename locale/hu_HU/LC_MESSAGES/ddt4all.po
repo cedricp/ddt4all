@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: parameters.py:64
+msgid "Returning to defaut session..."
+msgstr "Visszatérés az alapértelmezett munkaszakaszhoz..."
+
+#: parameters.py:83
+msgid "Save ECU (keep '.json' extension)"
+msgstr "ECU mentése ('.json' kiterjesztés megtartása)"
+
+#: parameters.py:159 parameters.py:187 parameters.py:206
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "A képernyő módosításához először exportáld JSON formátumba"
+
+#: parameters.py:229
+msgid "Enter label name"
+msgstr "Címke nevének megadása"
+
+#: parameters.py:295
+msgid "Add button"
+msgstr "Gomb hozzáadása"
+
+#: parameters.py:296
+msgid "Add label"
+msgstr "Címke hozzáadása"
+
+#: parameters.py:304
+msgid "Rename label"
+msgstr "Címke átnevezése"
+
+#: parameters.py:308
+msgid "Remove element"
+msgstr "Elem eltávolítása"
+
+#: parameters.py:401
+msgid "Diagnotic session"
+msgstr "Diagnózis munkaszakasz"
+
+#: parameters.py:402
+msgid "Input"
+msgstr "Bemenet"
+
+#: parameters.py:403
+msgid "Output"
+msgstr "Kimenet"
+
+#: parameters.py:444
+msgid "Initializing CAN mode"
+msgstr "CAN mód inicializálása"
+
+#: parameters.py:451
+msgid "Initializing KWP2000 mode"
+msgstr "KWP2000 mód inicializálása"
+
+#: parameters.py:457
+msgid "Initializing ISO8 mode"
+msgstr "ISO8 mód inicializálása"
+
+#: parameters.py:462
+msgid "Protocol "
+msgstr "Protokoll"
+
+#: parameters.py:462
+msgid " not supported"
+msgstr " nem támogatott"
+
+#: parameters.py:523
+msgid "XML file not found : "
+msgstr "XML fájl nem létezik:"
+
+#: parameters.py:530
+msgid "Invalid DDT file"
+msgstr "Hibás DDT fájl"
+
+#: parameters.py:559
+msgid "Switching to session mode"
+msgstr "Munkaszakasz módba váltás"
+
+#: parameters.py:576
+msgid "Sending ELM request :"
+msgstr "ELM parancs küldése:"
+
+#: parameters.py:578
+msgid "Blocked ELM request :"
+msgstr "Blokkolt ELM parancs:"
+
+#: parameters.py:582
+msgid "Sending ELM request:"
+msgstr "ELM parancs küldése:"
+
+#: parameters.py:591
+msgid "Sending simulated ELM request :"
+msgstr "Szimulált ELM parancs küldése:"
+
+#: parameters.py:601
+msgid "ELM response : "
+msgstr "ELM válasz:"
+
+#: parameters.py:744
+msgid "Button request not found : "
+msgstr "Gomb parancs nem létezik:"
+
+#: parameters.py:758
+msgid "Sending request :"
+msgstr "Parancs küldése:"
+
+#: parameters.py:800
+msgid "Request aborted (look at red paramters entries): "
+msgstr "Parancs visszautasítva (ellenőrizd a piros paramétereket):"
+
+#: parameters.py:820
+msgid "Invalid"
+msgstr "Érvénytelen"
+
+#: parameters.py:898
+msgid "Cannot call request "
+msgstr "Sikertelen parancshívás"
+
+#: parameters.py:917
+msgid "Clearing DTC information"
+msgstr "DTC információk törlése"
+
+#: parameters.py:926
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "Nem létezik ClearDTC parancs ehhez az ECU-hoz, az alapértelmezett 14FF00 küldése"
+
+#: parameters.py:930
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>Törölni fogod a diagnosztikai hibakódokat</center>"
+
+#: parameters.py:931
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>Tényleg ezt akarod.</center>"
+
+#: parameters.py:970
+msgid "Invalid response for ReadDTC command"
+msgstr "Érvénytelen válasz a ReadDTC parancsra"
+
+#: parameters.py:979
+msgid "No DTC"
+msgstr "Nincs DTC"
+
+#: parameters.py:988
+msgid "Clear ALL DTC"
+msgstr "Összes DTC törlése"
+
+#: parameters.py:994
+msgid "ECU trouble codes"
+msgstr "ECU hibakódok"
+
+#: parameters.py:1027
+msgid "Parsing screen "
+msgstr "Képernyő beolvasása"
