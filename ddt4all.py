@@ -487,7 +487,7 @@ class Main_widget(gui.QMainWindow):
 
         self.ecu_scan.clear()
         if scancan:
-            self.ecu_scan.scsoundssoundsan(self.progressstatus, self.infostatus)
+            self.ecu_scan.scan(self.progressstatus, self.infostatus)
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
 

@@ -19,11 +19,11 @@ msgstr ""
 
 #: dataeditor.py:165
 msgid "Goto data"
-msgstr "Adatok megtekintése"
+msgstr "Az adatokhoz"
 
 #: dataeditor.py:166
 msgid "Remove"
-msgstr "Eltávolítás"
+msgstr "Eltávolít"
 
 #: dataeditor.py:171
 msgid "Add to screen"
@@ -35,7 +35,7 @@ msgstr "Parancs neve;Manuális"
 
 #: dataeditor.py:291 dataeditor.py:1151
 msgid "Add"
-msgstr "Hozzáadás"
+msgstr "Hozzáad"
 
 #: dataeditor.py:292 dataeditor.py:1153
 msgid "Refresh"
@@ -43,7 +43,7 @@ msgstr "Frissítés"
 
 #: dataeditor.py:300
 msgid "Send request bytes (HEX)"
-msgstr "Parancs bájtok küldése (HEX)"
+msgstr "Parancsbájtok küldése (HEX)"
 
 #: dataeditor.py:302
 msgid "Receive bytes (HEX)"
@@ -59,7 +59,7 @@ msgstr "Shift bájtok száma"
 
 #: dataeditor.py:450
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Adat neve;Start bájt,Bit offszet;Bitek száma;Bájstsorrend"
+msgstr "Adat neve;Kezdő bájt,Bit offszet;Bitek száma;Bájstsorrend"
 
 #: dataeditor.py:468 dataeditor.py:528
 msgid "Little"
@@ -200,8 +200,8 @@ msgid ""
 "<font color=green>Request <font color=blue>'%s'</font> has no missing input "
 "values</font>"
 msgstr ""
-"<font color=green>A(z) <font color=blue>'%s'</font> parancsnak nincs hiányzó bemenete "
-"values</font>"
+"<font color=green>A(z) <font color=blue>'%s'</font> parancsnak nincs hiányzó bemeneti "
+"értéke</font>"
 
 #: dataeditor.py:1221
 #, python-format

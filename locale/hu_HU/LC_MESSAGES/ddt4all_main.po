@@ -51,7 +51,7 @@ msgstr "Parancsok"
 
 #: ddt4all.py:329
 msgid "Data"
-msgstr "Adat"
+msgstr "Adatok"
 
 #: ddt4all.py:330
 msgid "Buttons"
@@ -213,7 +213,7 @@ msgstr "CAN & KWP keresés"
 
 #: ddt4all.py:662
 msgid "Sending ECU informations to database, thank you for your paticipation"
-msgstr "ECU-információk feltöltése az adatbázisba, köszönjük a hozzájárulást."
+msgstr "ECU-információk feltöltése az adatbázisba, köszönjük a hozzájárulást"
 
 #: ddt4all.py:668
 msgid "EDITION MODE"
@@ -289,11 +289,11 @@ msgstr "Tisztában vagyok vele, hogy a helytelen használat kárt tehet a járm�
 
 #: ddt4all.py:961
 msgid "I accept to share ECU informations"
-msgstr "Hozzájárulok az ECU információk megosztásához"
+msgstr "Hozzájárulok az ECU-információk megosztásához"
 
 #: ddt4all.py:1060
 msgid "You must check the recommandations"
-msgstr "Tudomásul kell venned a figyelmeztetéseket"
+msgstr "Tudomásul kell venned a figyelmeztetést"
 
 #: ddt4all.py:1081
 msgid "Please select a communication port"
@@ -318,4 +318,4 @@ msgstr "ELM inicializálása %i sebességgel..."
 
 #: ddt4all.py:1145
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "Nem található ELM327 vagy OBDLINK-SX a COM porton"
+msgstr "Nem található ELM327 vagy OBDLINK-SX a COM porton: "
