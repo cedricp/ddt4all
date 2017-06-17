@@ -4,14 +4,12 @@
 import sys
 import os
 import glob
-import time
 import json
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options, locale
 import dataeditor
-import gettext
 import imp
 import traceback
 
@@ -24,13 +22,8 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
-
-# Set up message catalog access
-t = gettext.translation('ddt4all_main', 'locale', fallback=True)
-_ = t.ugettext
-
+_ = options.translator('ddt4all_main')
 app = None
-
 
 class Ecu_list(gui.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
@@ -939,11 +932,6 @@ class portChooser(gui.QDialog):
         self.done(True)
 
 if __name__ == '__main__':
-    if sys.platform.startswith('win'):
-        if os.getenv('LANG') is None:
-            lang, enc = locale.getdefaultlocale()
-            os.environ['LANG'] = lang
-
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
