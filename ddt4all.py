@@ -939,6 +939,11 @@ class portChooser(gui.QDialog):
         self.done(True)
 
 if __name__ == '__main__':
+    if sys.platform.startswith('win'):
+        if os.getenv('LANG') is None:
+            lang, enc = locale.getdefaultlocale()
+            os.environ['LANG'] = lang
+
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
