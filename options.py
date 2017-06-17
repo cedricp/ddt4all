@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+import locale
+import sys
+import gettext
+import os
+
 simulation_mode = False
 port_speed = 38400
 port = ""
@@ -23,3 +28,13 @@ def get_last_error():
     err = last_error
     last_error = ""
     return err
+
+def translator(filename):
+    if sys.platform.startswith('win'):
+        if os.getenv('LANG') is None:
+            lang, enc = locale.getdefaultlocale()
+            os.environ['LANG'] = lang
+
+    # Set up message catalog access
+    t = gettext.translation(filename, 'locale', fallback=True)
+    return t.ugettext

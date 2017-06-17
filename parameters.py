@@ -9,9 +9,8 @@ import PyQt4.QtCore as core
 import options
 from xml.dom.minidom import parse
 import xml.dom.minidom
-import json, unicodedata, argparse, zipfile, glob
+import json, argparse, zipfile, glob
 from StringIO import StringIO
-import gettext
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -22,11 +21,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
-
-# Set up message catalog access
-t = gettext.translation('ddt4all', 'locale', fallback=True)
-_ = t.ugettext
-
+_ = options.translator('ddt4all')
 # TODO :
 # Read freezeframe data // Done (partially)
 # Check ELM response validity (mode + 0x40)

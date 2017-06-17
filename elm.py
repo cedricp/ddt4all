@@ -16,11 +16,8 @@ import re
 import time
 import string
 from datetime import datetime
-import gettext
 
-# Set up message catalog access
-t = gettext.translation('elm', 'locale', fallback=True)
-_ = t.ugettext
+_ = options.translator('elm')
 
 snat = {"01": "760", "02": "724", "04": "762", "07": "771", "08": "778", "0D": "775", "0E": "76E", "0F": "770",
         "13": "732", "1B": "7AC", "1C": "76B", "1E": "768", "23": "773", "24": "77D", "26": "765", "27": "76D",

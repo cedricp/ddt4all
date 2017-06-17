@@ -2,7 +2,6 @@
 import ecu, math, string, options
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import gettext
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -13,10 +12,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
-
-# Set up message catalog access
-t = gettext.translation('dataeditor', 'locale', fallback=True)
-_ = t.ugettext
+_ = options.translator('dataeditor')
 
 class Bit_container(gui.QFrame):
     def __init__(self, data, num, parent=None):
