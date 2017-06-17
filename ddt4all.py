@@ -915,7 +915,7 @@ class portChooser(gui.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                self.port = currentitem.text().toAscii().split('[')[0]
+                self.port = str(currentitem.text().split('[')[0])
                 self.mode = 1
                 self.done(True)
             else:
