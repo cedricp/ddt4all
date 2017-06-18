@@ -283,7 +283,7 @@ class Ecu_data:
 
             if data.has_key('lists'):
                 for k, v in data['lists'].iteritems():
-                    self.lists[k] = v
+                    self.lists[int(k)] = v
         else:
             self.xmldoc = data
             self.name = self.xmldoc.getAttribute("Name")
@@ -396,7 +396,7 @@ class Ecu_data:
         if len(self.lists) > 0:
             itms = {}
             for k, v in self.lists.iteritems():
-                itms[k] = v
+                itms[int(k)] = v
             js['lists'] = itms
         if self.unit != '':
             js['unit'] = self.unit

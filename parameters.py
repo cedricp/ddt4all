@@ -597,7 +597,7 @@ class paramWidget(gui.QWidget):
                 # Test for ACU4
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
                 # Test for EDC16
-                #elm_response = "57 03 05 34 68 06 70 4F 09 A4 09 A4 17"
+                # elm_response = "57 02 05 34 68 06 70 4F 09 A4 09 A4 17"
             txt = '<font color=green>' + _('Sending simulated ELM request :') + '</font>'
 
         if not auto or options.log_all:
@@ -971,7 +971,6 @@ class paramWidget(gui.QWidget):
             return
 
         shiftbytecount = request.shiftbytescount
-        dtc_num = 0
         bytestosend = map(''.join, zip(*[iter(request.sentbytes.encode('ascii'))]*2))
 
         dtcread_command = ''.join(bytestosend)
@@ -992,6 +991,7 @@ class paramWidget(gui.QWidget):
             msgbox.exec_()
             return
 
+        numberofdtc = int('0x' + can_response[1], 16)
         dtcdialog = gui.QDialog(None)
         dtc_view = gui.QTextEdit(None)
         dtc_view.setReadOnly(True)
@@ -1005,8 +1005,8 @@ class paramWidget(gui.QWidget):
 
         html = '<h1 style="color:red">' + _('ECU trouble codes') + '</color></h1>'
 
-        while len(can_response) >= shiftbytecount + 2:
-            html += '<h2 style="color:orange">DTC #%i' % dtc_num + "</h2>"
+        for dn in range(0, numberofdtc):
+            html += '<h2 style="color:orange">DTC #%i' % dn + "</h2>"
             html += "<p>"
             for k in request.dataitems.keys():
                 ecu_data = self.ecurequestsparser.data[k]
@@ -1028,8 +1028,6 @@ class paramWidget(gui.QWidget):
                     html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
             html += "</p>"
             can_response = can_response[shiftbytecount:]
-
-            dtc_num += 1
 
         dtc_view.setHtml(html)
         dtcdialog.exec_()

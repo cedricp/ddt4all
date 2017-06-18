@@ -289,10 +289,10 @@ class Port:
                 print _("ELM not connected or wrong COM port"), portName
                 iterator = sorted(list(list_ports.comports()))
                 print ""
-                print _("Available COM ports:")
-                for port, desc, hwid in iterator:
-                    print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
-                print ""
+                # print _("Available COM ports:")
+                # for port, desc, hwid in iterator:
+                #     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
+                # print ""
 
             options.elm_failed = True
             options.last_error = _("Error:") + str(e)
