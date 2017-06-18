@@ -251,8 +251,8 @@ class Ecu_data:
         self.offset = 0.0
         self.divideby = 1.0
         self.format = ""
-        self.items = {}
         self.lists = {}
+        self.items = {}
         self.description = ''
         self.unit = ""
         self.comment = ''
@@ -277,13 +277,10 @@ class Ecu_data:
             if data.has_key('unit'): self.unit = data['unit']
             if data.has_key('comment'): self.comment = data['comment']
 
-            if data.has_key('items'):
-                for k, v in data['items'].iteritems():
-                    self.items[k] = v
-
             if data.has_key('lists'):
                 for k, v in data['lists'].iteritems():
                     self.lists[int(k)] = v
+                    self.items[v] = int(k)
         else:
             self.xmldoc = data
             self.name = self.xmldoc.getAttribute("Name")
@@ -301,7 +298,9 @@ class Ecu_data:
                     items = l.getElementsByTagName("Item")
                     for item in items:
                         key = int(item.getAttribute('Value'))
-                        self.lists[key] = item.getAttribute('Text')
+                        val = item.getAttribute('Text')
+                        self.lists[int(key)] = val
+                        self.items[val] = int(key)
 
             bytes = self.xmldoc.getElementsByTagName("Bytes")
             if bytes:
@@ -330,14 +329,6 @@ class Ecu_data:
                 binary = bits.item(0).getElementsByTagName("Binary")
                 if binary:
                     self.binary = True
-
-                self.items = {}
-                items = bits.item(0).getElementsByTagName("Item")
-                if items:
-                    for item in items:
-                        value = int(item.getAttribute("Value"))
-                        text  = item.getAttribute("Text")
-                        self.items[text] = value
 
                 scaled_value = bits.item(0).getElementsByTagName("Scaled")
                 if scaled_value:
@@ -388,16 +379,11 @@ class Ecu_data:
             js['divideby'] = self.divideby
         if self.format != '':
             js['format'] = self.format
-        if len(self.items) > 0:
-            itms = {}
-            for k, v in self.items.iteritems():
-                itms[k] = v
-            js['items'] = itms
         if len(self.lists) > 0:
-            itms = {}
+            lst = {}
             for k, v in self.lists.iteritems():
-                itms[int(k)] = v
-            js['lists'] = itms
+                lst[int(k)] = v
+            js['lists'] = lst
         if self.unit != '':
             js['unit'] = self.unit
         if self.comment != '':
