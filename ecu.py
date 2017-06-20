@@ -121,7 +121,7 @@ class Ecu_device:
         return js
 
 class Ecu_request:
-    def __init__(self, data, endian):
+    def __init__(self, data, ecu_file):
         self.minbytes = 0
         self.shiftbytescount = 0
         self.replybytes = ''
@@ -130,7 +130,7 @@ class Ecu_request:
         self.dataitems = {}
         self.sendbyte_dataitems = {}
         self.name = ''
-        self.endian = endian
+        self.ecu_file = ecu_file
 
         if isinstance(data, dict):
             if data.has_key('minbytes'): self.minbytes = data['minbytes']
@@ -139,19 +139,18 @@ class Ecu_request:
             if data.has_key('manualsend'): self.manualsend = data['manualsend']
             if data.has_key('sentbytes'): self.sentbytes = data['sentbytes']
 
-            self.endian = data['endian']
             self.name = data['name']
 
             if data.has_key('sendbyte_dataitems'):
                 sbdi = data['sendbyte_dataitems']
                 for k, v in sbdi.iteritems():
-                    di = Data_item(v, self.endian, k)
+                    di = Data_item(v, self.ecu_file.endianness, k)
                     self.sendbyte_dataitems[k] = di
 
             if data.has_key('receivebyte_dataitems'):
                 rbdi = data['receivebyte_dataitems']
                 for k, v in rbdi.iteritems():
-                    di = Data_item(v, self.endian, k)
+                    di = Data_item(v, self.ecu_file.endianness, k)
                     self.dataitems[k] = di
         elif isinstance(data, unicode):
             # Create a blank, new on
@@ -181,7 +180,7 @@ class Ecu_request:
                 dataitems = receiveddata.getElementsByTagName("DataItem")
                 if dataitems:
                     for dataitem in dataitems:
-                        di = Data_item(dataitem, self.endian)
+                        di = Data_item(dataitem, self.ecu_file.endianness)
                         self.dataitems[di.name] = di
 
             sentdata = self.xmldoc.getElementsByTagName("Sent")
@@ -195,7 +194,7 @@ class Ecu_request:
                 dataitems = sent.getElementsByTagName("DataItem")
                 if dataitems:
                     for dataitem in dataitems:
-                        di = Data_item(dataitem, self.endian)
+                        di = Data_item(dataitem, self.ecu_file.endianness)
                         self.sendbyte_dataitems[di.name] = di
 
     def get_formatted_sentbytes(self):
@@ -210,7 +209,6 @@ class Ecu_request:
         if self.manualsend: js['manualsend'] = self.manualsend
         if self.sentbytes != '': js['sentbytes'] = self.sentbytes
 
-        js['endian'] = self.endian
         js['name'] = self.name
 
         sdi = {}
@@ -390,12 +388,12 @@ class Ecu_data:
             js['comment'] = cleanhtml(self.comment)
         return self.name, js
 
-    def setValue(self, value, bytes_list, dataitem, request_endian, test_mode=False):
+    def setValue(self, value, bytes_list, dataitem, ecu_endian, test_mode=False):
         start_byte = dataitem.firstbyte - 1
         start_bit = dataitem.bitoffset
         little_endian = False
 
-        if request_endian == "Little":
+        if ecu_endian == "Little":
             little_endian = True
 
         # It seems that DataItem can override Request endianness
@@ -504,8 +502,8 @@ class Ecu_data:
 
         return bytes_list
 
-    def getDisplayValue(self, elm_data, dataitem, req_endian):
-        value = self.getHexValue(elm_data, dataitem, req_endian)
+    def getDisplayValue(self, elm_data, dataitem, ecu_endian):
+        value = self.getHexValue(elm_data, dataitem, ecu_endian)
         if value is None:
             return None
 
@@ -553,10 +551,10 @@ class Ecu_data:
 
         return str(res)
 
-    def getHexValue(self, resp, dataitem, req_endian):
+    def getHexValue(self, resp, dataitem, ecu_endian):
         little_endian = False
 
-        if req_endian == "Little":
+        if ecu_endian == "Little":
             little_endian = True
 
         if dataitem.endian == "Little":
@@ -682,7 +680,7 @@ class Ecu_file:
 
             requests = ecudict['requests']
             for request in requests:
-                ecu_req = Ecu_request(request, self.endianness)
+                ecu_req = Ecu_request(request, self)
                 self.requests[ecu_req.name] = ecu_req
 
             datalist = ecudict['data']
@@ -771,7 +769,7 @@ class Ecu_file:
 
                     requests = request_tag.getElementsByTagName("Request")
                     for f in requests:
-                        ecu_req = Ecu_request(f, endian)
+                        ecu_req = Ecu_request(f, self)
                         self.requests[ecu_req.name] = ecu_req
 
                     data = self.xmldoc.getElementsByTagName("Data")

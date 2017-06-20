@@ -500,9 +500,10 @@ class Main_widget(gui.QMainWindow):
 
         self.progressstatus.setValue(0)
 
-        if options.report_data:
-            self.logview.append(_("Sending ECU informations to database, thank you for your paticipation"))
-            self.ecu_scan.send_report()
+        # Doesn't work anymore
+#       if options.report_data:
+#           self.logview.append(_("Sending ECU informations to database, thank you for your paticipation"))
+#           self.ecu_scan.send_report()
 
     def setConnected(self, on):
         if options.simulation_mode:

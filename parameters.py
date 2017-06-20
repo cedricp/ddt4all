@@ -805,7 +805,7 @@ class paramWidget(gui.QWidget):
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
 
-                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, ecu_request.endian)
+                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, ecu_request.ecu_file.endianness)
 
                 if not elm_data_stream:
                     widget.setStyleSheet("background: red")
@@ -823,7 +823,7 @@ class paramWidget(gui.QWidget):
                 if request_name in self.displaydict:
                     data_item = rcvbytes_data_items[key]
                     dd_ecu_data = self.ecurequestsparser.data[key]
-                    value = dd_ecu_data.getDisplayValue(elm_response, data_item, ecu_request.endian)
+                    value = dd_ecu_data.getDisplayValue(elm_response, data_item, self.ecurequestsparser.endianness)
                     dd_request_data = self.displaydict[request_name]
                     data = dd_request_data.getDataByName(key)
 
@@ -861,7 +861,7 @@ class paramWidget(gui.QWidget):
             data_item = request.dataitems[ecu_data.name]
             #if not data_item.ref:
             #    continue
-            value = ecu_data.getDisplayValue(elm_response, data_item, request.endian)
+            value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
@@ -1011,7 +1011,7 @@ class paramWidget(gui.QWidget):
             for k in request.dataitems.keys():
                 ecu_data = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
-                value_hex = ecu_data.getHexValue(' '.join(can_response), dataitem, request.endian)
+                value_hex = ecu_data.getHexValue(' '.join(can_response), dataitem, request.ecu_file.endianness)
 
                 if value_hex is None:
                     continue

@@ -28,7 +28,7 @@ def get_isk(ecu, ecu_response = None):
         # Get it for real, else try a predefined value
         pass
     # Get Request
-    return isk_code_ecu_data.getHexValue(ecu_response, isk_code_data, abframe_request.endian).upper()
+    return isk_code_ecu_data.getHexValue(ecu_response, isk_code_data, abframe_request.ecu_file.endianness).upper()
 
 
 def plugin_entry():
@@ -48,5 +48,5 @@ def plugin_entry():
     # First generate a list of bytes representing the frame to be sent to the ELM
     # A template of it is available in the 'sentbytes' member of an 'Ecu_request' class
     elm_data_stream = after_sale_request.get_formatted_sentbytes()
-    print code_apv_ecu_data.setValue("001122334455", elm_data_stream, code_apv_data, after_sale_request.endian)
+    print code_apv_ecu_data.setValue("001122334455", elm_data_stream, code_apv_data, megane_ecu.endianness)
     print get_isk(megane_ecu, "61AB02FC0D08514C86555400000000000000008DE8EE1679D3C9A7A7CCF6AC0000000000002A")

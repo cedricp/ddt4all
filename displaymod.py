@@ -335,7 +335,7 @@ class displayWidget(gui.QWidget):
         self.qlabelval.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabelval.move(width, 0)
 
-        endianess = req.endian
+        endianess = req.ecu_file.endianness
         if dataitem.endian != "":
             endianess = dataitem.endian
         infos = req_name + u'\n'

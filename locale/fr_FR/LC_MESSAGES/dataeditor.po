@@ -255,11 +255,11 @@ msgstr "Encodage"
 
 #: dataeditor.py:1509
 msgid "Big Endian"
-msgstr "Petit endian"
+msgstr "Grand endian"
 
 #: dataeditor.py:1510
 msgid "Little Endian"
-msgstr "Grand endian"
+msgstr "Petit endian"
 
 #: dataeditor.py:1525
 msgid "Diag version;Supplier;Soft;Version"

@@ -152,8 +152,8 @@ class dataTable(gui.QTableWidget):
     def add_to_screen(self, name, item):
         if not options.main_window.paramview:
             return
-
-        options.main_window.paramview.addParameter(self.requestname, self.issend, name, item)
+        itemtext = unicode(item.toUtf8(), encoding="UTF-8")
+        options.main_window.paramview.addParameter(self.requestname, self.issend, name, itemtext)
 
     def init(self, issend, requestname):
         self.issend = issend
@@ -413,7 +413,7 @@ class paramEditor(gui.QFrame):
         valuetosend = valuetosend.replace("L", "")
 
         bytesarray = ["00" for a in range(bytes)]
-        bytesarray = ecudata.setValue(valuetosend, bytesarray, dataitem, self.current_request.endian, True)
+        bytesarray = ecudata.setValue(valuetosend, bytesarray, dataitem, self.current_request.ecu_file.endianness, True)
         self.bitviewer.set_bytes(bytesarray)
 
     def update_bitview_value(self, dataname):
@@ -631,7 +631,7 @@ class requestEditor(gui.QWidget):
         ecu_datareq['sentbytes'] = ''
         ecu_datareq['endian'] = ''
         ecu_datareq['name'] = u'New request'
-        self.ecurequestsparser.requests[ecu_datareq['name'] ] = ecu.Ecu_request(ecu_datareq, '')
+        self.ecurequestsparser.requests[ecu_datareq['name']] = ecu.Ecu_request(ecu_datareq, self.ecurequestsparser)
         self.init()
         self.requesttable.select(ecu_datareq['name'])
 
@@ -1521,12 +1521,16 @@ class ecuParamEditor(gui.QFrame):
         gridlayout.setColumnStretch(3, 1)
         layoutv.addLayout(gridlayout)
 
+        autoident_label = gui.QLabel("ECU Auto identification")
+        autoident_label.setAlignment(core.Qt.AlignCenter)
+
         self.identtable = gui.QTableWidget()
         self.identtable.setColumnCount(4)
         self.identtable.verticalHeader().hide()
         self.identtable.setSelectionBehavior(gui.QAbstractItemView.SelectRows)
         self.identtable.setSelectionMode(gui.QAbstractItemView.SingleSelection)
         self.identtable.itemSelectionChanged.connect(self.selection_changed)
+        layoutv.addWidget(autoident_label)
         layoutv.addWidget(self.identtable)
 
         headerstrings = core.QString(_("Diag version;Supplier;Soft;Version")).split(";")
