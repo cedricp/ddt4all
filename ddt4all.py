@@ -514,7 +514,6 @@ class Main_widget(gui.QMainWindow):
     def saveEcus(self):
         filename = gui.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
-        # pickle.dump(self.ecu_scan.ecus, open(filename, "wb"))
         if filename == "":
             return
 
@@ -792,14 +791,6 @@ class portChooser(gui.QDialog):
         safetychecklayout.addWidget(safetylabel)
         layout.addLayout(safetychecklayout)
 
-        # reportchecklayout = gui.QHBoxLayout()
-        # self.reportcheck = gui.QCheckBox()
-        # self.reportcheck.setChecked(True)
-        # reportlabel = gui.QLabel(_("I accept to share ECU informations"))
-        # reportchecklayout.addWidget(self.reportcheck)
-        # reportchecklayout.addWidget(reportlabel)
-        # layout.addLayout(reportchecklayout)
-
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
         button_layout.addWidget(button_elm_chk)
@@ -897,11 +888,6 @@ class portChooser(gui.QDialog):
             msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
-
-        if self.reportcheck.isChecked():
-            options.report_data = True
-        else:
-            options.report_data = False
 
         if self.wifibutton.isChecked():
             self.port = str(self.wifiinput.text())

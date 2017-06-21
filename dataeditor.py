@@ -276,7 +276,6 @@ class requestTable(gui.QTableWidget):
             self.setCellWidget(count, 1, manual)
             count += 1
 
-
         self.sortItems(0, core.Qt.AscendingOrder)
         self.resizeColumnsToContents()
         self.resizeRowsToContents()

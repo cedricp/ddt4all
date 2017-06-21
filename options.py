@@ -23,11 +23,14 @@ last_error = ""
 main_window = None
 ecu_scanner = None
 
+
 def get_last_error():
     global last_error
     err = last_error
     last_error = ""
     return err
+
+
 
 def translator(filename):
     if sys.platform.startswith('win'):
