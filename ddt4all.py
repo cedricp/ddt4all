@@ -189,7 +189,6 @@ class Main_widget(gui.QMainWindow):
         options.ecu_scanner = self.ecu_scan
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
 
-        self.ecu_scan.send_report()
         self.paramview = None
         self.screennames = []
 
@@ -499,11 +498,6 @@ class Main_widget(gui.QMainWindow):
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
-
-        # Doesn't work anymore
-#       if options.report_data:
-#           self.logview.append(_("Sending ECU informations to database, thank you for your paticipation"))
-#           self.ecu_scan.send_report()
 
     def setConnected(self, on):
         if options.simulation_mode:
