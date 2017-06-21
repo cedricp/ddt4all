@@ -2,7 +2,6 @@
 import math, string
 import options
 import elm
-import report
 import zipfile
 from xml.dom.minidom import parse
 import xml.dom.minidom
@@ -991,12 +990,6 @@ class Ecu_scanner:
         self.approximate_ecus = {}
         self.num_ecu_found = 0
         self.report_data = []
-
-    def send_report(self):
-        if options.report_data:
-            # order : diagversion, supplier, soft, addr, can_response, version, href
-            for reportdata in self.report_data:
-                report.report_ecu(reportdata[1], reportdata[2], reportdata[5], reportdata[0], reportdata[3], reportdata[4], reportdata[6], reportdata[7])
 
     def scan(self, progress=None, label=None):
         i = 0

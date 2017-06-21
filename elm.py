@@ -599,7 +599,7 @@ class ELM:
                 if s.replace(' ', '').startswith(positive.replace(' ', '')):
                     res += s.strip() + ' '
 
-        rsp = res
+        rsp = res.replace('>', '')
 
         # populate L2 cache
         self.rsp_cache[req] = rsp
@@ -667,7 +667,7 @@ class ELM:
             return self.send_can_cfc0(command)
         else:
             rsp = self.send_can(command)
-            if self.error_frame>0:  #then fallback to cfc0
+            if self.error_frame > 0:  #then fallback to cfc0
                 self.ATCFC0 = True
                 self.cmd("at cfc0")
                 rsp = self.send_can_cfc0(command)
@@ -727,7 +727,7 @@ class ELM:
         if len(responses) == 0:  # no data in response
             return ""
 
-        if len(responses)>1 and responses[0].startswith('037F') and responses[0][6:8]=='78':
+        if len(responses) > 1 and responses[0].startswith('037F') and responses[0][6:8] == '78':
             responses = responses[1:]
 
         if len(responses) == 1:  # single frame response
@@ -1085,6 +1085,8 @@ class ELM:
         self.cmd("at e1")
         self.cmd("at l1")
         self.cmd("at d1")
+        self.cmd("at h0")  # headers off
+        self.cmd("at al")  # Allow Long (>7 byte) messages
 
     def set_iso8_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
@@ -1135,7 +1137,7 @@ class ELM:
 
         if options.opt_si:
             self.cmd("at sp 4")  # slow init mode 4
-            if len(ecu['slowInit']) > 0:
+            if 'slowInit' in ecu and len(ecu['slowInit']) > 0:
                 self.cmd("at iia " + ecu['slowInit'])  # address for slow init
             rsp = self.lastinitrsp = self.cmd("at si")  # for slow init mode 4
             if 'ERROR' in rsp and len(ecu['fastInit']) > 0:
