@@ -611,6 +611,13 @@ class ELM:
         # populate L2 cache
         self.rsp_cache[req] = rsp
 
+        # save log
+
+        if self.vf != 0:
+            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+            self.vf.flush()
+
         return rsp
 
     def errorval(self, val):
