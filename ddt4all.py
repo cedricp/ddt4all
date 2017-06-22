@@ -813,7 +813,7 @@ class portChooser(gui.QDialog):
         currentitem = self.listview.currentItem()
         if currentitem:
             self.logview.show()
-            port = str(currentitem.text()).split('[')[0]
+            port = str(currentitem.text().split('[')[0])
             speed = int(self.speedcombo.currentText())
             res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
             if res == False:
