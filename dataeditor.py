@@ -1711,6 +1711,7 @@ class ecuParamEditor(gui.QFrame):
                 self.protocolcombo.setCurrentIndex(2)
             else:
                 self.protocolcombo.setCurrentIndex(1)
+
         elif self.ecurequestsparser.ecu_protocol == "ISO8":
             self.toolecuidbox.set_can(False)
             self.ecutoolidbox.set_can(False)

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import math, string
+
+from numpy.core.multiarray import can_cast
+
 import options
 import elm
 import zipfile
@@ -701,7 +704,7 @@ class Ecu_file:
             if target:
                 functions = getChildNodesByName(target[0], u"Function")
                 if functions:
-                    self.funcaddr = hex(int(functions[0].getAttribute("Address")))[2:].upper()
+                    self.funcaddr = hex(int(functions[0].getAttribute("Address")))[2:].upper().zfill(2)
                     self.funcname = functions[0].getAttribute("Name")
 
                 can = getChildNodesByName(target[0], u"CAN")
@@ -725,30 +728,33 @@ class Ecu_file:
                 if k:
                     kwp = getChildNodesByName(k[0], u"KWP")
                     iso8 = getChildNodesByName(k[0], u"ISO8")
+
                     if kwp:
                         kwp = kwp[0]
                         self.ecu_protocol = u"KWP2000"
                         fastinit = getChildNodesByName(kwp, u"FastInit")
                         if fastinit:
                             self.fastinit = True
+                            KW1 = getChildNodesByName(fastinit[0], "KW1")
+                            KW2 = getChildNodesByName(fastinit[0], "KW2")
+                        else:
+                            iso8 = getChildNodesByName(kwp, u"ISO8")
+                            KW1 = getChildNodesByName(iso8[0], "KW1")
+                            KW2 = getChildNodesByName(iso8[0], "KW2")
 
-                            self.kw1 = hex(
-                                int(getChildNodesByName(fastinit[0], "KW1")[0].getAttribute("Value")))[
-                                               2:].upper()
-                            self.kw2 = hex(
-                                int(getChildNodesByName(fastinit[0], "KW2")[0].getAttribute("Value")))[
-                                               2:].upper()
+                        self.kw1 = hex(int(KW1[0].getAttribute("Value")))[2:].upper()
+                        self.kw2 = hex(int(KW2[0].getAttribute("Value")))[2:].upper()
+
                     elif iso8:
                         self.fastinit = False
+                        self.ecu_protocol = "ISO8"
 
-                        if iso8:
-                            self.ecu_protocol = "ISO8"
-                            self.kw1 = hex(
-                                int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[
-                                               2:].upper()
-                            self.kw2 = hex(
-                                int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[
-                                               2:].upper()
+                        self.kw1 = hex(
+                            int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[
+                                           2:].upper()
+                        self.kw2 = hex(
+                            int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[
+                                           2:].upper()
 
 
             devices = self.xmldoc.getElementsByTagName("Device")
@@ -1037,11 +1043,19 @@ class Ecu_scanner:
             i += 1
 
             if not options.simulation_mode:
+                options.opt_si = True
                 options.elm.set_iso_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
                 options.elm.start_session_iso('10C0')
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
-                continue
+                if addr == "27":
+                    can_response = "61 80 82 00 26 02 45 09 30 30 31 01 18 52 20 06 05 02 05 00 03 01 04 33 69 91"
+                elif addr == "01":
+                    can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
+                elif addr == "2C":
+                    can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
+                else:
+                    continue
 
             self.check_ecu(can_response, label, addr, "KWP")
         if not options.simulation_mode:

@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: parameters.py:64
+msgid "Returning to defaut session..."
+msgstr "Powrot do sekcji domyslnej..."
+
+#: parameters.py:83
+msgid "Save ECU (keep '.json' extension)"
+msgstr "Zapisz ECU (zachowaj rozszerzenie '.json')"
+
+#: parameters.py:159 parameters.py:187 parameters.py:206
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "Zeby edytowac ekran, najpierw eksportuj do formatu JSON"
+
+#: parameters.py:229
+msgid "Enter label name"
+msgstr "Wprowadz nazwe etykiety"
+
+#: parameters.py:295
+msgid "Add button"
+msgstr "Dodaj przycisk"
+
+#: parameters.py:296
+msgid "Add label"
+msgstr "Dodaj etykiete"
+
+#: parameters.py:304
+msgid "Rename label"
+msgstr "Zmien etykiete"
+
+#: parameters.py:308
+msgid "Remove element"
+msgstr "Usun etykiete"
+
+#: parameters.py:401
+msgid "Diagnotic session"
+msgstr "Sesja diagnostyczna"
+
+#: parameters.py:402
+msgid "Input"
+msgstr "Wejscie"
+
+#: parameters.py:403
+msgid "Output"
+msgstr "Wyjscie"
+
+#: parameters.py:444
+msgid "Initializing CAN mode"
+msgstr "Inicjalizacja CAN"
+
+#: parameters.py:451
+msgid "Initializing KWP2000 mode"
+msgstr "Inicjalizacja KWP2000"
+
+#: parameters.py:457
+msgid "Initializing ISO8 mode"
+msgstr "Inicjalizacja IS08"
+
+#: parameters.py:462
+msgid "Protocol "
+msgstr "Protokol"
+
+#: parameters.py:462
+msgid " not supported"
+msgstr "Nie obslugiwane"
+
+#: parameters.py:523
+msgid "XML file not found : "
+msgstr "Nieobecny plik XML :"
+
+#: parameters.py:530
+msgid "Invalid DDT file"
+msgstr "Nieprawidlowy plik DDT"
+
+#: parameters.py:559
+msgid "Switching to session mode"
+msgstr "Zmiana sesji"
+
+#: parameters.py:576
+msgid "Sending ELM request :"
+msgstr "Wysli polecenie do ELM :"
+
+#: parameters.py:578
+msgid "Blocked ELM request :"
+msgstr "ZAblokuj polecenie do ELM :"
+
+#: parameters.py:582
+msgid "Sending ELM request:"
+msgstr "Wysli polecenie do ELM"
+
+#: parameters.py:591
+msgid "Sending simulated ELM request :"
+msgstr "Wysli polecenie do symulowanego ELM-a :"
+
+#: parameters.py:601
+msgid "ELM response : "
+msgstr "ELM odpowiedzial :"
+
+#: parameters.py:744
+msgid "Button request not found : "
+msgstr "Przycisk polecenia nieobecny :"
+
+#: parameters.py:758
+msgid "Sending request :"
+msgstr "Wysli polecenie :"
+
+#: parameters.py:800
+msgid "Request aborted (look at red paramters entries): "
+msgstr "Polecenie przerwane (zobacz na parametry-czerwone wpisy):"
+
+#: parameters.py:820
+msgid "Invalid"
+msgstr "Niewazne"
+
+#: parameters.py:898
+msgid "Cannot call request "
+msgstr "Nie mozna zglosic zadania"
+
+#: parameters.py:917
+msgid "Clearing DTC information"
+msgstr "Wyczysc informacje DTC"
+
+#: parameters.py:926
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "Brak wyrazniego Zadania DTC dla ECU spowoduje wyslanie domyslnego numeru 14FF00"
+
+#: parameters.py:930
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>Chcesz usunac kody bledow diagnostycznych</center>"
+
+#: parameters.py:931
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>Jestes pewny czego chcesz.</center>"
+
+#: parameters.py:970
+msgid "Invalid response for ReadDTC command"
+msgstr "Nieprawidlowa odpowiedz dla komendy DTC"
+
+#: parameters.py:979
+msgid "No DTC"
+msgstr "Brak DTC"
+
+#: parameters.py:988
+msgid "Clear ALL DTC"
+msgstr "Wyczysc wszystkie DTC"
+
+#: parameters.py:994
+msgid "ECU trouble codes"
+msgstr "Kody bledow Ecu"
+
+#: parameters.py:1027
+msgid "Parsing screen "
+msgstr "Analizowanie ekranu"
