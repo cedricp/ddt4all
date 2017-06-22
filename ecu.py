@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 import math, string
-
-from numpy.core.multiarray import can_cast
-
 import options
 import elm
 import zipfile
