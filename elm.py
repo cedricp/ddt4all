@@ -1147,11 +1147,6 @@ class ELM:
             self.cmd("at sp 4")                  # slow init mode 4
             self.cmd("at iia " + addr)           # address for slow init
             rsp = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
-            if 'ERROR' in rsp and len(ecu['fastInit']) > 0:
-                ecu['protocol'] = ''
-                if self.lf != 0:
-                    self.lf.write('### Try fast init\n')
-                    self.lf.flush()
 
         if 'OK' not in self.lastinitrsp:
             self.cmd("AT SP 5")                   # fast init mode 5
