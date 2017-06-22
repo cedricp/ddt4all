@@ -605,7 +605,7 @@ class paramWidget(gui.QWidget):
 
         if elm_response.startswith('7F'):
             nrsp = options.elm.errorval(elm_response[6:8])
-            self.logview.append("<font color=red>' + _('Bad ELM response :') + '</font> " + nrsp)
+            self.logview.append("<font color=red>" + _('Bad ELM response :') + "</font> " + nrsp)
 
         if not auto or options.log_all:
             self.logview.append(_('ELM response : ') + elm_response)
