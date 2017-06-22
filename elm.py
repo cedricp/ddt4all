@@ -1095,6 +1095,7 @@ class ELM:
         self.cmd("AT D1")
         self.cmd("AT H0")  # headers off
         self.cmd("AT AL")  # Allow Long (>7 byte) messages
+        self.cmd("AT KW0")
 
     def set_iso8_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
@@ -1119,6 +1120,7 @@ class ELM:
         self.cmd("AT ST FF")                     # set timeout to 1 second
         self.cmd("AT SP 3")
         self.cmd("AT AT 1")                      # enable adaptive timing
+        self.cmd("AT KW0")
 
     def set_iso_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
