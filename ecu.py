@@ -1052,6 +1052,7 @@ class Ecu_scanner:
                     can_response = "61 80 82 00 26 02 45 09 30 30 31 01 18 52 20 06 05 02 05 00 03 01 04 33 69 91"
                 elif addr == "01":
                     can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
+                    can_response = "61 80 82 01 00 28 28 04 41 4D 52 00 03 07 00 07 04 00 04 03 08 2B 00 31 04 00"
                 elif addr == "2C":
                     can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
                 else:
@@ -1073,6 +1074,7 @@ class Ecu_scanner:
             href = ""
 
             for target in self.ecu_database.targets:
+                print target.protocol
                 if target.checkWith(diagversion, supplier, soft, version, addr):
                     self.ecus[target.name] = target
                     self.num_ecu_found += 1
@@ -1088,6 +1090,14 @@ class Ecu_scanner:
                 min_delta_version = 0xFFFFFF
                 kept_ecu = None
                 for tgt in approximate_ecu:
+                    ecu_protocol = 'CAN'
+                    if tgt.protocol.startswith("KWP"):
+                        ecu_protocol = "KWP"
+                    # Shouldn't happen, but...
+                    if tgt.protocol.startswith("ISO8"):
+                        ecu_protocol = "KWP"
+                    if ecu_protocol != protocol:
+                        continue
                     delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
                     if delta < min_delta_version:
                         min_delta_version = delta
