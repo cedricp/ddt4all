@@ -919,7 +919,7 @@ if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
-        font = gui.QFont("Courier", 10)
+        font = gui.QFont("Sans", 9)
         font.setBold(False)
         app.setFont(font)
         app.setStyle("windows")

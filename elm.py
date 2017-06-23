@@ -621,11 +621,12 @@ class ELM:
         return rsp
 
     def errorval(self, val):
+        if val not in negrsp:
+            return "not registered response"
         if val in negrsp.keys():
             return negrsp[val]
 
     def cmd(self, command, serviceDelay="0"):
-
         tb = time.time()  # start time
 
         # Ensure time gap between commands

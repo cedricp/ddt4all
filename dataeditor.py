@@ -1298,6 +1298,8 @@ class buttonData(gui.QFrame):
             for butreq in self.buttonlayout:
                 if butreq['uniquename'] == itemname:
                     self.currentbuttonuniquename = itemname
+                    if 'send' not in butreq:
+                        continue
                     sendparams = butreq['send']
                     self.requesttable.setRowCount(len(sendparams))
                     self.currentbuttonparams = sendparams

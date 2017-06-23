@@ -4,6 +4,7 @@
 # (c) 2017
 # This is an example plugin
 
+
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import ecu

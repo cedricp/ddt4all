@@ -404,13 +404,20 @@ class displayWidget(gui.QWidget):
         self.qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
         self.qlabelval.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
         self.qlabelval.move(width, 0)
+
         infos = req_name + u'\n'
         if data.comment:
             infos += data.comment + u'\n'
+
+        endianess = req.ecu_file.endianness
+        if dataitem.endian != "":
+            endianess = dataitem.endian
+
         infos += u"Request=" + unicode(req.sentbytes) + u' ManualRequest=' + unicode(req.manualsend)
         infos += u'\nNumBits=' + unicode(data.bitscount)
         infos += u' FirstByte=' + unicode(dataitem.firstbyte)
         infos += u' BitOffset=' + unicode(dataitem.bitoffset)
+        infos += u' Endianess=' + unicode(endianess)
         self.qlabelval.setToolTip(infos)
 
         ddata = displayData(data, self.qlabelval)

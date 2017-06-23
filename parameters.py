@@ -30,6 +30,8 @@ _ = options.translator('ddt4all')
 class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
+        self.defaultdiagsessioncommand = "10C0"
+        self.currentsession = ""
         self.layoutdict = None
         self.targetsdata = None
         self.main_protocol_status = prot_status
@@ -398,7 +400,6 @@ class paramWidget(gui.QWidget):
         if not screen:
             return False
 
-        self.initELM()
         scr_init = self.initScreen(screen)
         self.layout.addWidget(self.panel)
         return scr_init
@@ -447,27 +448,30 @@ class paramWidget(gui.QWidget):
         self.refreshtime = value
 
     def initELM(self):
-        if not options.simulation_mode:
-            if self.ecurequestsparser.ecu_protocol == 'CAN':
-                self.logview.append(_("Initializing CAN mode"))
-                short_addr = options.elm.get_can_addr(self.ecurequestsparser.ecu_send_id)
-                ecu_conf = {'idTx': self.ecurequestsparser.ecu_send_id, 'idRx':
-                    self.ecurequestsparser.ecu_recv_id, 'ecuname': str(self.ecu_name)}
+        if self.ecurequestsparser.ecu_protocol == 'CAN':
+            self.logview.append(_("Initializing CAN mode"))
+            short_addr = elm.get_can_addr(self.ecurequestsparser.ecu_send_id)
+            ecu_conf = {'idTx': self.ecurequestsparser.ecu_send_id, 'idRx':
+                self.ecurequestsparser.ecu_recv_id, 'ecuname': str(self.ecu_name)}
+            if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf)
-            elif self.ecurequestsparser.ecu_protocol == 'KWP2000':
-                self.logview.append(_("Initializing KWP2000 mode"))
-                ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
-                options.opt_si = not self.ecurequestsparser.fastinit
+        elif self.ecurequestsparser.ecu_protocol == 'KWP2000':
+            self.logview.append(_("Initializing KWP2000 mode"))
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
+            options.opt_si = not self.ecurequestsparser.fastinit
+            if not options.simulation_mode:
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.ecurequestsparser.funcaddr, ecu_conf)
-            elif self.ecurequestsparser.ecu_protocol == 'ISO8':
-                self.logview.append(_("Initializing ISO8 mode"))
-                ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'ISO8'}
+        elif self.ecurequestsparser.ecu_protocol == 'ISO8':
+            self.logview.append(_("Initializing ISO8 mode"))
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'ISO8'}
+            if not options.simulation_mode:
                 options.elm.init_iso()
                 options.elm.set_iso8_addr(self.ecurequestsparser.funcaddr, ecu_conf)
-            else:
-                self.logview.append(_("Protocol ") + self.ecurequestsparser.ecu_protocol + _(" not supported"))
+        else:
+            self.logview.append(_("Protocol ") + self.ecurequestsparser.ecu_protocol + _(" not supported"))
+
         if self.main_protocol_status:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
@@ -523,7 +527,6 @@ class paramWidget(gui.QWidget):
             self.parser = 'json'
             self.ecurequestsparser = ecu.Ecu_file(self.ddtfile, True)
             self.initJSON()
-            self.initELM()
         else:
             self.parser = 'xml'
             xdom = xml.dom.minidom.parse(self.ddtfile)
@@ -552,7 +555,17 @@ class paramWidget(gui.QWidget):
                         screen_name = screen.getAttribute(u"Name")
                         self.xmlscreen[screen_name] = screen
                         self.categories[category_name].append(screen_name)
-            self.initELM()
+
+        self.initELM()
+
+        if 'StartDiagnosticSession' in self.ecurequestsparser.requests:
+            self.defaultdiagsessioncommand = self.ecurequestsparser.requests['StartDiagnosticSession'].sentbytes
+            self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
+
+        if 'Start Diagnostic Session' in self.ecurequestsparser.requests:
+            self.defaultdiagsessioncommand = self.ecurequestsparser.requests['Start Diagnostic Session'].sentbytes
+            self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
+
         reqk = self.ecurequestsparser.requests.keys()
 
         if self.ecurequestsparser.ecu_protocol == "CAN":
@@ -566,14 +579,10 @@ class paramWidget(gui.QWidget):
         elm_response = '00 ' * 70
 
         if command.startswith('10'):
-            self.logview.append('<font color=blue>' +_('Switching to session mode') + '%s</font>' % command)
+            self.logview.append('<font color=blue>' +_('Switching to session mode') + '</font> <font color=orange>%s</font>' % command)
             if not options.simulation_mode:
-                if self.ecurequestsparser.ecu_protocol == "CAN":
-                    options.elm.start_session_can(command)
-                    return
-                elif self.ecurequestsparser.ecu_protocol == "KWP2000":
-                    options.elm.start_session_iso(command)
-                    return
+                self.startDiagnosticSession(command)
+            return
 
         if not options.simulation_mode:
             if not options.promode:
@@ -630,8 +639,6 @@ class paramWidget(gui.QWidget):
         self.current_screen = screen_name
         self.presend = []
         self.timer.stop()
-
-        self.initELM()
 
         try:
             self.timer.timeout.disconnect()
@@ -818,6 +825,7 @@ class paramWidget(gui.QWidget):
 
             # Manage delay
             time.sleep(request_delay / 1000.0)
+
             # Then show received values
             elm_response = self.sendElm(' '.join(elm_data_stream))
 
@@ -842,6 +850,21 @@ class paramWidget(gui.QWidget):
         time.sleep(0.1)
         self.updateDisplays()
 
+    def startDiagnosticSession(self, sds=""):
+        if sds == "":
+            sds = self.defaultdiagsessioncommand
+
+        if self.currentsession == sds:
+            return
+
+        if not options.simulation_mode:
+            if self.ecurequestsparser.ecu_protocol == "CAN":
+                options.elm.start_session_can(sds)
+                self.currentsession = sds
+            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
+                options.elm.start_session_iso(sds)
+                self.currentsession = sds
+
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displaydict[request_name]
         request = request_data.request
@@ -851,7 +874,7 @@ class paramWidget(gui.QWidget):
 
         ecu_bytes_to_send = request.sentbytes.encode('ascii')
         elm_response = self.sendElm(ecu_bytes_to_send, True)
-        
+
         # Test data for offline test, below is UCT_X84 (roof) parameter misc timings and values
         # elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
         # Test data for DAE_X84
@@ -893,15 +916,10 @@ class paramWidget(gui.QWidget):
         if not self.allow_parameters_update:
             return
 
-        # Begin default diag session if not already done
-        if not options.simulation_mode:
-            if self.ecurequestsparser.ecu_protocol == "CAN":
-                options.elm.start_session_can('10C0')
-            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
-                options.elm.start_session_iso('10C0')
-
         # <Screen> <Send/> <Screen/> tag management
         # Manage pre send commands
+        self.startDiagnosticSession()
+
         for sendcom in self.panel.presend:
             delay = float(sendcom['Delay'])
             req_name = sendcom['RequestName']
@@ -920,22 +938,17 @@ class paramWidget(gui.QWidget):
             self.timer.start(self.refreshtime)
 
     def clearDTC(self):
-        request = None
-
-        if not options.simulation_mode:
-            if self.ecurequestsparser.ecu_protocol == "CAN":
-                options.elm.start_session_can('10C0')
-            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
-                options.elm.start_session_iso('10C0')
-
         self.logview.append(_("Clearing DTC information"))
 
         if "ClearDiagnosticInformation.All" in self.ecurequestsparser.requests:
-            request = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"].sentbytes
+            req = self.ecurequestsparser.requests["ClearDiagnosticInformation.All"]
+            request = req.sentbytes
         elif "ClearDTC" in self.ecurequestsparser.requests:
-            request = self.ecurequestsparser.requests["ClearDTC"].sentbytes
+            req = self.ecurequestsparser.requests["ClearDTC"]
+            request = req.sentbytes
         elif "Clear Diagnostic Information" in self.ecurequestsparser.requests:
-            request = self.ecurequestsparser.requests["Clear Diagnostic Information"].sentbytes
+            req = self.ecurequestsparser.requests["Clear Diagnostic Information"]
+            request = req.sentbytes
         else:
             self.logview.append(_("No ClearDTC request for that ECU, will send default 14FF00"))
             request = "14FF00"

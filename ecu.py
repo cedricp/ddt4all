@@ -130,6 +130,12 @@ class Ecu_request:
         self.sendbyte_dataitems = {}
         self.name = ''
         self.ecu_file = ecu_file
+        # StartDiagSession requirements
+        self.sds = {'nosds': True,
+                    'plant': True,
+                    'aftersales': True,
+                    'engineering': True,
+                    'supplier': True}
 
         if isinstance(data, dict):
             if data.has_key('minbytes'): self.minbytes = data['minbytes']
@@ -139,6 +145,7 @@ class Ecu_request:
             if data.has_key('sentbytes'): self.sentbytes = data['sentbytes']
 
             self.name = data['name']
+            self.sds = data['sds']
 
             if data.has_key('sendbyte_dataitems'):
                 sbdi = data['sendbyte_dataitems']
@@ -151,12 +158,27 @@ class Ecu_request:
                 for k, v in rbdi.iteritems():
                     di = Data_item(v, self.ecu_file.endianness, k)
                     self.dataitems[k] = di
+
         elif isinstance(data, unicode):
             # Create a blank, new on
             self.name = data
         else:
             self.xmldoc = data
             self.name = self.xmldoc.getAttribute("Name")
+
+            accessdata = self.xmldoc.getElementsByTagName("DenyAccess").item(0)
+            if accessdata:
+                for accessdatachild in accessdata.childNodes:
+                    if accessdatachild.nodeName == "NoSDS":
+                        self.sds['nosds'] = False
+                    elif accessdatachild.nodeName == "Plant":
+                        self.sds['plant'] = False
+                    elif accessdatachild.nodeName == "AfterSales":
+                        self.sds['aftersales'] = False
+                    elif accessdatachild.nodeName == "Engineering":
+                        self.sds['engineering'] = False
+                    elif accessdatachild.nodeName == "Supplier":
+                        self.sds['supplier'] = False
 
             manualsenddata = self.xmldoc.getElementsByTagName("ManuelSend").item(0)
             if manualsenddata:
@@ -196,6 +218,19 @@ class Ecu_request:
                         di = Data_item(dataitem, self.ecu_file.endianness)
                         self.sendbyte_dataitems[di.name] = di
 
+    def get_sds(self):
+        if self.sds['nosds']:
+            return ""
+        elif self.sds['aftersales']:
+            return "10C0"
+        elif self.sds['plant']:
+            return "1089"
+        elif self.sds['engineering']:
+            return "1086"
+        elif self.sds['supplier']:
+            return "10FA"
+        return "ERROR"
+
     def get_formatted_sentbytes(self):
         bytes_to_send_ascii = self.sentbytes.encode('ascii', 'ignore')
         return [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
@@ -209,6 +244,7 @@ class Ecu_request:
         if self.sentbytes != '': js['sentbytes'] = self.sentbytes
 
         js['name'] = self.name
+        js['sds'] = self.sds
 
         sdi = {}
         for key, value in self.sendbyte_dataitems.iteritems():
@@ -543,10 +579,14 @@ class Ecu_data:
             return None
 
         res = (float(value) * float(self.step) + float(self.offset)) / float(self.divideby)
+
         if len(self.format) and '.' in self.format:
             acc = len(self.format.split('.')[1])
             fmt = '%.' + str(acc) + 'f'
             res = fmt % res
+        else:
+            if int(res) == res:
+                return str(int(res))
 
         return str(res)
 
