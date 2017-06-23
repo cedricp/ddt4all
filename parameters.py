@@ -598,6 +598,8 @@ class paramWidget(gui.QWidget):
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
                 # Test for EDC16
                 # elm_response = "57 02 05 34 68 06 70 4F 09 A4 09 A4 17"
+            elif "17FFFF" in command:
+                elm_response = "7F 57 12"
             txt = '<font color=green>' + _('Sending simulated ELM request :') + '</font>'
 
         if not auto or options.log_all:
@@ -976,6 +978,12 @@ class paramWidget(gui.QWidget):
         dtcread_command = ''.join(bytestosend)
         can_response = self.sendElm(dtcread_command)
 
+        moredtcread_command = None
+        if 'MoreDTC' in request.sendbyte_dataitems:
+            moredtcfirstbyte = int(request.sendbyte_dataitems['MoreDTC'].firstbyte)
+            bytestosend[moredtcfirstbyte - 1] = "FF"
+            moredtcread_command = ''.join(bytestosend)
+
         if "RESPONSE" in can_response:
             msgbox = gui.QMessageBox()
             msgbox.setText(_("Invalid response for ReadDTC command"))
@@ -984,12 +992,32 @@ class paramWidget(gui.QWidget):
 
         can_response = can_response.split(' ')
 
+        # Handle error
+        if can_response[0].upper() == "7F":
+            msgbox = gui.QMessageBox()
+            msgbox.setText(_("Read DTC returned an error"))
+            msgbox.exec_()
+            return
+
+        # Handle no DTC
         if len(can_response) == 2:
             #No errors
             msgbox = gui.QMessageBox()
             msgbox.setText(_("No DTC"))
             msgbox.exec_()
             return
+
+        # Ask for more DTCs, allow only 50 iterations in case infinite loop
+        maxcount = 50
+        if moredtcread_command is not None:
+            while maxcount > 0:
+                more_can_response = self.sendElm(moredtcread_command)
+                more_can_response = more_can_response.split(' ')
+                if len(more_can_response) < 3 or more_can_response[0].upper() == '7F':
+                    break
+                # Append result to build one frame
+                can_response += more_can_response[2:]
+                maxcount -= 1
 
         numberofdtc = int('0x' + can_response[1], 16)
         dtcdialog = gui.QDialog(None)

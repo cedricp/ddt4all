@@ -644,8 +644,8 @@ class Main_widget(gui.QMainWindow):
             if ecu_file == self.paramview.ddtfile:
                 return
 
-        self.diagaction.setEnabled(False)
-        self.hexinput.setEnabled(False)
+        self.diagaction.setEnabled(True)
+        self.hexinput.setEnabled(True)
         self.treeview_params.clear()
 
         uiscale_mem = 12
@@ -919,7 +919,7 @@ if __name__ == '__main__':
     app = gui.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
-        font = gui.QFont("Sans", 8)
+        font = gui.QFont("Courier", 10)
         font.setBold(False)
         app.setFont(font)
         app.setStyle("windows")

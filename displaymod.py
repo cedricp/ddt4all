@@ -21,6 +21,7 @@ class labelWidget(gui.QLabel):
         self.ismovable = True
         self.uiscale = uiscale
         self.toggle_selected(False)
+        self.setWordWrap(True)
 
     def toggle_selected(self, sel):
         if sel:
@@ -327,6 +328,7 @@ class displayWidget(gui.QWidget):
         self.qlabel.resize(width, rect['height'])
         self.qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
+        self.qlabel.setWordWrap(True)
 
         self.qlabelval = gui.QLabel(self)
         self.qlabelval.setFont(qfnt)
@@ -394,6 +396,7 @@ class displayWidget(gui.QWidget):
         self.qlabel.resize(width, rect['height'] / self.uiscale)
         self.qlabel.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
+        self.qlabel.setWordWrap(True)
 
         self.qlabelval = gui.QLabel(self)
         self.qlabelval.setFont(qfnt)
@@ -495,6 +498,7 @@ class inputWidget(gui.QWidget):
 
         self.resize(rect['width'], rect['height'])
         self.qlabel = gui.QLabel(self)
+        self.qlabel.setWordWrap(True)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
@@ -565,6 +569,7 @@ class inputWidget(gui.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
+        self.qlabel.setWordWrap(True)
         #self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
