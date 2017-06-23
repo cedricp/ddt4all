@@ -558,14 +558,15 @@ class paramWidget(gui.QWidget):
 
         self.initELM()
 
-        if 'StartDiagnosticSession' in self.ecurequestsparser.requests:
-            self.defaultdiagsessioncommand = self.ecurequestsparser.requests['StartDiagnosticSession'].sentbytes
-            self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
+        # if 'StartDiagnosticSession' in self.ecurequestsparser.requests:
+        #     self.defaultdiagsessioncommand = self.ecurequestsparser.requests['StartDiagnosticSession'].sentbytes
+        #     self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
+        #
+        # if 'Start Diagnostic Session' in self.ecurequestsparser.requests:
+        #     self.defaultdiagsessioncommand = self.ecurequestsparser.requests['Start Diagnostic Session'].sentbytes
+        #     self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
 
-        if 'Start Diagnostic Session' in self.ecurequestsparser.requests:
-            self.defaultdiagsessioncommand = self.ecurequestsparser.requests['Start Diagnostic Session'].sentbytes
-            self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
-
+        self.defaultdiagsessioncommand = "10C0"
         reqk = self.ecurequestsparser.requests.keys()
 
         if self.ecurequestsparser.ecu_protocol == "CAN":
@@ -1026,7 +1027,7 @@ class paramWidget(gui.QWidget):
             while maxcount > 0:
                 more_can_response = self.sendElm(moredtcread_command)
                 more_can_response = more_can_response.split(' ')
-                if len(more_can_response) < 3 or more_can_response[0].upper() == '7F':
+                if more_can_response[0].upper() == 'WRONG':
                     break
                 # Append result to build one frame
                 can_response += more_can_response[2:]
@@ -1059,9 +1060,9 @@ class paramWidget(gui.QWidget):
 
                 value = int('0x' + value_hex, 16)
 
-                if ecu_data.scaled:
-                    html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
-                    continue
+                #if ecu_data.scaled:
+                #    html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
+                #    continue
 
                 if len(ecu_data.items) > 0 and value in ecu_data.lists:
                     html += "<u>" + dataitem.name + "</u> : [" + str(value_hex) + "] " + ecu_data.lists[value] + "<br>"
