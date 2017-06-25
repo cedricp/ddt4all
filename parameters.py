@@ -558,9 +558,9 @@ class paramWidget(gui.QWidget):
                         self.xmlscreen[screen_name] = screen
                         self.categories[category_name].append(screen_name)
 
+        self.defaultdiagsessioncommand = "10C0"
         self.initELM()
 
-        self.defaultdiagsessioncommand = "10C0"
         reqk = self.ecurequestsparser.requests.keys()
 
         if self.ecurequestsparser.ecu_protocol == "CAN":
