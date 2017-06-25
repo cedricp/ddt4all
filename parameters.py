@@ -474,10 +474,12 @@ class paramWidget(gui.QWidget):
 
         if self.main_protocol_status:
             if self.ecurequestsparser.ecu_protocol == "CAN":
+                self.startDiagnosticSession()
                 txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
                                               self.ecurequestsparser.ecu_recv_id)
                 self.main_protocol_status.setText("DiagOnCan " + txrx)
             elif self.ecurequestsparser.ecu_protocol == "KWP2000":
+                self.startDiagnosticSession()
                 self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.funcaddr)
             elif self.ecurequestsparser.ecu_protocol == "ISO8":
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
@@ -557,14 +559,6 @@ class paramWidget(gui.QWidget):
                         self.categories[category_name].append(screen_name)
 
         self.initELM()
-
-        # if 'StartDiagnosticSession' in self.ecurequestsparser.requests:
-        #     self.defaultdiagsessioncommand = self.ecurequestsparser.requests['StartDiagnosticSession'].sentbytes
-        #     self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
-        #
-        # if 'Start Diagnostic Session' in self.ecurequestsparser.requests:
-        #     self.defaultdiagsessioncommand = self.ecurequestsparser.requests['Start Diagnostic Session'].sentbytes
-        #     self.logview.append("SDS : %s" % self.defaultdiagsessioncommand)
 
         self.defaultdiagsessioncommand = "10C0"
         reqk = self.ecurequestsparser.requests.keys()

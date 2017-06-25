@@ -1081,7 +1081,11 @@ class Ecu_scanner:
 
             if not options.simulation_mode:
                 options.opt_si = True
-                options.elm.set_iso_addr(addr, {'idTx': '', 'idRx': '', 'ecuname': 'SCAN', 'protocol': "KWP2000"})
+                if not options.elm.set_iso_addr(addr,
+                                            {'idTx': '', 'idRx': '',
+                                             'ecuname': 'SCAN',
+                                             'protocol': "KWP2000"}):
+                    continue
                 options.elm.start_session_iso('10C0')
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
@@ -1111,7 +1115,6 @@ class Ecu_scanner:
             href = ""
 
             for target in self.ecu_database.targets:
-                print target.protocol
                 if target.checkWith(diagversion, supplier, soft, version, addr):
                     self.ecus[target.name] = target
                     self.num_ecu_found += 1

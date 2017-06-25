@@ -640,6 +640,7 @@ class ELM:
         # start_session_can was executed then send startSession command again
         # if ((tb-self.lastCMDtime)>self.keepAlive and self.currentprotocol=="can"
         if ((tb - self.lastCMDtime) > self.keepAlive
+            and self.currentprotocol == "can"
             and len(self.startSession) > 0):
 
             # log KeepAlive event
@@ -1155,8 +1156,11 @@ class ELM:
             self.cmd("AT SP 5")                   # fast init mode 5
             self.lastinitrsp = self.cmd("AT FI")  # perform fast init mode 5
 
-        self.cmd("AT AT 1")                       # enable adaptive timing
+        if 'OK' not in self.lastinitrsp:
+            return False
 
+        self.cmd("AT AT 1")                       # enable adaptive timing
+        return True
 
 def elm_checker(port, speed, logview, app):
     good = 0
