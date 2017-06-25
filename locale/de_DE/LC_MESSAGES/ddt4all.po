@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# GERMAN, 13.June 2017.
+# GERMAN, 24.June 2017.
 #
 #, fuzzy
 msgid ""
@@ -79,11 +79,11 @@ msgstr "Protokoll "
 
 #: parameters.py:462
 msgid " not supported"
-msgstr "nicht unterstuetzt"
+msgstr " nicht unterstuetzt"
 
 #: parameters.py:523
 msgid "XML file not found : "
-msgstr "XML Datei nicht gefunden : "
+msgstr "XML Datei nicht gefunden: "
 
 #: parameters.py:530
 msgid "Invalid DDT file"
@@ -95,35 +95,35 @@ msgstr "Start der Verbindung"
 
 #: parameters.py:576
 msgid "Sending ELM request :"
-msgstr "ELM Anfrage senden:"
+msgstr "ELM Anfrage senden: "
 
 #: parameters.py:578
 msgid "Blocked ELM request :"
-msgstr "ELM Anfrage gesperrt:"
+msgstr "ELM Anfrage gesperrt: "
 
 #: parameters.py:582
 msgid "Sending ELM request:"
-msgstr "ELM Anfrage senden:"
+msgstr "ELM Anfrage senden: "
 
 #: parameters.py:591
 msgid "Sending simulated ELM request :"
-msgstr "ELM Anfrage simuliert senden:"
+msgstr "ELM Anfrage simuliert senden: "
 
 #: parameters.py:601
 msgid "ELM response : "
-msgstr "ELM antwortet:"
+msgstr "ELM antwortet: "
 
 #: parameters.py:744
 msgid "Button request not found : "
-msgstr "Schaltflaeche nicht gefunden:"
+msgstr "Schaltflaeche nicht gefunden: "
 
 #: parameters.py:758
 msgid "Sending request :"
-msgstr "Anfrage senden:"
+msgstr "Anfrage senden: "
 
 #: parameters.py:800
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Anfrage abgebrochen (siehe rote Parametereinträge):"
+msgstr "Anfrage abgebrochen (siehe rote Parametereinträge): "
 
 #: parameters.py:820
 msgid "Invalid"

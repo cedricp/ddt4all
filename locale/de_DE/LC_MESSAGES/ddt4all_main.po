@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# GERMAN, 13.June 2017.
+# GERMAN, 24.June 2017.
 #
 #, fuzzy
 msgid ""
@@ -51,7 +51,7 @@ msgstr "Bildschirm"
 
 #: ddt4all.py:328
 msgid "Requests"
-msgstr "Anfrage"
+msgstr "Anfragen"
 
 #: ddt4all.py:329
 msgid "Data"
@@ -261,11 +261,11 @@ msgstr "<center>Vielen Dank fuer Ihren Beitrag, wenn nichts passiert, bitte gehe
 
 #: ddt4all.py:882
 msgid "ELM port selection"
-msgstr "Anschluss auswaehlen:"
+msgstr "Anschluss auswaehlen: "
 
 #: ddt4all.py:926
 msgid "Port speed"
-msgstr "Baudrate auswaehlen (OBDLink 115200):"
+msgstr "Baudrate auswaehlen (OBDLink 115200): "
 
 #: ddt4all.py:938
 msgid "Connected mode"
@@ -281,7 +281,7 @@ msgstr "ELM testen"
 
 #: ddt4all.py:943
 msgid "WiFi port : "
-msgstr "WiFi Anschluss:"
+msgstr "WiFi Anschluss: "
 
 #: ddt4all.py:953
 msgid "I'm aware that I can harm my car if badly used"
@@ -297,7 +297,7 @@ msgstr ";-) Du musst das Lesen der Warnung bestaetigen."
 
 #: ddt4all.py:1081
 msgid "Please select a communication port"
-msgstr "Bitte waehle einen Anschluss aus:"
+msgstr "Bitte waehle einen Anschluss aus: "
 
 #: ddt4all.py:1107
 msgid "Using custom DDT database"
@@ -318,4 +318,4 @@ msgstr "Starten des ELM mit einer Baudrate von %i..."
 
 #: ddt4all.py:1145
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "Kein ELM327 oder OBDLINK-SX am ausgewaehlten Anschluss erkannt."
+msgstr ":-(   Kein ELM327 oder OBDLINK-SX am ausgewaehlten Anschluss erkannt:  "

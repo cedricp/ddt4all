@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# GERMAN 13.June 2017
+# GERMAN, 24.June 2017
 #
 #, fuzzy
 msgid ""
@@ -51,7 +51,7 @@ msgstr "Antwortbytes (HEX)"
 
 #: dataeditor.py:314
 msgid "Data length"
-msgstr ""
+msgstr "Datenlaenge"
 
 #: dataeditor.py:316
 msgid "Shift byte count"
@@ -59,7 +59,7 @@ msgstr "Umschaltbytezaehler"
 
 #: dataeditor.py:450
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "Datenname;Start byte;Bit offset;Bit count;Endianess"
 
 #: dataeditor.py:468 dataeditor.py:528
 msgid "Little"
@@ -91,7 +91,7 @@ msgstr "Antwortbytes"
 
 #: dataeditor.py:657
 msgid "Number of bits"
-msgstr "anzahl der Bits"
+msgstr "Anzahl der Bits"
 
 #: dataeditor.py:658 dataeditor.py:820
 msgid "Signed"
@@ -178,7 +178,7 @@ msgstr "Datenname;Bezeichnung"
 
 #: dataeditor.py:1152
 msgid "Del"
-msgstr "loeschen"
+msgstr "Loeschen"
 
 #: dataeditor.py:1154
 msgid "Move up"
@@ -266,7 +266,7 @@ msgstr "Diag version;Supplier;Soft;Version"
 
 #: dataeditor.py:1533
 msgid "Add new"
-msgstr "neu hinzufuegen"
+msgstr "Neu hinzufuegen"
 
 #: dataeditor.py:1534
 msgid "Delete selected"
