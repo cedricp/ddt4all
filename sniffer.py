@@ -29,7 +29,11 @@ class snifferThread(core.QThread):
             options.elm.init_can_sniffer(self.filter)
 
     def stop(self):
-        options.elm.monitorstop = True
+        if not options.simulation_mode:
+            options.elm.monitorstop = True
+        else:
+            return
+
         while self.running:
             time.sleep(.1)
 
@@ -37,6 +41,12 @@ class snifferThread(core.QThread):
         self.dataready.emit(data)
 
     def run(self):
+        if options.simulation_mode:
+            if options.simulation_mode:
+                while 1:
+                    time.sleep(.1)
+                    self.dataready.emit("0: 03 00 00 00 00 40 00 00")
+
         while not options.elm.monitorstop:
             if options.simulation_mode:
                 time.sleep(.1)
