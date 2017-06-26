@@ -131,6 +131,7 @@ class Ecu_request:
         self.name = ''
         self.ecu_file = ecu_file
         # StartDiagSession requirements
+        # Seems relatively useless...
         self.sds = {'nosds': True,
                     'plant': True,
                     'aftersales': True,
@@ -145,7 +146,8 @@ class Ecu_request:
             if data.has_key('sentbytes'): self.sentbytes = data['sentbytes']
 
             self.name = data['name']
-            self.sds = data['sds']
+            if 'sds' in data:
+                self.sds = data['sds']
 
             if data.has_key('sendbyte_dataitems'):
                 sbdi = data['sendbyte_dataitems']
@@ -1115,6 +1117,12 @@ class Ecu_scanner:
             href = ""
 
             for target in self.ecu_database.targets:
+                print target.protocol, protocol
+                if target.protocol == "DiagOnCan" and protocol != "CAN":
+                    continue
+                if target.protocol.startswith("KWP") and protocol != "KWP":
+                    continue
+
                 if target.checkWith(diagversion, supplier, soft, version, addr):
                     self.ecus[target.name] = target
                     self.num_ecu_found += 1
