@@ -31,7 +31,6 @@ def get_last_error():
     return err
 
 
-
 def translator(filename):
     if sys.platform.startswith('win'):
         if os.getenv('LANG') is None:

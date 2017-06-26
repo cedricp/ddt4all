@@ -220,6 +220,38 @@ class Ecu_request:
                         di = Data_item(dataitem, self.ecu_file.endianness)
                         self.sendbyte_dataitems[di.name] = di
 
+    def get_data_inputs(self):
+        return self.sendbyte_dataitems.keys()
+
+    def build_data_stream(self, data):
+        data_stream = self.get_formatted_sentbytes()
+
+        for k, v in data.iteritems():
+            if k in self.sendbyte_dataitems:
+                datatitem = self.sendbyte_dataitems[k]
+            else:
+                raise KeyError('Data item %s does not exist' % k)
+
+            if k in self.ecu_file.data:
+                data = self.ecu_file.data[k]
+            else:
+                raise KeyError('Data %s does not exist' % k)
+
+            data.setValue(v, data_stream, datatitem, self.ecu_file.endianness)
+
+        return data_stream
+
+    def get_values_from_stream(self, stream):
+        values = {}
+        for k, v in self.dataitems.iteritems():
+            if k in self.ecu_file.data:
+                data = self.ecu_file.data[k]
+                values[k] = data.getDisplayValue(stream, v, self.ecu_file.endianness)
+            else:
+                raise KeyError('Data %s does not exist' % k)
+
+        return values
+
     def get_sds(self):
         if self.sds['nosds']:
             return ""

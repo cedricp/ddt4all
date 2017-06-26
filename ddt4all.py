@@ -10,6 +10,7 @@ import PyQt4.QtCore as core
 import parameters, ecu
 import elm, options, locale
 import dataeditor
+import sniffer
 import imp
 import traceback
 
@@ -225,7 +226,10 @@ class Main_widget(gui.QMainWindow):
         self.scrollview = gui.QScrollArea()
         self.scrollview.setWidgetResizable(False)
 
+        self.snifferview = sniffer.sniffer()
+
         self.tabbedview.addTab(self.scrollview, _("Screen"))
+        self.tabbedview.addTab(self.snifferview, _("CAN Sniffer"))
 
         if options.simulation_mode:
             self.buttonEditor = dataeditor.buttonEditor()
@@ -433,7 +437,7 @@ class Main_widget(gui.QMainWindow):
             self.screennames.append(newscreenname)
 
     def showDataTab(self, name):
-        self.tabbedview.setCurrentIndex(2)
+        self.tabbedview.setCurrentIndex(3)
         self.dataitemeditor.edititem(name)
 
     def hexeditor(self):
@@ -617,6 +621,9 @@ class Main_widget(gui.QMainWindow):
 
         self.paramview.setRefreshTime(self.refreshtimebox.value())
 
+    def closeEvent(self, event):
+        self.snifferview.stopthread()
+        super(Main_widget, self).closeEvent(event)
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
@@ -639,6 +646,9 @@ class Main_widget(gui.QMainWindow):
         if not ecu_file:
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
+
+        if self.snifferview.set_file(ecu_file):
+            self.tabbedview.setCurrentIndex(1)
 
         if self.paramview:
             if ecu_file == self.paramview.ddtfile:

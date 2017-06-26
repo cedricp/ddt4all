@@ -879,8 +879,6 @@ class paramWidget(gui.QWidget):
             qlabel = data_struct.widget
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
-            #if not data_item.ref:
-            #    continue
             value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
 
             if value == None:

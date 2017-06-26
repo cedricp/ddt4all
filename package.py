@@ -29,16 +29,14 @@ for file in files:
 
 zip.write("DDT4ALL.BAT")
 zip.write("json/")
+zip.write("logs/")
+zip.write("ecus/")
 
 zipdir("./Python27")
 zipdir("./importlib")
 zipdir("./serial")
 zipdir("./icons")
-zipdir("./json")
+#zipdir("./json")
 zipdir("./locale")
-
-
-zip.write("logs/")
-zip.write("ecus/")
 
 zip.close()

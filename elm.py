@@ -317,7 +317,7 @@ class Port:
         except:
             print '*' * 40
             print '*       ' + _('Connection to ELM was lost')
-            options.simulation_mode = True
+            return None
 
         return byte
 
@@ -554,7 +554,7 @@ class ELM:
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
 
-            res = self.send_raw("atz")
+            res = self.send_raw("ATZ")
             if not 'ELM' in res:
                 options.elm_failed = True
                 options.last_error = _("No ELM interface on port") + " %s" % portName
@@ -566,7 +566,7 @@ class ELM:
     def __del__(self):
         try:
             if not self.sim_mode:
-                self.port.write("atz\r")
+                self.port.write("ATZ\r")
         except:
             pass
 
@@ -1010,8 +1010,37 @@ class ELM:
         self.startSession = start_session
         self.cmd(self.startSession)
 
-    def init_can(self):
+    def init_can_sniffer(self, filter_addr):
+        if options.simulation_mode:
+            return
+        self.cmd('AT WS')
+        self.cmd("AT E0")
+        self.cmd("AT L0")
+        self.cmd("AT H0")
+        self.cmd("AT D0")
+        self.cmd("AT CAF0")
+        self.cmd("AT SP 6")
+        self.cmd("AT AL")
+        self.cmd("AT S0")
+        if filter_addr:
+            self.cmd("AT CRA " + filter_addr)
 
+    def monitor_can_bus(self, callback):
+        if options.simulation_mode:
+            pass
+        else:
+            self.port.write("AT MA\r")
+            stream = ""
+            while True:
+                byte = self.port.read()
+                if byte == '\n':
+                    callback(stream)
+                    stream = ""
+                elif byte == ">":
+                    break
+                stream += byte
+
+    def init_can(self):
         self.currentprotocol = "can"
         self.currentaddress = "7e0"
         self.startSession = ""
@@ -1022,15 +1051,15 @@ class ELM:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
-        self.cmd("at ws")
-        self.cmd("at e1")
-        self.cmd("at s0")
-        self.cmd("at h0")
-        self.cmd("at l0")
-        self.cmd("at al")
-        self.cmd("at caf0")
+        self.cmd("AT WS")
+        self.cmd("AT E1")
+        self.cmd("AT S0")
+        self.cmd("AT H0")
+        self.cmd("AT L0")
+        self.cmd("AT AL")
+        self.cmd("AT CAF0")
         if self.ATCFC0:
-            self.cmd("at cfc0")
+            self.cmd("AT CFC0")
 
         self.lastCMDtime = 0
 
@@ -1061,15 +1090,15 @@ class ELM:
             TXa = dnat[addr]
             RXa = snat[addr]
 
-        self.cmd("at sh " + TXa)
-        self.cmd("at cra " + RXa)
-        self.cmd("at fc sh " + TXa)
-        self.cmd("at fc sd 30 00 00")  # status BS STmin
-        self.cmd("at fc sm 1")
+        self.cmd("AT SH " + TXa)
+        self.cmd("AT CRA " + RXa)
+        self.cmd("AT FC SH " + TXa)
+        self.cmd("AT FC SD 30 00 00")  # status BS STmin
+        self.cmd("AT FC SM 1")
         if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-            self.cmd("at sp 8")
+            self.cmd("AT SP 8")
         else:
-            self.cmd("at sp 6")
+            self.cmd("AT SP 6")
 
         return TXa, RXa
 
@@ -1148,8 +1177,8 @@ class ELM:
         self.cmd("AT AT 0")                      # disable adaptive timing
 
         if options.opt_si:
-            self.cmd("at sp 4")                  # slow init mode 4
-            self.cmd("at iia " + addr)           # address for slow init
+            self.cmd("AT SP 4")                  # slow init mode 4
+            self.cmd("AT IIA " + addr)           # address for slow init
             rsp = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
 
         if 'OK' not in self.lastinitrsp:
