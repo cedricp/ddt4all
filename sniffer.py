@@ -25,21 +25,27 @@ class snifferThread(core.QThread):
         self.filter = address
         self.running = True
         if not options.simulation_mode:
+            options.elm.monitorstop = False
             options.elm.init_can_sniffer(self.filter)
 
     def stop(self):
-        self.running = False
+        options.elm.monitorstop = True
+        while self.running:
+            time.sleep(.1)
 
     def senddata(self, data):
         self.dataready.emit(data)
 
     def run(self):
-        while self.running:
+        while not options.elm.monitorstop:
             if options.simulation_mode:
                 time.sleep(.1)
-                self.dataready.emit("065A 0123456789ABCDEF")
+                self.dataready.emit("0: 03 00 00 00 00 40 00 00")
             else:
                 options.elm.monitor_can_bus(self.senddata)
+
+        print "Thread end"
+        self.running = False
 
 class sniffer(gui.QWidget):
     def __init__(self, parent=None):
@@ -108,11 +114,15 @@ class sniffer(gui.QWidget):
 
     def stopthread(self):
         if self.snifferthread:
+            self.snifferthread.stop()
             self.snifferthread.dataready.disconnect()
             self.snifferthread.quit()
+
         self.snifferthread = None
+        self.framecombo.setEnabled(True)
 
     def startthread(self, ecu_filter):
+        self.framecombo.setEnabled(False)
         self.stopthread()
 
         self.snifferthread = snifferThread(ecu_filter)
@@ -125,15 +135,20 @@ class sniffer(gui.QWidget):
         return self.init()
 
     def callback(self, stream):
-        stream = str(stream)
-        data = stream.split(" ")[1]
-        print data
+        data = str(stream)
+        if '0:' not in data:
+            return
+
+        data = data[3:24].replace(' ', '')
+
         if self.currentrequest:
             values = self.currentrequest.get_values_from_stream(data)
             i = 0
             for name in self.names:
                 if name in values:
-                    self.table.setItem(i, 0, gui.QTableWidgetItem(values[name]))
+                    value = values[name]
+                    if value is not None:
+                        self.table.setItem(i, 0, gui.QTableWidgetItem(value))
                 i += 1
 
     def init(self):

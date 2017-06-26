@@ -831,8 +831,14 @@ class portChooser(gui.QDialog):
 
     def rescan_ports(self):
         ports = elm.get_available_ports()
-        if ports == None or len(ports) == self.portcount:
+        if ports == None:
+            self.listview.clear()
+            self.portcount = 0
             return
+
+        if len(ports) == self.portcount:
+            return
+
 
         self.listview.clear()
         self.portcount = len(ports)

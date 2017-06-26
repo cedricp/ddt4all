@@ -558,6 +558,10 @@ class paramWidget(gui.QWidget):
                         self.xmlscreen[screen_name] = screen
                         self.categories[category_name].append(screen_name)
 
+        if self.ecurequestsparser.funcaddr == '00':
+            self.tester_presend_command = ""
+            return
+
         self.defaultdiagsessioncommand = "10C0"
         self.initELM()
 

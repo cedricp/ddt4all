@@ -534,6 +534,7 @@ class ELM:
     portName = ""
 
     lastMessage = ""
+    monitorstop = False
 
     def __init__(self, portName, speed, startSession='10C0'):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
@@ -1013,17 +1014,17 @@ class ELM:
     def init_can_sniffer(self, filter_addr):
         if options.simulation_mode:
             return
+        self.port.hdr.timeout = 1
         self.cmd('AT WS')
-        self.cmd("AT E0")
+        self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT H0")
         self.cmd("AT D0")
-        self.cmd("AT CAF0")
         self.cmd("AT SP 6")
+        self.cmd("AT S1")
         self.cmd("AT AL")
-        self.cmd("AT S0")
         if filter_addr:
-            self.cmd("AT CRA " + filter_addr)
+            self.cmd("AT CRA " + filter_addr[1:])
 
     def monitor_can_bus(self, callback):
         if options.simulation_mode:
@@ -1031,14 +1032,22 @@ class ELM:
         else:
             self.port.write("AT MA\r")
             stream = ""
-            while True:
+            while not self.monitorstop:
                 byte = self.port.read()
-                if byte == '\n':
+                if byte == '\r':
+                    if stream == "AT MA":
+                        # Cancel echo
+                        stream = ""
+                        continue
                     callback(stream)
                     stream = ""
                 elif byte == ">":
                     break
-                stream += byte
+                if byte:
+                    stream += byte
+
+            self.port.write("AT\r")
+            print self.port.expect('>')
 
     def init_can(self):
         self.currentprotocol = "can"
