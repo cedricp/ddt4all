@@ -1,0 +1,290 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: dataeditor.py:165
+msgid "Goto data"
+msgstr "Idi na podatke"
+
+#: dataeditor.py:166
+msgid "Remove"
+msgstr "Ukloni"
+
+#: dataeditor.py:171
+msgid "Add to screen"
+msgstr "Dodaj na prikaz"
+
+#: dataeditor.py:261
+msgid "Request name;Manual"
+msgstr "Zahtevaj ime;Rucno"
+
+#: dataeditor.py:291 dataeditor.py:1151
+msgid "Add"
+msgstr "Dodaj"
+
+#: dataeditor.py:292 dataeditor.py:1153
+msgid "Refresh"
+msgstr "Osvezi"
+
+#: dataeditor.py:300
+msgid "Send request bytes (HEX)"
+msgstr "Posalji zahtev u bajtima (HEX)"
+
+#: dataeditor.py:302
+msgid "Receive bytes (HEX)"
+msgstr "Primljeni bajtovi (HEX)"
+
+#: dataeditor.py:314
+msgid "Data length"
+msgstr "Duzina podataka"
+
+#: dataeditor.py:316
+msgid "Shift byte count"
+msgstr "Pomeranje brojackog registra"
+
+#: dataeditor.py:450
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "Naziv podataka;Pocetni bajt;Bit pomeraja;Bit brojaca;Nacin smestanja bajtova"
+
+#: dataeditor.py:468 dataeditor.py:528
+msgid "Little"
+msgstr "Mali"
+
+#: dataeditor.py:469 dataeditor.py:530
+msgid "Big"
+msgstr "Veliki"
+
+#: dataeditor.py:470 dataeditor.py:526
+msgid "Inherits globals"
+msgstr "Inherits globals"
+
+#: dataeditor.py:581
+msgid "Reload requests"
+msgstr "Zahtev za ponovno ucitavanje"
+
+#: dataeditor.py:582
+msgid "Add request"
+msgstr "Dodaj zahtev"
+
+#: dataeditor.py:600
+msgid "Send bytes"
+msgstr "Posalji bajtove"
+
+#: dataeditor.py:601
+msgid "Receive bytes"
+msgstr "Primi bajtove"
+
+#: dataeditor.py:657
+msgid "Number of bits"
+msgstr "Broj bitova"
+
+#: dataeditor.py:658 dataeditor.py:820
+msgid "Signed"
+msgstr "Potpisano"
+
+#: dataeditor.py:659
+msgid "Add item"
+msgstr "Dodaj stavku"
+
+#: dataeditor.py:660
+msgid "Del item"
+msgstr "Obrisi stavku"
+
+#: dataeditor.py:699
+msgid "New item"
+msgstr "Nova stavka"
+
+#: dataeditor.py:751
+msgid "Value;Text"
+msgstr "Vrednost;Tekst"
+
+#: dataeditor.py:767
+msgid "Number of bytes"
+msgstr "Broj bajtova"
+
+#: dataeditor.py:768 dataeditor.py:819
+msgid "Unit"
+msgstr "Jedinica mere"
+
+#: dataeditor.py:818
+msgid "Number of bit"
+msgstr "Broj bitova"
+
+#: dataeditor.py:821
+msgid "Format"
+msgstr "Format"
+
+#: dataeditor.py:822
+msgid "Value = (AX+B) / C"
+msgstr "Vrednost = (AX+B) / C"
+
+#: dataeditor.py:895
+msgid "New"
+msgstr "Nov"
+
+#: dataeditor.py:896
+msgid "Reload"
+msgstr "Ponovo ucitaj"
+
+#: dataeditor.py:897
+msgid "Validate changes"
+msgstr "Potvrdi promene"
+
+#: dataeditor.py:930
+msgid "Description"
+msgstr "Opis"
+
+#: dataeditor.py:936
+msgid "Data type"
+msgstr "Vrsta podataka"
+
+#: dataeditor.py:938
+msgid "Numeric"
+msgstr "Brojcani"
+
+#: dataeditor.py:939
+msgid "Numeric items"
+msgstr "Brojcane stavke"
+
+#: dataeditor.py:940
+msgid "Hex"
+msgstr "HEX"
+
+#: dataeditor.py:974
+msgid "New data"
+msgstr "Novi podaci"
+
+#: dataeditor.py:980
+msgid "Replace me with request description"
+msgstr "Zameni me sa opisom zahteva"
+
+#: dataeditor.py:1115
+msgid "Data name;Description"
+msgstr "Naziv podataka;Opis"
+
+#: dataeditor.py:1152
+msgid "Del"
+msgstr "Brisanje"
+
+#: dataeditor.py:1154
+msgid "Move up"
+msgstr "Pomeri gore"
+
+#: dataeditor.py:1155
+msgid "Check"
+msgstr "Proveri"
+
+#: dataeditor.py:1199
+#, python-format
+msgid "Request %s not found"
+msgstr "Zahtev %s nije pronadjen"
+
+#: dataeditor.py:1218
+#, python-format
+msgid ""
+"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
+"values</font>"
+msgstr ""
+"<font color=green>Zahtev <font color=blue>'%s'</font> nema nedostajuce ulazne "
+"vrednosti</font>"
+
+#: dataeditor.py:1221
+#, python-format
+msgid ""
+"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
+"font>"
+msgstr ""
+"<font color=red>Zahtev <font color=blue>'%s'</font> ima nedostajuce ulazne vrednosti :</"
+"font>"
+
+#: dataeditor.py:1224
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#: dataeditor.py:1320
+msgid "Delay;Request"
+msgstr "Kasnjenje;Zahtev"
+
+#: dataeditor.py:1412
+msgid "Screen initialization"
+msgstr "Inicijalizacija prikaza"
+
+#: dataeditor.py:1413
+msgid "Requests to send before screen drawing"
+msgstr "Zahtevano slanje pre iscrtavanja prikaza"
+
+#: dataeditor.py:1427
+msgid "Button name;Unique name"
+msgstr "Ime dugmeta;Jedinstveno ime"
+
+#: dataeditor.py:1496
+msgid "ECU Function address"
+msgstr "Adresa funkcije ECU"
+
+#: dataeditor.py:1499
+msgid "ECU Protocol"
+msgstr "ECU protokol"
+
+#: dataeditor.py:1501 dataeditor.py:1619
+msgid "Tool > Ecu ID (Hex)"
+msgstr "Alatka > Ecu ID (Hex)"
+
+#: dataeditor.py:1503 dataeditor.py:1620
+msgid "Ecu > Tool ID (Hex)"
+msgstr "Ecu > Alatka ID (Hex)"
+
+#: dataeditor.py:1505
+msgid "Coding"
+msgstr "Kodiranje"
+
+#: dataeditor.py:1509
+msgid "Big Endian"
+msgstr "Big Endian"
+
+#: dataeditor.py:1510
+msgid "Little Endian"
+msgstr "Little Endian"
+
+#: dataeditor.py:1525
+msgid "Diag version;Supplier;Soft;Version"
+msgstr "Verzija dijagnostike;Proizvodjac;Softver;Verzija"
+
+#: dataeditor.py:1533
+msgid "Add new"
+msgstr "Dodaj novo"
+
+#: dataeditor.py:1534
+msgid "Delete selected"
+msgstr "Obrisi izabrano"
+
+#: dataeditor.py:1535
+msgid "Diag version"
+msgstr "Verzija dijagnostike"
+
+#: dataeditor.py:1538
+msgid "Supplier"
+msgstr "Proizvodjac"
+
+#: dataeditor.py:1541
+msgid "Soft"
+msgstr "Softver"
+
+#: dataeditor.py:1544
+msgid "Version"
+msgstr "Verzija"
