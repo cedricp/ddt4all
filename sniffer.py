@@ -18,6 +18,7 @@ __status__ = "Beta"
 
 
 class snifferThread(core.QThread):
+    # Use a thread to avoid ELM buffer flooding
     dataready = core.pyqtSignal(basestring)
 
     def __init__(self, address):
@@ -45,6 +46,7 @@ class snifferThread(core.QThread):
             if options.simulation_mode:
                 while 1:
                     time.sleep(.1)
+                    # Test data
                     self.dataready.emit("0300000000400000")
             return
 
@@ -100,6 +102,7 @@ class sniffer(gui.QWidget):
 
     def change_frame(self):
         self.stopthread()
+        self.startbutton.setChecked(False)
         self.names = []
         framename = unicode(self.framecombo.currentText().toUtf8(), encoding="UTF-8")
         self.currentrequest = self.ecurequests.requests[framename]
@@ -110,6 +113,7 @@ class sniffer(gui.QWidget):
 
         headernames = ";".join([n for n in self.names])
 
+        self.table.clear()
         self.table.setColumnCount(1)
         self.table.setRowCount(len(self.names))
         headerstrings = core.QString(headernames).split(";")
@@ -118,6 +122,7 @@ class sniffer(gui.QWidget):
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
+        self.table.horizontalHeader().setResizeMode(0, gui.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:
@@ -175,12 +180,12 @@ class sniffer(gui.QWidget):
         self.oktostart = False
         self.startbutton.setEnabled(False)
 
-        if self.ecurequests.funcaddr != "00":
+        if not (self.ecurequests.funcaddr == "00" or self.ecurequests.funcaddr == "FF"):
             self.ecu_file = None
             self.ecurequests = None
             return False
 
-        for req in self.ecurequests.requests.keys():
+        for req in sorted(self.ecurequests.requests.keys()):
             self.framecombo.addItem(req)
 
         self.oktostart = True

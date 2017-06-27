@@ -1037,7 +1037,7 @@ class ELM:
                 byte = self.port.read()
                 if byte == '\r' or byte == '<' or byte == '\n':
                     if stream == "AT MA" or stream == "DATA ERROR":
-                        # Prefiltering echo and error reports
+                        # Prefiltering echo and error reports (if any)
                         stream = ""
                         continue
 
@@ -1162,8 +1162,9 @@ class ELM:
         self.cmd("AT IB10")                      # baud rate 10400
         self.cmd("AT ST FF")                     # set timeout to 1 second
         self.cmd("AT SP 3")
-        self.cmd("AT AT 1")                      # enable adaptive timing
-        self.cmd("AT KW0")
+        self.cmd("AT AT 0")                      # enable adaptive timing
+        self.cmd("AT SI")                        # ISO8 needs slow init
+        self.cmd("AT AT 1")
 
     def set_iso_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
