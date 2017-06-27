@@ -120,6 +120,11 @@ class sniffer(gui.QWidget):
         self.table.setVerticalHeaderLabels(headerstrings)
         self.table.setHorizontalHeaderLabels(["Values"])
 
+        for i in range(0, len(self.names)):
+            item = gui.QTableWidgetItem("Waiting...")
+            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
+            self.table.setItem(i, 0, item)
+
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
         self.table.horizontalHeader().setResizeMode(0, gui.QHeaderView.Stretch)
@@ -169,7 +174,7 @@ class sniffer(gui.QWidget):
                 if name in values:
                     value = values[name]
                     if value is not None:
-                        self.table.setItem(i, 0, gui.QTableWidgetItem(value))
+                        self.table.item(i, 0).setText(value)
                 i += 1
 
     def init(self):
