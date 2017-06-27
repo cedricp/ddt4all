@@ -1014,15 +1014,15 @@ class ELM:
     def init_can_sniffer(self, filter_addr):
         if options.simulation_mode:
             return
-        self.port.hdr.timeout = 1
+        #self.port.hdr.timeout = 1
         self.cmd('AT WS')
         self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT H0")
         self.cmd("AT D0")
         self.cmd("AT SP 6")
-        self.cmd("AT S1")
-        self.cmd("AT AL")
+        self.cmd("AT S0")
+        #self.cmd("AT AL")
         if filter_addr:
             self.cmd("AT CRA " + filter_addr[1:])
 

@@ -104,6 +104,7 @@ class sniffer(gui.QWidget):
 
     def change_frame(self):
         self.stopthread()
+        self.names = []
         framename = unicode(self.framecombo.currentText().toUtf8(), encoding="UTF-8")
         self.currentrequest = self.ecurequests.requests[framename]
         self.ecu_filter = self.currentrequest.sentbytes
@@ -146,10 +147,12 @@ class sniffer(gui.QWidget):
 
     def callback(self, stream):
         data = str(stream)
-        if '0:' not in data:
+        print data
+        if '0:' in data:
             return
 
-        data = data[3:24].replace(' ', '')
+        data = data[:16].replace(' ', '')
+        print data
 
         if self.currentrequest:
             values = self.currentrequest.get_values_from_stream(data)
