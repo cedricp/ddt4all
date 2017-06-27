@@ -1022,7 +1022,8 @@ class ELM:
         self.cmd("AT D0")
         self.cmd("AT SP 6")
         self.cmd("AT S0")
-        #self.cmd("AT AL")
+        self.cmd("AT AL")
+        self.cmd("AT CAF0")
         if filter_addr:
             self.cmd("AT CRA " + filter_addr[-3:])
 
@@ -1034,7 +1035,7 @@ class ELM:
             stream = ""
             while not self.monitorstop:
                 byte = self.port.read()
-                if byte == '\r' or byte == '<':
+                if byte == '\r' or byte == '<' or byte == '\n':
                     if stream == "AT MA" or stream == "DATA ERROR":
                         # Prefiltering echo and error reports
                         stream = ""
@@ -1049,7 +1050,7 @@ class ELM:
                     stream += byte
 
             self.port.write("AT\r")
-            print self.port.expect('>')
+            self.port.expect('>')
 
     def init_can(self):
         self.currentprotocol = "can"

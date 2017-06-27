@@ -142,7 +142,7 @@ class sniffer(gui.QWidget):
         return self.init()
 
     def callback(self, stream):
-        data = str(stream)
+        data = str(stream).replace(" ", "").strip()
 
         if '0:' in data:
             return
@@ -156,8 +156,6 @@ class sniffer(gui.QWidget):
             return
 
         data = data.replace(' ', '').ljust(16, "0")
-
-        print data
 
         if self.currentrequest:
             values = self.currentrequest.get_values_from_stream(data)
