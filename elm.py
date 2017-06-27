@@ -1014,7 +1014,7 @@ class ELM:
     def init_can_sniffer(self, filter_addr):
         if options.simulation_mode:
             return
-        #self.port.hdr.timeout = 1
+
         self.cmd('AT WS')
         self.cmd("AT E1")
         self.cmd("AT L0")
@@ -1024,7 +1024,7 @@ class ELM:
         self.cmd("AT S0")
         #self.cmd("AT AL")
         if filter_addr:
-            self.cmd("AT CRA " + filter_addr[1:])
+            self.cmd("AT CRA " + filter_addr[-3:])
 
     def monitor_can_bus(self, callback):
         if options.simulation_mode:
@@ -1034,11 +1034,13 @@ class ELM:
             stream = ""
             while not self.monitorstop:
                 byte = self.port.read()
-                if byte == '\r':
-                    if stream == "AT MA":
-                        # Cancel echo
+                if byte == '\r' or byte == '<':
+                    if stream == "AT MA" or stream == "DATA ERROR":
+                        # Prefiltering echo and error reports
                         stream = ""
                         continue
+
+                    # Ok to handle stream
                     callback(stream)
                     stream = ""
                 elif byte == ">":

@@ -5,7 +5,7 @@ import ecu
 from uiutils import *
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import options
+import options, string
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -45,16 +45,12 @@ class snifferThread(core.QThread):
             if options.simulation_mode:
                 while 1:
                     time.sleep(.1)
-                    self.dataready.emit("0: 03 00 00 00 00 40 00 00")
+                    self.dataready.emit("0300000000400000")
+            return
 
         while not options.elm.monitorstop:
-            if options.simulation_mode:
-                time.sleep(.1)
-                self.dataready.emit("0: 03 00 00 00 00 40 00 00")
-            else:
-                options.elm.monitor_can_bus(self.senddata)
+            options.elm.monitor_can_bus(self.senddata)
 
-        print "Thread end"
         self.running = False
 
 class sniffer(gui.QWidget):
@@ -147,11 +143,20 @@ class sniffer(gui.QWidget):
 
     def callback(self, stream):
         data = str(stream)
-        print data
+
         if '0:' in data:
             return
 
-        data = data[:16].replace(' ', '')
+        if len(data) > 16:
+            print "Frame length error : ", data
+            return
+
+        if not all(c in string.hexdigits for c in data):
+            print "Frame hex error : ", data
+            return
+
+        data = data.replace(' ', '').ljust(16, "0")
+
         print data
 
         if self.currentrequest:

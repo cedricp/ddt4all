@@ -221,7 +221,7 @@ msgstr "Sende ECU-Informationen an die Datenbank URL, Danke fuer deine Teilnahme
 
 #: ddt4all.py:668
 msgid "EDITION MODE"
-msgstr "DEMO MODUS"
+msgstr "EDITOR MODUS"
 
 #: ddt4all.py:672
 msgid "CONNECTED"
@@ -273,7 +273,7 @@ msgstr "ELM verbinden"
 
 #: ddt4all.py:939
 msgid "Edition mode"
-msgstr "Ohne Verbindung"
+msgstr "Dateieditor"
 
 #: ddt4all.py:940
 msgid "ELM benchmark"
