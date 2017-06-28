@@ -713,14 +713,19 @@ class Ecu_file:
         self.kw2 = ""
         self.funcname = ""
         self.funcaddr = ""
+        self.ecuname = ""
 
         if not data:
             return
 
         if isfile and '.json' in str(data):
-            data = "./json/" + data
+            data2 = "./json/" + data
             if os.path.exists(data):
                 jsfile = open(data, "r")
+                jsdata = jsfile.read()
+                jsfile.close()
+            elif os.path.exists(data2):
+                jsfile = open(data2, "r")
                 jsdata = jsfile.read()
                 jsfile.close()
             else:
@@ -773,6 +778,7 @@ class Ecu_file:
             target = getChildNodesByName(self.xmldoc, u"Target")
 
             if target:
+                self.ecuname = target[0].getAttribute("Name")
                 functions = getChildNodesByName(target[0], u"Function")
                 if functions:
                     self.funcaddr = hex(int(functions[0].getAttribute("Address")))[2:].upper().zfill(2)
@@ -855,6 +861,7 @@ class Ecu_file:
 
     def dumpJson(self):
         js = {}
+        js['ecuname']  = self.ecuname
         js['obd'] = {}
         js['obd']['protocol'] = self.ecu_protocol
         if self.ecu_protocol == "CAN":
@@ -957,6 +964,7 @@ class Ecu_database:
 
         jsonecu_files = glob.glob("json/*.json.targets")
         for jsonecu_file in jsonecu_files:
+            self.numecu += 1
             json_file = open(jsonecu_file, "r")
             json_data = json_file.read()
             json_file.close()
@@ -1224,6 +1232,7 @@ if __name__ == '__main__':
     parser.add_argument('--zipfs', action="store_true", default=None, help="Create a zip filesystem of the XMLs")
     parser.add_argument('--testdb', action="store_true", default=None, help="Test ecudatabse loading")
     parser.add_argument('--testecufile', action="store_true", default=None, help="Test ecudatabse loading")
+    parser.add_argument('--convertxml', action="store_true", default=None, help="Convert XML file to JSON")
 
     args = parser.parse_args()
 
@@ -1231,6 +1240,9 @@ if __name__ == '__main__':
         make_zipfs()
 
     if args.testdb:
+        db = Ecu_database()
+
+    if args.convertxml:
         db = Ecu_database()
 
     if args.testecufile:

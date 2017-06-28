@@ -216,8 +216,8 @@ class requestTable(gui.QTableWidget):
             self.ecureq[newname] = self.ecureq.pop(self.currentreq)
 
             self.init(self.ecureq)
-            self.select(newname)
             options.main_window.paramview.requestNameChanged(oldname, newname)
+            self.select(newname)
 
     def select(self, name):
         items = self.findItems(name, core.Qt.MatchExactly)

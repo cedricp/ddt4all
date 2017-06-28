@@ -584,6 +584,15 @@ class paramWidget(gui.QWidget):
             return
 
         if not options.simulation_mode:
+            if not options.elm.connectionStatus:
+                options.main_window.setConnected(False)
+                self.logview.append(_("Connection to ELM lost, trying to reconnect..."))
+                options.ELM = elm.ELM(options.port, options.port_speed)
+                if not options.elm.connectionStatus:
+                    self.logview.append(_("Cannot reconnect..."))
+                    return
+                options.main_window.setConnected(True)
+
             if not options.promode:
                 # Allow read only modes
                 if command.startswith('3E') or command.startswith('14')\
@@ -1056,10 +1065,6 @@ class paramWidget(gui.QWidget):
 
                 value = int('0x' + value_hex, 16)
 
-                #if ecu_data.scaled:
-                #    html += "<u>" + dataitem.name + "</u> : " + str(value) + " [" + hex(value) + "]<br>"
-                #    continue
-
                 if len(ecu_data.items) > 0 and value in ecu_data.lists:
                     html += "<u>" + dataitem.name + "</u> : [" + str(value_hex) + "] " + ecu_data.lists[value] + "<br>"
                 else:
@@ -1089,6 +1094,12 @@ class paramWidget(gui.QWidget):
                         if send['RequestName'] == oldname:
                             print "found in button ", screen_k
                             send['RequestName'] = newname
+
+            for presend_data in screen_data['presend']:
+                if 'RequestName' in presend_data:
+                    if presend_data['RequestName'] == oldname:
+                        print "found in presend ", screen_k
+                        presend_data['RequestName'] = newname
 
         self.reinitScreen()
 
@@ -1250,11 +1261,59 @@ def make_zipfs():
     with open("json/layouts.zip", "w") as f:
         f.write(zipoutput.getvalue())
 
+
+def convertXML():
+    options.ecus_dir = "./ecus"
+
+    ecus = glob.glob("ecus/*.xml")
+    ecus.remove("ecus/eculist.xml")
+    i = 0
+
+    print "Opening ECU Database..."
+    ecu_database = ecu.Ecu_database()
+    print "Starting conversion"
+    for target in ecus:
+        filename = target.replace(".xml", ".json")
+        filename = filename.replace("ecus/", "json/")
+        print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
+
+        i += 1
+        layoutjs = dumpXML(target)
+        ecufile = ecu.Ecu_file(target, True)
+        js = ecufile.dumpJson()
+
+        if js:
+            jsfile = open(filename, "w")
+            jsfile.write(js)
+            jsfile.close()
+
+        if layoutjs:
+            jsfile = open(filename + ".layout", "w")
+            jsfile.write(layoutjs)
+            jsfile.close()
+
+        target_name = filename + ".targets"
+        ecu_ident = ecu_database.getTargets(ecufile.ecuname)
+
+        js_targets = []
+        for ecui in ecu_ident:
+            js_targets.append(ecui.dump())
+
+        js = json.dumps(js_targets, indent=1)
+        if js:
+            jsfile = open(target_name, "w")
+            jsfile.write(js)
+            jsfile.close()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--zipfs', action="store_true", default=None, help="Create a zip filesystem of the XMLs")
-
+    parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
     args = parser.parse_args()
 
     if args.zipfs:
         make_zipfs()
+
+    if args.convert:
+        convertXML()

@@ -317,6 +317,7 @@ class Port:
         except:
             print '*' * 40
             print '*       ' + _('Connection to ELM was lost')
+            self.connectionStatus = False
             return None
 
         return byte
@@ -333,6 +334,7 @@ class Port:
         except:
             print '*' * 40
             print '*       ' + _('Connection to ELM was lost')
+            self.connectionStatus = False
             options.simulation_mode = True
 
     def expect(self, pattern, time_out=1):
@@ -536,6 +538,8 @@ class ELM:
     lastMessage = ""
     monitorstop = False
 
+    connectionStatus = False
+
     def __init__(self, portName, speed, startSession='10C0'):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
             print _("Trying to open port") + "%s @ %i" % (portName, s)
@@ -562,6 +566,7 @@ class ELM:
             else:
                 options.last_error = ""
                 options.elm_failed = False
+                self.connectionStatus = True
                 break
 
     def __del__(self):

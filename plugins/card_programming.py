@@ -24,7 +24,7 @@ def get_isk(ecu, ecu_response = None):
 
 
 def plugin_entry():
-    megane_ecu = ecu.Ecu_file("../json/UCH_Megane.json", True)
+    megane_ecu = ecu.Ecu_file("./plugins/ecu_def/UCH_Megane.json", True)
 
     # Request gathering
     start_session_request = megane_ecu.requests[u'Start Diagnostic Session']
