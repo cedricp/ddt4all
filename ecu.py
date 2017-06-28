@@ -730,7 +730,7 @@ class Ecu_file:
                 jsfile.close()
             else:
                 # Zipped json here
-                zf = zipfile.ZipFile('json/ecus.zip', mode='r')
+                zf = zipfile.ZipFile('ecu.zip', mode='r')
                 jsdata = zf.read(data)
 
             ecudict = json.loads(jsdata)
@@ -906,7 +906,7 @@ class Ecu_file:
 # ISO8                                  ?ATSP 3?
 
 class Ecu_ident:
-    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
+    def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol, projects, address, zipped=False):
         self.protocols = [u"KWP2000 Init 5 Baud Type I and II", u"ISO8",
                           u"CAN Messaging (125 kbps CAN)", u"KWP2000 FastInit MultiPoint",
                           u"KWP2000 FastInit MonoPoint", u"DiagOnCAN"]
@@ -921,6 +921,7 @@ class Ecu_ident:
         self.addr = address
         self.protocol = protocol
         self.hash = diagversion + supplier + soft + version
+        self.zipped = zipped
 
     def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.hash != diagversion + supplier + soft + version: return False
@@ -978,16 +979,20 @@ class Ecu_database:
                                       ecu_dict['projects'], ecu_dict['address'])
                 self.targets.append(ecu_ident)
 
-        # if os.path.exists(self.jsonfile) and not forceXML:
-        #     zf = zipfile.ZipFile(self.jsonfile, mode='r')
-        #     jsdb = zf.read("db.json")
-        #     dbdict = json.loads(jsdb)
-        #     for target in dbdict:
-        #         ecu_ident = Ecu_ident(target['diagnotic_version'], target['supplier_code'],
-        #                               target['soft_version'], target['version'],
-        #                               target['name'], target['group'], target['href'], target['protocol'],
-        #                               target['projects'], target['address'])
-        #         self.targets.append(ecu_ident)
+        if os.path.exists("ecu.zip") and not forceXML:
+            zf = zipfile.ZipFile("ecu.zip", mode='r')
+            jsdb = zf.read("db.json")
+            dbdict = json.loads(jsdb)
+            for targetk, targetv in dbdict.iteritems():
+                for target in targetv:
+                    self.numecu += 1
+                    href = targetk
+                    name = os.path.basename(targetk)
+                    ecu_ident = Ecu_ident(target['diagnotic_version'], target['supplier_code'],
+                                          target['soft_version'], target['version'],
+                                          name, target['group'], href, target['protocol'],
+                                          target['projects'], target['address'], True)
+                    self.targets.append(ecu_ident)
 
         if os.path.exists(xmlfile):
             xdom = xml.dom.minidom.parse(xmlfile)
@@ -1040,6 +1045,13 @@ class Ecu_database:
         tgt = []
         for t in self.targets:
             if t.name == name:
+                tgt.append(t)
+        return tgt
+
+    def getTargetsByHref(self, href):
+        tgt = []
+        for t in self.targets:
+            if t.href == href:
                 tgt.append(t)
         return tgt
 

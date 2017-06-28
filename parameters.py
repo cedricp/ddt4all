@@ -496,8 +496,9 @@ class paramWidget(gui.QWidget):
             jsondata = jsfile.read()
             jsfile.close()
         else:
-            zf = zipfile.ZipFile("json/layouts.zip", mode='r')
-            jsondata = zf.read(self.ddtfile)
+            zf = zipfile.ZipFile("ecu.zip", mode='r')
+            layoutfile = self.ddtfile + ".layout"
+            jsondata = zf.read(layoutfile)
 
         if os.path.exists(targetsfile):
             jsfile = open(targetsfile, "r")
@@ -1241,24 +1242,45 @@ def dumpDOC(xdoc):
     return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
 
 
-def make_zipfs():
-    options.ecus_dir = "./ecus"
+def zipConvertXML():
     zipoutput = StringIO()
-    i = 0
+    options.ecus_dir = "./ecus"
+
     ecus = glob.glob("ecus/*.xml")
     ecus.remove("ecus/eculist.xml")
+    i = 0
 
+    print "Opening ECU Database..."
+    ecu_database = ecu.Ecu_database()
+    print "Starting conversion"
+
+    targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
         for target in ecus:
-            name = target
-            print "Starting zipping " + target + " " + str(i) + "/" + str(len(ecus))
-            fileout = name.replace('.xml', '.json')
-            dump = dumpXML(name)
-            if dump is not None:
-                zf.writestr(fileout, str(dump))
-            i += 1
+            filename = target.replace(".xml", ".json")
+            filename = filename.replace("ecus/", "")
+            print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
 
-    with open("json/layouts.zip", "w") as f:
+            i += 1
+            layoutjs = dumpXML(target)
+            ecufile = ecu.Ecu_file(target, True)
+            js = ecufile.dumpJson()
+
+            if js:
+                zf.writestr(filename, str(js))
+
+            if layoutjs:
+                zf.writestr(filename + ".layout", str(layoutjs))
+
+            ecu_ident = ecu_database.getTargetsByHref(target.replace("ecus/", ""))
+
+            targetsdict[filename] = []
+            for ecui in ecu_ident:
+                targetsdict[filename].append(ecui.dump())
+
+        zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
+
+    with open("ecu.zip", "w") as f:
         f.write(zipoutput.getvalue())
 
 
@@ -1272,6 +1294,7 @@ def convertXML():
     print "Opening ECU Database..."
     ecu_database = ecu.Ecu_database()
     print "Starting conversion"
+
     for target in ecus:
         filename = target.replace(".xml", ".json")
         filename = filename.replace("ecus/", "json/")
@@ -1308,12 +1331,13 @@ def convertXML():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--zipfs', action="store_true", default=None, help="Create a zip filesystem of the XMLs")
     parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
+    parser.add_argument('--zipconvert', action="store_true", default=None,
+                        help="Convert all XML to JSON in a Zip archive")
     args = parser.parse_args()
 
-    if args.zipfs:
-        make_zipfs()
+    if args.zipconvert:
+        zipConvertXML()
 
     if args.convert:
         convertXML()
