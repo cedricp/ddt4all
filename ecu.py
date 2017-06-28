@@ -984,8 +984,8 @@ class Ecu_database:
             jsdb = zf.read("db.json")
             dbdict = json.loads(jsdb)
             for targetk, targetv in dbdict.iteritems():
+                self.numecu += 1
                 for target in targetv:
-                    self.numecu += 1
                     href = targetk
                     name = os.path.basename(targetk)
                     ecu_ident = Ecu_ident(target['diagnotic_version'], target['supplier_code'],
