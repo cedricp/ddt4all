@@ -1169,7 +1169,6 @@ class Ecu_scanner:
             href = ""
 
             for target in self.ecu_database.targets:
-                print target.protocol, protocol
                 if target.protocol == "DiagOnCan" and protocol != "CAN":
                     continue
                 if target.protocol.startswith("KWP") and protocol != "KWP":

@@ -499,13 +499,19 @@ class paramWidget(gui.QWidget):
             zf = zipfile.ZipFile("ecu.zip", mode='r')
             layoutfile = self.ddtfile + ".layout"
             jsondata = zf.read(layoutfile)
-
         if os.path.exists(targetsfile):
             jsfile = open(targetsfile, "r")
             self.targetsdata = json.loads(jsfile.read())
             jsfile.close()
         else:
-            self.targetsdata = None
+            # Fallback to main database (if zipped ECU)
+            tgt = options.main_window.ecu_scan.ecu_database.getTargets(self.ddtfile)
+            if tgt:
+                self.targetsdata = []
+                for t in tgt:
+                    self.targetsdata.append(t.dump())
+            else:
+                self.targetsdata = None
 
         self.layoutdict = json.loads(jsondata)
 
