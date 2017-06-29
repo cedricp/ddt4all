@@ -1143,10 +1143,11 @@ class Ecu_scanner:
                 options.elm.start_session_iso('10C0')
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
+                # Send some data collected during my tests
                 if addr == "27":
                     can_response = "61 80 82 00 26 02 45 09 30 30 31 01 18 52 20 06 05 02 05 00 03 01 04 33 69 91"
                 elif addr == "01":
-                    can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
+                    #can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
                     can_response = "61 80 82 01 00 28 28 04 41 4D 52 00 03 07 00 07 04 00 04 03 08 2B 00 31 04 00"
                 elif addr == "2C":
                     can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
