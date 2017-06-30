@@ -17,7 +17,7 @@ need_hw = True
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.clio_eps = ecu.Ecu_file("EPS_X98.json", True)
+        self.clio_eps = ecu.Ecu_file("X98ph2_X87ph2_EPS_HFP_v1.00_20150622T140219_20160726T172209.json", True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
         infos.setAlignment(core.Qt.AlignHCenter)

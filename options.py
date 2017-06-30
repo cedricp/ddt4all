@@ -36,6 +36,9 @@ def translator(filename):
         if os.getenv('LANG') is None:
             lang, enc = locale.getdefaultlocale()
             os.environ['LANG'] = lang
+    else:
+        if "LANGUAGE" not in os.environ is None:
+            os.environ["LANGUAGE"] = os.environ["LANGUAGE"]
 
     # Set up message catalog access
     t = gettext.translation(filename, 'locale', fallback=True)
