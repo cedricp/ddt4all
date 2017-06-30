@@ -11,26 +11,21 @@ import ecu
 
 plugin_name = "Megane/Scenic II card programming"
 category = "Keys"
+need_hw = True
 
-
-def get_isk(ecu, ecu_response = None):
-    isk_data_name = u'ISK Code'
-    request_ab_frame_name = u'Trame AB: Trame réservée'
-
-    # ECU Request
-    abframe_request = ecu.requests[request_ab_frame_name]
-
-    return abframe_request.get_values_from_stream(ecu_response)[isk_data_name]
+def get_isk(ecu, ecu_response):
+    ecu_response = ecu_response.replace(' ', '').strip()
+    return ecu_response[19 * 2:25 * 2]
 
 
 def plugin_entry():
-    megane_ecu = ecu.Ecu_file("./plugins/ecu_def/UCH_Megane.json", True)
+    megane_ecu = ecu.Ecu_file("UCH_84_J84_03_60.json", True)
 
     # Request gathering
     start_session_request = megane_ecu.requests[u'Start Diagnostic Session']
     after_sale_request = megane_ecu.requests[u'ACCEDER AU MODE APRES-VENTE']
     learn_key_request = megane_ecu.requests[u'APPRENDRE BADGE']
-    tester_present_request = megane_ecu.requests[u'Tester present']
+    #tester_present_request = megane_ecu.requests[u'Tester present']
 
     # First generate a list of bytes representing the frame to be sent to the ELM
     # A template of it is available in the 'sentbytes' member of an 'Ecu_request' class

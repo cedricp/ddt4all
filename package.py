@@ -27,16 +27,21 @@ for file in files:
     print "Adding source file %s" % file
     zip.write(file)
 
+files = glob.glob("plugins/*.py")
+for file in files:
+    print "Adding plugin file %s" % file
+    zip.write(file)
+
+zip.write("ecu.zip")
 zip.write("DDT4ALL.BAT")
 zip.write("json/")
 zip.write("logs/")
-zip.write("ecus/")
 
 zipdir("./Python27")
 zipdir("./importlib")
 zipdir("./serial")
 zipdir("./icons")
-#zipdir("./json")
 zipdir("./locale")
+zipdir("./crcmod")
 
 zip.close()

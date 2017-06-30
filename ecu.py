@@ -237,6 +237,9 @@ class Ecu_request:
             else:
                 raise KeyError('Data %s does not exist' % k)
 
+            if v in data.items:
+                v = hex(data.items[v])[2:].upper()
+
             data.setValue(v, data_stream, datatitem, self.ecu_file.endianness)
 
         return data_stream
@@ -624,6 +627,13 @@ class Ecu_data:
 
         return str(res)
 
+    def getIntValue(self, resp, dataitem, ecu_endian):
+        val = self.getHexValue(resp, dataitem, ecu_endian)
+        if val is None:
+            return None
+
+        return int("0x"+val, 16)
+
     def getHexValue(self, resp, dataitem, ecu_endian):
         little_endian = False
 
@@ -718,7 +728,12 @@ class Ecu_file:
         if not data:
             return
 
-        if isfile and '.json' in str(data):
+        if isfile:
+            if not os.path.exists(data):
+                if os.path.exists("./ecus/" + data + ".xml"):
+                    data = "./ecus/" + data + ".xml"
+
+        if isfile and '.json' in data:
             data2 = "./json/" + data
             if os.path.exists(data):
                 jsfile = open(data, "r")
@@ -730,8 +745,12 @@ class Ecu_file:
                 jsfile.close()
             else:
                 # Zipped json here
-                zf = zipfile.ZipFile('ecu.zip', mode='r')
-                jsdata = zf.read(data)
+                if os.path.exists('ecu.zip'):
+                    zf = zipfile.ZipFile('ecu.zip', mode='r')
+                    if data in zf.namelist():
+                        jsdata = zf.read(data)
+                else:
+                    print "Cannot found file ", data
 
             ecudict = json.loads(jsdata)
 
@@ -766,6 +785,9 @@ class Ecu_file:
                 self.data[k] = Ecu_data(v, k)
         else:
             if isfile:
+                if not os.path.exists(data):
+                    print "Cannot load ECU file", data
+                    return
                 xdom = xml.dom.minidom.parse(data)
                 self.xmldoc = xdom.documentElement
             else:

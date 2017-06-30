@@ -12,17 +12,14 @@ import PyQt4.QtCore as core
 
 plugin_name = "CRC calculator"
 category = "VIN"
-
+# We need an ELM to work
+need_hw = False
 
 def calc_crc(vin=None):
-    if not vin:
-        # Test data
-        # Should return 5E08
-        vin = "VF1JP0K0123456789"
     VIN=vin.encode("hex")
     VININT=unhexlify(VIN)
 
-    crc16 = crcmod.predefined.Crc('x25')
+    crc16 = crcmod.predefined.Crc('x-25')
     crc16.update(VININT)
     crcle = crc16.hexdigest()
     # Seems that computed CRC is returned in little endian way
@@ -35,7 +32,8 @@ class CrcWidget(gui.QDialog):
         super(CrcWidget, self).__init__(None)
         layout = gui.QVBoxLayout()
         self.input = gui.QLineEdit()
-        self.output = gui.QLabel()
+        self.output = gui.QLineEdit()
+        self.output.setStyleSheet("QLineEdit { color: rgb(255, 0, 0); }")
         info = gui.QLabel("CRC CALCULATOR")
         info.setAlignment(core.Qt.AlignHCenter)
         self.output.setAlignment(core.Qt.AlignHCenter)
@@ -44,11 +42,12 @@ class CrcWidget(gui.QDialog):
         layout.addWidget(self.output)
         self.input.textChanged.connect(self.recalc)
         self.setLayout(layout)
+        self.output.setReadOnly(True)
 
     def recalc(self):
         vin = str(self.input.text().toAscii()).upper()
         crc = calc_crc(vin)
-        self.output.setText('<font color="red">%s</fonts>' % crc)
+        self.output.setText('%s' % crc)
 
 
 def plugin_entry():
