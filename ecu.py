@@ -335,6 +335,7 @@ class Ecu_data:
 
         if isinstance(data, dict):
             if data.has_key('bitscount'): self.bitscount = data['bitscount']
+            if data.has_key('bytesascii'): self.bytesascii = data['bytesascii']
             if data.has_key('scaled'): self.scaled = data['scaled']
             if data.has_key('signed'): self.signed = data['signed']
             if data.has_key('byte'): self.byte = data['byte']
