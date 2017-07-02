@@ -191,7 +191,8 @@ class sniffer(gui.QWidget):
             return False
 
         for req in sorted(self.ecurequests.requests.keys()):
-            self.framecombo.addItem(req)
+            if 'DTOOL' not in req.upper():
+                self.framecombo.addItem(req)
 
         self.oktostart = True
         self.startbutton.setEnabled(True)

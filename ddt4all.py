@@ -384,6 +384,8 @@ class Main_widget(gui.QMainWindow):
         if self.paramview:
             self.paramview.init('')
         pim()
+        if self.paramview:
+            self.paramview.initELM()
 
     def screenRename(self):
         item = self.treeview_params.currentItem()

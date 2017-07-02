@@ -17,7 +17,7 @@ need_hw = True
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.airbag_ecu = ecu.Ecu_file("RSAT4_ACU_eng_v15_20150511T131328.json", True)
+        self.airbag_ecu = ecu.Ecu_file("RSAT4_ACU_eng_v15_20150511T131328", True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>"
                            "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"

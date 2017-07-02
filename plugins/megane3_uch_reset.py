@@ -17,7 +17,7 @@ need_hw = True
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.megane_uch = ecu.Ecu_file("BCM_X95_SW_2_V_1_2.json", True)
+        self.megane_uch = ecu.Ecu_file("BCM_X95_SW_2_V_1_2", True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
         infos.setAlignment(core.Qt.AlignHCenter)

@@ -734,6 +734,13 @@ class Ecu_file:
                 if os.path.exists("./ecus/" + data + ".xml"):
                     data = "./ecus/" + data + ".xml"
 
+        if isfile and ".xml" not in data[-4:] and ".json" not in data[-5:]:
+            xmlname = data + ".xml"
+            if os.path.exists(xmlname):
+                data = xmlname
+            else:
+                data += ".json"
+
         if isfile and '.json' in data:
             data2 = "./json/" + data
             if os.path.exists(data):
@@ -752,6 +759,7 @@ class Ecu_file:
                         jsdata = zf.read(data)
                 else:
                     print "Cannot found file ", data
+                    return
 
             ecudict = json.loads(jsdata)
 

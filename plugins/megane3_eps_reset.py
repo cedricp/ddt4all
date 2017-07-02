@@ -17,7 +17,7 @@ need_hw = True
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.megane_eps = ecu.Ecu_file("DAE_X95_X38_X10_v1.88_20120228T113904.json", True)
+        self.megane_eps = ecu.Ecu_file("DAE_X95_X38_X10_v1.88_20120228T113904", True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
         infos.setAlignment(core.Qt.AlignHCenter)

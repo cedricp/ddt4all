@@ -18,7 +18,7 @@ need_hw = True
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.laguna_uch = ecu.Ecu_file("UCH___M2S_X74_et_X73.json", True)
+        self.laguna_uch = ecu.Ecu_file("UCH___M2S_X74_et_X73", True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
         infos.setAlignment(core.Qt.AlignHCenter)
