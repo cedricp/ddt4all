@@ -220,6 +220,38 @@ class Ecu_request:
                         di = Data_item(dataitem, self.ecu_file.endianness)
                         self.sendbyte_dataitems[di.name] = di
 
+    def send_request(self, inputvalues={}, test_data=None):
+        request_stream = self.build_data_stream(inputvalues)
+        request_stream = " ".join(request_stream)
+
+        if options.debug:
+            print "Generated stream ", request_stream
+
+        if options.simulation_mode:
+            if test_data is not None:
+                elmstream = test_data
+                print "Send request stream", request_stream
+            else:
+                # return default reply bytes...
+                elmstream = self.replybytes
+        else:
+            elmstream = options.elm.request(request_stream)
+
+        if options.debug:
+            print "Received stream ", elmstream
+
+        if elmstream.startswith('7F'):
+            nrsp = options.elm.errorval(elmstream[6:8])
+            print "Request ECU Error", nrsp
+            return None
+
+        values = self.get_values_from_stream(elmstream)
+
+        if options.debug:
+            print "Decoded values", values
+
+        return values
+
     def get_data_inputs(self):
         return self.sendbyte_dataitems.keys()
 
@@ -889,6 +921,36 @@ class Ecu_file:
                     for f in data:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
+
+    def connect_to_hardware(self):
+        # Can handling
+        if self.ecu_protocol == 'CAN':
+            short_addr = elm.get_can_addr(self.ecu_send_id)
+            ecu_conf = {'idTx': self.ecu_send_id, 'idRx':
+                        self.ecu_recv_id, 'ecuname': str(self.ecuname)}
+
+            if not options.simulation_mode:
+                options.elm.init_can()
+                options.elm.set_can_addr(short_addr, ecu_conf)
+
+        # KWP 2000 Handling
+        elif self.ecu_protocol == 'KWP2000':
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecuname), 'protocol': 'KWP2000'}
+            options.opt_si = not self.fastinit
+            if not options.simulation_mode:
+                options.elm.init_iso()
+                options.elm.set_iso_addr(self.funcaddr, ecu_conf)
+
+        # ISO8 handling
+        elif self.ecu_protocol == 'ISO8':
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecuname), 'protocol': 'ISO8'}
+            if not options.simulation_mode:
+                options.elm.init_iso()
+                options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
+        else:
+            return False
+
+        return True
 
     def dumpJson(self):
         js = {}

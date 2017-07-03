@@ -348,6 +348,9 @@ class Main_widget(gui.QMainWindow):
         saveecuaction.triggered.connect(self.saveEcu)
         newecuction.triggered.connect(self.newEcu)
         diagmenu.addSeparator()
+        zipdbaction = diagmenu.addAction(_("Zip database"))
+        zipdbaction.triggered.connect(self.zipdb)
+        diagmenu.addSeparator()
 
         for ecuf in ecu_files:
             ecuaction = diagmenu.addAction(ecuf)
@@ -379,6 +382,11 @@ class Main_widget(gui.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def zipdb(self):
+        self.logview.append("Zipping XML database... (this can take a few minutes)")
+        core.QCoreApplication.processEvents()
+        parameters.zipConvertXML()
 
     def launchPlugin(self, pim):
         if self.paramview:
@@ -426,7 +434,7 @@ class Main_widget(gui.QMainWindow):
             self.logview.append("<font color=red>" + _("Please select a category before creating new screen") + "</font>")
             return
 
-        if item.parent() != None:
+        if item.parent() is not None:
             item = item.parent()
 
         category = unicode(item.text(0).toUtf8(), encoding="UTF-8")

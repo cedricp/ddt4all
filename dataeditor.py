@@ -199,6 +199,7 @@ class requestTable(gui.QTableWidget):
         self.verticalHeader().hide()
         #self.setShowGrid(False)
         self.currentreq = None
+        self.sdsupdate = True
 
     def cellModified(self, r, c):
         if not self.ecureq:
@@ -218,6 +219,24 @@ class requestTable(gui.QTableWidget):
             self.init(self.ecureq)
             options.main_window.paramview.requestNameChanged(oldname, newname)
             self.select(newname)
+
+    def update_sds(self, req):
+        self.sdsupdate = False
+        self.parent().init_sds(req)
+        self.sdsupdate = True
+
+    def set_sds(self, view):
+        if not self.sdsupdate:
+            return
+
+        if not self.ecureq:
+            return
+
+        self.ecureq[self.currentreq].sds['nosds'] = view.checknosds.isChecked()
+        self.ecureq[self.currentreq].sds['plant'] = view.checkplant.isChecked()
+        self.ecureq[self.currentreq].sds['aftersales'] = view.checkaftersales.isChecked()
+        self.ecureq[self.currentreq].sds['engineering'] = view.checkengineering.isChecked()
+        self.ecureq[self.currentreq].sds['supplier'] = view.checksupplier.isChecked()
 
     def select(self, name):
         items = self.findItems(name, core.Qt.MatchExactly)
@@ -249,6 +268,8 @@ class requestTable(gui.QTableWidget):
 
         self.sendbyteeditor.set_request(self.ecureq[currenttext])
         self.rcvbyteeditor.set_request(self.ecureq[currenttext])
+
+        self.update_sds(self.ecureq[currenttext])
 
     def init(self, ecureq):
         try:
@@ -582,6 +603,40 @@ class requestEditor(gui.QWidget):
         super(requestEditor, self).__init__(parent)
         self.ecurequestsparser = None
 
+        layoutsss = gui.QHBoxLayout()
+        nosdslabel = gui.QLabel("No SDS")
+        labelplant = gui.QLabel("Plant")
+        labelaftersales = gui.QLabel("After Sale")
+        labelngineering = gui.QLabel("Engineering")
+        labelsupplier = gui.QLabel("Supllier")
+
+        self.checknosds = gui.QCheckBox()
+        self.checkplant = gui.QCheckBox()
+        self.checkaftersales = gui.QCheckBox()
+        self.checkengineering = gui.QCheckBox()
+        self.checksupplier = gui.QCheckBox()
+
+        self.checknosds.toggled.connect(self.sdschanged)
+        self.checkplant.toggled.connect(self.sdschanged)
+        self.checkaftersales.toggled.connect(self.sdschanged)
+        self.checkengineering.toggled.connect(self.sdschanged)
+        self.checksupplier.toggled.connect(self.sdschanged)
+
+        layoutsss.addWidget(nosdslabel)
+        layoutsss.addWidget(self.checknosds)
+
+        layoutsss.addWidget(labelplant)
+        layoutsss.addWidget(self.checkplant)
+
+        layoutsss.addWidget(labelaftersales)
+        layoutsss.addWidget(self.checkaftersales)
+
+        layoutsss.addWidget(labelngineering)
+        layoutsss.addWidget(self.checkengineering)
+
+        layoutsss.addWidget(labelsupplier)
+        layoutsss.addWidget(self.checksupplier)
+
         layout_action = gui.QHBoxLayout()
         button_reload = gui.QPushButton(_("Reload requests"))
         button_add = gui.QPushButton(_("Add request"))
@@ -606,6 +661,7 @@ class requestEditor(gui.QWidget):
         self.tabs.addTab(self.receivebyteeditor, _("Receive bytes"))
 
         self.layv.addLayout(layout_action)
+        self.layv.addLayout(layoutsss)
         self.layv.addWidget(self.tabs)
 
         self.layh.addLayout(self.layv)
@@ -634,6 +690,12 @@ class requestEditor(gui.QWidget):
         self.init()
         self.requesttable.select(ecu_datareq['name'])
 
+    def sdschanged(self):
+        if not self.ecurequestsparser:
+            return
+
+        self.requesttable.set_sds(self)
+
     def reload(self):
         if not self.ecurequestsparser:
             return
@@ -643,6 +705,13 @@ class requestEditor(gui.QWidget):
         self.requesttable.init(self.ecurequestsparser.requests)
         self.sendbyteeditor.set_ecufile(self.ecurequestsparser)
         self.receivebyteeditor.set_ecufile(self.ecurequestsparser)
+
+    def init_sds(self, req):
+        self.checknosds.setChecked(req.sds['nosds'])
+        self.checkplant.setChecked(req.sds['plant'])
+        self.checkaftersales.setChecked(req.sds['aftersales'])
+        self.checkengineering.setChecked(req.sds['engineering'])
+        self.checksupplier.setChecked(req.sds['supplier'])
 
     def set_ecu(self, ecu):
         self.ecurequestsparser = ecu

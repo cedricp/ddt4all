@@ -22,7 +22,7 @@ ecus_dir = "ecus/"
 last_error = ""
 main_window = None
 ecu_scanner = None
-
+debug = False
 
 def get_last_error():
     global last_error

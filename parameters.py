@@ -448,29 +448,10 @@ class paramWidget(gui.QWidget):
         self.refreshtime = value
 
     def initELM(self):
-        if self.ecurequestsparser.ecu_protocol == 'CAN':
-            self.logview.append(_("Initializing CAN mode"))
-            short_addr = elm.get_can_addr(self.ecurequestsparser.ecu_send_id)
-            ecu_conf = {'idTx': self.ecurequestsparser.ecu_send_id, 'idRx':
-                self.ecurequestsparser.ecu_recv_id, 'ecuname': str(self.ecu_name)}
-            if not options.simulation_mode:
-                options.elm.init_can()
-                options.elm.set_can_addr(short_addr, ecu_conf)
-        elif self.ecurequestsparser.ecu_protocol == 'KWP2000':
-            self.logview.append(_("Initializing KWP2000 mode"))
-            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'KWP2000'}
-            options.opt_si = not self.ecurequestsparser.fastinit
-            if not options.simulation_mode:
-                options.elm.init_iso()
-                options.elm.set_iso_addr(self.ecurequestsparser.funcaddr, ecu_conf)
-        elif self.ecurequestsparser.ecu_protocol == 'ISO8':
-            self.logview.append(_("Initializing ISO8 mode"))
-            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecu_name), 'protocol': 'ISO8'}
-            if not options.simulation_mode:
-                options.elm.init_iso()
-                options.elm.set_iso8_addr(self.ecurequestsparser.funcaddr, ecu_conf)
-        else:
-            self.logview.append(_("Protocol ") + self.ecurequestsparser.ecu_protocol + _(" not supported"))
+        connection_status = self.ecurequestsparser.connect_to_hardware()
+        if not connection_status:
+            self.logview.append("<font color='red'>Protocol not supported</font>")
+            return
 
         if self.main_protocol_status:
             if self.ecurequestsparser.ecu_protocol == "CAN":
@@ -1259,6 +1240,7 @@ def zipConvertXML():
     print "Opening ECU Database..."
     ecu_database = ecu.Ecu_database()
     print "Starting conversion"
+
 
     targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
