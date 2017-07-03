@@ -799,6 +799,7 @@ class numericListPanel(gui.QFrame):
             while key in self.data.items:
                 key += u"_"
             self.data.items[key] = val
+            self.data.lists[val] = key
 
     def init(self):
         if not self.data:
