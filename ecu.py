@@ -755,7 +755,7 @@ class Ecu_file:
         self.kw1 = ""
         self.kw2 = ""
         self.funcname = ""
-        self.funcaddr = ""
+        self.funcaddr = "00"
         self.ecuname = ""
 
         if not data:

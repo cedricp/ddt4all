@@ -315,11 +315,9 @@ class paramEditor(gui.QFrame):
         add_layout = gui.QHBoxLayout()
         self.data_list = gui.QComboBox()
         self.button_add = gui.QPushButton(_("Add"))
-        self.refresh = gui.QPushButton(_("Refresh"))
         self.button_add.setFixedWidth(50)
-        self.refresh.setFixedWidth(80)
+
         add_layout.addWidget(self.data_list)
-        add_layout.addWidget(self.refresh)
         add_layout.addWidget(self.button_add)
 
         if issend:
@@ -329,7 +327,6 @@ class paramEditor(gui.QFrame):
         self.inputreq = gui.QLineEdit()
         self.inputreq.textChanged.connect(self.request_changed)
         self.button_add.clicked.connect(self.add_data)
-        self.refresh.clicked.connect(self.refresh_combo)
 
         self.layoutv.addLayout(add_layout)
         self.layoutv.addWidget(self.labelreq)
@@ -449,6 +446,9 @@ class paramEditor(gui.QFrame):
     def set_request(self, req):
         self.current_request = req
         self.init(req)
+
+    def refresh_data(self):
+        self.init(self.current_request)
 
     def init(self, req):
         self.table.clear()
@@ -671,6 +671,10 @@ class requestEditor(gui.QWidget):
         self.requesttable.setReceiveByteEditor(self.receivebyteeditor)
         self.enable_view(False)
 
+    def refresh_data(self):
+        self.sendbyteeditor.refresh_combo()
+        self.receivebyteeditor.refresh_combo()
+
     def enable_view(self, enable):
         children = self.children()
         for c in children:
@@ -705,6 +709,10 @@ class requestEditor(gui.QWidget):
         self.requesttable.init(self.ecurequestsparser.requests)
         self.sendbyteeditor.set_ecufile(self.ecurequestsparser)
         self.receivebyteeditor.set_ecufile(self.ecurequestsparser)
+
+    def refresh_data(self):
+        self.sendbyteeditor.refresh_data()
+        self.receivebyteeditor.refresh_data()
 
     def init_sds(self, req):
         self.checknosds.setChecked(req.sds['nosds'])
@@ -772,6 +780,8 @@ class numericListPanel(gui.QFrame):
         self.itemtable.setCellWidget(newrow, 0, spinvalue)
         self.itemtable.setItem(newrow, 1, gui.QTableWidgetItem(_("New item")))
         self.itemtable.setItem(newrow, 0, gui.QTableWidgetItem(str(value).zfill(5)))
+        self.itemtable.resizeRowsToContents()
+        self.itemtable.resizeColumnsToContents()
 
     def def_item(self):
         currentrow = self.itemtable.currentRow()
@@ -1061,6 +1071,9 @@ class dataEditor(gui.QWidget):
         new_item = self.datatable.findItems(new_data_name, core.Qt.MatchExactly)
         self.datatable.selectRow(new_item[0].row())
 
+        # Refresh request data combo
+        options.main_window.requesteditor.refresh_data()
+
     def cellModified(self, r, c):
         if c != 0:
             return
@@ -1087,6 +1100,7 @@ class dataEditor(gui.QWidget):
                 rbdata[newname] = rbdata.pop(oldname)
 
         options.main_window.paramview.dataNameChanged(oldname, newname)
+        options.main_window.requesteditor.init()
 
     def clear(self):
         self.datatable.clear()
@@ -1102,6 +1116,7 @@ class dataEditor(gui.QWidget):
         comment = unicode(self.descpriptioneditor.text().toUtf8(), encoding="UTF-8")
         self.currentecudata.comment = comment
         self.currentWidget.validate()
+        options.main_window.requesteditor.refresh_data()
 
     def changeData(self):
         if len(self.datatable.selectedItems()) == 0:
