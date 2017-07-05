@@ -775,6 +775,14 @@ class portChooser(gui.QDialog):
         self.btbutton.setCheckable(True)
         medialayout.addWidget(self.btbutton)
 
+        self.obdlinkbutton = gui.QPushButton()
+        self.obdlinkbutton.setIcon(gui.QIcon("icons/obdlink.png"))
+        self.obdlinkbutton.setIconSize(core.QSize(60, 60))
+        self.obdlinkbutton.setFixedHeight(64)
+        self.obdlinkbutton.setFixedWidth(64)
+        self.obdlinkbutton.setCheckable(True)
+        medialayout.addWidget(self.obdlinkbutton)
+
         layout.addLayout(medialayout)
 
         self.btbutton.toggled.connect(self.bt)
@@ -866,6 +874,7 @@ class portChooser(gui.QDialog):
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
 
         self.speedcombo.setCurrentIndex(2)
         self.btbutton.setChecked(True)
@@ -873,30 +882,36 @@ class portChooser(gui.QDialog):
         self.usbbutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
+        self.obdlinkbutton.setChecked(False)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
 
     def wifi(self):
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
 
         self.wifibutton.setChecked(True)
         self.btbutton.setChecked(False)
         self.usbbutton.setChecked(False)
         self.wifiinput.setEnabled(True)
         self.speedcombo.setEnabled(False)
+        self.obdlinkbutton.setChecked(False)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
 
     def usb(self):
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
 
         self.usbbutton.setChecked(True)
         self.speedcombo.setCurrentIndex(0)
@@ -904,10 +919,31 @@ class portChooser(gui.QDialog):
         self.wifibutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
+        self.obdlinkbutton.setChecked(False)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+
+    def obdlink(self):
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(2)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.obdlinkbutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
 
     def connectedMode(self):
         self.timer.stop()
