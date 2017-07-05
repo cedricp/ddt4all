@@ -1176,6 +1176,13 @@ class dataEditor(gui.QWidget):
         self.currentWidget.validate()
         options.main_window.requesteditor.refresh_data()
 
+        # Update table entry
+        if len(self.datatable.selectedItems()) == 0:
+            return
+
+        r = self.datatable.selectedItems()[-1].row()
+        self.datatable.item(r, 1).setText(comment)
+
     def changeData(self):
         if len(self.datatable.selectedItems()) == 0:
             return
