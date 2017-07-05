@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import ecu, math, string, options
+import ecu, math, string, options, copy
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 
@@ -42,9 +42,21 @@ class Bit_container(gui.QFrame):
         label = gui.QLabel(str(num + 1).zfill(2))
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
 
+        self.labelvaluehex = gui.QLabel("$00")
+        self.labelvaluehex.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
+
         self.layout.addWidget(label)
+        self.layout.addWidget(self.labelvaluehex)
         self.layout.addLayout(cblayout)
         self.setLayout(self.layout)
+
+    def set_value_hex(self, val):
+        char = val.decode("hex")
+        repr = ""
+        if ord(char) < 127 and char in string.printable:
+            repr = " [" + char + "]"
+
+        self.labelvaluehex.setText("<font color='green'>$" + val.zfill(2) + repr + "</font>")
 
     def set_byte_value(self, byte):
         if 'L' in byte:
@@ -56,6 +68,8 @@ class Bit_container(gui.QFrame):
                 self.checkboxes[i].setChecked(True)
             else:
                 self.checkboxes[i].setChecked(False)
+
+        self.set_value_hex(byte)
 
     def set_byte(self, byte):
         if 'L' in byte:
@@ -364,7 +378,7 @@ class paramEditor(gui.QFrame):
         self.table.itemSelectionChanged.connect(self.cell_clicked)
 
         self.bitviewer = Bit_viewer()
-        self.bitviewer.setFixedHeight(90)
+        self.bitviewer.setFixedHeight(110)
         self.layoutv.addWidget(self.bitviewer)
 
     def refresh_combo(self):
@@ -439,6 +453,7 @@ class paramEditor(gui.QFrame):
         self.bitviewer.set_bytes_value(byteslisttosend)
 
     def set_ecufile(self, ef):
+        self.current_request = None
         self.ecufile = ef
         self.table.clear()
         self.inputreq.clear()
@@ -448,7 +463,8 @@ class paramEditor(gui.QFrame):
         self.init(req)
 
     def refresh_data(self):
-        self.init(self.current_request)
+        if self.current_request:
+            self.init(self.current_request)
 
     def init(self, req):
         self.table.clear()
@@ -592,6 +608,7 @@ class paramEditor(gui.QFrame):
             self.update_bitview_value(self.currentdataitem)
 
         self.inputreq.setStyleSheet("background-color: green")
+
         if self.send:
             self.current_request.sentbytes = text
         else:
@@ -604,17 +621,12 @@ class requestEditor(gui.QWidget):
         self.ecurequestsparser = None
 
         layoutsss = gui.QHBoxLayout()
-        nosdslabel = gui.QLabel("No SDS")
-        labelplant = gui.QLabel("Plant")
-        labelaftersales = gui.QLabel("After Sale")
-        labelngineering = gui.QLabel("Engineering")
-        labelsupplier = gui.QLabel("Supllier")
 
-        self.checknosds = gui.QCheckBox()
-        self.checkplant = gui.QCheckBox()
-        self.checkaftersales = gui.QCheckBox()
-        self.checkengineering = gui.QCheckBox()
-        self.checksupplier = gui.QCheckBox()
+        self.checknosds = gui.QCheckBox("No SDS")
+        self.checkplant = gui.QCheckBox("Plant")
+        self.checkaftersales = gui.QCheckBox("After Sale")
+        self.checkengineering = gui.QCheckBox("Engineering")
+        self.checksupplier = gui.QCheckBox("Supllier")
 
         self.checknosds.toggled.connect(self.sdschanged)
         self.checkplant.toggled.connect(self.sdschanged)
@@ -622,19 +634,10 @@ class requestEditor(gui.QWidget):
         self.checkengineering.toggled.connect(self.sdschanged)
         self.checksupplier.toggled.connect(self.sdschanged)
 
-        layoutsss.addWidget(nosdslabel)
         layoutsss.addWidget(self.checknosds)
-
-        layoutsss.addWidget(labelplant)
         layoutsss.addWidget(self.checkplant)
-
-        layoutsss.addWidget(labelaftersales)
         layoutsss.addWidget(self.checkaftersales)
-
-        layoutsss.addWidget(labelngineering)
         layoutsss.addWidget(self.checkengineering)
-
-        layoutsss.addWidget(labelsupplier)
         layoutsss.addWidget(self.checksupplier)
 
         layout_action = gui.QHBoxLayout()
@@ -979,9 +982,13 @@ class dataEditor(gui.QWidget):
 
         layout_action = gui.QHBoxLayout()
         button_new = gui.QPushButton(_("New"))
+        button_duplicate = gui.QPushButton(_("Duplicate selected"))
+        button_remove = gui.QPushButton(_("Remove selected"))
         button_reload = gui.QPushButton(_("Reload"))
         button_validate = gui.QPushButton(_("Validate changes"))
         layout_action.addWidget(button_new)
+        layout_action.addWidget(button_duplicate)
+        layout_action.addWidget(button_remove)
         layout_action.addWidget(button_reload)
         layout_action.addWidget(button_validate)
         layout_action.addStretch()
@@ -989,6 +996,8 @@ class dataEditor(gui.QWidget):
         button_new.clicked.connect(self.new_request)
         button_reload.clicked.connect(self.reload)
         button_validate.clicked.connect(self.validate)
+        button_duplicate.clicked.connect(self.duplicate_selected)
+        button_remove.clicked.connect(self.remove_selected)
 
         self.layouth = gui.QHBoxLayout()
 
@@ -1040,6 +1049,55 @@ class dataEditor(gui.QWidget):
 
         self.datatable.itemSelectionChanged.connect(self.changeData)
         self.enable_view(False)
+
+    def remove_selected(self):
+        if len(self.datatable.selectedItems()) == 0:
+            return
+
+        r = self.datatable.selectedItems()[-1].row()
+        dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
+
+        # Check if data needed by request
+        for reqname, request in self.ecurequestsparser.requests.iteritems():
+            for rcvname, rcvdi in request.dataitems.iteritems():
+                if rcvname == dataname:
+                    msgbox = gui.QMessageBox()
+                    msgbox.setText(_("Data is used by request %s") % reqname)
+                    msgbox.exec_()
+                    return
+            for sndname, snddi in request.sendbyte_dataitems.iteritems():
+                if sndname == dataname:
+                    msgbox = gui.QMessageBox()
+                    msgbox.setText(_("Data is used by request %s") % reqname)
+                    msgbox.exec_()
+                    return
+
+        self.ecurequestsparser.data.pop(dataname)
+
+        self.reload()
+
+    def duplicate_selected(self):
+        if len(self.datatable.selectedItems()) == 0:
+            return
+
+        r = self.datatable.selectedItems()[-1].row()
+
+        dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        self.currentecudata = self.ecurequestsparser.data[dataname]
+
+        new_data_name = dataname
+        while new_data_name in self.ecurequestsparser.data:
+            new_data_name += u"_copy"
+
+        deep_data_copy = copy.deepcopy(self.currentecudata)
+        deep_data_copy.name = new_data_name
+        self.ecurequestsparser.data[new_data_name] = deep_data_copy
+        self.reload()
+
+        copied_item = self.datatable.findItems(new_data_name, core.Qt.MatchExactly)
+        self.datatable.selectRow(copied_item[0].row())
+
+        options.main_window.requesteditor.init()
 
     def enable_view(self, enable):
         children = self.children()
@@ -1100,7 +1158,7 @@ class dataEditor(gui.QWidget):
                 rbdata[newname] = rbdata.pop(oldname)
 
         options.main_window.paramview.dataNameChanged(oldname, newname)
-        options.main_window.requesteditor.init()
+        options.main_window.requesteditor.refresh_data()
 
     def clear(self):
         self.datatable.clear()
