@@ -788,6 +788,7 @@ class portChooser(gui.QDialog):
         self.btbutton.toggled.connect(self.bt)
         self.wifibutton.toggled.connect(self.wifi)
         self.usbbutton.toggled.connect(self.usb)
+        self.obdlinkbutton.toggled.connect(self.obdlink)
 
         speedlayout = gui.QHBoxLayout()
         self.speedcombo = gui.QComboBox()
