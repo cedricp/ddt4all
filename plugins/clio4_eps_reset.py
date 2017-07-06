@@ -12,12 +12,12 @@ import elm
 plugin_name = "Clio IV EPS Reset"
 category = "EPS Tools"
 need_hw = True
-
+ecufile = "X98ph2_X87ph2_EPS_HFP_v1.00_20150622T140219_20160726T172209"
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.clio_eps = ecu.Ecu_file("X98ph2_X87ph2_EPS_HFP_v1.00_20150622T140219_20160726T172209", True)
+        self.clio_eps = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
         infos.setAlignment(core.Qt.AlignHCenter)
@@ -36,56 +36,37 @@ class Virginizer(gui.QDialog):
         self.ecu_connect()
 
     def ecu_connect(self):
-        short_addr = elm.get_can_addr(self.clio_eps.ecu_send_id)
-        ecu_conf = {'idTx': self.clio_eps.ecu_send_id, 'idRx':
-            self.clio_eps.ecu_recv_id, 'ecuname': ""}
-        if not options.simulation_mode:
-            options.elm.set_can_addr(short_addr, ecu_conf)
-        else:
-            print "Connect to ", self.clio_eps.ecu_send_id, self.clio_eps.ecu_recv_id
+        connection = self.clio_eps.connect_to_hardware()
+        if not connection:
+            options.main_window.logview.append("Cannot connect to ECU")
+            self.finished()
 
     def check_virgin_status(self):
-        virgin_data_name = u"DongleState"
+        self.start_diag_session_c0()
+
         virigin_check_request = self.clio_eps.requests[u'DataRead.DongleState']
-        virgin_data_bit = virigin_check_request.dataitems[virgin_data_name]
-        virgin_ecu_data = self.clio_eps.data[virgin_data_name]
+        request_values = virigin_check_request.send_request()
 
-        request_stream = virigin_check_request.build_data_stream({})
-        request_stream = " ".join(request_stream)
+        if request_values is not None:
+            if u'DongleState' in request_values:
+                donglestate = request_values[u'DongleState']
 
-        self.start_diag_session_fa()
-        if options.simulation_mode:
-            # Simulate virgin ECU
-            # Blank bit is 4th byte (0=learnt, 1=blank,3=not operational)
-            elmstream = "62 01 64 00 00 00 00 00 00 00 00 00 00 FF 00"
-            # Simulate coded ECU
-            elmstream = "62 01 64 00 00 00 00 00 00 00 00 00 00 00 00"
-            print "Send request stream", request_stream
-        else:
-            elmstream = options.elm.request(request_stream)
+                if donglestate == u'NotOperational':
+                    self.virginize_button.setEnabled(False)
+                    self.status_check.setText("<font color='green'>EPS not operational</font>")
+                    return
 
-        if elmstream == "WRONG RESPONSE":
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='red'>Communication problem</font>")
-            return
+                if donglestate == u'OperationalBlanked':
+                    self.virginize_button.setEnabled(False)
+                    self.status_check.setText("<font color='green'>EPS virgin</font>")
+                    return
 
-        value = virgin_ecu_data.getIntValue(elmstream, virgin_data_bit, self.clio_eps.endianness)
-        virgin = value == 1
-        not_operational = value == 3
+                if donglestate == u'OperationalLearnt':
+                    self.virginize_button.setEnabled(True)
+                    self.status_check.setText("<font color='red'>EPS coded</font>")
+                    return
 
-        if not_operational:
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='green'>EPS not operational</font>")
-            return
-
-        if virgin:
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='green'>EPS virgin</font>")
-            return
-        else:
-            self.virginize_button.setEnabled(True)
-            self.status_check.setText("<font color='red'>EPS coded</font>")
-            return
+        self.status_check.setText("<font color='red'>UNEXPECTED RESPONSE</font>")
 
     def start_diag_session_fa(self):
         sds_request = self.clio_eps.requests[u"StartDiagnosticSession.supplierSession"]
@@ -95,15 +76,24 @@ class Virginizer(gui.QDialog):
             return
         options.elm.start_session_can(sds_stream)
 
-    def reset_ecu(self):
-        reset_request = self.clio_eps.requests[u"SRBLID.DongleBlanking.Request"]
-        reset_stream = " ".join(reset_request.build_data_stream({u'Dongle.Code': '1976'}))
-        self.start_diag_session_fa()
+    def start_diag_session_c0(self):
+        sds_request = self.clio_eps.requests[u"StartDiagnosticSession.extendedSession"]
+        sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print "Reset stream", reset_stream
+            print "SdSC0 stream", sds_stream
             return
-        # Reset can only be done in study diag session
-        options.elm.request(reset_stream)
+        options.elm.start_session_can(sds_stream)
+
+    def reset_ecu(self):
+        self.start_diag_session_fa()
+
+        reset_request = self.clio_eps.requests[u"SRBLID.DongleBlanking.Request"]
+        request_response = reset_request.send_request({u'Dongle.Code': '1976'})
+
+        if request_response is not None:
+            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+        else:
+            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
 
 
 def plugin_entry():

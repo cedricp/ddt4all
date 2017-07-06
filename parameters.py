@@ -194,12 +194,16 @@ class paramWidget(gui.QWidget):
             self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
+        cursorpos = self.panel.mapFromGlobal(gui.QCursor.pos())
+        posx = cursorpos.x() * self.uiscale
+        posy = cursorpos.y() * self.uiscale
+
         button_dict = {}
         button_dict['text'] = "Newbutton"
         button_dict['uniquename'] = "Newbutton_0"
         button_dict['color'] = "rgb(200,200,200)"
         button_dict['width'] = 3000
-        button_dict['rect'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
+        button_dict['rect'] = {'width': 4000, 'height': 400, 'top': posy, 'left': posx}
         button_dict['font'] = {'name': "Arial", 'size': 12, 'bold': False, 'italic': False}
         button_dict['messages'] = []
         button_dict['send'] = []
@@ -213,10 +217,14 @@ class paramWidget(gui.QWidget):
             self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
+        cursorpos = self.panel.mapFromGlobal(gui.QCursor.pos())
+        posx = cursorpos.x() * self.uiscale
+        posy = cursorpos.y() * self.uiscale
+
         label_dict = {}
         label_dict['text'] = "NewLabel"
         label_dict['color'] = "rgb(200,150,200)"
-        label_dict['bbox'] = {'width': 4000, 'height': 400, 'top': 100, 'left': 100}
+        label_dict['bbox'] = {'width': 4000, 'height': 400, 'top': posy, 'left': posx}
         label_dict['font'] = {'name': "Arial", 'size': 12, 'bold': False, 'italic': False}
         label_dict['fontcolor'] = "rgb(0,0,0)"
         label_dict['alignment'] = '2'
@@ -224,6 +232,19 @@ class paramWidget(gui.QWidget):
         self.layoutdict['screens'][self.current_screen]['labels'].append(label_dict)
 
         self.reinitScreen()
+
+    def changeLabelColor(self):
+        if self.currentwidget is None:
+            return
+
+        if isinstance(self.currentwidget, displaymod.labelWidget):
+            colordialog = gui.QColorDialog()
+            color = colordialog.getColor()
+            if color.isValid():
+                self.currentwidget.jsondata['color'] = "rgb(%i,%i,%i)" % (color.red(), color.green(), color.blue())
+
+        self.reinitScreen()
+
 
     def renameLabel(self):
         if self.currentwidget is None:
@@ -309,8 +330,11 @@ class paramWidget(gui.QWidget):
 
                 if isinstance(widget, displaymod.labelWidget):
                     renamelabelaction = gui.QAction(_("Rename label"), popmenu)
+                    changecoloraction = gui.QAction(_("Change color"), popmenu)
                     popmenu.addAction(renamelabelaction)
+                    popmenu.addAction(changecoloraction)
                     renamelabelaction.triggered.connect(self.renameLabel)
+                    changecoloraction.triggered.connect(self.changeLabelColor)
                 if found:
                     removeaction = gui.QAction(_("Remove element"), popmenu)
                     popmenu.addSeparator()

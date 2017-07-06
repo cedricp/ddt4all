@@ -22,7 +22,7 @@ ecus_dir = "ecus/"
 last_error = ""
 main_window = None
 ecu_scanner = None
-debug = False
+debug = 'DDTDEBUG' in os.environ
 
 def get_last_error():
     global last_error
@@ -38,7 +38,7 @@ def translator(filename):
             os.environ['LANG'] = lang
     else:
         if "LANGUAGE" not in os.environ is None:
-            os.environ["LANGUAGE"] = os.environ["LANGUAGE"]
+            os.environ["LANGUAGE"] = os.environ["LANG"]
 
     # Set up message catalog access
     t = gettext.translation(filename, 'locale', fallback=True)

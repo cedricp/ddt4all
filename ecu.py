@@ -240,6 +240,9 @@ class Ecu_request:
         if options.debug:
             print "Received stream ", elmstream
 
+        if elmstream.startswith('WRONG RESPONSE'):
+            return None
+
         if elmstream.startswith('7F'):
             nrsp = options.elm.errorval(elmstream[6:8])
             print "Request ECU Error", nrsp
@@ -622,9 +625,9 @@ class Ecu_data:
             # Manage signed values
             if self.signed:
                 if self.bytescount == 1:
-                    val = hex8_tosigned(value)
+                    val = hex8_tosigned(val)
                 elif self.bytescount == 2:
-                    val = hex16_tosigned(value)
+                    val = hex16_tosigned(val)
                 else:
                     print "Warning, cannot get signed value for %s" % dataitem.name
 

@@ -36,56 +36,36 @@ class Virginizer(gui.QDialog):
         self.ecu_connect()
 
     def ecu_connect(self):
-        short_addr = elm.get_can_addr(self.megane_eps.ecu_send_id)
-        ecu_conf = {'idTx': self.megane_eps.ecu_send_id, 'idRx':
-            self.megane_eps.ecu_recv_id, 'ecuname': ""}
-        if not options.simulation_mode:
-            options.elm.set_can_addr(short_addr, ecu_conf)
-        else:
-            print "Connect to ", self.megane_eps.ecu_send_id, self.megane_eps.ecu_recv_id
+        connection = self.megane_eps.connect_to_hardware()
+        if not connection:
+            options.main_window.logview.append("Cannot connect to ECU")
+            self.finished()
 
     def check_virgin_status(self):
-        virgin_data_name = u"DID - Dongle state"
+        self.start_diag_session_c0()
+
         virigin_check_request = self.megane_eps.requests[u'DataRead.DID - Dongle state']
-        virgin_data_bit = virigin_check_request.dataitems[virgin_data_name]
-        virgin_ecu_data = self.megane_eps.data[virgin_data_name]
+        request_response = virigin_check_request.send_request({}, "62 01 64 00 00 00 00 00 00 00 00 00 00 00 00")
 
-        request_stream = virigin_check_request.build_data_stream({})
-        request_stream = " ".join(request_stream)
+        if request_response is not None:
+            if u'DID - Dongle state' in request_response:
+                donglestate = request_response[u'DID - Dongle state']
+                if donglestate == u'Not operational':
+                    self.virginize_button.setEnabled(False)
+                    self.status_check.setText("<font color='green'>EPS not operational</font>")
+                    return
 
-        self.start_diag_session_fa()
-        if options.simulation_mode:
-            # Simulate virgin ECU
-            # Blank bit is 4th byte (0=learnt, 1=blank,3=not operational)
-            elmstream = "62 01 64 00 00 00 00 00 00 00 00 00 00 FF 00"
-            # Simulate coded ECU
-            elmstream = "62 01 64 00 00 00 00 00 00 00 00 00 00 00 00"
-            print "Send request stream", request_stream
-        else:
-            elmstream = options.elm.request(request_stream)
+                if donglestate == u'Operational blank':
+                    self.virginize_button.setEnabled(False)
+                    self.status_check.setText("<font color='green'>EPS virgin</font>")
+                    return
 
-        if elmstream == "WRONG RESPONSE":
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='red'>Communication problem</font>")
-            return
+                if donglestate == u'Operational learnt':
+                    self.virginize_button.setEnabled(True)
+                    self.status_check.setText("<font color='red'>EPS coded</font>")
+                    return
 
-        value = virgin_ecu_data.getIntValue(elmstream, virgin_data_bit, self.megane_eps.endianness)
-        virgin = value == 1
-        not_operational = value == 3
-
-        if not_operational:
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='green'>EPS not operational</font>")
-            return
-
-        if virgin:
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='green'>EPS virgin</font>")
-            return
-        else:
-            self.virginize_button.setEnabled(True)
-            self.status_check.setText("<font color='red'>EPS coded</font>")
-            return
+        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
 
     def start_diag_session_fa(self):
         sds_request = self.megane_eps.requests[u"SDS - Start Diagnostic Session $FA"]
@@ -95,16 +75,24 @@ class Virginizer(gui.QDialog):
             return
         options.elm.start_session_can(sds_stream)
 
-    def reset_ecu(self):
-        reset_request = self.megane_eps.requests[u"SRBLID - Dongle blanking"]
-        reset_stream = " ".join(reset_request.build_data_stream({}))
-        self.start_diag_session_fa()
+    def start_diag_session_c0(self):
+        sds_request = self.megane_eps.requests[u"SDS - Start Diagnostic Session $C0"]
+        sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print "Reset stream", reset_stream
+            print "SdSC0 stream", sds_stream
             return
-        # Reset can only be done in study diag session
-        options.elm.request(reset_stream)
+        options.elm.start_session_can(sds_stream)
 
+    def reset_ecu(self):
+        self.start_diag_session_fa()
+
+        reset_request = self.megane_eps.requests[u"SRBLID - Dongle blanking"]
+        request_response = reset_request.send_request()
+
+        if request_response is not None:
+            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+        else:
+            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
 
 def plugin_entry():
     v = Virginizer()

@@ -14,6 +14,7 @@ import options
 plugin_name = "Megane/Scenic II card programming"
 category = "Keys"
 need_hw = True
+ecufile = "UCH_84_J84_03_60"
 
 
 def get_isk(ecu_response):
@@ -25,7 +26,7 @@ class CardProg(gui.QDialog):
     def __init__(self):
         super(CardProg, self).__init__()
         options.debug = True
-        self.megane_ecu = ecu.Ecu_file("UCH_84_J84_03_60", True)
+        self.megane_ecu = ecu.Ecu_file(ecufile, True)
         self.start_session_request = self.megane_ecu.requests[u'Start Diagnostic Session']
         self.after_sale_request = self.megane_ecu.requests[u'ACCEDER AU MODE APRES-VENTE']
         self.learn_key_request = self.megane_ecu.requests[u'APPRENDRE BADGE']
@@ -118,8 +119,8 @@ class CardProg(gui.QDialog):
     def ecu_connect(self):
         connection = self.megane_ecu.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to UCH")
-            self.close()
+            options.main_window.logview.append("Cannot connect to ECU")
+            self.finished()
 
     def check_all(self):
         self.check_apv_status()

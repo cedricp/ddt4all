@@ -20,7 +20,7 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.megane_uch = ecu.Ecu_file("UCH_84_J84_03_60", True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel("MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
+        infos = gui.QLabel("MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>")
         infos.setAlignment(core.Qt.AlignHCenter)
         check_button = gui.QPushButton("Check UCH Virgin")
         self.status_check = gui.QLabel("Waiting")
@@ -37,46 +37,30 @@ class Virginizer(gui.QDialog):
         self.ecu_connect()
 
     def ecu_connect(self):
-        short_addr = elm.get_can_addr(self.megane_uch.ecu_send_id)
-        ecu_conf = {'idTx': self.megane_uch.ecu_send_id, 'idRx':
-            self.megane_uch.ecu_recv_id, 'ecuname': ""}
-        if not options.simulation_mode:
-            options.elm.set_can_addr(short_addr, ecu_conf)
-        else:
-            print "Connect to ", self.megane_uch.ecu_send_id, self.megane_uch.ecu_recv_id
+        connection = self.megane_uch.connect_to_hardware()
+        if not connection:
+            options.main_window.logview.append("Cannot connect to ECU")
+            self.finished()
 
     def check_virgin_status(self):
-        virgin_data_name = u"VSC UCH vierge (NbBadgeAppris=0)"
-        virigin_check_request = self.megane_uch.requests[u'Status général des opérations badges Bits']
-        virgin_data_bit = virigin_check_request.dataitems[virgin_data_name]
-        virgin_ecu_data = self.megane_uch.data[virgin_data_name]
-
-        request_stream = virigin_check_request.build_data_stream({})
-        request_stream = " ".join(request_stream)
-
         self.start_diag_session_aftersales()
-        if options.simulation_mode:
-            # Simulate coded ECU
-            elmstream = "61 06 00 00 00 00 00 00 00 00 00 00 00 00 00"
-            print "Send request stream", request_stream
-        else:
-            elmstream = options.elm.request(request_stream)
 
-        if elmstream == "WRONG RESPONSE":
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='red'>Communication problem</font>")
-            return
+        virigin_check_request = self.megane_uch.requests[u'Status général des opérations badges Bits']
+        request_values = virigin_check_request.send_request()
 
-        virgin = virgin_ecu_data.getIntValue(elmstream, virgin_data_bit, self.megane_uch.endianness) == 1
+        if request_values is not None:
+            virgin = request_values[u"VSC UCH vierge (NbBadgeAppris=0)"]
+            if virgin == u'Vierge':
+                self.virginize_button.setEnabled(False)
+                self.status_check.setText("<font color='green'>UCH virgin</font>")
+                return
 
-        if virgin:
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='green'>UCH virgin</font>")
-            return
-        else:
-            self.virginize_button.setEnabled(True)
-            self.status_check.setText("<font color='red'>UCH coded</font>")
-            return
+            if virgin == u'Codée':
+                self.virginize_button.setEnabled(True)
+                self.status_check.setText("<font color='red'>UCH coded</font>")
+                return
+
+        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
 
     def start_diag_session_study(self):
         sds_request = self.megane_uch.requests[u"StartDiagSession Etude"]
@@ -95,14 +79,15 @@ class Virginizer(gui.QDialog):
         options.elm.start_session_can(sds_stream)
 
     def reset_ecu(self):
-        reset_request = self.megane_uch.requests[u"RAZ EEPROM"]
-        reset_stream = " ".join(reset_request.build_data_stream({}))
         self.start_diag_session_study()
-        if options.simulation_mode:
-            print "Reset stream", reset_stream
-            return
-        # Reset can only be done in study diag session
-        options.elm.request(reset_stream)
+
+        reset_request = self.megane_uch.requests[u"RAZ EEPROM"]
+        request_response = reset_request.send_request()
+
+        if request_response is not None:
+            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+        else:
+            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
 
 
 def plugin_entry():

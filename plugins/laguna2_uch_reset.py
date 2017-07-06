@@ -13,12 +13,12 @@ import elm
 plugin_name = "Laguna II UCH Reset"
 category = "UCH Tools"
 need_hw = True
-
+ecufile = "UCH___M2S_X74_et_X73"
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.laguna_uch = ecu.Ecu_file("UCH___M2S_X74_et_X73", True)
+        self.laguna_uch = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel("LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
         infos.setAlignment(core.Qt.AlignHCenter)
@@ -39,44 +39,31 @@ class Virginizer(gui.QDialog):
         self.start_diag_session_study()
 
     def ecu_connect(self):
-        ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': '', 'protocol': 'KWP2000'}
-        if not options.simulation_mode:
-            options.elm.set_iso_addr(self.laguna_uch.funcaddr, ecu_conf)
-        else:
-            print "Connect to ", self.laguna_uch.funcaddr
+        connection = self.laguna_uch.connect_to_hardware()
+        if not connection:
+            options.main_window.logview.append("Cannot connect to ECU")
+            self.finished()
 
     def check_virgin_status(self):
-        virgin_data_name = u"UCH vierge"
-        virigin_check_request = self.laguna_uch.requests[u'Lecture Etats Antidémarrage et acces']
-        virgin_data_bit = virigin_check_request.dataitems[virgin_data_name]
-        virgin_ecu_data = self.laguna_uch.data[virgin_data_name]
-
-        request_stream = virigin_check_request.build_data_stream({})
-        request_stream = " ".join(request_stream)
-
         self.start_diag_session_aftersales()
-        if options.simulation_mode:
-            # Simulate coded ECU (third byte 1st bit)
-            elmstream = "61 DB 00 00 00 00 00 00 00 00 00 00 00 00 00"
-            print "Send request stream", request_stream
-        else:
-            elmstream = options.elm.request(request_stream)
 
-        if elmstream == "WRONG RESPONSE":
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='red'>Communication problem</font>")
-            return
+        virigin_check_request = self.laguna_uch.requests[u'Lecture Etats Antidémarrage et acces']
+        response_values = virigin_check_request.send_request()
 
-        virgin = virgin_ecu_data.getIntValue(elmstream, virgin_data_bit, self.laguna_uch.endianness) == 1
+        if response_values is not None:
+            virgin = response_values[u"UCH vierge"]
 
-        if virgin:
-            self.virginize_button.setEnabled(False)
-            self.status_check.setText("<font color='green'>UCH virgin</font>")
-            return
-        else:
-            self.virginize_button.setEnabled(True)
-            self.status_check.setText("<font color='red'>UCH coded</font>")
-            return
+            if virgin == u'oui':
+                self.virginize_button.setEnabled(False)
+                self.status_check.setText("<font color='green'>UCH virgin</font>")
+                return
+
+            if virgin == u'non':
+                self.virginize_button.setEnabled(True)
+                self.status_check.setText("<font color='red'>UCH coded</font>")
+                return
+
+        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
 
     def start_diag_session_study(self):
         sds_request = self.laguna_uch.requests[u"Start Diagnostic Session"]
@@ -95,14 +82,15 @@ class Virginizer(gui.QDialog):
         options.elm.request(sds_stream)
 
     def reset_ecu(self):
-        reset_request = self.laguna_uch.requests[u"Effacement_données_antidem_acces"]
-        reset_stream = " ".join(reset_request.build_data_stream({u'Code effacement': 'C2'}))
         self.start_diag_session_study()
-        if options.simulation_mode:
-            print "Reset stream", reset_stream
-            return
-        # Reset can only be done in study diag session
-        options.elm.request(reset_stream)
+
+        reset_request = self.laguna_uch.requests[u"Effacement_données_antidem_acces"]
+        request_response = reset_request.send_request()
+
+        if request_response is not None:
+            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+        else:
+            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
 
 
 def plugin_entry():

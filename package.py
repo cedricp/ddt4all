@@ -23,6 +23,7 @@ def zipdir(dirname):
 
 zip = zipfile.ZipFile("ddt4all_windows.zip", mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=True)
 files = glob.glob("*.py")
+
 for file in files:
     print "Adding source file %s" % file
     zip.write(file)
