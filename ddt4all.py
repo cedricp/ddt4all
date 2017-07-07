@@ -315,17 +315,23 @@ class Main_widget(gui.QMainWindow):
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
+        self.sdscombo = gui.QComboBox()
+        self.sdscombo.setFixedWidth(300)
+        self.sdscombo.currentIndexChanged.connect(self.changeSds)
+
         self.toolbar.addAction(scanaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
         self.toolbar.addAction(self.expert)
-        self.toolbar.addAction(self.autorefresh)
         self.toolbar.addSeparator()
+        self.toolbar.addAction(self.autorefresh)
         self.toolbar.addAction(self.refresh)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.diagaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.hexinput)
+        self.toolbar.addSeparator()
+        self.toolbar.addWidget(self.sdscombo)
 
         vehicle_dir = "vehicles"
         if not os.path.exists(vehicle_dir):
@@ -382,6 +388,12 @@ class Main_widget(gui.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def changeSds(self):
+        if self.paramview:
+            currenttext = self.sdscombo.currentText()
+            if len(currenttext):
+                self.paramview.changeSDS(currenttext)
 
     def zipdb(self):
         self.logview.append("Zipping XML database... (this can take a few minutes)")

@@ -31,6 +31,8 @@ class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
         self.defaultdiagsessioncommand = "10C0"
+        self.sds = {}
+        self.sdsready = False
         self.currentsession = ""
         self.layoutdict = None
         self.targetsdata = None
@@ -457,6 +459,14 @@ class paramWidget(gui.QWidget):
         self.dialogbox.setLayout(wlayout)
         self.dialogbox.show()
 
+    def changeSDS(self, qttext):
+        if not self.sdsready:
+            return
+        text = unicode(qttext.toUtf8(), encoding="UTF-8")
+        diagsession = self.sds[text]
+        self.defaultdiagsessioncommand = diagsession
+        self.sendElm(diagsession)
+
     def send_manual_cmd(self):
         diagmode = self.diagsession.currentText()
         if diagmode:
@@ -536,6 +546,9 @@ class paramWidget(gui.QWidget):
 
     def initXML(self):
         self.clearAll()
+        self.sds = {}
+        self.sdsready = False
+        options.main_window.sdscombo.clear()
 
         if '.json' in self.ddtfile:
             self.parser = 'json'
@@ -577,9 +590,21 @@ class paramWidget(gui.QWidget):
         self.defaultdiagsessioncommand = "10C0"
         self.initELM()
 
-        reqk = self.ecurequestsparser.requests.keys()
+        # Init startDiagnosticSession combo
+        for reqname, request in self.ecurequestsparser.requests.iteritems():
+            uppername = reqname.upper()
+            if "START" in uppername and "DIAGNOSTIC" in uppername and "SESSION" in uppername:
+                if u"Session Name" in request.sendbyte_dataitems:
+                    ecu_data = self.ecurequestsparser.data[u"Session Name"]
+                    for dataname, dataitem in ecu_data.items.iteritems():
+                        sdsrequest = "".join(request.build_data_stream({u"Session Name": dataname}))
+                        dataname += u" [" + sdsrequest + u"]"
+                        options.main_window.sdscombo.addItem(dataname)
+                        self.sds[dataname] = sdsrequest
+                self.sdsready = True
 
-        if self.ecurequestsparser.ecu_protocol == "CAN":
+        reqk = self.ecurequestsparser.requests.keys()
+        if self.ecurequestsparser.ecu_protocol == 'CAN':
             self.tester_presend_command = '3E'
             for k in reqk:
                 if "tester" in k.lower() and "present" in k.lower():
