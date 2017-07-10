@@ -615,7 +615,7 @@ class paramWidget(gui.QWidget):
         elm_response = '00 ' * 70
 
         if command.startswith('10'):
-            self.logview.append('<font color=blue>' +_('Switching to session mode') + '</font> <font color=orange>%s</font>' % command)
+            self.logview.append('<font color=blue>' + _('Switching to session mode') + '</font> <font color=orange>%s</font>' % command)
             if not options.simulation_mode:
                 self.startDiagnosticSession(command)
             return
@@ -1282,14 +1282,23 @@ def zipConvertXML():
     zipoutput = StringIO()
     options.ecus_dir = "./ecus"
 
-    ecus = glob.glob("ecus/*.xml")
-    ecus.remove("ecus/eculist.xml")
+    ecus_glob = glob.glob("ecus/*.xml")
+
+    if len(ecus_glob) == 0:
+        print "Cannot zip database, no 'ecus' directory"
+        return
+
+    ecus = []
+    for e in ecus_glob:
+        if 'eculist.xml' in e.lower():
+            continue
+        ecus.append(e)
+
     i = 0
 
     print "Opening ECU Database..."
     ecu_database = ecu.Ecu_database()
     print "Starting conversion"
-
 
     targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
