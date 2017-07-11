@@ -590,6 +590,9 @@ class paramWidget(gui.QWidget):
         self.defaultdiagsessioncommand = "10C0"
         self.initELM()
 
+        options.main_window.sdscombo.addItem("After sales (default) [10C0]")
+        self.sds["After sales (default) [10C0]"] = "10C0"
+
         # Init startDiagnosticSession combo
         for reqname, request in self.ecurequestsparser.requests.iteritems():
             uppername = reqname.upper()
@@ -621,14 +624,16 @@ class paramWidget(gui.QWidget):
             return
 
         if not options.simulation_mode:
-            if not options.elm.connectionStatus:
+            if not options.elm.connectionStat():
                 options.main_window.setConnected(False)
                 self.logview.append(_("Connection to ELM lost, trying to reconnect..."))
-                options.ELM = elm.ELM(options.port, options.port_speed)
-                if not options.elm.connectionStatus:
-                    self.logview.append(_("Cannot reconnect..."))
-                    return
-                options.main_window.setConnected(True)
+                if elm.reconnect_elm(options.port_name, options.port_speed):
+                    if not options.elm.connectionStatus:
+                        self.logview.append(_("Cannot reconnect..."))
+                        return
+                    # Must reinit ELM
+                    self.initELM()
+                    options.main_window.setConnected(True)
 
             if not options.promode:
                 # Allow read only modes

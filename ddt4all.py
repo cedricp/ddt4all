@@ -746,6 +746,7 @@ class portChooser(gui.QDialog):
     def __init__(self):
         portSpeeds = [38400, 57600, 115200, 230400, 500000]
         self.port = None
+        self.ports = {}
         self.mode = 0
         self.securitycheck = False
         self.selectedportspeed = 38400
@@ -869,18 +870,21 @@ class portChooser(gui.QDialog):
         ports = elm.get_available_ports()
         if ports == None:
             self.listview.clear()
+            self.ports = {}
             self.portcount = 0
             return
 
         if len(ports) == self.portcount:
             return
 
-
         self.listview.clear()
+        self.ports = {}
         self.portcount = len(ports)
         for p in ports:
             item = gui.QListWidgetItem(self.listview)
-            item.setText(p[0] + "[" + p[1] + "]")
+            itemname = p[0] + "[" + p[1] + "]"
+            item.setText(itemname)
+            self.ports[itemname] = (p[0], p[1])
 
         self.timer.start(1000)
 
@@ -976,7 +980,9 @@ class portChooser(gui.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                self.port = str(currentitem.text().split('[')[0])
+                portinfo = unicode(currentitem.text().toUtf8(), encoding="utf-8")
+                self.port = self.ports[portinfo][0]
+                options.port_name = self.ports[portinfo][1]
                 self.mode = 1
                 self.done(True)
             else:

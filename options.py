@@ -6,6 +6,7 @@ import os
 
 simulation_mode = False
 port_speed = 38400
+port_name = ""
 port = ""
 promode = False
 elm = None

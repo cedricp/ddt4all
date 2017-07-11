@@ -240,6 +240,13 @@ def get_available_ports():
 
     return ports
 
+def reconnect_elm(port_desc, speed):
+    ports = get_available_ports()
+    for port, desc in ports:
+        if desc == port_desc:
+            options.elm = ELM(port, speed)
+            return True
+    return False
 
 class Port:
     '''This is a serial port or a TCP-connection
@@ -247,7 +254,7 @@ class Port:
        then it is wifi and we should open tcp connection
        else try to open serial port
     '''
-
+    connectionStatus = False
     portType = 0  # 0-serial 1-tcp
     ipaddr = '192.168.0.10'
     tcpprt = 35000
@@ -283,19 +290,23 @@ class Port:
             self.portType = 0
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
+                self.connectionStatus = True
                 return
             except Exception as e:
                 print _("Error:") + str(e)
                 print _("ELM not connected or wrong COM port"), portName
                 iterator = sorted(list(list_ports.comports()))
                 print ""
-                # print _("Available COM ports:")
-                # for port, desc, hwid in iterator:
-                #     print "%-30s \n\tdesc: %s \n\thwid: %s" % (port, desc.decode("windows-1251"), hwid)
-                # print ""
 
             options.elm_failed = True
             options.last_error = _("Error:") + str(e)
+
+    def close(self):
+        try:
+            self.hdr.close()
+            print "Port closed"
+        except:
+            pass
 
     def read(self):
         try:
@@ -318,6 +329,7 @@ class Port:
             print '*' * 40
             print '*       ' + _('Connection to ELM was lost')
             self.connectionStatus = False
+            self.close()
             return None
 
         return byte
@@ -335,7 +347,7 @@ class Port:
             print '*' * 40
             print '*       ' + _('Connection to ELM was lost')
             self.connectionStatus = False
-            options.simulation_mode = True
+            self.close()
 
     def expect(self, pattern, time_out=1):
         tb = time.time()  # start time
@@ -357,6 +369,8 @@ class Port:
                     return self.buff + _("TIMEOUT")
         except:
             pass
+        self.close()
+        self.connectionStatus = False
         return ''
 
     # def wait_ok(self):
@@ -549,6 +563,10 @@ class ELM:
             if not options.simulation_mode:
                 self.port = Port(portName, s, self.portTimeout)
 
+            if options.elm_failed:
+                self.connectionStatus = False
+                return
+
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
 
@@ -575,6 +593,9 @@ class ELM:
                 self.port.write("ATZ\r")
         except:
             pass
+
+    def connectionStat(self):
+        return self.port.connectionStatus
 
     def clear_cache(self):
         ''' Clear L2 cache before screen update
@@ -975,6 +996,9 @@ class ELM:
             if options.simulation_mode:
                 break
             self.buff = self.port.expect('>', self.portTimeout)
+            if not self.port.connectionStatus:
+                break
+                return ''
             tc = time.time()
             if (tc - tb) > self.portTimeout and "TIMEOUT" not in self.buff:
                 self.buff += "TIMEOUT"

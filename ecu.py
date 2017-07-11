@@ -929,8 +929,7 @@ class Ecu_file:
         # Can handling
         if self.ecu_protocol == 'CAN':
             short_addr = elm.get_can_addr(self.ecu_send_id)
-            ecu_conf = {'idTx': self.ecu_send_id, 'idRx':
-                        self.ecu_recv_id, 'ecuname': str(self.ecuname)}
+            ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(self.ecuname)}
 
             if not options.simulation_mode:
                 options.elm.init_can()
