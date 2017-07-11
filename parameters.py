@@ -1309,7 +1309,10 @@ def zipConvertXML():
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
         for target in ecus:
             filename = target.replace(".xml", ".json")
-            filename = filename.replace("ecus/", "")
+            if filename.startswith("ecus/"):
+                filename = filename.replace("ecus/", "")
+            else:
+                filename = filename.replace("ecus\\", "")
             print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
 
             i += 1
@@ -1323,14 +1326,19 @@ def zipConvertXML():
             if layoutjs:
                 zf.writestr(filename + ".layout", str(layoutjs))
 
-            ecu_ident = ecu_database.getTargetsByHref(target.replace("ecus/", ""))
+            if target.startswith("ecus/"):
+                ecu_ident = ecu_database.getTargetsByHref(target.replace("ecus/", ""))
+            else:
+                ecu_ident = ecu_database.getTargetsByHref(target.replace("ecus\\", ""))
 
             targetsdict[filename] = []
             for ecui in ecu_ident:
                 targetsdict[filename].append(ecui.dump())
 
+        print 'Writing database'
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
+    print 'Writing archive'
     with open("ecu.zip", "w") as f:
         f.write(zipoutput.getvalue())
 
