@@ -28,7 +28,7 @@ for file in files:
     print "Adding source file %s" % file
     zip.write(file)
 
-files = glob.glob("plugins/*.py")
+files = glob.glob("ddtplugins/*.py")
 for file in files:
     print "Adding plugin file %s" % file
     zip.write(file)

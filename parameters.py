@@ -543,12 +543,12 @@ class paramWidget(gui.QWidget):
         self.tester_presend_command = ""
         self.movingwidgets = []
         self.sliding = False
-
-    def initXML(self):
-        self.clearAll()
         self.sds = {}
         self.sdsready = False
         options.main_window.sdscombo.clear()
+
+    def initXML(self):
+        self.clearAll()
 
         if '.json' in self.ddtfile:
             self.parser = 'json'
@@ -627,7 +627,7 @@ class paramWidget(gui.QWidget):
             if not options.elm.connectionStat():
                 options.main_window.setConnected(False)
                 self.logview.append(_("Connection to ELM lost, trying to reconnect..."))
-                if elm.reconnect_elm(options.port_name, options.port_speed):
+                if elm.reconnect_elm():
                     if not options.elm.connectionStatus:
                         self.logview.append(_("Cannot reconnect..."))
                         return

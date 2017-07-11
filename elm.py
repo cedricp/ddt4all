@@ -229,22 +229,20 @@ def getcansnat(addr):
 
 def get_available_ports():
     ports = []
-    #try:
     portlist = list_ports.comports()
-    if len(portlist) == 0: return
+    if len(portlist) == 0:
+        return
     iterator = sorted(list(portlist))
     for port, desc, hwid in iterator:
         ports.append((port, desc))
-    #except:
-    #    print "Problem while scanning ports"
 
     return ports
 
-def reconnect_elm(port_desc, speed):
+def reconnect_elm():
     ports = get_available_ports()
     for port, desc in ports:
-        if desc == port_desc:
-            options.elm = ELM(port, speed)
+        if desc == options.port_name:
+            options.elm = ELM(port, options.port_speed)
             return True
     return False
 
@@ -295,11 +293,8 @@ class Port:
             except Exception as e:
                 print _("Error:") + str(e)
                 print _("ELM not connected or wrong COM port"), portName
-                iterator = sorted(list(list_ports.comports()))
-                print ""
-
-            options.elm_failed = True
-            options.last_error = _("Error:") + str(e)
+                options.last_error = _("Error:") + str(e)
+                options.elm_failed = True
 
     def close(self):
         try:
@@ -318,8 +313,6 @@ class Port:
                     # print "Unexpected error:", sys.exc_info()
                     pass
             elif self.portType == 2:
-                # if self.droid.bluetoothReadReady(self.btcid):
-                #  byte = self.droid.bluetoothRead( 1, self.btcid ).result
                 if self.droid.bluetoothReadReady():
                     byte = self.droid.bluetoothRead(1).result
             else:
@@ -339,7 +332,6 @@ class Port:
             if self.portType == 1:
                 return self.hdr.sendall(data)
             elif self.portType == 2:
-                # return self.droid.bluetoothWrite(data , self.btcid)
                 return self.droid.bluetoothWrite(data)
             else:
                 return self.hdr.write(data)
@@ -352,6 +344,7 @@ class Port:
     def expect(self, pattern, time_out=1):
         tb = time.time()  # start time
         self.buff = ""
+
         try:
             while (True):
                 if not options.simulation_mode:
@@ -359,7 +352,8 @@ class Port:
                 else:
                     byte = '>'
 
-                if byte == '\r': byte = '\n'
+                if byte == '\r':
+                    byte = '\n'
 
                 self.buff += byte
                 tc = time.time()
@@ -369,12 +363,10 @@ class Port:
                     return self.buff + _("TIMEOUT")
         except:
             pass
+
         self.close()
         self.connectionStatus = False
         return ''
-
-    # def wait_ok(self):
-    #  return self.expect('>')
 
     def check_elm(self):
 
@@ -1232,6 +1224,7 @@ class ELM:
 
         self.cmd("AT AT 1")                       # enable adaptive timing
         return True
+
 
 def elm_checker(port, speed, logview, app):
     good = 0

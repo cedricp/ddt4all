@@ -1192,6 +1192,7 @@ class Ecu_scanner:
                 progress.setValue(i)
             self.qapp.processEvents()
             i += 1
+
             if not options.simulation_mode:
                 txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
                 options.elm.start_session_can('10C0')
@@ -1205,11 +1206,12 @@ class Ecu_scanner:
                     #can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
                 else:
-                    can_response = "7F 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+                    can_response = "7F 80"
             else:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
 
             self.check_ecu(can_response, label, addr, "CAN")
+
         if not options.simulation_mode:
             options.elm.close_protocol()
 
@@ -1276,9 +1278,14 @@ class Ecu_scanner:
                     label.setText("Found %i ecu" % self.num_ecu_found)
                     found_exact = True
                     href = target.href
+                    line = "<font color='green'>Found ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                           % (href, diagversion, supplier, soft, version)
+
+                    options.main_window.logview.append(line)
                 elif target.checkApproximate(diagversion, supplier, soft, version, addr):
                     approximate_ecu.append(target)
                     found_approximate = True
+
 
             # Try to find the closest possible version of an ECU
             if not found_exact and found_approximate:
@@ -1304,8 +1311,21 @@ class Ecu_scanner:
                     href = "-->" + kept_ecu.href + "<--"
                     label.setText("Found %i ecu" % self.num_ecu_found)
 
-            if can_response.startswith('61'):
-                self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
+                    line = "<font color='red'>Found ECU (not perfect match) :"\
+                           "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                           % (kept_ecu.name, diagversion, supplier, soft, version)
+
+                    options.main_window.logview.append(line)
+
+            if not found_exact and not found_approximate:
+                line = "<font color='red'>Found ECU (no relevant ECU file found) :" \
+                       "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
+                       % (diagversion, supplier, soft, version)
+
+                options.main_window.logview.append(line)
+
+            #if can_response.startswith('61'):
+            #    self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
 
 
 def make_zipfs():

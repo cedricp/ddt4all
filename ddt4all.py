@@ -365,7 +365,7 @@ class Main_widget(gui.QMainWindow):
 
         plugins_menu = menu.addMenu(_("Plugins"))
         category_menus = {}
-        plugins = glob.glob("./plugins/*.py")
+        plugins = glob.glob("./ddtplugins/*.py")
         for plugin in plugins:
             try:
                 modulename = os.path.basename(plugin).replace(".py", "")
