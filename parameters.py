@@ -1331,7 +1331,7 @@ def zipConvertXML():
 
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
-    with open("ecu.zip", "w") as f:
+    with open("ecu.zip", "wb") as f:
         f.write(zipoutput.getvalue())
 
 
