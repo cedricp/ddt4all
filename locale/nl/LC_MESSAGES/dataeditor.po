@@ -1,0 +1,291 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-12 08:41+0200\n"
+"PO-Revision-Date: 2017-07-13 19:42+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
+
+#: dataeditor.py:165
+msgid "Goto data"
+msgstr "Ga naar data"
+
+#: dataeditor.py:166
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: dataeditor.py:171
+msgid "Add to screen"
+msgstr "Aan scherm toevoegen"
+
+#: dataeditor.py:261
+msgid "Request name;Manual"
+msgstr "Aanvraag naam;Handleiding"
+
+#: dataeditor.py:291 dataeditor.py:1151
+msgid "Add"
+msgstr "Toevoegen"
+
+#: dataeditor.py:292 dataeditor.py:1153
+msgid "Refresh"
+msgstr "Verversen"
+
+#: dataeditor.py:300
+msgid "Send request bytes (HEX)"
+msgstr "Verzend aanvraag-bytes (HEX)"
+
+#: dataeditor.py:302
+msgid "Receive bytes (HEX)"
+msgstr "Ontvang bytes (HEX)"
+
+#: dataeditor.py:314
+msgid "Data length"
+msgstr "Data lengte"
+
+#: dataeditor.py:316
+msgid "Shift byte count"
+msgstr "Verander byte aantal"
+
+#: dataeditor.py:450
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "Datanaam;Start byte;Bit afstand;Bit aantal;Endiannes"
+
+#: dataeditor.py:468 dataeditor.py:528
+msgid "Little"
+msgstr "Klein"
+
+#: dataeditor.py:469 dataeditor.py:530
+msgid "Big"
+msgstr "Groot"
+
+#: dataeditor.py:470 dataeditor.py:526
+msgid "Inherits globals"
+msgstr "Algemeen overnemen"
+
+#: dataeditor.py:581
+msgid "Reload requests"
+msgstr "Aanvraag herladen"
+
+#: dataeditor.py:582
+msgid "Add request"
+msgstr "Aanvraag toevoegen"
+
+#: dataeditor.py:600
+msgid "Send bytes"
+msgstr "Bytes verzenden"
+
+#: dataeditor.py:601
+msgid "Receive bytes"
+msgstr "Bytes ontvangen"
+
+#: dataeditor.py:657
+msgid "Number of bits"
+msgstr "Aantal bits"
+
+#: dataeditor.py:658 dataeditor.py:820
+msgid "Signed"
+msgstr "Gesigneerd"
+
+#: dataeditor.py:659
+msgid "Add item"
+msgstr "Item toevoegen"
+
+#: dataeditor.py:660
+msgid "Del item"
+msgstr "Item verwijderen"
+
+#: dataeditor.py:699
+msgid "New item"
+msgstr "Nieuw item"
+
+#: dataeditor.py:751
+msgid "Value;Text"
+msgstr "Waarde;Text"
+
+#: dataeditor.py:767
+msgid "Number of bytes"
+msgstr "Aantal bytes"
+
+#: dataeditor.py:768 dataeditor.py:819
+msgid "Unit"
+msgstr "Eenheid"
+
+#: dataeditor.py:818
+msgid "Number of bit"
+msgstr "Bit nummer"
+
+#: dataeditor.py:821
+msgid "Format"
+msgstr "Formaat"
+
+#: dataeditor.py:822
+msgid "Value = (AX+B) / C"
+msgstr "Waarde = (AX+B) / C"
+
+#: dataeditor.py:895
+msgid "New"
+msgstr "Nieuw"
+
+#: dataeditor.py:896
+msgid "Reload"
+msgstr "Herladen"
+
+#: dataeditor.py:897
+msgid "Validate changes"
+msgstr "Wijzigingen valideren"
+
+#: dataeditor.py:930
+msgid "Description"
+msgstr "Beschrijving"
+
+#: dataeditor.py:936
+msgid "Data type"
+msgstr "Datatype"
+
+#: dataeditor.py:938
+msgid "Numeric"
+msgstr "Numeriek"
+
+#: dataeditor.py:939
+msgid "Numeric items"
+msgstr "Numerieke items"
+
+#: dataeditor.py:940
+msgid "Hex"
+msgstr "Hex"
+
+#: dataeditor.py:974
+msgid "New data"
+msgstr "Nieuwe data"
+
+#: dataeditor.py:980
+msgid "Replace me with request description"
+msgstr "Vervang dit met een aanvraag beschrijving"
+
+#: dataeditor.py:1115
+msgid "Data name;Description"
+msgstr "Data naam;Beschrijving"
+
+#: dataeditor.py:1152
+msgid "Del"
+msgstr "Verwijderen"
+
+#: dataeditor.py:1154
+msgid "Move up"
+msgstr "Naar boven"
+
+#: dataeditor.py:1155
+msgid "Check"
+msgstr "Controleren"
+
+#: dataeditor.py:1199
+#, python-format
+msgid "Request %s not found"
+msgstr "Aanvraag %s niet gevonden"
+
+#: dataeditor.py:1218
+#, python-format
+msgid ""
+"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
+"values</font>"
+msgstr ""
+"<font color=green>Aanvraag <font color=blue>'%s'</font> Heeft geen "
+"ontbrekende waardes</font>"
+
+#: dataeditor.py:1221
+#, python-format
+msgid ""
+"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
+"font>"
+msgstr ""
+"<font color=red>Aanvraag <font color=blue>'%s'</font> Heeft ontbrekende: "
+"waardes</font>"
+
+#: dataeditor.py:1224
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#: dataeditor.py:1320
+msgid "Delay;Request"
+msgstr "Vertraging;Aanvraag"
+
+#: dataeditor.py:1412
+msgid "Screen initialization"
+msgstr "Scherm initialisatie"
+
+#: dataeditor.py:1413
+msgid "Requests to send before screen drawing"
+msgstr "Vraag om verzenden voor tekenen scherm"
+
+#: dataeditor.py:1427
+msgid "Button name;Unique name"
+msgstr "Knopnaam;Unieke naam"
+
+#: dataeditor.py:1496
+msgid "ECU Function address"
+msgstr "ECU Functie Adres"
+
+#: dataeditor.py:1499
+msgid "ECU Protocol"
+msgstr "ECU Protocol"
+
+#: dataeditor.py:1501 dataeditor.py:1619
+msgid "Tool > Ecu ID (Hex)"
+msgstr "Tool > ECU ID (Hex)"
+
+#: dataeditor.py:1503 dataeditor.py:1620
+msgid "Ecu > Tool ID (Hex)"
+msgstr "ECU > Tool ID (Hex)"
+
+#: dataeditor.py:1505
+msgid "Coding"
+msgstr "Coderen"
+
+#: dataeditor.py:1509
+msgid "Big Endian"
+msgstr "Groot Endian"
+
+#: dataeditor.py:1510
+msgid "Little Endian"
+msgstr "Klein Endian"
+
+#: dataeditor.py:1525
+msgid "Diag version;Supplier;Soft;Version"
+msgstr "Diag versie;Leverancier;Soft;Versie"
+
+#: dataeditor.py:1533
+msgid "Add new"
+msgstr "Voeg nieuw toe"
+
+#: dataeditor.py:1534
+msgid "Delete selected"
+msgstr "Verwijdering geselecteerd"
+
+#: dataeditor.py:1535
+msgid "Diag version"
+msgstr "Diag versie"
+
+#: dataeditor.py:1538
+msgid "Supplier"
+msgstr "Leverancier"
+
+#: dataeditor.py:1541
+msgid "Soft"
+msgstr "Soft"
+
+#: dataeditor.py:1544
+msgid "Version"
+msgstr "Versie"
