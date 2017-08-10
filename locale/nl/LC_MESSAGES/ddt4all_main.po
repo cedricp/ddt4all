@@ -1,0 +1,326 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-12 09:01+0200\n"
+"PO-Revision-Date: 2017-07-16 10:34+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
+
+#: ddt4all.py:186
+msgid "ECU name"
+msgstr "ECU naam"
+
+#: ddt4all.py:187
+msgid "Projets"
+msgstr "Projecten"
+
+#: ddt4all.py:188
+msgid "Protocol"
+msgstr "Protocol"
+
+#: ddt4all.py:277
+msgid "DDT4All"
+msgstr "DDT4All - Daciamodellen.nl Editie"
+
+#: ddt4all.py:278
+msgid "Scanning ECUs..."
+msgstr "ECU's scannen..."
+
+#: ddt4all.py:282
+msgid "loaded ECUs in database."
+msgstr "ECU's in database geladen."
+
+#: ddt4all.py:306
+msgid "Refresh rate (ms):"
+msgstr "Verversingstijd (ms): "
+
+#: ddt4all.py:321
+msgid "Screen"
+msgstr "Scherm"
+
+#: ddt4all.py:328
+msgid "Requests"
+msgstr "Aanvragen"
+
+#: ddt4all.py:329
+msgid "Data"
+msgstr "Data"
+
+#: ddt4all.py:330
+msgid "Buttons"
+msgstr "Knoppen"
+
+#: ddt4all.py:331
+msgid "Ecu parameters"
+msgstr "ECU parameters"
+
+#: ddt4all.py:342
+msgid "Screens"
+msgstr "Schermen"
+
+#: ddt4all.py:345
+msgid "Action"
+msgstr "Actie"
+
+#: ddt4all.py:346
+msgid "New Category"
+msgstr "Nieuwe catagorie"
+
+#: ddt4all.py:347
+msgid "New Screen"
+msgstr "Nieuw scherm"
+
+#: ddt4all.py:348
+msgid "Rename"
+msgstr "Hernoemen"
+
+#: ddt4all.py:375 ddt4all.py:431
+msgid "File"
+msgstr "Bestand"
+
+#: ddt4all.py:377
+msgid "Scan ECUs"
+msgstr "ECU's scannen"
+
+#: ddt4all.py:380
+msgid "Read DTC"
+msgstr "DTC Lezen"
+
+#: ddt4all.py:384
+msgid "Full log"
+msgstr "Volledige log"
+
+#: ddt4all.py:389
+msgid "Expert mode (enable writing)"
+msgstr "Expert modus (staat wijzigen toe)"
+
+#: ddt4all.py:394
+msgid "Auto refresh"
+msgstr "Auto verversen"
+
+#: ddt4all.py:399
+msgid "Refresh (one shot)"
+msgstr "Verversen (één keer)"
+
+#: ddt4all.py:403
+msgid "Manual command"
+msgstr "Handmatig commando"
+
+#: ddt4all.py:432
+msgid "Create New ECU"
+msgstr "Maak nieuwe ECU"
+
+#: ddt4all.py:433
+msgid "Save current ECU"
+msgstr "Huidige ECU opslaan"
+
+#: ddt4all.py:435
+msgid "Save ECU list"
+msgstr "ECU lijst opslaan"
+
+#: ddt4all.py:445
+msgid "ISK Tools"
+msgstr "ISK tools"
+
+#: ddt4all.py:449
+msgid "UCH Tools"
+msgstr "UCH tools"
+
+#: ddt4all.py:450
+msgid "Megane2/Scenic2/Clio3 Virgin"
+msgstr "Megane2/Scenic2/Clio3 Virgin"
+
+#: ddt4all.py:453
+msgid "EPS(DAE) Tools"
+msgstr "ESP(DAE) tools"
+
+#: ddt4all.py:454
+msgid "Megane3 Virgin"
+msgstr "Megane3 Virgin"
+
+#: ddt4all.py:455
+msgid "Clio4 Virgin"
+msgstr "Clio4 Virgin"
+
+#: ddt4all.py:456
+msgid "Clio3 Virgin"
+msgstr "Clio3 Virgin"
+
+#: ddt4all.py:469
+msgid "Enter new name"
+msgstr "Nieuwe naam invullen"
+
+#: ddt4all.py:489
+msgid "Enter category name"
+msgstr "Catagorie naam invullen"
+
+#: ddt4all.py:499
+msgid "Please select a category before creating new screen"
+msgstr "Selecteer een catagorie voordat je een nieuw scherm maakt"
+
+#: ddt4all.py:506
+msgid "Enter screen name"
+msgstr "Schermnaam invullen"
+
+#: ddt4all.py:536
+msgid "Enable expert mode to access this menu"
+msgstr "Expert modus inschakelen om dit menu te gebruiken"
+
+#: ddt4all.py:541
+msgid ""
+"<center>I'm aware that this operation will clear the selected control unit.</"
+"center><center>If you have no idea of what it means, please get out of here."
+"</center><center>/!\\This part is highly experimental/!\\</center>"
+msgstr ""
+"<center>Ik weet dat deze actie de geselecteerde eenheid verwijdert.</"
+"center><center>Als je geen idee hebt wat dit betekent, ga hier dan weg.</"
+"center><center>/!\\Dit stuk is experimenteel/!\\</center>"
+
+#: ddt4all.py:583
+msgid "Cannot read ISK in demo mode"
+msgstr "Kan ISK niet lezen in demo mode"
+
+#: ddt4all.py:599
+msgid "Cannot read ISK : Bad reply"
+msgstr "Kan ISK niet lezen : Fout antwoord"
+
+#: ddt4all.py:605
+msgid "Your ISK code"
+msgstr "Jouw ISK code"
+
+#: ddt4all.py:611
+msgid "Scan options"
+msgstr "Scan opties"
+
+#: ddt4all.py:621
+msgid "Scanning CAN"
+msgstr "CAN scannen"
+
+#: ddt4all.py:625
+msgid "Scanning KWP"
+msgstr "KWP scannen"
+
+#: ddt4all.py:629
+msgid "Scanning CAN&KWP"
+msgstr "CAN en KWP scannen"
+
+#: ddt4all.py:662
+msgid "Sending ECU informations to database, thank you for your paticipation"
+msgstr "Verzenden ECU informatie naar database, bedankt voor je deelname"
+
+#: ddt4all.py:668
+msgid "EDITION MODE"
+msgstr "Editie modus"
+
+#: ddt4all.py:672
+msgid "CONNECTED"
+msgstr "VERBONDEN"
+
+#: ddt4all.py:675
+msgid "DISCONNECTED"
+msgstr "NIET VERBONDEN"
+
+#: ddt4all.py:678
+msgid "Save vehicule (keep '.ecu' extension)"
+msgstr "Voertuig opslaan (bewaar '.ecu' extensie)"
+
+#: ddt4all.py:695
+msgid "Save ECU (keep '.json' extension)"
+msgstr "ECU opslaan (bewaar '.json extensie)"
+
+#: ddt4all.py:857
+msgid ""
+"<center>This Software is free, but I need money to buy cables/ECUs and make "
+"this application more reliable</center>"
+msgstr ""
+"<center>Deze software is gratis, maar er is geld nodig voor kabels/ECU's om "
+"de applicatie te verbeteren</center>"
+
+#: ddt4all.py:858
+msgid "Yes I contribute"
+msgstr "Ja, ik doneer"
+
+#: ddt4all.py:860
+msgid "No, I don't"
+msgstr "Nee, bedankt"
+
+#: ddt4all.py:868
+msgid ""
+"<center>Thank you for you contribution, if nothing happens, please go to : "
+"https://github.com/cedricp/ddt4all</center>"
+msgstr ""
+"<center>Bedankt voor je contributie. Als er niets gebeurt ga dan naar : "
+"https://github.com/cedricp/ddt4all</center>"
+
+#: ddt4all.py:882
+msgid "ELM port selection"
+msgstr "ELM poort selectie"
+
+#: ddt4all.py:926
+msgid "Port speed"
+msgstr "Poortsnelheid"
+
+#: ddt4all.py:938
+msgid "Connected mode"
+msgstr "Verbinden"
+
+#: ddt4all.py:939
+msgid "Edition mode"
+msgstr "Editie modus"
+
+#: ddt4all.py:940
+msgid "ELM benchmark"
+msgstr "ELM Test"
+
+#: ddt4all.py:943
+msgid "WiFi port : "
+msgstr "Wi-fi poort: "
+
+#: ddt4all.py:953
+msgid "I'm aware that I can harm my car if badly used"
+msgstr "Ik snap dat ik de auto beschadig bij verkeerd gebruik"
+
+#: ddt4all.py:961
+msgid "I accept to share ECU informations"
+msgstr "Ik accepteer het delen van ECU informatie"
+
+#: ddt4all.py:1060
+msgid "You must check the recommandations"
+msgstr "Je moet de voorwaarde accepteren"
+
+#: ddt4all.py:1081
+msgid "Please select a communication port"
+msgstr "Selecteer aub een communicatiepoort"
+
+#: ddt4all.py:1107
+msgid "Using custom DDT database"
+msgstr "Gebruikt aangepaste DDT database"
+
+#: ddt4all.py:1111
+msgid "Using DDT2000 default installation"
+msgstr "Gebruikt DDT2000 standaard installatie"
+
+#: ddt4all.py:1135
+msgid "No COM port selected"
+msgstr "Geen COM poort geselcteerd"
+
+#: ddt4all.py:1138
+#, python-format
+msgid "Initilizing ELM with speed %i..."
+msgstr "Initialisering ELM met snelheid %i..."
+
+#: ddt4all.py:1145
+msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr "Geen ELM327 of OBDLINK-SX gevonden op COM poort "
