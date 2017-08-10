@@ -760,6 +760,7 @@ class Ecu_file:
         self.funcname = ""
         self.funcaddr = "00"
         self.ecuname = ""
+        self.projects = []
 
         if not data:
             return
@@ -845,6 +846,12 @@ class Ecu_file:
 
             if target:
                 self.ecuname = target[0].getAttribute("Name")
+
+                projects = getChildNodesByName(target[0], u"Projects")
+                if projects:
+                    for project in projects[0].childNodes:
+                        self.projects.append(project.nodeName)
+
                 functions = getChildNodesByName(target[0], u"Function")
                 if functions:
                     self.funcaddr = hex(int(functions[0].getAttribute("Address")))[2:].upper().zfill(2)
