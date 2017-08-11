@@ -946,17 +946,19 @@ class Ecu_file:
                         self.data[ecu_data.name] = ecu_data
 
     def dump_idents(self):
-        idents = []
+        idents = {}
+        idents["address"] = self.funcaddr
+        idents["group"] = self.funcname
+        idents["protocol"] = self.ecu_protocol
+        idents["projects"] = self.projects
+        idents["autoidents"] = []
+
         for ai in self.autoidents:
             aidict = {"diagnostic_version": ai["diagversion"],
                       "supplier_code": ai["supplier"],
                       "soft_version": ai["soft"],
-                      "version": ai["version"],
-                      "address": self.funcaddr,
-                      "group": self.funcname,
-                      "protocol": self.ecu_protocol,
-                      "projects": self.projects}
-            idents.append(aidict)
+                      "version": ai["version"]}
+            idents["autoidents"].append(aidict)
 
         return idents
 
@@ -1059,7 +1061,8 @@ class Ecu_ident:
         self.zipped = zipped
 
     def checkWith(self, diagversion, supplier, soft, version, addr):
-        if self.hash != diagversion + supplier + soft + version: return False
+        if self.hash != diagversion + supplier + soft + version:
+            return False
         self.addr = addr
         return True
 
@@ -1089,7 +1092,7 @@ class Ecu_ident:
 class Ecu_database:
     jsonfile = "json/ecus.zip"
 
-    def __init__(self, forceXML = False):
+    def __init__(self, forceXML=False):
         self.targets = []
         self.numecu = 0
         xmlfile = options.ecus_dir + "/eculist.xml"
@@ -1123,13 +1126,17 @@ class Ecu_database:
             dbdict = json.loads(jsdb)
             for targetk, targetv in dbdict.iteritems():
                 self.numecu += 1
-                for target in targetv:
+                ecugroup = targetv['group']
+                ecuprotocol = targetv['protocol']
+                ecuprojects = targetv['projects']
+                ecuaddress = targetv['address']
+                for target in targetv['autoidents']:
                     href = targetk
                     name = os.path.basename(targetk)
                     ecu_ident = Ecu_ident(target['diagnostic_version'], target['supplier_code'],
                                           target['soft_version'], target['version'],
-                                          name, target['group'], href, target['protocol'],
-                                          target['projects'], target['address'], True)
+                                          name, ecugroup, href, ecuprotocol,
+                                          ecuprojects, ecuaddress, True)
                     self.targets.append(ecu_ident)
 
         if os.path.exists(xmlfile):
