@@ -1890,7 +1890,10 @@ class ecuParamEditor(gui.QFrame):
         count = 0
         self.identtable.setRowCount(len(self.targets))
         for target in self.targets:
-            self.identtable.setItem(count, 0, gui.QTableWidgetItem(target['diagnotic_version']))
+            if 'diagnostic_version' in target:
+                self.identtable.setItem(count, 0, gui.QTableWidgetItem(target['diagnostic_version']))
+            else:
+                self.identtable.setItem(count, 0, gui.QTableWidgetItem(target['diagnotic_version']))
             self.identtable.setItem(count, 1, gui.QTableWidgetItem(target['supplier_code']))
             self.identtable.setItem(count, 2, gui.QTableWidgetItem(target['soft_version']))
             self.identtable.setItem(count, 3, gui.QTableWidgetItem(target['version']))

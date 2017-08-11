@@ -1300,9 +1300,6 @@ def zipConvertXML():
         ecus.append(e)
 
     i = 0
-
-    print "Opening ECU Database..."
-    ecu_database = ecu.Ecu_database()
     print "Starting conversion"
 
     targetsdict = {}
@@ -1326,14 +1323,9 @@ def zipConvertXML():
             if layoutjs:
                 zf.writestr(filename + ".layout", str(layoutjs))
 
-            if target.startswith("ecus/"):
-                ecu_ident = ecu_database.getTargetsByHref(target.replace("ecus/", ""))
-            else:
-                ecu_ident = ecu_database.getTargetsByHref(target.replace("ecus\\", ""))
+            ecu_ident = ecufile.dump_idents()
 
-            targetsdict[filename] = []
-            for ecui in ecu_ident:
-                targetsdict[filename].append(ecui.dump())
+            targetsdict[filename] = ecu_ident
 
         print 'Writing database'
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))

@@ -762,6 +762,7 @@ class Ecu_file:
         self.funcaddr = "00"
         self.ecuname = ""
         self.projects = []
+        self.autoidents = []
 
         if not data:
             return
@@ -848,6 +849,17 @@ class Ecu_file:
             if target:
                 self.ecuname = target[0].getAttribute("Name")
 
+                autoidents = getChildNodesByName(target[0], u"AutoIdents")
+                if autoidents:
+                    autoident = getChildNodesByName(autoidents[0], u"AutoIdent")
+                    for ai in autoident:
+                        autoident_dict = {}
+                        autoident_dict['diagversion'] = str(ai.getAttribute("DiagVersion").strip())
+                        autoident_dict['supplier'] = str(ai.getAttribute("Supplier").strip())
+                        autoident_dict['soft'] = str(ai.getAttribute("Soft").strip())
+                        autoident_dict['version'] = str(ai.getAttribute("Version").strip())
+                        self.autoidents.append(autoident_dict)
+
                 projects = getChildNodesByName(target[0], u"Projects")
                 if projects:
                     for project in projects[0].childNodes:
@@ -933,6 +945,21 @@ class Ecu_file:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
 
+    def dump_idents(self):
+        idents = []
+        for ai in self.autoidents:
+            aidict = {"diagnostic_version": ai["diagversion"],
+                      "supplier_code": ai["supplier"],
+                      "soft_version": ai["soft"],
+                      "version": ai["version"],
+                      "address": self.funcaddr,
+                      "group": self.funcname,
+                      "protocol": self.ecu_protocol,
+                      "projects": self.projects}
+            idents.append(aidict)
+
+        return idents
+
     def connect_to_hardware(self):
         # Can handling
         if self.ecu_protocol == 'CAN':
@@ -964,7 +991,8 @@ class Ecu_file:
 
     def dumpJson(self):
         js = {}
-        js['ecuname']  = self.ecuname
+        js['ecuname'] = self.ecuname
+        js['autoidents'] = self.autoidents
         js['obd'] = {}
         js['obd']['protocol'] = self.ecu_protocol
         if self.ecu_protocol == "CAN":
@@ -1010,9 +1038,6 @@ class Ecu_file:
 
 class Ecu_ident:
     def __init__(self, diagversion, supplier, soft, version, name, group, href, protocol, projects, address, zipped=False):
-        self.protocols = [u"KWP2000 Init 5 Baud Type I and II", u"ISO8",
-                          u"CAN Messaging (125 kbps CAN)", u"KWP2000 FastInit MultiPoint",
-                          u"KWP2000 FastInit MonoPoint", u"DiagOnCAN"]
         self.diagversion = diagversion
         self.supplier = supplier
         self.soft = soft
@@ -1022,7 +1047,14 @@ class Ecu_ident:
         self.projects = projects
         self.href = href
         self.addr = address
-        self.protocol = protocol
+        if "CAN" in protocol.upper():
+            self.protocol = 'CAN'
+        elif "KWP" in protocol.upper():
+            self.protocol = 'KWP2000'
+        elif "ISO8" in protocol.upper():
+            self.protocol = 'ISO8'
+        else:
+            self.protocol = 'UNKNOWN'
         self.hash = diagversion + supplier + soft + version
         self.zipped = zipped
 
@@ -1042,13 +1074,9 @@ class Ecu_ident:
         self.addr = addr
         return True
 
-    def checkProtocol(self):
-        if not self.protocol in self.protocols:
-            print "Unknown protocol '", self.protocol, "' "
-
     def dump(self):
         js = {}
-        js['diagnotic_version'] = self.diagversion
+        js['diagnostic_version'] = self.diagversion
         js['supplier_code'] = self.supplier
         js['soft_version'] = self.soft
         js['version'] = self.version
@@ -1076,7 +1104,14 @@ class Ecu_database:
             for ecu_dict in ecus_dict:
                 href = jsonecu_file.replace(".targets", "")
                 name = os.path.basename(href)
-                ecu_ident = Ecu_ident(ecu_dict['diagnotic_version'], ecu_dict['supplier_code'],
+                # Fix typo bug
+                diagversion = ""
+                if 'diagnostic_version' in ecu_dict:
+                    diagversion = ecu_dict['diagnostic_version']
+                else:
+                    diagversion = ecu_dict['diagnotic_version']
+
+                ecu_ident = Ecu_ident(diagversion, ecu_dict['supplier_code'],
                                       ecu_dict['soft_version'], ecu_dict['version'],
                                       name, ecu_dict['group'], href, ecu_dict['protocol'],
                                       ecu_dict['projects'], ecu_dict['address'])
@@ -1091,7 +1126,7 @@ class Ecu_database:
                 for target in targetv:
                     href = targetk
                     name = os.path.basename(targetk)
-                    ecu_ident = Ecu_ident(target['diagnotic_version'], target['supplier_code'],
+                    ecu_ident = Ecu_ident(target['diagnostic_version'], target['supplier_code'],
                                           target['soft_version'], target['version'],
                                           name, target['group'], href, target['protocol'],
                                           target['projects'], target['address'], True)
@@ -1161,7 +1196,7 @@ class Ecu_database:
     def dump(self):
         js = []
         for t in self.targets:
-            if t.protocol == u'DiagOnCAN' or u'KWP' in t.protocol or u'ISO8' == t.protocol:
+            if t.protocol == 'CAN' or t.protocol == 'KWP2000' or 'ISO8' == t.protocol:
                 js.append(t.dump())
         return json.dumps(js, indent=1)
 
@@ -1275,7 +1310,7 @@ class Ecu_scanner:
             href = ""
 
             for target in self.ecu_database.targets:
-                if target.protocol == "DiagOnCan" and protocol != "CAN":
+                if target.protocol == "CAN" and protocol != "CAN":
                     continue
                 if target.protocol.startswith("KWP") and protocol != "KWP":
                     continue
