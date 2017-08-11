@@ -411,10 +411,11 @@ class Ecu_data:
             bytes = self.xmldoc.getElementsByTagName("Bytes")
             if bytes:
                 self.byte = True
-                bytescount = bytes.item(0).getAttribute("count")
+                bytescount = bytes.item(0).getAttribute("count").replace(',', '.')
                 if '.' in bytescount:
-                    bytescount = bytescount.split('.')[0]
-                if bytescount:
+                    self.bytescount = math.ceil(float(bytescount))
+                    self.bitscount = int(float(bytescount) * 8)
+                elif bytescount:
                     self.bytescount = int(bytescount)
                     self.bitscount = self.bytescount * 8
 

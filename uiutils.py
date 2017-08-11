@@ -48,7 +48,7 @@ def getFontXML(xml):
     f = {}
     font = getChildNodesByName(xml, "Font")[0]
     f['name'] = font.getAttribute("Name")
-    f['size'] = float(font.getAttribute("Size"))
+    f['size'] = float(font.getAttribute("Size").replace(',', '.'))
     f['bold'] = font.getAttribute("Bold")
     f['italic'] = font.getAttribute("Italic")
     return f
@@ -57,7 +57,7 @@ def getFontXML(xml):
 def getXMLFont(xml, scale = 1):
     font = getChildNodesByName(xml, "Font")[0]
     font_name = font.getAttribute("Name")
-    font_size = float(font.getAttribute("Size"))
+    font_size = float(font.getAttribute("Size").replace(',', '.'))
     font_bold = font.getAttribute("Bold")
     font_italic = font.getAttribute("Italic")
 
@@ -70,7 +70,7 @@ def getXMLFont(xml, scale = 1):
         fnt_flags |= gui.QFont.StyleItalic
 
     font_size = font_size / float(scale) * 12.
-    qfnt = gui.QFont(font_name, font_size, fnt_flags);
+    qfnt = gui.QFont(font_name, font_size, fnt_flags)
 
     return qfnt
 
