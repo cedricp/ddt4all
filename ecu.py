@@ -793,11 +793,10 @@ class Ecu_file:
                 # Zipped json here
                 if os.path.exists('ecu.zip'):
                     zf = zipfile.ZipFile('ecu.zip', mode='r')
-                    print data
                     if data in zf.namelist():
                         jsdata = zf.read(data)
                     if os.path.basename(data) in zf.namelist():
-                        jsdata = zf.read(data[5:])
+                        jsdata = zf.read(os.path.basename(data))
                 else:
                     print "Cannot found file ", data
                     return
