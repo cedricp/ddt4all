@@ -1018,10 +1018,10 @@ if __name__ == '__main__':
         print _("Using custom DDT database")
         ecudirfound = True
 
-    if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
-        print _("Using DDT2000 default installation")
-        options.ecus_dir = "C:/DDT2000data/ecus/"
-        ecudirfound = True
+    #if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
+    #    print _("Using DDT2000 default installation")
+    #    options.ecus_dir = "C:/DDT2000data/ecus/"
+    #    ecudirfound = True
 
     pc = portChooser()
     nok = True
