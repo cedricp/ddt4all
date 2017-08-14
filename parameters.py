@@ -512,7 +512,7 @@ class paramWidget(gui.QWidget):
             jsfile.close()
         else:
             zf = zipfile.ZipFile("ecu.zip", mode='r')
-            layoutfile = self.ddtfile + ".layout"
+            layoutfile = self.ddtfile[5:] + ".layout"
             jsondata = zf.read(layoutfile)
         if os.path.exists(targetsfile):
             jsfile = open(targetsfile, "r")
@@ -520,7 +520,7 @@ class paramWidget(gui.QWidget):
             jsfile.close()
         else:
             # Fallback to main database (if zipped ECU)
-            tgt = options.main_window.ecu_scan.ecu_database.getTargets(self.ddtfile)
+            tgt = options.main_window.ecu_scan.ecu_database.getTargetsByHref(self.ddtfile[5:])
             if tgt:
                 self.targetsdata = []
                 for t in tgt:

@@ -791,6 +791,7 @@ class Ecu_file:
                 jsfile.close()
             else:
                 # Zipped json here
+                data = data[5:]
                 if os.path.exists('ecu.zip'):
                     zf = zipfile.ZipFile('ecu.zip', mode='r')
                     if data in zf.namelist():
@@ -816,6 +817,9 @@ class Ecu_file:
 
             if 'endian' in ecudict:
                 self.endianness = ecudict['endian']
+
+            if 'ecuname' in ecudict:
+                self.ecuname = ecudict['ecuname']
 
             devices = ecudict['devices']
             for device in devices:
@@ -848,16 +852,31 @@ class Ecu_file:
 
             if target:
                 self.ecuname = target[0].getAttribute("Name")
-
                 autoidents = getChildNodesByName(target[0], u"AutoIdents")
                 if autoidents:
                     autoident = getChildNodesByName(autoidents[0], u"AutoIdent")
                     for ai in autoident:
                         autoident_dict = {}
-                        autoident_dict['diagversion'] = str(ai.getAttribute("DiagVersion").strip())
-                        autoident_dict['supplier'] = str(ai.getAttribute("Supplier").strip())
-                        autoident_dict['soft'] = str(ai.getAttribute("Soft").strip())
-                        autoident_dict['version'] = str(ai.getAttribute("Version").strip())
+
+                        try:
+                            autoident_dict['diagversion'] = str(
+                                ai.getAttribute("DiagVersion").replace(unichr(160), " ").encode("ascii", errors='ignore'))
+                            autoident_dict['supplier'] = str(
+                                ai.getAttribute("Supplier").replace(unichr(160), " ").encode("ascii", errors='ignore'))
+                            autoident_dict['soft'] = str(
+                                ai.getAttribute("Soft").replace(unichr(160), " ").encode("ascii", errors='ignore'))
+                            autoident_dict['version'] = str(
+                                ai.getAttribute("Version").replace(unichr(160), " ").encode("ascii", errors='ignore'))
+                        except:
+                            autoident_dict['diagversion'] = str(
+                                ai.getAttribute("DiagVersion").replace(unichr(160), " ").encode("ascii"))
+                            autoident_dict['supplier'] = str(
+                                ai.getAttribute("Supplier").replace(unichr(160), " ").encode("ascii"))
+                            autoident_dict['soft'] = str(
+                                ai.getAttribute("Soft").replace(unichr(160), " ").encode("ascii"))
+                            autoident_dict['version'] = str(
+                                ai.getAttribute("Version").replace(unichr(160), " ").encode("ascii"))
+
                         self.autoidents.append(autoident_dict)
 
                 projects = getChildNodesByName(target[0], u"Projects")
@@ -913,12 +932,9 @@ class Ecu_file:
                         self.ecu_protocol = "ISO8"
 
                         self.kw1 = hex(
-                            int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[
-                                           2:].upper()
+                            int(getChildNodesByName(iso8[0], "KW1")[0].getAttribute("Value")))[2:].upper()
                         self.kw2 = hex(
-                            int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[
-                                           2:].upper()
-
+                            int(getChildNodesByName(iso8[0], "KW2")[0].getAttribute("Value")))[2:].upper()
 
             devices = self.xmldoc.getElementsByTagName("Device")
             for d in devices:
@@ -945,12 +961,43 @@ class Ecu_file:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
 
+    def connect_to_hardware(self):
+        # Can
+        ecuname = self.ecuname.encode('ascii', errors='ignore')
+        if self.ecu_protocol == 'CAN':
+            short_addr = elm.get_can_addr(self.ecu_send_id)
+            ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
+
+            if not options.simulation_mode:
+                options.elm.init_can()
+                options.elm.set_can_addr(short_addr, ecu_conf)
+
+        # KWP 2000 Handling
+        elif self.ecu_protocol == 'KWP2000':
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'KWP2000'}
+            options.opt_si = not self.fastinit
+            if not options.simulation_mode:
+                options.elm.init_iso()
+                options.elm.set_iso_addr(self.funcaddr, ecu_conf)
+
+        # ISO8 handling
+        elif self.ecu_protocol == 'ISO8':
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO8'}
+            if not options.simulation_mode:
+                options.elm.init_iso()
+                options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
+        else:
+            return False
+
+        return True
+
     def dump_idents(self):
         idents = {}
         idents["address"] = self.funcaddr
         idents["group"] = self.funcname
         idents["protocol"] = self.ecu_protocol
         idents["projects"] = self.projects
+        idents["ecuname"] = self.ecuname
         idents["autoidents"] = []
 
         for ai in self.autoidents:
@@ -962,39 +1009,10 @@ class Ecu_file:
 
         return idents
 
-    def connect_to_hardware(self):
-        # Can handling
-        if self.ecu_protocol == 'CAN':
-            short_addr = elm.get_can_addr(self.ecu_send_id)
-            ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(self.ecuname)}
-
-            if not options.simulation_mode:
-                options.elm.init_can()
-                options.elm.set_can_addr(short_addr, ecu_conf)
-
-        # KWP 2000 Handling
-        elif self.ecu_protocol == 'KWP2000':
-            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecuname), 'protocol': 'KWP2000'}
-            options.opt_si = not self.fastinit
-            if not options.simulation_mode:
-                options.elm.init_iso()
-                options.elm.set_iso_addr(self.funcaddr, ecu_conf)
-
-        # ISO8 handling
-        elif self.ecu_protocol == 'ISO8':
-            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(self.ecuname), 'protocol': 'ISO8'}
-            if not options.simulation_mode:
-                options.elm.init_iso()
-                options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
-        else:
-            return False
-
-        return True
-
     def dumpJson(self):
         js = {}
-        js['ecuname'] = self.ecuname
         js['autoidents'] = self.autoidents
+        js['ecuname'] = self.ecuname
         js['obd'] = {}
         js['obd']['protocol'] = self.ecu_protocol
         if self.ecu_protocol == "CAN":
@@ -1095,6 +1113,8 @@ class Ecu_database:
     def __init__(self, forceXML=False):
         self.targets = []
         self.numecu = 0
+        self.available_addr_kwp = []
+        self.available_addr_can = []
         xmlfile = options.ecus_dir + "/eculist.xml"
 
         jsonecu_files = glob.glob("json/*.json.targets")
@@ -1114,30 +1134,52 @@ class Ecu_database:
                 else:
                     diagversion = ecu_dict['diagnotic_version']
 
+                addr = ecu_dict['address']
+
+                if 'KWP' in ecu_dict['protocol']:
+                    if addr not in self.available_addr_kwp:
+                        self.available_addr_kwp.append(str(addr))
+                elif 'CAN' in ecu_dict['protocol']:
+                    if addr not in self.available_addr_can:
+                        self.available_addr_can.append(str(addr))
+
                 ecu_ident = Ecu_ident(diagversion, ecu_dict['supplier_code'],
                                       ecu_dict['soft_version'], ecu_dict['version'],
                                       name, ecu_dict['group'], href, ecu_dict['protocol'],
-                                      ecu_dict['projects'], ecu_dict['address'])
+                                      ecu_dict['projects'], addr)
                 self.targets.append(ecu_ident)
 
         if os.path.exists("ecu.zip") and not forceXML:
             zf = zipfile.ZipFile("ecu.zip", mode='r')
             jsdb = zf.read("db.json")
             dbdict = json.loads(jsdb)
-            for targetk, targetv in dbdict.iteritems():
+            for href, targetv in dbdict.iteritems():
                 self.numecu += 1
                 ecugroup = targetv['group']
                 ecuprotocol = targetv['protocol']
                 ecuprojects = targetv['projects']
                 ecuaddress = targetv['address']
-                for target in targetv['autoidents']:
-                    href = targetk
-                    name = os.path.basename(targetk)
-                    ecu_ident = Ecu_ident(target['diagnostic_version'], target['supplier_code'],
-                                          target['soft_version'], target['version'],
-                                          name, ecugroup, href, ecuprotocol,
+                ecuname = targetv['ecuname']
+
+                if 'KWP' in ecuprotocol:
+                    if not ecuaddress in self.available_addr_kwp:
+                        self.available_addr_kwp.append(str(ecuaddress))
+                elif 'CAN' in ecuprotocol:
+                    if not ecuaddress in self.available_addr_can:
+                        self.available_addr_can.append(str(ecuaddress))
+
+                if len(targetv['autoidents']) == 0:
+                    ecu_ident = Ecu_ident("", "", "", "", ecuname, ecugroup, href, ecuprotocol,
                                           ecuprojects, ecuaddress, True)
                     self.targets.append(ecu_ident)
+                else:
+                    for target in targetv['autoidents']:
+                        ecu_ident = Ecu_ident(target['diagnostic_version'], target['supplier_code'],
+                                              target['soft_version'], target['version'],
+                                              ecuname, ecugroup, href, ecuprotocol,
+                                              ecuprojects, ecuaddress, True)
+
+                        self.targets.append(ecu_ident)
 
         if os.path.exists(xmlfile):
             xdom = xml.dom.minidom.parse(xmlfile)
@@ -1158,8 +1200,17 @@ class Ecu_database:
                     href = target.getAttribute("href")
                     name = target.getAttribute("Name")
                     protnode = target.getElementsByTagName("Protocol")
+
                     if protnode:
                         protocol = protnode[0].firstChild.nodeValue
+
+                    if 'CAN' in protocol.upper():
+                        if address not in self.available_addr_can:
+                            self.available_addr_can.append(str(address))
+                    elif 'KWP' in protocol.upper():
+                        if address not in self.available_addr_kwp:
+                            self.available_addr_kwp.append(str(address))
+
                     autoidents = target.getElementsByTagName("AutoIdents")
                     projectselems = target.getElementsByTagName("Projects")
                     projects = []
@@ -1237,7 +1288,13 @@ class Ecu_scanner:
         i = 0
         if not options.simulation_mode:
             options.elm.init_can()
-        for addr in elm.snat.keys():
+
+        # Only scan available ecu addresses
+        for addr in self.ecu_database.available_addr_can:
+            # Don't want to scan NON ISO-TP
+            if addr == '00' or addr == 'FF':
+                continue
+
             if progress:
                 progress.setValue(i)
             self.qapp.processEvents()
@@ -1275,7 +1332,8 @@ class Ecu_scanner:
         i = 0
         if not options.simulation_mode:
             options.elm.init_iso()
-        for addr in elm.snat.keys():
+
+        for addr in self.ecu_database.available_addr_kwp:
             progress.setValue(i)
             self.qapp.processEvents()
             i += 1

@@ -139,10 +139,10 @@ class Ecu_list(gui.QWidget):
                 stored_ecus[grp] = []
 
             projects = "/".join(ecu.projects)
-            name = u' (' + projects + u')'
+            projname = u' (' + projects + u')'
 
-            if not [ecu.name, name, ecu.protocol] in stored_ecus[grp]:
-                stored_ecus[grp].append([ecu.name, name, ecu.protocol])
+            if not [ecu.name, projname, ecu.protocol] in stored_ecus[grp]:
+                stored_ecus[grp].append([ecu.name, projname, ecu.protocol])
 
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
@@ -673,6 +673,8 @@ class Main_widget(gui.QMainWindow):
         if not ecu_file:
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
+            if ecu.zipped:
+                isxml = False
 
         if self.snifferview.set_file(ecu_file):
             self.tabbedview.setCurrentIndex(1)
