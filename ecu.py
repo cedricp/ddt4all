@@ -1080,17 +1080,28 @@ class Ecu_ident:
         self.zipped = zipped
 
     def checkWith(self, diagversion, supplier, soft, version, addr):
-        if self.hash != diagversion + supplier + soft + version:
+        if self.diagversion == "":
+            return
+        if int("0x" + self.diagversion, 16) != int("0x" + diagversion, 16):
             return False
+        if self.supplier.strip() != supplier.strip():
+            return False
+        if self.soft.strip() != soft.strip():
+            return False
+        if self.version.strip() != version.strip():
+            return False
+
         self.addr = addr
         return True
 
-    def checkApproximate(self, diagversion, supplier, soft, version, addr):
-        if self.diagversion != diagversion:
+    def checkApproximate(self, diagversion, supplier, soft, addr):
+        if self.diagversion == "":
+            return
+        if int("0x" + self.diagversion, 16) != int("0x" + diagversion, 16):
             return False
-        if self.supplier != supplier:
+        if self.supplier.strip() != supplier.strip():
             return False
-        if self.soft != soft:
+        if self.soft.strip() != soft.strip():
             return False
 
         self.addr = addr
@@ -1285,10 +1296,112 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
 
+    # Scan
+    def scan_new(self, progress=None, label=None):
+        i = 0
+        if not options.simulation_mode:
+            options.elm.init_can()
+
+        if progress:
+            progress.setRange(0, len(self.ecu_database.available_addr_can))
+
+        # Only scan available ecu addresses
+        for addr in self.ecu_database.available_addr_can:
+            # Don't want to scan NON ISO-TP
+            if addr == '00' or addr == 'FF':
+                continue
+
+            if progress:
+                progress.setValue(i)
+            self.qapp.processEvents()
+            i += 1
+
+            diagversion = ""
+            supplier = ""
+            soft_version = ''
+            soft = ""
+            can_response = ""
+
+            # Check diagversion
+            if not options.simulation_mode:
+                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
+                options.elm.start_session_can('10C0')
+
+            if options.simulation_mode:
+                # Give scanner something to eat...
+                if addr == '26':
+                    can_response = "62 F1 A0 08"
+            else:
+                can_response = options.elm.request(req='22F1A0', positive='', cache=False)
+                if 'WRONG' in can_response:
+                    continue
+            diagversion = can_response.replace(' ', '')[6:8]
+
+            # Check supplier ident
+            if not options.simulation_mode:
+                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
+                options.elm.start_session_can('10C0')
+
+            if options.simulation_mode:
+                # Give scanner something to eat...
+                if addr == '26':
+                    can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
+                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                                   "20 20 20 20 20 20 20 20 20"
+            else:
+                can_response = options.elm.request(req='22F18A', positive='', cache=False)
+                if 'WRONG' in can_response:
+                    continue
+            supplier = can_response.replace(' ', '')[6:132].decode('hex')
+
+            # Check soft number
+            if not options.simulation_mode:
+                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
+                options.elm.start_session_can('10C0')
+
+            if options.simulation_mode:
+                # Give scanner something to eat...
+                if addr == '26':
+                    can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                                   "20 20 20 20 20 20 20 20 20"
+            else:
+                can_response = options.elm.request(req='22F194', positive='', cache=False)
+                if 'WRONG' in can_response:
+                    continue
+            soft = can_response.replace(' ', '')[6:38].decode('hex')
+
+            # Check soft version
+            if not options.simulation_mode:
+                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
+                options.elm.start_session_can('10C0')
+
+            if options.simulation_mode:
+                # Give scanner something to eat...
+                if addr == '26':
+                    can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                                   "20 20 20 20 20 20 20 20 20"
+            else:
+                can_response = options.elm.request(req='22F195', positive='', cache=False)
+                if 'WRONG' in can_response:
+                    continue
+            soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+            if diagversion == "":
+                continue
+
+            self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
+
+        if not options.simulation_mode:
+            options.elm.close_protocol()
+
     def scan(self, progress=None, label=None):
         i = 0
         if not options.simulation_mode:
             options.elm.init_can()
+
+        if progress:
+            progress.setRange(0, len(self.ecu_database.available_addr_can))
 
         # Only scan available ecu addresses
         for addr in self.ecu_database.available_addr_can:
@@ -1327,12 +1440,15 @@ class Ecu_scanner:
         if options.simulation_mode:
             # Test data..
             # diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
-            self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.xml",
+            self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.json",
                                                         "KWP2000 FastInit MonoPoint", [], "7A")
 
         i = 0
         if not options.simulation_mode:
             options.elm.init_iso()
+
+        if progress:
+            progress.setRange(0, len(self.ecu_database.available_addr_kwp))
 
         for addr in self.ecu_database.available_addr_kwp:
             progress.setValue(i)
@@ -1353,7 +1469,6 @@ class Ecu_scanner:
                 if addr == "27":
                     can_response = "61 80 82 00 26 02 45 09 30 30 31 01 18 52 20 06 05 02 05 00 03 01 04 33 69 91"
                 elif addr == "01":
-                    #can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
                     can_response = "61 80 82 01 00 28 28 04 41 4D 52 00 03 07 00 07 04 00 04 03 08 2B 00 31 04 00"
                 elif addr == "2C":
                     can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
@@ -1370,71 +1485,74 @@ class Ecu_scanner:
             supplier = can_response[24:32].replace(' ', '').decode('hex')
             soft = can_response[48:53].replace(' ', '')
             version = can_response[54:59].replace(' ', '')
-            approximate_ecu = []
-            found_exact = False
-            found_approximate = False
-            href = ""
+            self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
 
-            for target in self.ecu_database.targets:
-                if target.protocol == "CAN" and protocol != "CAN":
+    def check_ecu2(self, diagversion, supplier, soft, version, label, addr, protocol):
+        approximate_ecu = []
+        found_exact = False
+        found_approximate = False
+        href = ""
+
+        for target in self.ecu_database.targets:
+            if target.protocol == "CAN" and protocol != "CAN":
+                continue
+            if target.protocol.startswith("KWP") and protocol != "KWP":
+                continue
+
+            if target.checkWith(diagversion, supplier, soft, version, addr):
+                self.ecus[target.name] = target
+                self.num_ecu_found += 1
+                label.setText("Found %i ecu" % self.num_ecu_found)
+                found_exact = True
+                href = target.href
+                line = "<font color='green'>Found ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                       % (href, diagversion, supplier, soft, version)
+
+                options.main_window.logview.append(line)
+            elif target.checkApproximate(diagversion, supplier, soft, addr):
+                approximate_ecu.append(target)
+                found_approximate = True
+
+
+        # Try to find the closest possible version of an ECU
+        if not found_exact and found_approximate:
+            min_delta_version = 0xFFFFFF
+            kept_ecu = None
+            for tgt in approximate_ecu:
+                ecu_protocol = 'CAN'
+                if tgt.protocol.startswith("KWP"):
+                    ecu_protocol = "KWP"
+                # Shouldn't happen, but...
+                if tgt.protocol.startswith("ISO8"):
+                    ecu_protocol = "KWP"
+                if ecu_protocol != protocol:
                     continue
-                if target.protocol.startswith("KWP") and protocol != "KWP":
-                    continue
+                delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
+                if delta < min_delta_version:
+                    min_delta_version = delta
+                    kept_ecu = tgt
 
-                if target.checkWith(diagversion, supplier, soft, version, addr):
-                    self.ecus[target.name] = target
-                    self.num_ecu_found += 1
-                    label.setText("Found %i ecu" % self.num_ecu_found)
-                    found_exact = True
-                    href = target.href
-                    line = "<font color='green'>Found ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                           % (href, diagversion, supplier, soft, version)
+            if kept_ecu:
+                self.approximate_ecus[kept_ecu.name] = kept_ecu
+                self.num_ecu_found += 1
+                href = "-->" + kept_ecu.href + "<--"
+                label.setText("Found %i ecu" % self.num_ecu_found)
 
-                    options.main_window.logview.append(line)
-                elif target.checkApproximate(diagversion, supplier, soft, version, addr):
-                    approximate_ecu.append(target)
-                    found_approximate = True
-
-
-            # Try to find the closest possible version of an ECU
-            if not found_exact and found_approximate:
-                min_delta_version = 0xFFFFFF
-                kept_ecu = None
-                for tgt in approximate_ecu:
-                    ecu_protocol = 'CAN'
-                    if tgt.protocol.startswith("KWP"):
-                        ecu_protocol = "KWP"
-                    # Shouldn't happen, but...
-                    if tgt.protocol.startswith("ISO8"):
-                        ecu_protocol = "KWP"
-                    if ecu_protocol != protocol:
-                        continue
-                    delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
-                    if delta < min_delta_version:
-                        min_delta_version = delta
-                        kept_ecu = tgt
-
-                if kept_ecu:
-                    self.approximate_ecus[kept_ecu.name] = kept_ecu
-                    self.num_ecu_found += 1
-                    href = "-->" + kept_ecu.href + "<--"
-                    label.setText("Found %i ecu" % self.num_ecu_found)
-
-                    line = "<font color='red'>Found ECU (not perfect match) :"\
-                           "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                           % (kept_ecu.name, diagversion, supplier, soft, version)
-
-                    options.main_window.logview.append(line)
-
-            if not found_exact and not found_approximate:
-                line = "<font color='red'>Found ECU (no relevant ECU file found) :" \
-                       "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                       % (diagversion, supplier, soft, version)
+                line = "<font color='red'>Found ECU (not perfect match) :"\
+                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                       % (kept_ecu.name, diagversion, supplier, soft, version)
 
                 options.main_window.logview.append(line)
 
-            #if can_response.startswith('61'):
-            #    self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
+        if not found_exact and not found_approximate:
+            line = "<font color='red'>Found ECU (no relevant ECU file found) :" \
+                   "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
+                   % (diagversion, supplier, soft, version)
+
+            options.main_window.logview.append(line)
+
+        #if can_response.startswith('61'):
+        #    self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
 
 
 def make_zipfs():

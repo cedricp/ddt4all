@@ -641,7 +641,7 @@ class ELM:
 
     def errorval(self, val):
         if val not in negrsp:
-            return "not registered response"
+            return "not registered error"
         if val in negrsp.keys():
             return negrsp[val]
 

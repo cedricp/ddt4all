@@ -33,33 +33,12 @@ class Ecu_list(gui.QWidget):
         self.treeview_ecu = treeview_ecu
         self.vehicle_combo = gui.QComboBox()
 
-        self.ecu_map = {
-            "01": "ABS-VDC [$01]",
-            "2C": "Airbag-SRS [$2C]",
-            "0D": "Automatic Parking Brake [$0D]",
-            "6E": "Automatic Transmission [$6E]",
-            "13": "Audio [$13]",
-            "00": "CAN Primary network [$00]",
-            "7A": "ECM Engine Control Module [$7A]",
-            "04": "EPS Electric Power Steering [$04]",
-            "07": "HLS Hi Beam Lighting System [$07]",
-            "29": "HVAC Climate Control [$29]",
-            "70": "Head Light [$70]",
-            "72": "Head Light Right [$72]",
-            "71": "Head Light Left [$71]",
-            "79": "LNG [$79]",
-            "3F": "Navigation [$3F]",
-            "58": "Navigation [$58]",
-            "0E": "Parking Sonar [$0E]",
-            "51": "Cluster Meter [$51]",
-            "1C": "RCU Roof Control Unit [$1C]",
-            "26": "UCH - BCM [$26]",
-            "27": "UPC - USM [$27]"
-        }
+        self.ecu_map = {}
 
         vehicles = [
-            "ALL", "X06 - TWINGO", "X44 - TWINGO II", "X07 - TWINGO III", "X77 - MODUS",
+            "ALL", "X06 - TWINGO", "X44 - TWINGO II", "X07 - EDISON", "X77 - MODUS",
             "X35 - SYMBOL/THALIA", "X65 - CLIO II", "X85 - CLIO III", "X98 - CLIO IV",
+            "XJA - CLIO (C1A)"
             "X87 - CAPTUR", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
             "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV",
             "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
@@ -70,7 +49,7 @@ class Ecu_list(gui.QWidget):
             "X10 - ZOE",
             "X76 - KANGOO I", "X61 - KANGOO II", "X24 - MASCOTT", "X83 - TRAFFIC II",
             "X82 - TRAFFIC III", "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
-            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
+            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER phase 3", "X67 - DOKKER",
             "X92 - LODGY", "X02 - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
         ]
 
@@ -482,25 +461,25 @@ class Main_widget(gui.QMainWindow):
         msgBox = gui.QMessageBox()
         msgBox.setText(_('Scan options'))
         scancan = False
+        scancan2 = False
         scankwp = False
 
-        msgBox.addButton(gui.QPushButton('CAN'), gui.QMessageBox.YesRole)
-        msgBox.addButton(gui.QPushButton('KWP'), gui.QMessageBox.NoRole)
-        msgBox.addButton(gui.QPushButton('KWP&&CAN'), gui.QMessageBox.RejectRole)
+        msgBox.addButton(gui.QPushButton('CAN'), 0)
+        msgBox.addButton(gui.QPushButton('CAN new method'), 1)
+        msgBox.addButton(gui.QPushButton('KWP'), 2)
         role = msgBox.exec_()
 
         if role == 0:
             self.logview.append(_("Scanning CAN"))
             scancan = True
 
-        if role == 1:
+        if role == 2:
             self.logview.append(_("Scanning KWP"))
             scankwp = True
 
-        if role == 2:
-            self.logview.append(_("Scanning CAN&KWP"))
-            scankwp = True
-            scancan = True
+        if role == 1:
+            self.logview.append(_("Scanning CAN new method"))
+            scancan2 = True
 
         progressWidget = gui.QWidget(None)
         progressLayout = gui.QVBoxLayout()
@@ -513,6 +492,8 @@ class Main_widget(gui.QMainWindow):
             self.ecu_scan.scan(self.progressstatus, self.infostatus)
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
+        if scancan2:
+            self.ecu_scan.scan_new(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()
