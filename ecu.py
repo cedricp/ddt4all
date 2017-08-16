@@ -795,11 +795,11 @@ class Ecu_file:
                     zf = zipfile.ZipFile('ecu.zip', mode='r')
                     if data in zf.namelist():
                         jsdata = zf.read(data)
-                    if os.path.basename(data) in zf.namelist():
+                    elif os.path.basename(data) in zf.namelist():
                         jsdata = zf.read(os.path.basename(data))
-                else:
-                    print "Cannot found file ", data
-                    return
+                    else:
+                        print "Cannot found file ", data
+                        return
 
             ecudict = json.loads(jsdata)
 
