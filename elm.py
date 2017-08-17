@@ -263,6 +263,13 @@ def reconnect_elm():
     return False
 
 
+def errorval(val):
+    if val not in negrsp:
+        return "not registered error"
+    if val in negrsp.keys():
+        return negrsp[val]
+
+
 class Port:
     '''This is a serial port or a TCP-connection
        if portName looks like a 192.168.0.10:35000
