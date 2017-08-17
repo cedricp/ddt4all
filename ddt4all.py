@@ -838,6 +838,7 @@ class portChooser(gui.QDialog):
         self.timer.timeout.connect(self.rescan_ports)
         self.timer.start(200)
         self.portcount = -1
+        self.usb()
 
     def check_elm(self):
         currentitem = self.listview.currentItem()

@@ -1316,6 +1316,14 @@ class Ecu_scanner:
             self.qapp.processEvents()
             i += 1
 
+            if addr not in elm.dnat:
+                print "Warning, address %s is not mapped" % addr
+                continue
+
+            if len(elm.dnat[addr]) > 3:
+                print "Skipping CAN extended address (not supported yet) ", addr
+                continue
+
             diagversion = ""
             supplier = ""
             soft_version = ''
@@ -1413,6 +1421,14 @@ class Ecu_scanner:
                 progress.setValue(i)
             self.qapp.processEvents()
             i += 1
+
+            if addr not in elm.dnat:
+                print "Warning, address %s is not mapped" % addr
+                continue
+
+            if len(elm.dnat[addr]) > 3:
+                print "Skipping CAN extended address (not supported yet) ", addr
+                continue
 
             if not options.simulation_mode:
                 txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
