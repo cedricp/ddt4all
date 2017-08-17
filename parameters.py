@@ -68,15 +68,6 @@ class paramWidget(gui.QWidget):
         self.movingwidgets = []
         self.allow_parameters_update = True
 
-    def __del__(self):
-        # Return to default session
-        self.logview.append("<font color=blue>" + _("Returning to defaut session...") + "</font>")
-        if not options.simulation_mode:
-            if self.ecurequestsparser.ecu_protocol == "CAN":
-                options.elm.start_session_can('1081')
-            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
-                options.elm.start_session_iso('1081')
-
     def tester_send(self):
         if self.tester_presend_command == "":
             return

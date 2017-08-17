@@ -1431,6 +1431,7 @@ class Ecu_scanner:
                 continue
 
             if not options.simulation_mode:
+                options.elm.init_can()
                 txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
                 options.elm.start_session_can('10C0')
 
