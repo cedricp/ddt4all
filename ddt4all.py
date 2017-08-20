@@ -36,20 +36,17 @@ class Ecu_list(gui.QWidget):
         self.ecu_map = {}
 
         vehicles = [
-            "ALL", "X06 - TWINGO", "X44 - TWINGO II", "X07 - TWINGO III", "X77 - MODUS",
-            "X35 - SYMBOL/THALIA", "X65 - CLIO II", "X85 - CLIO III", "X98 - CLIO IV",
-            "XJA - CLIO (C1A)"
-            "X87 - CAPTUR", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
+            "ALL", "XBA - KWID CN", "XBB - KWID BR", "X06 - TWINGO", "X44 - TWINGO II",
+            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA", "X65 - CLIO II",
+            "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR",
+            "XJB - CAPTUR II", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
             "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV",
             "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
-            "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III",
-            "X81 - ESPACE IV", "XFC - ESPACE V",
-            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS",
-            "XZG - KOLEOS II", "XFE - KADJAR", "X33 - WIND", "X09 - TWIZY",
-            "X10 - ZOE",
-            "X76 - KANGOO I", "X61 - KANGOO II", "X24 - MASCOTT", "X83 - TRAFFIC II",
-            "X82 - TRAFFIC III", "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
-            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
+            "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
+            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II", "XFE - KADJAR",
+            "X33 - WIND", "X09 - TWIZY", "X10 - ZOE", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO II",
+            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III", "X70 - MASTER II", "X62 - MASTER III",
+            "X90 - LOGAN/SANDERO", "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
             "X92 - LODGY", "X02 - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
         ]
 
