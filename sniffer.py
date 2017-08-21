@@ -21,13 +21,13 @@ class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
     dataready = core.pyqtSignal(basestring)
 
-    def __init__(self, address):
+    def __init__(self, address, br):
         super(snifferThread, self).__init__()
         self.filter = address
         self.running = True
         if not options.simulation_mode:
             options.elm.monitorstop = False
-            options.elm.init_can_sniffer(self.filter)
+            options.elm.init_can_sniffer(self.filter, br)
 
     def stop(self):
         if not options.simulation_mode:
@@ -142,7 +142,7 @@ class sniffer(gui.QWidget):
         self.framecombo.setEnabled(False)
         self.stopthread()
 
-        self.snifferthread = snifferThread(ecu_filter)
+        self.snifferthread = snifferThread(ecu_filter, self.ecurequests.baudrate)
         self.snifferthread.dataready.connect(self.callback)
         self.snifferthread.start()
 

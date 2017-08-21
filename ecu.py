@@ -763,6 +763,7 @@ class Ecu_file:
         self.ecuname = ""
         self.projects = []
         self.autoidents = []
+        self.baudrate = 0
 
         if not data:
             return
@@ -808,6 +809,7 @@ class Ecu_file:
                 if self.ecu_protocol == "CAN":
                     self.ecu_send_id = ecudict['obd']['send_id']
                     self.ecu_recv_id = ecudict['obd']['recv_id']
+                    self.baudrate = int(ecudict['obd']['baudrate'])
                 if self.ecu_protocol == "KWP2000":
                     self.fastinit = ecudict['obd']['fastinit']
                 self.funcaddr = ecudict['obd']['funcaddr']
@@ -893,6 +895,7 @@ class Ecu_file:
                 can = getChildNodesByName(target[0], u"CAN")
                 if can:
                     self.ecu_protocol = "CAN"
+                    self.baudrate = int(can[0].getAttribute("BaudRate"))
                     send_ids = getChildNodesByName(can[0], "SendId")
                     if send_ids:
                         send_id = send_ids[0]
@@ -970,6 +973,8 @@ class Ecu_file:
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
             if not options.simulation_mode:
+                if self.baudrate == 250000:
+                    ecu_conf['brp'] = 1
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf)
 
@@ -1019,6 +1024,7 @@ class Ecu_file:
         if self.ecu_protocol == "CAN":
             js['obd']['send_id'] = self.ecu_send_id
             js['obd']['recv_id'] = self.ecu_recv_id
+            js['obd']['baudrate'] = self.baudrate
         if self.ecu_protocol == "KWP2000":
             js['obd']['fastinit'] = self.fastinit
         js['obd']['funcaddr'] = self.funcaddr
