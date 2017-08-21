@@ -1010,7 +1010,14 @@ class paramWidget(gui.QWidget):
         if userreply == gui.QMessageBox.Abort:
             return
 
-        self.sendElm(request)
+        response = self.sendElm(request)
+
+        self.dtcdialog.close()
+
+        if 'WRONG' in response:
+            options.main_window.logview.append("Clear DTC failed")
+        else:
+            options.main_window.logview.append("Clear DTC successfully done")
 
     def readDTC(self):
         if not options.simulation_mode:
@@ -1075,11 +1082,11 @@ class paramWidget(gui.QWidget):
                 maxcount -= 1
 
         numberofdtc = int('0x' + can_response[1], 16)
-        dtcdialog = gui.QDialog(None)
+        self.dtcdialog = gui.QDialog(None)
         dtc_view = gui.QTextEdit(None)
         dtc_view.setReadOnly(True)
         layout = gui.QVBoxLayout()
-        dtcdialog.setLayout(layout)
+        self.dtcdialog.setLayout(layout)
         clearbutton = gui.QPushButton(_("Clear ALL DTC"))
         layout.addWidget(clearbutton)
         layout.addWidget(dtc_view)
@@ -1109,7 +1116,7 @@ class paramWidget(gui.QWidget):
             can_response = can_response[shiftbytecount:]
 
         dtc_view.setHtml(html)
-        dtcdialog.exec_()
+        self.dtcdialog.exec_()
 
     def requestNameChanged(self, oldname, newname):
         for screen_k, screen_data in self.layoutdict['screens'].iteritems():
