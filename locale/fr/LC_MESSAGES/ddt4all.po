@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-11 21:50+0200\n"
-"PO-Revision-Date: 2017-06-11 21:59+0200\n"
+"PO-Revision-Date: 2017-08-19 13:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -131,7 +131,7 @@ msgstr "Invalide"
 
 #: parameters.py:898
 msgid "Cannot call request "
-msgstr "Appel eequête impossible"
+msgstr "Appel requête impossible"
 
 #: parameters.py:917
 msgid "Clearing DTC information"
@@ -159,7 +159,7 @@ msgstr "Pas de DTC"
 
 #: parameters.py:988
 msgid "Clear ALL DTC"
-msgstr "EFFACCER TOUT LES DTC"
+msgstr "EFFACER TOUT LES DTC"
 
 #: parameters.py:994
 msgid "ECU trouble codes"
@@ -167,4 +167,4 @@ msgstr "Code défauts ECU"
 
 #: parameters.py:1027
 msgid "Parsing screen "
-msgstr "Lecture des écrans"
+msgstr "Analyse des écrans"

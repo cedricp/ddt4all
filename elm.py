@@ -818,8 +818,11 @@ class ELM:
         if result[:2] == '7F':
             noerrors = False
 
+        errorstr = "Unknown"
         # check for negative response (repeat the same as in cmd())
-        if result[:2] == '7F' and result[6:8] in negrsp.keys():
+        if result[:2] == '7F':
+            if  result[6:8] in negrsp.keys():
+                errorstr = negrsp[result[6:8]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
@@ -835,7 +838,7 @@ class ELM:
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE" 
+            return "WRONG RESPONSE : " + errorstr
 
     def send_can_cfc0(self, command):
 
@@ -936,7 +939,7 @@ class ELM:
 
         # now we are going to receive data. st or ff should be in responses[0]
         if len(responses) != 1:
-            return "WRONG RESPONSE"
+            return "WRONG RESPONSE MULTILINE CFC0"
 
         result = ""
         noerrors = True
@@ -984,12 +987,19 @@ class ELM:
             self.error_frame += 1
             noerrors = False
 
+        errorstr = "Unknown"
+        # check for negative response (repeat the same as in cmd())
+        if result[:2] == '7F':
+            if  result[6:8] in negrsp.keys():
+                errorstr = negrsp[result[6:8]]
+                noerrors = False
+
         if len(result) / 2 >= nbytes and noerrors:
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE"
+            return "WRONG RESPONSE CFC0 " + errorstr
 
     def send_raw(self, command):
 
