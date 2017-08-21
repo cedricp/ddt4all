@@ -110,6 +110,7 @@ class paramWidget(gui.QWidget):
             jsfile.close()
         else:
             ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
+            ecu_ident.name = os.path.basename(filename)
 
             js_targets = []
             for ecui in ecu_ident:
@@ -495,8 +496,8 @@ class paramWidget(gui.QWidget):
 
     def initJSON(self):
         self.layoutdict = None
-        layoutfile = "./json/" + self.ddtfile + ".layout"
-        targetsfile = "./json/" + self.ddtfile + ".targets"
+        layoutfile = "./json/" + os.path.basename(self.ddtfile) + ".layout"
+        targetsfile = "./json/" + os.path.basename(self.ddtfile) + ".targets"
         if os.path.exists(layoutfile):
             jsfile = open(layoutfile, "r")
             jsondata = jsfile.read()

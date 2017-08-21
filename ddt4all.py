@@ -150,15 +150,20 @@ class Ecu_list(gui.QWidget):
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
         selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
         target = self.ecuscan.ecu_database.getTarget(selected)
+        name = selected
         if target:
             self.ecuscan.addTarget(target)
+            name = "[ " + target.group + " ] " + name
         if selected:
-            self.treeview_ecu.addItem(selected)
+            if name not in options.main_window.ecunamemap:
+                options.main_window.ecunamemap[name] = selected
+                self.treeview_ecu.addItem(name)
 
 
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
+        self.ecunamemap = {}
         self.plugins = {}
         self.setWindowTitle(_("DDT4All"))
         print _("Scanning ECUs...")
@@ -503,14 +508,17 @@ class Main_widget(gui.QMainWindow):
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()
+        self.ecunamemap = {}
         if self.paramview:
             self.paramview.init(None)
 
         for ecu in self.ecu_scan.ecus.keys():
+            self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
             item = gui.QListWidgetItem(ecu)
             self.treeview_ecu.addItem(item)
 
         for ecu in self.ecu_scan.approximate_ecus.keys():
+            self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
             item = gui.QListWidgetItem(ecu)
             item.setForeground(core.Qt.red)
             self.treeview_ecu.addItem(item)
@@ -539,7 +547,11 @@ class Main_widget(gui.QMainWindow):
         numecus = self.treeview_ecu.count()
         for i in range(numecus):
             item = self.treeview_ecu.item(i)
-            eculist.append(unicode(item.text().toUtf8(), encoding="UTF-8"))
+            itemname = unicode(item.text().toUtf8(), encoding="UTF-8")
+            if itemname in self.ecunamemap:
+                eculist.append((itemname, self.ecunamemap[itemname]))
+            else:
+                eculist.append((itemname, ""))
 
         jsonfile = open(filename, "w")
         jsonfile.write(json.dumps(eculist))
@@ -588,7 +600,8 @@ class Main_widget(gui.QMainWindow):
             self.paramview.init(None)
 
         for ecu in eculist:
-            item = gui.QListWidgetItem(ecu)
+            item = gui.QListWidgetItem(ecu[0])
+            self.ecunamemap[ecu[0]] = ecu[1]
             self.treeview_ecu.addItem(item)
 
     def readDtc(self):
@@ -644,20 +657,20 @@ class Main_widget(gui.QMainWindow):
         ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
 
         isxml = True
-        ecu_file = None
 
-        if ".json" in ecu_name:
-            ecu_file = ecu_name
-            ecu_addr = ""
-            isxml = False
-        elif ecu_name in self.ecu_scan.ecus:
+        ecu = None
+        ecu_file = ecu_name
+        if ecu_name in self.ecu_scan.ecus:
             ecu = self.ecu_scan.ecus[ecu_name]
         elif ecu_name in self.ecu_scan.approximate_ecus:
             ecu = self.ecu_scan.approximate_ecus[ecu_name]
+        elif ecu_name in self.ecunamemap:
+            name = self.ecunamemap[ecu_name]
+            ecu = self.ecu_scan.ecu_database.getTarget(name)
         else:
             ecu = self.ecu_scan.ecu_database.getTarget(ecu_name)
 
-        if not ecu_file:
+        if ecu:
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
             if ecu.zipped:

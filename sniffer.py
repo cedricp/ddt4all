@@ -181,6 +181,7 @@ class sniffer(gui.QWidget):
         self.ecurequests = ecu.Ecu_file(self.ecu_file, True)
         self.framecombo.clear()
         self.table.clear()
+        self.table.setRowCount(0)
         self.currentrequest = None
         self.oktostart = False
         self.startbutton.setEnabled(False)

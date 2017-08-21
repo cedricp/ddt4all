@@ -781,7 +781,7 @@ class Ecu_file:
                 data += ".json"
 
         if isfile and '.json' in data:
-            data2 = "./json/" + data
+            data2 = "./json/" + os.path.basename(data)
             if os.path.exists(data):
                 jsfile = open(data, "r")
                 jsdata = jsfile.read()
@@ -809,7 +809,8 @@ class Ecu_file:
                 if self.ecu_protocol == "CAN":
                     self.ecu_send_id = ecudict['obd']['send_id']
                     self.ecu_recv_id = ecudict['obd']['recv_id']
-                    self.baudrate = int(ecudict['obd']['baudrate'])
+                    if 'baudrate' in ecudict['obd']:
+                        self.baudrate = int(ecudict['obd']['baudrate'])
                 if self.ecu_protocol == "KWP2000":
                     self.fastinit = ecudict['obd']['fastinit']
                 self.funcaddr = ecudict['obd']['funcaddr']
@@ -1425,7 +1426,7 @@ class Ecu_scanner:
 
             if progress:
                 progress.setValue(i)
-            self.qapp.processEvents()
+                self.qapp.processEvents()
             i += 1
 
             if addr not in elm.dnat:
@@ -1474,8 +1475,9 @@ class Ecu_scanner:
             progress.setRange(0, len(self.ecu_database.available_addr_kwp))
 
         for addr in self.ecu_database.available_addr_kwp:
-            progress.setValue(i)
-            self.qapp.processEvents()
+            if progress:
+                progress.setValue(i)
+                self.qapp.processEvents()
             i += 1
 
             if not options.simulation_mode:
@@ -1523,7 +1525,9 @@ class Ecu_scanner:
                 continue
 
             if target.checkWith(diagversion, supplier, soft, version, addr):
-                self.ecus[target.name] = target
+                ecuname = "[ " + target.group + " ] " + target.name
+
+                self.ecus[ecuname] = target
                 self.num_ecu_found += 1
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
@@ -1558,12 +1562,11 @@ class Ecu_scanner:
             if kept_ecu:
                 self.approximate_ecus[kept_ecu.name] = kept_ecu
                 self.num_ecu_found += 1
-                href = "-->" + kept_ecu.href + "<--"
                 label.setText("Found %i ecu" % self.num_ecu_found)
 
                 line = "<font color='red'>Found ECU (not perfect match) :"\
-                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                       % (kept_ecu.name, diagversion, supplier, soft, version)
+                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>"\
+                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
                 options.main_window.logview.append(line)
 
