@@ -814,14 +814,11 @@ class ELM:
                     self.error_frame += 1
                     noerrors = False
 
-        # Check for negative
-        if result[:2] == '7F':
-            noerrors = False
-
         errorstr = "Unknown"
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F':
-            if  result[6:8] in negrsp.keys():
+            noerrors = False
+            if result[6:8] in negrsp.keys():
                 errorstr = negrsp[result[6:8]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
@@ -990,9 +987,9 @@ class ELM:
         errorstr = "Unknown"
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F':
-            if  result[6:8] in negrsp.keys():
+            if result[6:8] in negrsp.keys():
                 errorstr = negrsp[result[6:8]]
-                noerrors = False
+            noerrors = False
 
         if len(result) / 2 >= nbytes and noerrors:
             # split by bytes and return
@@ -1066,7 +1063,7 @@ class ELM:
         self.startSession = start_session
         self.cmd(self.startSession)
 
-    def init_can_sniffer(self, filter_addr):
+    def init_can_sniffer(self, filter_addr, br):
         if options.simulation_mode:
             return
 
@@ -1075,7 +1072,10 @@ class ELM:
         self.cmd("AT L0")
         self.cmd("AT H0")
         self.cmd("AT D0")
-        self.cmd("AT SP 6")
+        if br == 250000:
+            self.cmd("AT SP 8")
+        else:
+            self.cmd("AT SP 6")
         self.cmd("AT S0")
         self.cmd("AT AL")
         self.cmd("AT CAF0")
