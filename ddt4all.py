@@ -467,11 +467,16 @@ class Main_widget(gui.QMainWindow):
         canbutton = gui.QPushButton('CAN')
         cannmbutton = gui.QPushButton('CAN new method')
         kwpbutton = gui.QPushButton('KWP')
+        cancelbutton = gui.QPushButton('CANCEL')
 
-        msgBox.addButton(canbutton, gui.QMessageBox.YesRole)
-        msgBox.addButton(cannmbutton, gui.QMessageBox.HelpRole)
-        msgBox.addButton(kwpbutton, gui.QMessageBox.NoRole)
-        role = msgBox.exec_()
+        msgBox.addButton(canbutton, gui.QMessageBox.ActionRole)
+        msgBox.addButton(cannmbutton, gui.QMessageBox.ActionRole)
+        msgBox.addButton(kwpbutton, gui.QMessageBox.ActionRole)
+        msgBox.addButton(cancelbutton, gui.QMessageBox.NoRole)
+        msgBox.exec_()
+
+        if msgBox.clickedButton() == cancelbutton:
+            return
 
         if msgBox.clickedButton() == canbutton:
             self.logview.append(_("Scanning CAN"))
