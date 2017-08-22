@@ -146,8 +146,17 @@ class Ecu_request:
             if data.has_key('sentbytes'): self.sentbytes = data['sentbytes']
 
             self.name = data['name']
-            if 'sds' in data:
-                self.sds = data['sds']
+            if 'deny_sds' in data:
+                if 'nosds' in data['deny_sds']:
+                    self.sds['nosds'] = False
+                if 'plant' in data['deny_sds']:
+                    self.sds['plant'] = False
+                if 'aftersales' in data['deny_sds']:
+                    self.sds['aftersales'] = False
+                if 'engineering' in data['deny_sds']:
+                    self.sds['engineering'] = False
+                if 'supplier' in data['deny_sds']:
+                    self.sds['supplier'] = False
 
             if data.has_key('sendbyte_dataitems'):
                 sbdi = data['sendbyte_dataitems']
@@ -316,7 +325,17 @@ class Ecu_request:
         if self.sentbytes != '': js['sentbytes'] = self.sentbytes
 
         js['name'] = self.name
-        js['sds'] = self.sds
+        js['deny_sds'] = []
+        if self.sds['nosds'] == False:
+            js['deny_sds'].append('nosds')
+        if self.sds['plant'] == False:
+            js['deny_sds'].append('plant')
+        if self.sds['aftersales'] == False:
+            js['deny_sds'].append('aftersales')
+        if self.sds['engineering'] == False:
+            js['deny_sds'].append('engineering')
+        if self.sds['supplier'] == False:
+            js['deny_sds'].append('supplier')
 
         sdi = {}
         for key, value in self.sendbyte_dataitems.iteritems():

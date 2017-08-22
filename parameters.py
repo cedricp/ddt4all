@@ -428,12 +428,38 @@ class paramWidget(gui.QWidget):
         diaglabel = gui.QLabel(_("Diagnotic session"))
         inputlabel = gui.QLabel(_("Input"))
         outputlabel = gui.QLabel(_("Output"))
+
+        diaglabel.setAlignment(core.Qt.AlignCenter)
+        inputlabel.setAlignment(core.Qt.AlignCenter)
+        outputlabel.setAlignment(core.Qt.AlignCenter)
+
         self.diagsession = gui.QComboBox()
         rqsts = self.ecurequestsparser.requests.keys()
+        self.request_editor_sds = {}
+
+        self.diagsession.addItem(u"None")
+        self.request_editor_sds[u'None'] = ""
+
 
         for diag in rqsts:
-            if "start" in diag.lower() and "session" in diag.lower():
-                self.diagsession.addItem(diag)
+            if "start" in diag.lower() and "session" in diag.lower() and 'diag' in diag.lower():
+
+                sds = self.ecurequestsparser.requests[diag]
+
+                if u'Session Name' in sds.sendbyte_dataitems:
+                    session_names = self.ecurequestsparser.data[u'Session Name']
+                    for name in session_names.items.keys():
+                        sds_stream = " ".join(sds.build_data_stream({u'Session Name': name}))
+                        name = name + "[" + sds_stream + "]"
+                        self.request_editor_sds[name] = sds_stream
+                        self.diagsession.addItem(name)
+                    print sds.sendbyte_dataitems[u'Session Name']
+
+        if len(self.request_editor_sds) == 1:
+            self.diagsession.addItem(u"Default [10 81]")
+            self.diagsession.addItem(u"After Sales [10 C0]")
+            self.request_editor_sds[u"Default [10 81]"] = "10 81"
+            self.request_editor_sds[u"After Sales [10 C0]"] = "10 C0"
 
         self.input = gui.QLineEdit()
         self.input.returnPressed.connect(self.send_manual_cmd)
@@ -462,8 +488,10 @@ class paramWidget(gui.QWidget):
     def send_manual_cmd(self):
         diagmode = self.diagsession.currentText()
         if diagmode:
-            rq = self.ecurequestsparser.requests[str(diagmode.toUtf8()).decode("utf-8")].sentbytes
-            self.sendElm(rq)
+            sds = unicode(diagmode.toUtf8(), encoding="UTF-8")
+            if sds != u'None':
+                rq = self.request_editor_sds[sds]
+                self.sendElm(rq)
 
         command = self.input.text()
         ascii_cmd = str(command).upper().replace(" ", "")
@@ -1005,12 +1033,12 @@ class paramWidget(gui.QWidget):
         msgbox.setDefaultButton(gui.QMessageBox.Abort)
         userreply = msgbox.exec_()
 
-        if not request:
-            return
-
         if userreply == gui.QMessageBox.Abort:
             return
 
+        self.startDiagnosticSession()
+        # Add a little delay
+        time.sleep(.5)
         response = self.sendElm(request)
 
         self.dtcdialog.close()
