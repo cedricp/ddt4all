@@ -1120,6 +1120,9 @@ class paramWidget(gui.QWidget):
             html += '<h2 style="color:orange">DTC #%i' % dn + "</h2>"
             html += "<p>"
             for k in request.dataitems.keys():
+                # Filter out NDTC, not needed
+                if k == "NDTC":
+                    continue
                 ecu_data = self.ecurequestsparser.data[k]
                 dataitem = request.dataitems[k]
                 value_hex = ecu_data.getHexValue(' '.join(can_response), dataitem, request.ecu_file.endianness)
