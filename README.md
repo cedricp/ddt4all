@@ -69,7 +69,7 @@ Windows : Check serial drivers installation
 
 ## Informations
 
-[Windows archive with embedded Python/PyQt here](https://drive.google.com/file/d/0B2LgdbfJUsUZejBVbGlaM25sQ2M/view?usp=sharing)
+[Windows archive with embedded Python/PyQt here](https://drive.google.com/open?id=0B2LgdbfJUsUZWGVJWFJlTVdHVHc)
 
 Bugtracking here : https://github.com/cedricp/ddt4all
 
