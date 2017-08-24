@@ -163,6 +163,7 @@ class Ecu_list(gui.QWidget):
 class Main_widget(gui.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
+        self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
         self.setWindowTitle(_("DDT4All"))
@@ -373,6 +374,9 @@ class Main_widget(gui.QMainWindow):
         self.setConnected(True)
 
     def changeSds(self):
+        if not self.sdsready:
+            return
+
         if self.paramview:
             currenttext = self.sdscombo.currentText()
             if len(currenttext):

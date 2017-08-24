@@ -32,7 +32,6 @@ class paramWidget(gui.QWidget):
         super(paramWidget, self).__init__(parent)
         self.defaultdiagsessioncommand = "10C0"
         self.sds = {}
-        self.sdsready = False
         self.currentsession = ""
         self.layoutdict = None
         self.targetsdata = None
@@ -478,8 +477,6 @@ class paramWidget(gui.QWidget):
         self.dialogbox.show()
 
     def changeSDS(self, qttext):
-        if not self.sdsready:
-            return
         text = unicode(qttext.toUtf8(), encoding="UTF-8")
         diagsession = self.sds[text]
         self.defaultdiagsessioncommand = diagsession
@@ -564,7 +561,7 @@ class paramWidget(gui.QWidget):
         self.movingwidgets = []
         self.sliding = False
         self.sds = {}
-        self.sdsready = False
+        options.main_window.sdsready = False
         options.main_window.sdscombo.clear()
 
     def initXML(self):
@@ -608,7 +605,6 @@ class paramWidget(gui.QWidget):
             return
 
         self.defaultdiagsessioncommand = "10C0"
-        self.initELM()
 
         options.main_window.sdscombo.addItem("After sales (default) [10C0]")
         self.sds["After sales (default) [10C0]"] = "10C0"
@@ -626,14 +622,23 @@ class paramWidget(gui.QWidget):
                             dataname += u" [" + sdsrequest + u"]"
                             options.main_window.sdscombo.addItem(dataname)
                             self.sds[dataname] = sdsrequest
+
                 if len(request.sendbyte_dataitems) == 0:
                     sdsrequest = "".join(request.build_data_stream({}))
                     dataname = reqname + u" [" + sdsrequest + u"]"
-                    print "Adding " + dataname
                     options.main_window.sdscombo.addItem(dataname)
                     self.sds[dataname] = sdsrequest
 
-        self.sdsready = True
+        for i in range(0, options.main_window.sdscombo.count()):
+            itemname = unicode(options.main_window.sdscombo.itemText(i).toUtf8(), encoding="UTF-8")
+            if u'EXTENDED' in itemname.upper():
+                options.main_window.sdscombo.setCurrentIndex(i)
+                self.defaultdiagsessioncommand = self.sds[itemname]
+                break
+
+        options.main_window.sdsready = True
+        self.initELM()
+
         reqk = self.ecurequestsparser.requests.keys()
         if self.ecurequestsparser.ecu_protocol == 'CAN':
             self.tester_presend_command = '3E'
@@ -647,8 +652,7 @@ class paramWidget(gui.QWidget):
 
         if command.startswith('10'):
             self.logview.append('<font color=blue>' + _('Switching to session mode') + '</font> <font color=orange>%s</font>' % command)
-            if not options.simulation_mode:
-                self.startDiagnosticSession(command)
+            self.startDiagnosticSession(command)
             return
 
         if not options.simulation_mode:
@@ -935,13 +939,16 @@ class paramWidget(gui.QWidget):
         if self.currentsession == sds:
             return
 
-        if not options.simulation_mode:
-            if self.ecurequestsparser.ecu_protocol == "CAN":
+        self.logview.append('<font color=blue>' + _('ECU uses SDS ') + '</font> <font color=orange>%s</font>' % sds)
+
+        if self.ecurequestsparser.ecu_protocol == "CAN":
+            if not options.simulation_mode:
                 options.elm.start_session_can(sds)
-                self.currentsession = sds
-            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
+            self.currentsession = sds
+        elif self.ecurequestsparser.ecu_protocol == "KWP2000":
+            if not options.simulation_mode:
                 options.elm.start_session_iso(sds)
-                self.currentsession = sds
+            self.currentsession = sds
 
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displaydict[request_name]
