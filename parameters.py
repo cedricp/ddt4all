@@ -1044,9 +1044,12 @@ class paramWidget(gui.QWidget):
         self.dtcdialog.close()
 
         if 'WRONG' in response:
-            options.main_window.logview.append("Clear DTC failed")
+            msgbox = gui.QMessageBox()
+            msgbox.setText("There was an error clearing DTC")
+            msgbox.exec_()
+            options.main_window.logview.append("<font color=red>Clear DTC failed</font>")
         else:
-            options.main_window.logview.append("Clear DTC successfully done")
+            options.main_window.logview.append("<font color=green>Clear DTC successfully done</font>")
 
     def readDTC(self):
         if not options.simulation_mode:

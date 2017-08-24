@@ -316,6 +316,7 @@ class requestTable(gui.QTableWidget):
         self.resizeRowsToContents()
         self.cellChanged.connect(self.cellModified)
 
+
 class paramEditor(gui.QFrame):
     """Manages send/receive requests"""
     def __init__(self, issend=True, parent=None):
@@ -613,6 +614,7 @@ class paramEditor(gui.QFrame):
             self.current_request.sentbytes = text
         else:
             self.current_request.replybytes = text
+
 
 class requestEditor(gui.QWidget):
     """Main container for reauest editor"""

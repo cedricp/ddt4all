@@ -274,12 +274,12 @@ class Ecu_request:
             if k in self.sendbyte_dataitems:
                 datatitem = self.sendbyte_dataitems[k]
             else:
-                raise KeyError('Data item %s does not exist' % k)
+                raise KeyError('Ecurequest::build_data_stream : Data item %s does not exist' % k)
 
             if k in self.ecu_file.data:
                 data = self.ecu_file.data[k]
             else:
-                raise KeyError('Data %s does not exist' % k)
+                raise KeyError('Ecurequest::build_data_stream : Data %s does not exist' % k)
 
             if v in data.items:
                 v = hex(data.items[v])[2:].upper()
@@ -295,7 +295,7 @@ class Ecu_request:
                 data = self.ecu_file.data[k]
                 values[k] = data.getDisplayValue(stream, v, self.ecu_file.endianness)
             else:
-                raise KeyError('Data %s does not exist' % k)
+                raise KeyError('Ecurequest::get_values_from_stream : Data %s does not exist' % k)
 
         return values
 

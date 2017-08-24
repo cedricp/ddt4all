@@ -823,7 +823,7 @@ class ELM:
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
-                    tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + negrsp[result[6:8]] + "\n")
+                    tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache
