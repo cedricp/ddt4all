@@ -16,6 +16,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * `sudo apt-get install python-qt4`
 
 ## Features :
+
 * Read/Clear DTC
 * Manual ECU request
 * Log recorder
@@ -24,6 +25,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * AutoScan ECUs and select the related files
 * Internal JSON file format for high speed parsing
 * Database zip compression of converted JSON files
+* Can bus sniffing (Read/Decode non-ISOTP frames)
 
 ## How to install database ?
 

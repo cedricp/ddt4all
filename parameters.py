@@ -617,15 +617,23 @@ class paramWidget(gui.QWidget):
         for reqname, request in self.ecurequestsparser.requests.iteritems():
             uppername = reqname.upper()
             if "START" in uppername and "DIAGNOSTIC" in uppername and "SESSION" in uppername:
-                if u"Session Name" in request.sendbyte_dataitems:
-                    ecu_data = self.ecurequestsparser.data[u"Session Name"]
-                    for dataname, dataitem in ecu_data.items.iteritems():
-                        sdsrequest = "".join(request.build_data_stream({u"Session Name": dataname}))
-                        dataname += u" [" + sdsrequest + u"]"
-                        options.main_window.sdscombo.addItem(dataname)
-                        self.sds[dataname] = sdsrequest
-                self.sdsready = True
+                for di in request.sendbyte_dataitems.keys():
+                    dataitemnameupper = di.upper()
+                    if u"SESSION" in dataitemnameupper and u"NAME" in dataitemnameupper:
+                        ecu_data = self.ecurequestsparser.data[di]
+                        for dataname, dataitem in ecu_data.items.iteritems():
+                            sdsrequest = "".join(request.build_data_stream({di: dataname}))
+                            dataname += u" [" + sdsrequest + u"]"
+                            options.main_window.sdscombo.addItem(dataname)
+                            self.sds[dataname] = sdsrequest
+                if len(request.sendbyte_dataitems) == 0:
+                    sdsrequest = "".join(request.build_data_stream({}))
+                    dataname = reqname + u" [" + sdsrequest + u"]"
+                    print "Adding " + dataname
+                    options.main_window.sdscombo.addItem(dataname)
+                    self.sds[dataname] = sdsrequest
 
+        self.sdsready = True
         reqk = self.ecurequestsparser.requests.keys()
         if self.ecurequestsparser.ecu_protocol == 'CAN':
             self.tester_presend_command = '3E'
