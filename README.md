@@ -1,22 +1,73 @@
 # DDT4all
 
-DDT4all is a DDT2000 clone able to parse DDT2000's database, create/modifiy your own ECU parameters screens and connect to your with an ELM327 cable.
+DDT4all is a DDT2000 clone able to parse DDT2000's database, create/modifiy your own ECU parameters screens and connect to your vehicle with an ELM327 cable.
 
 This application is work in progress, so be very carful when using expert mode. If you're brave enough to use it and it's working (or not), please tell me so I can update the tested ECUs database.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
 
-Dependencies:
-* Python 2.6 or 2.7
-* PyQt 4.6 to 4.8
-* An ELM327 (usb preferable WiFi not tested yet)
+## Dependencies :
+* Python 2.7
+* PyQt 4.8
+* An ELM327 or OBDLink SX (usb preferable WiFi not tested yet)
 * The DDT2000 database (you must own it) - Copy the 'ecus' directory from your DDT2000 db (from C:\DDT2000data) to the ddt4all root directory
 
-Copy the  <ecus> directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py
+### Install dependencies on Ubuntu :
 
-NB :
-* If you have a local DDT2000 installation, you don't need to copy the 'ecus' directory, DDT4ALL will use it instead
+* `sudo apt-get install python-qt4`
+
+## Features :
+* Read/Clear DTC
+* Manual ECU request
+* Log recorder
+* Plugins system for automated functions
+* CAN/KWP2000 bus connection
+* AutoScan ECUs and select the related files
+* Internal JSON file format for high speed parsing
+* Database zip compression of converted JSON files
+
+## How to install database ?
+
+Copy the  <ecus> directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
+
+## How to compress XML files ?
+
+### From a terminal :
+
+* `python parameters.py --zipconvert`
+* remove 'ecus' directory
+
+### From the application :
+
+* Go to menu 'File' > 'Zip database'
+* remove 'ecus' directory
+
+## Notes
+
 * You can edit an original DDT2000 XML file after having saved it in JSON format.
 * You can create your own ECU screens.
+
+## Platforms
+
+* Gnu/Linux (**Ubuntu approved**)
+* Windows (**Not running on XP, vista, 2000**)
+* MacOS
+
+## Videos
+
+* [Changing roof minimun speed opration on Megane II](https://www.youtube.com/watch?v=6oiXV1Srg7E)
+* [Checking AirBag firing lines](https://www.youtube.com/watch?v=zTiqUaWeuT0)
+* [Clearing Airbag DTC](https://www.youtube.com/watch?v=oQ3WcKlsvrw)
+* [Can bus sniffing (Russian)](https://www.youtube.com/watch?v=SjDC7fUMWmg)
+* [ECU Parameters changes](https://www.youtube.com/watch?v=i9VkErEpoDE)
+
+## Troubleshootings
+
+### No serial connection
+
+Linux : Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
+Windows : Check serial drivers installation
+
+## Informations
 
 [Windows archive with embedded Python/PyQt here](https://drive.google.com/file/d/0B2LgdbfJUsUZejBVbGlaM25sQ2M/view?usp=sharing)
 
