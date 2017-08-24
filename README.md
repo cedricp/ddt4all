@@ -27,7 +27,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ## How to install database ?
 
-Copy the  <ecus> directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
+Copy the 'ecus' directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
 
 ## How to compress XML files ?
 
@@ -54,7 +54,7 @@ Copy the  <ecus> directory from your DDT2000 database to the root of the sources
 
 ## Videos
 
-* [Changing roof minimun speed opration on Megane II](https://www.youtube.com/watch?v=6oiXV1Srg7E)
+* [Changing roof minimun speed operation on Megane II Cabriolet](https://www.youtube.com/watch?v=6oiXV1Srg7E)
 * [Checking AirBag firing lines](https://www.youtube.com/watch?v=zTiqUaWeuT0)
 * [Clearing Airbag DTC](https://www.youtube.com/watch?v=oQ3WcKlsvrw)
 * [Can bus sniffing (Russian)](https://www.youtube.com/watch?v=SjDC7fUMWmg)
@@ -64,8 +64,8 @@ Copy the  <ecus> directory from your DDT2000 database to the root of the sources
 
 ### No serial connection
 
-Linux : Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
-Windows : Check serial drivers installation
+* Linux : Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
+* Windows : Check serial drivers installation
 
 ## Informations
 

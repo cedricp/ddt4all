@@ -300,6 +300,7 @@ class Main_widget(gui.QMainWindow):
         self.sdscombo = gui.QComboBox()
         self.sdscombo.setFixedWidth(300)
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
+        self.sdscombo.setEnabled(False)
 
         self.toolbar.addAction(scanaction)
         self.toolbar.addSeparator()
@@ -622,6 +623,7 @@ class Main_widget(gui.QMainWindow):
 
     def changeUserMode(self):
         options.promode = self.expert.isChecked()
+        self.sdscombo.setEnabled(options.promode)
 
     def changeLogMode(self):
         options.log_all = self.log.isChecked()
