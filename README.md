@@ -31,6 +31,11 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 Copy the 'ecus' directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
 
+## How to launch the application ?
+
+* Windows : double click DDT4ALL.BAT file
+* Linux : from a terminal, type `python ddt4all.py`
+
 ## How to compress XML files ?
 
 ### From a terminal :
