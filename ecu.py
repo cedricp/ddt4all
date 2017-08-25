@@ -1359,7 +1359,7 @@ class Ecu_scanner:
             # Check diagversion
             if not options.simulation_mode:
                 txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                if not options.elm.start_session_can('1001'):
+                if not options.elm.start_session_can('1003'):
                     # Bad response of SDS, no need to go further
                     continue
 
@@ -1450,7 +1450,7 @@ class Ecu_scanner:
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                if not options.elm.start_session_can('1081'):
+                if not options.elm.start_session_can('10C0'):
                     continue
 
             if options.simulation_mode:

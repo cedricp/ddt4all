@@ -308,7 +308,10 @@ class requestTable(gui.QTableWidget):
             manual = checkBox(request_inst)
 
             self.setItem(count, 0, gui.QTableWidgetItem(req))
-            self.setItem(count, 1, gui.QTableWidgetItem(request_inst.sentbytes))
+            sbtext = request_inst.sentbytes
+            if len(sbtext) > 10:
+                sbtext = sbtext[0:10] + "..."
+            self.setItem(count, 1, gui.QTableWidgetItem(sbtext))
             self.setCellWidget(count, 2, manual)
             count += 1
 

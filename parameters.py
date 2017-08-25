@@ -650,11 +650,6 @@ class paramWidget(gui.QWidget):
     def sendElm(self, command, auto=False):
         elm_response = '00 ' * 70
 
-        if command.startswith('10'):
-            self.logview.append('<font color=blue>' + _('Switching to session mode') + '</font> <font color=orange>%s</font>' % command)
-            self.startDiagnosticSession(command)
-            return
-
         if not options.simulation_mode:
             if not options.elm.connectionStat():
                 options.main_window.setConnected(False)
@@ -666,6 +661,12 @@ class paramWidget(gui.QWidget):
                     # Must reinit ELM
                     self.initELM()
                     options.main_window.setConnected(True)
+
+            if command.startswith('10'):
+                self.logview.append('<font color=blue>' + _(
+                    'Switching to session mode') + '</font> <font color=orange>%s</font>' % command)
+                options.elm.request(command, cache=False)
+                return
 
             if not options.promode:
                 # Allow read only modes
