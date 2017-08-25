@@ -61,7 +61,7 @@ Copy the 'ecus' directory from your DDT2000 database to the root of the sources 
 
 ## Videos
 
-* [Changing roof minimun speed operation on Megane II Cabriolet](https://www.youtube.com/watch?v=6oiXV1Srg7E)
+* [Changing roof minimum speed operation on Megane II Cabriolet](https://www.youtube.com/watch?v=6oiXV1Srg7E)
 * [Checking AirBag firing lines](https://www.youtube.com/watch?v=zTiqUaWeuT0)
 * [Clearing Airbag DTC](https://www.youtube.com/watch?v=oQ3WcKlsvrw)
 * [Can bus sniffing (Russian)](https://www.youtube.com/watch?v=SjDC7fUMWmg)

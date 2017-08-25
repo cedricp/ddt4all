@@ -729,8 +729,10 @@ class ELM:
     def send_can(self, command):
         command = command.strip().replace(' ', '')
 
-        if len(command) % 2 != 0 or len(command) == 0: return "ODD ERROR"
-        if not all(c in string.hexdigits for c in command): return "HEX ERROR"
+        if len(command) % 2 != 0 or len(command) == 0:
+            return "ODD ERROR"
+        if not all(c in string.hexdigits for c in command):
+            return "HEX ERROR"
 
         # do framing
         raw_command = []
@@ -1061,7 +1063,10 @@ class ELM:
 
     def start_session_can(self, start_session):
         self.startSession = start_session
-        self.cmd(self.startSession)
+        retcode = self.cmd(self.startSession)
+        if retcode.startswith('50'):
+            return True
+        return False
 
     def init_can_sniffer(self, filter_addr, br):
         if options.simulation_mode:
@@ -1174,6 +1179,9 @@ class ELM:
 
         if len(self.startSession) > 0:
             self.lastinitrsp = self.cmd(self.startSession)
+            if self.lastinitrsp.startswith('50'):
+                return True
+            return False
 
     def init_iso(self):
         self.currentprotocol = "iso"

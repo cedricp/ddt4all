@@ -1359,7 +1359,9 @@ class Ecu_scanner:
             # Check diagversion
             if not options.simulation_mode:
                 txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                options.elm.start_session_can('10C0')
+                if not options.elm.start_session_can('1001'):
+                    # Bad response of SDS, no need to go further
+                    continue
 
             if options.simulation_mode:
                 # Give scanner something to eat...
@@ -1372,10 +1374,6 @@ class Ecu_scanner:
             diagversion = can_response.replace(' ', '')[6:8]
 
             # Check supplier ident
-            if not options.simulation_mode:
-                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                options.elm.start_session_can('10C0')
-
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if addr == '26':
@@ -1389,10 +1387,6 @@ class Ecu_scanner:
             supplier = can_response.replace(' ', '')[6:132].decode('hex')
 
             # Check soft number
-            if not options.simulation_mode:
-                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                options.elm.start_session_can('10C0')
-
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if addr == '26':
@@ -1406,10 +1400,6 @@ class Ecu_scanner:
             soft = can_response.replace(' ', '')[6:38].decode('hex')
 
             # Check soft version
-            if not options.simulation_mode:
-                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                options.elm.start_session_can('10C0')
-
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if addr == '26':
@@ -1420,6 +1410,7 @@ class Ecu_scanner:
                 can_response = options.elm.request(req='22F195', positive='', cache=False)
                 if 'WRONG' in can_response:
                     continue
+
             soft_version = can_response.replace(' ', '')[6:38].decode('hex')
             if diagversion == "":
                 continue
@@ -1458,8 +1449,9 @@ class Ecu_scanner:
 
             if not options.simulation_mode:
                 options.elm.init_can()
-                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                options.elm.start_session_can('10C0')
+                options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
+                if not options.elm.start_session_can('1081'):
+                    continue
 
             if options.simulation_mode:
                 # Give scanner something to eat...
@@ -1467,7 +1459,6 @@ class Ecu_scanner:
                     can_response = "61 80 82 00 30 64 35 48 30 30 31 00 00 32 03 00 03 22 03 60 00 00 2D 32 14 00 60"
                 elif addr == "7A":
                     # Test approximate case
-                    #can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 74 00 56 05 02 01 00 00"
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
                 else:
                     can_response = "7F 80"
@@ -1535,7 +1526,6 @@ class Ecu_scanner:
         approximate_ecu = []
         found_exact = False
         found_approximate = False
-        href = ""
 
         for target in self.ecu_database.targets:
             if target.protocol == "CAN" and protocol != "CAN":

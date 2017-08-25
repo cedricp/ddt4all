@@ -269,7 +269,7 @@ class requestTable(gui.QTableWidget):
         if len(self.selectedItems()) == 0:
             return
 
-        currentItem = self.selectedItems()[-1]
+        currentItem = self.selectedItems()[0]
 
         if not currentItem:
             return
@@ -297,9 +297,9 @@ class requestTable(gui.QTableWidget):
         requestsk = self.ecureq.keys()
         numrows = len(requestsk)
         self.setRowCount(numrows)
-        self.setColumnCount(2)
+        self.setColumnCount(3)
 
-        self.setHorizontalHeaderLabels(core.QString(_("Request name;Manual")).split(";"))
+        self.setHorizontalHeaderLabels(core.QString(_("Request name;Bytes;Manual")).split(";"))
 
         count = 0
         for req in requestsk:
@@ -308,7 +308,8 @@ class requestTable(gui.QTableWidget):
             manual = checkBox(request_inst)
 
             self.setItem(count, 0, gui.QTableWidgetItem(req))
-            self.setCellWidget(count, 1, manual)
+            self.setItem(count, 1, gui.QTableWidgetItem(request_inst.sentbytes))
+            self.setCellWidget(count, 2, manual)
             count += 1
 
         self.sortItems(0, core.Qt.AscendingOrder)
