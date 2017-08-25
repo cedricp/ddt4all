@@ -495,11 +495,8 @@ class paramWidget(gui.QWidget):
         output = self.sendElm(ascii_cmd)
         self.output.setText(output)
 
-    def setRefreshTime(self, value):
-        self.refreshtime = value
-
     def initELM(self):
-        connection_status = self.ecurequestsparser.connect_to_hardware()
+        connection_status = self.ecurequestsparser.connect_to_hardware(options.cantimeout)
         if not connection_status:
             self.logview.append("<font color='red'>Protocol not supported</font>")
             return
@@ -1022,7 +1019,12 @@ class paramWidget(gui.QWidget):
             self.updateDisplay(request_name, update_inputs)
 
         if options.auto_refresh:
-            self.timer.start(self.refreshtime)
+            self.timer.start(options.refreshrate)
+
+    def setCanTimeout(self):
+        print options.cantimeout
+        if not options.simulation_mode:
+            options.elm.set_can_timeout(options.cantimeout)
 
     def clearDTC(self):
         self.logview.append(_("Clearing DTC information"))

@@ -985,7 +985,7 @@ class Ecu_file:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
 
-    def connect_to_hardware(self):
+    def connect_to_hardware(self, timeout = 200):
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
@@ -996,6 +996,7 @@ class Ecu_file:
                 if self.baudrate == 250000:
                     ecu_conf['brp'] = 1
                 options.elm.init_can()
+                options.elm.set_can_timeout(timeout)
                 options.elm.set_can_addr(short_addr, ecu_conf)
 
         # KWP 2000 Handling

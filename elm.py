@@ -713,6 +713,14 @@ class ELM:
                     self.lf.flush()
         return cmdrsp
 
+    def set_can_timeout(self, value):
+        if self.currentprotocol == 'can':
+            val = value / 4
+            if val > 255:
+                val = 255
+            val = hex(val)[2:].upper()
+            self.cmd("AT ST " + val)
+
     def send_cmd(self, command):
         if "AT" in command.upper() or self.currentprotocol != "can":
             return self.send_raw(command)

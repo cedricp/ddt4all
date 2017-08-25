@@ -196,11 +196,19 @@ class Main_widget(gui.QMainWindow):
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
         refrestimelabel = gui.QLabel(_("Refresh rate (ms):"))
 
+        self.cantimeout = gui.QSpinBox()
+        self.cantimeout.setRange(200, 1000)
+        self.cantimeout.setSingleStep(200)
+        self.cantimeout.valueChanged.connect(self.changeCanTimeout)
+        cantimeoutlabel = gui.QLabel(_("Can timeout (ms):"))
+
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
         self.statusBar.addWidget(self.progressstatus)
         self.statusBar.addWidget(refrestimelabel)
         self.statusBar.addWidget(self.refreshtimebox)
+        self.statusBar.addWidget(cantimeoutlabel)
+        self.statusBar.addWidget(self.cantimeout)
         self.statusBar.addWidget(self.infostatus)
 
         self.tabbedview = gui.QTabWidget()
@@ -461,8 +469,12 @@ class Main_widget(gui.QMainWindow):
             self.paramview.hexeditor()
 
     def changeRefreshTime(self):
+        options.refreshrate = self.refreshtimebox.value()
+
+    def changeCanTimeout(self):
+        options.cantimeout = self.cantimeout.value()
         if self.paramview:
-            self.paramview.setRefreshTime(self.refreshtimebox.value())
+            self.paramview.setCanTimeout()
 
     def scan(self):
         msgBox = gui.QMessageBox()
