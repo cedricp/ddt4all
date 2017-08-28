@@ -325,6 +325,13 @@ class Main_widget(gui.QMainWindow):
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.sdscombo)
 
+        if options.simulation_mode:
+            self.ui_edit_button = gui.QPushButton("UI Edit")
+            self.ui_edit_button.setCheckable(True)
+            self.toolbar.addSeparator()
+            self.toolbar.addWidget(self.ui_edit_button)
+            self.ui_edit_button.clicked.connect(self.toggle_edit)
+
         vehicle_dir = "vehicles"
         if not os.path.exists(vehicle_dir):
             os.mkdir(vehicle_dir)
@@ -380,6 +387,12 @@ class Main_widget(gui.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def toggle_edit(self):
+        options.mode_edit = self.ui_edit_button.isChecked()
+
+        if self.paramview:
+            self.paramview.reinitScreen()
 
     def changeSds(self):
         if not self.sdsready:

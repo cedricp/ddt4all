@@ -299,7 +299,7 @@ class paramWidget(gui.QWidget):
         self.reinitScreen()
 
     def mousePressEvent(self, event):
-        if options.simulation_mode:
+        if options.simulation_mode and options.mode_edit:
             self.currentwidget = None
             widget = gui.QApplication.widgetAt(gui.QCursor.pos())
 
@@ -364,7 +364,7 @@ class paramWidget(gui.QWidget):
             self.sliding = False
 
     def mouseMoveEvent(self, event):
-        if options.simulation_mode:
+        if options.simulation_mode and options.mode_edit == True:
             if len(self.movingwidgets):
                 sizemodifier = gui.QApplication.keyboardModifiers() == core.Qt.ControlModifier
                 ratiomodifier = gui.QApplication.keyboardModifiers() == core.Qt.ShiftModifier
@@ -380,6 +380,7 @@ class paramWidget(gui.QWidget):
                     else:
                         mw.move(mw.pos().x() + mouseX, mw.pos().y() + mouseY)
             return
+
         if self.sliding:
             mouseX = event.globalX() - self.mouseOldX
             mouseY = event.globalY() - self.mouseOldY
@@ -387,6 +388,9 @@ class paramWidget(gui.QWidget):
             self.mouseOldY = event.globalY()
             self.scrollarea.verticalScrollBar().setValue(self.scrollarea.verticalScrollBar().value() - mouseY)
             self.scrollarea.horizontalScrollBar().setValue(self.scrollarea.horizontalScrollBar().value() - mouseX)
+
+    def setRefreshTime(self, value):
+        self.refreshtime = value
 
     def wheelEvent(self, event):
         if event.delta() > 0:

@@ -202,7 +202,7 @@ class buttonRequest(gui.QPushButton):
         self.jsondata = jsdata
 
     def mousePressEvent(self, event):
-        if options.simulation_mode:
+        if options.simulation_mode and options.mode_edit:
             self.parent().mousePressEvent(event)
             return
         return super(buttonRequest, self).mousePressEvent(event)
@@ -538,7 +538,7 @@ class inputWidget(gui.QWidget):
             ddata = displayData(data, self.editwidget, True)
         else:
             self.editwidget = gui.QLineEdit(self)
-            if options.simulation_mode:
+            if options.simulation_mode and options.mode_edit:
                 self.editwidget.setEnabled(False)
             self.editwidget.setFont(qfnt)
             self.editwidget.setText("No Value")
@@ -577,7 +577,6 @@ class inputWidget(gui.QWidget):
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
         self.qlabel.setWordWrap(True)
-        #self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
         data = self.ecurequestsparser.data[text]
@@ -617,7 +616,7 @@ class inputWidget(gui.QWidget):
             self.editwidget.setToolTip(infos)
             ddata = displayData(data, self.editwidget)
 
-        if options.simulation_mode:
+        if options.simulation_mode and options.mode_edit:
             self.editwidget.setEnabled(False)
 
         self.editwidget.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)

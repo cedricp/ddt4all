@@ -26,6 +26,7 @@ ecu_scanner = None
 debug = 'DDTDEBUG' in os.environ
 cantimeout = 200
 refreshrate = 100
+mode_edit = False
 
 def get_last_error():
     global last_error
