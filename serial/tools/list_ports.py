@@ -29,7 +29,7 @@ elif os.name == 'posix':
     from serial.tools.list_ports_posix import comports
 #~ elif os.name == 'java':
 else:
-    raise ImportError("Sorry: no implementation for your platform ('{}') available".format(os.name))
+    raise ImportError("Sorry: no implementation for your platform ('%s') available" % (os.name,))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -54,24 +54,24 @@ def main():
     parser = argparse.ArgumentParser(description='Serial port enumeration')
 
     parser.add_argument(
-        'regexp',
-        nargs='?',
-        help='only show ports that match this regex')
+            'regexp',
+            nargs='?',
+            help='only show ports that match this regex')
 
     parser.add_argument(
-        '-v', '--verbose',
-        action='store_true',
-        help='show more messages')
+            '-v', '--verbose',
+            action='store_true',
+            help='show more messages')
 
     parser.add_argument(
-        '-q', '--quiet',
-        action='store_true',
-        help='suppress all messages')
+            '-q', '--quiet',
+            action='store_true',
+            help='suppress all messages')
 
     parser.add_argument(
-        '-n',
-        type=int,
-        help='only output the N-th entry')
+            '-n',
+            type=int,
+            help='only output the N-th entry')
 
     args = parser.parse_args()
 
@@ -79,7 +79,7 @@ def main():
     # get iteraror w/ or w/o filter
     if args.regexp:
         if not args.quiet:
-            sys.stderr.write("Filtered list with regexp: {!r}\n".format(args.regexp))
+            sys.stderr.write("Filtered list with regexp: %r\n" % (args.regexp,))
         iterator = sorted(grep(args.regexp))
     else:
         iterator = sorted(comports())

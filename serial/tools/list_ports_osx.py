@@ -22,7 +22,7 @@
 # Also see the 'IORegistryExplorer' for an idea of what we are actually searching
 
 import ctypes
-import ctypes.util
+from ctypes import util
 
 from serial.tools import list_ports_common
 
@@ -256,4 +256,4 @@ def comports():
 # test
 if __name__ == '__main__':
     for port, desc, hwid in sorted(comports()):
-        print("{}: {} [{}]".format(port, desc, hwid))
+        print("%s: %s [%s]" % (port, desc, hwid))
