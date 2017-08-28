@@ -21,7 +21,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * Manual ECU request
 * Log recorder
 * Plugins system for automated functions
-* CAN/KWP2000 bus connection
+* CAN / KWP2000 supported bus protocols
 * AutoScan ECUs and select the related files
 * Internal JSON file format for high speed parsing
 * Database zip compression of converted JSON files

@@ -242,11 +242,17 @@ def getcansnat(addr):
     return "??"
 
 
+def item_count(iter):
+    return sum(1 for _ in iter)
+
+
 def get_available_ports():
     ports = []
     portlist = list_ports.comports()
-    if len(portlist) == 0:
+
+    if item_count(portlist) == 0:
         return
+
     iterator = sorted(list(portlist))
     for port, desc, hwid in iterator:
         ports.append((port, desc))
