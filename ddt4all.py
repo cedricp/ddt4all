@@ -545,6 +545,10 @@ class Main_widget(gui.QMainWindow):
         for ecu in self.ecu_scan.ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
             item = gui.QListWidgetItem(ecu)
+            if '.xml' in self.ecu_scan.ecus[ecu].href.lower():
+                item.setForeground(core.Qt.yellow)
+            else:
+                item.setForeground(core.Qt.green)
             self.treeview_ecu.addItem(item)
 
         for ecu in self.ecu_scan.approximate_ecus.keys():
@@ -702,10 +706,10 @@ class Main_widget(gui.QMainWindow):
             ecu = self.ecu_scan.ecu_database.getTarget(ecu_name)
 
         if ecu:
+            if '.xml' not in ecu.href.lower():
+                isxml = False
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
-            if ecu.zipped:
-                isxml = False
 
         if self.snifferview.set_file(ecu_file):
             self.tabbedview.setCurrentIndex(1)

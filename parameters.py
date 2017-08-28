@@ -613,7 +613,8 @@ class paramWidget(gui.QWidget):
         # Init startDiagnosticSession combo
         for reqname, request in self.ecurequestsparser.requests.iteritems():
             uppername = reqname.upper()
-            if "START" in uppername and "DIAGNOSTIC" in uppername and "SESSION" in uppername:
+            if "START" in uppername and "DIAG" in uppername and "SESSION" in uppername:
+                sessionnamefound = False
                 for di in request.sendbyte_dataitems.keys():
                     dataitemnameupper = di.upper()
                     if u"SESSION" in dataitemnameupper and u"NAME" in dataitemnameupper:
@@ -623,8 +624,9 @@ class paramWidget(gui.QWidget):
                             dataname += u" [" + sdsrequest + u"]"
                             options.main_window.sdscombo.addItem(dataname)
                             self.sds[dataname] = sdsrequest
+                            sessionnamefound = True
 
-                if len(request.sendbyte_dataitems) == 0:
+                if len(request.sendbyte_dataitems) == 0 or sessionnamefound == False:
                     sdsrequest = "".join(request.build_data_stream({}))
                     dataname = reqname + u" [" + sdsrequest + u"]"
                     options.main_window.sdscombo.addItem(dataname)
@@ -1026,7 +1028,6 @@ class paramWidget(gui.QWidget):
             self.timer.start(options.refreshrate)
 
     def setCanTimeout(self):
-        print options.cantimeout
         if not options.simulation_mode:
             options.elm.set_can_timeout(options.cantimeout)
 

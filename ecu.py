@@ -72,14 +72,17 @@ class Data_item:
                 self.endian = endian.encode('ascii')
 
             ref = item.getAttribute("Ref")
-            if ref and ref == '1': self.ref = True
+            if ref and ref == '1':
+                self.ref = True
 
     def dump(self):
         js = {}
         if self.firstbyte != 0: js['firstbyte'] = self.firstbyte
         if self.bitoffset != 0: js['bitoffset'] = self.bitoffset
-        if self.ref != False: js['ref'] = self.ref
-        if self.endian != '': js['endian'] = self.endian
+        if self.ref != False:
+            js['ref'] = self.ref
+        if self.endian != '':
+            js['endian'] = self.endian
         return js
 
 
@@ -171,7 +174,7 @@ class Ecu_request:
                     self.dataitems[k] = di
 
         elif isinstance(data, unicode):
-            # Create a blank, new on
+            # Create a blank, new one
             self.name = data
         else:
             self.xmldoc = data
