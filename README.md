@@ -15,6 +15,10 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 * `sudo apt-get install python-qt4`
 
+## Windows installer
+
+Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
+
 ## Features :
 
 * Read/Clear DTC
@@ -41,7 +45,7 @@ Copy the 'ecus' directory from your DDT2000 database to the root of the sources 
 ### From a terminal :
 
 * `python parameters.py --zipconvert`
-* remove 'ecus' directory
+* remove/move 'ecus' directory
 
 ### From the application :
 
@@ -72,7 +76,9 @@ Copy the 'ecus' directory from your DDT2000 database to the root of the sources 
 ### No serial connection
 
 * Linux : Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
-* Windows : Check serial drivers installation
+* Windows :
+  * Check serial drivers installation
+  * Try to disable antivirus software
 
 ## Informations
 
