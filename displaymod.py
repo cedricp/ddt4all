@@ -182,7 +182,7 @@ class buttonRequest(gui.QPushButton):
         self.setFont(qfnt)
         self.setText(text)
         self.resize(rect['width'], rect['height'])
-        self.setStyleSheet("background: red; color: black")
+        self.setStyleSheet("background: yellow; color: black")
         self.move(rect['left'], rect['top'])
         self.butname = text + "_" + str(self.count)
 
@@ -195,7 +195,7 @@ class buttonRequest(gui.QPushButton):
         self.setFont(qfnt)
         self.setText(text)
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
-        self.setStyleSheet("background: red; color: black")
+        self.setStyleSheet("background: yellow; color: black")
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         self.butname = jsdata['text']
         self.uniquename = jsdata['uniquename']
