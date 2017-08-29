@@ -3,6 +3,8 @@ AppName=ddt4all
 AppVersion=1.0
 DefaultDirName={pf}\ddt4all
 DefaultGroupName=ddt4all
+SetupIconFile=icons\obd.ico
+OutputBaseFilename=ddt4all-installer
 
 [Files]
 Source: "*.py"; DestDir: "{app}"
@@ -17,8 +19,8 @@ Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 
 [Dirs]
-Name: "{app}\logs"
-Name: "{app}\json"
+Name: "{app}\logs"; Permissions: users-full
+Name: "{app}\json"; Permissions: users-full
 
 [Icons]
-Name: "{group}\ddt4all"; Filename: "{cmd}"; Parameters: "/C ""{app}\DDT4ALL.BAT"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
+Name: "{group}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"

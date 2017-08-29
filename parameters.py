@@ -1376,6 +1376,9 @@ def zipConvertXML():
 
             i += 1
             layoutjs = dumpXML(target)
+            if layoutjs is None:
+                print "Skipping current file (cannot parse it)"
+                continue
             ecufile = ecu.Ecu_file(target, True)
             js = ecufile.dumpJson()
 
