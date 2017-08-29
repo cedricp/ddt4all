@@ -1220,8 +1220,11 @@ class paramWidget(gui.QWidget):
         self.reinitScreen()
 
 def dumpXML(xmlname):
-    xdom = xml.dom.minidom.parse(xmlname)
-    xdoc = xdom.documentElement
+    try:
+        xdom = xml.dom.minidom.parse(xmlname)
+        xdoc = xdom.documentElement
+    except:
+        return None
     return dumpDOC(xdoc)
 
 def dumpDOC(xdoc):
@@ -1412,6 +1415,9 @@ def convertXML():
 
         i += 1
         layoutjs = dumpXML(target)
+        if layoutjs is None:
+            print "Skipping current file (cannot parse it)"
+            continue
         ecufile = ecu.Ecu_file(target, True)
         js = ecufile.dumpJson()
 
