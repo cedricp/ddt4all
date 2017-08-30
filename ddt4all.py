@@ -127,6 +127,8 @@ class Ecu_list(gui.QWidget):
             for t in stored_ecus[e]:
                 gui.QTreeWidgetItem(item, t)
 
+        self.list.resizeColumnToContents(0)
+
     def filterProject(self):
         project = str(self.vehicle_combo.currentText()[0:3])
         root = self.list.invisibleRootItem()
@@ -594,6 +596,9 @@ class Main_widget(gui.QMainWindow):
     def newEcu(self):
         filename = gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
+
+        if not filename:
+            return
 
         basename = os.path.basename(unicode(filename.toUtf8(), encoding="UTF-8"))
         filename = os.path.join("./json", basename)

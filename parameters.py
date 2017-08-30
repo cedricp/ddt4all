@@ -977,7 +977,7 @@ class paramWidget(gui.QWidget):
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
-                value = "ERROR"
+                value = "NO DATA"
             else:
                 qlabel.setStyleSheet("background: white")
 
@@ -1376,6 +1376,9 @@ def zipConvertXML():
 
             i += 1
             layoutjs = dumpXML(target)
+            if layoutjs is None:
+                print "Skipping current file (cannot parse it)"
+                continue
             ecufile = ecu.Ecu_file(target, True)
             js = ecufile.dumpJson()
 
@@ -1417,7 +1420,7 @@ def convertXML():
         layoutjs = dumpXML(target)
 
         if layoutjs is None:
-            print "Skipping file... (cannot parse)"
+            print "Skipping current file (cannot parse it)"
             continue
 
         ecufile = ecu.Ecu_file(target, True)
