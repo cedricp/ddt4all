@@ -977,7 +977,7 @@ class paramWidget(gui.QWidget):
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
-                value = "ERROR"
+                value = "NO DATA"
             else:
                 qlabel.setStyleSheet("background: white")
 
