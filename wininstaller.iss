@@ -22,5 +22,9 @@ Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs
 Name: "{app}\logs"; Permissions: users-full
 Name: "{app}\json"; Permissions: users-full
 
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
 [Icons]
 Name: "{group}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
+Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
