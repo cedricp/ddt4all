@@ -60,7 +60,7 @@ Copy the 'ecus' directory from your DDT2000 database to the root of the sources 
 ## Platforms
 
 * Gnu/Linux (**Ubuntu approved**)
-* Windows (**Not running on XP, vista, 2000**)
+* Windows (**For winXP, 2000, vista, try the 'winXP' branch**)
 * MacOS
 
 ## Videos
