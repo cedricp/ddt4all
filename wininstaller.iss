@@ -21,6 +21,7 @@ Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs
 [Dirs]
 Name: "{app}\logs"; Permissions: users-full
 Name: "{app}\json"; Permissions: users-full
+Name: "{app}\vehicles"; Permissions: users-full
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
