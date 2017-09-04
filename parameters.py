@@ -990,6 +990,16 @@ class paramWidget(gui.QWidget):
                         data = input.datadict[ecu_data.name]
                         if not data.is_combo:
                             data.widget.setText(value)
+                        else:
+                            combovalueindex = -1
+                            for i in range(data.widget.count()):
+                                itemname = data.widget.itemText(i)
+                                if unicode(itemname.toUtf8(), encoding="UTF8") == value:
+                                    combovalueindex = i
+                                    break
+
+                            if combovalueindex != -1:
+                                data.widget.setCurrentIndex(combovalueindex)
 
     def getRequest(self, requests, reqname):
         if reqname in requests:
