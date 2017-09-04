@@ -44,21 +44,20 @@ class ListPortInfo(object):
         self.interface = None
 
     def usb_description(self):
-        """return a short string to name the port based on USB info"""
         if self.interface is not None:
-            return '{0} - {1}'.format(self.product, self.interface)
+            return '{} - {}'.format(self.product, self.interface)
         elif self.product is not None:
             return self.product
         else:
             return self.name
 
     def usb_info(self):
-        """return a string with USB related information about device"""
-        return 'USB VID:PID={0:04X}:{1:04X}{2}{3}'.format(
-            self.vid or 0,
-            self.pid or 0,
-            ' SER={0}'.format(self.serial_number) if self.serial_number is not None else '',
-            ' LOCATION={0}'.format(self.location) if self.location is not None else '')
+        return 'USB VID:PID={:04X}:{:04X}{}{}'.format(
+                self.vid,
+                self.pid,
+                ' SER={}'.format(self.serial_number) if self.serial_number is not None else '',
+                ' LOCATION={}'.format(self.location) if self.location is not None else '',
+                )
 
     def apply_usb_info(self):
         """update description and hwid from USB data"""
@@ -83,7 +82,7 @@ class ListPortInfo(object):
         elif index == 2:
             return self.hwid
         else:
-            raise IndexError('{0} > 2'.format(index))
+            raise IndexError('{} > 2'.format(index))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # test

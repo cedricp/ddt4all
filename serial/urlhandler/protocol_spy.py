@@ -61,7 +61,9 @@ def hexdump(data):
     offset = 0
     for h, a in sixteen(data):
         if h is None:
-            yield (offset, ' '.join([''.join(values), ''.join(ascii)]))
+            yield (offset, ' '.join([
+                    ''.join(values),
+                    ''.join(ascii)]))
             del values[:]
             del ascii[:]
             offset += 0x10
@@ -80,21 +82,18 @@ class FormatRaw(object):
         self.tx_color = '\x1b[31m'
 
     def rx(self, data):
-        """show received data"""
         if self.color:
             self.output.write(self.rx_color)
         self.output.write(data)
         self.output.flush()
 
     def tx(self, data):
-        """show transmitted data"""
         if self.color:
             self.output.write(self.tx_color)
         self.output.write(data)
         self.output.flush()
 
     def control(self, name, value):
-        """(do not) show control calls"""
         pass
 
 
@@ -126,7 +125,6 @@ class FormatHexdump(object):
         self.output.flush()
 
     def rx(self, data):
-        """show received data as hex dump"""
         if self.color:
             self.output.write(self.rx_color)
         if data:
@@ -136,25 +134,19 @@ class FormatHexdump(object):
             self.write_line(time.time() - self.start_time, 'RX', '<empty>')
 
     def tx(self, data):
-        """show transmitted data as hex dump"""
         if self.color:
             self.output.write(self.tx_color)
         for offset, row in hexdump(data):
             self.write_line(time.time() - self.start_time, 'TX', '{:04X}  '.format(offset), row)
 
     def control(self, name, value):
-        """show control calls"""
         if self.color:
             self.output.write(self.control_color)
         self.write_line(time.time() - self.start_time, name, value)
 
 
 class Serial(serial.Serial):
-    """\
-    Inherit the native Serial port implementation and wrap all the methods and
-    attributes.
-    """
-    # pylint: disable=no-member
+    """Just inherit the native Serial port implementation and patch the port property."""
 
     def __init__(self, *args, **kwargs):
         super(Serial, self).__init__(*args, **kwargs)
@@ -170,10 +162,7 @@ class Serial(serial.Serial):
         """extract host and port from an URL string"""
         parts = urlparse.urlsplit(url)
         if parts.scheme != 'spy':
-            raise serial.SerialException(
-                'expected a string in the form '
-                '"spy://port[?option[=value][&option[=value]]]": '
-                'not starting with spy:// ({!r})'.format(parts.scheme))
+            raise serial.SerialException('expected a string in the form "spy://port[?option[=value][&option[=value]]]": not starting with spy:// (%r)' % (parts.scheme,))
         # process options now, directly altering self
         formatter = FormatHexdump
         color = False
@@ -189,11 +178,9 @@ class Serial(serial.Serial):
                 elif option == 'all':
                     self.show_all = True
                 else:
-                    raise ValueError('unknown option: {!r}'.format(option))
+                    raise ValueError('unknown option: %r' % (option,))
         except ValueError as e:
-            raise serial.SerialException(
-                'expected a string in the form '
-                '"spy://port[?option[=value][&option[=value]]]": {}'.format(e))
+            raise serial.SerialException('expected a string in the form "spy://port[?option[=value][&option[=value]]]": %s' % e)
         self.formatter = formatter(output, color)
         return ''.join([parts.netloc, parts.path])
 
@@ -206,16 +193,6 @@ class Serial(serial.Serial):
         if rx or self.show_all:
             self.formatter.rx(rx)
         return rx
-
-    if hasattr(serial.Serial, 'cancel_read'):
-        def cancel_read(self):
-            self.formatter.control('Q-RX', 'cancel_read')
-            super(Serial, self).cancel_read()
-
-    if hasattr(serial.Serial, 'cancel_write'):
-        def cancel_write(self):
-            self.formatter.control('Q-TX', 'cancel_write')
-            super(Serial, self).cancel_write()
 
     @property
     def in_waiting(self):
@@ -281,6 +258,6 @@ class Serial(serial.Serial):
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if __name__ == '__main__':
-    ser = Serial(None)
-    ser.port = 'spy:///dev/ttyS0'
-    print(ser)
+    s = Serial(None)
+    s.port = 'spy:///dev/ttyS0'
+    print(s)
