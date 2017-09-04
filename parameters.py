@@ -700,9 +700,8 @@ class paramWidget(gui.QWidget):
         if not auto or options.log_all:
             self.logview.append(txt + command)
 
-        if elm_response.startswith('7F'):
-            nrsp = elm.errorval(elm_response[6:8])
-            self.logview.append("<font color=red>" + _('Bad ELM response :') + "</font> " + nrsp)
+        if elm_response.startswith('WRONG'):
+            self.logview.append("<font color=red>" + _('Bad ELM response :') + "</font> " + elm_response)
 
         if not auto or options.log_all:
             self.logview.append(_('ELM response : ') + elm_response)
@@ -977,7 +976,7 @@ class paramWidget(gui.QWidget):
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
-                value = "ERROR"
+                value = "NO DATA"
             else:
                 qlabel.setStyleSheet("background: white")
 
@@ -990,6 +989,16 @@ class paramWidget(gui.QWidget):
                         data = input.datadict[ecu_data.name]
                         if not data.is_combo:
                             data.widget.setText(value)
+                        else:
+                            combovalueindex = -1
+                            for i in range(data.widget.count()):
+                                itemname = data.widget.itemText(i)
+                                if unicode(itemname.toUtf8(), encoding="UTF8") == value:
+                                    combovalueindex = i
+                                    break
+
+                            if combovalueindex != -1:
+                                data.widget.setCurrentIndex(combovalueindex)
 
     def getRequest(self, requests, reqname):
         if reqname in requests:
@@ -1130,6 +1139,7 @@ class paramWidget(gui.QWidget):
             while maxcount > 0:
                 more_can_response = self.sendElm(moredtcread_command)
                 more_can_response = more_can_response.split(' ')
+
                 if more_can_response[0].upper() == 'WRONG':
                     break
                 # Append result to build one frame
@@ -1220,8 +1230,11 @@ class paramWidget(gui.QWidget):
         self.reinitScreen()
 
 def dumpXML(xmlname):
-    xdom = xml.dom.minidom.parse(xmlname)
-    xdoc = xdom.documentElement
+    try:
+        xdom = xml.dom.minidom.parse(xmlname)
+        xdoc = xdom.documentElement
+    except:
+        return None
     return dumpDOC(xdoc)
 
 def dumpDOC(xdoc):
@@ -1373,6 +1386,9 @@ def zipConvertXML():
 
             i += 1
             layoutjs = dumpXML(target)
+            if layoutjs is None:
+                print "Skipping current file (cannot parse it)"
+                continue
             ecufile = ecu.Ecu_file(target, True)
             js = ecufile.dumpJson()
 
@@ -1412,6 +1428,9 @@ def convertXML():
 
         i += 1
         layoutjs = dumpXML(target)
+        if layoutjs is None:
+            print "Skipping current file (cannot parse it)"
+            continue
         ecufile = ecu.Ecu_file(target, True)
         js = ecufile.dumpJson()
 

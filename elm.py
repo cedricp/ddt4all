@@ -638,6 +638,8 @@ class ELM:
 
         # send cmd
         rsp = self.cmd(req, serviceDelay)
+        if 'WRONG' in rsp:
+            return rsp
         res = ""
 
         if self.currentprotocol != "can":
