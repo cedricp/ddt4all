@@ -7,6 +7,7 @@ import glob
 import json
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
+import PyQt4.QtWebKit as webkit
 import parameters, ecu
 import elm, options, locale
 import dataeditor
@@ -176,6 +177,8 @@ class Main_widget(gui.QMainWindow):
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
 
         self.paramview = None
+        self.docview = webkit.QWebView()
+        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
         self.screennames = []
 
         self.statusBar = gui.QStatusBar()
@@ -221,6 +224,7 @@ class Main_widget(gui.QMainWindow):
 
         self.snifferview = sniffer.sniffer()
 
+        self.tabbedview.addTab(self.docview, _("Documentation"))
         self.tabbedview.addTab(self.scrollview, _("Screen"))
         self.tabbedview.addTab(self.snifferview, _("CAN Sniffer"))
 
@@ -473,7 +477,7 @@ class Main_widget(gui.QMainWindow):
             self.screennames.append(newscreenname)
 
     def showDataTab(self, name):
-        self.tabbedview.setCurrentIndex(3)
+        self.tabbedview.setCurrentIndex(4)
         self.dataitemeditor.edititem(name)
 
     def hexeditor(self):
@@ -717,7 +721,7 @@ class Main_widget(gui.QMainWindow):
             ecu_addr = ecu.addr
 
         if self.snifferview.set_file(ecu_file):
-            self.tabbedview.setCurrentIndex(1)
+            self.tabbedview.setCurrentIndex(2)
 
         if self.paramview:
             if ecu_file == self.paramview.ddtfile:

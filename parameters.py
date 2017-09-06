@@ -31,6 +31,7 @@ class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
         self.defaultdiagsessioncommand = "10C0"
+        self.setFocusPolicy(core.Qt.ClickFocus)
         self.sds = {}
         self.currentsession = ""
         self.layoutdict = None
@@ -392,11 +393,16 @@ class paramWidget(gui.QWidget):
     def setRefreshTime(self, value):
         self.refreshtime = value
 
-    def wheelEvent(self, event):
-        if event.delta() > 0:
+    def keyPressEvent(self, event):
+        if event.key() == core.Qt.Key_Plus:
             self.zoomin_page()
-        else:
+        elif event.key() == core.Qt.Key_Minus:
             self.zoomout_page()
+        else:
+            event.ignore()
+            return
+
+        event.accept()
         self.allow_parameters_update = False
         self.init(self.current_screen)
         self.allow_parameters_update = True
