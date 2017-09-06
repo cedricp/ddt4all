@@ -179,6 +179,9 @@ class Main_widget(gui.QMainWindow):
         self.paramview = None
         self.docview = webkit.QWebView()
         self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+        self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
+        self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
+        self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
         self.screennames = []
 
         self.statusBar = gui.QStatusBar()
