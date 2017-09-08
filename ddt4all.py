@@ -320,6 +320,11 @@ class Main_widget(gui.QMainWindow):
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 
+        self.zoominbutton = gui.QPushButton("Zoom In")
+        self.zoomoutbutton = gui.QPushButton("Zoom Out")
+        self.zoominbutton.clicked.connect(self.zoomin)
+        self.zoomoutbutton.clicked.connect(self.zoomout)
+
         self.toolbar.addAction(scanaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
@@ -333,8 +338,12 @@ class Main_widget(gui.QMainWindow):
         self.toolbar.addAction(self.hexinput)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.sdscombo)
+        self.toolbar.addSeparator()
+        self.toolbar.addWidget(self.zoominbutton)
+        self.toolbar.addWidget(self.zoomoutbutton)
 
         if options.simulation_mode:
+            self.toolbar.addSeparator()
             self.ui_edit_button = gui.QPushButton("UI Edit")
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
@@ -396,6 +405,14 @@ class Main_widget(gui.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def zoomin(self):
+        if self.paramview:
+            self.paramview.zoomin_page()
+
+    def zoomout(self):
+        if self.paramview:
+            self.paramview.zoomout_page()
 
     def toggle_edit(self):
         options.mode_edit = self.ui_edit_button.isChecked()

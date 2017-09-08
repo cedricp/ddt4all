@@ -403,19 +403,24 @@ class paramWidget(gui.QWidget):
             return
 
         event.accept()
-        self.allow_parameters_update = False
-        self.init(self.current_screen)
-        self.allow_parameters_update = True
 
     def zoomin_page(self):
         self.uiscale -= 1
         if self.uiscale < 4:
             self.uiscale = 4
 
+        self.allow_parameters_update = False
+        self.init(self.current_screen)
+        self.allow_parameters_update = True
+
     def zoomout_page(self):
         self.uiscale += 1
         if self.uiscale > 20:
             self.uiscale = 20
+
+        self.allow_parameters_update = False
+        self.init(self.current_screen)
+        self.allow_parameters_update = True
 
     def init(self, screen):
         if self.panel:

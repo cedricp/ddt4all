@@ -17,11 +17,13 @@ Source: "importlib\*"; DestDir: "{app}\importlib"; Flags: ignoreversion recurses
 Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall('Do not forget to install database to ', ExpandConstant('{app}'))
+; Uncheck the line below to package ecu db
+; Source: "ecu.zip"; DestDir: "{app}";
 
 [Code]
 procedure AfterMyProgInstall(S: String; P: String);
 begin
-  MsgBox(S + P, mbInformation, MB_OK);
+    MsgBox(S + P, mbInformation, MB_OK);
 end;
 
 [Dirs]

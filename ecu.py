@@ -1505,12 +1505,12 @@ class Ecu_scanner:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
                 # Send some data collected during my tests
-                if addr == "27":
-                    can_response = "61 80 82 00 26 02 45 09 30 30 31 01 18 52 20 06 05 02 05 00 03 01 04 33 69 91"
-                elif addr == "01":
-                    can_response = "61 80 82 01 00 28 28 04 41 4D 52 00 03 07 00 07 04 00 04 03 08 2B 00 31 04 00"
-                elif addr == "2C":
-                    can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
+                if addr == "02":
+                    can_response = "61 80 77 00 31 38 31 04 41 42 45 E3 17 03 00 38 00 07 00 00 00 00 09 11 12 00"
+                elif addr == "7A":
+                    can_response = "61 80 82 00 23 66 18 14 30 33 37 82 00 08 53 86 00 CB A4 00 70 06 3C 02 B1 A4"
+                elif addr == "26":
+                    can_response = "61 80 82 00 03 27 76 00 32 31 33 11 01 10 30 08 00 66 00 00 00 41 06 01 F1 38"
                 else:
                     continue
 
@@ -1545,7 +1545,7 @@ class Ecu_scanner:
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Found ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
                        % (href, diagversion, supplier, soft, version)
 
                 options.main_window.logview.append(line)
