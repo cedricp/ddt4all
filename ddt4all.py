@@ -207,6 +207,7 @@ class Main_widget(gui.QMainWindow):
         self.cantimeout = gui.QSpinBox()
         self.cantimeout.setRange(200, 1000)
         self.cantimeout.setSingleStep(200)
+        self.cantimeout.setValue(options.cantimeout)
         self.cantimeout.valueChanged.connect(self.changeCanTimeout)
         cantimeoutlabel = gui.QLabel(_("Can timeout (ms):"))
 

@@ -511,7 +511,7 @@ class paramWidget(gui.QWidget):
         self.output.setText(output)
 
     def initELM(self):
-        connection_status = self.ecurequestsparser.connect_to_hardware(options.cantimeout)
+        connection_status = self.ecurequestsparser.connect_to_hardware()
         if not connection_status:
             self.logview.append("<font color='red'>Protocol not supported</font>")
             return
