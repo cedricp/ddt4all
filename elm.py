@@ -220,7 +220,6 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
-
 def get_can_addr(txa):
     for d in dnat.keys():
         if dnat[d] == txa:
@@ -1168,6 +1167,7 @@ class ELM:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
+            self.currentaddress = get_can_addr(TXa)
         else:
             TXa = dnat[addr]
             RXa = snat[addr]
