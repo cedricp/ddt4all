@@ -1,6 +1,6 @@
 # DDT4all
 
-DDT4all is a DDT2000 clone able to parse DDT2000's database, create/modify your own ECU parameters screens and connect to your vehicle with an ELM327 cable.
+DDT4all is tool to create your own ECU parameters screens and connect to your vehicle with an ELM327 cable.
 
 This application is work in progress, so be very carful when using expert mode. If you're brave enough to use it and it's working (or not), please tell me so I can update the tested ECUs database.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).

@@ -1458,7 +1458,7 @@ class Ecu_scanner:
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if addr == "04":
-                    can_response = "61 80 82 00 30 64 35 48 30 30 31 00 00 32 03 00 03 22 03 60 00 00 2D 32 14 00 60"
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
                 elif addr == "7A":
                     # Test approximate case
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
