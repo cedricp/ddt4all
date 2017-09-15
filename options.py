@@ -24,7 +24,7 @@ last_error = ""
 main_window = None
 ecu_scanner = None
 debug = 'DDTDEBUG' in os.environ
-cantimeout = 400
+cantimeout = 0
 refreshrate = 100
 mode_edit = False
 

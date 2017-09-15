@@ -1181,7 +1181,8 @@ class ELM:
         else:
             self.cmd("AT SP 6")
 
-        self.set_can_timeout(options.cantimeout)
+        if options.cantimeout > 0:
+            self.set_can_timeout(options.cantimeout)
 
         return TXa, RXa
 

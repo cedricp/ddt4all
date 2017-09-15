@@ -33,7 +33,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## How to install database ?
 
-Copy the 'ecus' directory from your DDT2000 database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
+Copy the 'ecus' directory from your database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
 
 ## How to launch the application ?
 
