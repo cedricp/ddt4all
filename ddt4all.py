@@ -7,6 +7,7 @@ import glob
 import json
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
+import PyQt4.QtWebKit as webkit
 import parameters, ecu
 import elm, options, locale
 import dataeditor
@@ -34,18 +35,20 @@ class Ecu_list(gui.QWidget):
         self.vehicle_combo = gui.QComboBox()
 
         self.ecu_map = {}
-
         vehicles = [
             "ALL", "XBA - KWID CN", "XBB - KWID BR", "X06 - TWINGO", "X44 - TWINGO II",
-            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA", "X65 - CLIO II",
+            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA",
+            "X65 - CLIO II",
             "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR",
             "XJB - CAPTUR II", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
             "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV",
             "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
             "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
             "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II", "XFE - KADJAR",
-            "X33 - WIND", "X09 - TWIZY", "X10 - ZOE", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO II",
-            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III", "X70 - MASTER II", "X62 - MASTER III",
+            "X33 - WIND", "X09 - TWIZY", "X10 - ZOE", "X76 - KANGOO I",
+            "X61 - KANGOO II", "XFK - KANGOO III",
+            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
+            "X70 - MASTER II", "X62 - MASTER III",
             "X90 - LOGAN/SANDERO", "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
             "X92 - LODGY", "X02 - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
         ]
@@ -176,6 +179,11 @@ class Main_widget(gui.QMainWindow):
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
 
         self.paramview = None
+        self.docview = webkit.QWebView()
+        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+        self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
+        self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
+        self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
         self.screennames = []
 
         self.statusBar = gui.QStatusBar()
@@ -199,10 +207,11 @@ class Main_widget(gui.QMainWindow):
         refrestimelabel = gui.QLabel(_("Refresh rate (ms):"))
 
         self.cantimeout = gui.QSpinBox()
-        self.cantimeout.setRange(200, 1000)
+        self.cantimeout.setRange(0, 1000)
         self.cantimeout.setSingleStep(200)
+        self.cantimeout.setValue(options.cantimeout)
         self.cantimeout.valueChanged.connect(self.changeCanTimeout)
-        cantimeoutlabel = gui.QLabel(_("Can timeout (ms):"))
+        cantimeoutlabel = gui.QLabel(_("Can timeout (ms) [0:AUTO] :"))
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -221,6 +230,7 @@ class Main_widget(gui.QMainWindow):
 
         self.snifferview = sniffer.sniffer()
 
+        self.tabbedview.addTab(self.docview, _("Documentation"))
         self.tabbedview.addTab(self.scrollview, _("Screen"))
         self.tabbedview.addTab(self.snifferview, _("CAN Sniffer"))
 
@@ -313,6 +323,11 @@ class Main_widget(gui.QMainWindow):
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 
+        self.zoominbutton = gui.QPushButton("Zoom In")
+        self.zoomoutbutton = gui.QPushButton("Zoom Out")
+        self.zoominbutton.clicked.connect(self.zoomin)
+        self.zoomoutbutton.clicked.connect(self.zoomout)
+
         self.toolbar.addAction(scanaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
@@ -326,8 +341,12 @@ class Main_widget(gui.QMainWindow):
         self.toolbar.addAction(self.hexinput)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.sdscombo)
+        self.toolbar.addSeparator()
+        self.toolbar.addWidget(self.zoominbutton)
+        self.toolbar.addWidget(self.zoomoutbutton)
 
         if options.simulation_mode:
+            self.toolbar.addSeparator()
             self.ui_edit_button = gui.QPushButton("UI Edit")
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
@@ -389,6 +408,14 @@ class Main_widget(gui.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def zoomin(self):
+        if self.paramview:
+            self.paramview.zoomin_page()
+
+    def zoomout(self):
+        if self.paramview:
+            self.paramview.zoomout_page()
 
     def toggle_edit(self):
         options.mode_edit = self.ui_edit_button.isChecked()
@@ -473,7 +500,7 @@ class Main_widget(gui.QMainWindow):
             self.screennames.append(newscreenname)
 
     def showDataTab(self, name):
-        self.tabbedview.setCurrentIndex(3)
+        self.tabbedview.setCurrentIndex(4)
         self.dataitemeditor.edititem(name)
 
     def hexeditor(self):
@@ -717,7 +744,7 @@ class Main_widget(gui.QMainWindow):
             ecu_addr = ecu.addr
 
         if self.snifferview.set_file(ecu_file):
-            self.tabbedview.setCurrentIndex(1)
+            self.tabbedview.setCurrentIndex(2)
 
         if self.paramview:
             if ecu_file == self.paramview.ddtfile:

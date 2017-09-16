@@ -48,6 +48,8 @@ class labelWidget(gui.QLabel):
         self.move(rect['left'], rect['top'])
         if alignment == '2':
             self.setAlignment(core.Qt.AlignHCenter)
+        elif alignment == '1':
+            self.setAlignment(core.Qt.AlignRight)
         else:
             self.setAlignment(core.Qt.AlignLeft)
 
@@ -69,6 +71,8 @@ class labelWidget(gui.QLabel):
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         if alignment == '2':
             self.setAlignment(core.Qt.AlignHCenter)
+        elif alignment == '1':
+            self.setAlignment(core.Qt.AlignRight)
         else:
             self.setAlignment(core.Qt.AlignLeft)
 

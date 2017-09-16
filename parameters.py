@@ -31,6 +31,7 @@ class paramWidget(gui.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
         self.defaultdiagsessioncommand = "10C0"
+        self.setFocusPolicy(core.Qt.ClickFocus)
         self.sds = {}
         self.currentsession = ""
         self.layoutdict = None
@@ -392,24 +393,34 @@ class paramWidget(gui.QWidget):
     def setRefreshTime(self, value):
         self.refreshtime = value
 
-    def wheelEvent(self, event):
-        if event.delta() > 0:
+    def keyPressEvent(self, event):
+        if event.key() == core.Qt.Key_Plus:
             self.zoomin_page()
-        else:
+        elif event.key() == core.Qt.Key_Minus:
             self.zoomout_page()
-        self.allow_parameters_update = False
-        self.init(self.current_screen)
-        self.allow_parameters_update = True
+        else:
+            event.ignore()
+            return
+
+        event.accept()
 
     def zoomin_page(self):
         self.uiscale -= 1
         if self.uiscale < 4:
             self.uiscale = 4
 
+        self.allow_parameters_update = False
+        self.init(self.current_screen)
+        self.allow_parameters_update = True
+
     def zoomout_page(self):
         self.uiscale += 1
         if self.uiscale > 20:
             self.uiscale = 20
+
+        self.allow_parameters_update = False
+        self.init(self.current_screen)
+        self.allow_parameters_update = True
 
     def init(self, screen):
         if self.panel:
@@ -500,7 +511,7 @@ class paramWidget(gui.QWidget):
         self.output.setText(output)
 
     def initELM(self):
-        connection_status = self.ecurequestsparser.connect_to_hardware(options.cantimeout)
+        connection_status = self.ecurequestsparser.connect_to_hardware()
         if not connection_status:
             self.logview.append("<font color='red'>Protocol not supported</font>")
             return
