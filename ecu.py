@@ -836,7 +836,8 @@ class Ecu_file:
                 if self.ecu_protocol == "KWP2000":
                     self.fastinit = ecudict['obd']['fastinit']
                 self.funcaddr = ecudict['obd']['funcaddr']
-                self.funcname = ecudict['obd']['funcname']
+                if 'funcname' in ecudict['obd']:
+                    self.funcname = ecudict['obd']['funcname']
                 if "kw1" in ecudict['obd']:
                     self.kw1 = ecudict['obd']['kw1']
                     self.kw2 = ecudict['obd']['kw2']
@@ -998,6 +999,7 @@ class Ecu_file:
             if not options.simulation_mode:
                 if self.baudrate == 250000:
                     ecu_conf['brp'] = 1
+                options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf)
 
         # KWP 2000 Handling
