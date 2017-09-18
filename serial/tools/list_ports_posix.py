@@ -24,7 +24,7 @@ from serial.tools import list_ports_common
 # try to detect the OS so that a device can be selected...
 plat = sys.platform.lower()
 
-if plat[:5] == 'linux':    # Linux (confirmed)
+if plat[:5] == 'linux':    # Linux (confirmed)  # noqa
     from serial.tools.list_ports_linux import comports
 
 elif plat[:6] == 'darwin':   # OS X (confirmed)
@@ -44,7 +44,6 @@ elif plat[:7] == 'openbsd':    # OpenBSD
         return [list_ports_common.ListPortInfo(d) for d in devices]
 
 elif plat[:3] == 'bsd' or plat[:7] == 'freebsd':
-
     def comports():
         devices = glob.glob('/dev/cua*[!.init][!.lock]')
         return [list_ports_common.ListPortInfo(d) for d in devices]
@@ -87,16 +86,16 @@ don't know how to enumerate ttys on this system.
 ! I you know how the serial ports are named send this information to
 ! the author of this module:
 
-sys.platform = %r
-os.name = %r
-pySerial version = %s
+sys.platform = {!r}
+os.name = {!r}
+pySerial version = {}
 
 also add the naming scheme of the serial ports and with a bit luck you can get
 this module running...
-""" % (sys.platform, os.name, serial.VERSION))
-    raise ImportError("Sorry: no implementation for your platform ('%s') available" % (os.name,))
+""".format(sys.platform, os.name, serial.VERSION))
+    raise ImportError("Sorry: no implementation for your platform ('{}') available".format(os.name))
 
 # test
 if __name__ == '__main__':
     for port, desc, hwid in sorted(comports()):
-        print("%s: %s [%s]" % (port, desc, hwid))
+        print("{}: {} [{}]".format(port, desc, hwid))
