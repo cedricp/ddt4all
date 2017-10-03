@@ -248,6 +248,8 @@ class Main_widget(gui.QMainWindow):
         self.treedock_widget = gui.QDockWidget(self)
         self.treedock_widget.setWidget(screen_widget)
         self.treeview_params = gui.QTreeWidget()
+        self.treeview_params.setSortingEnabled(True)
+        self.treeview_params.sortByColumn(0, core.Qt.AscendingOrder)
         self.screenmenu = gui.QMenuBar()
         treedock_layout = gui.QVBoxLayout()
         treedock_layout.addWidget(self.screenmenu)

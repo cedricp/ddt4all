@@ -527,7 +527,7 @@ class inputWidget(gui.QWidget):
             self.editwidget = gui.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
-            for key in items_ref.keys():
+            for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
 
             self.editwidget.resize(rect['width'] - width, rect['height'])
@@ -589,7 +589,7 @@ class inputWidget(gui.QWidget):
             self.editwidget = gui.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
-            for key in items_ref.keys():
+            for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
 
 
