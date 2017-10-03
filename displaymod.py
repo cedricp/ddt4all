@@ -48,6 +48,8 @@ class labelWidget(gui.QLabel):
         self.move(rect['left'], rect['top'])
         if alignment == '2':
             self.setAlignment(core.Qt.AlignHCenter)
+        elif alignment == '1':
+            self.setAlignment(core.Qt.AlignRight)
         else:
             self.setAlignment(core.Qt.AlignLeft)
 
@@ -69,6 +71,8 @@ class labelWidget(gui.QLabel):
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         if alignment == '2':
             self.setAlignment(core.Qt.AlignHCenter)
+        elif alignment == '1':
+            self.setAlignment(core.Qt.AlignRight)
         else:
             self.setAlignment(core.Qt.AlignLeft)
 
@@ -523,7 +527,7 @@ class inputWidget(gui.QWidget):
             self.editwidget = gui.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
-            for key in items_ref.keys():
+            for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
 
             self.editwidget.resize(rect['width'] - width, rect['height'])
@@ -585,7 +589,7 @@ class inputWidget(gui.QWidget):
             self.editwidget = gui.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
-            for key in items_ref.keys():
+            for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
 
 

@@ -836,7 +836,8 @@ class Ecu_file:
                 if self.ecu_protocol == "KWP2000":
                     self.fastinit = ecudict['obd']['fastinit']
                 self.funcaddr = ecudict['obd']['funcaddr']
-                self.funcname = ecudict['obd']['funcname']
+                if 'funcname' in ecudict['obd']:
+                    self.funcname = ecudict['obd']['funcname']
                 if "kw1" in ecudict['obd']:
                     self.kw1 = ecudict['obd']['kw1']
                     self.kw2 = ecudict['obd']['kw2']
@@ -988,7 +989,7 @@ class Ecu_file:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
 
-    def connect_to_hardware(self, timeout = 200):
+    def connect_to_hardware(self):
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
@@ -999,7 +1000,6 @@ class Ecu_file:
                 if self.baudrate == 250000:
                     ecu_conf['brp'] = 1
                 options.elm.init_can()
-                options.elm.set_can_timeout(timeout)
                 options.elm.set_can_addr(short_addr, ecu_conf)
 
         # KWP 2000 Handling
@@ -1460,7 +1460,7 @@ class Ecu_scanner:
             if options.simulation_mode:
                 # Give scanner something to eat...
                 if addr == "04":
-                    can_response = "61 80 82 00 30 64 35 48 30 30 31 00 00 32 03 00 03 22 03 60 00 00 2D 32 14 00 60"
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
                 elif addr == "7A":
                     # Test approximate case
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
@@ -1505,12 +1505,12 @@ class Ecu_scanner:
                 can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
                 # Send some data collected during my tests
-                if addr == "27":
-                    can_response = "61 80 82 00 26 02 45 09 30 30 31 01 18 52 20 06 05 02 05 00 03 01 04 33 69 91"
-                elif addr == "01":
-                    can_response = "61 80 82 01 00 28 28 04 41 4D 52 00 03 07 00 07 04 00 04 03 08 2B 00 31 04 00"
-                elif addr == "2C":
-                    can_response = "61 80 60 01 55 09 13 1C 30 33 37 33 09 31 24 FA EF 9E 01 01 00 00 80 05 84 00"
+                if addr == "02":
+                    can_response = "61 80 77 00 31 38 31 04 41 42 45 E3 17 03 00 38 00 07 00 00 00 00 09 11 12 00"
+                elif addr == "7A":
+                    can_response = "61 80 82 00 23 66 18 14 30 33 37 82 00 08 53 86 00 CB A4 00 70 06 3C 02 B1 A4"
+                elif addr == "26":
+                    can_response = "61 80 82 00 03 27 76 00 32 31 33 11 01 10 30 08 00 66 00 00 00 41 06 01 F1 38"
                 else:
                     continue
 
@@ -1545,7 +1545,7 @@ class Ecu_scanner:
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Found ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
                        % (href, diagversion, supplier, soft, version)
 
                 options.main_window.logview.append(line)

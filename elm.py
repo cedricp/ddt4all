@@ -220,7 +220,6 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
-
 def get_can_addr(txa):
     for d in dnat.keys():
         if dnat[d] == txa:
@@ -722,12 +721,11 @@ class ELM:
         return cmdrsp
 
     def set_can_timeout(self, value):
-        if self.currentprotocol == 'can':
-            val = value / 4
-            if val > 255:
-                val = 255
-            val = hex(val)[2:].upper()
-            self.cmd("AT ST " + val)
+        val = value / 4
+        if val > 255:
+            val = 255
+        val = hex(val)[2:].upper()
+        self.cmd("AT ST %s" % val)
 
     def send_cmd(self, command):
         if "AT" in command.upper() or self.currentprotocol != "can":
@@ -1130,7 +1128,7 @@ class ELM:
 
     def init_can(self):
         self.currentprotocol = "can"
-        self.currentaddress = "7e0"
+        self.currentaddress = "7A"
         self.startSession = ""
         self.lastCMDtime = 0
         self.l1_cache = {}
@@ -1174,6 +1172,7 @@ class ELM:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
+            self.currentaddress = get_can_addr(TXa)
         else:
             TXa = dnat[addr]
             RXa = snat[addr]
@@ -1187,6 +1186,9 @@ class ELM:
             self.cmd("AT SP 8")
         else:
             self.cmd("AT SP 6")
+
+        if options.cantimeout > 0:
+            self.set_can_timeout(options.cantimeout)
 
         return TXa, RXa
 
