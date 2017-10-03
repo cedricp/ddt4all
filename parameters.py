@@ -700,9 +700,8 @@ class paramWidget(gui.QWidget):
         if not auto or options.log_all:
             self.logview.append(txt + command)
 
-        if elm_response.startswith('7F'):
-            nrsp = elm.errorval(elm_response[6:8])
-            self.logview.append("<font color=red>" + _('Bad ELM response :') + "</font> " + nrsp)
+        if elm_response.startswith('WRONG'):
+            self.logview.append("<font color=red>" + _('Bad ELM response :') + "</font> " + elm_response)
 
         if not auto or options.log_all:
             self.logview.append(_('ELM response : ') + elm_response)
@@ -1140,6 +1139,7 @@ class paramWidget(gui.QWidget):
             while maxcount > 0:
                 more_can_response = self.sendElm(moredtcread_command)
                 more_can_response = more_can_response.split(' ')
+
                 if more_can_response[0].upper() == 'WRONG':
                     break
                 # Append result to build one frame
