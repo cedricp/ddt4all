@@ -309,6 +309,7 @@ class Port:
             try:
                 self.hdr.connect((self.ipaddr, self.tcpprt))
                 self.hdr.setblocking(True)
+                self.connectionStatus = True
             except:
                 options.elm_failed = True
 
@@ -1128,7 +1129,7 @@ class ELM:
 
     def init_can(self):
         self.currentprotocol = "can"
-        self.currentaddress = "7A"
+        self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.l1_cache = {}

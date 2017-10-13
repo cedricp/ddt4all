@@ -1461,6 +1461,8 @@ class Ecu_scanner:
                 # Give scanner something to eat...
                 if addr == "04":
                     can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                if addr == "51":
+                    can_response = "61 80 82 00 45 15 05 08 32 31 33 21 11 31 39 09 00 09 06 02 05 01 0D 8D 39 00"
                 elif addr == "7A":
                     # Test approximate case
                     can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
