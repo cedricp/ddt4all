@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-11 21:50+0200\n"
+"PO-Revision-Date: 2017-10-15 23:22+0100\n"
+"Last-Translator: reglissebudy@free.fr\n"
+"Language-Team: Portuguese\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+
+#: parameters.py:64
+msgid "Returning to defaut session..."
+msgstr "Regresar à sessão por defeito..."
+
+#: parameters.py:83
+msgid "Save ECU (keep '.json' extension)"
+msgstr "Salvar ECU (extensção '.json')"
+
+#: parameters.py:159 parameters.py:187 parameters.py:206
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "Para editar este ecrã, primero deve exportar-se em formato .JSON"
+
+#: parameters.py:229
+msgid "Enter label name"
+msgstr "Introduzir nome etiqueta"
+
+#: parameters.py:295
+msgid "Add button"
+msgstr "Adicionar botão"
+
+#: parameters.py:296
+msgid "Add label"
+msgstr "Adicionar etiqueta"
+
+#: parameters.py:304
+msgid "Rename label"
+msgstr "Renomear etiqueta"
+
+#: parameters.py:308
+msgid "Remove element"
+msgstr "Apagar elemento"
+
+#: parameters.py:401
+msgid "Diagnotic session"
+msgstr "Sessão de dianóstico"
+
+#: parameters.py:402
+msgid "Input"
+msgstr "Entrada"
+
+#: parameters.py:403
+msgid "Output"
+msgstr "Saída"
+
+#: parameters.py:444
+msgid "Initializing CAN mode"
+msgstr "Inicializando modo CAN"
+
+#: parameters.py:451
+msgid "Initializing KWP2000 mode"
+msgstr "Inicializando modo KWP2000"
+
+#: parameters.py:457
+msgid "Initializing ISO8 mode"
+msgstr "Inicializando modo ISO8"
+
+#: parameters.py:462
+msgid "Protocol "
+msgstr "Protocolo"
+
+#: parameters.py:462
+msgid " not supported"
+msgstr "Não suportado"
+
+#: parameters.py:523
+msgid "XML file not found : "
+msgstr "Fichero XML não encontrado: "
+
+#: parameters.py:530
+msgid "Invalid DDT file"
+msgstr "Fichero DDT não valido"
+
+#: parameters.py:559
+msgid "Switching to session mode"
+msgstr "Mudar para modo sessão "
+
+#: parameters.py:576
+msgid "Sending ELM request :"
+msgstr "Enviando petido ELM: "
+
+#: parameters.py:578
+msgid "Blocked ELM request :"
+msgstr "Pedido ELM bloqueado: "
+
+#: parameters.py:582
+msgid "Sending ELM request:"
+msgstr "Enviando pedido ELM: "
+
+#: parameters.py:591
+msgid "Sending simulated ELM request :"
+msgstr "Enviando pedido ELM simulado: "
+
+#: parameters.py:601
+msgid "ELM response : "
+msgstr "Resposta ELM :"
+
+#: parameters.py:744
+msgid "Button request not found : "
+msgstr "Butão pedido não encontrado: "
+
+#: parameters.py:758
+msgid "Sending request :"
+msgstr "Enviando pedido: "
+
+#: parameters.py:800
+msgid "Request aborted (look at red paramters entries): "
+msgstr "Pedido abortado (ver entradas de parametros em vermelho): "
+
+#: parameters.py:820
+msgid "Invalid"
+msgstr "Inválido"
+
+#: parameters.py:898
+msgid "Cannot call request "
+msgstr "Não se pode realizar pedido de chamada"
+
+#: parameters.py:917
+msgid "Clearing DTC information"
+msgstr "Apagando informação DTC"
+
+#: parameters.py:926
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "Não há pedidos ClearDTC para esta ECU, se enviará por defeito 14FF00"
+
+#: parameters.py:930
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>Está prestes a apagar os erros DTC<center>"
+
+#: parameters.py:931
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>Tem a certeza que é isso que quer?</center>"
+
+#: parameters.py:970
+msgid "Invalid response for ReadDTC command"
+msgstr "Resposta não válida para o comando ReadDTC"
+
+#: parameters.py:979
+msgid "No DTC"
+msgstr "Sem DTC"
+
+#: parameters.py:988
+msgid "Clear ALL DTC"
+msgstr "Apagar todos os DTC"
+
+#: parameters.py:994
+msgid "ECU trouble codes"
+msgstr "Códigos de erros ECU"
+
+#: parameters.py:1027
+msgid "Parsing screen "
+msgstr "Analizando ecrã"

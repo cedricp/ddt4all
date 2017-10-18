@@ -1,0 +1,106 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"X-Generator: Poedit 1.8.6\n"
+
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Cedric PAILLE <cedricpaille@gmail.com>, 2017.
+#
+#: elm.py:291 elm.py:301
+msgid "Error:"
+msgstr "Erro: "
+
+#: elm.py:292
+msgid "ELM not connected or wrong COM port"
+msgstr "ELM não conetado ou porto COM errado"
+
+#: elm.py:295
+msgid "Available COM ports:"
+msgstr "Portos COM disponíveis: "
+
+#: elm.py:322 elm.py:338
+msgid "Connection to ELM was lost"
+msgstr "Coneção ELM perdida"
+
+#: elm.py:358
+msgid "TIMEOUT"
+msgstr "TIMEOUT Tempo esgotado"
+
+#: elm.py:371
+msgid "Checking port speed:"
+msgstr "Verificando velocidade do porto"
+
+#: elm.py:390
+msgid "Start COM speed :"
+msgstr "Iniciando COM a velocidade de: "
+
+#: elm.py:395
+msgid "ELM not responding"
+msgstr "ELM não responde"
+
+#: elm.py:404
+msgid "ERROR - wifi do not support changing baud rate"
+msgstr "ERRO - WIFI não suporta racio de bauds"
+
+#: elm.py:407
+msgid "Changing baud rate to:"
+msgstr "Trocando bauds a: "
+
+#: elm.py:436
+msgid "ERROR - command not supported"
+msgstr "ERRO - comando não suportado"
+
+#: elm.py:467
+msgid "ERROR - rate not supported. Let's go back."
+msgstr "ERROR: racio não suportado, voltando atrás"
+
+#: elm.py:490
+msgid "ERROR - something went wrong. Let's get back."
+msgstr "ERRO - Algo correu mal, voltando atrás"
+
+#: elm.py:543
+msgid "Trying to open port"
+msgstr "Tentando abrir porto"
+
+#: elm.py:563
+msgid "No ELM interface on port"
+msgstr "No há interface ELM neste porto"
+
+#: elm.py:1176
+msgid "FAIL"
+msgstr "FALHA"
+
+#: elm.py:1181
+msgid "OK/TIMEOUT"
+msgstr "OK/TIMEOUT TEMPO ESGOTADO"
+
+#: elm.py:1185
+msgid "OK"
+msgstr "OK"
+
+#: elm.py:1193
+msgid "Incompatible adapter on ARM core"
+msgstr "Adaptador com ARM incompatível"
+
+#: elm.py:1194
+msgid "Result: "
+msgstr "Resultado: "
+
+#: elm.py:1194
+msgid " succeeded from "
+msgstr " bem sucedidos sobre "
+
+#: elm.py:1194
+msgid "ELM Max version:"
+msgstr "Versão ELM máxima: "
