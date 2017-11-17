@@ -44,7 +44,7 @@ class Ecu_list(gui.QWidget):
             "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV",
             "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
             "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
-            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II", "XFE - KADJAR",
+            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II", "HFE - KADJAR",
             "X33 - WIND", "X09 - TWIZY", "X10 - ZOE", "X76 - KANGOO I",
             "X61 - KANGOO II", "XFK - KANGOO III",
             "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",

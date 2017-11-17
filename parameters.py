@@ -3,6 +3,7 @@ import time
 import os
 import ecu, elm
 import displaymod
+from elm import elm_checker
 from uiutils import *
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
@@ -702,6 +703,7 @@ class paramWidget(gui.QWidget):
             elif "17FF00" in command:
                 # Test for ACU4
                 elm_response = "57 06 90 07 41 90 08 41 90 42 52 90 08 42 90 07 42 90 7C 40"
+                elm_response = "57 01 56 07 4D 00 00"
                 # Test for EDC16
                 # elm_response = "57 02 05 34 68 06 70 4F 09 A4 09 A4 17"
             elif "17FFFF" in command:
