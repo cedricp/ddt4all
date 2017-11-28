@@ -14,6 +14,7 @@ import dataeditor
 import sniffer
 import imp
 import traceback
+import tempfile, errno
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -26,6 +27,18 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all_main')
 app = None
+
+def isWritable(path):
+    try:
+        testfile = tempfile.TemporaryFile(dir = path)
+        testfile.close()
+    except OSError as e:
+        if e.errno == errno.EACCES:  # 13
+            return False
+        e.filename = path
+    except:
+        return False
+    return True
 
 class Ecu_list(gui.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
@@ -435,9 +448,22 @@ class Main_widget(gui.QMainWindow):
                 self.paramview.changeSDS(currenttext)
 
     def zipdb(self):
+        filename = gui.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
+                                                   "./ecu.zip", "*.zip")
+        filename = str(filename.toAscii())
+        if not filename.endswith(".zip"):
+            filename += ".zip"
+
+        if not isWritable(str(os.path.dirname(filename))):
+            mbox = gui.QMessageBox()
+            mbox.setText("Cannot write to directory " + os.path.dirname(filename))
+            mbox.exec_()
+            return
+
         self.logview.append("Zipping XML database... (this can take a few minutes)")
         core.QCoreApplication.processEvents()
-        parameters.zipConvertXML()
+        parameters.zipConvertXML(filename)
+        self.logview.append("Zip job finished")
 
     def launchPlugin(self, pim):
         if self.paramview:
@@ -789,12 +815,14 @@ class Main_widget(gui.QMainWindow):
                 param_item.setData(0, core.Qt.UserRole, param)
                 self.screennames.append(param)
 
+
 class donationWidget(gui.QLabel):
     def __init__(self):
         super(donationWidget, self).__init__()
         img = gui.QPixmap("icons/donate.png")
         self.setPixmap(img)
         self.setAlignment(core.Qt.AlignCenter)
+        self.setFrameStyle((gui.QFrame.Panel | gui.QFrame.StyledPanel))
 
     def mousePressEvent(self, mousevent):
         msgbox = gui.QMessageBox()
@@ -831,7 +859,6 @@ class portChooser(gui.QDialog):
         
         self.listview = gui.QListWidget(self)
 
-        layout.addWidget(donationwidget)
         layout.addWidget(label)
         layout.addWidget(self.listview)
 
@@ -908,6 +935,7 @@ class portChooser(gui.QDialog):
         safetychecklayout.addWidget(self.safetycheck)
         safetychecklayout.addWidget(safetylabel)
         layout.addLayout(safetychecklayout)
+        layout.addWidget(donationwidget)
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)

@@ -27,6 +27,7 @@ begin
 end;
 
 [Dirs]
+Name: "{app}"; Permissions: users-full
 Name: "{app}\logs"; Permissions: users-full
 Name: "{app}\json"; Permissions: users-full
 Name: "{app}\vehicles"; Permissions: users-full

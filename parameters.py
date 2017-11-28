@@ -1368,7 +1368,7 @@ def dumpDOC(xdoc):
     return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
 
 
-def zipConvertXML():
+def zipConvertXML(filename = "ecu.zip"):
     zipoutput = StringIO()
     options.ecus_dir = "./ecus"
 
@@ -1419,7 +1419,7 @@ def zipConvertXML():
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
     print 'Writing archive'
-    with open("ecu.zip", "wb") as f:
+    with open(filename, "wb") as f:
         f.write(zipoutput.getvalue())
 
 
