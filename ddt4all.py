@@ -72,7 +72,13 @@ class Ecu_list(gui.QWidget):
         self.vehicle_combo.activated.connect(self.filterProject)
 
         layout = gui.QVBoxLayout()
-        layout.addWidget(self.vehicle_combo)
+        layouth = gui.QHBoxLayout()
+        scanbutton = gui.QPushButton()
+        scanbutton.setIcon(gui.QIcon("icons/scan.png"))
+        scanbutton.clicked.connect(self.scanselvehicle)
+        layouth.addWidget(self.vehicle_combo)
+        layouth.addWidget(scanbutton)
+        layout.addLayout(layouth)
         self.setLayout(layout)
         self.list = gui.QTreeWidget(self)
         self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
@@ -80,6 +86,10 @@ class Ecu_list(gui.QWidget):
         self.ecuscan = ecuscan
         self.list.doubleClicked.connect(self.ecuSel)
         self.init()
+
+    def scanselvehicle(self):
+        project = str(self.vehicle_combo.currentText()[0:3])
+        self.parent().parent().scan_project(project)
 
     def init(self):
         self.list.clear()
@@ -545,6 +555,26 @@ class Main_widget(gui.QMainWindow):
         options.cantimeout = self.cantimeout.value()
         if self.paramview:
             self.paramview.setCanTimeout()
+
+    def scan_project(self, project):
+        self.ecu_scan.clear()
+        self.ecu_scan.scan(self.progressstatus, self.infostatus, project)
+        self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus, project)
+
+        for ecu in self.ecu_scan.ecus.keys():
+            self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
+            item = gui.QListWidgetItem(ecu)
+            if '.xml' in self.ecu_scan.ecus[ecu].href.lower():
+                item.setForeground(core.Qt.yellow)
+            else:
+                item.setForeground(core.Qt.green)
+            self.treeview_ecu.addItem(item)
+
+        for ecu in self.ecu_scan.approximate_ecus.keys():
+            self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
+            item = gui.QListWidgetItem(ecu)
+            item.setForeground(core.Qt.red)
+            self.treeview_ecu.addItem(item)
 
     def scan(self):
         msgBox = gui.QMessageBox()

@@ -1154,6 +1154,7 @@ class Ecu_database:
 
     def __init__(self, forceXML=False):
         self.targets = []
+        self.vehiclemap = {}
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
@@ -1189,6 +1190,13 @@ class Ecu_database:
                                       ecu_dict['soft_version'], ecu_dict['version'],
                                       name, ecu_dict['group'], href, ecu_dict['protocol'],
                                       ecu_dict['projects'], addr)
+
+                for proj in ecu_dict['projects']:
+                    projname = proj[0:3].upper()
+                    if not projname in self.vehiclemap:
+                        self.vehiclemap[projname] = []
+                    self.vehiclemap[projname].append((ecu_dict['protocol'], addr))
+
                 self.targets.append(ecu_ident)
 
         if os.path.exists("ecu.zip") and not forceXML:
@@ -1222,6 +1230,14 @@ class Ecu_database:
                                               ecuprojects, ecuaddress, True)
 
                         self.targets.append(ecu_ident)
+
+                for proj in ecuprojects:
+                    projname = proj[0:3].upper()
+                    if not projname in self.vehiclemap:
+                        self.vehiclemap[projname] = []
+                    self.vehiclemap[projname].append((ecuprotocol, ecuaddress))
+
+                self.targets.append(ecu_ident)
 
         if os.path.exists(xmlfile):
             xdom = xml.dom.minidom.parse(xmlfile)
@@ -1424,7 +1440,7 @@ class Ecu_scanner:
         if not options.simulation_mode:
             options.elm.close_protocol()
 
-    def scan(self, progress=None, label=None):
+    def scan(self, progress=None, label=None, vehiclefilter=None):
         i = 0
         if not options.simulation_mode:
             options.elm.init_can()
@@ -1432,8 +1448,17 @@ class Ecu_scanner:
         if progress:
             progress.setRange(0, len(self.ecu_database.available_addr_can))
 
+        project_can_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == u"CAN" and not addr in project_can_addresses:
+                        project_can_addresses.append(addr)
+        else:
+            project_can_addresses = self.ecu_database.available_addr_can
+
         # Only scan available ecu addresses
-        for addr in self.ecu_database.available_addr_can:
+        for addr in project_can_addresses:
             # Don't want to scan NON ISO-TP
             if addr == '00' or addr == 'FF':
                 continue
@@ -1476,7 +1501,7 @@ class Ecu_scanner:
         if not options.simulation_mode:
             options.elm.close_protocol()
 
-    def scan_kwp(self, progress=None, label=None):
+    def scan_kwp(self, progress=None, label=None, vehiclefilter=None):
         if options.simulation_mode:
             # Test data..
             # diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
@@ -1490,7 +1515,16 @@ class Ecu_scanner:
         if progress:
             progress.setRange(0, len(self.ecu_database.available_addr_kwp))
 
-        for addr in self.ecu_database.available_addr_kwp:
+        project_kwp_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == u"KWP2000" and not addr in project_kwp_addresses:
+                        project_kwp_addresses.append(addr)
+        else:
+            project_kwp_addresses = self.ecu_database.available_addr_kwp
+
+        for addr in project_kwp_addresses:
             if progress:
                 progress.setValue(i)
                 self.qapp.processEvents()
