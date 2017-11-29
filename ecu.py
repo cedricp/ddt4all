@@ -1342,111 +1342,100 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
 
-    # Scan
-    def scan_new(self, progress=None, label=None):
-        i = 0
+    def identity_old(self, addr, label):
         if not options.simulation_mode:
-            options.elm.init_can()
+            if not options.elm.start_session_can('10C0'):
+                return
 
-        if progress:
-            progress.setRange(0, len(self.ecu_database.available_addr_can))
-
-        # Only scan available ecu addresses
-        for addr in self.ecu_database.available_addr_can:
-            # Don't want to scan NON ISO-TP
-            if addr == '00' or addr == 'FF':
-                continue
-
-            if progress:
-                progress.setValue(i)
-            self.qapp.processEvents()
-            i += 1
-
-            if addr not in elm.dnat:
-                print "Warning, address %s is not mapped" % addr
-                continue
-
-            if len(elm.dnat[addr]) > 3:
-                print "Skipping CAN extended address (not supported yet) ", addr
-                continue
-
-            diagversion = ""
-            supplier = ""
-            soft_version = ''
-            soft = ""
-            can_response = ""
-
-            # Check diagversion
-            if not options.simulation_mode:
-                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                if not options.elm.start_session_can('1003'):
-                    # Bad response of SDS, no need to go further
-                    continue
-
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 A0 08"
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == "04":
+                can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+            if addr == "51":
+                can_response = "61 80 82 00 45 15 05 08 32 31 33 21 11 31 39 09 00 09 06 02 05 01 0D 8D 39 00"
+            elif addr == "7A":
+                # Test approximate case
+                can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
             else:
-                can_response = options.elm.request(req='22F1A0', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-            diagversion = can_response.replace(' ', '')[6:8]
+                can_response = "7F 80"
+        else:
+            can_response = options.elm.request(req='2180', positive='61', cache=False)
 
-            # Check supplier ident
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20"
-            else:
-                can_response = options.elm.request(req='22F18A', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-            supplier = can_response.replace(' ', '')[6:132].decode('hex')
+        self.check_ecu(can_response, label, addr, "CAN")
 
-            # Check soft number
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20"
-            else:
-                can_response = options.elm.request(req='22F194', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-            soft = can_response.replace(' ', '')[6:38].decode('hex')
+    def identify_new(self, addr, label):
+        diagversion = ""
+        supplier = ""
+        soft_version = ''
+        soft = ""
+        can_response = ""
 
-            # Check soft version
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20"
-            else:
-                can_response = options.elm.request(req='22F195', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-
-            soft_version = can_response.replace(' ', '')[6:38].decode('hex')
-            if diagversion == "":
-                continue
-
-            self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
-
+        # Check diagversion
         if not options.simulation_mode:
-            options.elm.close_protocol()
+            if not options.elm.start_session_can('1003'):
+                # Bad response of SDS, no need to go further
+                return False
+
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 A0 08"
+        else:
+            can_response = options.elm.request(req='22F1A0', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+        diagversion = can_response.replace(' ', '')[6:8]
+
+        # Check supplier ident
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20"
+        else:
+            can_response = options.elm.request(req='22F18A', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+        supplier = can_response.replace(' ', '')[6:132].decode('hex')
+
+        # Check soft number
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20"
+        else:
+            can_response = options.elm.request(req='22F194', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+        soft = can_response.replace(' ', '')[6:38].decode('hex')
+
+        # Check soft version
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20"
+        else:
+            can_response = options.elm.request(req='22F195', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+
+        soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+        if diagversion == "":
+            return False
+
+        self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
+        # New method succeded, return the good new
+        return True
 
     def scan(self, progress=None, label=None, vehiclefilter=None):
         i = 0
         if not options.simulation_mode:
             options.elm.init_can()
-
-        if progress:
-            progress.setRange(0, len(self.ecu_database.available_addr_can))
 
         project_can_addresses = []
         if vehiclefilter:
@@ -1457,16 +1446,25 @@ class Ecu_scanner:
         else:
             project_can_addresses = self.ecu_database.available_addr_can
 
+        if len(project_can_addresses) == 0:
+            return
+
+        if progress:
+            progress.setRange(0, len(project_can_addresses))
+            progress.setValue(0)
+
+        try_new = []
+
         # Only scan available ecu addresses
         for addr in project_can_addresses:
             # Don't want to scan NON ISO-TP
-            if addr == '00' or addr == 'FF':
-                continue
-
+            i += 1
             if progress:
                 progress.setValue(i)
                 self.qapp.processEvents()
-            i += 1
+
+            if addr == '00' or addr == 'FF':
+                continue
 
             if addr not in elm.dnat:
                 print "Warning, address %s is not mapped" % addr
@@ -1479,27 +1477,15 @@ class Ecu_scanner:
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                if not options.elm.start_session_can('10C0'):
-                    continue
 
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == "04":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                if addr == "51":
-                    can_response = "61 80 82 00 45 15 05 08 32 31 33 21 11 31 39 09 00 09 06 02 05 01 0D 8D 39 00"
-                elif addr == "7A":
-                    # Test approximate case
-                    can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
-                else:
-                    can_response = "7F 80"
-            else:
-                can_response = options.elm.request(req='2180', positive='61', cache=False)
-
-            self.check_ecu(can_response, label, addr, "CAN")
+            # Avoid to waste time, try new method : not working -> try old
+            if not self.identify_new(addr, label):
+                self.identity_old(addr, label)
 
         if not options.simulation_mode:
             options.elm.close_protocol()
+
+        return try_new
 
     def scan_kwp(self, progress=None, label=None, vehiclefilter=None):
         if options.simulation_mode:
@@ -1508,12 +1494,8 @@ class Ecu_scanner:
             self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.json",
                                                         "KWP2000 FastInit MonoPoint", [], "7A")
 
-        i = 0
         if not options.simulation_mode:
             options.elm.init_iso()
-
-        if progress:
-            progress.setRange(0, len(self.ecu_database.available_addr_kwp))
 
         project_kwp_addresses = []
         if vehiclefilter:
@@ -1524,11 +1506,20 @@ class Ecu_scanner:
         else:
             project_kwp_addresses = self.ecu_database.available_addr_kwp
 
+        print project_kwp_addresses
+        if len(project_kwp_addresses) == 0:
+            return
+
+        i = 0
+        if progress:
+            progress.setRange(0, len(project_kwp_addresses))
+            progress.setValue(0)
+
         for addr in project_kwp_addresses:
+            i += 1
             if progress:
                 progress.setValue(i)
                 self.qapp.processEvents()
-            i += 1
 
             if not options.simulation_mode:
                 options.opt_si = True

@@ -584,12 +584,10 @@ class Main_widget(gui.QMainWindow):
         scankwp = False
 
         canbutton = gui.QPushButton('CAN')
-        cannmbutton = gui.QPushButton('CAN new method')
         kwpbutton = gui.QPushButton('KWP')
         cancelbutton = gui.QPushButton('CANCEL')
 
         msgBox.addButton(canbutton, gui.QMessageBox.ActionRole)
-        msgBox.addButton(cannmbutton, gui.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, gui.QMessageBox.ActionRole)
         msgBox.addButton(cancelbutton, gui.QMessageBox.NoRole)
         msgBox.exec_()
@@ -605,10 +603,6 @@ class Main_widget(gui.QMainWindow):
             self.logview.append(_("Scanning KWP"))
             scankwp = True
 
-        if msgBox.clickedButton() == cannmbutton:
-            self.logview.append(_("Scanning CAN new method"))
-            scancan2 = True
-
         progressWidget = gui.QWidget(None)
         progressLayout = gui.QVBoxLayout()
         progressWidget.setLayout(progressLayout)
@@ -620,8 +614,6 @@ class Main_widget(gui.QMainWindow):
             self.ecu_scan.scan(self.progressstatus, self.infostatus)
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
-        if scancan2:
-            self.ecu_scan.scan_new(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()
