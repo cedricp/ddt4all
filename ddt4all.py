@@ -181,7 +181,8 @@ class Ecu_list(gui.QWidget):
         name = selected
         if target:
             self.ecuscan.addTarget(target)
-            name = "[ " + target.group + " ] " + name
+            group = self.ecuscan.ecu_database.addr_group_mapping[target.addr]
+            name = "[ " + group + " ] " + name
         if selected:
             if name not in options.main_window.ecunamemap:
                 options.main_window.ecunamemap[name] = selected
