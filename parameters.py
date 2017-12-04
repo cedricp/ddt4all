@@ -922,8 +922,8 @@ class paramWidget(gui.QWidget):
                 widget.setStyleSheet("background: white")
 
             # Manage delay
+            self.logview.append("Delay %d ms" % request_delay)
             time.sleep(request_delay / 1000.0)
-
             # Then show received values
             elm_response = self.sendElm(' '.join(elm_data_stream))
 

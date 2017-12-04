@@ -21,6 +21,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
+
 # Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
     return -(value & 0x8000) | (value & 0x7fff)
@@ -30,10 +31,12 @@ def hex16_tosigned(value):
 def hex8_tosigned(value):
     return -(value & 0x80) | (value & 0x7f)
 
+
 def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
+
 
 def getChildNodesByName(parent, name):
     nodes = []
@@ -41,6 +44,7 @@ def getChildNodesByName(parent, name):
         if node.nodeType == node.ELEMENT_NODE and node.localName == name:
             nodes.append(node)
     return nodes
+
 
 class Data_item:
     def __init__(self, item, req_endian, name = ''):
@@ -52,10 +56,14 @@ class Data_item:
 
         if isinstance(item, dict):
             self.name = name
-            if item.has_key('firstbyte'): self.firstbyte = item['firstbyte']
-            if item.has_key('bitoffset'): self.bitoffset = item['bitoffset']
-            if item.has_key('ref'): self.ref = item['ref']
-            if item.has_key('endian'): self.endian = item['endian']
+            if 'firstbyte' in item:
+                self.firstbyte = item['firstbyte']
+            if 'bitoffset' in item:
+                self.bitoffset = item['bitoffset']
+            if 'ref' in item:
+                self.ref = item['ref']
+            if 'endian' in item:
+                self.endian = item['endian']
         else:
             self.name = item.getAttribute("Name")
 
@@ -302,19 +310,6 @@ class Ecu_request:
 
         return values
 
-    def get_sds(self):
-        if self.sds['nosds']:
-            return ""
-        elif self.sds['aftersales']:
-            return "10C0"
-        elif self.sds['plant']:
-            return "1089"
-        elif self.sds['engineering']:
-            return "1086"
-        elif self.sds['supplier']:
-            return "10FA"
-        return "ERROR"
-
     def get_formatted_sentbytes(self):
         bytes_to_send_ascii = self.sentbytes.encode('ascii', 'ignore')
         return [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
@@ -391,19 +386,32 @@ class Ecu_data:
     def init(self, data):
 
         if isinstance(data, dict):
-            if data.has_key('bitscount'): self.bitscount = data['bitscount']
-            if data.has_key('bytesascii'): self.bytesascii = data['bytesascii']
-            if data.has_key('scaled'): self.scaled = data['scaled']
-            if data.has_key('signed'): self.signed = data['signed']
-            if data.has_key('byte'): self.byte = data['byte']
-            if data.has_key('binary'): self.binary = data['binary']
-            if data.has_key('step'): self.step = data['step']
-            if data.has_key('offset'): self.offset = data['offset']
-            if data.has_key('divideby'): self.divideby = data['divideby']
-            if data.has_key('format'): self.format = data['format']
-            if data.has_key('bytescount'): self.bytescount = data['bytescount']
-            if data.has_key('unit'): self.unit = data['unit']
-            if data.has_key('comment'): self.comment = data['comment']
+            if 'bitscount' in data:
+                self.bitscount = data['bitscount']
+            if 'bytesascii' in data:
+                self.bytesascii = data['bytesascii']
+            if 'scaled' in data:
+                self.scaled = data['scaled']
+            if 'signed' in data:
+                self.signed = data['signed']
+            if 'byte' in data:
+                self.byte = data['byte']
+            if 'binary' in data:
+                self.binary = data['binary']
+            if 'step' in data:
+                self.step = data['step']
+            if 'offset' in data:
+                self.offset = data['offset']
+            if 'divideby' in data:
+                self.divideby = data['divideby']
+            if 'format' in data:
+                self.format = data['format']
+            if 'bytescount' in data:
+                self.bytescount = data['bytescount']
+            if 'unit' in data:
+                self.unit = data['unit']
+            if 'comment' in data:
+                self.comment = data['comment']
 
             if data.has_key('lists'):
                 for k, v in data['lists'].iteritems():
@@ -691,7 +699,7 @@ class Ecu_data:
         if val is None:
             return None
 
-        return int("0x"+val, 16)
+        return int("0x" + val, 16)
 
     def getHexValue(self, resp, dataitem, ecu_endian):
         little_endian = False
@@ -1124,11 +1132,10 @@ class Ecu_ident:
         self.addr = addr
         return True
 
+    # Minimal checking
     def checkApproximate(self, diagversion, supplier, soft, addr):
         if self.diagversion == "":
             return
-        if int("0x" + self.diagversion, 16) != int("0x" + diagversion, 16):
-            return False
         if self.supplier.strip() != supplier.strip():
             return False
         if self.soft.strip() != soft.strip():
@@ -1158,6 +1165,29 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
+        self.addr_group_mapping = {"02": u"Suspension pilotée", "51": u"Tableau de bord", "29": u"Climatisation",
+                                   "D2": u"GATEWAY", "00": u"CAN Vehicle Network", "1E": u"4WD", "01": u"ABS-VDC - ABS-ESP",
+                                   "95": u"EVC", "26": u"UCBIC/BFR", "60": u"HMD", "50": u"Tachometer", "A1": u"HFM",
+                                   "93": u"LBC", "6E": u"BVA", "04": u"Direction assistée", "68": u"PEB", "58": u"Navigation",
+                                   "2B": u"RADAR", "F7": u"LDCM", "08": u"TPMS", "C0": u"HFM", "13": u"Audio", "59": u"MIU",
+                                   "F8": u"RDCM", "24": u"ACC", "27": u"EMM", "A8": u"LBC2", "23": u"4WS", "11": u"ADAS-Sub",
+                                   "2E": u"UBP", "67": u"BCB", "0E": u"Aide au parking", "0D": u"Frein de parking électrique",
+                                   "28": u"CSHV", "FF": u"CAN2", "62": u"FCAM", "DA": u"EVC-HCM-VCM_29b", "E8": u"SVS", "2F": u"IKEY",
+                                   "64": u"SOW_right", "07": u"HLS", "D3": u"UDM", "77": u"DCM Renault", "86": u"AAU", "3A": u"AAM",
+                                   "4D": u"SCU", "DF": u"Cluster", "A5": u"DCM", "10": u"Injection NISSAN", "0B": u"ACC", "61": u"AVM",
+                                   "46": u"Engineering", "EA": u"TCASE", "87": u"C-Box", "1B": u"DIFF LOCK", "72": u"Lampes à décharge à droite 84",
+                                   "ED": u"Audio", "EC": u"TPAD", "1C": u"Pilotage capote", "37": u"Onduleur", "D0": u"GATEWAY",
+                                   "32": u"Superviseur", "A6": u"PDCM", "66": u"VCCU", "71": u"HLL_DDL2", "E9": u"EPS",
+                                   "25": u"IDM", "79": u"GPL", "E2": u"C-Display", "A7": u"PBD", "6B": u"BSW", "2D": u"ABS-VDC",
+                                   "97": u"PLC/PLGW", "DE": u"ASBMD", "31": u"Transpondeur", "63": u"SOW Left", "E6": u"SCCM",
+                                   "2A": u"ADP", "0F": u"HFCK", "EB": u"HU", "78": u"DCM", "73": u"Embrayage piloté",
+                                   "5B": u"ADAS Insulator", "5A": u"ODS_DDL2", "3F": u"Navigation", "81": u"VSP", "40": u"TSR_FRONTCAM",
+                                   "06": u"EMCU", "E1": u"CCU", "1A": u"Additional Heater", "E3": u"HMI GateWay",
+                                   "AE": u"UCBIC ISO8", "91": u"LBC (HEV) CPC", "09": u"MC HEV FSCM", "EE": u"Controlographe",
+                                   "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM", "41": u"GATEWAY",
+                                   "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES",
+                                   "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"}
+        
         xmlfile = options.ecus_dir + "/eculist.xml"
 
         jsonecu_files = glob.glob("json/*.json.targets")
@@ -1185,6 +1215,9 @@ class Ecu_database:
                 elif 'CAN' in ecu_dict['protocol']:
                     if addr not in self.available_addr_can:
                         self.available_addr_can.append(str(addr))
+
+                if str(addr) not in self.addr_group_mapping:
+                    self.addr_group_mapping[str(addr)] = ecu_dict['group']
 
                 ecu_ident = Ecu_ident(diagversion, ecu_dict['supplier_code'],
                                       ecu_dict['soft_version'], ecu_dict['version'],
@@ -1217,6 +1250,9 @@ class Ecu_database:
                 elif 'CAN' in ecuprotocol:
                     if not ecuaddress in self.available_addr_can:
                         self.available_addr_can.append(str(ecuaddress))
+
+                if str(ecuaddress) not in self.addr_group_mapping:
+                    self.addr_group_mapping[ecuaddress] = targetv['group']
 
                 if len(targetv['autoidents']) == 0:
                     ecu_ident = Ecu_ident("", "", "", "", ecuname, ecugroup, href, ecuprotocol,
@@ -1251,16 +1287,19 @@ class Ecu_database:
             for function in functions:
                 targets = function.getElementsByTagName("Target")
                 address = function.getAttribute("Address")
-                group = function.getAttribute("Name")
                 address = hex(int(address))[2:].zfill(2).upper()
 
                 for target in targets:
+                    group = target.getAttribute("group")
                     href = target.getAttribute("href")
                     name = target.getAttribute("Name")
                     protnode = target.getElementsByTagName("Protocol")
-
                     if protnode:
                         protocol = protnode[0].firstChild.nodeValue
+
+                    if len(group) and (str(address) not in self.addr_group_mapping):
+                        print group, "-", address
+                        self.addr_group_mapping[str(address)] = group
 
                     if 'CAN' in protocol.upper():
                         if address not in self.available_addr_can:
@@ -1286,8 +1325,16 @@ class Ecu_database:
                             supplier = ai.getAttribute("Supplier")
                             soft = ai.getAttribute("Soft")
                             version = ai.getAttribute("Version")
-                            ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol, projects, address)
+                            ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol,
+                                                  projects, address)
                             self.targets.append(ecu_ident)
+
+                    if projectselems:
+                        for project in projectselems[0].childNodes:
+                            projname = project.nodeName[0:3].upper()
+                            if not projname in self.vehiclemap:
+                                self.vehiclemap[projname] = []
+                            self.vehiclemap[projname].append((ecu_ident.protocol, address))
 
     def getTarget(self, name):
         for t in self.targets:
@@ -1342,7 +1389,7 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
 
-    def identity_old(self, addr, label):
+    def identify_old(self, addr, label):
         if not options.simulation_mode:
             if not options.elm.start_session_can('10C0'):
                 return
@@ -1373,7 +1420,7 @@ class Ecu_scanner:
         # Check diagversion
         if not options.simulation_mode:
             if not options.elm.start_session_can('1003'):
-                # Bad response of SDS, no need to go further
+                # Bad response of SDS, no need check old method (10C0)
                 return False
 
         if options.simulation_mode:
@@ -1429,7 +1476,7 @@ class Ecu_scanner:
             return False
 
         self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
-        # New method succeded, return the good new
+        # New method succeded, return the good news
         return True
 
     def scan(self, progress=None, label=None, vehiclefilter=None):
@@ -1474,13 +1521,15 @@ class Ecu_scanner:
                 print "Skipping CAN extended address (not supported yet) ", addr
                 continue
 
+            print "Scanning address ECU %s" % self.ecu_database.addr_group_mapping[addr]
+
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
 
             # Avoid to waste time, try new method : not working -> try old
             if not self.identify_new(addr, label):
-                self.identity_old(addr, label)
+                self.identify_old(addr, label)
 
         if not options.simulation_mode:
             options.elm.close_protocol()
@@ -1506,7 +1555,6 @@ class Ecu_scanner:
         else:
             project_kwp_addresses = self.ecu_database.available_addr_kwp
 
-        print project_kwp_addresses
         if len(project_kwp_addresses) == 0:
             return
 
@@ -1572,7 +1620,8 @@ class Ecu_scanner:
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
+                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s]"\
+                       "SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
                        % (href, diagversion, supplier, soft, version)
 
                 options.main_window.logview.append(line)
@@ -1616,9 +1665,6 @@ class Ecu_scanner:
                    % (diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
-
-        #if can_response.startswith('61'):
-        #    self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
 
 
 def make_zipfs():

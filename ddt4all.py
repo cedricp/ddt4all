@@ -131,11 +131,11 @@ class Ecu_list(gui.QWidget):
             stored_ecus[grp].append([cs[:-8][7:], name, protocol])
 
         for ecu in self.ecuscan.ecu_database.targets:
-            if ecu.addr not in self.ecu_map:
-                grp = ecu.group
-                grp += " [$" + str(ecu.addr).zfill(2) + "]"
+            if ecu.addr in self.ecuscan.ecu_database.addr_group_mapping:
+                grp = self.ecuscan.ecu_database.addr_group_mapping[ecu.addr]
             else:
-                grp = self.ecu_map[ecu.addr]
+                grp = "?"
+            grp += " [$" + str(ecu.addr).zfill(2) + "]"
 
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
@@ -313,9 +313,6 @@ class Main_widget(gui.QMainWindow):
 
         self.toolbar = self.addToolBar(_("File"))
 
-        scanaction = gui.QAction(gui.QIcon("icons/scan.png"), _("Scan ECUs"), self)
-        scanaction.triggered.connect(self.scan)
-
         self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
@@ -353,7 +350,6 @@ class Main_widget(gui.QMainWindow):
         self.zoominbutton.clicked.connect(self.zoomin)
         self.zoomoutbutton.clicked.connect(self.zoomout)
 
-        self.toolbar.addAction(scanaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
         self.toolbar.addAction(self.expert)
@@ -557,6 +553,9 @@ class Main_widget(gui.QMainWindow):
             self.paramview.setCanTimeout()
 
     def scan_project(self, project):
+        if project == "ALL":
+            self.scan()
+            return
         self.ecu_scan.clear()
         self.ecu_scan.scan(self.progressstatus, self.infostatus, project)
         self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus, project)

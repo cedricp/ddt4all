@@ -583,6 +583,9 @@ class inputWidget(gui.QWidget):
         self.qlabel.setWordWrap(True)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
+        if not text in self.ecurequestsparser.data:
+            print "Cannot find data ", text
+            return
         data = self.ecurequestsparser.data[text]
 
         if len(self.ecurequestsparser.data[text].items) > 0:
