@@ -181,7 +181,10 @@ class Ecu_list(gui.QWidget):
         name = selected
         if target:
             self.ecuscan.addTarget(target)
-            group = self.ecuscan.ecu_database.addr_group_mapping[target.addr]
+            if target.addr in self.ecuscan.ecu_database.addr_group_mapping:
+                group = self.ecuscan.ecu_database.addr_group_mapping[target.addr]
+            else:
+                group = "Unknown"
             name = "[ " + group + " ] " + name
         if selected:
             if name not in options.main_window.ecunamemap:
