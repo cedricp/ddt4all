@@ -812,6 +812,7 @@ class Ecu_file:
 
         if isfile and '.json' in data:
             data2 = "./json/" + os.path.basename(data)
+            jsdata = None
             if os.path.exists(data):
                 jsfile = open(data, "r")
                 jsdata = jsfile.read()
@@ -829,8 +830,11 @@ class Ecu_file:
                     elif os.path.basename(data) in zf.namelist():
                         jsdata = zf.read(os.path.basename(data))
                     else:
-                        print "Cannot found file ", data
+                        print "Cannot find file ", data
                         return
+
+            if jsdata is None:
+                return
 
             ecudict = json.loads(jsdata)
 
@@ -1184,8 +1188,8 @@ class Ecu_database:
                                    "5B": u"ADAS Insulator", "5A": u"ODS_DDL2", "3F": u"Navigation", "81": u"VSP", "40": u"TSR_FRONTCAM",
                                    "06": u"EMCU", "E1": u"CCU", "1A": u"Additional Heater", "E3": u"HMI GateWay",
                                    "AE": u"UCBIC ISO8", "91": u"LBC (HEV) CPC", "09": u"MC HEV FSCM", "EE": u"Controlographe",
-                                   "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM", "41": u"GATEWAY",
-                                   "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES",
+                                   "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM", "41": u"GATEWAY", "2C": u"Airbag",
+                                   "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES", "7A": u"Injection",
                                    "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"}
         
         xmlfile = options.ecus_dir + "/eculist.xml"
@@ -1217,6 +1221,7 @@ class Ecu_database:
                         self.available_addr_can.append(str(addr))
 
                 if str(addr) not in self.addr_group_mapping:
+                    print "Adding group ", addr,  ecu_dict['group']
                     self.addr_group_mapping[str(addr)] = ecu_dict['group']
 
                 ecu_ident = Ecu_ident(diagversion, ecu_dict['supplier_code'],
