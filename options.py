@@ -20,6 +20,7 @@ elm_failed = False
 opt_si = False
 report_data = True
 ecus_dir = "ecus/"
+graphics_dir = "graphics/"
 last_error = ""
 main_window = None
 ecu_scanner = None

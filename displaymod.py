@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import options
+import options, os
 from uiutils import *
 
 __author__ = "Cedric PAILLE"
@@ -22,6 +22,7 @@ class labelWidget(gui.QLabel):
         self.uiscale = uiscale
         self.toggle_selected(False)
         self.setWordWrap(True)
+        self.img = None
 
     def toggle_selected(self, sel):
         if sel:
@@ -37,11 +38,20 @@ class labelWidget(gui.QLabel):
         color = xmldata.getAttribute("Color")
         alignment = xmldata.getAttribute("Alignment")
 
+        if text.startswith("::pic:"):
+            imgname = os.path.join(options.graphics_dir, text.replace("::pic:", "").replace("\\", "/")) + ".gif"
+            if not os.path.exists(imgname):
+                imgname = os.path.join(options.graphics_dir, text.replace("::pic:", "").replace("\\", "/")) + ".GIF"
+            self.img = gui.QMovie(imgname)
+            self.setMovie(self.img)
+            self.img.start()
+        else:
+            self.setText(text)
+
         rect = getRectangleXML(getChildNodesByName(xmldata, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(xmldata, self.uiscale)
 
         self.setFont(qfnt)
-        self.setText(text)
         self.resize(rect['width'], rect['height'])
         self.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(xmldata)))
 
