@@ -39,6 +39,7 @@ class labelWidget(gui.QLabel):
         alignment = xmldata.getAttribute("Alignment")
 
         if text.startswith("::pic:"):
+            self.setScaledContents(True)
             imgname = os.path.join(options.graphics_dir, text.replace("::pic:", "").replace("\\", "/")) + ".gif"
             if not os.path.exists(imgname):
                 imgname = os.path.join(options.graphics_dir, text.replace("::pic:", "").replace("\\", "/")) + ".GIF"
