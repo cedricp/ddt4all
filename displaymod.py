@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
-import options, os
+import options, os, zipfile
 from uiutils import *
 
 __author__ = "Cedric PAILLE"
@@ -33,6 +33,17 @@ class labelWidget(gui.QLabel):
     def change_ratio(self, x):
         return
 
+    def get_zip_graphic(self, name):
+        if os.path.exists("ecu.zip"):
+            zf = zipfile.ZipFile("ecu.zip", "r")
+            name = "graphics/" + name + ".gif"
+            if name in zf.namelist():
+                ba = core.QByteArray(zf.read(name))
+                self.buffer = core.QBuffer()
+                self.buffer.setData(ba)
+                self.buffer.open(core.QIODevice.ReadOnly)
+                self.img = gui.QMovie(self.buffer, 'GIF')
+
     def initXML(self, xmldata):
         text = xmldata.getAttribute("Text")
         color = xmldata.getAttribute("Color")
@@ -40,10 +51,13 @@ class labelWidget(gui.QLabel):
 
         if text.startswith("::pic:"):
             self.setScaledContents(True)
-            imgname = os.path.join(options.graphics_dir, text.replace("::pic:", "").replace("\\", "/")) + ".gif"
-            if not os.path.exists(imgname):
-                imgname = os.path.join(options.graphics_dir, text.replace("::pic:", "").replace("\\", "/")) + ".GIF"
-            self.img = gui.QMovie(imgname)
+            img_name = text.replace("::pic:", "").replace("\\", "/")
+            self.get_zip_graphic(img_name)
+            if self.img is None:
+                imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
+                if not os.path.exists(imgname):
+                    imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
+                self.img = gui.QMovie(imgname)
             self.setMovie(self.img)
             self.img.start()
         else:
@@ -75,7 +89,21 @@ class labelWidget(gui.QLabel):
 
         self.ismovable = True
         self.setFont(qfnt)
-        self.setText(text)
+
+        if text.startswith("::pic:"):
+            self.setScaledContents(True)
+            img_name = text.replace("::pic:", "").replace("\\", "/")
+            self.get_zip_graphic(img_name)
+            if self.img is None:
+                imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
+                if not os.path.exists(imgname):
+                    imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
+                self.img = gui.QMovie(imgname)
+            self.setMovie(self.img)
+            self.img.start()
+        else:
+            self.setText(text)
+
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
         self.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
 
