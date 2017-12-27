@@ -1378,7 +1378,7 @@ def zipConvertXML(dbfilename = "ecu.zip"):
         for dirpath, dirs, files in os.walk("graphics/"):
             for file in files:
                 if ".gif" in file.lower():
-                    imgs.append(os.path.join(dirpath, file[:-4]))
+                    imgs.append(os.path.join(dirpath, file))
 
     if len(ecus_glob) == 0:
         print "Cannot zip database, no 'ecus' directory"

@@ -36,9 +36,11 @@ class labelWidget(gui.QLabel):
     def get_zip_graphic(self, name):
         if os.path.exists("ecu.zip"):
             zf = zipfile.ZipFile("ecu.zip", "r")
-            name = "graphics/" + name + ".gif"
-            if name in zf.namelist():
-                ba = core.QByteArray(zf.read(name))
+            zname = "graphics/" + name + ".gif"
+            if not zname in zf.namelist():
+                zname = "graphics/" + name + ".GIF"
+            if zname in zf.namelist():
+                ba = core.QByteArray(zf.read(zname))
                 self.buffer = core.QBuffer()
                 self.buffer.setData(ba)
                 self.buffer.open(core.QIODevice.ReadOnly)
