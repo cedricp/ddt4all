@@ -3,8 +3,10 @@
 import time
 import ecu
 from uiutils import *
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
+
 import options, string
 
 __author__ = "Cedric PAILLE"
@@ -55,7 +57,7 @@ class snifferThread(core.QThread):
 
         self.running = False
 
-class sniffer(gui.QWidget):
+class sniffer(widgets.QWidget):
     def __init__(self, parent=None):
         super(sniffer, self).__init__(parent)
         self.ecu_file = None
@@ -66,12 +68,12 @@ class sniffer(gui.QWidget):
         self.oktostart = False
         self.ecu_filter = ""
 
-        hlayout = gui.QHBoxLayout()
+        hlayout = widgets.QHBoxLayout()
 
-        self.framecombo = gui.QComboBox()
+        self.framecombo = widgets.QComboBox()
 
-        self.startbutton = gui.QPushButton(">>")
-        self.addressinfo = gui.QLabel("0000")
+        self.startbutton = widgets.QPushButton(">>")
+        self.addressinfo = widgets.QLabel("0000")
 
         self.startbutton.setCheckable(True)
         self.startbutton.toggled.connect(self.startmonitoring)
@@ -83,12 +85,12 @@ class sniffer(gui.QWidget):
         hlayout.addWidget(self.framecombo)
         hlayout.addWidget(self.startbutton)
 
-        vlayout = gui.QVBoxLayout()
+        vlayout = widgets.QVBoxLayout()
         self.setLayout(vlayout)
 
         vlayout.addLayout(hlayout)
 
-        self.table = gui.QTableWidget()
+        self.table = widgets.QTableWidget()
         vlayout.addWidget(self.table)
 
         self.framecombo.activated.connect(self.change_frame)
@@ -121,13 +123,13 @@ class sniffer(gui.QWidget):
         self.table.setHorizontalHeaderLabels(["Values"])
 
         for i in range(0, len(self.names)):
-            item = gui.QTableWidgetItem("Waiting...")
+            item = widgets.QTableWidgetItem("Waiting...")
             item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
             self.table.setItem(i, 0, item)
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
-        self.table.horizontalHeader().setResizeMode(0, gui.QHeaderView.Stretch)
+        self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:
