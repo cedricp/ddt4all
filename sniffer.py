@@ -106,7 +106,7 @@ class sniffer(widgets.QWidget):
         self.stopthread()
         self.startbutton.setChecked(False)
         self.names = []
-        framename = unicode(self.framecombo.currentText().toUtf8(), encoding="UTF-8")
+        framename = self.framecombo.currentText()
         self.currentrequest = self.ecurequests.requests[framename]
         self.ecu_filter = self.currentrequest.sentbytes
         self.addressinfo.setText(self.ecu_filter)

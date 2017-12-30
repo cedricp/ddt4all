@@ -167,7 +167,7 @@ class Ecu_list(widgets.QWidget):
 
             items = [root_item.child(i) for i in range(root_item.childCount())]
             for item in items:
-                if (project.upper() in str(item.text(1).toAscii()).upper()) or project == "ALL":
+                if (project.upper() in str(item.text(1)).upper()) or project == "ALL":
                     item.setHidden(False)
                     root_hidden = False
                 else:
@@ -178,7 +178,7 @@ class Ecu_list(widgets.QWidget):
         if index.parent() == core.QModelIndex():
             return
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
-        selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
+        selected = item[0]
         target = self.ecuscan.ecu_database.getTarget(selected)
         name = selected
         if target:
@@ -462,7 +462,7 @@ class Main_widget(widgets.QMainWindow):
     def zipdb(self):
         filename = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
                                                    "./ecu.zip", "*.zip")
-        filename = str(filename.toAscii())
+        filename = str(filename)
         if not filename.endswith(".zip"):
             filename += ".zip"
 
@@ -489,13 +489,13 @@ class Main_widget(widgets.QMainWindow):
         if not item:
             return
 
-        itemname = unicode(item.text(0).toUtf8(), encoding="UTF-8")
+        itemname = item.text(0)
         nin = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
 
-        newitemname = unicode(nin[0].toUtf8(), encoding="UTF-8")
+        newitemname = nin[0]
 
         if newitemname == itemname:
             return
@@ -511,7 +511,7 @@ class Main_widget(widgets.QMainWindow):
 
     def newCategory(self):
         ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
-        necatname = unicode(ncn[0].toUtf8(), encoding="UTF-8")
+        necatname = ncn[0]
         if necatname:
             self.paramview.createCategory(necatname)
             self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
@@ -526,13 +526,13 @@ class Main_widget(widgets.QMainWindow):
         if item.parent() is not None:
             item = item.parent()
 
-        category = unicode(item.text(0).toUtf8(), encoding="UTF-8")
+        category = item.text(0)
         nsn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
 
-        newscreenname = unicode(nsn[0].toUtf8(), encoding="UTF-8")
+        newscreenname = nsn[0]
         if newscreenname:
             self.paramview.createScreen(newscreenname, category)
 
@@ -665,7 +665,7 @@ class Main_widget(widgets.QMainWindow):
         numecus = self.treeview_ecu.count()
         for i in range(numecus):
             item = self.treeview_ecu.item(i)
-            itemname = unicode(item.text().toUtf8(), encoding="UTF-8")
+            itemname = item.text()
             if itemname in self.ecunamemap:
                 eculist.append((itemname, self.ecunamemap[itemname]))
             else:
@@ -682,7 +682,7 @@ class Main_widget(widgets.QMainWindow):
         if not filename:
             return
 
-        basename = os.path.basename(unicode(filename.toUtf8(), encoding="UTF-8"))
+        basename = os.path.basename(filename)
         filename = os.path.join("./json", basename)
         ecufile = ecu.Ecu_file(None)
         layout = open(filename + ".layout", "w")
@@ -754,7 +754,7 @@ class Main_widget(widgets.QMainWindow):
 
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
-        screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
+        screen = item[0]
         inited = self.paramview.init(screen)
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
@@ -776,7 +776,7 @@ class Main_widget(widgets.QMainWindow):
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
-        ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
+        ecu_name = item[0]
 
         isxml = True
 
@@ -1107,7 +1107,7 @@ class portChooser(widgets.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                portinfo = unicode(currentitem.text().toUtf8(), encoding="utf-8")
+                portinfo = currentitem.text()
                 self.port = self.ports[portinfo][0]
                 options.port_name = self.ports[portinfo][1]
                 self.mode = 1

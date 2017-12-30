@@ -167,7 +167,7 @@ class dataTable(widgets.QTableWidget):
     def add_to_screen(self, name, item):
         if not options.main_window.paramview:
             return
-        itemtext = unicode(item.toUtf8(), encoding="UTF-8")
+        itemtext = item
         options.main_window.paramview.addParameter(self.requestname, self.issend, name, itemtext)
 
     def init(self, issend, requestname):
@@ -221,7 +221,7 @@ class requestTable(widgets.QTableWidget):
             return
 
         if c == 0:
-            newname = unicode(self.item(r, c).text().toUtf8(), encoding="UTF-8")
+            newname = self.item(r, c).text()
 
             # Avoid name clashes
             while newname in self.ecureq:
@@ -275,7 +275,7 @@ class requestTable(widgets.QTableWidget):
         if not currentItem:
             return
 
-        currenttext = unicode(currentItem.text().toUtf8(), encoding="UTF-8")
+        currenttext = currentItem.text()
         self.currentreq = currenttext
 
         if not currenttext:
@@ -394,7 +394,7 @@ class paramEditor(widgets.QFrame):
             self.data_list.addItem(k)
 
     def add_data(self):
-        current_data_name = unicode(self.data_list.currentText().toUtf8(), encoding="UTF-8")
+        current_data_name = self.data_list.currentText()
 
         data = {}
         data['firstbyte'] = 2
@@ -410,7 +410,6 @@ class paramEditor(widgets.QFrame):
         self.init(self.current_request)
 
     def removeitem(self, name):
-        name = unicode(name.toUtf8(), encoding="UTF-8")
         if self.send:
             self.current_request.sendbyte_dataitems.pop(name)
         else:
@@ -428,7 +427,7 @@ class paramEditor(widgets.QFrame):
 
         item = self.table.item(r, 0)
         if not item: return
-        dataname = unicode(item.text().toUtf8(), encoding="UTF-8")
+        dataname = item.text()
         self.currentdataitem = dataname
         self.update_bitview(dataname)
         self.update_bitview_value(dataname)
@@ -454,7 +453,7 @@ class paramEditor(widgets.QFrame):
         self.bitviewer.set_bytes(bytesarray)
 
     def update_bitview_value(self, dataname):
-        bytestosend = str(unicode(self.inputreq.text().toUtf8(), encoding="UTF8"))
+        bytestosend = str(self.inputreq.text())
         byteslisttosend = [bytestosend[a*2:a*2+2] for a in range(len(bytestosend ) / 2)]
         self.bitviewer.set_bytes_value(byteslisttosend)
 
@@ -814,7 +813,7 @@ class numericListPanel(widgets.QFrame):
         self.data.lists = {}
 
         for i in range(self.itemtable.rowCount()):
-            key = unicode(self.itemtable.item(i, 1).text().toUtf8(), encoding="UTF-8")
+            key = self.itemtable.item(i, 1).text()
             val = self.itemtable.cellWidget(i, 0).value()
             while key in self.data.items:
                 key += u"_"
@@ -960,9 +959,9 @@ class numericPanel(widgets.QFrame):
     def validate(self):
         self.data.scaled = True
         self.data.bitscount = self.inputnob.value()
-        self.data.unit = unicode(self.inputunit.text().toUtf8(), encoding="UTF-8")
+        self.data.unit = self.inputunit.text()
         self.data.signed = self.inputsigned.isChecked()
-        self.data.format = unicode(self.inputformat.text().toUtf8(), encoding="UTF-8")
+        self.data.format = self.inputformat.text()
         self.data.step = self.inputa.value()
         self.data.offset = self.inputb.value()
         self.data.divideby = self.inputc.value()
@@ -1062,7 +1061,7 @@ class dataEditor(widgets.QWidget):
             return
 
         r = self.datatable.selectedItems()[-1].row()
-        dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        dataname = self.datatable.item(r, 0).text()
 
         # Check if data needed by request
         for reqname, request in self.ecurequestsparser.requests.iteritems():
@@ -1089,7 +1088,7 @@ class dataEditor(widgets.QWidget):
 
         r = self.datatable.selectedItems()[-1].row()
 
-        dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        dataname = self.datatable.item(r, 0).text()
         self.currentecudata = self.ecurequestsparser.data[dataname]
 
         new_data_name = dataname
@@ -1147,7 +1146,7 @@ class dataEditor(widgets.QWidget):
         oldname = currentecudata.name
         self.ecurequestsparser.data.pop(oldname)
         item = self.datatable.item(r, c)
-        newname = unicode(item.text().toUtf8(), encoding="UTF-8")
+        newname = item.text()
         currentecudata.name = newname
         self.ecurequestsparser.data[newname] = currentecudata
 
@@ -1178,7 +1177,7 @@ class dataEditor(widgets.QWidget):
         if "validate" not in dir(self.currentWidget):
             return
 
-        comment = unicode(self.descpriptioneditor.text().toUtf8(), encoding="UTF-8")
+        comment = self.descpriptioneditor.text()
         self.currentecudata.comment = comment
         self.currentWidget.validate()
         options.main_window.requesteditor.refresh_data()
@@ -1197,7 +1196,7 @@ class dataEditor(widgets.QWidget):
         r = self.datatable.selectedItems()[-1].row()
 
 
-        dataname = unicode(self.datatable.item(r, 0).text().toUtf8(), encoding="UTF-8")
+        dataname = self.datatable.item(r, 0).text()
         self.currentecudata = self.ecurequestsparser.data[dataname]
         self.descpriptioneditor.setText(self.currentecudata.comment)
         if self.currentecudata.scaled:
@@ -1279,7 +1278,7 @@ class dataEditor(widgets.QWidget):
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
         self.datatable.resizeRowsToContents()
-        self.datatable.sortByColumn(0)
+        self.datatable.sortByColumn(0, core.Qt.AscendingOrder)
         self.connect_table()
 
     def set_ecu(self, ecu):
@@ -1433,7 +1432,7 @@ class buttonData(widgets.QFrame):
             return
 
         delay = self.delaybox.value()
-        request = unicode(self.requestcombo.currentText().toUtf8(), encoding="UTF-8")
+        request = self.requestcombo.currentText()
 
         smap = {
             'Delay': str(delay),
@@ -1527,7 +1526,7 @@ class buttonEditor(widgets.QWidget):
 
         idx = currentitem.row() - 1
         buttondata = self.layout['buttons'][idx]
-        textdata = unicode(currentitem.text().toUtf8(), encoding="UTF-8")
+        textdata = currentitem.text()
 
         buttondata['text'] = textdata
         buttondata['uniquename'] = textdata + u"_" + unicode(str(idx))
@@ -1542,7 +1541,7 @@ class buttonEditor(widgets.QWidget):
 
         current_row = selitems[-1].row()
         is_screen = current_row == 0
-        current_item_name = unicode(self.buttontable.item(current_row, 1).text().toUtf8(), encoding="UTF-8")
+        current_item_name = self.buttontable.item(current_row, 1).text()
         self.buttondata.init_table(current_item_name, is_screen)
 
     def set_ecu(self, ecu):
@@ -1630,16 +1629,16 @@ class hexSpinBox(widgets.QSpinBox):
             return 0
         return int("0x" + str(text), 16)
 
-    def validate(self, input, pos):
+    def validate(self, input, pos):        
         if len(str(input)) == 0:
-            return gui.QValidator.Acceptable, pos
+            return (gui.QValidator.Acceptable, input, pos)
 
         try:
             value = int("0x" + str(input)[pos-1], 16)
         except:
-            return gui.QValidator.Invalid, pos
+            return (gui.QValidator.Invalid, input, pos)
 
-        return gui.QValidator.Acceptable, pos
+        return (gui.QValidator.Acceptable, input, pos)
 
 class ecuParamEditor(widgets.QFrame):
     def __init__(self, parent=None):
@@ -1743,10 +1742,10 @@ class ecuParamEditor(widgets.QFrame):
         self.init()
 
     def add_ident(self):
-        diagversion = unicode(self.inputdiag.text().toUtf8(), encoding="UTF-8")
-        suppliercode = unicode(self.inputsupplier.text().toUtf8(), encoding="UTF-8")
-        soft = unicode(self.inputsoft.text().toUtf8(), encoding="UTF-8")
-        version = unicode(self.inputversion.text().toUtf8(), encoding="UTF-8")
+        diagversion = self.inputdiag.text()
+        suppliercode = self.inputsupplier.text()
+        soft = self.inputsoft.text()
+        version = self.inputversion.text()
 
         protocol = "Undefined"
         if self.protocolcombo.currentIndex() == 0:
@@ -1842,10 +1841,10 @@ class ecuParamEditor(widgets.QFrame):
             return
 
         current_row = selitems[-1].row()
-        diagversion = unicode(self.identtable.item(current_row, 0).text().toUtf8(), encoding="UTF-8")
-        suppliercode = unicode(self.identtable.item(current_row, 1).text().toUtf8(), encoding="UTF-8")
-        soft = unicode(self.identtable.item(current_row, 2).text().toUtf8(), encoding="UTF-8")
-        version = unicode(self.identtable.item(current_row, 3).text().toUtf8(), encoding="UTF-8")
+        diagversion = self.identtable.item(current_row, 0).text()
+        suppliercode = self.identtable.item(current_row, 1).text()
+        soft = self.identtable.item(current_row, 2).text()
+        version = self.identtable.item(current_row, 3).text()
 
         self.inputdiag.setText(diagversion)
         self.inputsupplier.setText(suppliercode)

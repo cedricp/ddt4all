@@ -82,7 +82,8 @@ class paramWidget(widgets.QWidget):
 
     def saveEcu(self, name=None):
         if not name:
-            filename = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
+            filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
+            filename = str(filename_tuple[0])
         else:
             filename = name
 
@@ -113,6 +114,7 @@ class paramWidget(widgets.QWidget):
         else:
             ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
             ecu_ident.name = os.path.basename(filename)
+            # TODO: THIS DOES NOT WORK as ecu_ident is a list
 
             js_targets = []
             for ecui in ecu_ident:
@@ -190,7 +192,7 @@ class paramWidget(widgets.QWidget):
             self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
-        cursorpos = self.panel.mapFromGlobal(widgets.QCursor.pos())
+        cursorpos = self.panel.mapFromGlobal(gui.QCursor.pos())
         posx = cursorpos.x() * self.uiscale
         posy = cursorpos.y() * self.uiscale
 
@@ -213,7 +215,7 @@ class paramWidget(widgets.QWidget):
             self.logview.append("<font color=red>" + _("To be able to edit your screen, first export it in JSON format") + "</font>")
             return
 
-        cursorpos = self.panel.mapFromGlobal(widgets.QCursor.pos())
+        cursorpos = self.panel.mapFromGlobal(gui.QCursor.pos())
         posx = cursorpos.x() * self.uiscale
         posy = cursorpos.y() * self.uiscale
 
@@ -249,11 +251,11 @@ class paramWidget(widgets.QWidget):
         if isinstance(self.currentwidget, displaymod.labelWidget):
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
+                if txt == self.currentwidget.text():
                     nln = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter label name'))
                     if not nln[1]:
                         return
-                    newlabelname = unicode(nln[0].toUtf8(), encoding="UTF-8")
+                    newlabelname = nln[0]
                     label['text'] = newlabelname
                     break
 
@@ -267,7 +269,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
+                if txt == self.currentwidget.text():
                     self.layoutdict['screens'][self.current_screen]['labels'].pop(count)
                     break
                 count += 1
@@ -276,7 +278,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for inp in self.layoutdict['screens'][self.current_screen]['inputs']:
                 txt = inp['text']
-                if txt == unicode(self.currentwidget.qlabel.text().toUtf8(), encoding="UTF-8"):
+                if txt == self.currentwidget.qlabel.text():
                     self.layoutdict['screens'][self.current_screen]['inputs'].pop(count)
                     break
                 count += 1
@@ -285,7 +287,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for display in self.layoutdict['screens'][self.current_screen]['displays']:
                 txt = display['text']
-                if txt == unicode(self.currentwidget.qlabel.text().toUtf8(), encoding="UTF-8"):
+                if txt == self.currentwidget.qlabel.text():
                     self.layoutdict['screens'][self.current_screen]['displays'].pop(count)
                     break
                 count += 1
@@ -304,7 +306,7 @@ class paramWidget(widgets.QWidget):
     def mousePressEvent(self, event):
         if options.simulation_mode and options.mode_edit:
             self.currentwidget = None
-            widget = widgets.QApplication.widgetAt(widgets.QCursor.pos())
+            widget = widgets.QApplication.widgetAt(gui.QCursor.pos())
 
             found = False
             while widget.parent():
@@ -337,7 +339,7 @@ class paramWidget(widgets.QWidget):
                     popmenu.addAction(removeaction)
                     removeaction.triggered.connect(self.removeElement)
 
-                popmenu.exec_(widgets.QCursor.pos())
+                popmenu.exec_(gui.QCursor.pos())
 
             if event.button() == core.Qt.LeftButton:
                 if not found or widget == self.panel:
@@ -482,7 +484,7 @@ class paramWidget(widgets.QWidget):
         self.output = widgets.QLineEdit()
         self.output.setReadOnly(True)
         hexvalidaor = core.QRegExp(("^[\s0-9a-fA-F]+"))
-        rev = widgets.QRegExpValidator(hexvalidaor, self)
+        rev = gui.QRegExpValidator(hexvalidaor, self)
         self.input.setValidator(rev)
         wlayout.addWidget(diaglabel)
         wlayout.addWidget(self.diagsession)
@@ -494,7 +496,7 @@ class paramWidget(widgets.QWidget):
         self.dialogbox.show()
 
     def changeSDS(self, qttext):
-        text = unicode(qttext.toUtf8(), encoding="UTF-8")
+        text = qttext
         diagsession = self.sds[text]
         self.defaultdiagsessioncommand = diagsession
         self.sendElm(diagsession)
@@ -502,7 +504,7 @@ class paramWidget(widgets.QWidget):
     def send_manual_cmd(self):
         diagmode = self.diagsession.currentText()
         if diagmode:
-            sds = unicode(diagmode.toUtf8(), encoding="UTF-8")
+            sds = diagmode
             if sds != u'None':
                 rq = self.request_editor_sds[sds]
                 self.sendElm(rq)
@@ -646,7 +648,7 @@ class paramWidget(widgets.QWidget):
                     self.sds[dataname] = sdsrequest
 
         for i in range(0, options.main_window.sdscombo.count()):
-            itemname = unicode(options.main_window.sdscombo.itemText(i).toUtf8(), encoding="UTF-8")
+            itemname = options.main_window.sdscombo.itemText(i)
             if u'EXTENDED' in itemname.upper():
                 options.main_window.sdscombo.setCurrentIndex(i)
                 self.defaultdiagsessioncommand = self.sds[itemname]
@@ -906,10 +908,10 @@ class paramWidget(widgets.QWidget):
 
                 if not is_combo_widget:
                     # Get input string from user line edit
-                    input_value = widget.text().toAscii()
+                    input_value = widget.text()
                 else:
                     # Get value from user input combo box
-                    combo_value = unicode(widget.currentText().toUtf8(), encoding="UTF-8")
+                    combo_value = widget.currentText()
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
 
@@ -1007,7 +1009,7 @@ class paramWidget(widgets.QWidget):
                             combovalueindex = -1
                             for i in range(data.widget.count()):
                                 itemname = data.widget.itemText(i)
-                                if unicode(itemname.toUtf8(), encoding="UTF8") == value:
+                                if itemname == value:
                                     combovalueindex = i
                                     break
 
