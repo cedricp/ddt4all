@@ -118,7 +118,7 @@ class sniffer(widgets.QWidget):
         self.table.clear()
         self.table.setColumnCount(1)
         self.table.setRowCount(len(self.names))
-        headerstrings = core.QString(headernames).split(";")
+        headerstrings = headernames.split(";")
         self.table.setVerticalHeaderLabels(headerstrings)
         self.table.setHorizontalHeaderLabels(["Values"])
 

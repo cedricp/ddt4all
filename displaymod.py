@@ -45,7 +45,7 @@ class labelWidget(widgets.QLabel):
                 self.buffer = core.QBuffer()
                 self.buffer.setData(ba)
                 self.buffer.open(core.QIODevice.ReadOnly)
-                self.img = widgets.QMovie(self.buffer, 'GIF')
+                self.img = gui.QMovie(self.buffer, 'GIF')
 
     def initXML(self, xmldata):
         text = xmldata.getAttribute("Text")
@@ -60,7 +60,7 @@ class labelWidget(widgets.QLabel):
                 imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
                 if not os.path.exists(imgname):
                     imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
-                self.img = widgets.QMovie(imgname)
+                self.img = gui.QMovie(imgname)
             self.setMovie(self.img)
             self.img.start()
         else:
@@ -101,7 +101,7 @@ class labelWidget(widgets.QLabel):
                 imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
                 if not os.path.exists(imgname):
                     imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
-                self.img = widgets.QMovie(imgname)
+                self.img = gui.QMovie(imgname)
             self.setMovie(self.img)
             self.img.start()
         else:

@@ -866,7 +866,7 @@ class donationWidget(widgets.QLabel):
 
     def donate(self):
         url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
-        widgets.QDesktopServices().openUrl(url)
+        gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
         msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
