@@ -84,6 +84,8 @@ class paramWidget(widgets.QWidget):
         if not name:
             filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
             filename = str(filename_tuple[0])
+            if filename == "":
+                return              
         else:
             filename = name
 

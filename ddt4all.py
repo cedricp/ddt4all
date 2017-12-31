@@ -460,9 +460,12 @@ class Main_widget(widgets.QMainWindow):
                 self.paramview.changeSDS(currenttext)
 
     def zipdb(self):
-        filename = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
                                                    "./ecu.zip", "*.zip")
-        filename = str(filename)
+        filename = str(filename_tuple[0])
+        if filename == "":
+            return        
+        
         if not filename.endswith(".zip"):
             filename += ".zip"
 
@@ -656,10 +659,11 @@ class Main_widget(widgets.QMainWindow):
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
-        filename = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
+        filename=str(filename_tuple[0])
         if filename == "":
-            return
+            return        
 
         eculist = []
         numecus = self.treeview_ecu.count()
@@ -676,10 +680,10 @@ class Main_widget(widgets.QMainWindow):
         jsonfile.close()
 
     def newEcu(self):
-        filename = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
-
-        if not filename:
+        filename=str(filename_tuple[0])
+        if filename == '':
             return
 
         basename = os.path.basename(filename)
