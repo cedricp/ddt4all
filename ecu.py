@@ -1303,7 +1303,6 @@ class Ecu_database:
                         protocol = protnode[0].firstChild.nodeValue
 
                     if len(group) and (str(address) not in self.addr_group_mapping):
-                        print group, "-", address
                         self.addr_group_mapping[str(address)] = group
 
                     if 'CAN' in protocol.upper():

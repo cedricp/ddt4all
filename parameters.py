@@ -1378,11 +1378,17 @@ def dumpDOC(xdoc):
     return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
 
 
-def zipConvertXML(filename = "ecu.zip"):
+def zipConvertXML(dbfilename = "ecu.zip"):
     zipoutput = StringIO()
     options.ecus_dir = "./ecus"
 
     ecus_glob = glob.glob("ecus/*.xml")
+    imgs = []
+    if os.path.exists("./graphics"):
+        for dirpath, dirs, files in os.walk("graphics/"):
+            for file in files:
+                if ".gif" in file.lower():
+                    imgs.append(os.path.join(dirpath, file))
 
     if len(ecus_glob) == 0:
         print "Cannot zip database, no 'ecus' directory"
@@ -1399,6 +1405,8 @@ def zipConvertXML(filename = "ecu.zip"):
 
     targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
+        for img in imgs:
+            zf.write(img)
         for target in ecus:
             filename = target.replace(".xml", ".json")
             if filename.startswith("ecus/"):
@@ -1429,7 +1437,7 @@ def zipConvertXML(filename = "ecu.zip"):
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
     print 'Writing archive'
-    with open(filename, "wb") as f:
+    with open(dbfilename, "wb") as f:
         f.write(zipoutput.getvalue())
 
 
