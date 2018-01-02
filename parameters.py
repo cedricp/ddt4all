@@ -5,13 +5,24 @@ import ecu, elm
 import displaymod
 from elm import elm_checker
 from uiutils import *
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
 import options
 from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, argparse, zipfile, glob
 from StringIO import StringIO
+
+try:
+    import PyQt5.QtGui as gui
+    import PyQt5.QtCore as core
+    import PyQt5.QtWidgets as widgets
+    def utf8(string):
+        return string
+except:
+    import PyQt4.QtGui as gui
+    import PyQt4.QtGui as widgets
+    import PyQt4.QtCore as core
+    def utf8(string):
+        return unicode(string.toUtf8(), encoding="UTF8")
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -28,7 +39,7 @@ _ = options.translator('ddt4all')
 # Check ELM response validity (mode + 0x40)
 
 
-class paramWidget(gui.QWidget):
+class paramWidget(widgets.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
         super(paramWidget, self).__init__(parent)
         self.defaultdiagsessioncommand = "10C0"
@@ -40,7 +51,7 @@ class paramWidget(gui.QWidget):
         self.main_protocol_status = prot_status
         self.scrollarea = parent
         self.refreshtime = 100
-        self.layout = gui.QHBoxLayout(self)
+        self.layout = widgets.QHBoxLayout(self)
         self.logview = logview
         self.ddtfile = ddtfile
         self.ecurequestsparser = None
@@ -81,7 +92,10 @@ class paramWidget(gui.QWidget):
 
     def saveEcu(self, name=None):
         if not name:
-            filename = gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
+            filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
+            filename = str(filename_tuple[0])
+            if filename == "":
+                return              
         else:
             filename = name
 
@@ -112,6 +126,7 @@ class paramWidget(gui.QWidget):
         else:
             ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
             ecu_ident.name = os.path.basename(filename)
+            # TODO: THIS DOES NOT WORK as ecu_ident is a list
 
             js_targets = []
             for ecui in ecu_ident:
@@ -233,7 +248,7 @@ class paramWidget(gui.QWidget):
             return
 
         if isinstance(self.currentwidget, displaymod.labelWidget):
-            colordialog = gui.QColorDialog()
+            colordialog = widgets.QColorDialog()
             color = colordialog.getColor()
             if color.isValid():
                 self.currentwidget.jsondata['color'] = "rgb(%i,%i,%i)" % (color.red(), color.green(), color.blue())
@@ -248,11 +263,11 @@ class paramWidget(gui.QWidget):
         if isinstance(self.currentwidget, displaymod.labelWidget):
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
-                    nln = gui.QInputDialog.getText(self, 'DDT4All', _('Enter label name'))
+                if txt == utf8(self.currentwidget.text()):
+                    nln = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter label name'))
                     if not nln[1]:
                         return
-                    newlabelname = unicode(nln[0].toUtf8(), encoding="UTF-8")
+                    newlabelname = nln[0]
                     label['text'] = newlabelname
                     break
 
@@ -266,7 +281,7 @@ class paramWidget(gui.QWidget):
             count = 0
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == unicode(self.currentwidget.text().toUtf8(), encoding="Utf-8"):
+                if txt == utf8(self.currentwidget.text()):
                     self.layoutdict['screens'][self.current_screen]['labels'].pop(count)
                     break
                 count += 1
@@ -275,7 +290,7 @@ class paramWidget(gui.QWidget):
             count = 0
             for inp in self.layoutdict['screens'][self.current_screen]['inputs']:
                 txt = inp['text']
-                if txt == unicode(self.currentwidget.qlabel.text().toUtf8(), encoding="UTF-8"):
+                if txt == utf8(self.currentwidget.qlabel.text()):
                     self.layoutdict['screens'][self.current_screen]['inputs'].pop(count)
                     break
                 count += 1
@@ -284,7 +299,7 @@ class paramWidget(gui.QWidget):
             count = 0
             for display in self.layoutdict['screens'][self.current_screen]['displays']:
                 txt = display['text']
-                if txt == unicode(self.currentwidget.qlabel.text().toUtf8(), encoding="UTF-8"):
+                if txt == utf8(self.currentwidget.qlabel.text()):
                     self.layoutdict['screens'][self.current_screen]['displays'].pop(count)
                     break
                 count += 1
@@ -293,7 +308,7 @@ class paramWidget(gui.QWidget):
             count = 0
             for button in self.layoutdict['screens'][self.current_screen]['buttons']:
                 txt = button['uniquename']
-                if txt == self.currentwidget.uniquename:
+                if txt == utf8(self.currentwidget.uniquename):
                     self.layoutdict['screens'][self.current_screen]['buttons'].pop(count)
                     break
                 count += 1
@@ -303,7 +318,7 @@ class paramWidget(gui.QWidget):
     def mousePressEvent(self, event):
         if options.simulation_mode and options.mode_edit:
             self.currentwidget = None
-            widget = gui.QApplication.widgetAt(gui.QCursor.pos())
+            widget = widgets.QApplication.widgetAt(gui.QCursor.pos())
 
             found = False
             while widget.parent():
@@ -314,9 +329,9 @@ class paramWidget(gui.QWidget):
 
             if event.button() == core.Qt.RightButton:
                 self.currentwidget = widget
-                popmenu = gui.QMenu(self)
-                addbuttonaction = gui.QAction(_("Add button"), popmenu)
-                addlabelaction = gui.QAction(_("Add label"), popmenu)
+                popmenu = widgets.QMenu(self)
+                addbuttonaction = widgets.QAction(_("Add button"), popmenu)
+                addlabelaction = widgets.QAction(_("Add label"), popmenu)
 
                 popmenu.addAction(addbuttonaction)
                 popmenu.addAction(addlabelaction)
@@ -324,14 +339,14 @@ class paramWidget(gui.QWidget):
                 addlabelaction.triggered.connect(self.addLabel)
 
                 if isinstance(widget, displaymod.labelWidget):
-                    renamelabelaction = gui.QAction(_("Rename label"), popmenu)
-                    changecoloraction = gui.QAction(_("Change color"), popmenu)
+                    renamelabelaction = widgets.QAction(_("Rename label"), popmenu)
+                    changecoloraction = widgets.QAction(_("Change color"), popmenu)
                     popmenu.addAction(renamelabelaction)
                     popmenu.addAction(changecoloraction)
                     renamelabelaction.triggered.connect(self.renameLabel)
                     changecoloraction.triggered.connect(self.changeLabelColor)
                 if found:
-                    removeaction = gui.QAction(_("Remove element"), popmenu)
+                    removeaction = widgets.QAction(_("Remove element"), popmenu)
                     popmenu.addSeparator()
                     popmenu.addAction(removeaction)
                     removeaction.triggered.connect(self.removeElement)
@@ -368,8 +383,8 @@ class paramWidget(gui.QWidget):
     def mouseMoveEvent(self, event):
         if options.simulation_mode and options.mode_edit == True:
             if len(self.movingwidgets):
-                sizemodifier = gui.QApplication.keyboardModifiers() == core.Qt.ControlModifier
-                ratiomodifier = gui.QApplication.keyboardModifiers() == core.Qt.ShiftModifier
+                sizemodifier = widgets.QApplication.keyboardModifiers() == core.Qt.ControlModifier
+                ratiomodifier = widgets.QApplication.keyboardModifiers() == core.Qt.ShiftModifier
                 mouseX = event.globalX() - self.mouseOldX
                 mouseY = event.globalY() - self.mouseOldY
                 self.mouseOldX = event.globalX()
@@ -438,17 +453,17 @@ class paramWidget(gui.QWidget):
         return scr_init
 
     def hexeditor(self):
-        self.dialogbox = gui.QWidget()
-        wlayout = gui.QVBoxLayout()
-        diaglabel = gui.QLabel(_("Diagnotic session"))
-        inputlabel = gui.QLabel(_("Input"))
-        outputlabel = gui.QLabel(_("Output"))
+        self.dialogbox = widgets.QWidget()
+        wlayout = widgets.QVBoxLayout()
+        diaglabel = widgets.QLabel(_("Diagnotic session"))
+        inputlabel = widgets.QLabel(_("Input"))
+        outputlabel = widgets.QLabel(_("Output"))
 
         diaglabel.setAlignment(core.Qt.AlignCenter)
         inputlabel.setAlignment(core.Qt.AlignCenter)
         outputlabel.setAlignment(core.Qt.AlignCenter)
 
-        self.diagsession = gui.QComboBox()
+        self.diagsession = widgets.QComboBox()
         rqsts = self.ecurequestsparser.requests.keys()
         self.request_editor_sds = {}
 
@@ -476,9 +491,9 @@ class paramWidget(gui.QWidget):
             self.request_editor_sds[u"Default [10 81]"] = "10 81"
             self.request_editor_sds[u"After Sales [10 C0]"] = "10 C0"
 
-        self.input = gui.QLineEdit()
+        self.input = widgets.QLineEdit()
         self.input.returnPressed.connect(self.send_manual_cmd)
-        self.output = gui.QLineEdit()
+        self.output = widgets.QLineEdit()
         self.output.setReadOnly(True)
         hexvalidaor = core.QRegExp(("^[\s0-9a-fA-F]+"))
         rev = gui.QRegExpValidator(hexvalidaor, self)
@@ -493,7 +508,7 @@ class paramWidget(gui.QWidget):
         self.dialogbox.show()
 
     def changeSDS(self, qttext):
-        text = unicode(qttext.toUtf8(), encoding="UTF-8")
+        text = utf8(qttext)
         diagsession = self.sds[text]
         self.defaultdiagsessioncommand = diagsession
         self.sendElm(diagsession)
@@ -501,7 +516,7 @@ class paramWidget(gui.QWidget):
     def send_manual_cmd(self):
         diagmode = self.diagsession.currentText()
         if diagmode:
-            sds = unicode(diagmode.toUtf8(), encoding="UTF-8")
+            sds = utf8(diagmode)
             if sds != u'None':
                 rq = self.request_editor_sds[sds]
                 self.sendElm(rq)
@@ -638,14 +653,14 @@ class paramWidget(gui.QWidget):
                             self.sds[dataname] = sdsrequest
                             sessionnamefound = True
 
-                if len(request.sendbyte_dataitems) == 0 or sessionnamefound == False:
+                if len(request.sendbyte_dataitems) == 0 or not sessionnamefound:
                     sdsrequest = "".join(request.build_data_stream({}))
                     dataname = reqname + u" [" + sdsrequest + u"]"
                     options.main_window.sdscombo.addItem(dataname)
                     self.sds[dataname] = sdsrequest
 
         for i in range(0, options.main_window.sdscombo.count()):
-            itemname = unicode(options.main_window.sdscombo.itemText(i).toUtf8(), encoding="UTF-8")
+            itemname = utf8(options.main_window.sdscombo.itemText(i))
             if u'EXTENDED' in itemname.upper():
                 options.main_window.sdscombo.setCurrentIndex(i)
                 self.defaultdiagsessioncommand = self.sds[itemname]
@@ -872,7 +887,7 @@ class paramWidget(gui.QWidget):
         if txt in self.button_messages:
             messages = self.button_messages[txt]
             for message in messages:
-                msgbox = gui.QMessageBox()
+                msgbox = widgets.QMessageBox()
                 msgbox.setText(message)
                 msgbox.exec_()
 
@@ -909,10 +924,10 @@ class paramWidget(gui.QWidget):
 
                 if not is_combo_widget:
                     # Get input string from user line edit
-                    input_value = widget.text().toAscii()
+                    input_value = utf8(widget.text())
                 else:
                     # Get value from user input combo box
-                    combo_value = unicode(widget.currentText().toUtf8(), encoding="UTF-8")
+                    combo_value = utf8(widget.currentText())
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
 
@@ -1016,7 +1031,7 @@ class paramWidget(gui.QWidget):
                             combovalueindex = -1
                             for i in range(data.widget.count()):
                                 itemname = data.widget.itemText(i)
-                                if unicode(itemname.toUtf8(), encoding="UTF8") == value:
+                                if utf8(itemname) == value:
                                     combovalueindex = i
                                     break
 
@@ -1079,16 +1094,16 @@ class paramWidget(gui.QWidget):
             self.logview.append(_("No ClearDTC request for that ECU, will send default 14FF00"))
             request = "14FF00"
 
-        msgbox = gui.QMessageBox()
+        msgbox = widgets.QMessageBox()
         msgbox.setText(_("<center>You are about to clear diagnostic troubles codes</center>") +
                        _("<center>Ae you sure this is what you want.</center>"))
 
-        msgbox.setStandardButtons(gui.QMessageBox.Yes)
-        msgbox.addButton(gui.QMessageBox.Abort)
-        msgbox.setDefaultButton(gui.QMessageBox.Abort)
+        msgbox.setStandardButtons(widgets.QMessageBox.Yes)
+        msgbox.addButton(widgets.QMessageBox.Abort)
+        msgbox.setDefaultButton(widgets.QMessageBox.Abort)
         userreply = msgbox.exec_()
 
-        if userreply == gui.QMessageBox.Abort:
+        if userreply == widgets.QMessageBox.Abort:
             return
 
         self.startDiagnosticSession()
@@ -1099,7 +1114,7 @@ class paramWidget(gui.QWidget):
         self.dtcdialog.close()
 
         if 'WRONG' in response:
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText("There was an error clearing DTC")
             msgbox.exec_()
             options.main_window.logview.append("<font color=red>Clear DTC failed</font>")
@@ -1134,7 +1149,7 @@ class paramWidget(gui.QWidget):
             moredtcread_command = ''.join(bytestosend)
 
         if "RESPONSE" in can_response:
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText(_("Invalid response for ReadDTC command"))
             msgbox.exec_()
             return
@@ -1143,7 +1158,7 @@ class paramWidget(gui.QWidget):
 
         # Handle error
         if can_response[0].upper() == "7F":
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText(_("Read DTC returned an error"))
             msgbox.exec_()
             return
@@ -1151,7 +1166,7 @@ class paramWidget(gui.QWidget):
         # Handle no DTC
         if len(can_response) == 2:
             #No errors
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText(_("No DTC"))
             msgbox.exec_()
             return
@@ -1170,12 +1185,12 @@ class paramWidget(gui.QWidget):
                 maxcount -= 1
 
         numberofdtc = int('0x' + can_response[1], 16)
-        self.dtcdialog = gui.QDialog(None)
-        dtc_view = gui.QTextEdit(None)
+        self.dtcdialog = widgets.QDialog(None)
+        dtc_view = widgets.QTextEdit(None)
         dtc_view.setReadOnly(True)
-        layout = gui.QVBoxLayout()
+        layout = widgets.QVBoxLayout()
         self.dtcdialog.setLayout(layout)
-        clearbutton = gui.QPushButton(_("Clear ALL DTC"))
+        clearbutton = widgets.QPushButton(_("Clear ALL DTC"))
         layout.addWidget(clearbutton)
         layout.addWidget(dtc_view)
 

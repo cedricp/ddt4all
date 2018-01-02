@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+try:
+    import PyQt5.QtGui as gui
+    import PyQt5.QtCore as core
+    import PyQt5.QtWidgets as widgets
+except:
+    import PyQt4.QtGui as gui
+    import PyQt4.QtGui as widgets
+    import PyQt4.QtCore as core
+
 import options, os, zipfile
 from uiutils import *
 
@@ -14,7 +21,7 @@ __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
 
-class labelWidget(gui.QLabel):
+class labelWidget(widgets.QLabel):
     def __init__(self, parent, uiscale):
         super(labelWidget, self).__init__(parent)
         self.jsondata = None
@@ -26,9 +33,9 @@ class labelWidget(gui.QLabel):
 
     def toggle_selected(self, sel):
         if sel:
-            self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.setFrameStyle(gui.QFrame.NoFrame)
+            self.setFrameStyle(widgets.QFrame.NoFrame)
 
     def change_ratio(self, x):
         return
@@ -136,7 +143,7 @@ class labelWidget(gui.QLabel):
             self.jsondata['bbox']['top'] = self.pos().y() * self.uiscale
 
 
-class screenWidget(gui.QFrame):
+class screenWidget(widgets.QFrame):
     def __init__(self, parent, uiscale):
         super(screenWidget, self).__init__(parent)
         self.jsondata = None
@@ -150,9 +157,9 @@ class screenWidget(gui.QFrame):
 
     def toggle_selected(self, sel):
         if sel:
-            self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.setFrameStyle(gui.QFrame.NoFrame)
+            self.setFrameStyle(widgets.QFrame.NoFrame)
 
     def change_ratio(self, x):
         return
@@ -194,7 +201,7 @@ class screenWidget(gui.QFrame):
             self.jsondata['width'] = self.width() * self.uiscale
             self.jsondata['height'] = self.height() * self.uiscale
 
-class buttonRequest(gui.QPushButton):
+class buttonRequest(widgets.QPushButton):
     def __init__(self, parent, uiscale, ecureq, count):
         super(buttonRequest, self).__init__(parent)
         self.jsdata = None
@@ -210,7 +217,7 @@ class buttonRequest(gui.QPushButton):
 
     def toggle_selected(self, sel):
         if sel:
-            #self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            #self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
             pass
         else:
             #self.setFrameStyle(0)
@@ -268,7 +275,7 @@ class buttonRequest(gui.QPushButton):
             self.jsondata['rect']['width'] = self.width() * self.uiscale
 
 
-class displayWidget(gui.QWidget):
+class displayWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(displayWidget, self).__init__(parent)
         self.uiscale = uiscale
@@ -280,11 +287,11 @@ class displayWidget(gui.QWidget):
 
     def toggle_selected(self, sel):
         if sel:
-            self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
-            self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
+            self.qlabelval.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.qlabel.setFrameStyle(gui.QFrame.NoFrame)
-            self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+            self.qlabel.setFrameStyle(widgets.QFrame.NoFrame)
+            self.qlabelval.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.Sunken)
 
     def lock(self, lock):
         pass
@@ -367,7 +374,7 @@ class displayWidget(gui.QWidget):
         self.move(rect['left'], rect['top'])
         self.resize(rect['width'], rect['height'])
 
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'])
@@ -375,7 +382,7 @@ class displayWidget(gui.QWidget):
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = gui.QLabel(self)
+        self.qlabelval = widgets.QLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] - width, rect['height'])
@@ -435,7 +442,7 @@ class displayWidget(gui.QWidget):
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
 
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
@@ -443,7 +450,7 @@ class displayWidget(gui.QWidget):
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = gui.QLabel(self)
+        self.qlabelval = widgets.QLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
@@ -474,7 +481,7 @@ class displayWidget(gui.QWidget):
         self.jsondata = display
         self.toggle_selected(False)
 
-class inputWidget(gui.QWidget):
+class inputWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(inputWidget, self).__init__(parent)
         self.uiscale = uiscale
@@ -487,11 +494,11 @@ class inputWidget(gui.QWidget):
 
     def toggle_selected(self, sel):
         if sel:
-            self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
-            #self.editwidget.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
+            #self.editwidget.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.qlabel.setFrameStyle(gui.QFrame.NoFrame)
-            #self.editwidget.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+            self.qlabel.setFrameStyle(widgets.QFrame.NoFrame)
+            #self.editwidget.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.Sunken)
 
     def lock(self, lock):
         self.locked = lock
@@ -549,12 +556,12 @@ class inputWidget(gui.QWidget):
             color = 0xAAAAAA
 
         self.resize(rect['width'], rect['height'])
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setWordWrap(True)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-        #self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+        #self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'])
         self.move(rect['left'], rect['top'])
 
@@ -565,7 +572,7 @@ class inputWidget(gui.QWidget):
             return
 
         if len(self.ecurequestsparser.data[text].items) > 0:
-            self.editwidget = gui.QComboBox(self)
+            self.editwidget = widgets.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
             for key in sorted(items_ref.keys()):
@@ -582,7 +589,7 @@ class inputWidget(gui.QWidget):
             self.editwidget.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
             ddata = displayData(data, self.editwidget, True)
         else:
-            self.editwidget = gui.QLineEdit(self)
+            self.editwidget = widgets.QLineEdit(self)
             if options.simulation_mode and options.mode_edit:
                 self.editwidget.setEnabled(False)
             self.editwidget.setFont(qfnt)
@@ -617,7 +624,7 @@ class inputWidget(gui.QWidget):
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
 
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
@@ -630,7 +637,7 @@ class inputWidget(gui.QWidget):
         data = self.ecurequestsparser.data[text]
 
         if len(self.ecurequestsparser.data[text].items) > 0:
-            self.editwidget = gui.QComboBox(self)
+            self.editwidget = widgets.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
             for key in sorted(items_ref.keys()):
@@ -650,7 +657,7 @@ class inputWidget(gui.QWidget):
 
             ddata = displayData(data, self.editwidget, True)
         else:
-            self.editwidget = gui.QLineEdit(self)
+            self.editwidget = widgets.QLineEdit(self)
 
             self.editwidget.setFont(qfnt)
             self.editwidget.setText("No Value")
