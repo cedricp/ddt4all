@@ -28,6 +28,7 @@ debug = 'DDTDEBUG' in os.environ
 cantimeout = 0
 refreshrate = 100
 mode_edit = False
+safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 
 def get_last_error():
     global last_error

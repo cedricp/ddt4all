@@ -685,14 +685,13 @@ class paramWidget(gui.QWidget):
 
             if not options.promode:
                 # Allow read only modes
-                if command.startswith('3E') or command.startswith('14')\
-                        or command.startswith('21') or command.startswith('22')\
-                        or command.startswith('17'):
+                if command[0:2] not in options.safe_commands:
 
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>' + _('Sending ELM request :') + '</font>'
                 else:
                     txt = '<font color=green>' + _('Blocked ELM request :') + '</font>'
+                    elm_response = "BLOCKED"
             else:
                 # Pro mode *Watch out*
                 elm_response = options.elm.request(command, cache=False)
@@ -709,6 +708,11 @@ class paramWidget(gui.QWidget):
             elif "17FFFF" in command:
                 elm_response = "7F 57 12"
             txt = '<font color=green>' + _('Sending simulated ELM request :') + '</font>'
+
+            if not options.promode:
+                # Allow read only modes
+                if command[0:2] not in options.safe_commands:
+                    elm_response = "BLOCKED"
 
         if not auto or options.log_all:
             self.logview.append(txt + command)
@@ -926,6 +930,12 @@ class paramWidget(gui.QWidget):
             time.sleep(request_delay / 1000.0)
             # Then show received values
             elm_response = self.sendElm(' '.join(elm_data_stream))
+            if elm_response == "BLOCKED":
+                msgbox = gui.QMessageBox()
+                msgbox.setWindowTitle("For your safety")
+                msgbox.setText("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock")
+                msgbox.exec_()
+                return
 
             for key in rcvbytes_data_items.keys():
                 if request_name in self.displaydict:
