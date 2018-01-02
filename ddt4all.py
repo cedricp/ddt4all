@@ -5,9 +5,11 @@ import sys
 import os
 import glob
 import json
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
-import PyQt4.QtWebKit as webkit
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWebKit as webkit
+import PyQt5.QtWebKitWidgets as webkitwidgets
+import PyQt5.QtWidgets as widgets
 import parameters, ecu
 import elm, options, locale
 import dataeditor
@@ -40,12 +42,12 @@ def isWritable(path):
         return False
     return True
 
-class Ecu_list(gui.QWidget):
+class Ecu_list(widgets.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
         super(Ecu_list, self).__init__()
         self.selected = ''
         self.treeview_ecu = treeview_ecu
-        self.vehicle_combo = gui.QComboBox()
+        self.vehicle_combo = widgets.QComboBox()
 
         self.ecu_map = {}
         vehicles = [
@@ -71,17 +73,17 @@ class Ecu_list(gui.QWidget):
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
-        layout = gui.QVBoxLayout()
-        layouth = gui.QHBoxLayout()
-        scanbutton = gui.QPushButton()
+        layout = widgets.QVBoxLayout()
+        layouth = widgets.QHBoxLayout()
+        scanbutton = widgets.QPushButton()
         scanbutton.setIcon(gui.QIcon("icons/scan.png"))
         scanbutton.clicked.connect(self.scanselvehicle)
         layouth.addWidget(self.vehicle_combo)
         layouth.addWidget(scanbutton)
         layout.addLayout(layouth)
         self.setLayout(layout)
-        self.list = gui.QTreeWidget(self)
-        self.list.setSelectionMode(gui.QAbstractItemView.SingleSelection)
+        self.list = widgets.QTreeWidget(self)
+        self.list.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
         layout.addWidget(self.list)
         self.ecuscan = ecuscan
         self.list.doubleClicked.connect(self.ecuSel)
@@ -149,9 +151,9 @@ class Ecu_list(gui.QWidget):
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
         for e in keys:
-            item = gui.QTreeWidgetItem(self.list, [e])
+            item = widgets.QTreeWidgetItem(self.list, [e])
             for t in stored_ecus[e]:
-                gui.QTreeWidgetItem(item, t)
+                widgets.QTreeWidgetItem(item, t)
 
         self.list.resizeColumnToContents(0)
 
@@ -165,7 +167,7 @@ class Ecu_list(gui.QWidget):
 
             items = [root_item.child(i) for i in range(root_item.childCount())]
             for item in items:
-                if (project.upper() in str(item.text(1).toAscii()).upper()) or project == "ALL":
+                if (project.upper() in str(item.text(1)).upper()) or project == "ALL":
                     item.setHidden(False)
                     root_hidden = False
                 else:
@@ -176,7 +178,7 @@ class Ecu_list(gui.QWidget):
         if index.parent() == core.QModelIndex():
             return
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
-        selected = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
+        selected = item[0]
         target = self.ecuscan.ecu_database.getTarget(selected)
         name = selected
         if target:
@@ -192,7 +194,7 @@ class Ecu_list(gui.QWidget):
                 self.treeview_ecu.addItem(name)
 
 
-class Main_widget(gui.QMainWindow):
+class Main_widget(widgets.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
         self.sdsready = False
@@ -206,39 +208,39 @@ class Main_widget(gui.QMainWindow):
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
 
         self.paramview = None
-        self.docview = webkit.QWebView()
+        self.docview = webkitwidgets.QWebView()
         self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
         self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
         self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
         self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
         self.screennames = []
 
-        self.statusBar = gui.QStatusBar()
+        self.statusBar = widgets.QStatusBar()
         self.setStatusBar(self.statusBar)
 
-        self.connectedstatus = gui.QLabel()
+        self.connectedstatus = widgets.QLabel()
         self.connectedstatus.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
-        self.protocolstatus = gui.QLabel()
-        self.progressstatus = gui.QProgressBar()
-        self.infostatus = gui.QLabel()
+        self.protocolstatus = widgets.QLabel()
+        self.progressstatus = widgets.QProgressBar()
+        self.infostatus = widgets.QLabel()
 
         self.connectedstatus.setFixedWidth(100)
         self.protocolstatus.setFixedWidth(200)
         self.progressstatus.setFixedWidth(150)
         self.infostatus.setFixedWidth(200)
 
-        self.refreshtimebox = gui.QSpinBox()
+        self.refreshtimebox = widgets.QSpinBox()
         self.refreshtimebox.setRange(100, 2000)
         self.refreshtimebox.setSingleStep(100)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
-        refrestimelabel = gui.QLabel(_("Refresh rate (ms):"))
+        refrestimelabel = widgets.QLabel(_("Refresh rate (ms):"))
 
-        self.cantimeout = gui.QSpinBox()
+        self.cantimeout = widgets.QSpinBox()
         self.cantimeout.setRange(0, 1000)
         self.cantimeout.setSingleStep(200)
         self.cantimeout.setValue(options.cantimeout)
         self.cantimeout.valueChanged.connect(self.changeCanTimeout)
-        cantimeoutlabel = gui.QLabel(_("Can timeout (ms) [0:AUTO] :"))
+        cantimeoutlabel = widgets.QLabel(_("Can timeout (ms) [0:AUTO] :"))
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -249,10 +251,10 @@ class Main_widget(gui.QMainWindow):
         self.statusBar.addWidget(self.cantimeout)
         self.statusBar.addWidget(self.infostatus)
 
-        self.tabbedview = gui.QTabWidget()
+        self.tabbedview = widgets.QTabWidget()
         self.setCentralWidget(self.tabbedview)
 
-        self.scrollview = gui.QScrollArea()
+        self.scrollview = widgets.QScrollArea()
         self.scrollview.setWidgetResizable(False)
 
         self.snifferview = sniffer.sniffer()
@@ -271,14 +273,14 @@ class Main_widget(gui.QMainWindow):
             self.tabbedview.addTab(self.buttonEditor, _("Buttons"))
             self.tabbedview.addTab(self.ecuparameditor, _("Ecu parameters"))
 
-        screen_widget = gui.QWidget()
-        self.treedock_widget = gui.QDockWidget(self)
+        screen_widget = widgets.QWidget()
+        self.treedock_widget = widgets.QDockWidget(self)
         self.treedock_widget.setWidget(screen_widget)
-        self.treeview_params = gui.QTreeWidget()
+        self.treeview_params = widgets.QTreeWidget()
         self.treeview_params.setSortingEnabled(True)
         self.treeview_params.sortByColumn(0, core.Qt.AscendingOrder)
-        self.screenmenu = gui.QMenuBar()
-        treedock_layout = gui.QVBoxLayout()
+        self.screenmenu = widgets.QMenuBar()
+        treedock_layout = widgets.QVBoxLayout()
         treedock_layout.addWidget(self.screenmenu)
         treedock_layout.addWidget(self.treeview_params)
         screen_widget.setLayout(treedock_layout)
@@ -286,9 +288,9 @@ class Main_widget(gui.QMainWindow):
         self.treeview_params.clicked.connect(self.changeScreen)
 
         actionmenu = self.screenmenu.addMenu(_("Action"))
-        cat_action = gui.QAction(_("New Category"), actionmenu)
-        screen_action = gui.QAction(_("New Screen"), actionmenu)
-        rename_action = gui.QAction(_("Rename"), actionmenu)
+        cat_action = widgets.QAction(_("New Category"), actionmenu)
+        screen_action = widgets.QAction(_("New Screen"), actionmenu)
+        rename_action = widgets.QAction(_("Rename"), actionmenu)
         actionmenu.addAction(cat_action)
         actionmenu.addAction(screen_action)
         actionmenu.addAction(rename_action)
@@ -296,18 +298,18 @@ class Main_widget(gui.QMainWindow):
         screen_action.triggered.connect(self.newScreen)
         rename_action.triggered.connect(self.screenRename)
 
-        self.treedock_logs = gui.QDockWidget(self)
-        self.logview = gui.QTextEdit()
+        self.treedock_logs = widgets.QDockWidget(self)
+        self.logview = widgets.QTextEdit()
         self.logview.setReadOnly(True)
         self.treedock_logs.setWidget(self.logview)
 
-        self.treedock_ecu = gui.QDockWidget(self)
-        self.treeview_ecu = gui.QListWidget(self.treedock_ecu)
+        self.treedock_ecu = widgets.QDockWidget(self)
+        self.treeview_ecu = widgets.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.clicked.connect(self.changeECU)
 
         self.eculistwidget = Ecu_list(self.ecu_scan, self.treeview_ecu)
-        self.treeview_eculist = gui.QDockWidget(self)
+        self.treeview_eculist = widgets.QDockWidget(self)
         self.treeview_eculist.setWidget(self.eculistwidget)
 
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treeview_eculist)
@@ -317,40 +319,40 @@ class Main_widget(gui.QMainWindow):
 
         self.toolbar = self.addToolBar(_("File"))
 
-        self.diagaction = gui.QAction(gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
+        self.diagaction = widgets.QAction(gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
-        self.log = gui.QAction(gui.QIcon("icons/log.png"), _("Full log"), self)
+        self.log = widgets.QAction(gui.QIcon("icons/log.png"), _("Full log"), self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
 
-        self.expert = gui.QAction(gui.QIcon("icons/expert.png"), _("Expert mode (enable writing)"), self)
+        self.expert = widgets.QAction(gui.QIcon("icons/expert.png"), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = gui.QAction(gui.QIcon("icons/autorefresh.png"), _("Auto refresh"), self)
+        self.autorefresh = widgets.QAction(gui.QIcon("icons/autorefresh.png"), _("Auto refresh"), self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = gui.QAction(gui.QIcon("icons/refresh.png"), _("Refresh (one shot)"), self)
+        self.refresh = widgets.QAction(gui.QIcon("icons/refresh.png"), _("Refresh (one shot)"), self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = gui.QAction(gui.QIcon("icons/hex.png"), _("Manual command"), self)
+        self.hexinput = widgets.QAction(gui.QIcon("icons/hex.png"), _("Manual command"), self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
-        self.sdscombo = gui.QComboBox()
+        self.sdscombo = widgets.QComboBox()
         self.sdscombo.setFixedWidth(300)
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 
-        self.zoominbutton = gui.QPushButton("Zoom In")
-        self.zoomoutbutton = gui.QPushButton("Zoom Out")
+        self.zoominbutton = widgets.QPushButton("Zoom In")
+        self.zoomoutbutton = widgets.QPushButton("Zoom Out")
         self.zoominbutton.clicked.connect(self.zoomin)
         self.zoomoutbutton.clicked.connect(self.zoomout)
 
@@ -372,7 +374,7 @@ class Main_widget(gui.QMainWindow):
 
         if options.simulation_mode:
             self.toolbar.addSeparator()
-            self.ui_edit_button = gui.QPushButton("UI Edit")
+            self.ui_edit_button = widgets.QPushButton("UI Edit")
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
             self.toolbar.addWidget(self.ui_edit_button)
@@ -458,14 +460,17 @@ class Main_widget(gui.QMainWindow):
                 self.paramview.changeSDS(currenttext)
 
     def zipdb(self):
-        filename = gui.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
                                                    "./ecu.zip", "*.zip")
-        filename = str(filename.toAscii())
+        filename = str(filename_tuple[0])
+        if filename == "":
+            return        
+        
         if not filename.endswith(".zip"):
             filename += ".zip"
 
         if not isWritable(str(os.path.dirname(filename))):
-            mbox = gui.QMessageBox()
+            mbox = widgets.QMessageBox()
             mbox.setText("Cannot write to directory " + os.path.dirname(filename))
             mbox.exec_()
             return
@@ -487,13 +492,13 @@ class Main_widget(gui.QMainWindow):
         if not item:
             return
 
-        itemname = unicode(item.text(0).toUtf8(), encoding="UTF-8")
-        nin = gui.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
+        itemname = item.text(0)
+        nin = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
 
-        newitemname = unicode(nin[0].toUtf8(), encoding="UTF-8")
+        newitemname = nin[0]
 
         if newitemname == itemname:
             return
@@ -508,11 +513,11 @@ class Main_widget(gui.QMainWindow):
         item.setText(0, newitemname)
 
     def newCategory(self):
-        ncn = gui.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
-        necatname = unicode(ncn[0].toUtf8(), encoding="UTF-8")
+        ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
+        necatname = ncn[0]
         if necatname:
             self.paramview.createCategory(necatname)
-            self.treeview_params.addTopLevelItem(gui.QTreeWidgetItem([necatname]))
+            self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
 
     def newScreen(self):
         item = self.treeview_params.currentItem()
@@ -524,17 +529,17 @@ class Main_widget(gui.QMainWindow):
         if item.parent() is not None:
             item = item.parent()
 
-        category = unicode(item.text(0).toUtf8(), encoding="UTF-8")
-        nsn = gui.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
+        category = item.text(0)
+        nsn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
 
-        newscreenname = unicode(nsn[0].toUtf8(), encoding="UTF-8")
+        newscreenname = nsn[0]
         if newscreenname:
             self.paramview.createScreen(newscreenname, category)
 
-            item.addChild(gui.QTreeWidgetItem([newscreenname]))
+            item.addChild(widgets.QTreeWidgetItem([newscreenname]))
             self.screennames.append(newscreenname)
 
     def showDataTab(self, name):
@@ -566,7 +571,7 @@ class Main_widget(gui.QMainWindow):
 
         for ecu in self.ecu_scan.ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
-            item = gui.QListWidgetItem(ecu)
+            item = widgets.QListWidgetItem(ecu)
             if '.xml' in self.ecu_scan.ecus[ecu].href.lower():
                 item.setForeground(core.Qt.yellow)
             else:
@@ -575,24 +580,24 @@ class Main_widget(gui.QMainWindow):
 
         for ecu in self.ecu_scan.approximate_ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
-            item = gui.QListWidgetItem(ecu)
+            item = widgets.QListWidgetItem(ecu)
             item.setForeground(core.Qt.red)
             self.treeview_ecu.addItem(item)
 
     def scan(self):
-        msgBox = gui.QMessageBox()
+        msgBox = widgets.QMessageBox()
         msgBox.setText(_('Scan options'))
         scancan = False
         scancan2 = False
         scankwp = False
 
-        canbutton = gui.QPushButton('CAN')
-        kwpbutton = gui.QPushButton('KWP')
-        cancelbutton = gui.QPushButton('CANCEL')
+        canbutton = widgets.QPushButton('CAN')
+        kwpbutton = widgets.QPushButton('KWP')
+        cancelbutton = widgets.QPushButton('CANCEL')
 
-        msgBox.addButton(canbutton, gui.QMessageBox.ActionRole)
-        msgBox.addButton(kwpbutton, gui.QMessageBox.ActionRole)
-        msgBox.addButton(cancelbutton, gui.QMessageBox.NoRole)
+        msgBox.addButton(canbutton, widgets.QMessageBox.ActionRole)
+        msgBox.addButton(kwpbutton, widgets.QMessageBox.ActionRole)
+        msgBox.addButton(cancelbutton, widgets.QMessageBox.NoRole)
         msgBox.exec_()
 
         if msgBox.clickedButton() == cancelbutton:
@@ -606,8 +611,8 @@ class Main_widget(gui.QMainWindow):
             self.logview.append(_("Scanning KWP"))
             scankwp = True
 
-        progressWidget = gui.QWidget(None)
-        progressLayout = gui.QVBoxLayout()
+        progressWidget = widgets.QWidget(None)
+        progressLayout = widgets.QVBoxLayout()
         progressWidget.setLayout(progressLayout)
         self.progressstatus.setRange(0, self.ecu_scan.getNumAddr())
         self.progressstatus.setValue(0)
@@ -626,7 +631,7 @@ class Main_widget(gui.QMainWindow):
 
         for ecu in self.ecu_scan.ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
-            item = gui.QListWidgetItem(ecu)
+            item = widgets.QListWidgetItem(ecu)
             if '.xml' in self.ecu_scan.ecus[ecu].href.lower():
                 item.setForeground(core.Qt.yellow)
             else:
@@ -635,7 +640,7 @@ class Main_widget(gui.QMainWindow):
 
         for ecu in self.ecu_scan.approximate_ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
-            item = gui.QListWidgetItem(ecu)
+            item = widgets.QListWidgetItem(ecu)
             item.setForeground(core.Qt.red)
             self.treeview_ecu.addItem(item)
 
@@ -654,16 +659,17 @@ class Main_widget(gui.QMainWindow):
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
-        filename = gui.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
+        filename=str(filename_tuple[0])
         if filename == "":
-            return
+            return        
 
         eculist = []
         numecus = self.treeview_ecu.count()
         for i in range(numecus):
             item = self.treeview_ecu.item(i)
-            itemname = unicode(item.text().toUtf8(), encoding="UTF-8")
+            itemname = item.text()
             if itemname in self.ecunamemap:
                 eculist.append((itemname, self.ecunamemap[itemname]))
             else:
@@ -674,13 +680,13 @@ class Main_widget(gui.QMainWindow):
         jsonfile.close()
 
     def newEcu(self):
-        filename = gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
-
-        if not filename:
+        filename=str(filename_tuple[0])
+        if filename == '':
             return
 
-        basename = os.path.basename(unicode(filename.toUtf8(), encoding="UTF-8"))
+        basename = os.path.basename(filename)
         filename = os.path.join("./json", basename)
         ecufile = ecu.Ecu_file(None)
         layout = open(filename + ".layout", "w")
@@ -695,7 +701,7 @@ class Main_widget(gui.QMainWindow):
         layout.write(ecufile.dumpJson())
         layout.close()
 
-        item = gui.QListWidgetItem(basename)
+        item = widgets.QListWidgetItem(basename)
         self.treeview_ecu.addItem(item)
 
     def saveEcu(self):
@@ -719,7 +725,7 @@ class Main_widget(gui.QMainWindow):
             self.paramview.init(None)
 
         for ecu in eculist:
-            item = gui.QListWidgetItem(ecu[0])
+            item = widgets.QListWidgetItem(ecu[0])
             self.ecunamemap[ecu[0]] = ecu[1]
             self.treeview_ecu.addItem(item)
 
@@ -752,7 +758,7 @@ class Main_widget(gui.QMainWindow):
 
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
-        screen = unicode(item[0].toPyObject().toUtf8(), encoding="UTF-8")
+        screen = item[0]
         inited = self.paramview.init(screen)
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
@@ -774,7 +780,7 @@ class Main_widget(gui.QMainWindow):
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
-        ecu_name = unicode(item[0].toString().toUtf8(), encoding="UTF-8")
+        ecu_name = item[0]
 
         isxml = True
 
@@ -834,39 +840,39 @@ class Main_widget(gui.QMainWindow):
         screens = self.paramview.categories.keys()
         self.screennames = []
         for screen in screens:
-            item = gui.QTreeWidgetItem(self.treeview_params, [screen])
+            item = widgets.QTreeWidgetItem(self.treeview_params, [screen])
             for param in self.paramview.categories[screen]:
-                param_item = gui.QTreeWidgetItem(item, [param])
+                param_item = widgets.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
                 self.screennames.append(param)
 
 
-class donationWidget(gui.QLabel):
+class donationWidget(widgets.QLabel):
     def __init__(self):
         super(donationWidget, self).__init__()
         img = gui.QPixmap("icons/donate.png")
         self.setPixmap(img)
         self.setAlignment(core.Qt.AlignCenter)
-        self.setFrameStyle((gui.QFrame.Panel | gui.QFrame.StyledPanel))
+        self.setFrameStyle((widgets.QFrame.Panel | widgets.QFrame.StyledPanel))
 
     def mousePressEvent(self, mousevent):
-        msgbox = gui.QMessageBox()
+        msgbox = widgets.QMessageBox()
         msgbox.setText(_("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
-        okbutton = gui.QPushButton(_('Yes I contribute'))
-        msgbox.addButton(okbutton, gui.QMessageBox.YesRole)
-        msgbox.addButton(gui.QPushButton(_("No, I don't")), gui.QMessageBox.NoRole)
+        okbutton = widgets.QPushButton(_('Yes I contribute'))
+        msgbox.addButton(okbutton, widgets.QMessageBox.YesRole)
+        msgbox.addButton(widgets.QPushButton(_("No, I don't")), widgets.QMessageBox.NoRole)
         okbutton.clicked.connect(self.donate)
         msgbox.exec_()
 
     def donate(self):
         url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
-        msgbox = gui.QMessageBox()
+        msgbox = widgets.QMessageBox()
         msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
 
 
-class portChooser(gui.QDialog):
+class portChooser(widgets.QDialog):
     def __init__(self):
         portSpeeds = [38400, 57600, 115200, 230400, 500000]
         self.port = None
@@ -875,20 +881,20 @@ class portChooser(gui.QDialog):
         self.securitycheck = False
         self.selectedportspeed = 38400
         super(portChooser, self).__init__(None)
-        layout = gui.QVBoxLayout()
-        label = gui.QLabel(self)
+        layout = widgets.QVBoxLayout()
+        label = widgets.QLabel(self)
         label.setText(_("ELM port selection"))
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = donationWidget()
         self.setLayout(layout)
         
-        self.listview = gui.QListWidget(self)
+        self.listview = widgets.QListWidget(self)
 
         layout.addWidget(label)
         layout.addWidget(self.listview)
 
-        medialayout = gui.QHBoxLayout()
-        self.usbbutton = gui.QPushButton()
+        medialayout = widgets.QHBoxLayout()
+        self.usbbutton = widgets.QPushButton()
         self.usbbutton.setIcon(gui.QIcon("icons/usb.png"))
         self.usbbutton.setIconSize(core.QSize(60, 60))
         self.usbbutton.setFixedHeight(64)
@@ -896,7 +902,7 @@ class portChooser(gui.QDialog):
         self.usbbutton.setCheckable(True)
         medialayout.addWidget(self.usbbutton)
 
-        self.wifibutton = gui.QPushButton()
+        self.wifibutton = widgets.QPushButton()
         self.wifibutton.setIcon(gui.QIcon("icons/wifi.png"))
         self.wifibutton.setIconSize(core.QSize(60, 60))
         self.wifibutton.setFixedHeight(64)
@@ -904,7 +910,7 @@ class portChooser(gui.QDialog):
         self.wifibutton.setCheckable(True)
         medialayout.addWidget(self.wifibutton)
 
-        self.btbutton = gui.QPushButton()
+        self.btbutton = widgets.QPushButton()
         self.btbutton.setIcon(gui.QIcon("icons/bt.png"))
         self.btbutton.setIconSize(core.QSize(60, 60))
         self.btbutton.setFixedHeight(64)
@@ -912,7 +918,7 @@ class portChooser(gui.QDialog):
         self.btbutton.setCheckable(True)
         medialayout.addWidget(self.btbutton)
 
-        self.obdlinkbutton = gui.QPushButton()
+        self.obdlinkbutton = widgets.QPushButton()
         self.obdlinkbutton.setIcon(gui.QIcon("icons/obdlink.png"))
         self.obdlinkbutton.setIconSize(core.QSize(60, 60))
         self.obdlinkbutton.setFixedHeight(64)
@@ -927,9 +933,9 @@ class portChooser(gui.QDialog):
         self.usbbutton.toggled.connect(self.usb)
         self.obdlinkbutton.toggled.connect(self.obdlink)
 
-        speedlayout = gui.QHBoxLayout()
-        self.speedcombo = gui.QComboBox()
-        speedlabel = gui.QLabel(_("Port speed"))
+        speedlayout = widgets.QHBoxLayout()
+        self.speedcombo = widgets.QComboBox()
+        speedlabel = widgets.QLabel(_("Port speed"))
         speedlayout.addWidget(speedlabel)
         speedlayout.addWidget(self.speedcombo)
 
@@ -940,23 +946,23 @@ class portChooser(gui.QDialog):
 
         layout.addLayout(speedlayout)
 
-        button_layout = gui.QHBoxLayout()
-        button_con = gui.QPushButton(_("Connected mode"))
-        button_dmo = gui.QPushButton(_("Edition mode"))
-        button_elm_chk = gui.QPushButton(_("ELM benchmark"))
+        button_layout = widgets.QHBoxLayout()
+        button_con = widgets.QPushButton(_("Connected mode"))
+        button_dmo = widgets.QPushButton(_("Edition mode"))
+        button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
 
-        wifilayout = gui.QHBoxLayout()
-        wifilabel = gui.QLabel(_("WiFi port : "))
-        self.wifiinput = gui.QLineEdit()
+        wifilayout = widgets.QHBoxLayout()
+        wifilabel = widgets.QLabel(_("WiFi port : "))
+        self.wifiinput = widgets.QLineEdit()
         self.wifiinput.setText("192.168.0.10:35000")
         wifilayout.addWidget(wifilabel)
         wifilayout.addWidget(self.wifiinput)
         layout.addLayout(wifilayout)
 
-        safetychecklayout = gui.QHBoxLayout()
-        self.safetycheck = gui.QCheckBox()
+        safetychecklayout = widgets.QHBoxLayout()
+        self.safetycheck = widgets.QCheckBox()
         self.safetycheck.setChecked(False)
-        safetylabel = gui.QLabel(_("I'm aware that I can harm my car if badly used"))
+        safetylabel = widgets.QLabel(_("I'm aware that I can harm my car if badly used"))
         safetychecklayout.addWidget(self.safetycheck)
         safetychecklayout.addWidget(safetylabel)
         layout.addLayout(safetychecklayout)
@@ -967,7 +973,7 @@ class portChooser(gui.QDialog):
         button_layout.addWidget(button_elm_chk)
         layout.addLayout(button_layout)
 
-        self.logview = gui.QTextEdit()
+        self.logview = widgets.QTextEdit()
         layout.addWidget(self.logview)
         self.logview.hide()
 
@@ -1012,7 +1018,7 @@ class portChooser(gui.QDialog):
         self.ports = {}
         self.portcount = len(ports)
         for p in ports:
-            item = gui.QListWidgetItem(self.listview)
+            item = widgets.QListWidgetItem(self.listview)
             itemname = p[0] + "[" + p[1] + "]"
             item.setText(itemname)
             self.ports[itemname] = (p[0], p[1])
@@ -1099,7 +1105,7 @@ class portChooser(gui.QDialog):
         self.securitycheck = self.safetycheck.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
@@ -1111,13 +1117,13 @@ class portChooser(gui.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                portinfo = unicode(currentitem.text().toUtf8(), encoding="utf-8")
+                portinfo = currentitem.text()
                 self.port = self.ports[portinfo][0]
                 options.port_name = self.ports[portinfo][1]
                 self.mode = 1
                 self.done(True)
             else:
-                msgbox = gui.QMessageBox()
+                msgbox = widgets.QMessageBox()
                 msgbox.setText(_("Please select a communication port"))
                 msgbox.exec_()
 
@@ -1133,7 +1139,7 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
-    app = gui.QApplication(sys.argv)
+    app = widgets.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
         font = gui.QFont("Sans", 9)
@@ -1157,7 +1163,7 @@ if __name__ == '__main__':
     while nok:
         pcres = pc.exec_()
 
-        if pc.mode == 0 or pcres == gui.QDialog.Rejected:
+        if pc.mode == 0 or pcres == widgets.QDialog.Rejected:
             exit(0)
         if pc.mode == 1:
             options.promode = False
@@ -1171,7 +1177,7 @@ if __name__ == '__main__':
         port_speed = pc.selectedportspeed
 
         if not options.port:
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
@@ -1181,7 +1187,7 @@ if __name__ == '__main__':
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())
-            msgbox = gui.QMessageBox()
+            msgbox = widgets.QMessageBox()
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:

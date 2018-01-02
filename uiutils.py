@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import PyQt4.QtGui as gui
+import PyQt5.QtGui as gui
+
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
