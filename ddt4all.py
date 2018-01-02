@@ -990,7 +990,8 @@ class portChooser(gui.QDialog):
             if not currentitem:
                 self.logview.hide()
                 return
-            port = str(currentitem.text().split('[')[0])
+            portinfo = unicode(currentitem.text().toUtf8(), encoding="utf-8")
+            port = self.ports[portinfo][0]
         speed = int(self.speedcombo.currentText())
         res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
         if not res:
