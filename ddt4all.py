@@ -983,13 +983,18 @@ class portChooser(gui.QDialog):
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
-        if currentitem:
-            self.logview.show()
+        self.logview.show()
+        if self.wifibutton.isChecked():
+            port = str(self.wifiinput.text())
+        else:
+            if not currentitem:
+                self.logview.hide()
+                return
             port = str(currentitem.text().split('[')[0])
-            speed = int(self.speedcombo.currentText())
-            res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
-            if res == False:
-                self.logview.append(options.get_last_error())
+        speed = int(self.speedcombo.currentText())
+        res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
+        if not res:
+            self.logview.append(options.get_last_error())
 
     def rescan_ports(self):
         ports = elm.get_available_ports()
