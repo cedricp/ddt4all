@@ -5,13 +5,19 @@ import sys
 import os
 import glob
 import json
+import platform
 
 try:
     import PyQt5.QtGui as gui
     import PyQt5.QtCore as core
     import PyQt5.QtWebKit as webkit
-    import PyQt5.QtWebKitWidgets as webkitwidgets
-    import PyQt5.QtWidgets as widgets
+    if platform.system() == 'Darwin':
+        import PyQt5.QtWebEngine as webkit
+        import PyQt5.QtWebEngineWidgets as webkitwidgets
+    else:
+        import PyQt5.QtWebKit as webkit
+        import PyQt5.QtWebKitWidgets as webkitwidgets
+
     def utf8(string):
         return string
     qt5 = True
@@ -227,11 +233,19 @@ class Main_widget(widgets.QMainWindow):
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
 
         self.paramview = None
-        self.docview = webkitwidgets.QWebView()
-        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-        self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
-        self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
-        self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
+        if platform.system() == 'Darwin':
+            self.docview = webkitwidgets.QWebEngineView()
+            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
+            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
+            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
+        else:
+            self.docview = webkitwidgets.QWebView()
+            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
+            self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
+            self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
+
         self.screennames = []
 
         self.statusBar = widgets.QStatusBar()
