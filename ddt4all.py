@@ -14,6 +14,7 @@ try:
     import PyQt5.QtWidgets as widgets
     def utf8(string):
         return string
+    qt5 = True
 except:
     import PyQt4.QtGui as gui
     import PyQt4.QtGui as widgets
@@ -22,6 +23,7 @@ except:
     import PyQt4.QtWebKit as webkitwidgets
     def utf8(string):
         return unicode(string.toUtf8(), encoding="UTF-8")
+    qt5 = False
 
 import parameters, ecu
 import elm, options, locale
@@ -191,7 +193,10 @@ class Ecu_list(widgets.QWidget):
         if index.parent() == core.QModelIndex():
             return
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
-        selected = utf8(item[0].toString())
+        if qt5:
+            selected = item[0]
+        else:
+            selected = utf8(item[0].toString())
         target = self.ecuscan.ecu_database.getTarget(selected)
         name = selected
         if target:
@@ -772,7 +777,10 @@ class Main_widget(widgets.QMainWindow):
 
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
-        screen = utf8(item[0].toString())
+        if qt5:
+            screen = item[0]
+        else:
+            screen = utf8(item[0].toString())
         inited = self.paramview.init(screen)
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
@@ -794,7 +802,10 @@ class Main_widget(widgets.QMainWindow):
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
-        ecu_name = utf8(item[0].toString())
+        if qt5:
+            ecu_name = item[0]
+        else:
+            ecu_name = utf8(item[0].toString())
 
         isxml = True
 
