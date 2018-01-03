@@ -10,14 +10,13 @@ import platform
 try:
     import PyQt5.QtGui as gui
     import PyQt5.QtCore as core
-    import PyQt5.QtWebKit as webkit
+    import PyQt5.QtWidgets as widgets
     if platform.system() == 'Darwin':
         import PyQt5.QtWebEngine as webkit
         import PyQt5.QtWebEngineWidgets as webkitwidgets
     else:
         import PyQt5.QtWebKit as webkit
         import PyQt5.QtWebKitWidgets as webkitwidgets
-
     def utf8(string):
         return string
     qt5 = True
