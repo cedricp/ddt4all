@@ -1431,6 +1431,14 @@ class Ecu_scanner:
             # Give scanner something to eat...
             if addr == '26':
                 can_response = "62 F1 A0 08"
+            elif addr == '13':
+                can_response = "62 F1 A0 0D"
+            elif addr == '26':
+                can_response = "62 F1 A0 08"
+            elif addr == '62':
+                can_response = "62 F1 A0 04"
+            elif addr == '01':
+                can_response = "62 F1 A0 04"
         else:
             can_response = options.elm.request(req='22F1A0', positive='', cache=False)
             if 'WRONG' in can_response:
@@ -1444,6 +1452,16 @@ class Ecu_scanner:
                 can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 8A 43 41 50"
+            elif addr == '26':
+                can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20" \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20" \
+                               "20 20 20 20 20 20 20 20 20 FF FF"
+            elif addr == '62':
+                can_response = "62 F1 8A 41 46 4B"
+            elif addr == '01':
+                can_response = "62 F1 8A 43 41 53"
         else:
             can_response = options.elm.request(req='22F18A', positive='', cache=False)
             if 'WRONG' in can_response:
@@ -1457,6 +1475,14 @@ class Ecu_scanner:
                 can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 94 32 32"
+            elif addr == '26':
+                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+            elif addr == '62':
+                can_response = "62 F1 94 31 30 30 30 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+            elif addr == '01':
+                can_response = "62 F1 94 4E 33 32 52 41 46 30 30 30 31 31 00 00 00 00 00 00"
         else:
             can_response = options.elm.request(req='22F194', positive='', cache=False)
             if 'WRONG' in can_response:
@@ -1470,13 +1496,23 @@ class Ecu_scanner:
                 can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 95 31 38 35 39 30 FF FF FF FF FF"
+            elif addr == '26':
+                can_response = "62 F1 95 46 30 37 2F 34 6F 00 00 00 03"
+            elif addr == '62':
+                can_response = "62 F1 95 30 35 30 31 30 30 30 32 31 37 30 30 FF FF FF FF FF"
+            elif addr == '01':
+                can_response = "62 F1 95 46 30 37 2F 34 6F 00 00 00 03"
         else:
             can_response = options.elm.request(req='22F195', positive='', cache=False)
             if 'WRONG' in can_response:
                 return False
 
         # Remove unwanted non-ascii FF from string
-        soft_version = can_response.replace('FF', '').replace(' ', '')[6:38].decode('hex')
+        soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+        printable_chars = set(string.printable)
+        soft_version = filter(lambda x: x in printable_chars, soft_version)
         if diagversion == "":
             return False
 

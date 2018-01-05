@@ -93,11 +93,14 @@ class Ecu_list(gui.QWidget):
 
     def init(self):
         self.list.clear()
-        self.list.setColumnCount(3)
+        self.list.setColumnCount(7)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
-        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('Projets'))
-        self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
-
+        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('Protocol'))
+        self.list.model().setHeaderData(2, core.Qt.Horizontal, "Supplier")
+        self.list.model().setHeaderData(3, core.Qt.Horizontal, "Diag")
+        self.list.model().setHeaderData(4, core.Qt.Horizontal, "Soft")
+        self.list.model().setHeaderData(5, core.Qt.Horizontal, "Version")
+        self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Projets'))
         stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
@@ -143,8 +146,13 @@ class Ecu_list(gui.QWidget):
             projects = "/".join(ecu.projects)
             projname = u' (' + projects + u')'
 
-            if not [ecu.name, projname, ecu.protocol] in stored_ecus[grp]:
-                stored_ecus[grp].append([ecu.name, projname, ecu.protocol])
+            soft = ecu.soft
+            version = ecu.version
+            supplier = ecu.supplier
+            diag = ecu.diagversion
+
+            if not [ecu.name, ecu.protocol, supplier, diag, soft, version, projname] in stored_ecus[grp]:
+                stored_ecus[grp].append([ecu.name, ecu.protocol, supplier, diag, soft, version, projname])
 
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
