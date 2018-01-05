@@ -1475,7 +1475,8 @@ class Ecu_scanner:
             if 'WRONG' in can_response:
                 return False
 
-        soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+        # Remove unwanted non-ascii FF from string
+        soft_version = can_response.replace('FF', '').replace(' ', '')[6:38].decode('hex')
         if diagversion == "":
             return False
 
@@ -1609,6 +1610,10 @@ class Ecu_scanner:
         approximate_ecu = []
         found_exact = False
         found_approximate = False
+        if addr in self.ecu_database.addr_group_mapping:
+            ecu_type = self.ecu_database.addr_group_mapping[addr]
+        else:
+            ecu_type = "UNKNOWN"
 
         for target in self.ecu_database.targets:
             if target.protocol == "CAN" and protocol != "CAN":
@@ -1624,15 +1629,14 @@ class Ecu_scanner:
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s]"\
+                line = "<font color='green'>Identified ECU [%s] : %s DIAGVERSION [%s]"\
                        "SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                       % (href, diagversion, supplier, soft, version)
+                       % (ecu_type, href, diagversion, supplier, soft, version)
 
                 options.main_window.logview.append(line)
             elif target.checkApproximate(diagversion, supplier, soft, addr):
                 approximate_ecu.append(target)
                 found_approximate = True
-
 
         # Try to find the closest possible version of an ECU
         if not found_exact and found_approximate:
@@ -1647,7 +1651,15 @@ class Ecu_scanner:
                     ecu_protocol = "KWP"
                 if ecu_protocol != protocol:
                     continue
-                delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
+
+                # If version contains ASCII characters, I can do nothing for you...
+                try:
+                    int_version = int('0x' + version, 16)
+                    int_tgt_version = int('0x' + tgt.version, 16)
+                except ValueError:
+                    continue
+
+                delta = abs(int_tgt_version - int_version)
                 if delta < min_delta_version:
                     min_delta_version = delta
                     kept_ecu = tgt
@@ -1657,16 +1669,16 @@ class Ecu_scanner:
                 self.num_ecu_found += 1
                 label.setText("Found %i ecu" % self.num_ecu_found)
 
-                line = "<font color='red'>Found ECU (not perfect match) :"\
+                line = "<font color='red'>Found ECU [%s] (not perfect match) :"\
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>"\
-                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
+                       % (ecu_type, kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
                 options.main_window.logview.append(line)
 
         if not found_exact and not found_approximate:
-            line = "<font color='red'>Found ECU (no relevant ECU file found) :" \
+            line = "<font color='red'>Found ECU [%s] (no relevant ECU file found) :" \
                    "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                   % (diagversion, supplier, soft, version)
+                   % (ecu_type, diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
 
