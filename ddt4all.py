@@ -173,7 +173,7 @@ class Ecu_list(gui.QWidget):
 
             items = [root_item.child(i) for i in range(root_item.childCount())]
             for item in items:
-                if (project.upper() in str(item.text(1).toAscii()).upper()) or project == "ALL":
+                if (project.upper() in str(item.text(6).toAscii()).upper()) or project == "ALL":
                     item.setHidden(False)
                     root_hidden = False
                 else:
