@@ -3,7 +3,6 @@ import time
 import os
 import ecu, elm
 import displaymod
-from elm import elm_checker
 from uiutils import *
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
