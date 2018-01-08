@@ -151,8 +151,14 @@ class Ecu_list(gui.QWidget):
             supplier = ecu.supplier
             diag = ecu.diagversion
 
-            if not [ecu.name, ecu.protocol, supplier, diag, soft, version, projname] in stored_ecus[grp]:
-                stored_ecus[grp].append([ecu.name, ecu.protocol, supplier, diag, soft, version, projname])
+            row = [ecu.name, ecu.protocol, supplier, diag, soft, version, projname]
+            found = False
+            for r in stored_ecus[grp]:
+                if (r[0], r[1]) == (row[0], row[1]):
+                    found = True
+                    break
+            if not found:
+                stored_ecus[grp].append(row)
 
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
