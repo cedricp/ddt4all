@@ -3,7 +3,6 @@ import time
 import os
 import ecu, elm
 import displaymod
-from elm import elm_checker
 from uiutils import *
 import options
 from xml.dom.minidom import parse
@@ -700,7 +699,7 @@ class paramWidget(widgets.QWidget):
 
             if not options.promode:
                 # Allow read only modes
-                if command[0:2] not in options.safe_commands:
+                if command[0:2] in options.safe_commands:
 
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>' + _('Sending ELM request :') + '</font>'

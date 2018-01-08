@@ -1124,13 +1124,16 @@ class Ecu_ident:
     def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.diagversion == "":
             return
+        supplier_strip = self.supplier.strip()
+        soft_strip = self.soft.strip()
+        version_strip = self.version.strip()
         if int("0x" + self.diagversion, 16) != int("0x" + diagversion, 16):
             return False
-        if self.supplier.strip() != supplier.strip():
+        if supplier_strip != supplier.strip()[:len(supplier_strip)]:
             return False
-        if self.soft.strip() != soft.strip():
+        if soft_strip != soft.strip()[:len(soft_strip)]:
             return False
-        if self.version.strip() != version.strip():
+        if version_strip != version.strip()[:len(version_strip)]:
             return False
 
         self.addr = addr
@@ -1415,6 +1418,7 @@ class Ecu_scanner:
         self.check_ecu(can_response, label, addr, "CAN")
 
     def identify_new(self, addr, label):
+        printable_chars = set(string.printable)
         diagversion = ""
         supplier = ""
         soft_version = ''
@@ -1431,6 +1435,16 @@ class Ecu_scanner:
             # Give scanner something to eat...
             if addr == '26':
                 can_response = "62 F1 A0 08"
+            elif addr == '13':
+                can_response = "62 F1 A0 0D"
+            elif addr == '26':
+                can_response = "62 F1 A0 08"
+            elif addr == '62':
+                can_response = "62 F1 A0 04"
+            elif addr == '01':
+                can_response = "62 F1 A0 04"
+            elif addr == '04':
+                can_response = "62 F1 A0 04"
         else:
             can_response = options.elm.request(req='22F1A0', positive='', cache=False)
             if 'WRONG' in can_response:
@@ -1444,6 +1458,20 @@ class Ecu_scanner:
                 can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 8A 43 41 50"
+            elif addr == '26':
+                can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20" \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20" \
+                               "20 20 20 20 20 20 20 20 20 FF FF"
+            elif addr == '62':
+                can_response = "62 F1 8A 41 46 4B"
+            elif addr == '01':
+                can_response = "62 F1 8A 43 41 53"
+            elif addr == '04':
+                can_response = "62 F1 8A 56 69 73 74 65 6F 6E 5F 4E 61 6D 65 73 74 6F 76 6F 5F 30 39 36 20 20 20 20"\
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"\
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20"
         else:
             can_response = options.elm.request(req='22F18A', positive='', cache=False)
             if 'WRONG' in can_response:
@@ -1457,11 +1485,22 @@ class Ecu_scanner:
                 can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 94 32 32"
+            elif addr == '26':
+                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+            elif addr == '62':
+                can_response = "62 F1 94 31 30 30 30 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+            elif addr == '01':
+                can_response = "62 F1 94 4E 33 32 52 41 46 30 30 30 31 31 00 00 00 00 00 00"
+            elif addr == '04':
+                can_response = "62 F1 94 56 30 36 30 32 F1 94 56 30 36"
         else:
             can_response = options.elm.request(req='22F194', positive='', cache=False)
             if 'WRONG' in can_response:
                 return False
         soft = can_response.replace(' ', '')[6:38].decode('hex')
+        soft= filter(lambda x: x in printable_chars, soft)
 
         # Check soft version
         if options.simulation_mode:
@@ -1470,15 +1509,27 @@ class Ecu_scanner:
                 can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
                                "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 95 31 38 35 39 30 FF FF FF FF FF"
+            elif addr == '26':
+                can_response = "62 F1 95 46 30 37 2F 34 6F 00 00 00 03"
+            elif addr == '62':
+                can_response = "62 F1 95 30 35 30 31 30 30 30 32 31 37 30 30 FF FF FF FF FF"
+            elif addr == '01':
+                can_response = "62 F1 95 46 30 37 2F 34 6F 00 00 00 03"
+            elif addr == '04':
+                can_response = "62 F1 95 56 30 36 30 32 F1 95 56 30 36"
         else:
             can_response = options.elm.request(req='22F195', positive='', cache=False)
             if 'WRONG' in can_response:
                 return False
 
+        # Remove unwanted non-ascii FF from string
         soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+        soft_version = filter(lambda x: x in printable_chars, soft_version)
         if diagversion == "":
             return False
-
+        print diagversion, supplier, soft, soft_version
         self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
         # New method succeded, return the good news
         return True
@@ -1609,6 +1660,10 @@ class Ecu_scanner:
         approximate_ecu = []
         found_exact = False
         found_approximate = False
+        if addr in self.ecu_database.addr_group_mapping:
+            ecu_type = self.ecu_database.addr_group_mapping[addr]
+        else:
+            ecu_type = "UNKNOWN"
 
         for target in self.ecu_database.targets:
             if target.protocol == "CAN" and protocol != "CAN":
@@ -1624,15 +1679,14 @@ class Ecu_scanner:
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s]"\
+                line = "<font color='green'>Identified ECU [%s] : %s DIAGVERSION [%s]"\
                        "SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                       % (href, diagversion, supplier, soft, version)
+                       % (ecu_type, href, diagversion, supplier, soft, version)
 
                 options.main_window.logview.append(line)
             elif target.checkApproximate(diagversion, supplier, soft, addr):
                 approximate_ecu.append(target)
                 found_approximate = True
-
 
         # Try to find the closest possible version of an ECU
         if not found_exact and found_approximate:
@@ -1647,7 +1701,15 @@ class Ecu_scanner:
                     ecu_protocol = "KWP"
                 if ecu_protocol != protocol:
                     continue
-                delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
+
+                # If version contains ASCII characters, I can do nothing for you...
+                try:
+                    int_version = int('0x' + version, 16)
+                    int_tgt_version = int('0x' + tgt.version, 16)
+                except ValueError:
+                    continue
+
+                delta = abs(int_tgt_version - int_version)
                 if delta < min_delta_version:
                     min_delta_version = delta
                     kept_ecu = tgt
@@ -1657,16 +1719,16 @@ class Ecu_scanner:
                 self.num_ecu_found += 1
                 label.setText("Found %i ecu" % self.num_ecu_found)
 
-                line = "<font color='red'>Found ECU (not perfect match) :"\
+                line = "<font color='red'>Found ECU [%s] (not perfect match) :"\
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>"\
-                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
+                       % (ecu_type, kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
                 options.main_window.logview.append(line)
 
         if not found_exact and not found_approximate:
-            line = "<font color='red'>Found ECU (no relevant ECU file found) :" \
+            line = "<font color='red'>Found ECU [%s] (no relevant ECU file found) :" \
                    "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                   % (diagversion, supplier, soft, version)
+                   % (ecu_type, diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
 

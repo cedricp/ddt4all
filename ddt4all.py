@@ -39,7 +39,7 @@ import traceback
 import tempfile, errno
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2017"
+__copyright__ = "Copyright 2016-2018"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -115,11 +115,14 @@ class Ecu_list(widgets.QWidget):
 
     def init(self):
         self.list.clear()
-        self.list.setColumnCount(3)
+        self.list.setColumnCount(7)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
-        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('Projets'))
-        self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
-
+        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('Protocol'))
+        self.list.model().setHeaderData(2, core.Qt.Horizontal, "Supplier")
+        self.list.model().setHeaderData(3, core.Qt.Horizontal, "Diag")
+        self.list.model().setHeaderData(4, core.Qt.Horizontal, "Soft")
+        self.list.model().setHeaderData(5, core.Qt.Horizontal, "Version")
+        self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Projets'))
         stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
@@ -165,8 +168,19 @@ class Ecu_list(widgets.QWidget):
             projects = "/".join(ecu.projects)
             projname = u' (' + projects + u')'
 
-            if not [ecu.name, projname, ecu.protocol] in stored_ecus[grp]:
-                stored_ecus[grp].append([ecu.name, projname, ecu.protocol])
+            soft = ecu.soft
+            version = ecu.version
+            supplier = ecu.supplier
+            diag = ecu.diagversion
+
+            row = [ecu.name, ecu.protocol, supplier, diag, soft, version, projname]
+            found = False
+            for r in stored_ecus[grp]:
+                if (r[0], r[1]) == (row[0], row[1]):
+                    found = True
+                    break
+            if not found:
+                stored_ecus[grp].append(row)
 
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
@@ -187,7 +201,7 @@ class Ecu_list(widgets.QWidget):
 
             items = [root_item.child(i) for i in range(root_item.childCount())]
             for item in items:
-                if (project.upper() in str(item.text(1)).upper()) or project == "ALL":
+                if (project.upper() in str(item.text(6)).upper()) or project == "ALL":
                     item.setHidden(False)
                     root_hidden = False
                 else:
