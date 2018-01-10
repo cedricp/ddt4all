@@ -82,7 +82,7 @@ Copy the 'ecus' directory from your database to the root of the sources tree and
 
 ## Informations
 
-[Windows archive with embedded Python/PyQt here](https://drive.google.com/open?id=0B2LgdbfJUsUZWGVJWFJlTVdHVHc)
+[Windows archive with embedded Python/PyQt here](https://github.com/cedricp/ddt4all/releases)
 
 Bugtracking here : https://github.com/cedricp/ddt4all
 
