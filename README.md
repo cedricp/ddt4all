@@ -1,6 +1,6 @@
 # DDT4All
 
-DDT4All is tool to create your own ECU parameters screens and connect to a CAM network with a cheap ELM327 interface.
+DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
 
 This application is work in progress, so be very carful when using expert mode.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
