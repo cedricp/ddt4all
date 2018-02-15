@@ -1,15 +1,22 @@
-# DDT4all
+# DDT4All
 
-DDT4all is tool to create your own ECU parameters screens and connect to your vehicle with an ELM327 cable.
+DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
 
-This application is work in progress, so be very carful when using expert mode. If you're brave enough to use it and it's working (or not), please tell me so I can update the tested ECUs database.
+This application is work in progress, so be very carful when using expert mode.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
+
+**Important :**
+
+**Do not use this software if you don't have a strong knowledge of how a CAN network (or ECU) works, you can really do bad thing with it**
+
+**The author declines all responsibility about a bad use of this tool. You are the only responsible**
+
+**This tool is mainly aimed for CAN network study**
 
 ## Dependencies :
 * Python 2.7
 * PyQt 5.7+
 * An ELM327 or OBDLink SX (usb preferable WiFi not tested yet)
-* The DDT2000 database (you must own it) - Copy the 'ecus' directory from your DDT2000 db (from C:\DDT2000data) to the ddt4all root directory
 
 ### Install dependencies on Ubuntu :
 
@@ -31,31 +38,11 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Database zip compression of converted JSON files
 * Can bus sniffing (Read/Decode non-ISOTP frames)
 
-## How to install database ?
-
-Copy the 'ecus' directory from your database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
-
 ## How to launch the application ?
 
 * Windows : double click DDT4ALL.BAT file
 * Linux : from a terminal, type `python ddt4all.py`
 
-## How to compress XML files ?
-
-### From a terminal :
-
-* `python parameters.py --zipconvert`
-* remove/move 'ecus' directory
-
-### From the application :
-
-* Go to menu 'File' > 'Zip database'
-* remove 'ecus' directory
-
-## Notes
-
-* You can edit an original DDT2000 XML file after having saved it in JSON format.
-* You can create your own ECU screens.
 
 ## Platforms
 
