@@ -718,7 +718,7 @@ class Ecu_data:
         if not all(c in string.hexdigits for c in resp): resp = ''
         resp.replace(' ', '')
 
-        res_bytes = [resp[i:i + 2] for i in range(0,len(resp), 2)]
+        res_bytes = [resp[i:i + 2] for i in range(0, len(resp), 2)]
 
         # Data count
         startByte = dataitem.firstbyte
@@ -1529,7 +1529,7 @@ class Ecu_scanner:
         soft_version = filter(lambda x: x in printable_chars, soft_version)
         if diagversion == "":
             return False
-        print diagversion, supplier, soft, soft_version
+
         self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
         # New method succeded, return the good news
         return True
@@ -1558,13 +1558,13 @@ class Ecu_scanner:
         try_new = []
 
         # Only scan available ecu addresses
-        for addr in project_can_addresses:
-            # Don't want to scan NON ISO-TP
+        for addr in list(set(project_can_addresses)):
             i += 1
             if progress:
                 progress.setValue(i)
                 self.qapp.processEvents()
 
+            # Don't want to scan NON ISO-TP
             if addr == '00' or addr == 'FF':
                 continue
 
@@ -1665,6 +1665,7 @@ class Ecu_scanner:
         else:
             ecu_type = "UNKNOWN"
 
+        targetNum = 0
         for target in self.ecu_database.targets:
             if target.protocol == "CAN" and protocol != "CAN":
                 continue
@@ -1679,14 +1680,17 @@ class Ecu_scanner:
                 label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Identified ECU [%s] : %s DIAGVERSION [%s]"\
-                       "SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                       % (ecu_type, href, diagversion, supplier, soft, version)
+                line = "<font color='green'>Identified ECU [%s]@%s : %s DIAGVERSION [%s]"\
+                       "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>"\
+                       % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
 
                 options.main_window.logview.append(line)
+                break
             elif target.checkApproximate(diagversion, supplier, soft, addr):
                 approximate_ecu.append(target)
                 found_approximate = True
+
+            targetNum += 1
 
         # Try to find the closest possible version of an ECU
         if not found_exact and found_approximate:
