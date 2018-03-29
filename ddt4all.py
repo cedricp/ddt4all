@@ -406,6 +406,7 @@ class Main_widget(gui.QMainWindow):
         menu = self.menuBar()
 
         diagmenu = menu.addMenu(_("File"))
+        xmlopenaction = diagmenu.addAction("Open XML")
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
@@ -413,6 +414,7 @@ class Main_widget(gui.QMainWindow):
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
         newecuction.triggered.connect(self.newEcu)
+        xmlopenaction.triggered.connect(self.openxml)
         diagmenu.addSeparator()
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
@@ -719,11 +721,12 @@ class Main_widget(gui.QMainWindow):
         self.eculistwidget.init()
         self.eculistwidget.filterProject()
 
+    def openxml(self):
+        filename = unicode(gui.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)"), encoding="UTF-8")
+        self.set_param_file(filename, "", "", True)
+
     def loadEcu(self, name):
         vehicle_file = "vehicles/" + name + ".ecu"
-        # self.ecu_scan.ecus = pickle.load(open(vehicle_file, "rb"))
-        #
-
         jsonfile = open(vehicle_file, "r")
         eculist = json.loads(jsonfile.read())
         jsonfile.close()
@@ -817,7 +820,9 @@ class Main_widget(gui.QMainWindow):
         if self.paramview:
             if ecu_file == self.paramview.ddtfile:
                 return
+        self.set_param_file(ecu_file, ecu_addr, ecu_name, isxml)
 
+    def set_param_file(self, ecu_file, ecu_addr, ecu_name, isxml):
         self.diagaction.setEnabled(True)
         self.hexinput.setEnabled(True)
         self.treeview_params.clear()

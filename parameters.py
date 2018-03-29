@@ -80,7 +80,7 @@ class paramWidget(gui.QWidget):
 
     def saveEcu(self, name=None):
         if not name:
-            filename = gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
+            filename = unicode(gui.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json"), encoding='UTF8')
         else:
             filename = name
 
@@ -109,17 +109,16 @@ class paramWidget(gui.QWidget):
             jsfile.write(js)
             jsfile.close()
         else:
-            ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
-            ecu_ident.name = os.path.basename(filename)
+            ecu_idents = options.ecu_scanner.ecu_database.getTargetsByHref(os.path.basename(self.ddtfile))
+            if len(ecu_idents):
+                js_targets = []
+                for ecui in ecu_idents:
+                    js_targets.append(ecui.dump())
 
-            js_targets = []
-            for ecui in ecu_ident:
-                js_targets.append(ecui.dump())
-
-            js = json.dumps(js_targets, indent=1)
-            jsfile = open(target_name, "w")
-            jsfile.write(js)
-            jsfile.close()
+                js = json.dumps(js_targets, indent=1)
+                jsfile = open(target_name, "w")
+                jsfile.write(js)
+                jsfile.close()
 
     def renameCategory(self, oldname, newname):
         if oldname not in self.categories:
