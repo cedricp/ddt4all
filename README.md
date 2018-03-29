@@ -7,11 +7,11 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 **Important :**
 
-**Do not use this software if you don't have a strong knowledge of how a CAN network (or ECU) works, you can really do bad thing with it**
+**Do not use this software if you don't have a strong knowledge of how a CAN network (or ECU) works, you can really do bad things with it, especially if you're working on a vehicle**
 
 **The author declines all responsibility about a bad use of this tool. You are the only responsible**
 
-**This tool is mainly aimed for CAN network study**
+**This tool is mainly aimed for CAN ISO_TP network study**
 
 ## Dependencies :
 * Python 2.7
@@ -25,6 +25,12 @@ Using the application in non expert mode should not be harmful for your vehicle 
 ## Windows installer
 
 Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
+
+## Supported diagnostic adapters (so far)
+
+* **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
+* **ObdLink** SX
+* **ELS27**
 
 ## Features :
 

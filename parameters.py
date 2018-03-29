@@ -94,7 +94,7 @@ class paramWidget(widgets.QWidget):
             filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
             filename = str(filename_tuple[0])
             if filename == "":
-                return              
+                return
         else:
             filename = name
 
@@ -123,18 +123,16 @@ class paramWidget(widgets.QWidget):
             jsfile.write(js)
             jsfile.close()
         else:
-            ecu_ident = options.ecu_scanner.ecu_database.getTargets(self.ecu_name)
-            ecu_ident.name = os.path.basename(filename)
-            # TODO: THIS DOES NOT WORK as ecu_ident is a list
+            ecu_idents = options.ecu_scanner.ecu_database.getTargetsByHref(os.path.basename(self.ddtfile))
+            if len(ecu_idents):
+                js_targets = []
+                for ecui in ecu_idents:
+                    js_targets.append(ecui.dump())
 
-            js_targets = []
-            for ecui in ecu_ident:
-                js_targets.append(ecui.dump())
-
-            js = json.dumps(js_targets, indent=1)
-            jsfile = open(target_name, "w")
-            jsfile.write(js)
-            jsfile.close()
+                js = json.dumps(js_targets, indent=1)
+                jsfile = open(target_name, "w")
+                jsfile.write(js)
+                jsfile.close()
 
     def renameCategory(self, oldname, newname):
         if oldname not in self.categories:

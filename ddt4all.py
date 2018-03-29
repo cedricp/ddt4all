@@ -37,6 +37,7 @@ import sniffer
 import imp
 import traceback
 import tempfile, errno
+import codecs
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -49,6 +50,7 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all_main')
 app = None
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def isWritable(path):
     try:
@@ -239,7 +241,6 @@ class Main_widget(widgets.QMainWindow):
         self.ecunamemap = {}
         self.plugins = {}
         self.setWindowTitle(_("DDT4All"))
-        print _("Scanning ECUs...")
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
@@ -439,6 +440,7 @@ class Main_widget(widgets.QMainWindow):
         menu = self.menuBar()
 
         diagmenu = menu.addMenu(_("File"))
+        xmlopenaction = diagmenu.addAction("Open XML")
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
@@ -446,6 +448,7 @@ class Main_widget(widgets.QMainWindow):
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
         newecuction.triggered.connect(self.newEcu)
+        xmlopenaction.triggered.connect(self.openxml)
         diagmenu.addSeparator()
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
@@ -756,11 +759,12 @@ class Main_widget(widgets.QMainWindow):
         self.eculistwidget.init()
         self.eculistwidget.filterProject()
 
+    def openxml(self):
+        filename = unicode(gui.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)"), encoding="UTF-8")
+        self.set_param_file(filename, "", "", True)
+
     def loadEcu(self, name):
         vehicle_file = "vehicles/" + name + ".ecu"
-        # self.ecu_scan.ecus = pickle.load(open(vehicle_file, "rb"))
-        #
-
         jsonfile = open(vehicle_file, "r")
         eculist = json.loads(jsonfile.read())
         jsonfile.close()
@@ -860,7 +864,9 @@ class Main_widget(widgets.QMainWindow):
         if self.paramview:
             if ecu_file == self.paramview.ddtfile:
                 return
+        self.set_param_file(ecu_file, ecu_addr, ecu_name, isxml)
 
+    def set_param_file(self, ecu_file, ecu_addr, ecu_name, isxml):
         self.diagaction.setEnabled(True)
         self.hexinput.setEnabled(True)
         self.treeview_params.clear()
@@ -978,12 +984,21 @@ class portChooser(widgets.QDialog):
         self.obdlinkbutton.setCheckable(True)
         medialayout.addWidget(self.obdlinkbutton)
 
+        self.elsbutton = gui.QPushButton()
+        self.elsbutton.setIcon(gui.QIcon("icons/els27.png"))
+        self.elsbutton.setIconSize(core.QSize(60, 60))
+        self.elsbutton.setFixedHeight(64)
+        self.elsbutton.setFixedWidth(64)
+        self.elsbutton.setCheckable(True)
+        medialayout.addWidget(self.elsbutton)
+
         layout.addLayout(medialayout)
 
         self.btbutton.toggled.connect(self.bt)
         self.wifibutton.toggled.connect(self.wifi)
         self.usbbutton.toggled.connect(self.usb)
         self.obdlinkbutton.toggled.connect(self.obdlink)
+        self.elsbutton.toggled.connect(self.els)
 
         speedlayout = widgets.QHBoxLayout()
         self.speedcombo = widgets.QComboBox()
@@ -1141,6 +1156,25 @@ class portChooser(widgets.QDialog):
 
         self.usbbutton.setChecked(False)
         self.speedcombo.setCurrentIndex(2)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.obdlinkbutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+
+    def els(self):
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(0)
         self.btbutton.setChecked(False)
         self.wifibutton.setChecked(False)
         self.wifiinput.setEnabled(False)
