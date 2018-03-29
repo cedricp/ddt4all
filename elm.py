@@ -317,6 +317,7 @@ class Port:
             self.portType = 0
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
+                self.check_elm()
                 self.connectionStatus = True
                 return
             except Exception as e:
@@ -575,7 +576,7 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, speed, startSession='10C0'):
+    def __init__(self, portName, speed):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
             print _("Trying to open port") + "%s @ %i" % (portName, s)
             self.sim_mode = options.simulation_mode

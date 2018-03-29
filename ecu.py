@@ -1477,6 +1477,7 @@ class Ecu_scanner:
             if 'WRONG' in can_response:
                 return False
         supplier = can_response.replace(' ', '')[6:132].decode('hex')
+        supplier = filter(lambda x: x in printable_chars, supplier)
 
         # Check soft number
         if options.simulation_mode:
@@ -1500,7 +1501,7 @@ class Ecu_scanner:
             if 'WRONG' in can_response:
                 return False
         soft = can_response.replace(' ', '')[6:38].decode('hex')
-        soft= filter(lambda x: x in printable_chars, soft)
+        soft = filter(lambda x: x in printable_chars, soft)
 
         # Check soft version
         if options.simulation_mode:
@@ -1576,8 +1577,7 @@ class Ecu_scanner:
                 print "Skipping CAN extended address (not supported yet) ", addr
                 continue
 
-            print "Scanning address ECU %s" % self.ecu_database.addr_group_mapping[addr]
-
+            print "Scanning ECU %s" % self.ecu_database.addr_group_mapping[addr].encode('ascii', 'ignore')
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})

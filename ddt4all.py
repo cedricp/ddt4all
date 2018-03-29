@@ -15,6 +15,7 @@ import sniffer
 import imp
 import traceback
 import tempfile, errno
+import codecs
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -27,6 +28,7 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all_main')
 app = None
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def isWritable(path):
     try:
@@ -213,7 +215,6 @@ class Main_widget(gui.QMainWindow):
         self.ecunamemap = {}
         self.plugins = {}
         self.setWindowTitle(_("DDT4All"))
-        print _("Scanning ECUs...")
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
@@ -934,12 +935,21 @@ class portChooser(gui.QDialog):
         self.obdlinkbutton.setCheckable(True)
         medialayout.addWidget(self.obdlinkbutton)
 
+        self.elsbutton = gui.QPushButton()
+        self.elsbutton.setIcon(gui.QIcon("icons/els27.png"))
+        self.elsbutton.setIconSize(core.QSize(60, 60))
+        self.elsbutton.setFixedHeight(64)
+        self.elsbutton.setFixedWidth(64)
+        self.elsbutton.setCheckable(True)
+        medialayout.addWidget(self.elsbutton)
+
         layout.addLayout(medialayout)
 
         self.btbutton.toggled.connect(self.bt)
         self.wifibutton.toggled.connect(self.wifi)
         self.usbbutton.toggled.connect(self.usb)
         self.obdlinkbutton.toggled.connect(self.obdlink)
+        self.elsbutton.toggled.connect(self.els)
 
         speedlayout = gui.QHBoxLayout()
         self.speedcombo = gui.QComboBox()
@@ -1097,6 +1107,25 @@ class portChooser(gui.QDialog):
 
         self.usbbutton.setChecked(False)
         self.speedcombo.setCurrentIndex(2)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.obdlinkbutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+
+    def els(self):
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(0)
         self.btbutton.setChecked(False)
         self.wifibutton.setChecked(False)
         self.wifiinput.setEnabled(False)

@@ -30,6 +30,7 @@ refreshrate = 100
 mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 
+
 def get_last_error():
     global last_error
     err = last_error
@@ -47,5 +48,5 @@ def translator(filename):
             os.environ["LANGUAGE"] = os.environ["LANG"]
 
     # Set up message catalog access
-    t = gettext.translation(filename, 'locale', fallback=True)
+    t = gettext.translation(filename, 'locale', fallback=True, codeset="utf-8")
     return t.ugettext
