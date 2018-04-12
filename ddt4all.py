@@ -894,6 +894,7 @@ class portChooser(gui.QDialog):
         self.mode = 0
         self.securitycheck = False
         self.selectedportspeed = 38400
+        self.isels = False
         super(portChooser, self).__init__(None)
         layout = gui.QVBoxLayout()
         label = gui.QLabel(self)
@@ -1049,6 +1050,7 @@ class portChooser(gui.QDialog):
         self.timer.start(1000)
 
     def bt(self):
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1068,6 +1070,7 @@ class portChooser(gui.QDialog):
         self.obdlinkbutton.blockSignals(False)
 
     def wifi(self):
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1086,6 +1089,7 @@ class portChooser(gui.QDialog):
         self.obdlinkbutton.blockSignals(False)
 
     def usb(self):
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1105,6 +1109,7 @@ class portChooser(gui.QDialog):
         self.obdlinkbutton.blockSignals(False)
 
     def obdlink(self):
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1124,6 +1129,7 @@ class portChooser(gui.QDialog):
         self.obdlinkbutton.blockSignals(False)
 
     def els(self):
+        self.isels = True
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1224,7 +1230,7 @@ if __name__ == '__main__':
             msgbox.exec_()
 
         print _("Initilizing ELM with speed %i...") % port_speed
-        options.elm = elm.ELM(options.port, port_speed)
+        options.elm = elm.ELM(options.port, port_speed, pc.isels)
 
         if options.elm_failed:
             pc.show()

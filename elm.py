@@ -292,7 +292,7 @@ class Port:
 
     hdr = None
 
-    def __init__(self, portName, speed, portTimeout):
+    def __init__(self, portName, speed, portTimeout, isels=False):
         options.elm_failed = False
         self.portTimeout = portTimeout
 
@@ -317,7 +317,9 @@ class Port:
             self.portType = 0
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
-                self.check_elm()
+                if isels:
+                    print "Checking els"
+                    self.check_elm()
                 self.connectionStatus = True
                 return
             except Exception as e:
@@ -576,14 +578,14 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, speed):
+    def __init__(self, portName, speed, isels = False):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
             print _("Trying to open port") + "%s @ %i" % (portName, s)
             self.sim_mode = options.simulation_mode
             self.portName = portName
 
             if not options.simulation_mode:
-                self.port = Port(portName, s, self.portTimeout)
+                self.port = Port(portName, s, self.portTimeout, isels)
 
             if options.elm_failed:
                 self.connectionStatus = False
