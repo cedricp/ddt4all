@@ -38,3 +38,16 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{c
 [Icons]
 Name: "{group}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
 Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
+
+[Languages]
+Name: "en"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Default.isl"; 
+Name: "de"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\German.isl"; 
+Name: "fr"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\French.isl"; 
+Name: "es"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Spanish.isl"; 
+Name: "hu"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Hungarian.isl"; 
+Name: "it"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Italian.isl"; 
+Name: "nl"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Dutch.isl"; 
+Name: "pl"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Polish.isl"; 
+Name: "pt"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Portuguese.isl"; 
+Name: "ru"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Russian.isl"; 
+Name: "sr"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\SerbianLatin.isl"; 
