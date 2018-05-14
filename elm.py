@@ -668,7 +668,10 @@ class ELM:
 
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+            if self.currentaddress in dnat:
+                self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+            else:
+                print "Unknown address ", self.currentaddress, req, rsp
             self.vf.flush()
 
         return rsp

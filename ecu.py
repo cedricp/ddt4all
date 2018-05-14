@@ -1172,6 +1172,7 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
+        self.addr_group_mapping_long = {}
         self.addr_group_mapping = {"02": u"Suspension pilotée", "51": u"Tableau de bord", "29": u"Climatisation",
                                    "D2": u"GATEWAY", "00": u"CAN Vehicle Network", "1E": u"4WD", "01": u"ABS-VDC - ABS-ESP",
                                    "95": u"EVC", "26": u"UCBIC/BFR", "60": u"HMD", "50": u"Tachometer", "A1": u"HFM",
@@ -1194,7 +1195,15 @@ class Ecu_database:
                                    "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM", "41": u"GATEWAY", "2C": u"Airbag",
                                    "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES", "7A": u"Injection",
                                    "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"}
-        
+
+        f = open("json/addressing.json", "r")
+        js = json.loads(f.read())
+        f.close()
+
+        for k, v in js.iteritems():
+            self.addr_group_mapping[k] = v[0]
+            self.addr_group_mapping_long[k] = v[1]
+
         xmlfile = options.ecus_dir + "/eculist.xml"
 
         jsonecu_files = glob.glob("json/*.json.targets")

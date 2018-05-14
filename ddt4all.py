@@ -52,20 +52,20 @@ class Ecu_list(gui.QWidget):
         self.ecu_map = {}
         vehicles = [
             "ALL", "XBA - KWID CN", "XBB - KWID BR", "X06 - TWINGO", "X44 - TWINGO II",
-            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA",
+            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA", "XJC - SYMBOL/THALIA II",
             "X65 - CLIO II",
-            "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR",
-            "XJB - CAPTUR II", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
-            "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV",
+            "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR", "XJB - CAPTUR II",
+            "XJE - CAPTUR II CN", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
+            "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
             "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
             "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
-            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II", "HFE - KADJAR",
-            "X33 - WIND", "X09 - TWIZY", "X10 - ZOE", "X76 - KANGOO I",
-            "X61 - KANGOO II", "XFK - KANGOO III",
+            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
+            "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
+            "X10 - ZOE", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
             "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
-            "X70 - MASTER II", "X62 - MASTER III",
-            "X90 - LOGAN/SANDERO", "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
-            "X92 - LODGY", "X02 - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
+            "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
+            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
+            "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
         ]
 
         for v in vehicles:
@@ -97,12 +97,13 @@ class Ecu_list(gui.QWidget):
         self.list.clear()
         self.list.setColumnCount(7)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
-        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('Protocol'))
-        self.list.model().setHeaderData(2, core.Qt.Horizontal, "Supplier")
-        self.list.model().setHeaderData(3, core.Qt.Horizontal, "Diag")
-        self.list.model().setHeaderData(4, core.Qt.Horizontal, "Soft")
-        self.list.model().setHeaderData(5, core.Qt.Horizontal, "Version")
-        self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Projets'))
+        self.list.model().setHeaderData(1, core.Qt.Horizontal, ('ID'))
+        self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
+        self.list.model().setHeaderData(3, core.Qt.Horizontal, "Supplier")
+        self.list.model().setHeaderData(4, core.Qt.Horizontal, "Diag")
+        self.list.model().setHeaderData(5, core.Qt.Horizontal, "Soft")
+        self.list.model().setHeaderData(6, core.Qt.Horizontal, "Version")
+        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projets'))
         stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
@@ -135,12 +136,14 @@ class Ecu_list(gui.QWidget):
 
             stored_ecus[grp].append([cs[:-8][7:], name, protocol])
 
+        longgroupnames = {}
         for ecu in self.ecuscan.ecu_database.targets:
             if ecu.addr in self.ecuscan.ecu_database.addr_group_mapping:
                 grp = self.ecuscan.ecu_database.addr_group_mapping[ecu.addr]
+                if ecu.addr in self.ecuscan.ecu_database.addr_group_mapping_long:
+                    longgroupnames[grp] = self.ecuscan.ecu_database.addr_group_mapping_long[ecu.addr]
             else:
                 grp = "?"
-            grp += " [$" + str(ecu.addr).zfill(2) + "]"
 
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
@@ -153,7 +156,7 @@ class Ecu_list(gui.QWidget):
             supplier = ecu.supplier
             diag = ecu.diagversion
 
-            row = [ecu.name, ecu.protocol, supplier, diag, soft, version, projname]
+            row = [ecu.name, ecu.addr, ecu.protocol, supplier, diag, soft, version, projname]
             found = False
             for r in stored_ecus[grp]:
                 if (r[0], r[1]) == (row[0], row[1]):
@@ -166,6 +169,10 @@ class Ecu_list(gui.QWidget):
         keys.sort(cmp=locale.strcoll)
         for e in keys:
             item = gui.QTreeWidgetItem(self.list, [e])
+            if e in longgroupnames:
+                item.setToolTip(0, longgroupnames[e])
+            if e in self.ecuscan.ecu_database.addr_group_mapping:
+                item.setToolTip(self.ecuscan.ecu_database.addr_group_mapping[e])
             for t in stored_ecus[e]:
                 gui.QTreeWidgetItem(item, t)
 

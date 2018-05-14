@@ -1258,6 +1258,25 @@ def dumpXML(xmlname):
         return None
     return dumpDOC(xdoc)
 
+def dumpAddressing():
+    xdom = xml.dom.minidom.parse("GenericAddressing.xml")
+    xdoc = xdom.documentElement
+    dict = {}
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        shortname = func.getAttribute(u"Name")
+        address = func.getAttribute(u"Address")
+        for name in  getChildNodesByName(func, u"Name"):
+            longname = name.firstChild.nodeValue
+            dict[hex(int(address))[2:].upper()] = (shortname, longname)
+            break
+
+    js = json.dumps(dict)
+    f = open("json/addressing.json", "w")
+    f.write(js)
+    f.close()
+
+
 def dumpDOC(xdoc):
     target = getChildNodesByName(xdoc, u"Target")
     if not target:
@@ -1489,6 +1508,7 @@ def convertXML():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--dumpaddressing', action="store_true", default=None, help="Dump addressing")
     parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
     parser.add_argument('--zipconvert', action="store_true", default=None,
                         help="Convert all XML to JSON in a Zip archive")
@@ -1499,3 +1519,6 @@ if __name__ == '__main__':
 
     if args.convert:
         convertXML()
+
+    if args.dumpaddressing:
+        dumpAddressing()
