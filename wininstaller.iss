@@ -16,7 +16,7 @@ Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
 Source: "importlib\*"; DestDir: "{app}\importlib"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall('Do not forget to install database to ', ExpandConstant('{app}'))
+Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall('{cm:AfterMyProgInstall}', ExpandConstant('{app}'))
 ; Uncheck the line below to package ecu db
 ; Source: "ecu.zip"; DestDir: "{app}";
 
@@ -38,6 +38,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{c
 [Icons]
 Name: "{group}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
 Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
+
+[CustomMessages]
+en.AfterMyProgInstall=Do not forget to install database to 
+it.AfterMyProgInstall=Non dimenticare di installare il database in 
 
 [Languages]
 Name: "en"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Default.isl"; 
