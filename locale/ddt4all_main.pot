@@ -17,6 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ddt4all.py:380
+msgid "Zoom In"
+msgstr ""
+
+#: ddt4all.py:381
+msgid "Zoom Out"
+msgstr ""
+
+#: ddt4all.py:288
+msgid "Documentation"
+msgstr ""
+
+#: ddt4all.py:290
+msgid "CAN Sniffer"
+msgstr ""
+
+#: ddt4all.py:403
+msgid "UI Edit"
+msgstr ""
+
+#: ddt4all.py:432
+msgid "Zip database"
+msgstr ""
+
+#: ddt4all.py:269
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr ""
+
+#: ddt4all.py:440
+msgid "Plugins"
+msgstr ""
+
+#: ddt4all.py:422
+msgid "Open XML"
+msgstr ""
+
+#: ddt4all.py:503
+msgid "Zipping XML database... (this can take a few minutes"
+msgstr ""
+
+#: ddt4all.py:506
+msgid "Zip job finished"
+msgstr ""
+
+#: ddt4all.py:186
+msgid "ECU name"
+msgstr "Nome ECU"
+
 #: ddt4all.py:186
 msgid "ECU name"
 msgstr ""
