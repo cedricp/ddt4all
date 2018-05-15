@@ -17,6 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: dataeditor.py:631
+msgid "No SDS"
+msgstr ""
+
+#: dataeditor.py:632
+msgid "Plant"
+msgstr ""
+
+#: dataeditor.py:633
+msgid "After Sale"
+msgstr ""
+
+#: dataeditor.py:634
+msgid "Engineering"
+msgstr ""
+
+#: dataeditor.py:16881
+msgid "ECU Auto identification"
+msgstr ""
+
+#: dataeditor.py:991
+msgid "Duplicate selected"
+msgstr ""
+
+#: dataeditor.py:992
+msgid "Remove selected"
+msgstr ""
+
 #: dataeditor.py:165
 msgid "Goto data"
 msgstr ""
