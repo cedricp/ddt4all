@@ -65,10 +65,6 @@ msgstr ""
 msgid "ECU name"
 msgstr "Nome ECU"
 
-#: ddt4all.py:186
-msgid "ECU name"
-msgstr ""
-
 #: ddt4all.py:187
 msgid "Projets"
 msgstr ""

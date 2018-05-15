@@ -1,33 +1,61 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:28+0200\n"
-"PO-Revision-Date: 2017-06-11 21:28+0200\n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"PO-Revision-Date: 2018-05-15 11:18+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: fr_FR\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: dataeditor.py:631
+msgid "No SDS"
+msgstr "Pas SDS"
+
+#: dataeditor.py:632
+msgid "Plant"
+msgstr "Usine"
+
+#: dataeditor.py:633
+msgid "After Sale"
+msgstr "Après vente"
+
+#: dataeditor.py:634
+msgid "Engineering"
+msgstr "Ingénieur"
+
+#: dataeditor.py:16881
+msgid "ECU Auto identification"
+msgstr "Auto identification UCE"
+
+#: dataeditor.py:991
+msgid "Duplicate selected"
+msgstr "Dupliquer selection"
+
+#: dataeditor.py:992
+msgid "Remove selected"
+msgstr "Supprimer selectionné"
 
 #: dataeditor.py:165
 msgid "Goto data"
-msgstr "Aller à la donnée"
+msgstr "Aller a la donnée"
 
 #: dataeditor.py:166
 msgid "Remove"
-msgstr "Supprimer"
+msgstr "Enlever"
 
 #: dataeditor.py:171
 msgid "Add to screen"
-msgstr "Ajouter à l'écran"
+msgstr "Ajouter a l'écran"
 
 #: dataeditor.py:261
 msgid "Request name;Manual"
@@ -43,23 +71,23 @@ msgstr "Rafraîchir"
 
 #: dataeditor.py:300
 msgid "Send request bytes (HEX)"
-msgstr "Requête envoyée (HEXA)"
+msgstr "Envoie octets requête (HEXA)"
 
 #: dataeditor.py:302
 msgid "Receive bytes (HEX)"
-msgstr "Octets reçus (HEXA)"
+msgstr "Reception Octet"
 
 #: dataeditor.py:314
 msgid "Data length"
-msgstr "Longueur donnée"
+msgstr "Longueur de donnée"
 
 #: dataeditor.py:316
 msgid "Shift byte count"
-msgstr "Nombre octets décalés"
+msgstr "Déclalage octets"
 
 #: dataeditor.py:450
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nom donnée;Octet de départ;Décalage bit;Nombre de bits;Endianisme"
+msgstr "Nom donnée;Octet démarrage;Décalage bit;Endianess"
 
 #: dataeditor.py:468 dataeditor.py:528
 msgid "Little"
@@ -71,23 +99,23 @@ msgstr "Grand"
 
 #: dataeditor.py:470 dataeditor.py:526
 msgid "Inherits globals"
-msgstr "Hérite défaut ECU"
+msgstr "Hérite global"
 
 #: dataeditor.py:581
 msgid "Reload requests"
-msgstr "Recharger requêtes"
+msgstr "Recharger la requête"
 
 #: dataeditor.py:582
 msgid "Add request"
-msgstr "Ajouter reqête"
+msgstr "Ajouter requête"
 
 #: dataeditor.py:600
 msgid "Send bytes"
-msgstr "Octets envoie"
+msgstr "Octets envoyés"
 
 #: dataeditor.py:601
 msgid "Receive bytes"
-msgstr "Octets réception"
+msgstr "Octets reçus"
 
 #: dataeditor.py:657
 msgid "Number of bits"
@@ -131,7 +159,7 @@ msgstr "Format"
 
 #: dataeditor.py:822
 msgid "Value = (AX+B) / C"
-msgstr "Valeur =(AX+B) / C"
+msgstr "Valeur = (AX+B) / C"
 
 #: dataeditor.py:895
 msgid "New"
@@ -151,15 +179,15 @@ msgstr "Déscription"
 
 #: dataeditor.py:936
 msgid "Data type"
-msgstr "Type de donées"
+msgstr "Type de donnée"
 
 #: dataeditor.py:938
 msgid "Numeric"
-msgstr "Numérique"
+msgstr "Numerique"
 
 #: dataeditor.py:939
 msgid "Numeric items"
-msgstr "Entrée Numérique"
+msgstr "Entrées numeriques"
 
 #: dataeditor.py:940
 msgid "Hex"
@@ -171,28 +199,28 @@ msgstr "Nouvelle donnée"
 
 #: dataeditor.py:980
 msgid "Replace me with request description"
-msgstr "Remplacez moi par la déscription de la requête"
+msgstr "Remplacez moi par une déscription"
 
 #: dataeditor.py:1115
 msgid "Data name;Description"
-msgstr "Nom donnée;Déscription"
+msgstr "Nom de donnée;Déscription"
 
 #: dataeditor.py:1152
 msgid "Del"
-msgstr "Enlever"
+msgstr "Supprimer"
 
 #: dataeditor.py:1154
 msgid "Move up"
-msgstr "Déplacer vers haut"
+msgstr "Monter"
 
 #: dataeditor.py:1155
 msgid "Check"
-msgstr "Vérifier"
+msgstr "Tester"
 
 #: dataeditor.py:1199
 #, python-format
 msgid "Request %s not found"
-msgstr "Requête %s non trouvée"
+msgstr "Requête non trouvée"
 
 #: dataeditor.py:1218
 #, python-format
@@ -200,8 +228,8 @@ msgid ""
 "<font color=green>Request <font color=blue>'%s'</font> has no missing input "
 "values</font>"
 msgstr ""
-"<font color=green>Request <font color=blue>'%s'</font> n'a pas d'entrée "
-"manquante</font>"
+"<font color=green>Requête <font color=blue>'%s'</font> a des entrées "
+"manquantes</font>"
 
 #: dataeditor.py:1221
 #, python-format
@@ -209,8 +237,8 @@ msgid ""
 "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
 "font>"
 msgstr ""
-"<font color=red>Request <font color=blue>'%s'</font> a les entrées suivantes "
-"manquantes :</font>"
+"<font color=red>Requête <font color=blue>'%s'</font> entrées manquantes :</"
+"font>"
 
 #: dataeditor.py:1224
 #, python-format
@@ -227,7 +255,7 @@ msgstr "Initialisation écran"
 
 #: dataeditor.py:1413
 msgid "Requests to send before screen drawing"
-msgstr "Requête à envoyer avant affichage écran"
+msgstr "Requête a envoyer avant affichage écran"
 
 #: dataeditor.py:1427
 msgid "Button name;Unique name"
@@ -243,15 +271,15 @@ msgstr "Protocole ECU"
 
 #: dataeditor.py:1501 dataeditor.py:1619
 msgid "Tool > Ecu ID (Hex)"
-msgstr "Outil > Ecu (Hexa)"
+msgstr "Outil > ID ECU (Hexa)"
 
 #: dataeditor.py:1503 dataeditor.py:1620
 msgid "Ecu > Tool ID (Hex)"
-msgstr "Ecu > Outil (Hexa)"
+msgstr "ECU > Outil (Hexa)"
 
 #: dataeditor.py:1505
 msgid "Coding"
-msgstr "Encodage"
+msgstr "Codage"
 
 #: dataeditor.py:1509
 msgid "Big Endian"
@@ -263,7 +291,7 @@ msgstr "Petit endian"
 
 #: dataeditor.py:1525
 msgid "Diag version;Supplier;Soft;Version"
-msgstr "Version Diag;Fournisseur;Soft;Version"
+msgstr "Version diag;Fournisseur;Logiciel;Version"
 
 #: dataeditor.py:1533
 msgid "Add new"
@@ -271,11 +299,11 @@ msgstr "Ajouter nouveau"
 
 #: dataeditor.py:1534
 msgid "Delete selected"
-msgstr "Supprimersélectionné"
+msgstr "Supprimer selectionné"
 
 #: dataeditor.py:1535
 msgid "Diag version"
-msgstr "Version diagnostic"
+msgstr "Version diag"
 
 #: dataeditor.py:1538
 msgid "Supplier"
@@ -283,8 +311,9 @@ msgstr "Fournisseur"
 
 #: dataeditor.py:1541
 msgid "Soft"
-msgstr "Soft"
+msgstr "Logiciel"
 
 #: dataeditor.py:1544
 msgid "Version"
 msgstr "Version"
+

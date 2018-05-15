@@ -1,179 +1,223 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# , 2017.
+# , 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 20:48+0200\n"
-"PO-Revision-Date: 2017-06-11 20:49+0200\n"
+"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"PO-Revision-Date: 2018-05-15 14:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ddt4all.py:185
+#: ddt4all.py:380
+msgid "Zoom In"
+msgstr "Agrandir"
+
+#: ddt4all.py:381
+msgid "Zoom Out"
+msgstr "Rétrécir"
+
+#: ddt4all.py:288
+msgid "Documentation"
+msgstr ""
+
+#: ddt4all.py:290
+msgid "CAN Sniffer"
+msgstr "Espion CAN"
+
+#: ddt4all.py:403
+msgid "UI Edit"
+msgstr "Edition interface"
+
+#: ddt4all.py:432
+msgid "Zip database"
+msgstr "Compresser base de donnée"
+
+#: ddt4all.py:269
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr "Temps max CAN (ms) [0:AUTO] :"
+
+#: ddt4all.py:440
+msgid "Plugins"
+msgstr "Extensions"
+
+#: ddt4all.py:422
+msgid "Open XML"
+msgstr "Ouvrir XML"
+
+#: ddt4all.py:503
+msgid "Zipping XML database... (this can take a few minutes"
+msgstr "Compresser XML (peut prendre quelques minutes)"
+
+#: ddt4all.py:506
+msgid "Zip job finished"
+msgstr "Compression terminée"
+
+#: ddt4all.py:186
 msgid "ECU name"
 msgstr "Nom ECU"
 
-#: ddt4all.py:186
+#: ddt4all.py:187
 msgid "Projets"
 msgstr "Projets"
 
-#: ddt4all.py:187
+#: ddt4all.py:188
 msgid "Protocol"
 msgstr "Protocole"
 
-#: ddt4all.py:277
+#: ddt4all.py:278
 msgid "Scanning ECUs..."
 msgstr "Balayage ECU"
 
-#: ddt4all.py:281
+#: ddt4all.py:282
 msgid "loaded ECUs in database."
 msgstr "ECU chargées en base de donnée"
 
-#: ddt4all.py:305
+#: ddt4all.py:306
 msgid "Refresh rate (ms):"
 msgstr "Vitesse rafraichissement (ms):"
 
-#: ddt4all.py:320
+#: ddt4all.py:321
 msgid "Screen"
 msgstr "Ecran"
 
-#: ddt4all.py:327
+#: ddt4all.py:328
 msgid "Requests"
 msgstr "Requêtes"
 
-#: ddt4all.py:328
+#: ddt4all.py:329
 msgid "Data"
 msgstr "Données"
 
-#: ddt4all.py:329
+#: ddt4all.py:330
 msgid "Buttons"
 msgstr "Boutons"
 
-#: ddt4all.py:330
+#: ddt4all.py:331
 msgid "Ecu parameters"
 msgstr "Paramètres ECU"
 
-#: ddt4all.py:341
+#: ddt4all.py:342
 msgid "Screens"
 msgstr "Ecrans"
 
-#: ddt4all.py:344
+#: ddt4all.py:345
 msgid "Action"
 msgstr "Action"
 
-#: ddt4all.py:345
+#: ddt4all.py:346
 msgid "New Category"
 msgstr "Nouvelle catégorie"
 
-#: ddt4all.py:346
+#: ddt4all.py:347
 msgid "New Screen"
 msgstr "Nouvel écran"
 
-#: ddt4all.py:347
+#: ddt4all.py:348
 msgid "Rename"
 msgstr "Renommer"
 
-#: ddt4all.py:374 ddt4all.py:430
+#: ddt4all.py:375 ddt4all.py:431
 msgid "File"
 msgstr "Fichier"
 
-#: ddt4all.py:376
+#: ddt4all.py:377
 msgid "Scan ECUs"
 msgstr "Balayage ECUs"
 
-#: ddt4all.py:379
+#: ddt4all.py:380
 msgid "Read DTC"
 msgstr "Lire les DTC"
 
-#: ddt4all.py:383
+#: ddt4all.py:384
 msgid "Full log"
 msgstr "Tout loguer"
 
-#: ddt4all.py:388
+#: ddt4all.py:389
 msgid "Expert mode (enable writing)"
 msgstr "Mode expert"
 
-#: ddt4all.py:393
+#: ddt4all.py:394
 msgid "Auto refresh"
 msgstr "Rafraichissement auto"
 
-#: ddt4all.py:398
+#: ddt4all.py:399
 msgid "Refresh (one shot)"
 msgstr "Rafraichir (une fois)"
 
-#: ddt4all.py:402
+#: ddt4all.py:403
 msgid "Manual command"
 msgstr "Commande manuelle"
 
-#: ddt4all.py:431
+#: ddt4all.py:432
 msgid "Create New ECU"
 msgstr "Créer un ECU"
 
-#: ddt4all.py:432
+#: ddt4all.py:433
 msgid "Save current ECU"
 msgstr "Sauvegarder ECU actuel"
 
-#: ddt4all.py:434
+#: ddt4all.py:435
 msgid "Save ECU list"
 msgstr "Sauvegarder la liste d'ECU"
 
-#: ddt4all.py:444
+#: ddt4all.py:445
 msgid "ISK Tools"
 msgstr "Outil ISK"
 
-#: ddt4all.py:448
+#: ddt4all.py:449
 msgid "UCH Tools"
 msgstr "Outil UCH"
 
-#: ddt4all.py:449
+#: ddt4all.py:450
 msgid "Megane2/Scenic2/Clio3 Virgin"
 msgstr "Megane2/Scenic2/Clio3 Vierge"
 
-#: ddt4all.py:452
+#: ddt4all.py:453
 msgid "EPS(DAE) Tools"
 msgstr "Outil DAE(EPS)"
 
-#: ddt4all.py:453
+#: ddt4all.py:454
 msgid "Megane3 Virgin"
 msgstr "Megane3 Vierge"
 
-#: ddt4all.py:454
+#: ddt4all.py:455
 msgid "Clio4 Virgin"
 msgstr "Clio4 Vierge"
 
-#: ddt4all.py:455
+#: ddt4all.py:456
 msgid "Clio3 Virgin"
 msgstr "Clio3 Vierge"
 
-#: ddt4all.py:468
+#: ddt4all.py:469
 msgid "Enter new name"
 msgstr "Entrez nouveau nom"
 
-#: ddt4all.py:488
+#: ddt4all.py:489
 msgid "Enter category name"
 msgstr "Entrez nom de catégorie"
 
-#: ddt4all.py:498
+#: ddt4all.py:499
 msgid "Please select a category before creating new screen"
 msgstr "Choisissez une catégorie avant de créer un nouvel écran"
 
-#: ddt4all.py:505
+#: ddt4all.py:506
 msgid "Enter screen name"
 msgstr "Nom du nouvel écran"
 
-#: ddt4all.py:535
+#: ddt4all.py:536
 msgid "Enable expert mode to access this menu"
 msgstr "Activez le mode expert pour accéder a ce menu"
 
-#: ddt4all.py:540
+#: ddt4all.py:541
 msgid ""
 "<center>I'm aware that this operation will clear the selected control unit.</"
 "center><center>If you have no idea of what it means, please get out of here."
@@ -184,59 +228,59 @@ msgstr ""
 "impique, merci de quitter maintenant.</center><center>/!\\Partie hautement "
 "experimentale/!\\</center>"
 
-#: ddt4all.py:582
+#: ddt4all.py:583
 msgid "Cannot read ISK in demo mode"
 msgstr "Pas de lecture ISK en mode edition"
 
-#: ddt4all.py:598
+#: ddt4all.py:599
 msgid "Cannot read ISK : Bad reply"
 msgstr "Lecture ISK impossible : mauvaise réponse ECU"
 
-#: ddt4all.py:604
+#: ddt4all.py:605
 msgid "Your ISK code"
 msgstr "Votre code ISK"
 
-#: ddt4all.py:610
+#: ddt4all.py:611
 msgid "Scan options"
 msgstr "Options de balayage"
 
-#: ddt4all.py:620
+#: ddt4all.py:621
 msgid "Scanning CAN"
 msgstr "Balayage CAN"
 
-#: ddt4all.py:624
+#: ddt4all.py:625
 msgid "Scanning KWP"
 msgstr "Balayage KWP"
 
-#: ddt4all.py:628
+#: ddt4all.py:629
 msgid "Scanning CAN&KWP"
 msgstr "Balayage CAN&KWP"
 
-#: ddt4all.py:661
+#: ddt4all.py:662
 msgid "Sending ECU informations to database, thank you for your paticipation"
 msgstr "Envoie des informations ECU, merci pour votre participation"
 
-#: ddt4all.py:667
+#: ddt4all.py:668
 msgid "EDITION MODE"
 msgstr "MODE EDITION"
 
-#: ddt4all.py:671
+#: ddt4all.py:672
 msgid "CONNECTED"
 msgstr "CONNECTÉ"
 
-#: ddt4all.py:674
+#: ddt4all.py:675
 msgid "DISCONNECTED"
 msgstr "DECONNECTÉ"
 
-#: ddt4all.py:677
+#: ddt4all.py:678
 msgid "Save vehicule (keep '.ecu' extension)"
 msgstr "Savegarde ECU (Gardez l'extension '.ecu')"
 
-#: ddt4all.py:694
+#: ddt4all.py:695
 msgid "Save ECU (keep '.json' extension)"
 msgstr "Savegarde ECU (Gardez l'extension '.json')"
 
-#: ddt4all.py:856
+#: ddt4all.py:857
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -244,15 +288,15 @@ msgstr ""
 "<center>Cette application est libre d'utilisation, mais j'ai besoin d'argent "
 "pour rendre cette application plus fiable et acheter du materiel</center>"
 
-#: ddt4all.py:857
+#: ddt4all.py:858
 msgid "Yes I contribute"
 msgstr "Oui, je contibue"
 
-#: ddt4all.py:859
+#: ddt4all.py:860
 msgid "No, I don't"
 msgstr "Non merci"
 
-#: ddt4all.py:867
+#: ddt4all.py:868
 msgid ""
 "<center>Thank you for you contribution, if nothing happens, please go to : "
 "https://github.com/cedricp/ddt4all</center>"
@@ -260,65 +304,66 @@ msgstr ""
 "<center>Merci de votre particapation, si rien ne se passe, allez ici : "
 "https://github.com/cedricp/ddt4all</center>"
 
-#: ddt4all.py:881
+#: ddt4all.py:882
 msgid "ELM port selection"
 msgstr "Sélection du port ELM"
 
-#: ddt4all.py:925
+#: ddt4all.py:926
 msgid "Port speed"
 msgstr "Vitesse du port"
 
-#: ddt4all.py:937
+#: ddt4all.py:938
 msgid "Connected mode"
 msgstr "Mode connecté"
 
-#: ddt4all.py:938
+#: ddt4all.py:939
 msgid "Edition mode"
 msgstr "Mode édition"
 
-#: ddt4all.py:939
+#: ddt4all.py:940
 msgid "ELM benchmark"
 msgstr "Tests ELM"
 
-#: ddt4all.py:942
+#: ddt4all.py:943
 msgid "WiFi port : "
 msgstr "Port WIFI :"
 
-#: ddt4all.py:952
+#: ddt4all.py:953
 msgid "I'm aware that I can harm my car if badly used"
 msgstr ""
 "Je suis conscient que je risque d'endomager mon véhicule avec cette "
 "application si je ne suis pas vigilant"
 
-#: ddt4all.py:960
+#: ddt4all.py:961
 msgid "I accept to share ECU informations"
 msgstr "J'accepte de partager mes information"
 
-#: ddt4all.py:1059
+#: ddt4all.py:1060
 msgid "You must check the recommandations"
 msgstr "Vous devez cocher les recommandations"
 
-#: ddt4all.py:1080
+#: ddt4all.py:1081
 msgid "Please select a communication port"
 msgstr "Vous devez selectionner le port de communication"
 
-#: ddt4all.py:1106
+#: ddt4all.py:1107
 msgid "Using custom DDT database"
 msgstr "Utilisation de la base de donnée personnelle"
 
-#: ddt4all.py:1110
+#: ddt4all.py:1111
 msgid "Using DDT2000 default installation"
 msgstr "Utilisation de la base DDT2000 par défaut"
 
-#: ddt4all.py:1134
+#: ddt4all.py:1135
 msgid "No COM port selected"
 msgstr "Pas de port communication sélectionné"
 
-#: ddt4all.py:1137
+#: ddt4all.py:1138
 #, python-format
 msgid "Initilizing ELM with speed %i..."
 msgstr "Initialisation ELM a la vitesse %i"
 
-#: ddt4all.py:1144
+#: ddt4all.py:1145
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Pas de materiel ELM ou OBDLink-SX détecté"
+
