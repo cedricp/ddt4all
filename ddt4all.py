@@ -100,9 +100,9 @@ class Ecu_list(gui.QWidget):
         self.list.model().setHeaderData(1, core.Qt.Horizontal, _('ID'))
         self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
         self.list.model().setHeaderData(3, core.Qt.Horizontal, _('Supplier'))
-        self.list.model().setHeaderData(4, core.Qt.Horizontal, -('Diag'))
-        self.list.model().setHeaderData(5, core.Qt.Horizontal, -('Soft'))
-        self.list.model().setHeaderData(6, core.Qt.Horizontal, -('Version'))
+        self.list.model().setHeaderData(4, core.Qt.Horizontal, _('Diag'))
+        self.list.model().setHeaderData(5, core.Qt.Horizontal, _('Soft'))
+        self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Version'))
         self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projets'))
         stored_ecus = {"Custom": []}
 
