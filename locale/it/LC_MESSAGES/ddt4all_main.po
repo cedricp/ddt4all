@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: DDT4ALL (14.05.2018)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-11 21:49+0200\n"
-"PO-Revision-Date: 2018-05-14 11:59+0200\n"
+"PO-Revision-Date: 2018-05-15 11:59+0200\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,6 +17,54 @@ msgstr ""
 "Language-Team: bovirus@gmail.com\n"
 "X-Generator: Poedit 2.0.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+#: ddt4all.py:380
+msgid "Zoom In"
+msgstr "Zoom +"
+
+#: ddt4all.py:381
+msgid "Zoom Out"
+msgstr "Zoom -"
+
+#: ddt4all.py:288
+msgid "Documentation"
+msgstr "Documentazione"
+
+#: ddt4all.py:290
+msgid "CAN Sniffer"
+msgstr "Sniffer CAN"
+
+#: ddt4all.py:403
+msgid "UI Edit"
+msgstr "Modifica UI"
+
+#: ddt4all.py:432
+msgid "Zip database"
+msgstr "Comprimi database"
+
+#: ddt4all.py:269
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr "Timeout CAN (ms) [0:AUTO] :"
+
+#: ddt4all.py:440
+msgid "Plugins"
+msgstr "Plugin"
+
+#: ddt4all.py:422
+msgid "Open XML"
+msgstr "Apri XML"
+
+#: ddt4all.py:503
+msgid "Zipping XML database... (this can take a few minutes"
+msgstr "Compressione database... (potrebbe richiedere alcuni minuti)"
+
+#: ddt4all.py:506
+msgid "Zip job finished"
+msgstr "Attività compressione completata"
+
+#: ddt4all.py:186
+msgid "ECU name"
+msgstr "Nome ECU"
 
 #: ddt4all.py:186
 msgid "ECU name"
