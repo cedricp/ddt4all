@@ -7,101 +7,100 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"POT-Creation-Date: 2018-05-15 14:56+0200\n"
 "PO-Revision-Date: 2018-05-14 10:26+0200\n"
+"Last-Translator: bovirus <bovirus@gmail.com>\n"
+"Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: bovirus <bovirus@gmail.com>\n"
-"Language-Team: bovirus@gmail.com\n"
 "X-Generator: Poedit 2.0.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: elm.py:291 elm.py:301
+#: ..\elm.py:326 ..\elm.py:328
 msgid "Error:"
 msgstr "Errore:"
 
-#: elm.py:292
+#: ..\elm.py:327
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM non connesso o porta COM errata"
 
-#: elm.py:295
-msgid "Available COM ports:"
-msgstr "Porte COM disponibili:"
-
-#: elm.py:322 elm.py:338
+#: ..\elm.py:355 ..\elm.py:372
 msgid "Connection to ELM was lost"
 msgstr "Persa connessione a ELM"
 
-#: elm.py:358
+#: ..\elm.py:395
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
 
-#: elm.py:371
+#: ..\elm.py:408
 msgid "Checking port speed:"
 msgstr "Controllo velocità porta:"
 
-#: elm.py:390
+#: ..\elm.py:427
 msgid "Start COM speed :"
 msgstr "Velocità iniziale COM:"
 
-#: elm.py:395
+#: ..\elm.py:432
 msgid "ELM not responding"
 msgstr "ELM non risponde"
 
-#: elm.py:404
+#: ..\elm.py:441
 msgid "ERROR - wifi do not support changing baud rate"
 msgstr "Errore - Il Wi-Fi non supporta la modifica della velocità"
 
-#: elm.py:407
+#: ..\elm.py:444
 msgid "Changing baud rate to:"
 msgstr "Modifica velocità a:"
 
-#: elm.py:436
+#: ..\elm.py:473
 msgid "ERROR - command not supported"
 msgstr "ERRORE - comando non supportato"
 
-#: elm.py:467
+#: ..\elm.py:504
 msgid "ERROR - rate not supported. Let's go back."
 msgstr "ERRORE - velocità non supportata. Annullamento modifica."
 
-#: elm.py:490
+#: ..\elm.py:527
 msgid "ERROR - something went wrong. Let's get back."
 msgstr "ERRORE - qualcosa non ha funzionato. Annullamento modifica."
 
-#: elm.py:543
+#: ..\elm.py:583
 msgid "Trying to open port"
 msgstr "Apertura porta COM"
 
-#: elm.py:563
+#: ..\elm.py:607
 msgid "No ELM interface on port"
 msgstr "Nessuna interfaccia ELM collegata alla porta"
 
-#: elm.py:1176
+#: ..\elm.py:1322
 msgid "FAIL"
 msgstr "FALLITO"
 
-#: elm.py:1181
+#: ..\elm.py:1327
 msgid "OK/TIMEOUT"
 msgstr "OK/TIMEOUT"
 
-#: elm.py:1185
+#: ..\elm.py:1331
 msgid "OK"
 msgstr "OK"
 
-#: elm.py:1193
+#: ..\elm.py:1339
 msgid "Incompatible adapter on ARM core"
 msgstr "Adattatore non compatibile basato su core ARM"
 
-#: elm.py:1194
+#: ..\elm.py:1340
 msgid "Result: "
 msgstr "Risultato: "
 
-#: elm.py:1194
+#: ..\elm.py:1340
 msgid " succeeded from "
 msgstr " completato da "
 
-#: elm.py:1194
+#: ..\elm.py:1340
 msgid "ELM Max version:"
 msgstr "Versione max ELM:"
+
+#~ msgid "Available COM ports:"
+#~ msgstr "Porte COM disponibili:"

@@ -7,166 +7,185 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (14.05.2018)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:49+0200\n"
-"PO-Revision-Date: 2018-05-14 18:14+0200\n"
+"POT-Creation-Date: 2018-05-15 14:56+0200\n"
+"PO-Revision-Date: 2018-05-15 13:45+0200\n"
+"Last-Translator: bovirus <bovirus@gmail.com>\n"
+"Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: bovirus <bovirus@gmail.com>\n"
-"Language-Team: bovirus@gmail.com\n"
 "X-Generator: Poedit 2.0.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: parameters.py:64
-msgid "Returning to defaut session..."
-msgstr "Ritorno alla sessione predefinità..."
-
-#: parameters.py:83
+#: ..\parameters.py:83
 msgid "Save ECU (keep '.json' extension)"
 msgstr "Salva ECU (mantieni estensione '.json')"
 
-#: parameters.py:159 parameters.py:187 parameters.py:206
+#: ..\parameters.py:159 ..\parameters.py:187 ..\parameters.py:210
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Per poter modificare la schermata, prima esportala in formato JSON"
 
-#: parameters.py:229
+#: ..\parameters.py:250
 msgid "Enter label name"
 msgstr "Inserisci nome etichetta"
 
-#: parameters.py:295
+#: ..\parameters.py:316
 msgid "Add button"
 msgstr "Aggiungi pulsante"
 
-#: parameters.py:296
+#: ..\parameters.py:317
 msgid "Add label"
 msgstr "Aggiungi etichetta"
 
-#: parameters.py:304
+#: ..\parameters.py:325
 msgid "Rename label"
 msgstr "Rinomina etichetta"
 
-#: parameters.py:308
+#: ..\parameters.py:326
+msgid "Change color"
+msgstr "Colore modifica"
+
+#: ..\parameters.py:332
 msgid "Remove element"
 msgstr "Rimuovi elemento"
 
-#: parameters.py:401
+#: ..\parameters.py:441
 msgid "Diagnotic session"
 msgstr "Sessione diagnostica"
 
-#: parameters.py:402
+#: ..\parameters.py:442
 msgid "Input"
 msgstr "Ingresso"
 
-#: parameters.py:403
+#: ..\parameters.py:443
 msgid "Output"
 msgstr "Uscita"
 
-#: parameters.py:444
-msgid "Initializing CAN mode"
-msgstr "Inizializzazione modo CAN"
-
-#: parameters.py:451
-msgid "Initializing KWP2000 mode"
-msgstr "Inizializzazione modo KWP2000"
-
-#: parameters.py:457
-msgid "Initializing ISO8 mode"
-msgstr "Inizializzazione modo ISO8"
-
-#: parameters.py:462
-msgid "Protocol "
-msgstr "Protocollo "
-
-#: parameters.py:462
-msgid " not supported"
-msgstr " non supportato"
-
-#: parameters.py:523
+#: ..\parameters.py:591
 msgid "XML file not found : "
 msgstr "File XML non trovato : "
 
-#: parameters.py:530
+#: ..\parameters.py:598
 msgid "Invalid DDT file"
 msgstr "File DDT non valido"
 
-#: parameters.py:559
+#: ..\parameters.py:669
+msgid "Connection to ELM lost, trying to reconnect..."
+msgstr "Connessione a ELM persa. Tentativo di riconnessione..."
+
+#: ..\parameters.py:672
+msgid "Cannot reconnect..."
+msgstr "Impossibile riconnettersi..."
+
+#: ..\parameters.py:680
 msgid "Switching to session mode"
 msgstr "Passaggio a modo sessione"
 
-#: parameters.py:576
+#: ..\parameters.py:689
 msgid "Sending ELM request :"
 msgstr "Invia richiesta ELM :"
 
-#: parameters.py:578
+#: ..\parameters.py:691
 msgid "Blocked ELM request :"
 msgstr "Richiesta ELM bloccata :"
 
-#: parameters.py:582
+#: ..\parameters.py:696
 msgid "Sending ELM request:"
 msgstr "Invio richiesta ELM :"
 
-#: parameters.py:591
+#: ..\parameters.py:708
 msgid "Sending simulated ELM request :"
 msgstr "Invio richiesta simulata ELM :"
 
-#: parameters.py:601
+#: ..\parameters.py:719
+msgid "Bad ELM response :"
+msgstr "Risposta ELM errata :"
+
+#: ..\parameters.py:722
 msgid "ELM response : "
 msgstr "Risposta ELM : "
 
-#: parameters.py:744
+#: ..\parameters.py:867
 msgid "Button request not found : "
 msgstr "Richiesta pulsante non trovata : "
 
-#: parameters.py:758
+#: ..\parameters.py:881
 msgid "Sending request :"
 msgstr "Invio richiesta :"
 
-#: parameters.py:800
+#: ..\parameters.py:921
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Richiesta interrotta (vedi elementi parametri rossi): "
 
-#: parameters.py:820
+#: ..\parameters.py:948
 msgid "Invalid"
 msgstr "Non valida"
 
-#: parameters.py:898
+#: ..\parameters.py:966
+msgid "ECU uses SDS "
+msgstr "ECU usa SDS "
+
+#: ..\parameters.py:1050
 msgid "Cannot call request "
 msgstr "Impossibile chiamare richiesta "
 
-#: parameters.py:917
+#: ..\parameters.py:1065
 msgid "Clearing DTC information"
 msgstr "Azzeramento informazioni DTC"
 
-#: parameters.py:926
+#: ..\parameters.py:1077
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Nessuna richiesta ClearDTC per questa ECU. Verrà inviato predefinito (14FF00)"
+msgstr ""
+"Nessuna richiesta ClearDTC per questa ECU. Verrà inviato predefinito (14FF00)"
 
-#: parameters.py:930
+#: ..\parameters.py:1081
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Stai azzerando i codici diagnostici guasti</center>"
 
-#: parameters.py:931
+#: ..\parameters.py:1082
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Sei sicuro di voler proseguire?</center>"
 
-#: parameters.py:970
+#: ..\parameters.py:1136
 msgid "Invalid response for ReadDTC command"
 msgstr "Risposta non valida per il comando ReadDTC"
 
-#: parameters.py:979
+#: ..\parameters.py:1145
+msgid "Read DTC returned an error"
+msgstr "La lettura DTC ha ritornato un errore"
+
+#: ..\parameters.py:1153
 msgid "No DTC"
 msgstr "Nessun DTC"
 
-#: parameters.py:988
+#: ..\parameters.py:1176
 msgid "Clear ALL DTC"
 msgstr "Azzera TUTTI i DTC"
 
-#: parameters.py:994
+#: ..\parameters.py:1182
 msgid "ECU trouble codes"
 msgstr "Codici guasto ECU"
 
-#: parameters.py:1027
+#: ..\parameters.py:1212
 msgid "Parsing screen "
 msgstr "Analisi schermata "
+
+#~ msgid "Returning to defaut session..."
+#~ msgstr "Ritorno alla sessione predefinità..."
+
+#~ msgid "Initializing CAN mode"
+#~ msgstr "Inizializzazione modo CAN"
+
+#~ msgid "Initializing KWP2000 mode"
+#~ msgstr "Inizializzazione modo KWP2000"
+
+#~ msgid "Initializing ISO8 mode"
+#~ msgstr "Inizializzazione modo ISO8"
+
+#~ msgid "Protocol "
+#~ msgstr "Protocollo "
+
+#~ msgid " not supported"
+#~ msgstr " non supportato"
