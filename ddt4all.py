@@ -97,12 +97,12 @@ class Ecu_list(gui.QWidget):
         self.list.clear()
         self.list.setColumnCount(7)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
-        self.list.model().setHeaderData(1, core.Qt.Horizontal, ('ID'))
+        self.list.model().setHeaderData(1, core.Qt.Horizontal, _('ID'))
         self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
-        self.list.model().setHeaderData(3, core.Qt.Horizontal, "Supplier")
-        self.list.model().setHeaderData(4, core.Qt.Horizontal, "Diag")
-        self.list.model().setHeaderData(5, core.Qt.Horizontal, "Soft")
-        self.list.model().setHeaderData(6, core.Qt.Horizontal, "Version")
+        self.list.model().setHeaderData(3, core.Qt.Horizontal, _('Supplier'))
+        self.list.model().setHeaderData(4, core.Qt.Horizontal, -('Diag'))
+        self.list.model().setHeaderData(5, core.Qt.Horizontal, -('Soft'))
+        self.list.model().setHeaderData(6, core.Qt.Horizontal, -('Version'))
         self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projets'))
         stored_ecus = {"Custom": []}
 
@@ -377,8 +377,8 @@ class Main_widget(gui.QMainWindow):
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 
-        self.zoominbutton = gui.QPushButton("Zoom In")
-        self.zoomoutbutton = gui.QPushButton("Zoom Out")
+        self.zoominbutton = gui.QPushButton(_("Zoom In"))
+        self.zoomoutbutton = gui.QPushButton(_("Zoom Out"))
         self.zoominbutton.clicked.connect(self.zoomin)
         self.zoomoutbutton.clicked.connect(self.zoomout)
 
@@ -400,7 +400,7 @@ class Main_widget(gui.QMainWindow):
 
         if options.simulation_mode:
             self.toolbar.addSeparator()
-            self.ui_edit_button = gui.QPushButton("UI Edit")
+            self.ui_edit_button = gui.QPushButton(_("UI Edit"))
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
             self.toolbar.addWidget(self.ui_edit_button)
@@ -419,7 +419,7 @@ class Main_widget(gui.QMainWindow):
         menu = self.menuBar()
 
         diagmenu = menu.addMenu(_("File"))
-        xmlopenaction = diagmenu.addAction("Open XML")
+        xmlopenaction = diagmenu.addAction(_("Open XML"))
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
@@ -500,10 +500,10 @@ class Main_widget(gui.QMainWindow):
             mbox.exec_()
             return
 
-        self.logview.append("Zipping XML database... (this can take a few minutes)")
+        self.logview.append(_("Zipping XML database... (this can take a few minutes"))
         core.QCoreApplication.processEvents()
         parameters.zipConvertXML(filename)
-        self.logview.append("Zip job finished")
+        self.logview.append(_("Zip job finished"))
 
     def launchPlugin(self, pim):
         if self.paramview:
@@ -618,7 +618,7 @@ class Main_widget(gui.QMainWindow):
 
         canbutton = gui.QPushButton('CAN')
         kwpbutton = gui.QPushButton('KWP')
-        cancelbutton = gui.QPushButton('CANCEL')
+        cancelbutton = gui.QPushButton(_('CANCEL'))
 
         msgBox.addButton(canbutton, gui.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, gui.QMessageBox.ActionRole)
