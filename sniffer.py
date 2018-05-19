@@ -3,8 +3,19 @@
 import time
 import ecu
 from uiutils import *
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+try:
+    import PyQt5.QtGui as gui
+    import PyQt5.QtCore as core
+    import PyQt5.QtWidgets as widgets
+    def utf8(string):
+        return string
+except:
+    import PyQt4.QtGui as gui
+    import PyQt4.QtGui as widgets
+    import PyQt4.QtCore as core
+    def utf8(string):
+        return unicode(string.toUtf8(), encoding="UTF8")
+
 import options, string
 
 __author__ = "Cedric PAILLE"
@@ -56,7 +67,7 @@ class snifferThread(core.QThread):
 
         self.running = False
 
-class sniffer(gui.QWidget):
+class sniffer(widgets.QWidget):
     def __init__(self, parent=None):
         super(sniffer, self).__init__(parent)
         self.ecu_file = None
@@ -67,12 +78,12 @@ class sniffer(gui.QWidget):
         self.oktostart = False
         self.ecu_filter = ""
 
-        hlayout = gui.QHBoxLayout()
+        hlayout = widgets.QHBoxLayout()
 
-        self.framecombo = gui.QComboBox()
+        self.framecombo = widgets.QComboBox()
 
-        self.startbutton = gui.QPushButton(">>")
-        self.addressinfo = gui.QLabel("0000")
+        self.startbutton = widgets.QPushButton(">>")
+        self.addressinfo = widgets.QLabel("0000")
 
         self.startbutton.setCheckable(True)
         self.startbutton.toggled.connect(self.startmonitoring)
@@ -84,12 +95,12 @@ class sniffer(gui.QWidget):
         hlayout.addWidget(self.framecombo)
         hlayout.addWidget(self.startbutton)
 
-        vlayout = gui.QVBoxLayout()
+        vlayout = widgets.QVBoxLayout()
         self.setLayout(vlayout)
 
         vlayout.addLayout(hlayout)
 
-        self.table = gui.QTableWidget()
+        self.table = widgets.QTableWidget()
         vlayout.addWidget(self.table)
 
         self.framecombo.activated.connect(self.change_frame)
@@ -105,7 +116,7 @@ class sniffer(gui.QWidget):
         self.stopthread()
         self.startbutton.setChecked(False)
         self.names = []
-        framename = unicode(self.framecombo.currentText().toUtf8(), encoding="UTF-8")
+        framename = utf8(self.framecombo.currentText())
         self.currentrequest = self.ecurequests.requests[framename]
         self.ecu_filter = self.currentrequest.sentbytes
         self.addressinfo.setText(self.ecu_filter)
@@ -117,7 +128,7 @@ class sniffer(gui.QWidget):
         self.table.clear()
         self.table.setColumnCount(1)
         self.table.setRowCount(len(self.names))
-        headerstrings = core.QString(headernames).split(";")
+        headerstrings = headernames.split(";")
         self.table.setVerticalHeaderLabels(headerstrings)
         self.table.setHorizontalHeaderLabels([_("Values")])
 
@@ -128,7 +139,7 @@ class sniffer(gui.QWidget):
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
-        self.table.horizontalHeader().setResizeMode(0, gui.QHeaderView.Stretch)
+        self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:
