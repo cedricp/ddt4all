@@ -15,12 +15,15 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ## Dependencies :
 * Python 2.7
-* PyQt 4.8
+* PyQt 4.8 or 5.7+
 * An ELM327 or OBDLink SX (usb preferable WiFi not tested yet)
 
 ### Install dependencies on Ubuntu :
 
+QT4
 * `sudo apt-get install python-qt4`
+or QT5
+* `sudo apt-get install python-pyqt5 python-pyqt5.qtwebkit`
 
 ## Windows installer
 
