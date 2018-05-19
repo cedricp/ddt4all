@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
-import os, zipfile, glob
+import PyQt4.QtGui as gui
+import PyQt4.QtCore as core
+import os, zipfile, glob, options
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -11,6 +13,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
+_ = options.translator('ddt4all')
 
 def zipdir(dirname):
     for root, dirs, files in os.walk(dirname, topdown=False):
@@ -25,12 +28,12 @@ zip = zipfile.ZipFile("ddt4all_windows.zip", mode="w", compression=zipfile.ZIP_D
 files = glob.glob("*.py")
 
 for file in files:
-    print "Adding source file %s" % file
+    print _("Adding source file %s") % file
     zip.write(file)
 
 files = glob.glob("ddtplugins/*.py")
 for file in files:
-    print "Adding plugin file %s" % file
+    print _("Adding plugin file %s") % file
     zip.write(file)
 
 zip.write("ecu.zip")

@@ -13,6 +13,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
+_ = options.translator('ddt4all')
 
 class labelWidget(gui.QLabel):
     def __init__(self, parent, uiscale):
@@ -337,7 +338,7 @@ class displayWidget(gui.QWidget):
         rect = getRectangleXML(getChildNodesByName(display, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(display, self.uiscale)
         if req_name not in self.ecurequestsparser.requests:
-            print "No request named ", req_name
+            print _("No request named "), req_name
             return
         req = self.ecurequestsparser.requests[req_name]
         dataitem = None
@@ -348,7 +349,7 @@ class displayWidget(gui.QWidget):
             for k in keys:
                 if k.upper() == text.upper():
                     dataitem = req.dataitems[k]
-                    print "Found similar", k, " vs ", text
+                    print _("Found similar"), k, " vs ", text
                     break
 
         if not dataitem:
@@ -358,7 +359,7 @@ class displayWidget(gui.QWidget):
         try:
             data = self.ecurequestsparser.data[text]
         except:
-            print "Cannot find data ", text
+            print _("Cannot find data "), text
             return
 
         if not color:
@@ -427,7 +428,7 @@ class displayWidget(gui.QWidget):
                     break
 
         if not dataitem:
-            print "DataItem not found", text
+            print _("DataItem not found"), text
             return
 
         data = self.ecurequestsparser.data[text]
@@ -561,7 +562,7 @@ class inputWidget(gui.QWidget):
         try:
             data = self.ecurequestsparser.data[text]
         except:
-            print "Cannot draw input ", text
+            print _("Cannot draw input "), text
             return
 
         if len(self.ecurequestsparser.data[text].items) > 0:
@@ -586,7 +587,7 @@ class inputWidget(gui.QWidget):
             if options.simulation_mode and options.mode_edit:
                 self.editwidget.setEnabled(False)
             self.editwidget.setFont(qfnt)
-            self.editwidget.setText("No Value")
+            self.editwidget.setText(_("No Value"))
             self.editwidget.resize(rect['width'] - width, rect['height'])
             self.editwidget.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
             self.editwidget.move(width, 0)
@@ -625,7 +626,7 @@ class inputWidget(gui.QWidget):
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
         if not text in self.ecurequestsparser.data:
-            print "Cannot find data ", text
+            print _("Cannot find data "), text
             return
         data = self.ecurequestsparser.data[text]
 

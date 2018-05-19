@@ -16,6 +16,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
+_ = options.translator('ddt4all')
 
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
@@ -118,10 +119,10 @@ class sniffer(gui.QWidget):
         self.table.setRowCount(len(self.names))
         headerstrings = core.QString(headernames).split(";")
         self.table.setVerticalHeaderLabels(headerstrings)
-        self.table.setHorizontalHeaderLabels(["Values"])
+        self.table.setHorizontalHeaderLabels([_("Values")])
 
         for i in range(0, len(self.names)):
-            item = gui.QTableWidgetItem("Waiting...")
+            item = gui.QTableWidgetItem(_("Waiting..."))
             item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
             self.table.setItem(i, 0, item)
 
@@ -162,7 +163,7 @@ class sniffer(gui.QWidget):
             return
 
         if not all(c in string.hexdigits for c in data):
-            print "Frame hex error : ", data
+            print _("Frame hex error : "), data
             return
 
         data = data.replace(' ', '').ljust(16, "0")

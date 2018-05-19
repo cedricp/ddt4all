@@ -12,7 +12,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
-_ = options.translator('dataeditor')
+_ = options.translator('ddt4all')
 
 class Bit_container(gui.QFrame):
     def __init__(self, data, num, parent=None):

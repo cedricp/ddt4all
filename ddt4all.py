@@ -26,7 +26,7 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
-_ = options.translator('ddt4all_main')
+_ = options.translator('ddt4all')
 app = None
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
