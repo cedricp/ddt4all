@@ -311,7 +311,7 @@ class requestTable(widgets.QTableWidget):
         self.setRowCount(numrows)
         self.setColumnCount(3)
 
-        self.setHorizontalHeaderLabels(str("Request name;Bytes;Manual").split(";"))
+        self.setHorizontalHeaderLabels(str(_("Request name;Bytes;Manual")).split(";"))
 
         count = 0
         for req in requestsk:
@@ -506,7 +506,7 @@ class paramEditor(widgets.QFrame):
             self.spin_shift_byte.setValue(req.shiftbytescount)
             self.spin_data_len.setValue(req.minbytes)
 
-        headerstrings = str("Data name;Start byte;Bit offset;Bit count;Endianess").split(";")
+        headerstrings = str(_("Data name;Start byte;Bit offset;Bit count;Endianess")).split(";")
         self.table.setHorizontalHeaderLabels(headerstrings)
         self.table.init(self.send, self.current_request.name)
 
@@ -854,7 +854,7 @@ class numericListPanel(widgets.QFrame):
             self.itemtable.setItem(count, 1, widgets.QTableWidgetItem(k))
             count += 1
 
-        headerstrings = str("Value;Text").split(";")
+        headerstrings = str(_("Value;Text")).split(";")
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
         self.itemtable.resizeRowsToContents()
@@ -1286,7 +1286,7 @@ class dataEditor(widgets.QWidget):
 
         self.datatable.sortItems(0, core.Qt.AscendingOrder)
 
-        headerstrings = str("Data name;Description").split(";")
+        headerstrings = str(_("Data name;Description")).split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
         self.datatable.resizeRowsToContents()
@@ -1493,7 +1493,7 @@ class buttonData(widgets.QFrame):
                 itemdelay.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
                 count += 1
 
-        headerstrings = str("Delay;Request").split(";")
+        headerstrings = str(_("Delay;Request")).split(";")
         self.requesttable.setHorizontalHeaderLabels(headerstrings)
         self.requesttable.resizeColumnsToContents()
         self.requesttable.resizeRowsToContents()
@@ -1600,7 +1600,7 @@ class buttonEditor(widgets.QWidget):
             uniquenameitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
             count += 1
 
-        headerstrings = str("Button name;Unique name").split(";")
+        headerstrings = str(_("Button name;Unique name")).split(";")
         self.buttontable.setHorizontalHeaderLabels(headerstrings)
         self.buttontable.resizeColumnsToContents()
         self.buttontable.resizeRowsToContents()
@@ -1713,7 +1713,7 @@ class ecuParamEditor(widgets.QFrame):
         layoutv.addWidget(autoident_label)
         layoutv.addWidget(self.identtable)
 
-        headerstrings = str("Diag version;Supplier;Soft;Version").split(";")
+        headerstrings = str(_("Diag version;Supplier;Soft;Version")).split(";")
         self.identtable.setHorizontalHeaderLabels(headerstrings)
 
         inputayout = widgets.QHBoxLayout()
