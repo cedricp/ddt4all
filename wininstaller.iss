@@ -42,6 +42,7 @@ Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python27\python.exe"; Parameters
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to 
 it.AfterMyProgInstall=Non dimenticare di installare il database in 
+fr.AfterMyProgInstall=Pensez a installer une base de donnée dans 
 
 [Languages]
 Name: "en"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Default.isl"; 
