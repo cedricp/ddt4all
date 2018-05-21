@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-20 10:07+0200\n"
-"PO-Revision-Date: 2018-05-21 11:07+0000\n"
+"PO-Revision-Date: 2018-05-21 15:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -1238,7 +1238,7 @@ msgstr ""
 
 #: ..\ddtplugins\vin_crc.py:39
 msgid "CRC CALCULATOR"
-msgstr "CACULATEUR CRC"
+msgstr "CALCULATEUR CRC"
 
 #~ msgid "Returning to defaut session..."
 #~ msgstr "Retour à la session par défaut..."
