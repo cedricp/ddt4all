@@ -1286,7 +1286,7 @@ class dataEditor(widgets.QWidget):
 
         self.datatable.sortItems(0, core.Qt.AscendingOrder)
 
-        headerstrings = str(_("Data name;Description")).split(";")
+        headerstrings = _("Data name;Description").split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
         self.datatable.resizeRowsToContents()
@@ -1493,7 +1493,7 @@ class buttonData(widgets.QFrame):
                 itemdelay.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
                 count += 1
 
-        headerstrings = str(_("Delay;Request")).split(";")
+        headerstrings = _("Delay;Request").split(";")
         self.requesttable.setHorizontalHeaderLabels(headerstrings)
         self.requesttable.resizeColumnsToContents()
         self.requesttable.resizeRowsToContents()

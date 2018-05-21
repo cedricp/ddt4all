@@ -1,22 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-20 10:07+0200\n"
-"PO-Revision-Date: 2018-05-17 14:03+0200\n"
-"Last-Translator: bovirus <bovirus@gmail.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2018-05-21 11:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Lokalize 1.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ..\dataeditor.py:197
 msgid "Goto data"
@@ -194,7 +194,7 @@ msgstr "Hexa"
 #: ..\dataeditor.py:1083 ..\dataeditor.py:1089
 #, python-format
 msgid "Data is used by request %s"
-msgstr ""
+msgstr "Cette Donnée est utilisée par la requête %s"
 
 #: ..\dataeditor.py:1136
 msgid "New data"
@@ -475,7 +475,7 @@ msgstr "Extensions"
 #: ..\ddt4all.py:497
 #, python-format
 msgid "Cannot load plugin %s, %s"
-msgstr ""
+msgstr "Overture extension impossible %s, %s"
 
 #: ..\ddt4all.py:525
 #, fuzzy
@@ -512,7 +512,7 @@ msgstr "Options de balayage"
 
 #: ..\ddt4all.py:658 ..\ddtplugins\card_programming.py:134
 msgid "CANCEL"
-msgstr ""
+msgstr "Abandonner"
 
 #: ..\ddt4all.py:669
 msgid "Scanning CAN"
@@ -708,12 +708,12 @@ msgstr "Version ELM maximum:"
 #: ..\package.py:31
 #, python-format
 msgid "Adding source file %s"
-msgstr ""
+msgstr "Ajouter fichier source %s"
 
 #: ..\package.py:36
 #, python-format
 msgid "Adding plugin file %s"
-msgstr ""
+msgstr "Ajout extension %s"
 
 #: ..\parameters.py:173 ..\parameters.py:201 ..\parameters.py:224
 msgid "To be able to edit your screen, first export it in JSON format"
@@ -737,7 +737,7 @@ msgstr "Renommer label"
 
 #: ..\parameters.py:340
 msgid "Change color"
-msgstr ""
+msgstr "Changer couleur"
 
 #: ..\parameters.py:346
 msgid "Remove element"
@@ -770,7 +770,7 @@ msgstr "Connexion ELM perdue"
 
 #: ..\parameters.py:686
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Reconnexion impossible"
 
 #: ..\parameters.py:694
 msgid "Switching to session mode"
@@ -819,7 +819,7 @@ msgstr "Invalide"
 
 #: ..\parameters.py:980
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "UCE utilise diagnostic session "
 
 #: ..\parameters.py:1064
 msgid "Cannot call request "
@@ -847,7 +847,7 @@ msgstr "Réponse invalide de la requête ReadDTC"
 
 #: ..\parameters.py:1159
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "La lecture DTC a retourné une erreur"
 
 #: ..\parameters.py:1167
 msgid "No DTC"
@@ -872,20 +872,20 @@ msgstr "Valeur;Texte"
 
 #: ..\sniffer.py:136
 msgid "Waiting..."
-msgstr ""
+msgstr "Attente..."
 
 #: ..\sniffer.py:177
 msgid "Frame hex error : "
-msgstr ""
+msgstr "Erreur trame hexa :"
 
 #: ..\ddtplugins\ab90_reset.py:13
 msgid "AB90 AIRBAG Reset"
-msgstr ""
+msgstr "AB90 Airbag RAZ"
 
 #: ..\ddtplugins\ab90_reset.py:14 ..\ddtplugins\megane3_ab_reset.py:14
 #: ..\ddtplugins\rsat4_reset.py:15
 msgid "Airbag Tools"
-msgstr ""
+msgstr "Outils Airbag"
 
 #: ..\ddtplugins\ab90_reset.py:23
 msgid ""
@@ -893,11 +893,14 @@ msgid ""
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
 msgstr ""
+"AB90 (Clio III)/2<br>AIRBAG Virginiseur<br><font color='red'>CE PLUGIN "
+"EFFACERA LES DONNEES CRASH<br>NE CONTINUEZ PAS SI VOUS NE SAVEZ PAS CE QUE "
+"CELA IMPLIQUE</"
 
 #: ..\ddtplugins\ab90_reset.py:27 ..\ddtplugins\megane3_ab_reset.py:27
 #: ..\ddtplugins\rsat4_reset.py:28
 msgid "Check ACU Virgin"
-msgstr ""
+msgstr "Vérifier etat virginité"
 
 #: ..\ddtplugins\ab90_reset.py:28 ..\ddtplugins\clio3_eps_reset.py:38
 #: ..\ddtplugins\clio4_eps_reset.py:27 ..\ddtplugins\laguna2_uch_reset.py:27
@@ -905,12 +908,12 @@ msgstr ""
 #: ..\ddtplugins\megane3_ab_reset.py:28 ..\ddtplugins\megane3_eps_reset.py:26
 #: ..\ddtplugins\megane3_uch_reset.py:27 ..\ddtplugins\rsat4_reset.py:29
 msgid "Waiting"
-msgstr ""
+msgstr "Attente"
 
 #: ..\ddtplugins\ab90_reset.py:30 ..\ddtplugins\megane3_ab_reset.py:30
 #: ..\ddtplugins\rsat4_reset.py:31
 msgid "Virginize ACU"
-msgstr ""
+msgstr "ACU Vierge"
 
 #: ..\ddtplugins\ab90_reset.py:44 ..\ddtplugins\card_programming.py:219
 #: ..\ddtplugins\clio3_eps_reset.py:102 ..\ddtplugins\clio4_eps_reset.py:43
@@ -919,23 +922,23 @@ msgstr ""
 #: ..\ddtplugins\megane3_eps_reset.py:42 ..\ddtplugins\megane3_uch_reset.py:43
 #: ..\ddtplugins\rsat4_reset.py:45
 msgid "Cannot connect to ECU"
-msgstr ""
+msgstr "Impossible de se connecter a l'ECU"
 
 #: ..\ddtplugins\ab90_reset.py:54 ..\ddtplugins\clio3_eps_reset.py:127
 #: ..\ddtplugins\laguna2_uch_reset.py:67 ..\ddtplugins\megane2_uch_reset.py:64
 #: ..\ddtplugins\megane3_ab_reset.py:54 ..\ddtplugins\megane3_eps_reset.py:69
 #: ..\ddtplugins\megane3_uch_reset.py:65 ..\ddtplugins\rsat4_reset.py:65
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='orange'>RESPONSE INATTENDUE</font>"
 
 #: ..\ddtplugins\ab90_reset.py:62 ..\ddtplugins\megane3_ab_reset.py:62
 #: ..\ddtplugins\rsat4_reset.py:59
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='red'>CRASH DETECTE</font>"
 
 #: ..\ddtplugins\ab90_reset.py:64 ..\ddtplugins\rsat4_reset.py:62
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='green'>PAS DE CRASH DETECTE</font>"
 
 #: ..\ddtplugins\ab90_reset.py:82 ..\ddtplugins\clio3_eps_reset.py:155
 #: ..\ddtplugins\clio4_eps_reset.py:96 ..\ddtplugins\laguna2_uch_reset.py:92
@@ -943,7 +946,7 @@ msgstr ""
 #: ..\ddtplugins\megane3_ab_reset.py:91 ..\ddtplugins\megane3_eps_reset.py:94
 #: ..\ddtplugins\megane3_uch_reset.py:82 ..\ddtplugins\rsat4_reset.py:83
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr ""
+msgstr "<font color='green'>EFFACEMENT EXECUTE</font>"
 
 #: ..\ddtplugins\ab90_reset.py:84 ..\ddtplugins\clio3_eps_reset.py:157
 #: ..\ddtplugins\clio4_eps_reset.py:98 ..\ddtplugins\laguna2_uch_reset.py:94
@@ -951,37 +954,39 @@ msgstr ""
 #: ..\ddtplugins\megane3_ab_reset.py:93 ..\ddtplugins\megane3_eps_reset.py:96
 #: ..\ddtplugins\megane3_uch_reset.py:84 ..\ddtplugins\rsat4_reset.py:85
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr ""
+msgstr "<font color='red'>ECHEC EFFACEMENT</font>"
 
 #: ..\ddtplugins\card_programming.py:16
 msgid "Megane/Scenic II card programming"
-msgstr ""
+msgstr "Megane/Scenic II programmation clefs"
 
 #: ..\ddtplugins\card_programming.py:17
 msgid "Keys"
-msgstr ""
+msgstr "Clefs"
 
 #: ..\ddtplugins\card_programming.py:118
 msgid "ENTER AFTER SALE MODE"
-msgstr ""
+msgstr "ENTRER EN MODE APRES VENTE"
 
 #: ..\ddtplugins\card_programming.py:130
 msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
+"<font color='red'>MEGANE II PROGRAMMATION CLEFS<br>EXPERIMENTAL : PAS ENCORE "
+"TESTE</font>"
 
 #: ..\ddtplugins\card_programming.py:132
 msgid "LEARN"
-msgstr ""
+msgstr "APPRENDRE"
 
 #: ..\ddtplugins\card_programming.py:133
 msgid "VALIDATE"
-msgstr ""
+msgstr "VALIDER"
 
 #: ..\ddtplugins\card_programming.py:136
 msgid "Algo 2"
-msgstr ""
+msgstr "Algo #2"
 
 #: ..\ddtplugins\card_programming.py:147
 msgid "ISK"
@@ -993,31 +998,32 @@ msgstr ""
 
 #: ..\ddtplugins\card_programming.py:154
 msgid "Num key learnt"
-msgstr ""
+msgstr "Num clefs apprises"
 
 #: ..\ddtplugins\card_programming.py:156
 msgid "CARD IDE"
-msgstr ""
+msgstr "IDE CARTE"
 
 #: ..\ddtplugins\card_programming.py:210
 msgid "Cannot get ISK, check connections and UCH compatibility"
 msgstr ""
+"Impossible de recuperer l'ISK, verifiez les connexions et la compatibilité UCH"
 
 #: ..\ddtplugins\card_programming.py:245
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
-msgstr ""
+msgstr "<font color='red'>CODE PIN NON RECONNU</font>"
 
 #: ..\ddtplugins\card_programming.py:251
 msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>CODE PIN OK / APPRENTISSAGE CLEF</font>"
 
 #: ..\ddtplugins\card_programming.py:257
 msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>CODE PIN OK / APPRENTISSAGE UCH</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:14
 msgid "Modus/Clio III EPS Reset"
-msgstr ""
+msgstr "Modus/Clio III EPS (DAE) RAZ"
 
 #: ..\ddtplugins\clio3_eps_reset.py:15 ..\ddtplugins\clio4_eps_reset.py:14
 #: ..\ddtplugins\megane3_eps_reset.py:14
@@ -1030,144 +1036,161 @@ msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Modus/Clio III DAE VIRGINISEUR<br><font color='red'>CETTE EXTENSION EFFACERA "
+"LES DONNEES D'IMMOBILISATION<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE "
+"CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:37
 msgid "BLANK STATUS & VIN READ"
-msgstr ""
+msgstr "STATUS VIERGE & LECTURE VIN"
 
 #: ..\ddtplugins\clio3_eps_reset.py:40 ..\ddtplugins\clio4_eps_reset.py:29
 #: ..\ddtplugins\megane3_eps_reset.py:28
 msgid "Virginize EPS"
-msgstr ""
+msgstr "VIRGINISER DAE"
 
 #: ..\ddtplugins\clio3_eps_reset.py:46
 msgid "VIN - READ"
-msgstr ""
+msgstr "LECTURE VIN"
 
 #: ..\ddtplugins\clio3_eps_reset.py:51
 msgid "VIN - WRITE"
-msgstr ""
+msgstr "Ecriture VIN"
 
 #: ..\ddtplugins\clio3_eps_reset.py:55
 msgid "Write VIN"
-msgstr ""
+msgstr "Ecriture VIN"
 
 #: ..\ddtplugins\clio3_eps_reset.py:82
 msgid "<font color='red'>VIN - INVALID</font>"
-msgstr ""
+msgstr "<font color='red'>VIN - INVALIDE</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:86
 msgid "<font color='res'>VIN - BAD LENGTH</font>"
-msgstr ""
+msgstr "<font color='res'>VIN - MAUVAISE TAILLE</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:94
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
-msgstr ""
+msgstr "<font color='orange'>ECHEC ECRITURE VIN</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:97
 msgid "<font color='green'>VIN WRITE OK</font>"
-msgstr ""
+msgstr "<font color='green'>SUCCES ECRITURE VIN</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:120 ..\ddtplugins\clio4_eps_reset.py:63
 #: ..\ddtplugins\megane3_eps_reset.py:61
 msgid "<font color='green'>EPS virgin</font>"
-msgstr ""
+msgstr "<font color='green'>DAE vierge</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:124 ..\ddtplugins\clio4_eps_reset.py:68
 #: ..\ddtplugins\megane3_eps_reset.py:66
 msgid "<font color='red'>EPS coded</font>"
-msgstr ""
+msgstr "<font color='red'>DAE codée</font>"
 
 #: ..\ddtplugins\clio4_eps_reset.py:13
 msgid "Clio IV EPS Reset"
-msgstr ""
+msgstr "Clio IV DAE RAZ"
 
 #: ..\ddtplugins\clio4_eps_reset.py:24
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Clio IV DAE VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES "
+"DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\clio4_eps_reset.py:26 ..\ddtplugins\megane3_eps_reset.py:25
 msgid "Check EPS Virgin"
-msgstr ""
+msgstr "Vérifier état vierge DAE"
 
 #: ..\ddtplugins\clio4_eps_reset.py:58 ..\ddtplugins\megane3_eps_reset.py:56
 msgid "<font color='green'>EPS not operational</font>"
-msgstr ""
+msgstr "<font color='green'>DAE non opérationelle</font>"
 
 #: ..\ddtplugins\clio4_eps_reset.py:71
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='red'>REPONSE INATTENDUE</font>"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:14
 msgid "Laguna II UCH Reset"
-msgstr ""
+msgstr "Laguna II UCH RAZ"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:15 ..\ddtplugins\laguna3_uch_reset.py:14
 #: ..\ddtplugins\megane2_uch_reset.py:15 ..\ddtplugins\megane3_uch_reset.py:15
 msgid "UCH Tools"
-msgstr "Outil UCH"
+msgstr "Outils UCH"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:24
 msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA II UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
+"DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
+"/font>"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:26 ..\ddtplugins\laguna3_uch_reset.py:25
 #: ..\ddtplugins\megane2_uch_reset.py:26 ..\ddtplugins\megane3_uch_reset.py:26
 msgid "Check UCH Virgin"
-msgstr ""
+msgstr "Vérifier état vierge UCH"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:29 ..\ddtplugins\laguna3_uch_reset.py:28
 #: ..\ddtplugins\megane2_uch_reset.py:29 ..\ddtplugins\megane3_uch_reset.py:29
 msgid "Virginize UCH"
-msgstr ""
+msgstr "UCH rendre Vierge"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:59 ..\ddtplugins\laguna3_uch_reset.py:56
 #: ..\ddtplugins\megane2_uch_reset.py:56 ..\ddtplugins\megane3_uch_reset.py:57
 msgid "<font color='green'>UCH virgin</font>"
-msgstr ""
+msgstr "<font color='green'>UCH vierge</font>"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:64 ..\ddtplugins\laguna3_uch_reset.py:61
 #: ..\ddtplugins\megane2_uch_reset.py:61 ..\ddtplugins\megane3_uch_reset.py:62
 msgid "<font color='red'>UCH coded</font>"
-msgstr ""
+msgstr "<font color='red'>UCH codée</font>"
 
 #: ..\ddtplugins\laguna3_uch_reset.py:13
 msgid "Laguna III UCH Reset"
-msgstr ""
+msgstr "Laguna III UCH RAZ"
 
 #: ..\ddtplugins\laguna3_uch_reset.py:23
 msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA III UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
+"DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
+"/font>"
 
 #: ..\ddtplugins\megane2_uch_reset.py:14
 msgid "Megane/Scenic II UCH Reset"
-msgstr ""
+msgstr "Megane/Scenic II UCH RAZ"
 
 #: ..\ddtplugins\megane2_uch_reset.py:24
 msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE II UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
+"DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
+"/font>"
 
 #: ..\ddtplugins\megane3_ab_reset.py:13
 msgid "Megane3 AIRBAG Reset"
-msgstr ""
+msgstr "Megane3 AIRBAG RAZ"
 
 #: ..\ddtplugins\megane3_ab_reset.py:23
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Megane III<br>AIRBAG VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
+"DONNEES ABS<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
+"/font>"
 
 #: ..\ddtplugins\megane3_eps_reset.py:13
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
-msgstr ""
+msgstr "ZOE/FLENCE/Megane III/Scenic III DAE RAZ"
 
 #: ..\ddtplugins\megane3_eps_reset.py:23
 msgid ""
@@ -1175,20 +1198,25 @@ msgid ""
 "PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
 "MEANS</font>"
 msgstr ""
+"ZOE/FLENCE/Megane III/Scenic III DAE RAZ<br><font color='red'>CETTE EXTENSION "
+"EFFACERA LES DONNEES DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA "
+"IMPLIQUE</font>"
 
 #: ..\ddtplugins\megane3_uch_reset.py:14
 msgid "Megane/Scenic III UCH Reset"
-msgstr ""
+msgstr "Megane/Scenic III UCH RAZ"
 
 #: ..\ddtplugins\megane3_uch_reset.py:24
 msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE III UCH RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES "
+"UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\rsat4_reset.py:14
 msgid "RSAT4 AIRBAG Reset"
-msgstr ""
+msgstr "RSAT4 AIRBAG RAZ"
 
 #: ..\ddtplugins\rsat4_reset.py:24
 msgid ""
@@ -1196,10 +1224,13 @@ msgid ""
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES AIRBAG<br>NE "
+"PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\vin_crc.py:15
 msgid "CRC calculator"
-msgstr ""
+msgstr "Caculateur CRC"
 
 #: ..\ddtplugins\vin_crc.py:16
 msgid "VIN"
@@ -1207,7 +1238,7 @@ msgstr ""
 
 #: ..\ddtplugins\vin_crc.py:39
 msgid "CRC CALCULATOR"
-msgstr ""
+msgstr "CACULATEUR CRC"
 
 #~ msgid "Returning to defaut session..."
 #~ msgstr "Retour à la session par défaut..."
