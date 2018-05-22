@@ -998,7 +998,7 @@ class portChooser(widgets.QDialog):
         self.obdlinkbutton.setCheckable(True)
         medialayout.addWidget(self.obdlinkbutton)
 
-        self.elsbutton = gui.QPushButton()
+        self.elsbutton = widgets.QPushButton()
         self.elsbutton.setIcon(gui.QIcon("icons/els27.png"))
         self.elsbutton.setIconSize(core.QSize(60, 60))
         self.elsbutton.setFixedHeight(64)
