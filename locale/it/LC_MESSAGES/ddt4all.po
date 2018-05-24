@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: DDT4ALL (14.05.2018)\n"
+"Project-Id-Version: DDT4ALL (22.05.2018)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-20 10:07+0200\n"
-"PO-Revision-Date: 2018-05-18 16:23+0200\n"
+"PO-Revision-Date: 2018-05-22 14:26+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -1052,7 +1052,7 @@ msgstr "VIN - SCRITTURA"
 
 #: ..\ddtplugins\clio3_eps_reset.py:55
 msgid "Write VIN"
-msgstr ""
+msgstr "Scrivi VIN"
 
 #: ..\ddtplugins\clio3_eps_reset.py:82
 msgid "<font color='red'>VIN - INVALID</font>"
