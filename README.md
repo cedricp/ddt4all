@@ -22,6 +22,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 QT4
 * `sudo apt-get install python-qt4`
+
 or QT5
 * `sudo apt-get install python-pyqt5 python-pyqt5.qtwebkit`
 

@@ -190,7 +190,7 @@ class Ecu_list(widgets.QWidget):
         keys = stored_ecus.keys()
         keys.sort(cmp=locale.strcoll)
         for e in keys:
-            item = gui.QTreeWidgetItem(self.list, [e])
+            item = widgets.QTreeWidgetItem(self.list, [e])
             if e in longgroupnames:
                 item.setToolTip(0, longgroupnames[e])
             if e in self.ecuscan.ecu_database.addr_group_mapping:
@@ -411,8 +411,8 @@ class Main_widget(widgets.QMainWindow):
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 
-        self.zoominbutton = gui.QPushButton(_("Zoom In"))
-        self.zoomoutbutton = gui.QPushButton(_("Zoom Out"))
+        self.zoominbutton = widgets.QPushButton(_("Zoom In"))
+        self.zoomoutbutton = widgets.QPushButton(_("Zoom Out"))
         self.zoominbutton.clicked.connect(self.zoomin)
         self.zoomoutbutton.clicked.connect(self.zoomout)
 
@@ -434,7 +434,7 @@ class Main_widget(widgets.QMainWindow):
 
         if options.simulation_mode:
             self.toolbar.addSeparator()
-            self.ui_edit_button = gui.QPushButton(_("UI Edit"))
+            self.ui_edit_button = widgets.QPushButton(_("UI Edit"))
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
             self.toolbar.addWidget(self.ui_edit_button)
@@ -653,9 +653,9 @@ class Main_widget(widgets.QMainWindow):
         scancan2 = False
         scankwp = False
 
-        canbutton = gui.QPushButton('CAN')
-        kwpbutton = gui.QPushButton('KWP')
-        cancelbutton = gui.QPushButton(_('CANCEL'))
+        canbutton = widgets.QPushButton('CAN')
+        kwpbutton = widgets.QPushButton('KWP')
+        cancelbutton = widgets.QPushButton(_('CANCEL'))
 
         msgBox.addButton(canbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, widgets.QMessageBox.ActionRole)
@@ -773,7 +773,11 @@ class Main_widget(widgets.QMainWindow):
         self.eculistwidget.filterProject()
 
     def openxml(self):
-        filename = unicode(gui.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)"), encoding="UTF-8")
+        filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
+        filename=str(filename_tuple[0])
+        if filename == '':
+            return
+
         self.set_param_file(filename, "", "", True)
 
     def loadEcu(self, name):

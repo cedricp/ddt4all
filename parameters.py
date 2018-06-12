@@ -944,7 +944,7 @@ class paramWidget(widgets.QWidget):
             # Then show received values
             elm_response = self.sendElm(' '.join(elm_data_stream))
             if elm_response == "BLOCKED":
-                msgbox = gui.QMessageBox()
+                msgbox = widgets.QMessageBox()
                 msgbox.setWindowTitle("For your safety")
                 msgbox.setText("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock")
                 msgbox.exec_()

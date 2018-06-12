@@ -640,11 +640,11 @@ class requestEditor(widgets.QWidget):
 
         layoutsss = widgets.QHBoxLayout()
 
-        self.checknosds = gui.QCheckBox(_("No SDS"))
-        self.checkplant = gui.QCheckBox(_("Plant"))
-        self.checkaftersales = gui.QCheckBox(_("After Sale"))
-        self.checkengineering = gui.QCheckBox(_("Engineering"))
-        self.checksupplier = gui.QCheckBox(_("Supplier"))
+        self.checknosds = widgets.QCheckBox(_("No SDS"))
+        self.checkplant = widgets.QCheckBox(_("Plant"))
+        self.checkaftersales = widgets.QCheckBox(_("After Sale"))
+        self.checkengineering = widgets.QCheckBox(_("Engineering"))
+        self.checksupplier = widgets.QCheckBox(_("Supplier"))
 
         self.checknosds.toggled.connect(self.sdschanged)
         self.checkplant.toggled.connect(self.sdschanged)
@@ -1701,7 +1701,7 @@ class ecuParamEditor(widgets.QFrame):
         gridlayout.setColumnStretch(3, 1)
         layoutv.addLayout(gridlayout)
 
-        autoident_label = gui.QLabel(_("ECU Auto identification"))
+        autoident_label = widgets.QLabel(_("ECU Auto identification"))
         autoident_label.setAlignment(core.Qt.AlignCenter)
 
         self.identtable = widgets.QTableWidget()
