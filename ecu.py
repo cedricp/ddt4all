@@ -1547,7 +1547,7 @@ class Ecu_scanner:
         # New method succeded, return the good news
         return True
 
-    def scan(self, progress=None, label=None, vehiclefilter=None):
+    def scan(self, progress=None, label=None, vehiclefilter=None, canline=0):
         i = 0
         if not options.simulation_mode:
             options.elm.init_can()
@@ -1592,7 +1592,7 @@ class Ecu_scanner:
             print "Scanning ECU %s" % self.ecu_database.addr_group_mapping[addr].encode('ascii', 'ignore')
             if not options.simulation_mode:
                 options.elm.init_can()
-                options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
+                options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
 
             # Avoid to waste time, try new method : not working -> try old
             if not self.identify_new(addr, label):

@@ -696,7 +696,7 @@ class Main_widget(widgets.QMainWindow):
 
         self.ecu_scan.clear()
         if scancan:
-            self.ecu_scan.scan(self.progressstatus, self.infostatus)
+            self.ecu_scan.scan(self.progressstatus, self.infostatus, self.canlinecombo.currentIndex())
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
 
