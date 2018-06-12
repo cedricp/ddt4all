@@ -1193,7 +1193,7 @@ class portChooser(widgets.QDialog):
         self.obdlinkbutton.blockSignals(True)
 
         self.usbbutton.setChecked(False)
-        self.speedcombo.setCurrentIndex(0)
+        self.speedcombo.setCurrentIndex(2)
         self.btbutton.setChecked(False)
         self.wifibutton.setChecked(False)
         self.wifiinput.setEnabled(False)

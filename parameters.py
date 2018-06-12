@@ -532,9 +532,10 @@ class paramWidget(widgets.QWidget):
         if self.main_protocol_status:
             if self.ecurequestsparser.ecu_protocol == "CAN":
                 self.startDiagnosticSession()
-                txrx = "(Tx 0x%s/Rx 0x%s)" % (self.ecurequestsparser.ecu_send_id,
-                                              self.ecurequestsparser.ecu_recv_id)
-                self.main_protocol_status.setText("DiagOnCan " + txrx)
+                txrx = "(Tx0x%s/Rx0x%s)@%iK" % (self.ecurequestsparser.ecu_send_id,
+                                              self.ecurequestsparser.ecu_recv_id,
+                                              self.ecurequestsparser.baudrate/1000)
+                self.main_protocol_status.setText("CAN " + txrx)
             elif self.ecurequestsparser.ecu_protocol == "KWP2000":
                 self.startDiagnosticSession()
                 self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.funcaddr)
