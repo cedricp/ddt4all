@@ -1006,6 +1006,9 @@ class Ecu_file:
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
             short_addr = elm.get_can_addr(self.ecu_send_id)
+            if short_addr is None:
+                print "Cannot connect to ECU %s " % self.ecuname
+                return
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
             if not options.simulation_mode:
