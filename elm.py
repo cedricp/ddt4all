@@ -583,6 +583,7 @@ class ELM:
             print _("Trying to open port") + "%s @ %i" % (portName, s)
             self.sim_mode = options.simulation_mode
             self.portName = portName
+            self.isels = isels
 
             if not options.simulation_mode:
                 self.port = Port(portName, s, self.portTimeout, isels)
@@ -1161,7 +1162,7 @@ class ELM:
                 return d
         return None
 
-    def set_can_addr(self, addr, ecu):
+    def set_can_addr(self, addr, ecu, canline=0):
         if self.currentprotocol == "can" and self.currentaddress == addr:
             return
 
@@ -1188,10 +1189,13 @@ class ELM:
         self.cmd("AT FC SH " + TXa)
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
-        if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-            self.cmd("AT SP 8")
+        if canline == 0:
+            if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
+                self.cmd("AT SP 8")
+            else:
+                self.cmd("AT SP 6")
         else:
-            self.cmd("AT SP 6")
+            self.cmd("STP 53")
 
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)

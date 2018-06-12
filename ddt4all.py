@@ -406,6 +406,14 @@ class Main_widget(widgets.QMainWindow):
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
+        self.canlinecombo = widgets.QComboBox()
+        self.canlinecombo.setFixedWidth(150)
+        self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
+        self.canlinecombo.addItem("HighSpeed CAN")
+        self.canlinecombo.addItem("MediumSpeed CAN")
+        if options.elm is not None and not options.elm.isels:
+            self.canlinecombo.setEnabled(False)
+
         self.sdscombo = widgets.QComboBox()
         self.sdscombo.setFixedWidth(300)
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
@@ -426,6 +434,8 @@ class Main_widget(widgets.QMainWindow):
         self.toolbar.addAction(self.diagaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.hexinput)
+        self.toolbar.addSeparator()
+        self.toolbar.addWidget(self.canlinecombo)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.sdscombo)
         self.toolbar.addSeparator()
@@ -497,6 +507,11 @@ class Main_widget(widgets.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def changecanspeed(self):
+        item = self.canlinecombo.currentIndex()
+        if self.paramview:
+            self.paramview.setCanLine(item)
 
     def zoomin(self):
         if self.paramview:
@@ -744,7 +759,11 @@ class Main_widget(widgets.QMainWindow):
     def newEcu(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
-        filename=str(filename_tuple[0])
+        if qt5:
+            filename = str(filename_tuple[0])
+        else:
+            filename = filename_tuple
+
         if filename == '':
             return
 
@@ -774,7 +793,10 @@ class Main_widget(widgets.QMainWindow):
 
     def openxml(self):
         filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
-        filename=str(filename_tuple[0])
+        if qt5:
+            filename=str(filename_tuple[0])
+        else:
+            filename = unicode(filename_tuple, encoding="UTF-8")
         if filename == '':
             return
 
@@ -858,6 +880,7 @@ class Main_widget(widgets.QMainWindow):
         isxml = True
 
         ecu = None
+        ecu_addr = "0"
         ecu_file = ecu_name
         if ecu_name in self.ecu_scan.ecus:
             ecu = self.ecu_scan.ecus[ecu_name]
@@ -896,7 +919,7 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.close()
             self.paramview.destroy()
 
-        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus)
+        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)

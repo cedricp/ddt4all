@@ -16,12 +16,14 @@ try:
     import PyQt5.QtWidgets as widgets
     def utf8(string):
         return string
+    qt5 = True
 except:
     import PyQt4.QtGui as gui
     import PyQt4.QtGui as widgets
     import PyQt4.QtCore as core
     def utf8(string):
         return unicode(string.toUtf8(), encoding="UTF8")
+    qt5 = False
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -39,11 +41,12 @@ _ = options.translator('ddt4all')
 
 
 class paramWidget(widgets.QWidget):
-    def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status):
+    def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status, canline):
         super(paramWidget, self).__init__(parent)
         self.defaultdiagsessioncommand = "10C0"
         self.setFocusPolicy(core.Qt.ClickFocus)
         self.sds = {}
+        self.canline = canline
         self.currentsession = ""
         self.layoutdict = None
         self.targetsdata = None
@@ -92,7 +95,10 @@ class paramWidget(widgets.QWidget):
     def saveEcu(self, name=None):
         if not name:
             filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
-            filename = str(filename_tuple[0])
+            if qt5:
+                filename = str(filename_tuple[0])
+            else:
+                filename = unicode(filename_tuple, encoding="utf-8")
             if filename == "":
                 return
         else:
@@ -523,8 +529,12 @@ class paramWidget(widgets.QWidget):
         output = self.sendElm(ascii_cmd)
         self.output.setText(output)
 
+    def setCanLine(self, line):
+        self.canline = line
+        self.initELM()
+
     def initELM(self):
-        connection_status = self.ecurequestsparser.connect_to_hardware()
+        connection_status = self.ecurequestsparser.connect_to_hardware(self.canline)
         if not connection_status:
             self.logview.append("<font color='red'>Protocol not supported</font>")
             return
