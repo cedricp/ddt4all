@@ -653,9 +653,9 @@ class Main_widget(widgets.QMainWindow):
         scancan2 = False
         scankwp = False
 
-        canbutton = gui.QPushButton('CAN')
-        kwpbutton = gui.QPushButton('KWP')
-        cancelbutton = gui.QPushButton(_('CANCEL'))
+        canbutton = widgets.QPushButton('CAN')
+        kwpbutton = widgets.QPushButton('KWP')
+        cancelbutton = widgets.QPushButton(_('CANCEL'))
 
         msgBox.addButton(canbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, widgets.QMessageBox.ActionRole)
@@ -773,7 +773,11 @@ class Main_widget(widgets.QMainWindow):
         self.eculistwidget.filterProject()
 
     def openxml(self):
-        filename = unicode(gui.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)"), encoding="UTF-8")
+        filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
+        filename=str(filename_tuple[0])
+        if filename == '':
+            return
+
         self.set_param_file(filename, "", "", True)
 
     def loadEcu(self, name):
