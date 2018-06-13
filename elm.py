@@ -221,20 +221,20 @@ cmdb = '''
 
 def get_can_addr(txa):
     for d in dnat.keys():
-        if dnat[d] == txa:
+        if dnat[d].upper() == txa.upper():
             return d
     return None
 
 
 def getcandnat(addr):
-    a = str(addr)
+    a = str(addr).upper()
     if a in dnat:
         return dnat[a]
     return "??"
 
 
 def getcansnat(addr):
-    a = str(addr)
+    a = str(addr).upper()
     if a in snat:
         return snat[a]
     return "??"
@@ -741,7 +741,7 @@ class ELM:
             return self.send_can_cfc0(command)
         else:
             rsp = self.send_can(command)
-            if self.error_frame > 0:  #then fallback to cfc0
+            if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
                 self.ATCFC0 = True
                 self.cmd("at cfc0")
                 rsp = self.send_can_cfc0(command)
