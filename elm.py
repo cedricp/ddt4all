@@ -555,6 +555,7 @@ class ELM:
     error_timeout = 0
     error_rx = 0
     error_can = 0
+    canline = 0
 
     response_time = 0
 
@@ -1163,7 +1164,7 @@ class ELM:
         return None
 
     def set_can_addr(self, addr, ecu, canline=0):
-        if self.currentprotocol == "can" and self.currentaddress == addr:
+        if self.currentprotocol == "can" and self.currentaddress == addr and self.canline == canline:
             return
 
         if self.lf != 0:
@@ -1175,6 +1176,7 @@ class ELM:
         self.startSession = ""
         self.lastCMDtime = 0
         self.l1_cache = {}
+        self.canline = canline
 
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
@@ -1196,6 +1198,7 @@ class ELM:
                 self.cmd("AT SP 6")
         else:
             self.cmd("STP 53")
+            self.cmd("STPBR 250000")
 
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)
