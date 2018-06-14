@@ -736,7 +736,7 @@ class ELM:
         self.cmd("AT ST %s" % val)
 
     def send_cmd(self, command):
-        if "AT" in command.upper() or self.currentprotocol != "can":
+        if "AT" in command.upper() or "ST" in command.upper() or self.currentprotocol != "can":
             return self.send_raw(command)
         if self.ATCFC0:
             return self.send_can_cfc0(command)
