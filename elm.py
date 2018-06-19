@@ -1199,7 +1199,7 @@ class ELM:
         else:
             self.cmd("STP 53")
             if canline == 1:
-                self.cmd("STPBR 250000")
+                self.cmd("STPBR 500000")
             elif canline == 2:
                 self.cmd("STPBR 250000")
             elif canline == 3:
