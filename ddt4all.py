@@ -409,8 +409,10 @@ class Main_widget(widgets.QMainWindow):
         self.canlinecombo = widgets.QComboBox()
         self.canlinecombo.setFixedWidth(150)
         self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
-        self.canlinecombo.addItem("HighSpeed CAN")
-        self.canlinecombo.addItem("MediumSpeed CAN")
+        self.canlinecombo.addItem("CAN Line 1")
+        self.canlinecombo.addItem("CAN Line 2@500K")
+        self.canlinecombo.addItem("CAN Line 2@250K")
+        self.canlinecombo.addItem("CAN Line 2@125K")
         if options.elm is not None and not options.elm.isels:
             self.canlinecombo.setEnabled(False)
 

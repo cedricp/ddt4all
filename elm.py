@@ -1198,7 +1198,12 @@ class ELM:
                 self.cmd("AT SP 6")
         else:
             self.cmd("STP 53")
-            self.cmd("STPBR 250000")
+            if canline == 1:
+                self.cmd("STPBR 250000")
+            elif canline == 2:
+                self.cmd("STPBR 250000")
+            elif canline == 3:
+                self.cmd("STPBR 125000")
 
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)
