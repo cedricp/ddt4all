@@ -1060,6 +1060,7 @@ class portChooser(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
+        self.elmchk = button_elm_chk
 
         wifilayout = widgets.QHBoxLayout()
         wifilabel = widgets.QLabel(_("WiFi port : "))
@@ -1154,6 +1155,7 @@ class portChooser(widgets.QDialog):
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elmchk.setEnabled(True)
 
     def wifi(self):
         self.isels = False
@@ -1173,6 +1175,7 @@ class portChooser(widgets.QDialog):
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elmchk.setEnabled(True)
 
     def usb(self):
         self.isels = False
@@ -1193,6 +1196,7 @@ class portChooser(widgets.QDialog):
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elmchk.setEnabled(True)
 
     def obdlink(self):
         self.isels = False
@@ -1213,6 +1217,7 @@ class portChooser(widgets.QDialog):
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elmchk.setEnabled(False)
 
     def els(self):
         self.isels = True
@@ -1233,6 +1238,7 @@ class portChooser(widgets.QDialog):
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elmchk.setEnabled(False)
 
     def connectedMode(self):
         self.timer.stop()
