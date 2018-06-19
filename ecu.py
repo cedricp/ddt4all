@@ -1003,7 +1003,6 @@ class Ecu_file:
 
     def connect_to_hardware(self, canline=0):
         # Can
-        print canline
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
             short_addr = elm.get_can_addr(self.ecu_send_id)
