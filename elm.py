@@ -689,7 +689,8 @@ class ELM:
 
         # Ensure time gap between commands
         dl = self.busLoad + self.srvsDelay - tb + self.lastCMDtime
-        if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) and "AT" not in command.upper():
+        if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) \
+                and ("AT" not in command.upper() or "ST" not in command.upper()):
             time.sleep(self.busLoad + self.srvsDelay - tb + self.lastCMDtime)
 
         tb = time.time()  # renew start time

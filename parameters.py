@@ -86,7 +86,7 @@ class paramWidget(widgets.QWidget):
         if self.tester_presend_command == "":
             return
 
-        # No need to send "tester_present" command if we're updating
+        # No need to send "tester_present" command if we're auto updating
         if options.auto_refresh:
             return
 
