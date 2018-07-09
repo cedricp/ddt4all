@@ -78,7 +78,7 @@ class Ecu_list(widgets.QWidget):
             "X65 - CLIO II",
             "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR", "XJB - CAPTUR II",
             "XJE - CAPTUR II CN", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
-            "X84 - MEGANE/SCENIC II", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
+            "X84 - MEGANE/SCENIC II", "X84ph2 - MEGANE/SCENIC II Phase 2", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
             "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
             "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
             "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
@@ -117,7 +117,7 @@ class Ecu_list(widgets.QWidget):
 
     def init(self):
         self.list.clear()
-        self.list.setColumnCount(7)
+        self.list.setColumnCount(8)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
         self.list.model().setHeaderData(1, core.Qt.Horizontal, _('ID'))
         self.list.model().setHeaderData(2, core.Qt.Horizontal, _('Protocol'))
@@ -153,8 +153,7 @@ class Ecu_list(widgets.QWidget):
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
 
-            projects = "/".join(projects_list)
-            name = u' (' + projects + u')'
+            name = "/".join(projects_list)
 
             stored_ecus[grp].append([cs[:-8][7:], name, protocol])
 
@@ -170,8 +169,7 @@ class Ecu_list(widgets.QWidget):
             if not grp in stored_ecus:
                 stored_ecus[grp] = []
 
-            projects = "/".join(ecu.projects)
-            projname = u' (' + projects + u')'
+            projname = "/".join(ecu.projects)
 
             soft = ecu.soft
             version = ecu.version
@@ -201,7 +199,7 @@ class Ecu_list(widgets.QWidget):
         self.list.resizeColumnToContents(0)
 
     def filterProject(self):
-        project = str(self.vehicle_combo.currentText()[0:3])
+        project = str(self.vehicle_combo.currentText().split(" ")[0])
         root = self.list.invisibleRootItem()
         root_items = [root.child(i) for i in range(root.childCount())]
 
@@ -210,7 +208,7 @@ class Ecu_list(widgets.QWidget):
 
             items = [root_item.child(i) for i in range(root_item.childCount())]
             for item in items:
-                if (project.upper() in str(item.text(7)).upper()) or project == "ALL":
+                if (project.upper() in str(item.text(7)).upper().split("/")) or project == "ALL":
                     item.setHidden(False)
                     root_hidden = False
                 else:
