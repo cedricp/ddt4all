@@ -78,15 +78,16 @@ class Ecu_list(widgets.QWidget):
             "X65 - CLIO II",
             "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR", "XJB - CAPTUR II",
             "XJE - CAPTUR II CN", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
-            "X84 - MEGANE/SCENIC II", "X84ph2 - MEGANE/SCENIC II Phase 2", "X95 - MEGANE/SCENIC III", "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
-            "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X91 - LAGUNA III",
+            "X84 - MEGANE/SCENIC II", "X84ph2 - MEGANE/SCENIC II Phase 2", "X95 - MEGANE/SCENIC III",
+            "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
+            "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X74ph2 - LAGUNA II Phase 2", "X91 - LAGUNA III",
             "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
             "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
             "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
-            "X10 - ZOE", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
+            "X10 - ZOE", "X10Ph2 - ZOE Ph2", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
             "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
             "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
-            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "XJD - DUSTER II", "X67 - DOKKER",
+            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
             "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
         ]
 
