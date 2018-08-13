@@ -739,7 +739,11 @@ class Main_widget(widgets.QMainWindow):
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
-        filename=str(filename_tuple[0])
+        if qt5:
+            filename = str(filename_tuple[0])
+        else:
+            filename = filename_tuple
+
         if filename == "":
             return        
 
