@@ -905,7 +905,12 @@ class paramWidget(widgets.QWidget):
             request_name  = req['RequestName']
             self.logview.append(u'<font color=purple>' + _('Sending request :') + '</font>' + request_name)
 
-            ecu_request = self.ecurequestsparser.requests[request_name]
+            ecu_request = self.ecurequestsparser.get_request(request_name)
+            if ecu_request is None:
+                self.logview.append("Unknown request " + request_name)
+                self.logview.append("Command aborted ")
+
+            print "Request found" + request_name
             sendbytes_data_items = ecu_request.sendbyte_dataitems
             rcvbytes_data_items = ecu_request.dataitems
 

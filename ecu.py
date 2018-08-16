@@ -1001,6 +1001,14 @@ class Ecu_file:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
 
+    def get_request(self, name):
+        if name in self.requests:
+            return self.requests[name]
+        for k, v in self.requests.iteritems():
+            if k.lower() == name.lower():
+                return v
+        return None
+
     def connect_to_hardware(self, canline=0):
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')

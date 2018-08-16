@@ -540,9 +540,10 @@ class Main_widget(widgets.QMainWindow):
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
                                                    "./ecu.zip", "*.zip")
-        filename = str(filename_tuple[0])
-        if filename == "":
-            return        
+        if qt5:
+            filename = str(filename_tuple[0])
+        else:
+            filename = filename_tuple
         
         if not filename.endswith(".zip"):
             filename += ".zip"
