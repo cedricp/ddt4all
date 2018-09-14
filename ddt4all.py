@@ -283,8 +283,8 @@ class Main_widget(widgets.QMainWindow):
         options.ecu_scanner = self.ecu_scan
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
         if self.ecu_scan.getNumEcuDb() == 0:
-            msgbox = gui.QMessageBox()
-            msgbox.setIcon(gui.QMessageBox.Warning)
+            msgbox = widgets.QMessageBox()
+            msgbox.setIcon(widgets.QMessageBox.Warning)
             msgbox.setText("No database found")
             msgbox.setInformativeText("Check documentation")
             msgbox.exec_()
