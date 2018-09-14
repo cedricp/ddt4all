@@ -9,6 +9,7 @@ from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, argparse, zipfile, glob
 from StringIO import StringIO
+import datetime
 
 try:
     import PyQt5.QtGui as gui
@@ -43,6 +44,9 @@ _ = options.translator('ddt4all')
 class paramWidget(widgets.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status, canline):
         super(paramWidget, self).__init__(parent)
+        self.pagename = ""
+        self.logfile = None
+        self.updatelog = False
         self.defaultdiagsessioncommand = "10C0"
         self.setFocusPolicy(core.Qt.ClickFocus)
         self.sds = {}
@@ -441,7 +445,9 @@ class paramWidget(widgets.QWidget):
         self.init(self.current_screen)
         self.allow_parameters_update = True
 
-    def init(self, screen):
+    def init(self, screen, logfile):
+        self.logfile = logfile
+        self.updatelog = True
         if self.panel:
             self.layout.removeWidget(self.panel)
             self.panel.setParent(None)
@@ -859,7 +865,8 @@ class paramWidget(widgets.QWidget):
 
                 if 'send' in button:
                     sendlist = button['send']
-                    self.button_requests[qbutton.uniquename] = sendlist
+                    self.button_requests[qbutton.butname] = sendlist
+                print qbutton.butname
 
                 qbutton.clicked.connect(lambda state, btn=qbutton.uniquename: self.buttonClicked(btn))
 
@@ -910,12 +917,12 @@ class paramWidget(widgets.QWidget):
                 self.logview.append("Unknown request " + request_name)
                 self.logview.append("Command aborted ")
 
-            print "Request found" + request_name
             sendbytes_data_items = ecu_request.sendbyte_dataitems
             rcvbytes_data_items = ecu_request.dataitems
 
             elm_data_stream = ecu_request.get_formatted_sentbytes()
 
+            logdict = {}
             for k in sendbytes_data_items.keys():
                 dataitem = sendbytes_data_items[k]
 
@@ -935,16 +942,20 @@ class paramWidget(widgets.QWidget):
                 ecu_data = data.data
                 is_combo_widget = data.is_combo
 
+                newval = ""
                 if not is_combo_widget:
                     # Get input string from user line edit
                     input_value = utf8(widget.text())
+                    newval = input_value
                 else:
                     # Get value from user input combo box
                     combo_value = utf8(widget.currentText())
+                    newval = combo_value
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
 
                 elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem, ecu_request.ecu_file.endianness)
+                logdict[dataitem.name] = newval
 
                 if not elm_data_stream:
                     widget.setStyleSheet("background: red")
@@ -954,6 +965,7 @@ class paramWidget(widgets.QWidget):
                 widget.setStyleSheet("background: white")
 
             # Manage delay
+            blocked = False
             self.logview.append("Delay %d ms" % request_delay)
             time.sleep(request_delay / 1000.0)
             # Then show received values
@@ -963,6 +975,19 @@ class paramWidget(widgets.QWidget):
                 msgbox.setWindowTitle("For your safety")
                 msgbox.setText("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock")
                 msgbox.exec_()
+                blocked = True
+
+            if self.logfile is not None and len(logdict) > 0:
+                self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
+                if not blocked:
+                    self.logfile.write("\tWriting parameter : \n\t\t")
+                else:
+                    self.logfile.write("\tBlocked writing parameter : \n\t\t")
+                self.logfile.write(json.dumps(logdict))
+                self.logfile.write("\n")
+                self.logfile.flush()
+
+            if blocked:
                 return
 
             for key in rcvbytes_data_items.keys():
@@ -974,16 +999,20 @@ class paramWidget(widgets.QWidget):
                     data = dd_request_data.getDataByName(key)
 
                     if value == None:
-                        if data: data.widget.setStyleSheet("background: red")
+                        if data:
+                            data.widget.setStyleSheet("background: red")
                         value = _("Invalid")
                     else:
-                        if data: data.widget.setStyleSheet("background: white")
+                        if data:
+                            data.widget.setStyleSheet("background: white")
 
                     if data:
                         data.widget.setText(value + ' ' + dd_ecu_data.unit)
 
         # Give some time to ECU to refresh parameters
         time.sleep(0.1)
+        # Want to show result in log
+        self.updatelog = True
         self.updateDisplays()
 
     def startDiagnosticSession(self, sds=""):
@@ -1019,11 +1048,13 @@ class paramWidget(widgets.QWidget):
         # Test data for DAE_X84
         # elm_response = "61 01 0E 0E FF FF 70 00 00 00 00 01 11 64 00 00 EC 00 00 00"
         # elm_response = "61 08 F3 0C 48 00 00 00 00 F3 0C 48 00 00 00 00 00 00 00 00 00 00 00 FF 48 FF FF"
+        logdict = {}
         for data_struct in request_data.data:
             qlabel = data_struct.widget
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
             value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
+            logdict[data_item.name] = value
 
             if value == None:
                 qlabel.setStyleSheet("background: red")
@@ -1050,6 +1081,15 @@ class paramWidget(widgets.QWidget):
 
                             if combovalueindex != -1:
                                 data.widget.setCurrentIndex(combovalueindex)
+
+        if self.updatelog and self.logfile is not None:
+            self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
+            self.logfile.write("\tScreen : " + self.pagename.encode('utf8') + "\tRequest : " + request_name.encode('utf8') + "\n")
+            string = json.dumps(logdict)
+            self.logfile.write(u"\t\t" + string)
+            self.logfile.write("\n")
+            self.logfile.flush()
+
 
     def getRequest(self, requests, reqname):
         if reqname in requests:
@@ -1084,6 +1124,8 @@ class paramWidget(widgets.QWidget):
         for request_name in self.displaydict.keys():
             self.updateDisplay(request_name, update_inputs)
 
+        # Stop log
+        self.updatelog = False
         if options.auto_refresh:
             self.timer.start(options.refreshrate)
 

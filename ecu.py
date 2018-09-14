@@ -307,7 +307,6 @@ class Ecu_request:
                 values[k] = data.getDisplayValue(stream, v, self.ecu_file.endianness)
             else:
                 raise KeyError('Ecurequest::get_values_from_stream : Data %s does not exist' % k)
-
         return values
 
     def get_formatted_sentbytes(self):
@@ -1416,12 +1415,12 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
 
-    def identify_old(self, addr, label):
+    def identify_old(self, addr, label, force = False):
         if not options.simulation_mode:
             if not options.elm.start_session_can('10C0'):
                 return
 
-        if options.simulation_mode:
+        if options.simulation_mode and force == False:
             # Give scanner something to eat...
             if addr == "04":
                 can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
@@ -1436,6 +1435,9 @@ class Ecu_scanner:
             can_response = options.elm.request(req='2180', positive='61', cache=False)
 
         self.check_ecu(can_response, label, addr, "CAN")
+
+    def identify_from_frame(self, addr, can_response):
+        self.check_ecu(can_response, None, addr, "CAN")
 
     def identify_new(self, addr, label):
         printable_chars = set(string.printable)
@@ -1697,7 +1699,8 @@ class Ecu_scanner:
 
                 self.ecus[ecuname] = target
                 self.num_ecu_found += 1
-                label.setText("Found %i ecu" % self.num_ecu_found)
+                if label is not None:
+                    label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
                 line = "<font color='green'>Identified ECU [%s]@%s : %s DIAGVERSION [%s]"\
@@ -1741,7 +1744,8 @@ class Ecu_scanner:
             if kept_ecu:
                 self.approximate_ecus[kept_ecu.name] = kept_ecu
                 self.num_ecu_found += 1
-                label.setText("Found %i ecu" % self.num_ecu_found)
+                if label is not None:
+                    label.setText("Found %i ecu" % self.num_ecu_found)
 
                 line = "<font color='red'>Found ECU [%s] (not perfect match) :"\
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>"\

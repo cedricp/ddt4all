@@ -250,7 +250,7 @@ class buttonRequest(widgets.QPushButton):
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
         self.setStyleSheet("background: yellow; color: black")
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-        self.butname = jsdata['text']
+        self.butname = jsdata['text'] + "_" + str(self.count)
         self.uniquename = jsdata['uniquename']
         self.jsondata = jsdata
 

@@ -64,6 +64,29 @@ def isWritable(path):
         return False
     return True
 
+class Ecu_finder(gui.QDialog):
+    def __init__(self, ecuscanner):
+        super(Ecu_finder, self).__init__()
+        self.ecuscanner = ecuscanner
+        layoutv = widgets.QVBoxLayout()
+        layouth = widgets.QHBoxLayout()
+        self.setLayout(layoutv)
+        layoutv.addLayout(layouth)
+        self.ecuaddr = widgets.QLineEdit()
+        self.ecuident = widgets.QLineEdit()
+        layouth.addWidget(widgets.QLabel("Addr :"))
+        layouth.addWidget(self.ecuaddr)
+        layouth.addWidget(widgets.QLabel("ID frame :"))
+        layouth.addWidget(self.ecuident)
+        button = widgets.QPushButton("VALIDATE")
+        layouth.addWidget(button)
+        button.clicked.connect(self.check)
+
+    def check(self):
+        addr = utf8(self.ecuaddr.text())
+        frame = utf8(self.ecuident.text())
+        self.ecuscanner.identify_from_frame(addr, frame)
+
 class Ecu_list(widgets.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
         super(Ecu_list, self).__init__()
@@ -243,6 +266,14 @@ class Ecu_list(widgets.QWidget):
 class Main_widget(widgets.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
+
+        if 1:#not options.simulation_mode:
+            if not os.path.exists("./logs"):
+                os.mkdir("./logs")
+            self.screenlogfile = open("./logs/screens.txt", "at")
+        else:
+            self.screenlogfile = None
+
         self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
@@ -465,6 +496,7 @@ class Main_widget(widgets.QMainWindow):
 
         diagmenu = menu.addMenu(_("File"))
         xmlopenaction = diagmenu.addAction(_("Open XML"))
+        identecu = diagmenu.addAction(_("Identify ECU"))
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
@@ -473,6 +505,7 @@ class Main_widget(widgets.QMainWindow):
         saveecuaction.triggered.connect(self.saveEcu)
         newecuction.triggered.connect(self.newEcu)
         xmlopenaction.triggered.connect(self.openxml)
+        identecu.triggered.connect(self.identEcu)
         diagmenu.addSeparator()
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
@@ -508,6 +541,10 @@ class Main_widget(widgets.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+
+    def identEcu(self):
+        dialog = Ecu_finder(self.ecu_scan)
+        dialog.exec_()
 
     def changecanspeed(self):
         item = self.canlinecombo.currentIndex()
@@ -857,7 +894,8 @@ class Main_widget(widgets.QMainWindow):
             screen = item[0]
         else:
             screen = utf8(item[0].toString())
-        inited = self.paramview.init(screen)
+        self.paramview.pagename = screen
+        inited = self.paramview.init(screen, self.screenlogfile)
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
         self.expert.setChecked(False)
@@ -906,6 +944,9 @@ class Main_widget(widgets.QMainWindow):
 
         if self.snifferview.set_file(ecu_file):
             self.tabbedview.setCurrentIndex(2)
+        else:
+            if self.screenlogfile:
+                self.screenlogfile.write("ECU : " + ecu.href + "\n")
 
         if self.paramview:
             if ecu_file == self.paramview.ddtfile:
