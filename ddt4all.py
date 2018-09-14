@@ -267,7 +267,7 @@ class Main_widget(widgets.QMainWindow):
     def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
 
-        if 1:#not options.simulation_mode:
+        if not options.simulation_mode:
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
             self.screenlogfile = open("./logs/screens.txt", "at")
@@ -283,8 +283,8 @@ class Main_widget(widgets.QMainWindow):
         options.ecu_scanner = self.ecu_scan
         print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
         if self.ecu_scan.getNumEcuDb() == 0:
-            msgbox = widgets.QMessageBox()
-            msgbox.setIcon(widgets.QMessageBox.Warning)
+            msgbox = gui.QMessageBox()
+            msgbox.setIcon(gui.QMessageBox.Warning)
             msgbox.setText("No database found")
             msgbox.setInformativeText("Check documentation")
             msgbox.exec_()
