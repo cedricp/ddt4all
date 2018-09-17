@@ -726,6 +726,20 @@ class paramWidget(widgets.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>' + _('Sending ELM request:') + '</font>'
         else:
+            # Only test data
+            if self.ecurequestsparser.ecu_send_id == "745":
+                if "2144" in command:
+                    elm_response = "61 44 0A 00 24 14 0F 14 14 12 01 06 08 0A 0C 16 01 0E 10 14 32 14 0A FF FF FF FF"
+                if "210B" in command:
+                    elm_response = "61 0B 02 00 6C 10 80 00 02 01 02 01 02 00 00 05 FF FF FF FF"
+                if "2147" in command:
+                    elm_response = "61 47 00 30 50 50 20 1E 0A 20 FF FF FF"
+                if "2126" in command:
+                    elm_response = "61 26 14 0F 1C 28 64 5A 50 46 3C 32 28 1E 14 0A 00 5A 0A FF"
+                if "2125" in command:
+                    elm_response = "61 25 1E 0A 4C 87 14 40 14 06 0F FF FF"
+                if "216B" in command:
+                    elm_response = "61 6B 10 00"
             if "210A" in command:
                 elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
             elif "17FF00" in command:
@@ -866,7 +880,6 @@ class paramWidget(widgets.QWidget):
                 if 'send' in button:
                     sendlist = button['send']
                     self.button_requests[qbutton.butname] = sendlist
-                print qbutton.butname
 
                 qbutton.clicked.connect(lambda state, btn=qbutton.uniquename: self.buttonClicked(btn))
 
