@@ -580,7 +580,7 @@ class Main_widget(widgets.QMainWindow):
         if qt5:
             filename = str(filename_tuple[0])
         else:
-            filename = filename_tuple
+            filename = str(filename_tuple)
         
         if not filename.endswith(".zip"):
             filename += ".zip"
@@ -780,7 +780,7 @@ class Main_widget(widgets.QMainWindow):
         if qt5:
             filename = str(filename_tuple[0])
         else:
-            filename = filename_tuple
+            filename = str(filename_tuple)
 
         if filename == "":
             return        
@@ -805,7 +805,7 @@ class Main_widget(widgets.QMainWindow):
         if qt5:
             filename = str(filename_tuple[0])
         else:
-            filename = filename_tuple
+            filename = str(filename_tuple)
 
         if filename == '':
             return
@@ -837,7 +837,7 @@ class Main_widget(widgets.QMainWindow):
     def openxml(self):
         filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
         if qt5:
-            filename=str(filename_tuple[0])
+            filename = str(filename_tuple[0])
         else:
             filename = unicode(filename_tuple, encoding="UTF-8")
         if filename == '':
