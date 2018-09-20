@@ -541,6 +541,7 @@ class Main_widget(widgets.QMainWindow):
                 print _("Cannot load plugin %s, %s") % (plugin, traceback.format_exc())
 
         self.setConnected(True)
+        self.tabbedview.setCurrentIndex(1)
 
     def identEcu(self):
         dialog = Ecu_finder(self.ecu_scan)
@@ -1330,7 +1331,12 @@ if __name__ == '__main__':
         font = gui.QFont("Sans", 9)
         font.setBold(False)
         app.setFont(font)
-        app.setStyle("windows")
+        app.setStyle("plastic")
+
+    stylefile = core.QFile("qstyle.qss")
+    stylefile.open(core.QFile.ReadOnly)
+    StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
+    app.setStyleSheet(StyleSheet)
 
     ecudirfound = False
 
@@ -1379,6 +1385,7 @@ if __name__ == '__main__':
             nok = False
 
     w = Main_widget()
+    w.setStyleSheet(StyleSheet)
     options.main_window = w
     w.show()
     app.exec_()

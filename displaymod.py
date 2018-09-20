@@ -276,6 +276,18 @@ class buttonRequest(widgets.QPushButton):
             self.jsondata['rect']['width'] = self.width() * self.uiscale
 
 
+class styleLabel(widgets.QLabel):
+    def __init__(self, parent):
+        super(styleLabel, self).__init__(parent)
+        self.defaultStyle = ""
+
+    def setDefaultStyle(self, style):
+        self.defaultStyle = style
+        self.setStyleSheet(self.defaultStyle)
+
+    def resetDefaultStyle(self):
+        self.setStyleSheet(self.defaultStyle)
+
 class displayWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(displayWidget, self).__init__(parent)
@@ -297,7 +309,7 @@ class displayWidget(widgets.QWidget):
     def lock(self, lock):
         pass
 
-    def resize(self, x ,y):
+    def resize(self, x, y):
         oldwidth = self.width()
         super(displayWidget, self).resize(x, y)
         newwidth = self.width()
@@ -370,7 +382,7 @@ class displayWidget(widgets.QWidget):
             return
 
         if not color:
-            color = 0xAAAAAA
+            color = 0x55555
 
         self.move(rect['left'], rect['top'])
         self.resize(rect['width'], rect['height'])
@@ -379,15 +391,15 @@ class displayWidget(widgets.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'])
-        self.qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
+        self.qlabel.setStyleSheet("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = widgets.QLabel(self)
+        self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] - width, rect['height'])
-        self.qlabelval.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
+        self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabelval.move(width, 0)
 
         endianess = req.ecu_file.endianness
@@ -447,15 +459,15 @@ class displayWidget(widgets.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
-        self.qlabel.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
+        self.qlabel.setStyleSheet("background-color: %s; color: %s" % (color, fontcolor))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = widgets.QLabel(self)
+        self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
-        self.qlabelval.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
+        self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (color, fontcolor))
         self.qlabelval.move(width, 0)
 
         infos = req_name + u'\n'

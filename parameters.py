@@ -445,8 +445,9 @@ class paramWidget(widgets.QWidget):
         self.init(self.current_screen)
         self.allow_parameters_update = True
 
-    def init(self, screen, logfile):
-        self.logfile = logfile
+    def init(self, screen, logfile=None):
+        if logfile is not None:
+            self.logfile = logfile
         self.updatelog = True
         if self.panel:
             self.layout.removeWidget(self.panel)
@@ -971,11 +972,11 @@ class paramWidget(widgets.QWidget):
                 logdict[dataitem.name] = newval
 
                 if not elm_data_stream:
-                    widget.setStyleSheet("background: red")
+                    widget.setStyleSheet("background-color: red;color: black")
                     self.logview.append(_("Request aborted (look at red paramters entries): ") + str(input_value))
                     return
 
-                widget.setStyleSheet("background: white")
+                widget.setStyleSheet("background-color: white;color: black")
 
             # Manage delay
             blocked = False
@@ -1013,11 +1014,11 @@ class paramWidget(widgets.QWidget):
 
                     if value == None:
                         if data:
-                            data.widget.setStyleSheet("background: red")
+                            data.widget.setStyleSheet("background-color: red;color: black")
                         value = _("Invalid")
                     else:
                         if data:
-                            data.widget.setStyleSheet("background: white")
+                            data.widget.setStyleSheet("background-color: white;color: black")
 
                     if data:
                         data.widget.setText(value + ' ' + dd_ecu_data.unit)
@@ -1069,11 +1070,11 @@ class paramWidget(widgets.QWidget):
             value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
             logdict[data_item.name] = value
 
-            if value == None:
-                qlabel.setStyleSheet("background: red")
+            if value is None:
+                qlabel.setStyleSheet("background-color: red;color: black")
                 value = "NO DATA"
             else:
-                qlabel.setStyleSheet("background: white")
+                qlabel.resetDefaultStyle()
 
             qlabel.setText(value + ' ' + ecu_data.unit)
 

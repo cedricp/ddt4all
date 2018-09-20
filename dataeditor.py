@@ -32,7 +32,7 @@ class Bit_container(widgets.QFrame):
         self.data = data
         self.setFrameStyle(widgets.QFrame.Sunken)
         self.setFrameShape(widgets.QFrame.Box)
-        self.setFixedWidth(130)
+        self.setFixedWidth(140)
 
         self.layout = widgets.QVBoxLayout()
         cblayout = widgets.QHBoxLayout()
@@ -90,9 +90,9 @@ class Bit_container(widgets.QFrame):
         binary = bin(int("0x" + byte, 16))[2:].zfill(8)
         for i in range(8):
             if binary[i] == "1":
-                self.checkboxes[i].setStyleSheet("background-color:#00FF00;")
+                self.checkboxes[i].setStyleSheet("border: 1px solid #00FF00;")
             else:
-                self.checkboxes[i].setStyleSheet("background-color:#FFFFFF;")
+                self.checkboxes[i].setStyleSheet("border: 1px solid #FFFFFF;")
 
 
 class Bit_viewer(widgets.QScrollArea):
@@ -255,7 +255,7 @@ class requestTable(widgets.QTableWidget):
         if not self.sdsupdate:
             return
 
-        if not self.ecureq:
+        if not self.ecureq or self.currentreq is None:
             return
 
         self.ecureq[self.currentreq].sds['nosds'] = view.checknosds.isChecked()
