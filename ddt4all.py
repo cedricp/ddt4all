@@ -1335,7 +1335,10 @@ if __name__ == '__main__':
 
     stylefile = core.QFile("qstyle.qss")
     stylefile.open(core.QFile.ReadOnly)
-    StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
+    if qt5:
+        StyleSheet = str(stylefile.readAll())
+    else:
+        StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
     app.setStyleSheet(StyleSheet)
 
     ecudirfound = False
