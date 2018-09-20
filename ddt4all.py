@@ -765,14 +765,14 @@ class Main_widget(widgets.QMainWindow):
 
     def setConnected(self, on):
         if options.simulation_mode:
-            self.connectedstatus.setStyleSheet("background : orange")
+            self.connectedstatus.setStyleSheet("background-color : orange; color: black")
             self.connectedstatus.setText(_("EDITION MODE"))
             return
         if on:
-            self.connectedstatus.setStyleSheet("background : green")
+            self.connectedstatus.setStyleSheet("background-color : green; color: black")
             self.connectedstatus.setText(_("CONNECTED"))
         else:
-            self.connectedstatus.setStyleSheet("background : red")
+            self.connectedstatus.setStyleSheet("background-color : red; color: black")
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
