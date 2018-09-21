@@ -438,6 +438,18 @@ QCheckBox::indicator{
     height: 9px;
 }
 
+QSpinBox {
+    color: #b1b1b1;
+    background-color: #323232;
+    border: 1px solid #b1b1b1;
+}
+
+QDoubleSpinBox {
+    color: #b1b1b1;
+    background-color: #323232;
+    border: 1px solid #b1b1b1;
+}
+
 QRadioButton::indicator
 {
     border-radius: 6px;
