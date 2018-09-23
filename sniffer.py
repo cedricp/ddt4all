@@ -3,13 +3,15 @@
 import time
 import ecu
 from uiutils import *
-try:
+try: 
+    qt5 = True
     import PyQt5.QtGui as gui
     import PyQt5.QtCore as core
     import PyQt5.QtWidgets as widgets
     def utf8(string):
         return string
 except:
+    qt5 = False
     import PyQt4.QtGui as gui
     import PyQt4.QtGui as widgets
     import PyQt4.QtCore as core
@@ -133,13 +135,16 @@ class sniffer(widgets.QWidget):
         self.table.setHorizontalHeaderLabels([_("Values")])
 
         for i in range(0, len(self.names)):
-            item = gui.QTableWidgetItem(_("Waiting..."))
+            item = widgets.QTableWidgetItem(_("Waiting..."))
             item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
             self.table.setItem(i, 0, item)
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
-        self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
+        if not qt5:
+            self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
+        else:
+            self.table.horizontalHeader().setSectionResizeMode(0, widgets.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:
