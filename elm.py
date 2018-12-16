@@ -292,6 +292,23 @@ class Port:
 
     hdr = None
 
+    def reinit(self):
+        '''
+        Need for wifi adapters with short connection timeout
+        '''
+        if self.portType != 1: return
+
+        import socket
+        self.hdr.close()
+        self.hdr = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
+        self.hdr.setsockopt (socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        try:
+            self.hdr.connect((self.ipaddr, self.tcpprt))
+            self.hdr.setblocking(True)
+            self.connectionStatus = True
+        except:
+            options.elm_failed = True
+
     def __init__(self, portName, speed, portTimeout, isels=False):
         options.elm_failed = False
         self.portTimeout = portTimeout
@@ -694,6 +711,10 @@ class ELM:
             time.sleep(self.busLoad + self.srvsDelay - tb + self.lastCMDtime)
 
         tb = time.time()  # renew start time
+
+        # If we use wifi and there was more than keepAlive seconds of silence then reinit tcp
+        if (tb - self.lastCMDtime) > self.keepAlive:
+          self.port.reinit()
 
         # If we are on CAN and there was more than keepAlive seconds of silence and
         # start_session_can was executed then send startSession command again
