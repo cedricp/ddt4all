@@ -13,6 +13,7 @@ Source: "crcmod\*"; DestDir: "{app}\crcmod"; Flags: ignoreversion recursesubdirs
 Source: "Python27\*"; DestDir: "{app}\Python27"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
+Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs
 Source: "importlib\*"; DestDir: "{app}\importlib"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"

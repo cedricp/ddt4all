@@ -1206,7 +1206,7 @@ class Ecu_database:
                                    "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES", "7A": u"Injection",
                                    "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"}
 
-        f = open("json/addressing.json", "r")
+        f = open("./json/addressing.json", "r")
         js = json.loads(f.read())
         f.close()
 
@@ -1216,7 +1216,7 @@ class Ecu_database:
 
         xmlfile = options.ecus_dir + "/eculist.xml"
 
-        jsonecu_files = glob.glob("json/*.json.targets")
+        jsonecu_files = glob.glob("./json/*.json.targets")
         for jsonecu_file in jsonecu_files:
             self.numecu += 1
             json_file = open(jsonecu_file, "r")

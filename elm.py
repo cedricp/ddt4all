@@ -292,22 +292,7 @@ class Port:
 
     hdr = None
 
-    def reinit(self):
-        '''
-        Need for wifi adapters with short connection timeout
-        '''
-        if self.portType != 1: return
-
-        import socket
-        self.hdr.close()
-        self.hdr = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
-        self.hdr.setsockopt (socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        try:
-            self.hdr.connect((self.ipaddr, self.tcpprt))
-            self.hdr.setblocking(True)
-            self.connectionStatus = True
-        except:
-            options.elm_failed = True
+    tcp_needs_reconnect = False
 
     def __init__(self, portName, speed, portTimeout, isels=False):
         options.elm_failed = False
@@ -320,15 +305,7 @@ class Port:
             self.ipaddr, self.tcpprt = portName.split(':')
             self.tcpprt = int(self.tcpprt)
             self.portType = 1
-            self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-            try:
-                self.hdr.connect((self.ipaddr, self.tcpprt))
-                self.hdr.setblocking(True)
-                self.connectionStatus = True
-            except:
-                options.elm_failed = True
-
+            self.init_wifi()
         else:
             self.portName = portName
             self.portType = 0
@@ -352,14 +329,36 @@ class Port:
         except:
             pass
 
+    def init_wifi(self, reinit=False):
+        '''
+        Needed for wifi adapters with short connection timeout
+        '''
+        if self.portType != 1:
+            return
+
+        import socket
+
+        if reinit:
+            self.hdr.close()
+        self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        try:
+            self.hdr.connect((self.ipaddr, self.tcpprt))
+            self.hdr.setblocking(True)
+            self.connectionStatus = True
+        except:
+            options.elm_failed = True
+
     def read(self):
         try:
             byte = ""
             if self.portType == 1:
+                import socket
                 try:
                     byte = self.hdr.recv(1)
-                except:
-                    # print "Unexpected error:", sys.exc_info()
+                except socket.timeout:
+                    self.tcp_needs_reconnect = True
+                except Exception:
                     pass
             elif self.portType == 2:
                 if self.droid.bluetoothReadReady():
@@ -379,6 +378,9 @@ class Port:
     def write(self, data):
         try:
             if self.portType == 1:
+                if self.tcp_needs_reconnect:
+                    self.tcp_needs_reconnect = False
+                    self.init_wifi(True)
                 return self.hdr.sendall(data)
             elif self.portType == 2:
                 return self.droid.bluetoothWrite(data)
@@ -714,7 +716,7 @@ class ELM:
 
         # If we use wifi and there was more than keepAlive seconds of silence then reinit tcp
         if (tb - self.lastCMDtime) > self.keepAlive:
-          self.port.reinit()
+          self.port.init_wifi(True)
 
         # If we are on CAN and there was more than keepAlive seconds of silence and
         # start_session_can was executed then send startSession command again
