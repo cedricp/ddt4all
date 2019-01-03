@@ -496,10 +496,9 @@ class paramWidget(widgets.QWidget):
                     print sds.sendbyte_dataitems[u'Session Name']
 
         if len(self.request_editor_sds) == 1:
-            self.diagsession.addItem(u"Default [10 81]")
-            self.diagsession.addItem(u"After Sales [10 C0]")
-            self.request_editor_sds[u"Default [10 81]"] = "10 81"
-            self.request_editor_sds[u"After Sales [10 C0]"] = "10 C0"
+            for k, v in self.sds.iteritems():
+                self.diagsession.addItem(k)
+                self.request_editor_sds[k] = v
 
         self.input = widgets.QLineEdit()
         self.input.returnPressed.connect(self.send_manual_cmd)
