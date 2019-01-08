@@ -436,6 +436,10 @@ class Main_widget(widgets.QMainWindow):
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
+        self.cominput = widgets.QAction(gui.QIcon("icons/command.png"), _("Manual request"), self)
+        self.cominput.triggered.connect(self.command_editor)
+        self.cominput.setEnabled(False)
+
         self.canlinecombo = widgets.QComboBox()
         self.canlinecombo.setFixedWidth(150)
         self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
@@ -466,6 +470,8 @@ class Main_widget(widgets.QMainWindow):
         self.toolbar.addAction(self.diagaction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.hexinput)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(self.cominput)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.canlinecombo)
         self.toolbar.addSeparator()
@@ -669,6 +675,13 @@ class Main_widget(widgets.QMainWindow):
             options.auto_refresh = False
             self.refresh.setEnabled(False)
             self.paramview.hexeditor()
+
+    def command_editor(self):
+        if self.paramview:
+            # Stop auto refresh
+            options.auto_refresh = False
+            self.refresh.setEnabled(False)
+            self.paramview.command_editor()
 
     def changeRefreshTime(self):
         options.refreshrate = self.refreshtimebox.value()
@@ -899,6 +912,7 @@ class Main_widget(widgets.QMainWindow):
         inited = self.paramview.init(screen, self.screenlogfile)
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
+        self.cominput.setEnabled(inited)
         self.expert.setChecked(False)
         options.promode = False
         self.autorefresh.setChecked(False)
@@ -957,6 +971,7 @@ class Main_widget(widgets.QMainWindow):
     def set_param_file(self, ecu_file, ecu_addr, ecu_name, isxml):
         self.diagaction.setEnabled(True)
         self.hexinput.setEnabled(True)
+        self.cominput.setEnabled(True)
         self.treeview_params.clear()
 
         uiscale_mem = 12

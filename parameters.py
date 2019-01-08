@@ -40,6 +40,128 @@ _ = options.translator('ddt4all')
 # Read freezeframe data // Done (partially)
 # Check ELM response validity (mode + 0x40)
 
+class ecuCommand(widgets.QDialog):
+    def __init__(self, paramview, ecurequestparser, sds):
+        super(ecuCommand, self).__init__(None)
+        self.ecu = ecurequestparser
+        self.ecu.requests.keys()
+        self.sds = sds
+        self.paramview = paramview
+
+        layout = widgets.QVBoxLayout()
+        self.req_combo = widgets.QComboBox()
+        self.sds_combo = widgets.QComboBox()
+        self.com_table = widgets.QTableWidget()
+        self.rcv_table = widgets.QTableWidget()
+        self.com_table.setColumnCount(2)
+        self.com_table.verticalHeader().hide()
+
+        self.rcv_table.setColumnCount(2)
+        self.rcv_table.verticalHeader().hide()
+        layout.addWidget(widgets.QLabel("Start diagnostic session"))
+        layout.addWidget(self.sds_combo)
+        layout.addWidget(widgets.QLabel("Request"))
+        layout.addWidget(self.req_combo)
+        layout.addWidget(widgets.QLabel("Data to send"))
+        layout.addWidget(self.com_table)
+        layout.addWidget(widgets.QLabel("Data received"))
+        layout.addWidget(self.rcv_table)
+        button = widgets.QPushButton("Execute")
+        layout.addWidget(button)
+        button.clicked.connect(self.execute)
+        self.setLayout(layout)
+        self.reqs = []
+        self.send_data = []
+        self.current_request = None
+
+        reqlist = [a for a in self.ecu.requests.keys()]
+        reqlist.sort()
+        for k in reqlist:
+            self.req_combo.addItem(k)
+            self.reqs.append(k)
+        self.req_combo.currentIndexChanged.connect(self.req_changed)
+
+        for k, v in self.sds.iteritems():
+            self.sds_combo.addItem(k)
+
+    def execute(self):
+        if self.current_request is None:
+            return
+
+        sds = self.sds[utf8(self.sds_combo.currentText())]
+        self.paramview.sendElm(sds)
+
+        data_to_stream = {}
+        for i in range(0, self.com_table.rowCount()):
+            cellwidget = self.com_table.cellWidget(i, 1)
+            reqkey = utf8(self.com_table.item(i, 0).text())
+            if (cellwidget):
+                curtext = utf8(cellwidget.currentText())
+            elif self.com_table.item(i, 1) is not None:
+                curtext = utf8(self.com_table.item(i, 1).text())
+            else:
+                print "Missing data, aborting..."
+                return
+
+            if curtext is None:
+                # Error here
+                data_to_stream[reqkey] = ""
+            else:
+                data_to_stream[reqkey] = curtext
+
+        received_data = self.current_request.send_request(data_to_stream)
+
+        self.rcv_table.setRowCount(len(received_data))
+        itemcount = 0
+        for k, v in received_data.iteritems():
+            item = widgets.QTableWidgetItem(k)
+            self.rcv_table.setItem(itemcount, 0, item)
+            if v is not None:
+                item = widgets.QTableWidgetItem(v)
+            else:
+                item = widgets.QTableWidgetItem("NONE")
+            self.rcv_table.setItem(itemcount, 1, item)
+            itemcount += 1
+
+        self.rcv_table.resizeColumnsToContents()
+        self.rcv_table.resizeRowsToContents()
+
+    def req_changed(self, item):
+        self.com_table.clear()
+        self.com_table.setColumnCount(2)
+        self.current_request = self.ecu.requests[self.reqs[item]]
+        self.com_table.setRowCount(len(self.current_request.sendbyte_dataitems))
+        self.send_data = []
+
+        headerstrings = ["Key", "Value"]
+        self.com_table.setHorizontalHeaderLabels(headerstrings)
+        self.rcv_table.setHorizontalHeaderLabels(headerstrings)
+
+        itemcount = 0
+        for k, v in self.current_request.sendbyte_dataitems.iteritems():
+            self.send_data.append(k)
+            ecudata = self.ecu.data[k]
+
+            if ecudata.unit:
+                text = k + " (" + ecudata.unit + ")"
+            else:
+                text = k
+
+            item = widgets.QTableWidgetItem(text)
+            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
+            self.com_table.setItem(itemcount, 0, item)
+
+            if len(ecudata.items):
+                items = ecudata.items.keys()
+                combo = widgets.QComboBox()
+                for item in items:
+                    combo.addItem(item)
+                self.com_table.setCellWidget(itemcount, 1, combo)
+            itemcount += 1
+
+        self.com_table.resizeColumnsToContents()
+        self.com_table.resizeRowsToContents()
+        self.rcv_table.setRowCount(0)
 
 class paramWidget(widgets.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status, canline):
@@ -461,6 +583,10 @@ class paramWidget(widgets.QWidget):
         scr_init = self.initScreen(screen)
         self.layout.addWidget(self.panel)
         return scr_init
+
+    def command_editor(self):
+        editor = ecuCommand(self, self.ecurequestsparser, self.sds)
+        editor.exec_()
 
     def hexeditor(self):
         self.dialogbox = widgets.QWidget()
