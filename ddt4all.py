@@ -1032,6 +1032,18 @@ class donationWidget(widgets.QLabel):
         msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
 
+def set_dark_style(onoff):
+    if (onoff):
+        stylefile = core.QFile("qstyle.qss")
+        stylefile.open(core.QFile.ReadOnly)
+        if qt5:
+            StyleSheet = str(stylefile.readAll())
+        else:
+            StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
+    else:
+        StyleSheet = ""
+
+    app.setStyleSheet(StyleSheet)
 
 class portChooser(widgets.QDialog):
     def __init__(self):
@@ -1137,7 +1149,20 @@ class portChooser(widgets.QDialog):
         safetylabel = widgets.QLabel(_("I'm aware that I can harm my car if badly used"))
         safetychecklayout.addWidget(self.safetycheck)
         safetychecklayout.addWidget(safetylabel)
+        safetychecklayout.addStretch()
         layout.addLayout(safetychecklayout)
+
+        darkstylelayout = widgets.QHBoxLayout()
+        self.darklayoutcheck = widgets.QCheckBox()
+        self.darklayoutcheck.setChecked(False)
+        self.darklayoutcheck.stateChanged.connect(set_dark_style)
+        darkstylelabel = widgets.QLabel(_("Dark style"))
+        darkstylelayout.addWidget(self.darklayoutcheck)
+        darkstylelayout.addWidget(darkstylelabel)
+        darkstylelayout.addStretch()
+        layout.addLayout(darkstylelayout)
+
+
         layout.addWidget(donationwidget)
 
         button_layout.addWidget(button_con)
@@ -1348,13 +1373,7 @@ if __name__ == '__main__':
         app.setFont(font)
         app.setStyle("plastic")
 
-    stylefile = core.QFile("qstyle.qss")
-    stylefile.open(core.QFile.ReadOnly)
-    if qt5:
-        StyleSheet = str(stylefile.readAll())
-    else:
-        StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
-    app.setStyleSheet(StyleSheet)
+
 
     ecudirfound = False
 
@@ -1403,7 +1422,6 @@ if __name__ == '__main__':
             nok = False
 
     w = Main_widget()
-    w.setStyleSheet(StyleSheet)
     options.main_window = w
     w.show()
     app.exec_()
