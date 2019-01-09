@@ -84,6 +84,13 @@ class ecuCommand(widgets.QDialog):
         for k, v in self.sds.iteritems():
             self.sds_combo.addItem(k)
 
+        text = "<center>This feature is experimental</center>\n"
+        text += "<center>Use it at your own risk</center>\n"
+        text += "<center>and if you know exactely what you do</center>\n"
+        msgbox = widgets.QMessageBox()
+        msgbox.setText(text)
+        msgbox.exec_()
+
     def execute(self):
         if self.current_request is None:
             return
@@ -100,7 +107,9 @@ class ecuCommand(widgets.QDialog):
             elif self.com_table.item(i, 1) is not None:
                 curtext = utf8(self.com_table.item(i, 1).text())
             else:
-                print "Missing data, aborting..."
+                msgbox = widgets.QMessageBox()
+                msgbox.setText("Missing data in table")
+                msgbox.exec_()
                 return
 
             if curtext is None:
@@ -109,7 +118,14 @@ class ecuCommand(widgets.QDialog):
             else:
                 data_to_stream[reqkey] = curtext
 
-        received_data = self.current_request.send_request(data_to_stream)
+        stream_to_send = " ".join(self.current_request.build_data_stream(data_to_stream))
+        reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
+        if reveived_stream.startswith("WRONG"):
+            msgbox = widgets.QMessageBox()
+            msgbox.setText("ECU returned error (check logview)")
+            msgbox.exec_()
+            return
+        received_data = self.current_request.get_values_from_stream(reveived_stream)
 
         self.rcv_table.setRowCount(len(received_data))
         itemcount = 0
@@ -128,28 +144,38 @@ class ecuCommand(widgets.QDialog):
 
     def req_changed(self, item):
         self.com_table.clear()
-        self.com_table.setColumnCount(2)
+        self.com_table.setColumnCount(5)
         self.current_request = self.ecu.requests[self.reqs[item]]
         self.com_table.setRowCount(len(self.current_request.sendbyte_dataitems))
         self.send_data = []
 
-        headerstrings = ["Key", "Value"]
-        self.com_table.setHorizontalHeaderLabels(headerstrings)
-        self.rcv_table.setHorizontalHeaderLabels(headerstrings)
+        self.com_table.setHorizontalHeaderLabels(["Key", "Value", "Unit", "Data type", "Description"])
+        self.rcv_table.setHorizontalHeaderLabels(["Key", "Value"])
 
         itemcount = 0
         for k, v in self.current_request.sendbyte_dataitems.iteritems():
             self.send_data.append(k)
             ecudata = self.ecu.data[k]
 
-            if ecudata.unit:
-                text = k + " (" + ecudata.unit + ")"
-            else:
-                text = k
-
-            item = widgets.QTableWidgetItem(text)
+            item = widgets.QTableWidgetItem(k)
             item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
             self.com_table.setItem(itemcount, 0, item)
+            item = widgets.QTableWidgetItem(ecudata.unit)
+            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
+            self.com_table.setItem(itemcount, 2, item)
+            if ecudata.scaled:
+                item = widgets.QTableWidgetItem("Numeric decimal")
+            elif len(ecudata.items):
+                item = widgets.QTableWidgetItem("List")
+            elif ecudata.bytesascii:
+                item = widgets.QTableWidgetItem("String")
+            else:
+                item = widgets.QTableWidgetItem("Hexadecimal")
+            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
+            self.com_table.setItem(itemcount, 3, item)
+            item = widgets.QTableWidgetItem(ecudata.description)
+            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
+            self.com_table.setItem(itemcount, 4, item)
 
             if len(ecudata.items):
                 items = ecudata.items.keys()
@@ -817,7 +843,7 @@ class paramWidget(widgets.QWidget):
                     self.tester_presend_command = self.ecurequestsparser.requests[k].sentbytes
                     break
 
-    def sendElm(self, command, auto=False):
+    def sendElm(self, command, auto=False, force=False):
         elm_response = '00 ' * 70
 
         if not options.simulation_mode:
@@ -838,7 +864,7 @@ class paramWidget(widgets.QWidget):
                 options.elm.request(command, cache=False)
                 return
 
-            if not options.promode:
+            if not force and not options.promode:
                 # Allow read only modes
                 if command[0:2] in options.safe_commands:
 
@@ -878,7 +904,7 @@ class paramWidget(widgets.QWidget):
                 elm_response = "7F 57 12"
             txt = '<font color=green>' + _('Sending simulated ELM request :') + '</font>'
 
-            if not options.promode:
+            if not force and not options.promode:
                 # Allow read only modes
                 if command[0:2] not in options.safe_commands:
                     elm_response = "BLOCKED"
