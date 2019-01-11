@@ -1216,16 +1216,32 @@ class ELM:
             TXa = dnat[addr]
             RXa = snat[addr]
 
-        self.cmd("AT SH " + TXa)
-        self.cmd("AT CRA " + RXa)
-        self.cmd("AT FC SH " + TXa)
+        RXsh = RXa
+        TXsh = TXa
+        CANEXT = False
+        if len(RXa) > 4:
+            # Extended (29bits) addressing
+            RXsh = RXa[2:]
+            TXsh = TXa[2:]
+            CANEXT = True
+
+        # No need to set AT CP it should be set to 18 yet
+        self.cmd("AT SH " + TXsh)
+        self.cmd("AT CRA " + RXsh)
+        self.cmd("AT FC SH " + TXsh)
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
         if canline == 0:
             if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-                self.cmd("AT SP 8")
+                if CANEXT:
+                    self.cmd("AT SP 9")
+                else:
+                    self.cmd("AT SP 8")
             else:
-                self.cmd("AT SP 6")
+                if CANEXT:
+                    self.cmd("AT SP 7")
+                else:
+                    self.cmd("AT SP 6")
         else:
             self.cmd("STP 53")
             if canline == 1:
