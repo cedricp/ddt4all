@@ -1184,6 +1184,8 @@ class portChooser(widgets.QDialog):
         self.portcount = -1
         self.usb()
 
+        self.setWindowTitle("DDT4all")
+
     def check_elm(self):
         currentitem = self.listview.currentItem()
         self.logview.show()
@@ -1373,10 +1375,7 @@ if __name__ == '__main__':
         app.setFont(font)
         app.setStyle("plastic")
 
-
-
     ecudirfound = False
-
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
         print _("Using custom DDT database")
         ecudirfound = True
