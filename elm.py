@@ -872,8 +872,8 @@ class ELM:
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F':
             noerrors = False
-            if result[6:8] in negrsp.keys():
-                errorstr = negrsp[result[6:8]]
+            if result[4:6] in negrsp.keys():
+                errorstr = negrsp[result[4:6]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
@@ -885,11 +885,13 @@ class ELM:
             self.l1_cache[command] = str(nframes)
 
         if len(result) / 2 >= nbytes and noerrors:
+            # Remove unnecessay bytes
+            result = result[0:nbytes*2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE : " + errorstr
+            return "WRONG RESPONSE : " + errorstr + "(" + result + ")"
 
     def send_can_cfc0(self, command):
 
