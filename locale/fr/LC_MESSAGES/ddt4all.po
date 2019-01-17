@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-20 10:07+0200\n"
+"POT-Creation-Date: 2019-01-10 21:09+0100\n"
 "PO-Revision-Date: 2018-05-21 15:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -31,9 +31,8 @@ msgid "Add to screen"
 msgstr "Ajouter a l'écran"
 
 #: ..\dataeditor.py:314
-#, fuzzy
 msgid "Request name;Bytes;Manual"
-msgstr "Nom requête;Manuel"
+msgstr ""
 
 #: ..\dataeditor.py:348 ..\dataeditor.py:1325
 msgid "Add"
@@ -87,7 +86,7 @@ msgstr "Après vente"
 msgid "Engineering"
 msgstr "Ingénieur"
 
-#: ..\dataeditor.py:647 ..\dataeditor.py:1729 ..\ddt4all.py:124
+#: ..\dataeditor.py:647 ..\dataeditor.py:1729 ..\ddt4all.py:148
 msgid "Supplier"
 msgstr "Fournisseur"
 
@@ -231,21 +230,13 @@ msgstr "Requête %s non trouvée"
 
 #: ..\dataeditor.py:1392
 #, python-format
-msgid ""
-"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
-"values</font>"
-msgstr ""
-"<font color=green>Requête <font color=blue>'%s'</font> a des entrées "
-"manquantes</font>"
+msgid "<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>"
+msgstr "<font color=green>Requête <font color=blue>'%s'</font> a des entrées manquantes</font>"
 
 #: ..\dataeditor.py:1395
 #, python-format
-msgid ""
-"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
-"font>"
-msgstr ""
-"<font color=red>Requête <font color=blue>'%s'</font> entrées manquantes :</"
-"font>"
+msgid "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>"
+msgstr "<font color=red>Requête <font color=blue>'%s'</font> entrées manquantes :</font>"
 
 #: ..\dataeditor.py:1398
 #, python-format
@@ -316,308 +307,308 @@ msgstr "Supprimer selectionné"
 msgid "Diag version"
 msgstr "Version diag"
 
-#: ..\dataeditor.py:1732 ..\ddt4all.py:126
+#: ..\dataeditor.py:1732 ..\ddt4all.py:150
 msgid "Soft"
 msgstr "Logiciel"
 
-#: ..\dataeditor.py:1735 ..\ddt4all.py:127
+#: ..\dataeditor.py:1735 ..\ddt4all.py:151
 msgid "Version"
 msgstr "Version"
 
-#: ..\ddt4all.py:121
+#: ..\ddt4all.py:145
 msgid "ECU name"
 msgstr "Nom ECU"
 
-#: ..\ddt4all.py:122
+#: ..\ddt4all.py:146
 msgid "ID"
 msgstr ""
 
-#: ..\ddt4all.py:123
+#: ..\ddt4all.py:147
 msgid "Protocol"
 msgstr "Protocole"
 
-#: ..\ddt4all.py:125
+#: ..\ddt4all.py:149
 msgid "Diag"
 msgstr ""
 
-#: ..\ddt4all.py:128
+#: ..\ddt4all.py:152
 msgid "Projets"
 msgstr "Projets"
 
-#: ..\ddt4all.py:250
+#: ..\ddt4all.py:280
 msgid "DDT4All"
 msgstr ""
 
-#: ..\ddt4all.py:254
+#: ..\ddt4all.py:284
 msgid "loaded ECUs in database."
 msgstr "ECU chargées en base de donnée."
 
-#: ..\ddt4all.py:296
+#: ..\ddt4all.py:326
 msgid "Refresh rate (ms):"
 msgstr "Vitesse rafraichissement (ms):"
 
-#: ..\ddt4all.py:303
+#: ..\ddt4all.py:333
 msgid "Can timeout (ms) [0:AUTO] :"
 msgstr "Temps max CAN (ms) [0:AUTO] :"
 
-#: ..\ddt4all.py:322
+#: ..\ddt4all.py:352
 msgid "Documentation"
 msgstr ""
 
-#: ..\ddt4all.py:323
+#: ..\ddt4all.py:353
 msgid "Screen"
 msgstr "Ecran"
 
-#: ..\ddt4all.py:324
+#: ..\ddt4all.py:354
 msgid "CAN Sniffer"
 msgstr "Espion CAN"
 
-#: ..\ddt4all.py:331
+#: ..\ddt4all.py:361
 msgid "Requests"
 msgstr "Requêtes"
 
-#: ..\ddt4all.py:332
+#: ..\ddt4all.py:362
 msgid "Data"
 msgstr "Données"
 
-#: ..\ddt4all.py:333
+#: ..\ddt4all.py:363
 msgid "Buttons"
 msgstr "Boutons"
 
-#: ..\ddt4all.py:334
+#: ..\ddt4all.py:364
 msgid "Ecu parameters"
 msgstr "Paramètres ECU"
 
-#: ..\ddt4all.py:347
+#: ..\ddt4all.py:377
 msgid "Screens"
 msgstr "Ecrans"
 
-#: ..\ddt4all.py:350
+#: ..\ddt4all.py:380
 msgid "Action"
 msgstr "Action"
 
-#: ..\ddt4all.py:351
+#: ..\ddt4all.py:381
 msgid "New Category"
 msgstr "Nouvelle catégorie"
 
-#: ..\ddt4all.py:352
+#: ..\ddt4all.py:382
 msgid "New Screen"
 msgstr "Nouvel écran"
 
-#: ..\ddt4all.py:353
+#: ..\ddt4all.py:383
 msgid "Rename"
 msgstr "Renommer"
 
-#: ..\ddt4all.py:380 ..\ddt4all.py:455
+#: ..\ddt4all.py:410 ..\ddt4all.py:503
 msgid "File"
 msgstr "Fichier"
 
-#: ..\ddt4all.py:382
+#: ..\ddt4all.py:412
 msgid "Read DTC"
 msgstr "Lire les DTC"
 
-#: ..\ddt4all.py:386
+#: ..\ddt4all.py:416
 msgid "Full log"
 msgstr "Tout loguer"
 
-#: ..\ddt4all.py:391
+#: ..\ddt4all.py:421
 msgid "Expert mode (enable writing)"
 msgstr "Mode expert"
 
-#: ..\ddt4all.py:396
+#: ..\ddt4all.py:426
 msgid "Auto refresh"
 msgstr "Rafraichissement auto"
 
-#: ..\ddt4all.py:401
+#: ..\ddt4all.py:431
 msgid "Refresh (one shot)"
 msgstr "Rafraichir (une fois)"
 
-#: ..\ddt4all.py:405
+#: ..\ddt4all.py:435
 msgid "Manual command"
 msgstr "Commande manuelle"
 
-#: ..\ddt4all.py:414
+#: ..\ddt4all.py:439
+msgid "Manual request"
+msgstr ""
+
+#: ..\ddt4all.py:458
 msgid "Zoom In"
 msgstr "Agrandir"
 
-#: ..\ddt4all.py:415
+#: ..\ddt4all.py:459
 msgid "Zoom Out"
 msgstr "Rétrécir"
 
-#: ..\ddt4all.py:437
+#: ..\ddt4all.py:485
 msgid "UI Edit"
 msgstr "Edition interface"
 
-#: ..\ddt4all.py:456
+#: ..\ddt4all.py:504
 msgid "Open XML"
 msgstr "Ouvrir XML"
 
-#: ..\ddt4all.py:457
+#: ..\ddt4all.py:505
+msgid "Identify ECU"
+msgstr ""
+
+#: ..\ddt4all.py:506
 msgid "Create New ECU"
 msgstr "Créer un ECU"
 
-#: ..\ddt4all.py:458
+#: ..\ddt4all.py:507
 msgid "Save current ECU"
 msgstr "Sauvegarder ECU actuel"
 
-#: ..\ddt4all.py:460
+#: ..\ddt4all.py:509
 msgid "Save ECU list"
 msgstr "Sauvegarder la liste d'ECU"
 
-#: ..\ddt4all.py:466
+#: ..\ddt4all.py:516
 msgid "Zip database"
 msgstr "Compresser base de donnée"
 
-#: ..\ddt4all.py:474
+#: ..\ddt4all.py:524
 msgid "Plugins"
 msgstr "Extensions"
 
-#: ..\ddt4all.py:497
-#, python-format
-msgid "Cannot load plugin %s, %s"
-msgstr "Overture extension impossible %s, %s"
+#: ..\ddt4all.py:547
+msgid "Cannot load plugin "
+msgstr ""
 
-#: ..\ddt4all.py:525
-#, fuzzy
+#: ..\ddt4all.py:585
 msgid "Save database (keep '.zip' extension)"
-msgstr "Savegarde ECU (Gardez l'extension '.json')"
+msgstr ""
 
-#: ..\ddt4all.py:540
+#: ..\ddt4all.py:601
 msgid "Zipping XML database... (this can take a few minutes"
 msgstr "Compresser XML (peut prendre quelques minutes)"
 
-#: ..\ddt4all.py:543
+#: ..\ddt4all.py:604
 msgid "Zip job finished"
 msgstr "Compression terminée"
 
-#: ..\ddt4all.py:558
+#: ..\ddt4all.py:619
 msgid "Enter new name"
 msgstr "Entrez nouveau nom"
 
-#: ..\ddt4all.py:578
+#: ..\ddt4all.py:639
 msgid "Enter category name"
 msgstr "Entrez nom de catégorie"
 
-#: ..\ddt4all.py:588
+#: ..\ddt4all.py:649
 msgid "Please select a category before creating new screen"
 msgstr "Choisissez une catégorie avant de créer un nouvel écran"
 
-#: ..\ddt4all.py:595
+#: ..\ddt4all.py:656
 msgid "Enter screen name"
 msgstr "Nom du nouvel écran"
 
-#: ..\ddt4all.py:651
+#: ..\ddt4all.py:719
 msgid "Scan options"
 msgstr "Options de balayage"
 
-#: ..\ddt4all.py:658 ..\ddtplugins\card_programming.py:134
+#: ..\ddt4all.py:726 ..\ddtplugins\card_programming.py:134
 msgid "CANCEL"
 msgstr "Abandonner"
 
-#: ..\ddt4all.py:669
+#: ..\ddt4all.py:737
 msgid "Scanning CAN"
 msgstr "Balayage CAN"
 
-#: ..\ddt4all.py:673
+#: ..\ddt4all.py:741
 msgid "Scanning KWP"
 msgstr "Balayage KWP"
 
-#: ..\ddt4all.py:714
+#: ..\ddt4all.py:782
 msgid "EDITION MODE"
 msgstr "MODE EDITION"
 
-#: ..\ddt4all.py:718
+#: ..\ddt4all.py:786
 msgid "CONNECTED"
 msgstr "CONNECTÉ"
 
-#: ..\ddt4all.py:721
+#: ..\ddt4all.py:789
 msgid "DISCONNECTED"
 msgstr "DECONNECTÉ"
 
-#: ..\ddt4all.py:724
+#: ..\ddt4all.py:792
 msgid "Save vehicule (keep '.ecu' extension)"
 msgstr "Savegarde ECU (Gardez l'extension '.ecu')"
 
-#: ..\ddt4all.py:745 ..\parameters.py:94
+#: ..\ddt4all.py:817 ..\parameters.py:249
 msgid "Save ECU (keep '.json' extension)"
 msgstr "Savegarde ECU (Gardez l'extension '.json')"
 
-#: ..\ddt4all.py:931
-msgid ""
-"<center>This Software is free, but I need money to buy cables/ECUs and make "
-"this application more reliable</center>"
-msgstr ""
-"<center>Cette application est libre d'utilisation, mais j'ai besoin d'argent "
-"pour rendre cette application plus fiable et acheter du materiel</center>"
+#: ..\ddt4all.py:1021
+msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
+msgstr "<center>Cette application est libre d'utilisation, mais j'ai besoin d'argent pour rendre cette application plus fiable et acheter du materiel</center>"
 
-#: ..\ddt4all.py:932
+#: ..\ddt4all.py:1022
 msgid "Yes I contribute"
 msgstr "Oui, je contibue"
 
-#: ..\ddt4all.py:934
+#: ..\ddt4all.py:1024
 msgid "No, I don't"
 msgstr "Non merci"
 
-#: ..\ddt4all.py:942
-msgid ""
-"<center>Thank you for you contribution, if nothing happens, please go to : "
-"https://github.com/cedricp/ddt4all</center>"
-msgstr ""
-"<center>Merci de votre particapation, si rien ne se passe, allez ici : "
-"https://github.com/cedricp/ddt4all</center>"
+#: ..\ddt4all.py:1032
+msgid "<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"
+msgstr "<center>Merci de votre particapation, si rien ne se passe, allez ici : https://github.com/cedricp/ddt4all</center>"
 
-#: ..\ddt4all.py:958
+#: ..\ddt4all.py:1060
 msgid "ELM port selection"
 msgstr "Sélection du port ELM"
 
-#: ..\ddt4all.py:1019
+#: ..\ddt4all.py:1121
 msgid "Port speed"
 msgstr "Vitesse du port"
 
-#: ..\ddt4all.py:1031
+#: ..\ddt4all.py:1133
 msgid "Connected mode"
 msgstr "Mode connecté"
 
-#: ..\ddt4all.py:1032
+#: ..\ddt4all.py:1134
 msgid "Edition mode"
 msgstr "Mode édition"
 
-#: ..\ddt4all.py:1033
+#: ..\ddt4all.py:1135
 msgid "ELM benchmark"
 msgstr "Tests ELM"
 
-#: ..\ddt4all.py:1036
+#: ..\ddt4all.py:1139
 msgid "WiFi port : "
 msgstr "Port WIFI : "
 
-#: ..\ddt4all.py:1046
+#: ..\ddt4all.py:1149
 msgid "I'm aware that I can harm my car if badly used"
-msgstr ""
-"Je suis conscient que je risque d'endomager mon véhicule avec cette "
-"application si je ne suis pas vigilant"
+msgstr "Je suis conscient que je risque d'endomager mon véhicule avec cette application si je ne suis pas vigilant"
 
-#: ..\ddt4all.py:1214
+#: ..\ddt4all.py:1159
+msgid "Dark style"
+msgstr ""
+
+#: ..\ddt4all.py:1335
 msgid "You must check the recommandations"
 msgstr "Vous devez cocher les recommandations"
 
-#: ..\ddt4all.py:1232
+#: ..\ddt4all.py:1353
 msgid "Please select a communication port"
 msgstr "Vous devez selectionner le port de communication"
 
-#: ..\ddt4all.py:1258
+#: ..\ddt4all.py:1381
 msgid "Using custom DDT database"
 msgstr "Utilisation de la base de donnée personnelle"
 
-#: ..\ddt4all.py:1286
+#: ..\ddt4all.py:1409
 msgid "No COM port selected"
 msgstr "Pas de port communication sélectionné"
 
-#: ..\ddt4all.py:1289
+#: ..\ddt4all.py:1412
 #, python-format
 msgid "Initilizing ELM with speed %i..."
 msgstr "Initialisation ELM a la vitesse %i..."
 
-#: ..\ddt4all.py:1296
+#: ..\ddt4all.py:1419
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Pas de materiel ELM ou OBDLink-SX détecté "
 
@@ -629,79 +620,79 @@ msgstr "Erreur:"
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM no detecté ou port erroné"
 
-#: ..\elm.py:355 ..\elm.py:372
+#: ..\elm.py:377 ..\elm.py:397
 msgid "Connection to ELM was lost"
 msgstr "Connexion ELM perdue"
 
-#: ..\elm.py:395
+#: ..\elm.py:420
 msgid "TIMEOUT"
 msgstr "TEMPS DEPASSE"
 
-#: ..\elm.py:408
+#: ..\elm.py:433
 msgid "Checking port speed:"
 msgstr "Vérfication vitesse de port:"
 
-#: ..\elm.py:427
+#: ..\elm.py:452
 msgid "Start COM speed :"
 msgstr "Vitesse port communication :"
 
-#: ..\elm.py:432
+#: ..\elm.py:457
 msgid "ELM not responding"
 msgstr "Pas de réponse ELM"
 
-#: ..\elm.py:441
+#: ..\elm.py:466
 msgid "ERROR - wifi do not support changing baud rate"
 msgstr "ERREUR - Le mode WiFi ne supporte pas les changement de vitesse"
 
-#: ..\elm.py:444
+#: ..\elm.py:469
 msgid "Changing baud rate to:"
 msgstr "Changement débit à:"
 
-#: ..\elm.py:473
+#: ..\elm.py:498
 msgid "ERROR - command not supported"
 msgstr "ERREUR - commande non suportée"
 
-#: ..\elm.py:504
+#: ..\elm.py:529
 msgid "ERROR - rate not supported. Let's go back."
 msgstr "ERREUR: Débit non supporté, retour en arrière."
 
-#: ..\elm.py:527
+#: ..\elm.py:552
 msgid "ERROR - something went wrong. Let's get back."
 msgstr "ERREUR - Quelque chose c'est mal passé, retour en arrière."
 
-#: ..\elm.py:583
+#: ..\elm.py:609
 msgid "Trying to open port"
 msgstr "Tentative d'ouverture du port"
 
-#: ..\elm.py:607
+#: ..\elm.py:634
 msgid "No ELM interface on port"
 msgstr "Pas d'interface sur port sélectionné"
 
-#: ..\elm.py:1322
+#: ..\elm.py:1364
 msgid "FAIL"
 msgstr "ECHEC"
 
-#: ..\elm.py:1327
+#: ..\elm.py:1369
 msgid "OK/TIMEOUT"
 msgstr "OK/TEMPS DEPASSE"
 
-#: ..\elm.py:1331
+#: ..\elm.py:1373
 msgid "OK"
 msgstr "OK"
 
-#: ..\elm.py:1339
+#: ..\elm.py:1381
 msgid "Incompatible adapter on ARM core"
 msgstr "Adaptateur ARM incompatible"
 
-#: ..\elm.py:1340
+#: ..\elm.py:1382
 msgid "Result: "
 msgstr "Résultat: "
 
-#: ..\elm.py:1340
+#: ..\elm.py:1382
 msgid " succeeded from "
 msgstr " réussis sur "
 
-#: ..\elm.py:1340
+#: ..\elm.py:1382
 msgid "ELM Max version:"
 msgstr "Version ELM maximum:"
 
@@ -715,166 +706,163 @@ msgstr "Ajouter fichier source %s"
 msgid "Adding plugin file %s"
 msgstr "Ajout extension %s"
 
-#: ..\parameters.py:173 ..\parameters.py:201 ..\parameters.py:224
+#: ..\parameters.py:331 ..\parameters.py:359 ..\parameters.py:382
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Pour éditer cet écran, exportez en format JSON avant"
 
-#: ..\parameters.py:264
+#: ..\parameters.py:422
 msgid "Enter label name"
 msgstr "Entrez nom label"
 
-#: ..\parameters.py:330
+#: ..\parameters.py:488
 msgid "Add button"
 msgstr "Ajouter bouton"
 
-#: ..\parameters.py:331
+#: ..\parameters.py:489
 msgid "Add label"
 msgstr "Ajouter label"
 
-#: ..\parameters.py:339
+#: ..\parameters.py:497
 msgid "Rename label"
 msgstr "Renommer label"
 
-#: ..\parameters.py:340
+#: ..\parameters.py:498
 msgid "Change color"
 msgstr "Changer couleur"
 
-#: ..\parameters.py:346
+#: ..\parameters.py:504
 msgid "Remove element"
 msgstr "Supprimer élément"
 
-#: ..\parameters.py:455
+#: ..\parameters.py:620
 msgid "Diagnotic session"
 msgstr "Session de dianostic"
 
-#: ..\parameters.py:456
+#: ..\parameters.py:621
 msgid "Input"
 msgstr "Entree"
 
-#: ..\parameters.py:457
+#: ..\parameters.py:622
 msgid "Output"
 msgstr "Sortie"
 
-#: ..\parameters.py:605
+#: ..\parameters.py:774
 msgid "XML file not found : "
 msgstr "Fichier XML non trouvé : "
 
-#: ..\parameters.py:612
+#: ..\parameters.py:781
 msgid "Invalid DDT file"
 msgstr "Fichier DDT invalide"
 
-#: ..\parameters.py:683
-#, fuzzy
+#: ..\parameters.py:852
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr "Connexion ELM perdue"
+msgstr ""
 
-#: ..\parameters.py:686
+#: ..\parameters.py:855
 msgid "Cannot reconnect..."
 msgstr "Reconnexion impossible"
 
-#: ..\parameters.py:694
+#: ..\parameters.py:863
 msgid "Switching to session mode"
 msgstr "Changement de mode session"
 
-#: ..\parameters.py:703
+#: ..\parameters.py:872
 msgid "Sending ELM request :"
 msgstr "Envoie requête ELM :"
 
-#: ..\parameters.py:705
+#: ..\parameters.py:874
 msgid "Blocked ELM request :"
 msgstr "Requête ELM bloquée :"
 
-#: ..\parameters.py:710
+#: ..\parameters.py:879
 msgid "Sending ELM request:"
 msgstr "Envoie requête ELM :"
 
-#: ..\parameters.py:722
+#: ..\parameters.py:905
 msgid "Sending simulated ELM request :"
 msgstr "Envoie requête ELM simulée:"
 
-#: ..\parameters.py:733
-#, fuzzy
+#: ..\parameters.py:916
 msgid "Bad ELM response :"
-msgstr "Réponse ELM : "
+msgstr ""
 
-#: ..\parameters.py:736
+#: ..\parameters.py:919
 msgid "ELM response : "
 msgstr "Réponse ELM : "
 
-#: ..\parameters.py:881
+#: ..\parameters.py:1064
 msgid "Button request not found : "
 msgstr "Requête bouton non trouvée : "
 
-#: ..\parameters.py:895
+#: ..\parameters.py:1078
 msgid "Sending request :"
 msgstr "Envoie requête :"
 
-#: ..\parameters.py:935
+#: ..\parameters.py:1127
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Requête abandonée (verifiez les parametres en rouges): "
 
-#: ..\parameters.py:962
+#: ..\parameters.py:1169
 msgid "Invalid"
 msgstr "Invalide"
 
-#: ..\parameters.py:980
+#: ..\parameters.py:1190
 msgid "ECU uses SDS "
 msgstr "UCE utilise diagnostic session "
 
-#: ..\parameters.py:1064
+#: ..\parameters.py:1285
 msgid "Cannot call request "
 msgstr "Appel requête impossible "
 
-#: ..\parameters.py:1079
+#: ..\parameters.py:1302
 msgid "Clearing DTC information"
 msgstr "Effacement information DTC"
 
-#: ..\parameters.py:1091
+#: ..\parameters.py:1314
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Pas de requête d'effacement DTC pour cet ECU, envoie par défaut 14FF00"
 
-#: ..\parameters.py:1095
+#: ..\parameters.py:1318
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Vous êtes sur le point d'effacer les DTC<center>"
 
-#: ..\parameters.py:1096
+#: ..\parameters.py:1319
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Etes vous sur que c'est ce que vous voulez.</center>"
 
-#: ..\parameters.py:1150
+#: ..\parameters.py:1373
 msgid "Invalid response for ReadDTC command"
 msgstr "Réponse invalide de la requête ReadDTC"
 
-#: ..\parameters.py:1159
+#: ..\parameters.py:1382
 msgid "Read DTC returned an error"
 msgstr "La lecture DTC a retourné une erreur"
 
-#: ..\parameters.py:1167
+#: ..\parameters.py:1390
 msgid "No DTC"
 msgstr "Pas de DTC"
 
-#: ..\parameters.py:1190
+#: ..\parameters.py:1413
 msgid "Clear ALL DTC"
 msgstr "EFFACER TOUT LES DTC"
 
-#: ..\parameters.py:1196
+#: ..\parameters.py:1419
 msgid "ECU trouble codes"
 msgstr "Code défauts ECU"
 
-#: ..\parameters.py:1226
+#: ..\parameters.py:1449
 msgid "Parsing screen "
 msgstr "Analyse des écrans "
 
-#: ..\sniffer.py:133
-#, fuzzy
+#: ..\sniffer.py:135
 msgid "Values"
-msgstr "Valeur;Texte"
+msgstr ""
 
-#: ..\sniffer.py:136
+#: ..\sniffer.py:138
 msgid "Waiting..."
 msgstr "Attente..."
 
-#: ..\sniffer.py:177
+#: ..\sniffer.py:182
 msgid "Frame hex error : "
 msgstr "Erreur trame hexa :"
 
@@ -888,14 +876,8 @@ msgid "Airbag Tools"
 msgstr "Outils Airbag"
 
 #: ..\ddtplugins\ab90_reset.py:23
-msgid ""
-"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
-"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
-"font>"
-msgstr ""
-"AB90 (Clio III)/2<br>AIRBAG Virginiseur<br><font color='red'>CE PLUGIN "
-"EFFACERA LES DONNEES CRASH<br>NE CONTINUEZ PAS SI VOUS NE SAVEZ PAS CE QUE "
-"CELA IMPLIQUE</"
+msgid "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "AB90 (Clio III)/2<br>AIRBAG Virginiseur<br><font color='red'>CE PLUGIN EFFACERA LES DONNEES CRASH<br>NE CONTINUEZ PAS SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</"
 
 #: ..\ddtplugins\ab90_reset.py:27 ..\ddtplugins\megane3_ab_reset.py:27
 #: ..\ddtplugins\rsat4_reset.py:28
@@ -969,12 +951,8 @@ msgid "ENTER AFTER SALE MODE"
 msgstr "ENTRER EN MODE APRES VENTE"
 
 #: ..\ddtplugins\card_programming.py:130
-msgid ""
-"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
-"YET</font>"
-msgstr ""
-"<font color='red'>MEGANE II PROGRAMMATION CLEFS<br>EXPERIMENTAL : PAS ENCORE "
-"TESTE</font>"
+msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
+msgstr "<font color='red'>MEGANE II PROGRAMMATION CLEFS<br>EXPERIMENTAL : PAS ENCORE TESTE</font>"
 
 #: ..\ddtplugins\card_programming.py:132
 msgid "LEARN"
@@ -1006,8 +984,7 @@ msgstr "IDE CARTE"
 
 #: ..\ddtplugins\card_programming.py:210
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
-"Impossible de recuperer l'ISK, verifiez les connexions et la compatibilité UCH"
+msgstr "Impossible de recuperer l'ISK, verifiez les connexions et la compatibilité UCH"
 
 #: ..\ddtplugins\card_programming.py:245
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
@@ -1027,18 +1004,12 @@ msgstr "Modus/Clio III EPS (DAE) RAZ"
 
 #: ..\ddtplugins\clio3_eps_reset.py:15 ..\ddtplugins\clio4_eps_reset.py:14
 #: ..\ddtplugins\megane3_eps_reset.py:14
-#, fuzzy
 msgid "EPS Tools"
-msgstr "Outil DAE(EPS)"
+msgstr ""
 
 #: ..\ddtplugins\clio3_eps_reset.py:35
-msgid ""
-"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
-"EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"Modus/Clio III DAE VIRGINISEUR<br><font color='red'>CETTE EXTENSION EFFACERA "
-"LES DONNEES D'IMMOBILISATION<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE "
-"CELA IMPLIQUE</font>"
+msgid "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Modus/Clio III DAE VIRGINISEUR<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES D'IMMOBILISATION<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\clio3_eps_reset.py:37
 msgid "BLANK STATUS & VIN READ"
@@ -1092,12 +1063,8 @@ msgid "Clio IV EPS Reset"
 msgstr "Clio IV DAE RAZ"
 
 #: ..\ddtplugins\clio4_eps_reset.py:24
-msgid ""
-"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
-"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"Clio IV DAE VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES "
-"DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
+msgid "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Clio IV DAE VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\clio4_eps_reset.py:26 ..\ddtplugins\megane3_eps_reset.py:25
 msgid "Check EPS Virgin"
@@ -1121,13 +1088,8 @@ msgid "UCH Tools"
 msgstr "Outils UCH"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:24
-msgid ""
-"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"LAGUNA II UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
-"DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
-"/font>"
+msgid "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "LAGUNA II UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\laguna2_uch_reset.py:26 ..\ddtplugins\laguna3_uch_reset.py:25
 #: ..\ddtplugins\megane2_uch_reset.py:26 ..\ddtplugins\megane3_uch_reset.py:26
@@ -1154,79 +1116,48 @@ msgid "Laguna III UCH Reset"
 msgstr "Laguna III UCH RAZ"
 
 #: ..\ddtplugins\laguna3_uch_reset.py:23
-msgid ""
-"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"LAGUNA III UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
-"DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
-"/font>"
+msgid "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "LAGUNA III UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\megane2_uch_reset.py:14
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH RAZ"
 
 #: ..\ddtplugins\megane2_uch_reset.py:24
-msgid ""
-"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"MEGANE II UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
-"DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
-"/font>"
+msgid "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "MEGANE II UCH VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\megane3_ab_reset.py:13
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 AIRBAG RAZ"
 
 #: ..\ddtplugins\megane3_ab_reset.py:23
-msgid ""
-"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
-"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"Megane III<br>AIRBAG VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES "
-"DONNEES ABS<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE<"
-"/font>"
+msgid "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Megane III<br>AIRBAG VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES ABS<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\megane3_eps_reset.py:13
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III DAE RAZ"
 
 #: ..\ddtplugins\megane3_eps_reset.py:23
-msgid ""
-"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
-"PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
-"MEANS</font>"
-msgstr ""
-"ZOE/FLENCE/Megane III/Scenic III DAE RAZ<br><font color='red'>CETTE EXTENSION "
-"EFFACERA LES DONNEES DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA "
-"IMPLIQUE</font>"
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "ZOE/FLENCE/Megane III/Scenic III DAE RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\megane3_uch_reset.py:14
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III UCH RAZ"
 
 #: ..\ddtplugins\megane3_uch_reset.py:24
-msgid ""
-"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"MEGANE III UCH RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES "
-"UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
+msgid "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "MEGANE III UCH RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES UCH<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\rsat4_reset.py:14
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 AIRBAG RAZ"
 
 #: ..\ddtplugins\rsat4_reset.py:24
-msgid ""
-"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
-"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
-"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
-"RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES AIRBAG<br>NE "
-"PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
+msgid "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG RAZ<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES AIRBAG<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 #: ..\ddtplugins\vin_crc.py:15
 msgid "CRC calculator"
@@ -1239,81 +1170,3 @@ msgstr ""
 #: ..\ddtplugins\vin_crc.py:39
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
-
-#~ msgid "Returning to defaut session..."
-#~ msgstr "Retour à la session par défaut..."
-
-#~ msgid "Initializing CAN mode"
-#~ msgstr "Initialisation mode CAN"
-
-#~ msgid "Initializing KWP2000 mode"
-#~ msgstr "Initialisation mode KWP2000"
-
-#~ msgid "Initializing ISO8 mode"
-#~ msgstr "Initialisation mode ISO8"
-
-#~ msgid "Protocol "
-#~ msgstr "Protocole "
-
-#~ msgid " not supported"
-#~ msgstr " non supporté"
-
-#~ msgid "Scanning ECUs..."
-#~ msgstr "Balayage ECU..."
-
-#~ msgid "Scan ECUs"
-#~ msgstr "Balayage ECUs"
-
-#~ msgid "ISK Tools"
-#~ msgstr "Outil ISK"
-
-#~ msgid "Megane2/Scenic2/Clio3 Virgin"
-#~ msgstr "Megane2/Scenic2/Clio3 Vierge"
-
-#~ msgid "Megane3 Virgin"
-#~ msgstr "Megane3 Vierge"
-
-#~ msgid "Clio4 Virgin"
-#~ msgstr "Clio4 Vierge"
-
-#~ msgid "Clio3 Virgin"
-#~ msgstr "Clio3 Vierge"
-
-#~ msgid "Enable expert mode to access this menu"
-#~ msgstr "Activez le mode expert pour accéder a ce menu"
-
-#~ msgid ""
-#~ "<center>I'm aware that this operation will clear the selected control "
-#~ "unit.</center><center>If you have no idea of what it means, please get "
-#~ "out of here.</center><center>/!\\This part is highly experimental/!\\</"
-#~ "center>"
-#~ msgstr ""
-#~ "<center>Je suis conscient que cette opération va rendre vierge l'unité de "
-#~ "contrôle sélectionée.</center><center>Si vous ne savez pas ce que cela "
-#~ "impique, merci de quitter maintenant.</center><center>/!\\Partie "
-#~ "hautement experimentale/!\\</center>"
-
-#~ msgid "Cannot read ISK in demo mode"
-#~ msgstr "Pas de lecture ISK en mode edition"
-
-#~ msgid "Cannot read ISK : Bad reply"
-#~ msgstr "Lecture ISK impossible : mauvaise réponse ECU"
-
-#~ msgid "Your ISK code"
-#~ msgstr "Votre code ISK"
-
-#~ msgid "Scanning CAN&KWP"
-#~ msgstr "Balayage CAN&KWP"
-
-#~ msgid ""
-#~ "Sending ECU informations to database, thank you for your paticipation"
-#~ msgstr "Envoie des informations ECU, merci pour votre participation"
-
-#~ msgid "I accept to share ECU informations"
-#~ msgstr "J'accepte de partager mes information"
-
-#~ msgid "Using DDT2000 default installation"
-#~ msgstr "Utilisation de la base DDT2000 par défaut"
-
-#~ msgid "Available COM ports:"
-#~ msgstr "Port de communication disponibles:"
