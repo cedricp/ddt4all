@@ -357,7 +357,7 @@ class displayWidget(widgets.QWidget):
         rect = getRectangleXML(getChildNodesByName(display, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(display, self.uiscale)
         if req_name not in self.ecurequestsparser.requests:
-            print _("No request named "), req_name
+            print(_("No request named "), req_name)
             return
         req = self.ecurequestsparser.requests[req_name]
         dataitem = None
@@ -368,17 +368,17 @@ class displayWidget(widgets.QWidget):
             for k in keys:
                 if k.upper() == text.upper():
                     dataitem = req.dataitems[k]
-                    print _("Found similar"), k, " vs ", text
+                    print(_("Found similar"), k, " vs ", text)
                     break
 
         if not dataitem:
-            print "DataItem not found", text
+            print("DataItem not found", text)
             return
 
         try:
             data = self.ecurequestsparser.data[text]
         except:
-            print _("Cannot find data "), text
+            print(_("Cannot find data "), text)
             return
 
         if not color:
@@ -443,11 +443,11 @@ class displayWidget(widgets.QWidget):
             for k in keys:
                 if k.upper() == text.upper():
                     dataitem = req.dataitems[k]
-                    print "Found similar", k, " vs ", text
+                    print("Found similar", k, " vs ", text)
                     break
 
         if not dataitem:
-            print _("DataItem not found"), text
+            print(_("DataItem not found"), text)
             return
 
         data = self.ecurequestsparser.data[text]
@@ -581,7 +581,7 @@ class inputWidget(widgets.QWidget):
         try:
             data = self.ecurequestsparser.data[text]
         except:
-            print _("Cannot draw input "), text
+            print(_("Cannot draw input "), text)
             return
 
         if len(self.ecurequestsparser.data[text].items) > 0:
@@ -645,7 +645,7 @@ class inputWidget(widgets.QWidget):
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
         if not text in self.ecurequestsparser.data:
-            print _("Cannot find data "), text
+            print(_("Cannot find data "), text)
             return
         data = self.ecurequestsparser.data[text]
 

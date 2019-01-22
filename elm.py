@@ -318,20 +318,19 @@ class Port:
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
                 if isels:
-                    print "Checking els"
                     self.check_elm()
                 self.connectionStatus = True
                 return
             except Exception as e:
-                print _("Error:") + str(e)
-                print _("ELM not connected or wrong COM port"), portName
+                print(_("Error:") + str(e))
+                print(_("ELM not connected or wrong COM port"), portName)
                 options.last_error = _("Error:") + str(e)
                 options.elm_failed = True
 
     def close(self):
         try:
             self.hdr.close()
-            print "Port closed"
+            print("Port closed")
         except:
             pass
 
@@ -373,8 +372,8 @@ class Port:
                 if self.hdr.inWaiting():
                     byte = self.hdr.read()
         except:
-            print '*' * 40
-            print '*       ' + _('Connection to ELM was lost')
+            print('*' * 40)
+            print('*       ' + _('Connection to ELM was lost'))
             self.connectionStatus = False
             self.close()
             return None
@@ -393,8 +392,8 @@ class Port:
             else:
                 return self.hdr.write(data)
         except:
-            print '*' * 40
-            print '*       ' + _('Connection to ELM was lost')
+            print('*' * 40)
+            print('*       ' + _('Connection to ELM was lost'))
             self.connectionStatus = False
             self.close()
 
@@ -430,7 +429,7 @@ class Port:
         self.hdr.timeout = 2
 
         for s in [38400, 115200, 230400, 57600, 9600, 500000]:
-            print "\r\t\t\t\t\r" + _("Checking port speed:"), s,
+            print("\r\t\t\t\t\r" + _("Checking port speed:"), s,)
             sys.stdout.flush()
 
             self.hdr.baudrate = s
@@ -449,12 +448,12 @@ class Port:
                 tc = time.time()
                 if '>' in self.buff:
                     options.port_speed = s
-                    print "\n" + _("Start COM speed :"), s
+                    print("\n" + _("Start COM speed :"), s)
                     self.hdr.timeout = self.portTimeout
                     return True
                 if (tc - tb) > 1:
                     break
-        print "\n" + _("ELM not responding")
+        print("\n" + _("ELM not responding"))
         return False
 
     def soft_baudrate(self, baudrate):
@@ -463,10 +462,10 @@ class Port:
             return
 
         if self.portType == 1:  # wifi is not supported
-            print _("ERROR - wifi do not support changing baud rate")
+            print(_("ERROR - wifi do not support changing baud rate"))
             return
 
-        print _("Changing baud rate to:"), baudrate,
+        print(_("Changing baud rate to:"), baudrate,)
 
         if baudrate == 38400:
             self.write("at brd 68\r")
@@ -495,7 +494,7 @@ class Port:
             if 'OK' in self.buff:
                 break
             if (tc - tb) > 1:
-                print _("ERROR - command not supported")
+                print(_("ERROR - command not supported"))
                 sys.exit()
 
         self.hdr.timeout = 1
@@ -526,7 +525,7 @@ class Port:
             if 'ELM' in self.buff:
                 break
             if (tc - tb) > 1:
-                print _("ERROR - rate not supported. Let's go back.")
+                print(_("ERROR - rate not supported. Let's go back."))
                 self.hdr.timeout = self.portTimeout
                 self.hdr.baudrate = options.port_speed
                 return
@@ -549,12 +548,12 @@ class Port:
             if '>' in self.buff:
                 break
             if (tc - tb) > 1:
-                print _("ERROR - something went wrong. Let's get back.")
+                print(_("ERROR - something went wrong. Let's get back."))
                 self.hdr.timeout = self.portTimeout
                 self.hdr.baudrate = options.port_speed
                 return
 
-        print "OK"
+        print("OK")
         return
 
 
@@ -606,7 +605,7 @@ class ELM:
 
     def __init__(self, portName, speed, isels = False):
         for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
-            print _("Trying to open port") + "%s @ %i" % (portName, s)
+            print(_("Trying to open port") + "%s @ %i" % (portName, s))
             self.sim_mode = options.simulation_mode
             self.portName = portName
             self.isels = isels
@@ -698,7 +697,7 @@ class ELM:
             if self.currentaddress in dnat:
                 self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
             else:
-                print "Unknown address ", self.currentaddress, req, rsp
+                print("Unknown address ", self.currentaddress, req, rsp)
             self.vf.flush()
 
         return rsp
@@ -752,7 +751,7 @@ class ELM:
         for l in cmdrsp.split('\n'):
             l = l.strip().upper()
             if l.startswith("7F") and len(l) == 8 and l[6:8] in negrsp.keys():
-                print l, negrsp[l[6:8]]
+                print(l, negrsp[l[6:8]])
                 if self.lf != 0:
                     self.lf.write("#[" + str(tc - tb) + "] rsp:" + l + ":" + negrsp[l[6:8]] + "\n")
                     self.lf.flush()
@@ -962,7 +961,7 @@ class ELM:
                             ST = int(ST[1:2], 16) * 100
                         else:
                             ST = int(ST, 16)
-                        print 'BS:', BS, 'ST:', ST
+                        print('BS:', BS, 'ST:', ST)
                         break  # go to sending consequent frames
                     else:
                         responses.append(s)
@@ -1044,10 +1043,11 @@ class ELM:
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F':
             if result[6:8] in negrsp.keys():
-                errorstr = negrsp[result[6:8]]
+                errorstr = negrsp[result[4:6]]
             noerrors = False
 
         if len(result) / 2 >= nbytes and noerrors:
+            result = result[0:nbytes*2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
@@ -1377,7 +1377,7 @@ def elm_checker(port, speed, logview, app):
                 if 'H' in cm[1].upper():
                     continue
                 total += 1
-                print cm[2] + " " + res.strip()
+                print(cm[2] + " " + res.strip())
                 if '?' in res:
                     chre = '<font color=red>[' + _('FAIL') + ']</font>'
                     if 'P' in cm[1].upper():

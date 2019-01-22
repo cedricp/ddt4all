@@ -33,7 +33,10 @@ _ = options.translator('ddt4all')
 
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
-    dataready = core.pyqtSignal(basestring)
+    try:
+        dataready = core.pyqtSignal(basestring)
+    except:
+        dataready = core.pyqtSignal(str)
 
     def __init__(self, address, br):
         super(snifferThread, self).__init__()
@@ -175,11 +178,11 @@ class sniffer(widgets.QWidget):
             return
 
         if len(data) > 16:
-            print "Frame length error : ", data
+            print("Frame length error : ", data)
             return
 
         if not all(c in string.hexdigits for c in data):
-            print _("Frame hex error : "), data
+            print(_("Frame hex error : "), data)
             return
 
         data = data.replace(' ', '').ljust(16, "0")

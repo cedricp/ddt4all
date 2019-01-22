@@ -11,10 +11,10 @@ try:
     import PyQt5.QtGui as gui
     import PyQt5.QtCore as core
     import PyQt5.QtWidgets as widgets
-    if platform.system() == 'Darwin':
+    try:
         import PyQt5.QtWebEngine as webkit
         import PyQt5.QtWebEngineWidgets as webkitwidgets
-    else:
+    except:
         import PyQt5.QtWebKit as webkit
         import PyQt5.QtWebKitWidgets as webkitwidgets
     def utf8(string):
@@ -209,8 +209,11 @@ class Ecu_list(widgets.QWidget):
             if not found:
                 stored_ecus[grp].append(row)
 
-        keys = stored_ecus.keys()
-        keys.sort(cmp=locale.strcoll)
+        keys = list(stored_ecus.keys())
+        try:
+            keys.sort(cmp=locale.strcoll)
+        except:
+            keys.sort()
         for e in keys:
             item = widgets.QTreeWidgetItem(self.list, [e])
             if e in longgroupnames:
@@ -255,7 +258,6 @@ class Ecu_list(widgets.QWidget):
                 group = self.ecuscan.ecu_database.addr_group_mapping[target.addr]
             else:
                 group = "Unknown"
-            print name, group
             name = "[ " + group + " ] " + name
         if selected:
             if name not in options.main_window.ecunamemap:
@@ -281,7 +283,7 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
-        print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
+        #print(str(self.ecu_scan.getNumEcuDb()) + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -290,13 +292,13 @@ class Main_widget(widgets.QMainWindow):
             msgbox.exec_()
 
         self.paramview = None
-        if platform.system() == 'Darwin':
+        try:
             self.docview = webkitwidgets.QWebEngineView()
             self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
             self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
             self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
             self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
-        else:
+        except:
             self.docview = webkitwidgets.QWebView()
             self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
             self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
@@ -544,7 +546,7 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print _("Cannot load plugin ") + plugin + traceback.format_exc()
+                pass
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
@@ -1377,7 +1379,7 @@ if __name__ == '__main__':
 
     ecudirfound = False
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
-        print _("Using custom DDT database")
+        print(_("Using custom DDT database"))
         ecudirfound = True
 
     #if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
@@ -1408,7 +1410,7 @@ if __name__ == '__main__':
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print _("Initilizing ELM with speed %i...") % port_speed
+        print(_("Initilizing ELM with speed %i...") % port_speed)
         options.elm = elm.ELM(options.port, port_speed, pc.isels)
 
         if options.elm_failed:

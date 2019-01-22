@@ -49,4 +49,7 @@ def translator(filename):
 
     # Set up message catalog access
     t = gettext.translation(filename, 'locale', fallback=True, codeset="utf-8")
-    return t.ugettext
+    try:
+        return t.ugettext
+    except:
+        return t.gettext

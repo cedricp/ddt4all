@@ -8,8 +8,12 @@ import options
 from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, argparse, zipfile, glob
-from StringIO import StringIO
 import datetime
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 try:
     import PyQt5.QtGui as gui
@@ -53,6 +57,7 @@ class ecuCommand(widgets.QDialog):
         self.sds_combo = widgets.QComboBox()
         self.com_table = widgets.QTableWidget()
         self.rcv_table = widgets.QTableWidget()
+        self.isotp_frame_edit = widgets.QLineEdit()
         self.com_table.setColumnCount(2)
         self.com_table.verticalHeader().hide()
 
@@ -64,6 +69,10 @@ class ecuCommand(widgets.QDialog):
         layout.addWidget(self.req_combo)
         layout.addWidget(widgets.QLabel("Data to send"))
         layout.addWidget(self.com_table)
+        layout.addWidget(widgets.QLabel("Computed ISOTP Frame"))
+        layout.addWidget(self.isotp_frame_edit)
+        checkbutton = widgets.QPushButton("Compute frame")
+        layout.addWidget(checkbutton)
         layout.addWidget(widgets.QLabel("Data received"))
         layout.addWidget(self.rcv_table)
         button = widgets.QPushButton("Execute")
@@ -73,6 +82,7 @@ class ecuCommand(widgets.QDialog):
         self.reqs = []
         self.send_data = []
         self.current_request = None
+        checkbutton.clicked.connect(self.recompute)
 
         reqlist = [a for a in self.ecu.requests.keys()]
         reqlist.sort()
@@ -81,7 +91,7 @@ class ecuCommand(widgets.QDialog):
             self.reqs.append(k)
         self.req_combo.currentIndexChanged.connect(self.req_changed)
 
-        for k, v in self.sds.iteritems():
+        for k, v in self.sds.items():
             self.sds_combo.addItem(k)
 
         text = "<center>This feature is experimental</center>\n"
@@ -91,26 +101,25 @@ class ecuCommand(widgets.QDialog):
         msgbox.setText(text)
         msgbox.exec_()
 
-    def execute(self):
-        if self.current_request is None:
-            return
+    def recompute(self):
+        frame = self.compute_frame(False)
+        self.isotp_frame_edit.setText(frame)
 
-        sds = self.sds[utf8(self.sds_combo.currentText())]
-        self.paramview.sendElm(sds)
-
+    def compute_frame(self, check=True):
         data_to_stream = {}
         for i in range(0, self.com_table.rowCount()):
             cellwidget = self.com_table.cellWidget(i, 1)
             reqkey = utf8(self.com_table.item(i, 0).text())
-            if (cellwidget):
+            if cellwidget:
                 curtext = utf8(cellwidget.currentText())
             elif self.com_table.item(i, 1) is not None:
                 curtext = utf8(self.com_table.item(i, 1).text())
             else:
-                msgbox = widgets.QMessageBox()
-                msgbox.setText("Missing data in table")
-                msgbox.exec_()
-                return
+                if check:
+                    msgbox = widgets.QMessageBox()
+                    msgbox.setText("Missing data in table")
+                    msgbox.exec_()
+                return "Missing input data"
 
             if curtext is None:
                 # Error here
@@ -119,6 +128,16 @@ class ecuCommand(widgets.QDialog):
                 data_to_stream[reqkey] = curtext
 
         stream_to_send = " ".join(self.current_request.build_data_stream(data_to_stream))
+        return stream_to_send
+
+    def execute(self):
+        if self.current_request is None:
+            return
+
+        sds = self.sds[utf8(self.sds_combo.currentText())]
+        self.paramview.sendElm(sds)
+
+        stream_to_send = self.compute_frame()
         reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
         if reveived_stream.startswith("WRONG"):
             msgbox = widgets.QMessageBox()
@@ -129,7 +148,7 @@ class ecuCommand(widgets.QDialog):
 
         self.rcv_table.setRowCount(len(received_data))
         itemcount = 0
-        for k, v in received_data.iteritems():
+        for k, v in received_data.items():
             item = widgets.QTableWidgetItem(k)
             self.rcv_table.setItem(itemcount, 0, item)
             if v is not None:
@@ -153,7 +172,7 @@ class ecuCommand(widgets.QDialog):
         self.rcv_table.setHorizontalHeaderLabels(["Key", "Value"])
 
         itemcount = 0
-        for k, v in self.current_request.sendbyte_dataitems.iteritems():
+        for k, v in self.current_request.sendbyte_dataitems.items():
             self.send_data.append(k)
             ecudata = self.ecu.data[k]
 
@@ -294,18 +313,18 @@ class paramWidget(widgets.QWidget):
 
     def renameCategory(self, oldname, newname):
         if oldname not in self.categories:
-            print "Err, cannot rename ", oldname
+            print("Err, cannot rename ", oldname)
             return
 
         self.categories[newname] = self.categories.pop(oldname)
 
     def renameScreen(self, oldname, newname):
         if oldname not in self.xmlscreen:
-            print "Err, cannot rename ", oldname
+            print("Err, cannot rename ", oldname)
             return
 
         self.xmlscreen[newname] = self.xmlscreen.pop(oldname)
-        for key, cat in self.categories.iteritems():
+        for key, cat in self.categories.items():
             if oldname in cat:
                 cat.remove(oldname)
                 cat.append(newname)
@@ -645,10 +664,10 @@ class paramWidget(widgets.QWidget):
                         name = name + "[" + sds_stream + "]"
                         self.request_editor_sds[name] = sds_stream
                         self.diagsession.addItem(name)
-                    print sds.sendbyte_dataitems[u'Session Name']
+                    print(sds.sendbyte_dataitems[u'Session Name'])
 
         if len(self.request_editor_sds) == 1:
-            for k, v in self.sds.iteritems():
+            for k, v in self.sds.items():
                 self.diagsession.addItem(k)
                 self.request_editor_sds[k] = v
 
@@ -711,7 +730,7 @@ class paramWidget(widgets.QWidget):
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
-                print "Protocol not supported : " + self.ecurequestsparser.ecu_protocol
+                print("Protocol not supported : " + self.ecurequestsparser.ecu_protocol)
 
     def initJSON(self):
         self.layoutdict = None
@@ -804,7 +823,7 @@ class paramWidget(widgets.QWidget):
         self.sds["After sales (default) [10C0]"] = "10C0"
 
         # Init startDiagnosticSession combo
-        for reqname, request in self.ecurequestsparser.requests.iteritems():
+        for reqname, request in self.ecurequestsparser.requests.items():
             uppername = reqname.upper()
             if "START" in uppername and "DIAG" in uppername and "SESSION" in uppername:
                 sessionnamefound = False
@@ -812,8 +831,9 @@ class paramWidget(widgets.QWidget):
                     dataitemnameupper = di.upper()
                     if u"SESSION" in dataitemnameupper and u"NAME" in dataitemnameupper:
                         ecu_data = self.ecurequestsparser.data[di]
-                        for dataname, dataitem in ecu_data.items.iteritems():
-                            sdsrequest = "".join(request.build_data_stream({di: dataname}))
+                        for dataname, dataitem in ecu_data.items.items():
+                            datastream = request.build_data_stream({di: dataname})
+                            sdsrequest = "".join(datastream)
                             dataname += u" [" + sdsrequest + u"]"
                             options.main_window.sdscombo.addItem(dataname)
                             self.sds[dataname] = sdsrequest
@@ -1452,44 +1472,44 @@ class paramWidget(widgets.QWidget):
         self.dtcdialog.exec_()
 
     def requestNameChanged(self, oldname, newname):
-        for screen_k, screen_data in self.layoutdict['screens'].iteritems():
-            print _("Parsing screen "), screen_k
+        for screen_k, screen_data in self.layoutdict['screens'].items():
+            print(_("Parsing screen "), screen_k)
             for input_data in screen_data['inputs']:
                 if oldname == input_data['request']:
-                    print "found request in input ", screen_k
+                    print("found request in input ", screen_k)
                     input_data['request'] = newname
 
             for display_data in screen_data['displays']:
                 if oldname == display_data['request']:
-                    print "found in display ", screen_k
+                    print("found in display ", screen_k)
                     display_data['request'] = newname
 
             for button_data in screen_data['buttons']:
                 if 'send' in button_data.keys():
                     for send in button_data['send']:
                         if send['RequestName'] == oldname:
-                            print "found in button ", screen_k
+                            print("found in button ", screen_k)
                             send['RequestName'] = newname
 
             for presend_data in screen_data['presend']:
                 if 'RequestName' in presend_data:
                     if presend_data['RequestName'] == oldname:
-                        print "found in presend ", screen_k
+                        print("found in presend ", screen_k)
                         presend_data['RequestName'] = newname
 
         self.reinitScreen()
 
     def dataNameChanged(self, oldname, newname):
-        for screen_k, screen_data in self.layoutdict['screens'].iteritems():
-            print "Parsing screen ", screen_k
+        for screen_k, screen_data in self.layoutdict['screens'].items():
+            print("Parsing screen ", screen_k)
             for input_data in screen_data['inputs']:
                 if oldname == input_data['text']:
-                    print "found data in input ", screen_k
+                    print("found data in input ", screen_k)
                     input_data['text'] = newname
 
             for display_data in screen_data['displays']:
                 if oldname == display_data['text']:
-                    print "found data in display ", screen_k
+                    print("found data in display ", screen_k)
                     display_data['text'] = newname
 
         self.reinitScreen()
@@ -1545,7 +1565,7 @@ def dumpDOC(xdoc):
                 xmlscreens[screen_name] = screen
                 js_categories[category_name].append(screen_name)
 
-    for scrname, screen in xmlscreens.iteritems():
+    for scrname, screen in xmlscreens.items():
         screen_name = scrname
         js_screens[screen_name] = {}
         js_screens[screen_name]['width'] = int(screen.getAttribute("Width"))
@@ -1652,7 +1672,7 @@ def zipConvertXML(dbfilename = "ecu.zip"):
                     imgs.append(os.path.join(dirpath, file))
 
     if len(ecus_glob) == 0:
-        print "Cannot zip database, no 'ecus' directory"
+        print("Cannot zip database, no 'ecus' directory")
         return
 
     ecus = []
@@ -1662,7 +1682,7 @@ def zipConvertXML(dbfilename = "ecu.zip"):
         ecus.append(e)
 
     i = 0
-    print "Starting conversion"
+    print("Starting conversion")
 
     targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
@@ -1674,12 +1694,12 @@ def zipConvertXML(dbfilename = "ecu.zip"):
                 filename = filename.replace("ecus/", "")
             else:
                 filename = filename.replace("ecus\\", "")
-            print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
+            print("Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename)
 
             i += 1
             layoutjs = dumpXML(target)
             if layoutjs is None:
-                print "Skipping current file (cannot parse it)"
+                print("Skipping current file (cannot parse it)")
                 continue
             ecufile = ecu.Ecu_file(target, True)
             js = ecufile.dumpJson()
@@ -1694,10 +1714,10 @@ def zipConvertXML(dbfilename = "ecu.zip"):
 
             targetsdict[filename] = ecu_ident
 
-        print 'Writing database'
+        print('Writing database')
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
-    print 'Writing archive'
+    print('Writing archive')
     with open(dbfilename, "wb") as f:
         f.write(zipoutput.getvalue())
 
@@ -1709,19 +1729,19 @@ def convertXML():
     ecus.remove("ecus/eculist.xml")
     i = 0
 
-    print "Opening ECU Database..."
+    print("Opening ECU Database...")
     ecu_database = ecu.Ecu_database()
-    print "Starting conversion"
+    print("Starting conversion")
 
     for target in ecus:
         filename = target.replace(".xml", ".json")
         filename = filename.replace("ecus/", "json/")
-        print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
+        print("Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename)
 
         i += 1
         layoutjs = dumpXML(target)
         if layoutjs is None:
-            print "Skipping current file (cannot parse it)"
+            print("Skipping current file (cannot parse it)")
             continue
         ecufile = ecu.Ecu_file(target, True)
         js = ecufile.dumpJson()
