@@ -313,28 +313,33 @@ class Ecu_request:
         return values
 
     def get_formatted_sentbytes(self):
-        bytes_to_send_ascii = self.sentbytes.encode('ascii', 'ignore')
-        return [bytes_to_send_ascii[i:i + 2] for i in range(0, len(bytes_to_send_ascii), 2)]
+        bytes_to_send_ascii = self.sentbytes
+        return [str(bytes_to_send_ascii[i:i + 2]) for i in range(0, len(bytes_to_send_ascii), 2)]
 
     def dump(self):
         js = {}
-        if self.minbytes != 0: js['minbytes'] = self.minbytes
-        if self.shiftbytescount != 0: js['shiftbytescount'] = self.shiftbytescount
-        if self.replybytes != '': js['replybytes'] = self.replybytes
-        if self.manualsend: js['manualsend'] = self.manualsend
-        if self.sentbytes != '': js['sentbytes'] = self.sentbytes
+        if self.minbytes != 0:
+            js['minbytes'] = self.minbytes
+        if self.shiftbytescount != 0:
+            js['shiftbytescount'] = self.shiftbytescount
+        if self.replybytes != '':
+            js['replybytes'] = self.replybytes
+        if self.manualsend:
+            js['manualsend'] = self.manualsend
+        if self.sentbytes != '':
+            js['sentbytes'] = self.sentbytes
 
         js['name'] = self.name
         js['deny_sds'] = []
-        if self.sds['nosds'] == False:
+        if self.sds['nosds'] is False:
             js['deny_sds'].append('nosds')
-        if self.sds['plant'] == False:
+        if self.sds['plant'] is False:
             js['deny_sds'].append('plant')
-        if self.sds['aftersales'] == False:
+        if self.sds['aftersales'] is False:
             js['deny_sds'].append('aftersales')
-        if self.sds['engineering'] == False:
+        if self.sds['engineering'] is False:
             js['deny_sds'].append('engineering')
-        if self.sds['supplier'] == False:
+        if self.sds['supplier'] is False:
             js['deny_sds'].append('supplier')
 
         sdi = {}

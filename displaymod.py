@@ -8,6 +8,12 @@ except:
     import PyQt4.QtGui as widgets
     import PyQt4.QtCore as core
 
+try:
+    a = unicode("")
+except:
+    def unicode(a):
+        return str(a)
+
 import options, os, zipfile
 from uiutils import *
 

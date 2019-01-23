@@ -5,7 +5,6 @@ import sys
 import os
 import glob
 import json
-import platform
 
 try:
     import PyQt5.QtGui as gui
@@ -27,7 +26,10 @@ except:
     import PyQt4.QtWebKit as webkit
     import PyQt4.QtWebKit as webkitwidgets
     def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF-8")
+        try:
+            return unicode(string.toUtf8(), encoding="UTF8")
+        except:
+            return string
     qt5 = False
 
 import parameters, ecu
@@ -35,7 +37,6 @@ import elm, options, locale
 import dataeditor
 import sniffer
 import imp
-import traceback
 import tempfile, errno
 import codecs
 
@@ -50,11 +51,10 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all')
 app = None
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def isWritable(path):
     try:
-        testfile = tempfile.TemporaryFile(dir = path)
+        testfile = tempfile.TemporaryFile(dir=path)
         testfile.close()
     except OSError as e:
         if e.errno == errno.EACCES:  # 13
@@ -1366,6 +1366,7 @@ class portChooser(widgets.QDialog):
         self.done(True)
 
 if __name__ == '__main__':
+    #sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
@@ -1381,11 +1382,6 @@ if __name__ == '__main__':
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
         print(_("Using custom DDT database"))
         ecudirfound = True
-
-    #if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
-    #    print _("Using DDT2000 default installation")
-    #    options.ecus_dir = "C:/DDT2000data/ecus/"
-    #    ecudirfound = True
 
     pc = portChooser()
     nok = True

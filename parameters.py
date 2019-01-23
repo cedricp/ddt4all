@@ -27,7 +27,10 @@ except:
     import PyQt4.QtGui as widgets
     import PyQt4.QtCore as core
     def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF8")
+        try:
+            return unicode(string.toUtf8(), encoding="UTF8")
+        except:
+            return string
     qt5 = False
 
 __author__ = "Cedric PAILLE"
@@ -833,7 +836,7 @@ class paramWidget(widgets.QWidget):
                         ecu_data = self.ecurequestsparser.data[di]
                         for dataname, dataitem in ecu_data.items.items():
                             datastream = request.build_data_stream({di: dataname})
-                            sdsrequest = "".join(datastream)
+                            sdsrequest = ''.join(datastream)
                             dataname += u" [" + sdsrequest + u"]"
                             options.main_window.sdscombo.addItem(dataname)
                             self.sds[dataname] = sdsrequest
@@ -864,8 +867,9 @@ class paramWidget(widgets.QWidget):
                     break
 
     def sendElm(self, command, auto=False, force=False):
+        if not isinstance(command, str):
+            command = str(command)
         elm_response = '00 ' * 70
-
         if not options.simulation_mode:
             if not options.elm.connectionStat():
                 options.main_window.setConnected(False)
@@ -912,7 +916,7 @@ class paramWidget(widgets.QWidget):
                     elm_response = "61 25 1E 0A 4C 87 14 40 14 06 0F FF FF"
                 if "216B" in command:
                     elm_response = "61 6B 10 00"
-            if "210A" in command:
+            if '210A' in command:
                 elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
             elif "17FF00" in command:
                 # Test for ACU4

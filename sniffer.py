@@ -3,6 +3,11 @@
 import time
 import ecu
 from uiutils import *
+try:
+    a = unicode("")
+except:
+    def unicode(a):
+        return a
 try: 
     qt5 = True
     import PyQt5.QtGui as gui
