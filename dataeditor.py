@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
-import ecu, math, string, options, copy
+import ecu
+import math
+import string
+import options
+import copy
+import codecs
+
+hex_decoder = codecs.getdecoder("hex_codec")
+
+
+def decode_hex(string):
+    return hex_decoder(string)[0]
+
 try:
     import PyQt5.QtGui as gui
     import PyQt5.QtCore as core
@@ -63,9 +75,9 @@ class Bit_container(widgets.QFrame):
         self.setLayout(self.layout)
 
     def set_value_hex(self, val):
-        char = val.decode("hex")
+        char = decode_hex(val)
         repr = ""
-        if ord(char) < 127 and char in string.printable:
+        if ord(char) < 127 and str(char) in string.printable:
             repr = " [" + char + "]"
 
         self.labelvaluehex.setText("<font color='green'>$" + val.zfill(2) + repr + "</font>")
@@ -466,7 +478,7 @@ class paramEditor(widgets.QFrame):
 
     def update_bitview_value(self, dataname):
         bytestosend = str(utf8(self.inputreq.text()))
-        byteslisttosend = [bytestosend[a*2:a*2+2] for a in range(len(bytestosend ) / 2)]
+        byteslisttosend = [bytestosend[a*2:a*2+2] for a in range(len(bytestosend) // 2)]
         self.bitviewer.set_bytes_value(byteslisttosend)
 
     def set_ecufile(self, ef):
@@ -845,7 +857,7 @@ class numericListPanel(widgets.QFrame):
         self.inputnob.setValue(self.data.bitscount)
 
         count = 0
-        for k, v in self.data.items.iteritems():
+        for k, v in self.data.items.items():
             spinvalue = widgets.QSpinBox()
             spinvalue.setRange(-1000000,1000000)
             spinvalue.setValue(int(v))
@@ -1076,14 +1088,14 @@ class dataEditor(widgets.QWidget):
         dataname = utf8(self.datatable.item(r, 0).text())
 
         # Check if data needed by request
-        for reqname, request in self.ecurequestsparser.requests.iteritems():
-            for rcvname, rcvdi in request.dataitems.iteritems():
+        for reqname, request in self.ecurequestsparser.requests.items():
+            for rcvname, rcvdi in request.dataitems.items():
                 if rcvname == dataname:
                     msgbox = widgets.QMessageBox()
                     msgbox.setText(_("Data is used by request %s") % reqname)
                     msgbox.exec_()
                     return
-            for sndname, snddi in request.sendbyte_dataitems.iteritems():
+            for sndname, snddi in request.sendbyte_dataitems.items():
                 if sndname == dataname:
                     msgbox = widgets.QMessageBox()
                     msgbox.setText(_("Data is used by request %s") % reqname)
@@ -1163,7 +1175,7 @@ class dataEditor(widgets.QWidget):
         self.ecurequestsparser.data[newname] = currentecudata
 
         # Change requests data items name too
-        for reqk, req in self.ecurequestsparser.requests.iteritems():
+        for reqk, req in self.ecurequestsparser.requests.items():
             sbdata = req.sendbyte_dataitems
             rbdata = req.dataitems
 
@@ -1393,7 +1405,7 @@ class buttonData(widgets.QFrame):
             return
 
         options.main_window.logview.append(_("<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>") % requestname)
-        for k, v in itemsfound.iteritems():
+        for k, v in itemsfound.items():
             if not v:
                 options.main_window.logview.append(_("<font color=orange> - '%s'</font>") % k)
 

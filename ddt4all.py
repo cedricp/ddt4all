@@ -283,7 +283,7 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
-        #print(str(self.ecu_scan.getNumEcuDb()) + _("loaded ECUs in database."))
+        print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -1366,7 +1366,10 @@ class portChooser(widgets.QDialog):
         self.done(True)
 
 if __name__ == '__main__':
-    #sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+    try:
+        sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
+    except:
+        sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
