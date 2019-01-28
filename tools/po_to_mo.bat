@@ -1,7 +1,13 @@
 @ECHO OFF
+
+SET PROGRAM-NAME=DDT4All
+SET FILE-NAME=ddt4all
+SET MSGFMT-OPTIONS=
+
 CLS
 ECHO ******************************************
-ECHO * DDT4ALL - Convert PO files in MO files *
+ECHO * %PROGRAM-NAME%
+ECHO * Convert PO files in MO files
 ECHO ******************************************
 ECHO.
 ECHO.
@@ -11,14 +17,15 @@ PAUSE >NUL
 
 CLS
 ECHO ******************************************
-ECHO * DDT4ALL - Convert PO files in MO files *
+ECHO * %PROGRAM-NAME%
+ECHO * Convert PO files in MO files
 ECHO ******************************************
 ECHO.
 
 for %%x in (de es fr hu it nl pl pt ru sr) do (
 
-ECHO **** Country = %%x - Compiling 'ddt4all.po' in 'ddt4all.mo'....
-msgfmt ..\locale\%%x\lc_messages\ddt4all.po -o ..\locale\%%x\lc_messages\ddt4all.mo > NUL
+ECHO **** Country = %%x - Compiling '%FILE-NAME%.po' in '%FILE-NAME%.mo'....
+msgfmt %MSGFMT-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po -o ..\locale\%%x\lc_messages\%FILE-NAME%.mo > NUL
 ECHO.
 )
 
@@ -27,3 +34,7 @@ ECHO.
 ECHO      #### Press any key to exit ####
 
 PAUSE > NUL
+
+SET PROGRAM-NAME=
+SET FILE-NAME=
+SET MSGFMT-OPTIONS=

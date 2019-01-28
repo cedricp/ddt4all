@@ -371,24 +371,12 @@ class Main_widget(widgets.QMainWindow):
         self.treeview_params = widgets.QTreeWidget()
         self.treeview_params.setSortingEnabled(True)
         self.treeview_params.sortByColumn(0, core.Qt.AscendingOrder)
-        self.screenmenu = widgets.QMenuBar()
+
         treedock_layout = widgets.QVBoxLayout()
-        treedock_layout.addWidget(self.screenmenu)
         treedock_layout.addWidget(self.treeview_params)
         screen_widget.setLayout(treedock_layout)
         self.treeview_params.setHeaderLabels([_("Screens")])
         self.treeview_params.clicked.connect(self.changeScreen)
-
-        actionmenu = self.screenmenu.addMenu(_("Action"))
-        cat_action = widgets.QAction(_("New Category"), actionmenu)
-        screen_action = widgets.QAction(_("New Screen"), actionmenu)
-        rename_action = widgets.QAction(_("Rename"), actionmenu)
-        actionmenu.addAction(cat_action)
-        actionmenu.addAction(screen_action)
-        actionmenu.addAction(rename_action)
-        cat_action.triggered.connect(self.newCategory)
-        screen_action.triggered.connect(self.newScreen)
-        rename_action.triggered.connect(self.screenRename)
 
         self.treedock_logs = widgets.QDockWidget(self)
         self.logview = widgets.QTextEdit()
@@ -522,6 +510,19 @@ class Main_widget(widgets.QMainWindow):
         for ecuf in ecu_files:
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
+
+        self.screenmenu = menu.addMenu(_("Screens"))
+
+        actionmenu = self.screenmenu.addMenu(_("Action"))
+        cat_action = widgets.QAction(_("New Category"), actionmenu)
+        screen_action = widgets.QAction(_("New Screen"), actionmenu)
+        rename_action = widgets.QAction(_("Rename"), actionmenu)
+        actionmenu.addAction(cat_action)
+        actionmenu.addAction(screen_action)
+        actionmenu.addAction(rename_action)
+        cat_action.triggered.connect(self.newCategory)
+        screen_action.triggered.connect(self.newScreen)
+        rename_action.triggered.connect(self.screenRename)
 
         plugins_menu = menu.addMenu(_("Plugins"))
         category_menus = {}
