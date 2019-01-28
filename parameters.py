@@ -1327,9 +1327,16 @@ class paramWidget(widgets.QWidget):
             return
 
         self.startDiagnosticSession()
+
+        # Extend timeout to not miss response
+        if options.elm is not None:
+            options.elm.set_can_timeout(1500)
         # Add a little delay
         time.sleep(.5)
+
         response = self.sendElm(request)
+        if options.elm is not None:
+            options.elm.set_can_timeout(options.cantimeout)
 
         self.dtcdialog.close()
 
