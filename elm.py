@@ -772,10 +772,11 @@ class ELM:
             return self.send_can_cfc0(command)
         else:
             rsp = self.send_can(command)
-            if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
-                self.ATCFC0 = True
-                self.cmd("at cfc0")
-                rsp = self.send_can_cfc0(command)
+            # Disabled this because it's now possible to control it via UI
+            # if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
+            #     self.ATCFC0 = True
+            #     self.cmd("at cfc0")
+            #     rsp = self.send_can_cfc0(command)
             return rsp
 
     def send_can(self, command):
