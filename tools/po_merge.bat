@@ -1,9 +1,18 @@
 @ECHO OFF
 SETLOCAL EnableExtensions 
 
+SET PROGRAM-NAME=DDT4All
+SET FILE-NAME=ddt4all
+
+SET CHARACTERS=400
+SET MSGMERGE-OPTIONS=-q -U -N --backup=none --width=%CHARACTERS% --no-wrap --no-location
+SET MSGATTRIB-OPTIONS=--no-obsolete --no-fuzzy --width=%CHARACTERS% --no-wrap --no-location
+SET MSGFMT-OPTIONS=--statistics
+
 CLS
 ECHO ********************************************************
-ECHO * DDTALL - Update language files using master template *
+ECHO * %PROGRAM-NAME%
+ECHO * Update language files using master template 
 ECHO ********************************************************
 ECHO.
 ECHO.
@@ -13,21 +22,24 @@ PAUSE >NUL
 
 CLS
 ECHO ********************************************************
-ECHO * DDTALL - Update language files using master template *
+ECHO * %PROGRAM-NAME%
+ECHO * Update language files using master template 
 ECHO ********************************************************
+
 for %%x in (de es fr hu it nl pl pt ru sr) do (
 
-ECHO **** Country = %%x - Merging 'ddt4all.po' with 'ddt4all.pot' template....
-msgmerge  --no-wrap -U -q -N --backup=none ..\locale\%%x\lc_messages\ddt4all.po ..\locale\ddt4all.pot >NUL
-ECHO **** Country = %%x - Cleaning obsolete entries from 'ddt4all.po'....
-msgattrib --no-wrap --no-fuzzy --no-obsolete ..\locale\%%x\lc_messages\ddt4all.po > ..\locale\%%x\lc_messages\ddt4all_new.po
-copy ..\locale\%%x\lc_messages\ddt4all_new.po ..\locale\%%x\lc_messages\ddt4all.po >NUL
-del ..\locale\%%x\lc_messages\ddt4all_new.po >NUL
-ECHO **** Country = %%x - Statistics about 'ddt4all.po'....
-msgfmt --statistics ..\locale\%%x\lc_messages\ddt4all.po
-REM msgattrib --no-obsolete ..\locale\it\lc_messages\ddt4all.po > ..\locale\%%x\lc_messages\ddt4all_new.po
-REM copy ..\locale\%%x\lc_messages\ddt4all_new.po ..\locale\it\lc_messages\ddt4all.po
-REM del ..\locale\%%x\lc_messages\ddt4all_new.po
+ECHO **** Country = %%x - Merging '%FILE-NAME%.po' with '%FILE-NAME%.pot' template....
+msgmerge %MSGMERGE-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po ..\locale\%FILE-NAME%.pot >NUL
+
+ECHO **** Country = %%x - Cleaning obsolete entries from '%FILE-NAME%.po'....
+msgattrib %MSGATTRIB-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po > ..\locale\%%x\lc_messages\%FILE-NAME%_new.po
+
+copy ..\locale\%%x\lc_messages\%FILE-NAME%_new.po ..\locale\%%x\lc_messages\%FILE-NAME%.po >NUL
+del ..\locale\%%x\lc_messages\%FILE-NAME%_new.po >NUL
+
+ECHO **** Country = %%x - Statistics about '%FILE-NAME%.po'....
+msgfmt %MSGFMT-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po
+
 ECHO *******************************************************
 
 )
@@ -38,3 +50,8 @@ ECHO.
 ECHO.
 ECHO      #### Press any key to exit #####
 PAUSE > NUL
+
+SET MSGMERGE.OPTIONS=
+SET MSGATTRIB.OPTIONS=
+SET MSGFMT.OPTIONS=
+

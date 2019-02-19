@@ -256,6 +256,10 @@ class paramWidget(widgets.QWidget):
         self.movingwidgets = []
         self.allow_parameters_update = True
 
+    def set_soft_fc(self, b):
+        if options.elm is not None:
+            options.elm.ATCFC0 = b
+
     def tester_send(self):
         if self.tester_presend_command == "":
             return

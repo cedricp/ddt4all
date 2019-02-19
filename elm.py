@@ -771,10 +771,11 @@ class ELM:
             return self.send_can_cfc0(command)
         else:
             rsp = self.send_can(command)
-            if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
-                self.ATCFC0 = True
-                self.cmd("at cfc0")
-                rsp = self.send_can_cfc0(command)
+            # Disabled this because it's now possible to control it via UI
+            # if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
+            #     self.ATCFC0 = True
+            #     self.cmd("at cfc0")
+            #     rsp = self.send_can_cfc0(command)
             return rsp
 
     def send_can(self, command):
@@ -923,6 +924,9 @@ class ELM:
         Fc = 0  # Current frame
         Fn = len(raw_command)  # Number of frames
 
+        if Fn > 1 or len(raw_command[0])>15: # set elm timeout to 300ms for first response
+          self.send_raw('ATST4B')
+
         while Fc < Fn:
 
             # enable responses
@@ -932,10 +936,15 @@ class ELM:
 
             tb = time.time()  # time of sending (ff)
 
-            if len(raw_command[Fc]) == 16:
-                frsp = self.send_raw(raw_command[Fc])  # we'll get only 1 frame: fc, ff or sf
+            if Fn > 1 and Fc == (Fn-1):  # set elm timeout to maximum for last response on long command
+                self.send_raw('ATSTFF')
+                self.send_raw('ATAT1')
+
+            if (Fc == 0 or Fc == (Fn-1)) and len(raw_command[Fc])<16:  #first or last frame in command and len<16 (bug in ELM)
+                frsp = self.send_raw (raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
             else:
-                frsp = self.send_raw(raw_command[Fc] + '1')  # we'll get only 1 frame: fc, ff or sf
+                frsp = self.send_raw (raw_command[Fc])
+
             Fc = Fc + 1
 
             # analyse response
