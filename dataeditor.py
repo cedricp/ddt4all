@@ -5,12 +5,7 @@ import string
 import options
 import copy
 import codecs
-
 hex_decoder = codecs.getdecoder("hex_codec")
-
-
-def decode_hex(string):
-    return hex_decoder(string)[0]
 
 try:
     import PyQt5.QtGui as gui
@@ -37,6 +32,11 @@ __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
 _ = options.translator('ddt4all')
+
+
+def decode_hex(string):
+    return hex_decoder(string)[0]
+
 
 class Bit_container(widgets.QFrame):
     def __init__(self, data, num, parent=None):
