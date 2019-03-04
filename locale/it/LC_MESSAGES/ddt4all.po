@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (22.05.2018)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-21 15:12+0100\n"
+"POT-Creation-Date: 2019-03-04 07:06+0100\n"
 "PO-Revision-Date: 2019-01-10 21:11+0100\n"
 "Last-Translator: bovirus <bovirus@gmail.com>\n"
 "Language-Team: bovirus@gmail.com\n"
@@ -328,6 +328,9 @@ msgstr "Comando manuale"
 
 msgid "Manual request"
 msgstr "Richiesta manuale"
+
+msgid "Software flow control"
+msgstr "Flusso controllo software"
 
 msgid "Zoom In"
 msgstr "Zoom +"
