@@ -31,6 +31,7 @@ class labelWidget(widgets.QLabel):
         self.toggle_selected(False)
         self.setWordWrap(True)
         self.img = None
+        self.area = 0
 
     def toggle_selected(self, sel):
         if sel:
@@ -76,6 +77,7 @@ class labelWidget(widgets.QLabel):
         rect = getRectangleXML(getChildNodesByName(xmldata, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(xmldata, self.uiscale)
 
+        self.area = rect['width'] * rect['height']
         self.setFont(qfnt)
         self.resize(rect['width'], rect['height'])
         self.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(xmldata)))
@@ -95,6 +97,7 @@ class labelWidget(widgets.QLabel):
         fontcolor = jsdata['fontcolor']
 
         rect = jsdata['bbox']
+        self.area = rect['width'] * rect['height']
         qfnt = jsonFont(jsdata['font'], self.uiscale)
 
         self.ismovable = True
