@@ -1064,17 +1064,23 @@ class paramWidget(widgets.QWidget):
                 qbutton.clicked.connect(lambda state, btn=qbutton.uniquename: self.buttonClicked(btn))
 
     def drawLabels(self, screen):
+        labeldict = {}
         if self.parser == 'xml':
             labels = self.getChildNodesByName(screen, "Label")
             for label in labels:
                 qlabel = displaymod.labelWidget(self.panel, self.uiscale)
                 qlabel.initXML(label)
-
+                labeldict[qlabel] = qlabel.area
         else:
             for label in screen['labels']:
                 qlabel = displaymod.labelWidget(self.panel, self.uiscale)
                 qlabel.initJson(label)
-    
+
+        # Raise the small labels so they're not hidden by bigger ones
+        for key, value in reversed(sorted(labeldict.iteritems(), key=lambda (k,v): (v,k))):
+            key.setParent(self.panel)
+            key.raise_()
+
     def drawInputs(self,screen):
         self.inputdict = {}
         if self.parser == 'xml':
