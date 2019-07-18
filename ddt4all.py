@@ -864,7 +864,7 @@ class Main_widget(widgets.QMainWindow):
         if qt5:
             filename = str(filename_tuple[0])
         else:
-            filename = unicode(filename_tuple, encoding="UTF-8")
+            filename = utf8(filename_tuple)
         if filename == '':
             return
 
@@ -1206,7 +1206,7 @@ class portChooser(widgets.QDialog):
             if not currentitem:
                 self.logview.hide()
                 return
-            portinfo = unicode(currentitem.text().toUtf8(), encoding="utf-8")
+            portinfo = utf8(currentitem.text())
             port = self.ports[portinfo][0]
         speed = int(self.speedcombo.currentText())
         res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
