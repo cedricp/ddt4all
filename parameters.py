@@ -1075,9 +1075,10 @@ class paramWidget(widgets.QWidget):
             for label in screen['labels']:
                 qlabel = displaymod.labelWidget(self.panel, self.uiscale)
                 qlabel.initJson(label)
+                labeldict[qlabel] = qlabel.area
 
         # Raise the small labels so they're not hidden by bigger ones
-        for key, value in reversed(sorted(labeldict.iteritems(), key=lambda (k,v): (v,k))):
+        for key, value in [(k, labeldict[k]) for k in sorted(labeldict, key=labeldict.get, reverse=True)]:
             key.setParent(self.panel)
             key.raise_()
 

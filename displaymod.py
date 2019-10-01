@@ -59,7 +59,7 @@ class labelWidget(widgets.QLabel):
                 self.buffer = core.QBuffer()
                 self.buffer.setData(ba)
                 self.buffer.open(core.QIODevice.ReadOnly)
-                self.img = gui.QMovie(self.buffer, 'GIF')
+                self.img = gui.QMovie(self.buffer, b"gif")
 
     def initXML(self, xmldata):
         text = xmldata.getAttribute("Text")
