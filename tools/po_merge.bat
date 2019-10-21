@@ -26,7 +26,7 @@ ECHO * %PROGRAM-NAME%
 ECHO * Update language files using master template 
 ECHO ********************************************************
 
-for %%x in (de es fr hu it nl pl pt ru sr) do (
+for %%x in (de es fr hu it nl pl pt ro ru sr) do (
 
 ECHO **** Country = %%x - Merging '%FILE-NAME%.po' with '%FILE-NAME%.pot' template....
 msgmerge %MSGMERGE-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po ..\locale\%FILE-NAME%.pot >NUL
