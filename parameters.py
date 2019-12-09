@@ -256,6 +256,10 @@ class paramWidget(widgets.QWidget):
         self.movingwidgets = []
         self.allow_parameters_update = True
 
+    def set_soft_fc(self, b):
+        if options.elm is not None:
+            options.elm.ATCFC0 = b
+
     def tester_send(self):
         if self.tester_presend_command == "":
             return
@@ -1060,17 +1064,24 @@ class paramWidget(widgets.QWidget):
                 qbutton.clicked.connect(lambda state, btn=qbutton.uniquename: self.buttonClicked(btn))
 
     def drawLabels(self, screen):
+        labeldict = {}
         if self.parser == 'xml':
             labels = self.getChildNodesByName(screen, "Label")
             for label in labels:
                 qlabel = displaymod.labelWidget(self.panel, self.uiscale)
                 qlabel.initXML(label)
-
+                labeldict[qlabel] = qlabel.area
         else:
             for label in screen['labels']:
                 qlabel = displaymod.labelWidget(self.panel, self.uiscale)
                 qlabel.initJson(label)
-    
+                labeldict[qlabel] = qlabel.area
+
+        # Raise the small labels so they're not hidden by bigger ones
+        for key, value in [(k, labeldict[k]) for k in sorted(labeldict, key=labeldict.get, reverse=True)]:
+            key.setParent(self.panel)
+            key.raise_()
+
     def drawInputs(self,screen):
         self.inputdict = {}
         if self.parser == 'xml':

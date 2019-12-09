@@ -430,6 +430,10 @@ class Main_widget(widgets.QMainWindow):
         self.cominput.triggered.connect(self.command_editor)
         self.cominput.setEnabled(False)
 
+        self.fctrigger = widgets.QAction(gui.QIcon("icons/flowcontrol.png"), _("Software flow control"), self)
+        self.fctrigger.setCheckable(True)
+        self.fctrigger.triggered.connect(self.flow_control)
+
         self.canlinecombo = widgets.QComboBox()
         self.canlinecombo.setFixedWidth(150)
         self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
@@ -462,6 +466,7 @@ class Main_widget(widgets.QMainWindow):
         self.toolbar.addAction(self.hexinput)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.cominput)
+        self.toolbar.addAction(self.fctrigger)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.canlinecombo)
         self.toolbar.addSeparator()
@@ -551,6 +556,12 @@ class Main_widget(widgets.QMainWindow):
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
+
+    def flow_control(self):
+        enabled = self.fctrigger.isChecked()
+        options.opt_cfc0 = enabled
+        if self.paramview is not None:
+            self.paramview.set_soft_fc(enabled)
 
     def identEcu(self):
         dialog = Ecu_finder(self.ecu_scan)
