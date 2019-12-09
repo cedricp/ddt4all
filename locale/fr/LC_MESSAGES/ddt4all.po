@@ -28,7 +28,7 @@ msgid "Add to screen"
 msgstr "Ajouter a l'écran"
 
 msgid "Request name;Bytes;Manual"
-msgstr ""
+msgstr "Nom requête;Octet;Manuel"
 
 msgid "Add"
 msgstr "Ajouter"

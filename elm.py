@@ -1387,6 +1387,7 @@ def elm_checker(port, speed, logview, app):
                     chre = '<font color=green>[' + _('OK/TIMEOUT') + ']</font>'
                     good += 1
                     vers = cm[0]
+
                 else:
                     chre = '<font color=green>[' + _('OK') + ']</font>'
                     good += 1
