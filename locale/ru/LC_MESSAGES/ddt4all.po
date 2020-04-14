@@ -573,10 +573,10 @@ msgid "Invalid DDT file"
 msgstr "Неверный DDT файл"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "Соединение с ELM утеряно,выполняется переподключение..."
 
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Невозможно восстановить соединение..."
 
 msgid "Switching to session mode"
 msgstr "Переключение в режим"
