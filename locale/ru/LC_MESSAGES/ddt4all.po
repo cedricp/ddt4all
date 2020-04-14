@@ -133,7 +133,7 @@ msgid "Validate changes"
 msgstr "Validate changes"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Описание"
 
 msgid "Data type"
 msgstr "Data type"
