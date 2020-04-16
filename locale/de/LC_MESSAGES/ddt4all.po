@@ -605,7 +605,7 @@ msgstr "Schaltflaeche nicht gefunden: "
 msgid "Sending request :"
 msgstr "Anfrage senden:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Anfrage abgebrochen (siehe rote Parametereinträge): "
 
 msgid "Invalid"

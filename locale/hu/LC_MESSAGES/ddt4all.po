@@ -605,7 +605,7 @@ msgstr "Gomb parancs nem létezik: "
 msgid "Sending request :"
 msgstr "Parancs küldése:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Parancs visszautasítva (ellenőrizd a piros paramétereket): "
 
 msgid "Invalid"

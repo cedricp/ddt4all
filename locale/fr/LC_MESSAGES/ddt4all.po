@@ -605,7 +605,7 @@ msgstr "Requête bouton non trouvée : "
 msgid "Sending request :"
 msgstr "Envoie requête :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Requête abandonée (verifiez les parametres en rouges): "
 
 msgid "Invalid"

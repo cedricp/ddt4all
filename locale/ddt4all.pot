@@ -604,7 +604,7 @@ msgstr ""
 msgid "Sending request :"
 msgstr ""
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr ""
 
 msgid "Invalid"

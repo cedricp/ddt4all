@@ -605,7 +605,7 @@ msgstr "Нет параметров для кнопки : "
 msgid "Sending request :"
 msgstr "Отправка запроса :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Запрос прерван (проверьте красные записи): "
 
 msgid "Invalid"

@@ -605,7 +605,7 @@ msgstr "Zahtev dugmeta nije pronadjen: "
 msgid "Sending request :"
 msgstr "Slanje zahteva:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Zahtev odbacen (pogledati parametre obelezene crvenom bojom): "
 
 msgid "Invalid"

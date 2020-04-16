@@ -608,7 +608,7 @@ msgstr "Richiesta pulsante non trovata : "
 msgid "Sending request :"
 msgstr "Invio richiesta :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Richiesta interrotta (vedi elementi parametri rossi): "
 
 msgid "Invalid"

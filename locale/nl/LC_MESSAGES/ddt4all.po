@@ -606,7 +606,7 @@ msgstr "Knop aanvraag niet gevonden: "
 msgid "Sending request :"
 msgstr "Aanvraag verzenden:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Aanvraag afgebroken (bekijk rood gemarkeerde parameter waarden): "
 
 msgid "Invalid"

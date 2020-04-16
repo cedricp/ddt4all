@@ -605,7 +605,7 @@ msgstr "Przycisk polecenia nieobecny : "
 msgid "Sending request :"
 msgstr "Wysli polecenie :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Polecenie przerwane (zobacz na parametry-czerwone wpisy): "
 
 msgid "Invalid"
