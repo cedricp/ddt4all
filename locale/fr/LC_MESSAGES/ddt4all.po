@@ -557,7 +557,7 @@ msgstr "Changer couleur"
 msgid "Remove element"
 msgstr "Supprimer élément"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Session de dianostic"
 
 msgid "Input"

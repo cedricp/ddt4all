@@ -556,7 +556,7 @@ msgstr ""
 msgid "Remove element"
 msgstr ""
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr ""
 
 msgid "Input"

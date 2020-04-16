@@ -557,7 +557,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Elem eltávolítása"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Diagnózis munkaszakasz"
 
 msgid "Input"

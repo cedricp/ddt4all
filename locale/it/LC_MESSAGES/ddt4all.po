@@ -560,7 +560,7 @@ msgstr "Colore modifica"
 msgid "Remove element"
 msgstr "Rimuovi elemento"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Sessione diagnostica"
 
 msgid "Input"

@@ -738,7 +738,7 @@ msgid "Remove element"
 msgstr "Eliminati elementul"
 
 #: ..\parameters.py:620
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Sesiune de diagnosticare"
 
 #: ..\parameters.py:621
