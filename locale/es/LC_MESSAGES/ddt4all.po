@@ -404,7 +404,7 @@ msgstr "CONECTADO"
 msgid "DISCONNECTED"
 msgstr "DESCONECTADO"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Salvar ECU (mantiene extension '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Soy consciente de que puedo dañar mi coche si se usa incorrectamente"
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Debe aceptar las recomendaciones"
 
 msgid "Please select a communication port"

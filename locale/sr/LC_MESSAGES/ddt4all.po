@@ -404,7 +404,7 @@ msgstr "POVEZAN"
 msgid "DISCONNECTED"
 msgstr "PREKINUTA VEZA"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Upozoren sam da mogu oštetiti moje vozilo ako pogrešno koristim"
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Morate proveriti preporuke"
 
 msgid "Please select a communication port"

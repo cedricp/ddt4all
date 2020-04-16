@@ -404,7 +404,7 @@ msgstr "CSATLAKOZVA"
 msgid "DISCONNECTED"
 msgstr "NINCS KAPCSOLAT"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Jármű mentése ('.ecu' kiteresztés megtartása)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Tisztában vagyok vele, hogy a helytelen használat kárt tehet a járm�
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Tudomásul kell venned a figyelmeztetést"
 
 msgid "Please select a communication port"

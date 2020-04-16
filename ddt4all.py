@@ -800,7 +800,7 @@ class Main_widget(widgets.QMainWindow):
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicle (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
         if qt5:
             filename = str(filename_tuple[0])
@@ -1345,7 +1345,7 @@ class portChooser(widgets.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
             msgbox = widgets.QMessageBox()
-            msgbox.setText(_("You must check the recommandations"))
+            msgbox.setText(_("You must check the recommendations"))
             msgbox.exec_()
             return
 

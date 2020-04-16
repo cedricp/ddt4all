@@ -404,7 +404,7 @@ msgstr "ПОДКЛЮЧЕН"
 msgid "DISCONNECTED"
 msgstr "ОТКЛЮЧЕН"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Сохранить список моих ЭБУ (.ecu)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Я понимаю, что могу навредить моему авт�
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Вы должны согласиться с условиями"
 
 msgid "Please select a communication port"
