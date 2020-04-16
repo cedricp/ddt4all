@@ -1419,7 +1419,7 @@ if __name__ == '__main__':
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print _("Initilizing ELM with speed %i...") % port_speed
+        print _("Initialising ELM with speed %i...") % port_speed
         options.elm = elm.ELM(options.port, port_speed, pc.isels)
 
         if options.elm_failed:

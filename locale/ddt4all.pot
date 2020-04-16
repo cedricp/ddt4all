@@ -458,7 +458,7 @@ msgid "No COM port selected"
 msgstr ""
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr ""
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "

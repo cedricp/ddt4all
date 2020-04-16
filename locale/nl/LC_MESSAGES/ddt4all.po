@@ -460,7 +460,7 @@ msgid "No COM port selected"
 msgstr "Geen COM poort geselcteerd"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Initialisering ELM met snelheid %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "

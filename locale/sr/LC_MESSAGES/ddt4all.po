@@ -459,8 +459,8 @@ msgid "No COM port selected"
 msgstr "Nije izabran COM port"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
-msgstr "Initilizing ELM sa brzinom %i..."
+msgid "Initialising ELM with speed %i..."
+msgstr "Initialising ELM sa brzinom %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nema ELM327 ili OBDLINK-SX uredjaja na COM portu  "

@@ -608,7 +608,7 @@ msgstr "Niciun port COM nu a fost selectat"
 
 #: ..\ddt4all.py:1412
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Initializeaza ELM cu viteza %i..."
 
 #: ..\ddt4all.py:1419
