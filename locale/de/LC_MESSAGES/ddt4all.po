@@ -254,7 +254,7 @@ msgstr "Protokoll"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Projekte"
 
 msgid "DDT4All"

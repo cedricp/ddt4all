@@ -331,7 +331,7 @@ msgid "Diag"
 msgstr "Diag"
 
 #: ..\ddt4all.py:152
-msgid "Projets"
+msgid "Projects"
 msgstr "Proiecte"
 
 #: ..\ddt4all.py:280

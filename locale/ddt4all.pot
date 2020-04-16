@@ -253,7 +253,7 @@ msgstr ""
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr ""
 
 msgid "DDT4All"

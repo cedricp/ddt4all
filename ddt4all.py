@@ -149,7 +149,7 @@ class Ecu_list(widgets.QWidget):
         self.list.model().setHeaderData(4, core.Qt.Horizontal, _('Diag'))
         self.list.model().setHeaderData(5, core.Qt.Horizontal, _('Soft'))
         self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Version'))
-        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projets'))
+        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projects'))
         stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
