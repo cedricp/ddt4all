@@ -4,6 +4,7 @@ SETLOCAL EnableExtensions
 SET PROGRAM-NAME=DDT4All
 SET FILE-NAME=ddt4all
 
+SET LANGUAGES=de es fr hu it nl pl pt ro ru sr
 SET CHARACTERS=400
 SET MSGMERGE-OPTIONS=-q -U -N --backup=none --width=%CHARACTERS% --no-wrap --no-location
 SET MSGATTRIB-OPTIONS=--no-obsolete --no-fuzzy --width=%CHARACTERS% --no-wrap --no-location
@@ -26,7 +27,7 @@ ECHO * %PROGRAM-NAME%
 ECHO * Update language files using master template 
 ECHO ********************************************************
 
-for %%x in (de es fr hu it nl pl pt ro ru sr) do (
+for %%x in (%LANGUAGES%) do (
 
 ECHO **** Country = %%x - Merging '%FILE-NAME%.po' with '%FILE-NAME%.pot' template....
 msgmerge %MSGMERGE-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po ..\locale\%FILE-NAME%.pot >NUL
@@ -51,6 +52,10 @@ ECHO.
 ECHO      #### Press any key to exit #####
 PAUSE > NUL
 
+SET PROGRAM-NAME=
+SET FILE-NAME=
+SET LANGUAGES=
+SET CHARACTERS=
 SET MSGMERGE.OPTIONS=
 SET MSGATTRIB.OPTIONS=
 SET MSGFMT.OPTIONS=
