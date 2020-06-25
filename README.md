@@ -3,25 +3,25 @@
 
 # DDT4All
 
-DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
+DDT4All is a tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
 
-This application is work in progress, so be very carful when using expert mode.
+This application is work in progress, so be very careful when using expert mode.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
 
-**Important :**
+**Important:**
 
 **Do not use this software if you don't have a strong knowledge of how a CAN network (or ECU) works, you can really do bad things with it, especially if you're working on a vehicle**
 
 **The author declines all responsibility about a bad use of this tool. You are the only responsible**
 
-**This tool is mainly aimed for CAN ISO_TP network study**
+**This tool should be used primarily for CAN ISO_TP network study**
 
-## Dependencies :
+## Dependencies:
 * Python 2.7
 * PyQt 4.8 or 5.7+
 * An ELM327 or OBDLink SX (usb preferable WiFi not tested yet)
 
-### Install dependencies on Ubuntu :
+### Install dependencies on Ubuntu:
 
 QT4
 * `sudo apt-get install python-qt4`
@@ -31,7 +31,7 @@ or QT5
 
 ## Windows installer
 
-Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
+Get the fully packaged installer here: [Release area](https://github.com/cedricp/ddt4all/releases)
 
 ## Supported diagnostic adapters (so far)
 
@@ -39,7 +39,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * **ObdLink** SX
 * **ELS27**
 
-## Features :
+## Features:
 
 * Read/Clear DTC
 * Manual ECU request
@@ -53,8 +53,8 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## How to launch the application ?
 
-* Windows : double click DDT4ALL.BAT file
-* Linux : from a terminal, type `python ddt4all.py`
+* Windows: double-click DDT4ALL.BAT file
+* Linux: from a terminal, type `python ddt4all.py`
 
 
 ## Platforms
@@ -71,22 +71,22 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * [Can bus sniffing (Russian)](https://www.youtube.com/watch?v=SjDC7fUMWmg)
 * [ECU Parameters changes](https://www.youtube.com/watch?v=i9VkErEpoDE)
 
-## Troubleshootings
+## Troubleshooting
 
 ### No serial connection
 
-* Linux : Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
-* Windows :
+* Linux: Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
+* Windows:
   * Check serial drivers installation
   * Try to disable antivirus software
 
-## Informations
+## Information
 
 [Windows archive with embedded Python/PyQt here](https://github.com/cedricp/ddt4all/releases)
 
-Bugtracking here : https://github.com/cedricp/ddt4all
+Bug tracking: https://github.com/cedricp/ddt4all
 
 Happy CAN-Hacking :)
 
-To make this application more reliable, I need to buy hardware, cables and devices, so please consider contributing by making a donation (hardware or money). Of course you can contribute by filling bug reports and sending patches.
+To make this application more reliable, I need to buy hardware, cables and devices, so please consider contributing by making a donation (hardware or money). You can contribute too by filling bug reports and sending patches.
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
