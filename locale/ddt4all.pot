@@ -253,7 +253,7 @@ msgstr ""
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr ""
 
 msgid "DDT4All"
@@ -403,7 +403,7 @@ msgstr ""
 msgid "DISCONNECTED"
 msgstr ""
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr ""
 
 msgid "Save ECU (keep '.json' extension)"
@@ -445,7 +445,7 @@ msgstr ""
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr ""
 
 msgid "Please select a communication port"
@@ -458,7 +458,7 @@ msgid "No COM port selected"
 msgstr ""
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr ""
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -556,7 +556,7 @@ msgstr ""
 msgid "Remove element"
 msgstr ""
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr ""
 
 msgid "Input"
@@ -604,7 +604,7 @@ msgstr ""
 msgid "Sending request :"
 msgstr ""
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr ""
 
 msgid "Invalid"

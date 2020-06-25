@@ -254,7 +254,7 @@ msgstr "Protocollo"
 msgid "Diag"
 msgstr "Diag"
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Progetti"
 
 msgid "DDT4All"
@@ -407,7 +407,7 @@ msgstr "CONNESSA"
 msgid "DISCONNECTED"
 msgstr "DISCONNESSA"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Salva veicolo (mantieni estensione '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -449,7 +449,7 @@ msgstr "Sono consapevole che in caso di uso errato potrei danneggiare l'auto"
 msgid "Dark style"
 msgstr "Stile scuro"
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Devi accettare le raccomandazioni"
 
 msgid "Please select a communication port"
@@ -462,7 +462,7 @@ msgid "No COM port selected"
 msgstr "Nessuna porta COM selezionata"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Inizializzazione ELM con velocità %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -560,7 +560,7 @@ msgstr "Colore modifica"
 msgid "Remove element"
 msgstr "Rimuovi elemento"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Sessione diagnostica"
 
 msgid "Input"
@@ -608,7 +608,7 @@ msgstr "Richiesta pulsante non trovata : "
 msgid "Sending request :"
 msgstr "Invio richiesta :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Richiesta interrotta (vedi elementi parametri rossi): "
 
 msgid "Invalid"

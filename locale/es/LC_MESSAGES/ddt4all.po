@@ -254,7 +254,7 @@ msgstr "Protocolo"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Proyectos"
 
 msgid "DDT4All"
@@ -404,7 +404,7 @@ msgstr "CONECTADO"
 msgid "DISCONNECTED"
 msgstr "DESCONECTADO"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Salvar ECU (mantiene extension '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Soy consciente de que puedo dañar mi coche si se usa incorrectamente"
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Debe aceptar las recomendaciones"
 
 msgid "Please select a communication port"
@@ -459,7 +459,7 @@ msgid "No COM port selected"
 msgstr "Puerto COM no seleccionado"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Iniciando ELM a velocidad %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -557,7 +557,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Borrar élemento"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Sesión de dianostico"
 
 msgid "Input"
@@ -605,7 +605,7 @@ msgstr "Botón petición no encontrado: "
 msgid "Sending request :"
 msgstr "Enviando petición:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Petición abortada (ver entradas de parametros en rojo): "
 
 msgid "Invalid"

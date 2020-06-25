@@ -621,7 +621,7 @@ class paramWidget(widgets.QWidget):
     def hexeditor(self):
         self.dialogbox = widgets.QWidget()
         wlayout = widgets.QVBoxLayout()
-        diaglabel = widgets.QLabel(_("Diagnotic session"))
+        diaglabel = widgets.QLabel(_("Diagnostic session"))
         inputlabel = widgets.QLabel(_("Input"))
         outputlabel = widgets.QLabel(_("Output"))
 
@@ -1135,7 +1135,7 @@ class paramWidget(widgets.QWidget):
 
                 if not elm_data_stream:
                     widget.setStyleSheet("background-color: red;color: black")
-                    self.logview.append(_("Request aborted (look at red paramters entries): ") + str(input_value))
+                    self.logview.append(_("Request aborted (look at red parameters entries): ") + str(input_value))
                     return
 
                 widget.setStyleSheet("background-color: white;color: black")

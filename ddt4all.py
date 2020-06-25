@@ -149,7 +149,7 @@ class Ecu_list(widgets.QWidget):
         self.list.model().setHeaderData(4, core.Qt.Horizontal, _('Diag'))
         self.list.model().setHeaderData(5, core.Qt.Horizontal, _('Soft'))
         self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Version'))
-        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projets'))
+        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projects'))
         stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
@@ -800,7 +800,7 @@ class Main_widget(widgets.QMainWindow):
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicle (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
         if qt5:
             filename = str(filename_tuple[0])
@@ -1345,7 +1345,7 @@ class portChooser(widgets.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
             msgbox = widgets.QMessageBox()
-            msgbox.setText(_("You must check the recommandations"))
+            msgbox.setText(_("You must check the recommendations"))
             msgbox.exec_()
             return
 
@@ -1419,7 +1419,7 @@ if __name__ == '__main__':
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print _("Initilizing ELM with speed %i...") % port_speed
+        print _("Initialising ELM with speed %i...") % port_speed
         options.elm = elm.ELM(options.port, port_speed, pc.isels)
 
         if options.elm_failed:

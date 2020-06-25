@@ -331,7 +331,7 @@ msgid "Diag"
 msgstr "Diag"
 
 #: ..\ddt4all.py:152
-msgid "Projets"
+msgid "Projects"
 msgstr "Proiecte"
 
 #: ..\ddt4all.py:280
@@ -531,7 +531,7 @@ msgid "DISCONNECTED"
 msgstr "DECONECTAT"
 
 #: ..\ddt4all.py:792
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Salvati vehiculul (pastrati extensia '.ecu')"
 
 #: ..\ddt4all.py:817 ..\parameters.py:249
@@ -591,7 +591,7 @@ msgid "Dark style"
 msgstr "Stil intunecat"
 
 #: ..\ddt4all.py:1335
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Trebuie sa verificati recomandarile"
 
 #: ..\ddt4all.py:1353
@@ -608,7 +608,7 @@ msgstr "Niciun port COM nu a fost selectat"
 
 #: ..\ddt4all.py:1412
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Initializeaza ELM cu viteza %i..."
 
 #: ..\ddt4all.py:1419
@@ -738,7 +738,7 @@ msgid "Remove element"
 msgstr "Eliminati elementul"
 
 #: ..\parameters.py:620
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Sesiune de diagnosticare"
 
 #: ..\parameters.py:621
@@ -802,7 +802,7 @@ msgid "Sending request :"
 msgstr "Trimite solicitare :"
 
 #: ..\parameters.py:1127
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Solicitare anulata (consultati intrarile cu parametri rosii): "
 
 #: ..\parameters.py:1169

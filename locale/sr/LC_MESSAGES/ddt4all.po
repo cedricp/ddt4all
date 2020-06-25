@@ -254,7 +254,7 @@ msgstr "Protokol"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Projekti"
 
 msgid "DDT4All"
@@ -404,7 +404,7 @@ msgstr "POVEZAN"
 msgid "DISCONNECTED"
 msgstr "PREKINUTA VEZA"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Upozoren sam da mogu oštetiti moje vozilo ako pogrešno koristim"
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Morate proveriti preporuke"
 
 msgid "Please select a communication port"
@@ -459,8 +459,8 @@ msgid "No COM port selected"
 msgstr "Nije izabran COM port"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
-msgstr "Initilizing ELM sa brzinom %i..."
+msgid "Initialising ELM with speed %i..."
+msgstr "Initialising ELM sa brzinom %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nema ELM327 ili OBDLINK-SX uredjaja na COM portu  "
@@ -557,7 +557,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Ukloni element"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Dijagnosticka sesija"
 
 msgid "Input"
@@ -605,7 +605,7 @@ msgstr "Zahtev dugmeta nije pronadjen: "
 msgid "Sending request :"
 msgstr "Slanje zahteva:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Zahtev odbacen (pogledati parametre obelezene crvenom bojom): "
 
 msgid "Invalid"

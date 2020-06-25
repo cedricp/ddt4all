@@ -254,7 +254,7 @@ msgstr "Protokol"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Projekt"
 
 msgid "DDT4All"
@@ -404,7 +404,7 @@ msgstr "POLACZONY"
 msgid "DISCONNECTED"
 msgstr "ROZLACZONY"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Zapisz pojazd (zapisz rozszerzenie'.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Jestem swiadomy, ze moge uszkodzic pojazd tym programem"
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Musisz zaznaczyc polecenie"
 
 msgid "Please select a communication port"
@@ -459,7 +459,7 @@ msgid "No COM port selected"
 msgstr "Nie wybrano portu COM"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Inicjowanie ELM-a z predkoscia %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -557,7 +557,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Usun etykiete"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Sesja diagnostyczna"
 
 msgid "Input"
@@ -605,7 +605,7 @@ msgstr "Przycisk polecenia nieobecny : "
 msgid "Sending request :"
 msgstr "Wysli polecenie :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Polecenie przerwane (zobacz na parametry-czerwone wpisy): "
 
 msgid "Invalid"

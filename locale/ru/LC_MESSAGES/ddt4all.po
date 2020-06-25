@@ -254,7 +254,7 @@ msgstr "Протокол"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Проекты"
 
 msgid "DDT4All"
@@ -404,7 +404,7 @@ msgstr "ПОДКЛЮЧЕН"
 msgid "DISCONNECTED"
 msgstr "ОТКЛЮЧЕН"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Сохранить список моих ЭБУ (.ecu)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Я понимаю, что могу навредить моему авт�
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Вы должны согласиться с условиями"
 
 msgid "Please select a communication port"
@@ -459,7 +459,7 @@ msgid "No COM port selected"
 msgstr "Не выбран COM порт"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Инициализация ELM на скорости %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -557,7 +557,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Удалить надпись"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Диагностическая сессия"
 
 msgid "Input"
@@ -605,7 +605,7 @@ msgstr "Нет параметров для кнопки : "
 msgid "Sending request :"
 msgstr "Отправка запроса :"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Запрос прерван (проверьте красные записи): "
 
 msgid "Invalid"

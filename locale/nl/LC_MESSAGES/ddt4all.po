@@ -255,7 +255,7 @@ msgstr "Protocol"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Projecten"
 
 msgid "DDT4All"
@@ -405,7 +405,7 @@ msgstr "VERBONDEN"
 msgid "DISCONNECTED"
 msgstr "NIET VERBONDEN"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Voertuig opslaan (bewaar '.ecu' extensie)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -447,7 +447,7 @@ msgstr "Ik snap dat ik de auto beschadig bij verkeerd gebruik"
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Je moet de voorwaarde accepteren"
 
 msgid "Please select a communication port"
@@ -460,7 +460,7 @@ msgid "No COM port selected"
 msgstr "Geen COM poort geselcteerd"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "Initialisering ELM met snelheid %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -558,7 +558,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Element verwijderen"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Diagnostische sessie"
 
 msgid "Input"
@@ -606,7 +606,7 @@ msgstr "Knop aanvraag niet gevonden: "
 msgid "Sending request :"
 msgstr "Aanvraag verzenden:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Aanvraag afgebroken (bekijk rood gemarkeerde parameter waarden): "
 
 msgid "Invalid"
