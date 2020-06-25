@@ -108,7 +108,7 @@ class Ecu_list(widgets.QWidget):
             "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
             "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
             "X10 - ZOE", "X10Ph2 - ZOE Ph2", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
-            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
+            "X24 - MASCOTT", "X83 - TRAFIC II", "X83ph2 - TRAFIC II Phase 2", "X83ph3 - TRAFIC II Phase 3", "X82 - TRAFFIC III",
             "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
             "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
             "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
