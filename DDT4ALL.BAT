@@ -1,7 +1,10 @@
 @echo off
+SET PYTHON-RUN-OPTIONS=
 CLS
 ECHO Running "ddt4all.py2 Python scripts...
-Python.exe ddt4all.py
+Python27\python.exe %PYTHON-RUN-OPTIONS% ddt4all.py
 ECHO.
 ECHO.
-pause
+ECHO #### Press any key to exit ####
+PAUSE >NUL
+SET PYTHON-RUN-OPTIONS=
