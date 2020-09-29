@@ -1,0 +1,865 @@
+# BAZI AÇIKLAMA BAŞLIKLARI.
+
+# Telif Hakkı (C) YIL PAKETİN TELİF HAKKI SAHİBİ
+
+# Bu dosya, PAKET paketi ile aynı lisans altında dağıtılmaktadır.
+
+# FIRST AUTHOR <EMAIL @ ADDRESS>, YEAR.
+
+#msgid ""
+msgstr ""
+"Proje Kimliği Sürümü: \ n"
+"İleti-Mesaj-Hataları-Kime: \ n"
+"POT-Oluşturma Tarihi: 2019-01-21 15: 12 + 0100 \ n"
+"PO-Revizyon-Tarihi: 2020-29-09 13:02 + 0200 \ n"
+"Son Çevirmen: Atum Elektronik Ali Bey tarafından Türkçe diline çevirilmiştir atumelektronik@gmail.com> \ n"
+"Dil Ekibi: \ n"
+"Dil: es \ n"
+"MIME Sürümü: 1.0 \ n"
+"İçerik Türü: metin / düz; karakter kümesi = UTF-8 \ n"
+"İçerik Aktarımı-Kodlaması: 8 bit \ n"
+"X-Jeneratör: Poedit 2.0.7 \ n"
+"X-Poedit-Kaynak Karakter Kümesi: UTF-8 \ n"
+
+msgid "Goto data"
+msgstr "Veriye Git"
+
+msgid "Remove"
+msgstr "Sil"
+
+msgid "Add to screen"
+msgstr "Ekran Ekle"
+
+msgid "Request name;Bytes;Manual"
+msgstr "İstek adı; bayt; Manuel"
+
+msgid "Add"
+msgstr "Ekle"
+
+msgid "Send request bytes (HEX)"
+msgstr "Bayt isteği gönder (HEX)"
+
+msgid "Receive bytes (HEX)"
+msgstr "Alınan bayt (HEXA)"
+
+msgid "Data length"
+msgstr "Veri uzunluğu"
+
+msgid "Shift byte count"
+msgstr "Ofset baytı"
+
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "Veri adı;Başlangıç bayt;Bit ofset;Bit sayısı;Endianness"
+
+msgid "Little"
+msgstr "Küçük"
+
+msgid "Big"
+msgstr "Büyük"
+
+msgid "Inherits globals"
+msgstr "Devralır"
+
+msgid "No SDS"
+msgstr "Yok SDS"
+
+msgid "Plant"
+msgstr ""
+
+msgid "After Sale"
+msgstr "Satış Sonrası"
+
+msgid "Engineering"
+msgstr "Mühendislik"
+
+msgid "Supplier"
+msgstr "Tedarikçi"
+
+msgid "Reload requests"
+msgstr "İstekleri yeniden yükle"
+
+msgid "Add request"
+msgstr "İstek Ekle"
+
+msgid "Send bytes"
+msgstr "Gönderilen bayt"
+
+msgid "Receive bytes"
+msgstr "Alınan bayt"
+
+msgid "Number of bits"
+msgstr "Bit sayısı"
+
+msgid "Signed"
+msgstr "İmzala"
+
+msgid "Add item"
+msgstr "Giriş Ekle"
+
+msgid "Del item"
+msgstr "Girişleri sil"
+
+msgid "New item"
+msgstr "Yeni giriş"
+
+msgid "Value;Text"
+msgstr "Metin;Değeri"
+
+msgid "Number of bytes"
+msgstr "Bayt Sayısı"
+
+msgid "Unit"
+msgstr "Birim"
+
+msgid "Number of bit"
+msgstr "Bit Sayısı"
+
+msgid "Format"
+msgstr "Formatlar"
+
+msgid "Value = (AX+B) / C"
+msgstr "Değer =(AX+B) / C"
+
+msgid "New"
+msgstr "Yeni"
+
+msgid "Duplicate selected"
+msgstr "Seçili Çoğalt"
+
+msgid "Remove selected"
+msgstr "Seçilenleri Sil"
+
+msgid "Reload"
+msgstr "Şarj Et"
+
+msgid "Validate changes"
+msgstr "Değişiklikleri Doğrula"
+
+msgid "Description"
+msgstr "Genel Bakış"
+
+msgid "Data type"
+msgstr "Veri Türü"
+
+msgid "Numeric"
+msgstr "Sayısal"
+
+msgid "Numeric items"
+msgstr "Sayısal Öğeler"
+
+msgid "Hex"
+msgstr "Hex"
+
+#, python-format
+msgid "Data is used by request %s"
+msgstr "Veriler istek üzerine kullanılır %s"
+
+msgid "New data"
+msgstr "Yeni Veri"
+
+msgid "Replace me with request description"
+msgstr "Beni istek açıklamasıyla değiştir"
+
+msgid "Data name;Description"
+msgstr "Veri adı; Açıklaması"
+
+msgid "Del"
+msgstr "Sil"
+
+msgid "Refresh"
+msgstr "Yenile"
+
+msgid "Move up"
+msgstr "Yukarı Taşı"
+
+msgid "Check"
+msgstr "Kontrol"
+
+#, python-format
+msgid "Request %s not found"
+msgstr "İstek % s bulunamadı"
+
+#, python-format
+msgid "<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>"
+msgstr "<font color=green>Talep <font color=blue>'%s'</font> Eksik Giriş Değerleri Yok</font>"
+
+#, python-format
+msgid "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>"
+msgstr "<font color=red>Talep <font color=blue>'%s'</font> Eksik Girişler Var: </font>"
+
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+msgid "Delay;Request"
+msgstr "İstek"
+
+msgid "Screen initialization"
+msgstr "Ekran Başlatma"
+
+msgid "Requests to send before screen drawing"
+msgstr "Ekran çiziminden önce gönderme istekleri"
+
+msgid "Button name;Unique name"
+msgstr "Düğme adı; Benzersiz Ad
+"
+
+msgid "ECU Function address"
+msgstr "ECU Fonksiyon Yönü"
+
+msgid "ECU Protocol"
+msgstr "ECU Protokolü"
+
+msgid "Tool > Ecu ID (Hex)"
+msgstr "Araçları > Ecu (Hex)"
+
+msgid "Ecu > Tool ID (Hex)"
+msgstr "Ecu > Araç Kimliği (Hex)"
+
+msgid "Coding"
+msgstr "Kodlama"
+
+msgid "Big Endian"
+msgstr "Büyük Endian"
+
+msgid "Little Endian"
+msgstr "Küçük Endian"
+
+msgid "ECU Auto identification"
+msgstr "ECU Otomatik Tanımlama"
+
+msgid "Diag version;Supplier;Soft;Version"
+msgstr "Diag versiyonu; Tedarikçi; Yumuşak; Versiyon"
+
+msgid "Add new"
+msgstr "Yeni Ekle"
+
+msgid "Delete selected"
+msgstr "Seçilenleri Sil"
+
+msgid "Diag version"
+msgstr "Teşhis Sürümü"
+
+msgid "Soft"
+msgstr "Yumuşak"
+
+msgid "Version"
+msgstr "Sürüm"
+
+msgid "ECU name"
+msgstr "ECU Adı"
+
+msgid "ID"
+msgstr ""
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Diag"
+msgstr ""
+
+msgid "Projects"
+msgstr "Proje"
+
+msgid "DDT4All"
+msgstr "DDT4All - dacieros.forumfree.net"
+
+msgid "loaded ECUs in database."
+msgstr "ECU Veritabanına Yüklendi."
+
+msgid "Refresh rate (ms):"
+msgstr "Yenileme Hızı (ms):"
+
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr ""
+
+msgid "Documentation"
+msgstr "Belge"
+
+msgid "Screen"
+msgstr "Ekran"
+
+msgid "CAN Sniffer"
+msgstr ""
+
+msgid "Requests"
+msgstr "İstek"
+
+msgid "Data"
+msgstr "Veriler"
+
+msgid "Buttons"
+msgstr "Düğmeler"
+
+msgid "Ecu parameters"
+msgstr "ECU Parametreleri"
+
+msgid "Screens"
+msgstr "Ekranlar"
+
+msgid "Action"
+msgstr "Aksiyon"
+
+msgid "New Category"
+msgstr "Yeni Kategori"
+
+msgid "New Screen"
+msgstr "Yeni Ekran"
+
+msgid "Rename"
+msgstr "Adını Değiştir"
+
+msgid "File"
+msgstr "Dosya"
+
+msgid "Read DTC"
+msgstr "DTC'yi Oku"
+
+msgid "Full log"
+msgstr "Tam Günlük"
+
+msgid "Expert mode (enable writing)"
+msgstr "Uzman Modunu (Yazmak İçin Aç)"
+
+msgid "Auto refresh"
+msgstr "Otomatik Yenileme"
+
+msgid "Refresh (one shot)"
+msgstr "Yenile (Bir Kez)"
+
+msgid "Manual command"
+msgstr "Manuel Kontrol"
+
+msgid "Manual request"
+msgstr "Manuel İstek"
+
+msgid "Zoom In"
+msgstr "Yakınlaştır +"
+
+msgid "Zoom Out"
+msgstr "Uzaklaştır -"
+
+msgid "UI Edit"
+msgstr "UI Düzenle"
+
+msgid "Open XML"
+msgstr "XML'i Aç"
+
+msgid "Identify ECU"
+msgstr "ECUyu Tanımla"
+
+msgid "Create New ECU"
+msgstr "Yeni ECU Oluştur"
+
+msgid "Save current ECU"
+msgstr "Mevcut ECUyu Kaydet"
+
+msgid "Save ECU list"
+msgstr "ECU Listesini Kaydet"
+
+msgid "Zip database"
+msgstr "Veri Tabanını Zip Olarak Dışarı Al"
+
+msgid "Plugins"
+msgstr "Eklentiler"
+
+msgid "Cannot load plugin "
+msgstr "Eklenti Yüklenemiyor"
+
+msgid "Save database (keep '.zip' extension)"
+msgstr "Veritabanını kaydedin (".zip" uzantısını koruyun) "
+
+msgid "Zipping XML database... (this can take a few minutes"
+msgstr "XML veritabanını sıkıştırmak... (bu birkaç dakika sürecektir)"
+
+msgid "Zip job finished"
+msgstr "Sıkıştırma Tamamlandı"
+
+msgid "Enter new name"
+msgstr "Yeni Ad Girin"
+
+msgid "Enter category name"
+msgstr "Yeni Kategori Girin"
+
+msgid "Please select a category before creating new screen"
+msgstr "Lütfen yeni bir ekran oluşturmadan önce bir kategori seçin"
+
+msgid "Enter screen name"
+msgstr "Yeni İsim Girin"
+
+msgid "Scan options"
+msgstr "Tarama Seçenekleri"
+
+msgid "CANCEL"
+msgstr "İptal Et"
+
+msgid "Scanning CAN"
+msgstr "CAN Taranıyor"
+
+msgid "Scanning KWP"
+msgstr "KWP Taranıyor"
+
+msgid "EDITION MODE"
+msgstr "DÜZENLEME MODU"
+
+msgid "CONNECTED"
+msgstr "BAĞLAN"
+
+msgid "DISCONNECTED"
+msgstr "BAĞLANTI KESİLDİ"
+
+msgid "Save vehicle (keep '.ecu' extension)"
+msgstr "Aracı kaydet (".ecu" uzantısını koruyun)"
+
+msgid "Save ECU (keep '.json' extension)"
+msgstr "ECU'yu kaydedin (".json" uzantısını koruyun)"
+
+msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
+msgstr "<center>Bu yazılım ücretsizdir, ancak kabloları / ECU'ları satın almak ve bu uygulamayı daha kararlı hale getirmek için paraya ihtiyacım var</center>"
+
+msgid "Yes I contribute"
+msgstr "Evet, katkıda bulunmak istiyorum"
+
+msgid "No, I don't"
+msgstr "Hayır teşekkürler"
+
+msgid "<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"
+msgstr "<center>Katkınız için teşekkürler, hiçbir şey olmazsa lütfen gidin: https://github.com/cedricp/ddt4all</center>"
+
+msgid "ELM port selection"
+msgstr "ELM bağlantı noktası seçimi"
+
+msgid "Port speed"
+msgstr "Bağlantı noktası hızı"
+
+msgid "Connected mode"
+msgstr "Bağlı Mod"
+
+msgid "Edition mode"
+msgstr "Düzenleme Modu"
+
+msgid "ELM benchmark"
+msgstr "ELMyi test edin"
+
+msgid "WiFi port : "
+msgstr "WiFi bağlantı noktası: "
+
+msgid "I'm aware that I can harm my car if badly used"
+msgstr "Yanlış kullanılırsa arabama zarar verebileceğimin farkındayım"
+
+msgid "Dark style"
+msgstr "Karanlık mod"
+
+msgid "You must check the recommendations"
+msgstr "Önerileri kabul etmelisiniz"
+
+msgid "Please select a communication port"
+msgstr "Bir iletişim bağlantı noktası seçmelisiniz"
+
+msgid "Using custom DDT database"
+msgstr "Özel DDT veritabanını kullanma"
+
+msgid "No COM port selected"
+msgstr "COM bağlantı noktası seçili değil"
+
+#, python-format
+msgid "Initialising ELM with speed %i..."
+msgstr "ELM'yi hızla başlatma %i..."
+
+msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr "OBDLink-SX veya ELM algılanmadı"
+
+msgid "Error:"
+msgstr "Hata:"
+
+msgid "ELM not connected or wrong COM port"
+msgstr "ELM bağlı değil veya yanlış COM bağlantı noktası"
+
+msgid "Connection to ELM was lost"
+msgstr "ELM bağlantısı kesildi"
+
+msgid "TIMEOUT"
+msgstr "ZAMAN AŞIMI"
+
+msgid "Checking port speed:"
+msgstr "Bağlantı noktası hızı kontrol ediliyor:"
+
+msgid "Start COM speed :"
+msgstr "COM hızla başlatılıyor:"
+
+msgid "ELM not responding"
+msgstr "ELM yanıt vermiyor"
+
+msgid "ERROR - wifi do not support changing baud rate"
+msgstr "HATA - WIFI, baud hızının değiştirilmesini desteklemiyor"
+
+msgid "Changing baud rate to:"
+msgstr "Baud değiştiriliyor:"
+
+msgid "ERROR - command not supported"
+msgstr "HATA - komut desteklenmiyor"
+
+msgid "ERROR - rate not supported. Let's go back."
+msgstr "HATA: oran desteklenmiyor, geri dönüyor."
+
+msgid "ERROR - something went wrong. Let's get back."
+msgstr "HATA - Bir şeyler ters gitti, geri dönülüyor."
+
+msgid "Trying to open port"
+msgstr "Bağlantı noktasını açmaya çalışıyorum"
+
+msgid "No ELM interface on port"
+msgstr "Bağlantı noktasında ELM arayüzü yok"
+
+msgid "FAIL"
+msgstr "BAŞARISIZ"
+
+msgid "OK/TIMEOUT"
+msgstr "TAM/ZAMAN/AŞIMI"
+
+msgid "OK"
+msgstr "EVET"
+
+msgid "Incompatible adapter on ARM core"
+msgstr "Uyumsuz ARM adaptörü"
+
+msgid "Result: "
+msgstr "Sonuç: "
+
+msgid " succeeded from "
+msgstr " Başarılı Oldu "
+
+msgid "ELM Max version:"
+msgstr "ELM Max sürümü:"
+
+#, python-format
+msgid "Adding source file %s"
+msgstr "Kaynak dosya ekleniyor %s"
+
+#, python-format
+msgid "Adding plugin file %s"
+msgstr "Eklenti dosyası yükleniyor %s"
+
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "Bu ekranı düzenlemek için önce JSON formatına aktarılmalıdır"
+
+msgid "Enter label name"
+msgstr "Etiket adını girin"
+
+msgid "Add button"
+msgstr "Düğme Ekle"
+
+msgid "Add label"
+msgstr "Etiket Ekle"
+
+msgid "Rename label"
+msgstr "Etiketi Yeniden Adlandır"
+
+msgid "Change color"
+msgstr "Rengi değiştir"
+
+msgid "Remove element"
+msgstr "Öğeyi sil"
+
+msgid "Diagnostic session"
+msgstr "Teşhis oturumu"
+
+msgid "Input"
+msgstr "Giriş"
+
+msgid "Output"
+msgstr "Çıkış"
+
+msgid "XML file not found : "
+msgstr "XML dosyası bulunamadı: "
+
+msgid "Invalid DDT file"
+msgstr "Geçersiz DDT dosyası"
+
+msgid "Connection to ELM lost, trying to reconnect..."
+msgstr "ELM bağlantısı kesildi, yeniden bağlanmaya çalışıyor..."
+
+msgid "Cannot reconnect..."
+msgstr "Yeniden bağlanamıyor..."
+
+msgid "Switching to session mode"
+msgstr "Oturum moduna geçiliyor"
+
+msgid "Sending ELM request :"
+msgstr "ELM isteği gönderme:"
+
+msgid "Blocked ELM request :"
+msgstr "ELM isteği engellendi:"
+
+msgid "Sending ELM request:"
+msgstr "ELM isteği gönderme:"
+
+msgid "Sending simulated ELM request :"
+msgstr "Sahte ELM isteği gönderme:"
+
+msgid "Bad ELM response :"
+msgstr "Kötü ELM yanıtı"
+
+msgid "ELM response : "
+msgstr "ELM yanıtı : "
+
+msgid "Button request not found : "
+msgstr "Düğme isteği bulunamadı: "
+
+msgid "Sending request :"
+msgstr "İstek gönderme:"
+
+msgid "Request aborted (look at red parameters entries): "
+msgstr "İstek iptal edildi (kırmızı parametre girişlerine bakın): "
+
+msgid "Invalid"
+msgstr "Geçersiz"
+
+msgid "ECU uses SDS "
+msgstr "ECU ABD SDS"
+
+msgid "Cannot call request "
+msgstr "İstek aranamıyor "
+
+msgid "Clearing DTC information"
+msgstr "DTC bilgilerinin silinmesi"
+
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "Bu ECU için Clear DTC talebi yok, varsayılan olarak gönderilecek 14FF00"
+
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>Teşhis sorun kodlarını temizlemek üzeresiniz<center>"
+
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>Emin misin istediğinin bu olduğundan?.</center>"
+
+msgid "Invalid response for ReadDTC command"
+msgstr "DTC Oku komutu için geçersiz yanıt"
+
+msgid "Read DTC returned an error"
+msgstr "DTC okundu bir hata verdi"
+
+msgid "No DTC"
+msgstr "DTC yok"
+
+msgid "Clear ALL DTC"
+msgstr "Tüm DTC'leri silin"
+
+msgid "ECU trouble codes"
+msgstr "ECU sorun kodları"
+
+msgid "Parsing screen "
+msgstr "Ekran ayrıştırma "
+
+msgid "Values"
+msgstr "Değerler"
+
+msgid "Waiting..."
+msgstr "Bekle..."
+
+msgid "Frame hex error : "
+msgstr "Hata trama hex"
+
+msgid "AB90 AIRBAG Reset"
+msgstr "AB90 Hava Yastığı Sıfırlama"
+
+msgid "Airbag Tools"
+msgstr "Hava Yastığı Araçları"
+
+msgid "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>BU EKLENTİ HAVA YASTIĞI ÇARPIŞMA VERİLERİNİN KİLİDİNİ AÇAR<br>EĞER NE ANLAMA GELDİĞİNİ HİÇBİR FİKRİN YOKSA BURADAN  UZAKLAŞIN</font>"
+
+msgid "Check ACU Virgin"
+msgstr "Bakirelik ACU'YU kontrol et"
+
+msgid "Waiting"
+msgstr "Bekle"
+
+msgid "Virginize ACU"
+msgstr "Bakir (sıfır) ACU"
+
+msgid "Cannot connect to ECU"
+msgstr "ECU bağlanamıyor"
+
+msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
+msgstr "<font color='orange'>BEKLENMEYEN YANIT</font>"
+
+msgid "<font color='red'>CRASH DETECTED</font>"
+msgstr "<font color='red'>KİLİTLENME ALGILANDI</font>"
+
+msgid "<font color='green'>NO CRASH DETECTED</font>"
+msgstr "<font color='green'>KİLİTLENME ALGILANMADI</font>"
+
+msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgstr "<font color='green'>TEMİZLENDİ</font>"
+
+msgid "<font color='red'>CLEAR FAILED</font>"
+msgstr "<font color='red'>TEMİZLE BAŞARISIZ OLDU</font>"
+
+msgid "Megane/Scenic II card programming"
+msgstr "Megane / Scenic II kart programlama"
+
+msgid "Keys"
+msgstr "Anahtarlar"
+
+msgid "ENTER AFTER SALE MODE"
+msgstr "SATIŞ SONRASI MODUNA GİRİN"
+
+msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
+msgstr "<font color='red'>MEGANE II ANAHTAR KARTI PROGRAMLAMA<br>DENEME : HENÜZ TEST EDİLMEDİ</font>"
+
+msgid "LEARN"
+msgstr "ÖĞRENME"
+
+msgid "VALIDATE"
+msgstr "DOĞRULAMAK"
+
+msgid "Algo 2"
+msgstr ""
+
+msgid "ISK"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Num key learnt"
+msgstr "Öğrenilen anahtar bir"
+
+msgid "CARD IDE"
+msgstr "KART IDE"
+
+msgid "Cannot get ISK, check connections and UCH compatibility"
+msgstr "ISK alınamıyor, bağlantıları kontrol edin ve UCH uyumluluğunuda"
+
+msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
+msgstr "<font color='red'>PIN KODU TANINMIYOR</font>"
+
+msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
+msgstr "<font color='green'>PIN KODU TAMAM / ÖĞRENME ANAHTARI</font>"
+
+msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
+msgstr "<font color='green'>PIN KODU TAMAM / ÖĞRENME UCH</font>"
+
+msgid "Modus/Clio III EPS Reset"
+msgstr "Modus / Clio III EPS Sıfırlama"
+
+msgid "EPS Tools"
+msgstr "EPS araçları"
+
+msgid "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Modus/Clio III EPS SIFIR BAKİR<br><font color='red'>BU EKLENTİ EPS IMMO VERİLERİNİ SIFIRLAYACAKTIR<br>EĞER NE ANLAMA GELDİĞİNİ BİLMİYORSAN UZAKLAŞ</font>"
+
+msgid "BLANK STATUS & VIN READ"
+msgstr "BOŞ DURUM VE VIN OKUMA"
+
+msgid "Virginize EPS"
+msgstr "Bakir (sıfır) EPS"
+
+msgid "VIN - READ"
+msgstr "VIN - Oku"
+
+msgid "VIN - WRITE"
+msgstr "VIN - ŞASE NO. YAZ"
+
+msgid "Write VIN"
+msgstr "YAZ VIN"
+
+msgid "<font color='red'>VIN - INVALID</font>"
+msgstr "<font color='red'>VIN - GEÇERSİZ</font>"
+
+msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgstr "<font color='res'>VIN - ÇOK UZUN</font>"
+
+msgid "<font color='orange'>VIN WRITE FAILED</font>"
+msgstr "<font color='orange'>VIN YAZMA BAŞARISIZ OLDU</font>"
+
+msgid "<font color='green'>VIN WRITE OK</font>"
+msgstr "<font color='green'>VIN YAZMA BAŞARILI</font>"
+
+msgid "<font color='green'>EPS virgin</font>"
+msgstr ""
+
+msgid "<font color='red'>EPS coded</font>"
+msgstr ""
+
+msgid "Clio IV EPS Reset"
+msgstr "Clio IV EPS Sıfırla (Rest)"
+
+msgid "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Clio IV EPS VIRGINIZER<br><font color='red'>BU EKLENTİ EPS IMMO VERİLERİNİ SIFIRLAYACAKTIR<br>EĞER NE ANLAMA GELDİĞİNİ BİLMİYORSAN DOKUNMA</font>"
+
+msgid "Check EPS Virgin"
+msgstr "EPS Bakire kontrol edin"
+
+msgid "<font color='green'>EPS not operational</font>"
+msgstr "<font color='green'>EPS çalışmıyor</font>"
+
+msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
+msgstr "<font color='red'>BEKLENMEDİK HATA</font>"
+
+msgid "Laguna II UCH Reset"
+msgstr ""
+
+msgid "UCH Tools"
+msgstr "UCH Araçları"
+
+msgid "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "LAGUNA II UCH VIRGINIZER<br><font color='red'>UCH'yi SİL<br>EĞER NE ANLAMA GELDİĞİNİ BİLMİYORSAN DOKUNMA</font>"
+
+msgid "Check UCH Virgin"
+msgstr "UCH Bakir (sıfır olduğunu) kontrol edin"
+
+msgid "Virginize UCH"
+msgstr "Bakir UCHİHA"
+
+msgid "<font color='green'>UCH virgin</font>"
+msgstr ""
+
+msgid "<font color='red'>UCH coded</font>"
+msgstr "<font color='red'>UCH kodlanmış</font>"
+
+msgid "Laguna III UCH Reset"
+msgstr ""
+
+msgid "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "LAGUNA III UCH VIRGINIZER<br><font color='red'>UCH'yi SİL<br>EĞER NE ANLAMA GELDİĞİNİ BİLMİYORSAN DOKUNMA</font>"
+
+msgid "Megane/Scenic II UCH Reset"
+msgstr ""
+
+msgid "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "MEGANE II UCH VIRGINIZER<br><font color='red'>UCH'yi SİL<br>EĞER NE ANLAMA GELDİĞİNİ BİLMİYORSAN DOKUNMA</font>"
+
+msgid "Megane3 AIRBAG Reset"
+msgstr ""
+
+msgid "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>HAVA YASTIĞI ÇARPIŞMA VERİLERİNİN KİLİDİNİ AÇACAKTIR<br>EĞER NE ANLAMA GELDİĞİ İLE İLGİLİ BİLGİN YOKSA UZAKLAŞ</font>"
+
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
+msgstr ""
+
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>EPS IMMO VERİLERİNİ SIFIRLAYACAKTIR<br>EĞER NE ANLAMA GELDİĞİ İLE İLGİLİ BİLGİN YOKSA UZAKLAŞ</font>"
+
+msgid "Megane/Scenic III UCH Reset"
+msgstr ""
+
+msgid "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "MEGANE III UCH VIRGINIZER<br><font color='red'>BU EKLENTİ UCH'NİZİ SİLECEKTİR<br>EĞER NE ANLMA GELDİĞİNİ BİLMİYORSAN DOKUNMA</font>"
+
+msgid "RSAT4 AIRBAG Reset"
+msgstr ""
+
+msgid "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>HAVA YASTIĞI ÇARPIŞMA VERİLERİNİN KİLİDİNİ AÇACAKTIR<br>EĞER NE ANLAMA GELDİĞİ İLE İLGİLİ BİLGİN YOKSA UZAKLAŞ</font>"
+
+msgid "CRC calculator"
+msgstr "CRC hesap makinesi"
+
+msgid "VIN"
+msgstr "ÇERÇEVE (VIN)"
+
+msgid "CRC CALCULATOR"
+msgstr "CRC HESAPLAYICI"
