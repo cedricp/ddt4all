@@ -1,17 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
+# Ukrainian translation of DDT4ALL.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR yuriy@novostavskiy.kiev.ua, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-21 15:12+0100\n"
-"PO-Revision-Date: 2018-05-17 14:11+0200\n"
-"Last-Translator: bovirus <bovirus@gmail.com>\n"
+"POT-Creation-Date: 2020-10-09 12:00+0200\n"
+"PO-Revision-Date: 2020-10-09 12:00+0200\n"
+"Last-Translator: yurnov <yuriy@novostavskiy.kiev.ua>\n"
 "Language-Team: \n"
-"Language: ru_RU\n"
+"Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,28 +22,28 @@ msgid "Goto data"
 msgstr "Goto data"
 
 msgid "Remove"
-msgstr "Remove"
+msgstr "Видалити"
 
 msgid "Add to screen"
-msgstr "Add to screen"
+msgstr "Додати на екран"
 
 msgid "Request name;Bytes;Manual"
 msgstr ""
 
 msgid "Add"
-msgstr "Add"
+msgstr "Додати"
 
 msgid "Send request bytes (HEX)"
-msgstr "Send request bytes (HEX)"
+msgstr "Відправити запит байт (HEX)"
 
 msgid "Receive bytes (HEX)"
-msgstr "Receive bytes (HEX)"
+msgstr "Отримати байти (HEX)"
 
 msgid "Data length"
-msgstr "Data length"
+msgstr "Довжина даних"
 
 msgid "Shift byte count"
-msgstr "Shift byte count"
+msgstr "Розмір зміщення"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr "Data name;Start byte;Bit offset;Bit count;Endianess"
@@ -70,13 +70,13 @@ msgid "Engineering"
 msgstr ""
 
 msgid "Supplier"
-msgstr "Supplier"
+msgstr "Постачальник"
 
 msgid "Reload requests"
-msgstr "Reload requests"
+msgstr "Перечитати запит"
 
 msgid "Add request"
-msgstr "Add request"
+msgstr "Додати запит"
 
 msgid "Send bytes"
 msgstr "Send bytes"
@@ -85,25 +85,25 @@ msgid "Receive bytes"
 msgstr "Receive bytes"
 
 msgid "Number of bits"
-msgstr "Number of bits"
+msgstr "Кількість бітів"
 
 msgid "Signed"
-msgstr "Signed"
+msgstr "Підписано"
 
 msgid "Add item"
-msgstr "Add item"
+msgstr "Додати"
 
 msgid "Del item"
-msgstr "Del item"
+msgstr "Виданити"
 
 msgid "New item"
-msgstr "New item"
+msgstr "Новий"
 
 msgid "Value;Text"
-msgstr "Value;Text"
+msgstr "Значення;Текст"
 
 msgid "Number of bytes"
-msgstr "Number of bytes"
+msgstr "Кількість байтів"
 
 msgid "Unit"
 msgstr "Unit"
@@ -112,13 +112,13 @@ msgid "Number of bit"
 msgstr "Number of bit"
 
 msgid "Format"
-msgstr "Format"
+msgstr "Формат"
 
 msgid "Value = (AX+B) / C"
 msgstr "Value = (AX+B) / C"
 
 msgid "New"
-msgstr "New"
+msgstr "Нове"
 
 msgid "Duplicate selected"
 msgstr ""
@@ -164,7 +164,7 @@ msgid "Del"
 msgstr "Del"
 
 msgid "Refresh"
-msgstr "Refresh"
+msgstr "Оновити"
 
 msgid "Move up"
 msgstr "Move up"
@@ -198,7 +198,7 @@ msgid "Requests to send before screen drawing"
 msgstr "Requests to send before screen drawing"
 
 msgid "Button name;Unique name"
-msgstr "Button name;Unique name"
+msgstr "Назва кнопки;Унікальне імя"
 
 msgid "ECU Function address"
 msgstr "ECU Function address"
@@ -240,10 +240,10 @@ msgid "Soft"
 msgstr "Soft"
 
 msgid "Version"
-msgstr "Version"
+msgstr "Версія"
 
 msgid "ECU name"
-msgstr "Название ЭБУ"
+msgstr "Назва ЕБУ"
 
 msgid "ID"
 msgstr ""
@@ -255,16 +255,16 @@ msgid "Diag"
 msgstr ""
 
 msgid "Projects"
-msgstr "Проекты"
+msgstr "Проекти"
 
 msgid "DDT4All"
 msgstr ""
 
 msgid "loaded ECUs in database."
-msgstr "ЭБУ загружено."
+msgstr "ЕБУ завантажено у базу"
 
 msgid "Refresh rate (ms):"
-msgstr "Частота обновления (ms):"
+msgstr "Частота оновлення (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
 msgstr ""
@@ -273,58 +273,58 @@ msgid "Documentation"
 msgstr ""
 
 msgid "Screen"
-msgstr "Экран"
+msgstr "Енран"
 
 msgid "CAN Sniffer"
 msgstr ""
 
 msgid "Requests"
-msgstr "Запросы"
+msgstr "Запити"
 
 msgid "Data"
-msgstr "Данные"
+msgstr "Дані"
 
 msgid "Buttons"
 msgstr "Кнопки"
 
 msgid "Ecu parameters"
-msgstr "Параметры ЭБУ"
+msgstr "Параметре ЕБУ"
 
 msgid "Screens"
-msgstr "Экраны"
+msgstr "Екрани"
 
 msgid "Action"
-msgstr "Действия"
+msgstr "Дії"
 
 msgid "New Category"
-msgstr "Новая категория"
+msgstr "Нова категорія"
 
 msgid "New Screen"
-msgstr "Новый экран"
+msgstr "Новий екран"
 
 msgid "Rename"
-msgstr "Переименовать"
+msgstr "Перейменувати"
 
 msgid "File"
 msgstr "Файл"
 
 msgid "Read DTC"
-msgstr "Чтение ошибок DTC"
+msgstr "Читання прмилок DTC"
 
 msgid "Full log"
-msgstr "Полный лог"
+msgstr "Повний лог"
 
 msgid "Expert mode (enable writing)"
-msgstr "Экспертный режим (включает запись)"
+msgstr "Режим експерта (включаючи запис)"
 
 msgid "Auto refresh"
-msgstr "Авто-обновление"
+msgstr "Авто-оновлення"
 
 msgid "Refresh (one shot)"
-msgstr "Обновить (один раз)"
+msgstr "Оновити (разово)"
 
 msgid "Manual command"
-msgstr "Ручной ввод команды"
+msgstr "Ручний ввід команди"
 
 msgid "Manual request"
 msgstr ""
@@ -342,25 +342,25 @@ msgid "Open XML"
 msgstr ""
 
 msgid "Identify ECU"
-msgstr ""
+msgstr "Ідентифікація ЕБУ"
 
 msgid "Create New ECU"
-msgstr "Создать новый ЭБУ"
+msgstr "Створити новий ЕБУ"
 
 msgid "Save current ECU"
-msgstr "Сохранить ЭБУ"
+msgstr "Зберегти ЕБУ"
 
 msgid "Save ECU list"
-msgstr "Сохранить список ЭБУ"
+msgstr "Зберегти список ЕБУ"
 
 msgid "Zip database"
 msgstr ""
 
 msgid "Plugins"
-msgstr ""
+msgstr "Плагіни"
 
 msgid "Cannot load plugin "
-msgstr ""
+msgstr "Не вдалось завантажити плагін"
 
 msgid "Save database (keep '.zip' extension)"
 msgstr ""
@@ -372,143 +372,143 @@ msgid "Zip job finished"
 msgstr ""
 
 msgid "Enter new name"
-msgstr "Введите новое название"
+msgstr "Введіть нове імя"
 
 msgid "Enter category name"
-msgstr "Введите название категории"
+msgstr "Введіть імя категорії"
 
 msgid "Please select a category before creating new screen"
-msgstr "Выберите категорию перед созданием нового экрана"
+msgstr "Виберіть категорію перед сторенням нового екрана"
 
 msgid "Enter screen name"
-msgstr "Введите название экрана"
+msgstr ""
 
 msgid "Scan options"
-msgstr "Опции сканирования"
+msgstr "Опції сканування"
 
 msgid "CANCEL"
 msgstr ""
 
 msgid "Scanning CAN"
-msgstr "Сканирование CAN"
+msgstr "Сканування CAN"
 
 msgid "Scanning KWP"
-msgstr "Сканирование KWP"
+msgstr "Сканування KWP"
 
 msgid "EDITION MODE"
-msgstr "РЕДАКТОР"
+msgstr "РЕЖИМ РЕДАГУВАННЯ"
 
 msgid "CONNECTED"
-msgstr "ПОДКЛЮЧЕН"
+msgstr "ПІДКЛЮЧЕНО"
 
 msgid "DISCONNECTED"
-msgstr "ОТКЛЮЧЕН"
+msgstr "ВІДКЛЮЧЕНО"
 
 msgid "Save vehicle (keep '.ecu' extension)"
-msgstr "Сохранить список моих ЭБУ (.ecu)"
+msgstr "Зберегти список моїх ЕБУ (.ecu)"
 
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Создание нового ЭБУ (.json)"
+msgstr "Зберегти ЕБУ (формат .json)"
 
 msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
-msgstr "<center>Эта программа бесплатна, но мне нужны деньги для покупки тестовых ЭБУ, развития её функциональности и надежности</center>"
+msgstr "<center>Ця прогама безкоштовна, але мені потрібні кошти для покупки кабелів/блоків та підтрики надійної роботи програми</center>"
 
 msgid "Yes I contribute"
-msgstr "Да, Я заплачу"
+msgstr "Так, я дам внесок"
 
 msgid "No, I don't"
-msgstr "Нет, не сейчас"
+msgstr "Ні, я не буду"
 
 msgid "<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"
-msgstr "<center>Спасибо за платеж, если не получилось, пожалуйста зайдите на : https://github.com/cedricp/ddt4all</center>"
+msgstr "<center>Дякую за допомогу, якщо нічого не відбулось, зайдіть на : https://github.com/cedricp/ddt4all</center>"
 
 msgid "ELM port selection"
-msgstr "Выберите порт ELM"
+msgstr "Виберіть порт ELM"
 
 msgid "Port speed"
-msgstr "Скорость порта"
+msgstr "Швидкість порта"
 
 msgid "Connected mode"
-msgstr "Подключиться"
+msgstr "Режим підключення"
 
 msgid "Edition mode"
-msgstr "Редактор"
+msgstr "Режим редагування"
 
 msgid "ELM benchmark"
-msgstr "Проверка ELM"
+msgstr "Перевірка ELM"
 
 msgid "WiFi port : "
 msgstr "WiFi порт : "
 
 msgid "I'm aware that I can harm my car if badly used"
-msgstr "Я понимаю, что могу навредить моему автомобилю"
+msgstr "Я розумію що можу нашкодити автомобілю у гіршому випадку"
 
 msgid "Dark style"
-msgstr ""
+msgstr "Темний стиль"
 
 msgid "You must check the recommendations"
-msgstr "Вы должны согласиться с условиями"
+msgstr "Ви мовинні погодитись з рекомендаціями"
 
 msgid "Please select a communication port"
-msgstr "Выберите нужный порт"
+msgstr "Виберіть прорт для звязку"
 
 msgid "Using custom DDT database"
-msgstr "Используем альтернативную базу DDT"
+msgstr "Використання власної бази DDT"
 
 msgid "No COM port selected"
-msgstr "Не выбран COM порт"
+msgstr "Не обрано COM порт"
 
 #, python-format
 msgid "Initialising ELM with speed %i..."
-msgstr "Инициализация ELM на скорости %i..."
+msgstr "Ініціаалізація ELM на швидкості %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "ELM327 или OBDLINK-SX не обнаружены на COM порту "
+msgstr "ELM327 чи OBDLINK-SX не виявлено на COM порті "
 
 msgid "Error:"
-msgstr ""
+msgstr "Помилка:"
 
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM не подключен или неверный COM порт"
+msgstr ""
 
 msgid "Connection to ELM was lost"
-msgstr "Связь с ELM потеряна"
+msgstr "Звязок з ELM втрачено"
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
 
 msgid "Checking port speed:"
-msgstr "Проверка скорости порта:"
+msgstr "Перевірка швидкості порта:"
 
 msgid "Start COM speed :"
-msgstr "Скорость COM порта :"
+msgstr "Швидкість COM порта :"
 
 msgid "ELM not responding"
-msgstr "ELM не отвечает"
+msgstr "ELM не відповідає"
 
 msgid "ERROR - wifi do not support changing baud rate"
-msgstr "ОШИБКА - wifi не поддерживает изменение скорости порта"
+msgstr ""
 
 msgid "Changing baud rate to:"
-msgstr "Изменение скорости порта на:"
+msgstr "зміна швидкості порта на:"
 
 msgid "ERROR - command not supported"
-msgstr "ОШИБКА - команда не поддерживается"
+msgstr "ПОМИЛКА - команда не підтримується"
 
 msgid "ERROR - rate not supported. Let's go back."
-msgstr "ОШИБКА - заданная скорость не поддерживается. Возвращаем прежнюю скорость."
+msgstr ""
 
 msgid "ERROR - something went wrong. Let's get back."
-msgstr "ОШИБКА - что-то пошло не так. Возвращаем прежнюю скорость."
+msgstr ""
 
 msgid "Trying to open port"
-msgstr "Пытаемся открыть порт"
+msgstr ""
 
 msgid "No ELM interface on port"
-msgstr "ELM не обнаружен"
+msgstr "ELM на порту не виявлено"
 
 msgid "FAIL"
-msgstr "ОШИБКА"
+msgstr "Помилка"
 
 msgid "OK/TIMEOUT"
 msgstr "OK/TIMEOUT"
@@ -517,16 +517,16 @@ msgid "OK"
 msgstr "OK"
 
 msgid "Incompatible adapter on ARM core"
-msgstr "Несовместимый адаптер на ARM ядре"
+msgstr "Incompatible adapter on ARM core"
 
 msgid "Result: "
 msgstr "Результат: "
 
 msgid " succeeded from "
-msgstr " успешных из "
+msgstr " успішних із "
 
 msgid "ELM Max version:"
-msgstr "Максимальная версия ELM:"
+msgstr "Максимальна версія ELM:"
 
 #, python-format
 msgid "Adding source file %s"
@@ -537,40 +537,40 @@ msgid "Adding plugin file %s"
 msgstr ""
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "Для редактирования экрана сначала сохраните его в JSON"
+msgstr "Для редагування екрана спочатку збережіть його у форматі JSON"
 
 msgid "Enter label name"
-msgstr "Введите имя надписи"
-
-msgid "Add button"
-msgstr "Добавить кнопку"
-
-msgid "Add label"
-msgstr "Добавить надпись"
-
-msgid "Rename label"
-msgstr "Переименовать надпись"
-
-msgid "Change color"
 msgstr ""
 
+msgid "Add button"
+msgstr "Додати кнопку"
+
+msgid "Add label"
+msgstr "Добавить лейбу"
+
+msgid "Rename label"
+msgstr "Переийменувати лейбу"
+
+msgid "Change color"
+msgstr "Змінити колір"
+
 msgid "Remove element"
-msgstr "Удалить надпись"
+msgstr "Видалити елемент"
 
 msgid "Diagnostic session"
-msgstr "Диагностическая сессия"
+msgstr ""
 
 msgid "Input"
-msgstr "Поле ввода"
+msgstr "Поле вводу"
 
 msgid "Output"
-msgstr "Поле вывода"
+msgstr "Поле виводу"
 
 msgid "XML file not found : "
-msgstr "XML файл не найден : "
+msgstr "XML файл не знайдено : "
 
 msgid "Invalid DDT file"
-msgstr "Неверный DDT файл"
+msgstr "Невірний DDT файл"
 
 msgid "Connection to ELM lost, trying to reconnect..."
 msgstr ""
@@ -579,13 +579,13 @@ msgid "Cannot reconnect..."
 msgstr ""
 
 msgid "Switching to session mode"
-msgstr "Переключение в режим"
+msgstr ""
 
 msgid "Sending ELM request :"
-msgstr "Отправляем ELM запрос :"
+msgstr "Відправка ELM запиту :"
 
 msgid "Blocked ELM request :"
-msgstr "Блокированный ELM запрос :"
+msgstr "Заблокований ELM запит :"
 
 msgid "Sending ELM request:"
 msgstr "Отправляем ELM запрос :"
@@ -597,61 +597,61 @@ msgid "Bad ELM response :"
 msgstr ""
 
 msgid "ELM response : "
-msgstr "Ответ ELM : "
+msgstr "Відповідь ELM : "
 
 msgid "Button request not found : "
-msgstr "Нет параметров для кнопки : "
+msgstr "Немає параметрів для кнопки : "
 
 msgid "Sending request :"
-msgstr "Отправка запроса :"
+msgstr "Відпрака запиту :"
 
 msgid "Request aborted (look at red parameters entries): "
-msgstr "Запрос прерван (проверьте красные записи): "
+msgstr "Запит перервано (перевірта чевоні значення): "
 
 msgid "Invalid"
-msgstr "Не считано"
+msgstr "Invalid"
 
 msgid "ECU uses SDS "
 msgstr ""
 
 msgid "Cannot call request "
-msgstr "Не могу сформировать запрос "
+msgstr ""
 
 msgid "Clearing DTC information"
-msgstr "Сброс ошибок DTC"
+msgstr "Скидання помилок DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "У ЭБУ нет запроса ClearDTC, буду посылать стандартный 14FF00"
+msgstr "У ЕБУ немає запиту ClearDTC, посилаю стандартний 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<center>Ошибки DTC сейчас будут стерты</center>"
+msgstr "<center>Зараз будуть витерті діагностичні помилки</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
-msgstr "<center>Вы уверены?</center>"
+msgstr "<center>Впевнені?</center>"
 
 msgid "Invalid response for ReadDTC command"
-msgstr "Неверный отклик на команду чтения ошибок"
+msgstr "неправильна відповідь на команду читання DTC"
 
 msgid "Read DTC returned an error"
 msgstr ""
 
 msgid "No DTC"
-msgstr "Нет ошибок DTC"
+msgstr "Немає DTC"
 
 msgid "Clear ALL DTC"
-msgstr "Сбросить ВСЕ ошибки"
+msgstr "Витерти УСТ DTC"
 
 msgid "ECU trouble codes"
-msgstr "Считанные ошибки"
+msgstr "DTC ЕБУ"
 
 msgid "Parsing screen "
-msgstr "Расшифровка "
+msgstr "Екран розшифровки "
 
 msgid "Values"
-msgstr ""
+msgstr "Значення"
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Очікування..."
 
 msgid "Frame hex error : "
 msgstr ""
