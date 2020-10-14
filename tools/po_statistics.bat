@@ -4,7 +4,7 @@ SETLOCAL EnableExtensions
 SET PROGRAM-NAME=DDT4All
 SET FILE-NAME=ddt4all
 
-SET LANGUAGES=de es fr hu it nl pl pt ro ru sr
+SET LANGUAGES=de es fr hu it nl pl pt ro ru sr uk
 SET MSGFMT-OPTIONS=--statistics
 
 CLS
