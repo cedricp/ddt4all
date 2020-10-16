@@ -1027,8 +1027,8 @@ class Ecu_file:
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
             if not options.simulation_mode:
-                if self.baudrate == 250000:
-                    ecu_conf['brp'] = 1
+                if self.baudrate == 250000 or self.baudrate == 10400:
+                    ecu_conf['brp'] = "1"
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf, canline)
 
