@@ -12,8 +12,10 @@ import datetime
 
 try:
     from StringIO import StringIO
+    from BytesIO import BytesIO
 except ImportError:
     from io import StringIO
+    from io import BytesIO
 
 try:
     import PyQt5.QtGui as gui
@@ -906,6 +908,8 @@ class paramWidget(widgets.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>' + _('Sending ELM request:') + '</font>'
         else:
+            if "1902" in command:
+                elm_response="59 40 FF 01 00 28 40 01 00 28 40 02 25 12 40 02 25 14 40 02 56 44 02 12 01 24 02 12 01 44 02 12 06 44 02 29 93 14 02 29 99 74 00 30 16 64 00 30 26 64 00 30 36 64 00 30 46 64 00 30 06 64 02 42 51 24 02 42 51 14 02 42 51 34 02 42 54 94 00 48 71 24 00 48 71 14 00 48 71 34 00 48 87 34 00 48 87 24 00 54 41 55 02 08 0F 15 02 08 0F 15 00 34 03 14 00 34 03 84 00 33 53 14 00 33 53 84 00 01 63 84 02 26 92 45 00 38 02 F4 00 38 03 16 80 38 00 94 00 67 11 24 00 67 10 94 00 67 21 24 00 67 20 94 00 67 31 24 00 67 30 94 00 67 41 24 00 67 40 94 01 20 51 24 02 42 AF 15 02 42 AF 04 02 14 61 14 02 14 64 94 00 62"
             # Only test data
             if self.ecurequestsparser.ecu_send_id == "745":
                 if "2144" in command:
@@ -1675,7 +1679,7 @@ def dumpDOC(xdoc):
 
 
 def zipConvertXML(dbfilename = "ecu.zip"):
-    zipoutput = StringIO()
+    zipoutput = BytesIO()
     options.ecus_dir = "./ecus"
 
     ecus_glob = glob.glob("ecus/*.xml")

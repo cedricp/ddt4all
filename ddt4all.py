@@ -552,7 +552,8 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                pass
+                print("Cannot load plugin "  + plugin)
+                print(e)
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)

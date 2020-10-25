@@ -14,6 +14,8 @@ try:
     qt5 = True
     def utf8(string):
         return string
+    def unicode(string):
+    	return string
 except:
     import PyQt4.QtGui as gui
     import PyQt4.QtGui as widgets
