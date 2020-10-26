@@ -36,7 +36,7 @@ import parameters, ecu
 import elm, options, locale
 import dataeditor
 import sniffer
-import imp
+#import imp
 import tempfile, errno
 import codecs
 
@@ -441,7 +441,7 @@ class Main_widget(widgets.QMainWindow):
         self.canlinecombo.addItem("CAN Line 2@500K")
         self.canlinecombo.addItem("CAN Line 2@250K")
         self.canlinecombo.addItem("CAN Line 2@125K")
-        if options.elm is not None and not options.elm.isels:
+        if options.elm is not None and not options.elm.adapter_type == "ELS":
             self.canlinecombo.setEnabled(False)
 
         self.sdscombo = widgets.QComboBox()
@@ -943,6 +943,10 @@ class Main_widget(widgets.QMainWindow):
     def closeEvent(self, event):
         self.snifferview.stopthread()
         super(Main_widget, self).closeEvent(event)
+        try:
+            del options.elm
+        except:
+            pass
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
@@ -1062,13 +1066,13 @@ def set_dark_style(onoff):
 
 class portChooser(widgets.QDialog):
     def __init__(self):
-        portSpeeds = [38400, 57600, 115200, 230400, 500000]
+        portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
         self.port = None
         self.ports = {}
         self.mode = 0
         self.securitycheck = False
         self.selectedportspeed = 38400
-        self.isels = False
+        self.adapter = "STD"
         super(portChooser, self).__init__(None)
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
@@ -1199,7 +1203,7 @@ class portChooser(widgets.QDialog):
         self.portcount = -1
         self.usb()
 
-        self.setWindowTitle("DDT4all")
+        self.setWindowTitle("DDT4All")
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
@@ -1210,7 +1214,7 @@ class portChooser(widgets.QDialog):
             if not currentitem:
                 self.logview.hide()
                 return
-            portinfo = unicode(currentitem.text().toUtf8(), encoding="utf-8")
+            portinfo = currentitem.text()
             port = self.ports[portinfo][0]
         speed = int(self.speedcombo.currentText())
         res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
@@ -1240,7 +1244,7 @@ class portChooser(widgets.QDialog):
         self.timer.start(1000)
 
     def bt(self):
-        self.isels = False
+        self.adapter = "STD_BT"
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1261,7 +1265,7 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def wifi(self):
-        self.isels = False
+        self.adapter = "STD_WIFI"
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1281,7 +1285,7 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def usb(self):
-        self.isels = False
+        self.adapter = "STD_USB"
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1302,7 +1306,7 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def obdlink(self):
-        self.isels = False
+        self.adapter = "OBDLINK"
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1323,7 +1327,7 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(False)
 
     def els(self):
-        self.isels = True
+        self.adapter = "ELS"
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1423,7 +1427,7 @@ if __name__ == '__main__':
             msgbox.exec_()
 
         print(_("Initilizing ELM with speed %i...") % port_speed)
-        options.elm = elm.ELM(options.port, port_speed, pc.isels)
+        options.elm = elm.ELM(options.port, port_speed, pc.adapter)
 
         if options.elm_failed:
             pc.show()

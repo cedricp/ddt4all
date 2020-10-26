@@ -3,9 +3,11 @@
 # Base class and support functions used by various backends.
 #
 # This file is part of pySerial. https://github.com/pyserial/pyserial
-# (C) 2001-2016 Chris Liechti <cliechti@gmx.net>
+# (C) 2001-2020 Chris Liechti <cliechti@gmx.net>
 #
 # SPDX-License-Identifier:    BSD-3-Clause
+
+from __future__ import absolute_import
 
 import io
 import time
@@ -95,8 +97,10 @@ class SerialTimeoutException(SerialException):
     """Write timeouts give an exception"""
 
 
-writeTimeoutError = SerialTimeoutException('Write timeout')
-portNotOpenError = SerialException('Attempting to use a port that is not open')
+class PortNotOpenError(SerialException):
+    """Port is not open"""
+    def __init__(self):
+        super(PortNotOpenError, self).__init__('Attempting to use a port that is not open')
 
 
 class Timeout(object):
@@ -185,6 +189,7 @@ class SerialBase(io.RawIOBase):
                  write_timeout=None,
                  dsrdtr=False,
                  inter_byte_timeout=None,
+                 exclusive=None,
                  **kwargs):
         """\
         Initialize comm port object. If a "port" is given, then the port will be
@@ -211,6 +216,7 @@ class SerialBase(io.RawIOBase):
         self._rts_state = True
         self._dtr_state = True
         self._break_state = False
+        self._exclusive = None
 
         # assign values using get/set methods using the properties feature
         self.port = port
@@ -224,6 +230,8 @@ class SerialBase(io.RawIOBase):
         self.rtscts = rtscts
         self.dsrdtr = dsrdtr
         self.inter_byte_timeout = inter_byte_timeout
+        self.exclusive = exclusive
+
         # watch for backward compatible kwargs
         if 'writeTimeout' in kwargs:
             self.write_timeout = kwargs.pop('writeTimeout')
@@ -301,6 +309,18 @@ class SerialBase(io.RawIOBase):
         if bytesize not in self.BYTESIZES:
             raise ValueError("Not a valid byte size: {!r}".format(bytesize))
         self._bytesize = bytesize
+        if self.is_open:
+            self._reconfigure_port()
+
+    @property
+    def exclusive(self):
+        """Get the current exclusive access setting."""
+        return self._exclusive
+
+    @exclusive.setter
+    def exclusive(self, exclusive):
+        """Change the exclusive access setting."""
+        self._exclusive = exclusive
         if self.is_open:
             self._reconfigure_port()
 
@@ -541,6 +561,8 @@ class SerialBase(io.RawIOBase):
     # context manager
 
     def __enter__(self):
+        if self._port is not None and not self.is_open:
+            self.open()
         return self
 
     def __exit__(self, *args, **kwargs):
@@ -554,7 +576,7 @@ class SerialBase(io.RawIOBase):
         duration.
         """
         if not self.is_open:
-            raise portNotOpenError
+            raise PortNotOpenError()
         self.break_condition = True
         time.sleep(duration)
         self.break_condition = False
@@ -629,22 +651,25 @@ class SerialBase(io.RawIOBase):
         """
         return self.read(self.in_waiting)
 
-    def read_until(self, terminator=LF, size=None):
+    def read_until(self, expected=LF, size=None):
         """\
-        Read until a termination sequence is found ('\n' by default), the size
+        Read until an expected sequence is found ('\n' by default), the size
         is exceeded or until timeout occurs.
         """
-        lenterm = len(terminator)
+        lenterm = len(expected)
         line = bytearray()
+        timeout = Timeout(self._timeout)
         while True:
             c = self.read(1)
             if c:
                 line += c
-                if line[-lenterm:] == terminator:
+                if line[-lenterm:] == expected:
                     break
                 if size is not None and len(line) >= size:
                     break
             else:
+                break
+            if timeout.expired():
                 break
         return bytes(line)
 

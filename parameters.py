@@ -21,18 +21,22 @@ try:
     import PyQt5.QtGui as gui
     import PyQt5.QtCore as core
     import PyQt5.QtWidgets as widgets
-    def utf8(string):
-        return string
+
+    def utf8(input_string):
+        return input_string
+
     qt5 = True
 except:
     import PyQt4.QtGui as gui
     import PyQt4.QtGui as widgets
     import PyQt4.QtCore as core
-    def utf8(string):
+
+    def utf8(input_string):
         try:
-            return unicode(string.toUtf8(), encoding="UTF8")
+            return unicode(input_string.toUtf8(), encoding="UTF8")
         except:
-            return string
+            return input_string
+
     qt5 = False
 
 __author__ = "Cedric PAILLE"
@@ -278,7 +282,7 @@ class paramWidget(widgets.QWidget):
             if qt5:
                 filename = str(filename_tuple[0])
             else:
-                filename = unicode(filename_tuple, encoding="utf-8")
+                filename = utf8(filename_tuple)
             if filename == "":
                 return
         else:

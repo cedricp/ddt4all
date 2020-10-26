@@ -12,17 +12,18 @@ try:
     import PyQt5.QtCore as core
     import PyQt5.QtWidgets as widgets
     qt5 = True
-    def utf8(string):
-        return string
-    def unicode(string):
-    	return string
+
+    def utf8(input_string):
+        return input_string
+
 except:
     import PyQt4.QtGui as gui
     import PyQt4.QtGui as widgets
     import PyQt4.QtCore as core
     qt5 = False
-    def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF8")
+
+    def utf8(input_string):
+        return unicode(input_string.toUtf8(), encoding="UTF8")
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -325,7 +326,7 @@ class requestTable(widgets.QTableWidget):
         self.setRowCount(numrows)
         self.setColumnCount(3)
 
-        self.setHorizontalHeaderLabels(unicode(_("Request name;Bytes;Manual")).split(";"))
+        self.setHorizontalHeaderLabels(utf8(_("Request name;Bytes;Manual")).split(";"))
 
         count = 0
         for req in requestsk:
@@ -520,7 +521,7 @@ class paramEditor(widgets.QFrame):
             self.spin_shift_byte.setValue(req.shiftbytescount)
             self.spin_data_len.setValue(req.minbytes)
 
-        headerstrings = unicode(_("Data name;Start byte;Bit offset;Bit count;Endianess")).split(";")
+        headerstrings = utf8(_("Data name;Start byte;Bit offset;Bit count;Endianess")).split(";")
         self.table.setHorizontalHeaderLabels(headerstrings)
         self.table.init(self.send, self.current_request.name)
 
@@ -868,7 +869,7 @@ class numericListPanel(widgets.QFrame):
             self.itemtable.setItem(count, 1, widgets.QTableWidgetItem(k))
             count += 1
 
-        headerstrings = unicode(_("Value;Text")).split(";")
+        headerstrings = utf8(_("Value;Text")).split(";")
         self.itemtable.setHorizontalHeaderLabels(headerstrings)
         self.itemtable.resizeColumnsToContents()
         self.itemtable.resizeRowsToContents()
@@ -1304,7 +1305,7 @@ class dataEditor(widgets.QWidget):
 
         self.datatable.sortItems(0, core.Qt.AscendingOrder)
 
-        headerstrings = unicode(_("Data name;Description")).split(";")
+        headerstrings = utf8(_("Data name;Description")).split(";")
         self.datatable.setHorizontalHeaderLabels(headerstrings)
         self.datatable.resizeColumnsToContents()
         self.datatable.resizeRowsToContents()
@@ -1511,7 +1512,7 @@ class buttonData(widgets.QFrame):
                 itemdelay.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
                 count += 1
 
-        headerstrings = unicode(_("Delay;Request")).split(";")
+        headerstrings = utf8(_("Delay;Request")).split(";")
         self.requesttable.setHorizontalHeaderLabels(headerstrings)
         self.requesttable.resizeColumnsToContents()
         self.requesttable.resizeRowsToContents()
@@ -1559,7 +1560,7 @@ class buttonEditor(widgets.QWidget):
         textdata = utf8(currentitem.text())
 
         buttondata['text'] = textdata
-        buttondata['uniquename'] = textdata + u"_" + unicode(str(idx))
+        buttondata['uniquename'] = textdata + u"_" + utf8(str(idx))
         self.init()
         if options.main_window:
             options.main_window.paramview.reinitScreen()
@@ -1618,7 +1619,7 @@ class buttonEditor(widgets.QWidget):
             uniquenameitem.setFlags(core.Qt.ItemIsSelectable | core.Qt.ItemIsEnabled)
             count += 1
 
-        headerstrings = unicode(_("Button name;Unique name")).split(";")
+        headerstrings = utf8(_("Button name;Unique name")).split(";")
         self.buttontable.setHorizontalHeaderLabels(headerstrings)
         self.buttontable.resizeColumnsToContents()
         self.buttontable.resizeRowsToContents()
@@ -1731,7 +1732,7 @@ class ecuParamEditor(widgets.QFrame):
         layoutv.addWidget(autoident_label)
         layoutv.addWidget(self.identtable)
 
-        headerstrings = unicode(_("Diag version;Supplier;Soft;Version")).split(";")
+        headerstrings = utf8(_("Diag version;Supplier;Soft;Version")).split(";")
         self.identtable.setHorizontalHeaderLabels(headerstrings)
 
         inputayout = widgets.QHBoxLayout()

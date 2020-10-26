@@ -3,9 +3,11 @@
 # Very simple serial terminal
 #
 # This file is part of pySerial. https://github.com/pyserial/pyserial
-# (C)2002-2015 Chris Liechti <cliechti@gmx.net>
+# (C)2002-2020 Chris Liechti <cliechti@gmx.net>
 #
 # SPDX-License-Identifier:    BSD-3-Clause
+
+from __future__ import absolute_import
 
 import codecs
 import os
@@ -86,6 +88,7 @@ class ConsoleBase(object):
 if os.name == 'nt':  # noqa
     import msvcrt
     import ctypes
+    import platform
 
     class Out(object):
         """file-like wrapper that uses os.write"""
@@ -100,12 +103,52 @@ if os.name == 'nt':  # noqa
             os.write(self.fd, s)
 
     class Console(ConsoleBase):
+        fncodes = {
+            ';': '\1bOP',  # F1
+            '<': '\1bOQ',  # F2
+            '=': '\1bOR',  # F3
+            '>': '\1bOS',  # F4
+            '?': '\1b[15~',  # F5
+            '@': '\1b[17~',  # F6
+            'A': '\1b[18~',  # F7
+            'B': '\1b[19~',  # F8
+            'C': '\1b[20~',  # F9
+            'D': '\1b[21~',  # F10
+        }
+        navcodes = {
+            'H': '\x1b[A',  # UP
+            'P': '\x1b[B',  # DOWN
+            'K': '\x1b[D',  # LEFT
+            'M': '\x1b[C',  # RIGHT
+            'G': '\x1b[H',  # HOME
+            'O': '\x1b[F',  # END
+            'R': '\x1b[2~',  # INSERT
+            'S': '\x1b[3~',  # DELETE
+            'I': '\x1b[5~',  # PGUP
+            'Q': '\x1b[6~',  # PGDN        
+        }
+        
         def __init__(self):
             super(Console, self).__init__()
             self._saved_ocp = ctypes.windll.kernel32.GetConsoleOutputCP()
             self._saved_icp = ctypes.windll.kernel32.GetConsoleCP()
             ctypes.windll.kernel32.SetConsoleOutputCP(65001)
             ctypes.windll.kernel32.SetConsoleCP(65001)
+            # ANSI handling available through SetConsoleMode since Windows 10 v1511 
+            # https://en.wikipedia.org/wiki/ANSI_escape_code#cite_note-win10th2-1
+            if platform.release() == '10' and int(platform.version().split('.')[2]) > 10586:
+                ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
+                import ctypes.wintypes as wintypes
+                if not hasattr(wintypes, 'LPDWORD'): # PY2
+                    wintypes.LPDWORD = ctypes.POINTER(wintypes.DWORD)
+                SetConsoleMode = ctypes.windll.kernel32.SetConsoleMode
+                GetConsoleMode = ctypes.windll.kernel32.GetConsoleMode
+                GetStdHandle = ctypes.windll.kernel32.GetStdHandle
+                mode = wintypes.DWORD()
+                GetConsoleMode(GetStdHandle(-11), ctypes.byref(mode))
+                if (mode.value & ENABLE_VIRTUAL_TERMINAL_PROCESSING) == 0:
+                    SetConsoleMode(GetStdHandle(-11), mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+                    self._saved_cm = mode
             self.output = codecs.getwriter('UTF-8')(Out(sys.stdout.fileno()), 'replace')
             # the change of the code page is not propagated to Python, manually fix it
             sys.stderr = codecs.getwriter('UTF-8')(Out(sys.stderr.fileno()), 'replace')
@@ -115,14 +158,25 @@ if os.name == 'nt':  # noqa
         def __del__(self):
             ctypes.windll.kernel32.SetConsoleOutputCP(self._saved_ocp)
             ctypes.windll.kernel32.SetConsoleCP(self._saved_icp)
+            try:
+                ctypes.windll.kernel32.SetConsoleMode(ctypes.windll.kernel32.GetStdHandle(-11), self._saved_cm)
+            except AttributeError: # in case no _saved_cm
+                pass
 
         def getkey(self):
             while True:
                 z = msvcrt.getwch()
                 if z == unichr(13):
                     return unichr(10)
-                elif z in (unichr(0), unichr(0x0e)):    # functions keys, ignore
-                    msvcrt.getwch()
+                elif z is unichr(0) or z is unichr(0xe0):
+                    try:
+                        code = msvcrt.getwch()
+                        if z is unichr(0):
+                            return self.fncodes[code]
+                        else:
+                            return self.navcodes[code]
+                    except KeyError:
+                        pass
                 else:
                     return z
 
@@ -135,15 +189,12 @@ if os.name == 'nt':  # noqa
 elif os.name == 'posix':
     import atexit
     import termios
-    import select
+    import fcntl
 
     class Console(ConsoleBase):
         def __init__(self):
             super(Console, self).__init__()
             self.fd = sys.stdin.fileno()
-            # an additional pipe is used in getkey, so that the cancel method
-            # can abort the waiting getkey method
-            self.pipe_r, self.pipe_w = os.pipe()
             self.old = termios.tcgetattr(self.fd)
             atexit.register(self.cleanup)
             if sys.version_info < (3, 0):
@@ -159,17 +210,13 @@ elif os.name == 'posix':
             termios.tcsetattr(self.fd, termios.TCSANOW, new)
 
         def getkey(self):
-            ready, _, _ = select.select([self.enc_stdin, self.pipe_r], [], [], None)
-            if self.pipe_r in ready:
-                os.read(self.pipe_r, 1)
-                return
             c = self.enc_stdin.read(1)
             if c == unichr(0x7f):
                 c = unichr(8)    # map the BS key (which yields DEL) to backspace
             return c
 
         def cancel(self):
-            os.write(self.pipe_w, b"x")
+            fcntl.ioctl(self.fd, termios.TIOCSTI, b'\0')
 
         def cleanup(self):
             termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.old)
@@ -282,12 +329,12 @@ class DebugIO(Transform):
     """Print what is sent and received"""
 
     def rx(self, text):
-        sys.stderr.write(' [RX:{}] '.format(repr(text)))
+        sys.stderr.write(' [RX:{!r}] '.format(text))
         sys.stderr.flush()
         return text
 
     def tx(self, text):
-        sys.stderr.write(' [TX:{}] '.format(repr(text)))
+        sys.stderr.write(' [TX:{!r}] '.format(text))
         sys.stderr.flush()
         return text
 
@@ -322,7 +369,7 @@ def ask_for_port():
     sys.stderr.write('\n--- Available ports:\n')
     ports = []
     for n, (port, desc, hwid) in enumerate(sorted(comports()), 1):
-        sys.stderr.write('--- {:2}: {:20} {}\n'.format(n, port, desc))
+        sys.stderr.write('--- {:2}: {:20} {!r}\n'.format(n, port, desc))
         ports.append(port)
     while True:
         port = raw_input('--- Enter port index or full name: ')
@@ -354,8 +401,8 @@ class Miniterm(object):
         self.eol = eol
         self.filters = filters
         self.update_transformations()
-        self.exit_character = 0x1d  # GS/CTRL+]
-        self.menu_character = 0x14  # Menu: CTRL+T
+        self.exit_character = unichr(0x1d)  # GS/CTRL+]
+        self.menu_character = unichr(0x14)  # Menu: CTRL+T
         self.alive = None
         self._reader_alive = None
         self.receiver_thread = None
@@ -509,25 +556,7 @@ class Miniterm(object):
             if self.echo:
                 self.console.write(c)
         elif c == '\x15':                       # CTRL+U -> upload file
-            sys.stderr.write('\n--- File to upload: ')
-            sys.stderr.flush()
-            with self.console:
-                filename = sys.stdin.readline().rstrip('\r\n')
-                if filename:
-                    try:
-                        with open(filename, 'rb') as f:
-                            sys.stderr.write('--- Sending file {} ---\n'.format(filename))
-                            while True:
-                                block = f.read(1024)
-                                if not block:
-                                    break
-                                self.serial.write(block)
-                                # Wait for output buffer to drain.
-                                self.serial.flush()
-                                sys.stderr.write('.')   # Progress indicator.
-                        sys.stderr.write('\n--- File {} sent ---\n'.format(filename))
-                    except IOError as e:
-                        sys.stderr.write('--- ERROR opening file {}: {} ---\n'.format(filename, e))
+            self.upload_file()
         elif c in '\x08hH?':                    # CTRL+H, h, H, ? -> Show help
             sys.stderr.write(self.get_help_text())
         elif c == '\x12':                       # CTRL+R -> Toggle RTS
@@ -543,24 +572,9 @@ class Miniterm(object):
             self.echo = not self.echo
             sys.stderr.write('--- local echo {} ---\n'.format('active' if self.echo else 'inactive'))
         elif c == '\x06':                       # CTRL+F -> edit filters
-            sys.stderr.write('\n--- Available Filters:\n')
-            sys.stderr.write('\n'.join(
-                '---   {:<10} = {.__doc__}'.format(k, v)
-                for k, v in sorted(TRANSFORMATIONS.items())))
-            sys.stderr.write('\n--- Enter new filter name(s) [{}]: '.format(' '.join(self.filters)))
-            with self.console:
-                new_filters = sys.stdin.readline().lower().split()
-            if new_filters:
-                for f in new_filters:
-                    if f not in TRANSFORMATIONS:
-                        sys.stderr.write('--- unknown filter: {}\n'.format(repr(f)))
-                        break
-                else:
-                    self.filters = new_filters
-                    self.update_transformations()
-            sys.stderr.write('--- filters: {}\n'.format(' '.join(self.filters)))
+            self.change_filter()
         elif c == '\x0c':                       # CTRL+L -> EOL mode
-            modes = list(EOL_TRANSFORMATIONS)  # keys
+            modes = list(EOL_TRANSFORMATIONS)   # keys
             eol = modes.index(self.eol) + 1
             if eol >= len(modes):
                 eol = 0
@@ -568,63 +582,17 @@ class Miniterm(object):
             sys.stderr.write('--- EOL: {} ---\n'.format(self.eol.upper()))
             self.update_transformations()
         elif c == '\x01':                       # CTRL+A -> set encoding
-            sys.stderr.write('\n--- Enter new encoding name [{}]: '.format(self.input_encoding))
-            with self.console:
-                new_encoding = sys.stdin.readline().strip()
-            if new_encoding:
-                try:
-                    codecs.lookup(new_encoding)
-                except LookupError:
-                    sys.stderr.write('--- invalid encoding name: {}\n'.format(new_encoding))
-                else:
-                    self.set_rx_encoding(new_encoding)
-                    self.set_tx_encoding(new_encoding)
-            sys.stderr.write('--- serial input encoding: {}\n'.format(self.input_encoding))
-            sys.stderr.write('--- serial output encoding: {}\n'.format(self.output_encoding))
+            self.change_encoding()
         elif c == '\x09':                       # CTRL+I -> info
             self.dump_port_settings()
         #~ elif c == '\x01':                       # CTRL+A -> cycle escape mode
         #~ elif c == '\x0c':                       # CTRL+L -> cycle linefeed mode
         elif c in 'pP':                         # P -> change port
-            with self.console:
-                try:
-                    port = ask_for_port()
-                except KeyboardInterrupt:
-                    port = None
-            if port and port != self.serial.port:
-                # reader thread needs to be shut down
-                self._stop_reader()
-                # save settings
-                settings = self.serial.getSettingsDict()
-                try:
-                    new_serial = serial.serial_for_url(port, do_not_open=True)
-                    # restore settings and open
-                    new_serial.applySettingsDict(settings)
-                    new_serial.rts = self.serial.rts
-                    new_serial.dtr = self.serial.dtr
-                    new_serial.open()
-                    new_serial.break_condition = self.serial.break_condition
-                except Exception as e:
-                    sys.stderr.write('--- ERROR opening new port: {} ---\n'.format(e))
-                    new_serial.close()
-                else:
-                    self.serial.close()
-                    self.serial = new_serial
-                    sys.stderr.write('--- Port changed to: {} ---\n'.format(self.serial.port))
-                # and restart the reader thread
-                self._start_reader()
+            self.change_port()
+        elif c in 'zZ':                         # S -> suspend / open port temporarily
+            self.suspend_port()
         elif c in 'bB':                         # B -> change baudrate
-            sys.stderr.write('\n--- Baudrate: ')
-            sys.stderr.flush()
-            with self.console:
-                backup = self.serial.baudrate
-                try:
-                    self.serial.baudrate = int(sys.stdin.readline().strip())
-                except ValueError as e:
-                    sys.stderr.write('--- ERROR setting baudrate: {} ---\n'.format(e))
-                    self.serial.baudrate = backup
-                else:
-                    self.dump_port_settings()
+            self.change_baudrate()
         elif c == '8':                          # 8 -> change to 8 bits
             self.serial.bytesize = serial.EIGHTBITS
             self.dump_port_settings()
@@ -661,8 +629,142 @@ class Miniterm(object):
         elif c in 'rR':                         # R -> change hardware flow control
             self.serial.rtscts = (c == 'R')
             self.dump_port_settings()
+        elif c in 'qQ':
+            self.stop()                         # Q -> exit app
         else:
             sys.stderr.write('--- unknown menu character {} --\n'.format(key_description(c)))
+
+    def upload_file(self):
+        """Ask user for filenname and send its contents"""
+        sys.stderr.write('\n--- File to upload: ')
+        sys.stderr.flush()
+        with self.console:
+            filename = sys.stdin.readline().rstrip('\r\n')
+            if filename:
+                try:
+                    with open(filename, 'rb') as f:
+                        sys.stderr.write('--- Sending file {} ---\n'.format(filename))
+                        while True:
+                            block = f.read(1024)
+                            if not block:
+                                break
+                            self.serial.write(block)
+                            # Wait for output buffer to drain.
+                            self.serial.flush()
+                            sys.stderr.write('.')   # Progress indicator.
+                    sys.stderr.write('\n--- File {} sent ---\n'.format(filename))
+                except IOError as e:
+                    sys.stderr.write('--- ERROR opening file {}: {} ---\n'.format(filename, e))
+
+    def change_filter(self):
+        """change the i/o transformations"""
+        sys.stderr.write('\n--- Available Filters:\n')
+        sys.stderr.write('\n'.join(
+            '---   {:<10} = {.__doc__}'.format(k, v)
+            for k, v in sorted(TRANSFORMATIONS.items())))
+        sys.stderr.write('\n--- Enter new filter name(s) [{}]: '.format(' '.join(self.filters)))
+        with self.console:
+            new_filters = sys.stdin.readline().lower().split()
+        if new_filters:
+            for f in new_filters:
+                if f not in TRANSFORMATIONS:
+                    sys.stderr.write('--- unknown filter: {!r}\n'.format(f))
+                    break
+            else:
+                self.filters = new_filters
+                self.update_transformations()
+        sys.stderr.write('--- filters: {}\n'.format(' '.join(self.filters)))
+
+    def change_encoding(self):
+        """change encoding on the serial port"""
+        sys.stderr.write('\n--- Enter new encoding name [{}]: '.format(self.input_encoding))
+        with self.console:
+            new_encoding = sys.stdin.readline().strip()
+        if new_encoding:
+            try:
+                codecs.lookup(new_encoding)
+            except LookupError:
+                sys.stderr.write('--- invalid encoding name: {}\n'.format(new_encoding))
+            else:
+                self.set_rx_encoding(new_encoding)
+                self.set_tx_encoding(new_encoding)
+        sys.stderr.write('--- serial input encoding: {}\n'.format(self.input_encoding))
+        sys.stderr.write('--- serial output encoding: {}\n'.format(self.output_encoding))
+
+    def change_baudrate(self):
+        """change the baudrate"""
+        sys.stderr.write('\n--- Baudrate: ')
+        sys.stderr.flush()
+        with self.console:
+            backup = self.serial.baudrate
+            try:
+                self.serial.baudrate = int(sys.stdin.readline().strip())
+            except ValueError as e:
+                sys.stderr.write('--- ERROR setting baudrate: {} ---\n'.format(e))
+                self.serial.baudrate = backup
+            else:
+                self.dump_port_settings()
+
+    def change_port(self):
+        """Have a conversation with the user to change the serial port"""
+        with self.console:
+            try:
+                port = ask_for_port()
+            except KeyboardInterrupt:
+                port = None
+        if port and port != self.serial.port:
+            # reader thread needs to be shut down
+            self._stop_reader()
+            # save settings
+            settings = self.serial.getSettingsDict()
+            try:
+                new_serial = serial.serial_for_url(port, do_not_open=True)
+                # restore settings and open
+                new_serial.applySettingsDict(settings)
+                new_serial.rts = self.serial.rts
+                new_serial.dtr = self.serial.dtr
+                new_serial.open()
+                new_serial.break_condition = self.serial.break_condition
+            except Exception as e:
+                sys.stderr.write('--- ERROR opening new port: {} ---\n'.format(e))
+                new_serial.close()
+            else:
+                self.serial.close()
+                self.serial = new_serial
+                sys.stderr.write('--- Port changed to: {} ---\n'.format(self.serial.port))
+            # and restart the reader thread
+            self._start_reader()
+
+    def suspend_port(self):
+        """\
+        open port temporarily, allow reconnect, exit and port change to get
+        out of the loop
+        """
+        # reader thread needs to be shut down
+        self._stop_reader()
+        self.serial.close()
+        sys.stderr.write('\n--- Port closed: {} ---\n'.format(self.serial.port))
+        do_change_port = False
+        while not self.serial.is_open:
+            sys.stderr.write('--- Quit: {exit} | p: port change | any other key to reconnect ---\n'.format(
+                exit=key_description(self.exit_character)))
+            k = self.console.getkey()
+            if k == self.exit_character:
+                self.stop()             # exit app
+                break
+            elif k in 'pP':
+                do_change_port = True
+                break
+            try:
+                self.serial.open()
+            except Exception as e:
+                sys.stderr.write('--- ERROR opening port: {} ---\n'.format(e))
+        if do_change_port:
+            self.change_port()
+        else:
+            # and restart the reader thread
+            self._start_reader()
+            sys.stderr.write('--- Port opened: {} ---\n'.format(self.serial.port))
 
     def get_help_text(self):
         """return the help text"""
@@ -670,7 +772,7 @@ class Miniterm(object):
         return """
 --- pySerial ({version}) - miniterm - help
 ---
---- {exit:8} Exit program
+--- {exit:8} Exit program (alias {menu} Q)
 --- {menu:8} Menu escape key, followed by:
 --- Menu keys:
 ---    {menu:7} Send the menu character itself to remote
@@ -714,123 +816,130 @@ def main(default_port=None, default_baudrate=9600, default_rts=None, default_dtr
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Miniterm - A simple terminal program for the serial port.")
+        description='Miniterm - A simple terminal program for the serial port.')
 
     parser.add_argument(
-        "port",
+        'port',
         nargs='?',
-        help="serial port name ('-' to show port list)",
+        help='serial port name ("-" to show port list)',
         default=default_port)
 
     parser.add_argument(
-        "baudrate",
+        'baudrate',
         nargs='?',
         type=int,
-        help="set baud rate, default: %(default)s",
+        help='set baud rate, default: %(default)s',
         default=default_baudrate)
 
-    group = parser.add_argument_group("port settings")
+    group = parser.add_argument_group('port settings')
 
     group.add_argument(
-        "--parity",
+        '--parity',
         choices=['N', 'E', 'O', 'S', 'M'],
         type=lambda c: c.upper(),
-        help="set parity, one of {N E O S M}, default: N",
+        help='set parity, one of {N E O S M}, default: N',
         default='N')
 
     group.add_argument(
-        "--rtscts",
-        action="store_true",
-        help="enable RTS/CTS flow control (default off)",
+        '--rtscts',
+        action='store_true',
+        help='enable RTS/CTS flow control (default off)',
         default=False)
 
     group.add_argument(
-        "--xonxoff",
-        action="store_true",
-        help="enable software flow control (default off)",
+        '--xonxoff',
+        action='store_true',
+        help='enable software flow control (default off)',
         default=False)
 
     group.add_argument(
-        "--rts",
+        '--rts',
         type=int,
-        help="set initial RTS line state (possible values: 0, 1)",
+        help='set initial RTS line state (possible values: 0, 1)',
         default=default_rts)
 
     group.add_argument(
-        "--dtr",
+        '--dtr',
         type=int,
-        help="set initial DTR line state (possible values: 0, 1)",
+        help='set initial DTR line state (possible values: 0, 1)',
         default=default_dtr)
 
     group.add_argument(
-        "--ask",
-        action="store_true",
-        help="ask again for port when open fails",
-        default=False)
-
-    group = parser.add_argument_group("data handling")
-
-    group.add_argument(
-        "-e", "--echo",
-        action="store_true",
-        help="enable local echo (default off)",
-        default=False)
+        '--non-exclusive',
+        dest='exclusive',
+        action='store_false',
+        help='disable locking for native ports',
+        default=True)
 
     group.add_argument(
-        "--encoding",
-        dest="serial_port_encoding",
-        metavar="CODEC",
-        help="set the encoding for the serial port (e.g. hexlify, Latin1, UTF-8), default: %(default)s",
+        '--ask',
+        action='store_true',
+        help='ask again for port when open fails',
+        default=False)
+
+    group = parser.add_argument_group('data handling')
+
+    group.add_argument(
+        '-e', '--echo',
+        action='store_true',
+        help='enable local echo (default off)',
+        default=False)
+
+    group.add_argument(
+        '--encoding',
+        dest='serial_port_encoding',
+        metavar='CODEC',
+        help='set the encoding for the serial port (e.g. hexlify, Latin1, UTF-8), default: %(default)s',
         default='UTF-8')
 
     group.add_argument(
-        "-f", "--filter",
-        action="append",
-        metavar="NAME",
-        help="add text transformation",
+        '-f', '--filter',
+        action='append',
+        metavar='NAME',
+        help='add text transformation',
         default=[])
 
     group.add_argument(
-        "--eol",
+        '--eol',
         choices=['CR', 'LF', 'CRLF'],
         type=lambda c: c.upper(),
-        help="end of line mode",
+        help='end of line mode',
         default='CRLF')
 
     group.add_argument(
-        "--raw",
-        action="store_true",
-        help="Do no apply any encodings/transformations",
+        '--raw',
+        action='store_true',
+        help='Do no apply any encodings/transformations',
         default=False)
 
-    group = parser.add_argument_group("hotkeys")
+    group = parser.add_argument_group('hotkeys')
 
     group.add_argument(
-        "--exit-char",
+        '--exit-char',
         type=int,
         metavar='NUM',
-        help="Unicode of special character that is used to exit the application, default: %(default)s",
+        help='Unicode of special character that is used to exit the application, default: %(default)s',
         default=0x1d)  # GS/CTRL+]
 
     group.add_argument(
-        "--menu-char",
+        '--menu-char',
         type=int,
         metavar='NUM',
-        help="Unicode code of special character that is used to control miniterm (menu), default: %(default)s",
+        help='Unicode code of special character that is used to control miniterm (menu), default: %(default)s',
         default=0x14)  # Menu: CTRL+T
 
-    group = parser.add_argument_group("diagnostics")
+    group = parser.add_argument_group('diagnostics')
 
     group.add_argument(
-        "-q", "--quiet",
-        action="store_true",
-        help="suppress non-error messages",
+        '-q', '--quiet',
+        action='store_true',
+        help='suppress non-error messages',
         default=False)
 
     group.add_argument(
-        "--develop",
-        action="store_true",
-        help="show Python traceback on error",
+        '--develop',
+        action='store_true',
+        help='show Python traceback on error',
         default=False)
 
     args = parser.parse_args()
@@ -883,9 +992,12 @@ def main(default_port=None, default_baudrate=9600, default_rts=None, default_dtr
                     sys.stderr.write('--- forcing RTS {}\n'.format('active' if args.rts else 'inactive'))
                 serial_instance.rts = args.rts
 
+            if isinstance(serial_instance, serial.Serial):
+                serial_instance.exclusive = args.exclusive
+
             serial_instance.open()
         except serial.SerialException as e:
-            sys.stderr.write('could not open port {}: {}\n'.format(repr(args.port), e))
+            sys.stderr.write('could not open port {!r}: {}\n'.format(args.port, e))
             if args.develop:
                 raise
             if not args.ask:
@@ -921,7 +1033,7 @@ def main(default_port=None, default_baudrate=9600, default_rts=None, default_dtr
     except KeyboardInterrupt:
         pass
     if not args.quiet:
-        sys.stderr.write("\n--- exit ---\n")
+        sys.stderr.write('\n--- exit ---\n')
     miniterm.join()
     miniterm.close()
 

@@ -266,9 +266,12 @@ def get_available_ports():
 
 def reconnect_elm():
     ports = get_available_ports()
+    current_adapter = "STD"
+    if options.elm:
+        current_adapter = options.elm.adapter_type
     for port, desc in ports:
         if desc == options.port_name:
-            options.elm = ELM(port, options.port_speed)
+            options.elm = ELM(port, options.port_speed, current_adapter)
             return True
     return False
 
@@ -300,7 +303,7 @@ class Port:
 
     tcp_needs_reconnect = False
 
-    def __init__(self, portName, speed, portTimeout, isels=False):
+    def __init__(self, portName, speed, portTimeout):
         options.elm_failed = False
         self.portTimeout = portTimeout
 
@@ -316,9 +319,9 @@ class Port:
             self.portName = portName
             self.portType = 0
             try:
-                self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
-                if isels:
-                    self.check_elm()
+                self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout,
+                                         parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+                print(self.hdr)
                 self.connectionStatus = True
                 return
             except Exception as e:
@@ -356,15 +359,16 @@ class Port:
 
     def read(self):
         try:
-            byte = ""
+            byte = b""
             if self.portType == 1:
                 import socket
                 try:
                     byte = self.hdr.recv(1)
+                    print(str(byte))
                 except socket.timeout:
                     self.tcp_needs_reconnect = True
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(e)
             elif self.portType == 2:
                 if self.droid.bluetoothReadReady():
                     byte = self.droid.bluetoothRead(1).result
@@ -377,8 +381,15 @@ class Port:
             self.connectionStatus = False
             self.close()
             return None
+        try:
+            return byte.decode("utf-8")
+        except:
+            print("Cannot decode bytes " + str(byte))
+            return ""
 
-        return byte
+    def change_rate(self, rate):
+        print("Serial port switch to " + str(rate))
+        self.hdr.baudrate = rate
 
     def write(self, data):
         try:
@@ -401,24 +412,23 @@ class Port:
         tb = time.time()  # start time
         self.buff = ""
 
-        try:
-            while (True):
-                if not options.simulation_mode:
-                    byte = self.read()
-                else:
-                    byte = '>'
+        while True:
+            if not options.simulation_mode:
 
-                if byte == '\r':
-                    byte = '\n'
+                byte = self.read()
+            else:
+                byte = '>'
 
-                self.buff += byte
-                tc = time.time()
-                if pattern in self.buff:
-                    return self.buff
-                if (tc - tb) > time_out:
-                    return self.buff + _("TIMEOUT")
-        except:
-            pass
+            if byte == '\r':
+                byte = '\n'
+
+            self.buff += byte
+            tc = time.time()
+            if pattern in self.buff:
+                return self.buff
+            if (tc - tb) > time_out:
+                return self.buff + _("TIMEOUT")
+
 
         self.close()
         self.connectionStatus = False
@@ -603,15 +613,15 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, speed, isels = False):
-        for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
-            print(_("Trying to open port") + "%s @ %i" % (portName, s))
+    def __init__(self, portName, rate, adapter_type="STD"):
+        for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000]:
+            print(_("Trying to open port") + "%s @ %i" % (portName, speed))
             self.sim_mode = options.simulation_mode
             self.portName = portName
-            self.isels = isels
+            self.adapter_type = adapter_type
 
             if not options.simulation_mode:
-                self.port = Port(portName, s, self.portTimeout, isels)
+                self.port = Port(portName, speed, self.portTimeout)
 
             if options.elm_failed:
                 self.connectionStatus = False
@@ -627,6 +637,7 @@ class ELM:
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
 
+            self.port.expect(">")
             res = self.send_raw("ATZ")
             if not 'ELM' in res:
                 options.elm_failed = True
@@ -635,12 +646,31 @@ class ELM:
                 options.last_error = ""
                 options.elm_failed = False
                 self.connectionStatus = True
+                rate = speed
                 break
+
+        if not options.elm_failed and rate != 1000000 and adapter_type == "OBDLINK":
+            print("OBDLink Connection OK, attempting full speed UART switch")
+            res = self.send_raw("ST SBR 1000000")
+            if "OK" in res:
+                print("OBDLINK switched to 1Mbs, changing UART speed now...")
+                self.port.change_rate(1000000)
+                time.sleep(1)
+                res = self.send_raw("STI")
+                if "STN" in res:
+                    print("OBDLink full speed connection OK")
+                    print("OBDLink Version " + res)
+                else:
+                    print("OBDLink full speed switch failed")
+                    options.elm_failed = True
+                    self.connectionStatus = False
+            else:
+                print("Failed to switch to change OBDLink to 1Mbs, using " + str(speed))
 
     def __del__(self):
         try:
-            if not self.sim_mode:
-                self.port.write("ATZ\r")
+            print("ELM reset...")
+            self.send_raw("ATZ\r")
         except:
             pass
 
@@ -1064,7 +1094,6 @@ class ELM:
             return "WRONG RESPONSE CFC0 " + errorstr
 
     def send_raw(self, command):
-
         tb = time.time()  # start time
 
         # save command to log
@@ -1089,7 +1118,7 @@ class ELM:
                 return ''
             tc = time.time()
             if (tc - tb) > self.portTimeout and "TIMEOUT" not in self.buff:
-                self.buff += "TIMEOUT"
+                self.buff += " TIMEOUT"
             if "TIMEOUT" in self.buff:
                 self.error_timeout += 1
                 break
