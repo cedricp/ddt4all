@@ -414,15 +414,14 @@ class Port:
 
         while True:
             if not options.simulation_mode:
-
                 byte = self.read()
             else:
                 byte = '>'
 
             if byte == '\r':
                 byte = '\n'
-
-            self.buff += byte
+            if byte:
+                self.buff += byte
             tc = time.time()
             if pattern in self.buff:
                 return self.buff
@@ -818,7 +817,7 @@ class ELM:
 
         # do framing
         raw_command = []
-        cmd_len = len(command) / 2
+        cmd_len = int(len(command) / 2)
         if cmd_len < 8:  # single frame
             # check L1 cache here
             if command in self.l1_cache.keys():

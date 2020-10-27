@@ -877,8 +877,11 @@ class paramWidget(widgets.QWidget):
                     break
 
     def sendElm(self, command, auto=False, force=False):
-        if not isinstance(command, str):
+        if isinstance(command, bytes):
+            command = command.decode("utf-8")
+        elif not isinstance(command, str):
             command = str(command)
+
         elm_response = '00 ' * 70
         if not options.simulation_mode:
             if not options.elm.connectionStat():
@@ -901,7 +904,6 @@ class paramWidget(widgets.QWidget):
             if not force and not options.promode:
                 # Allow read only modes
                 if command[0:2] in options.safe_commands:
-
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>' + _('Sending ELM request :') + '</font>'
                 else:
@@ -1292,7 +1294,7 @@ class paramWidget(widgets.QWidget):
 
         if self.updatelog and self.logfile is not None:
             self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
-            self.logfile.write("\tScreen : " + self.pagename.encode('utf8') + "\tRequest : " + request_name.encode('utf8') + "\n")
+            self.logfile.write("\tScreen : " + self.pagename.encode('utf-8') + "\tRequest : " + request_name.encode('utf-8') + "\n")
             string = json.dumps(logdict)
             self.logfile.write(u"\t\t" + string)
             self.logfile.write("\n")
@@ -1326,7 +1328,6 @@ class paramWidget(widgets.QWidget):
             request = self.getRequest(self.ecurequestsparser.requests, req_name)
             if not request:
                 self.logview.append(_("Cannot call request ") + req_name)
-
             self.sendElm(request.sentbytes, True)
 
         for request_name in self.displaydict.keys():
@@ -1407,7 +1408,7 @@ class paramWidget(widgets.QWidget):
             return
 
         shiftbytecount = request.shiftbytescount
-        bytestosend = map(''.join, zip(*[iter(request.sentbytes.encode('ascii'))]*2))
+        bytestosend = list(map(''.join, zip(*[iter(request.sentbytes)]*2)))
 
         dtcread_command = ''.join(bytestosend)
         can_response = self.sendElm(dtcread_command)
@@ -1416,7 +1417,7 @@ class paramWidget(widgets.QWidget):
         if 'MoreDTC' in request.sendbyte_dataitems:
             moredtcfirstbyte = int(request.sendbyte_dataitems['MoreDTC'].firstbyte)
             bytestosend[moredtcfirstbyte - 1] = "FF"
-            moredtcread_command = ''.join(bytestosend)
+            moredtcread_command = ''.join(str(bytestosend))
 
         if "RESPONSE" in can_response:
             msgbox = widgets.QMessageBox()
