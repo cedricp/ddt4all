@@ -1280,7 +1280,7 @@ class paramWidget(widgets.QWidget):
 
         if self.updatelog and self.logfile is not None:
             self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
-            self.logfile.write("\tScreen : " + self.pagename.encode('utf-8') + "\tRequest : " + request_name.encode('utf-8') + "\n")
+            self.logfile.write("\tScreen : " + self.pagename + "\tRequest : " + request_name + "\n")
             string = json.dumps(logdict)
             self.logfile.write(u"\t\t" + string)
             self.logfile.write("\n")

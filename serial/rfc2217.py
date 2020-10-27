@@ -58,8 +58,6 @@
 #   RFC).
 # the order of the options is not relevant
 
-from __future__ import absolute_import
-
 import logging
 import socket
 import struct
@@ -76,7 +74,7 @@ except ImportError:
 
 import serial
 from serial.serialutil import SerialBase, SerialException, to_bytes, \
-    iterbytes, PortNotOpenError, Timeout
+    iterbytes, portNotOpenError, Timeout
 
 # port string is expected to be something like this:
 # rfc2217://host:port
@@ -483,7 +481,7 @@ class Serial(SerialBase):
             if self.logger:
                 self.logger.info("Negotiated options: {}".format(self._telnet_options))
 
-            # fine, go on, set RFC 2217 specific things
+            # fine, go on, set RFC 2271 specific things
             self._reconfigure_port()
             # all things set up get, now a clean start
             if not self._dsrdtr:
@@ -598,7 +596,7 @@ class Serial(SerialBase):
     def in_waiting(self):
         """Return the number of bytes currently in the input buffer."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         return self._read_buffer.qsize()
 
     def read(self, size=1):
@@ -608,17 +606,14 @@ class Serial(SerialBase):
         until the requested number of bytes is read.
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         data = bytearray()
         try:
             timeout = Timeout(self._timeout)
             while len(data) < size:
-                if self._thread is None or not self._thread.is_alive():
+                if self._thread is None:
                     raise SerialException('connection failed (reader thread died)')
-                buf = self._read_buffer.get(True, timeout.time_left())
-                if buf is None:
-                    return bytes(data)
-                data += buf
+                data += self._read_buffer.get(True, timeout.time_left())
                 if timeout.expired():
                     break
         except Queue.Empty:  # -> timeout
@@ -632,7 +627,8 @@ class Serial(SerialBase):
         closed.
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
+        # XXX use protocol_socket's write
         with self._write_lock:
             try:
                 self._socket.sendall(to_bytes(data).replace(IAC, IAC_DOUBLED))
@@ -643,7 +639,7 @@ class Serial(SerialBase):
     def reset_input_buffer(self):
         """Clear input buffer, discarding all that is in the buffer."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         self.rfc2217_send_purge(PURGE_RECEIVE_BUFFER)
         # empty read buffer
         while self._read_buffer.qsize():
@@ -655,7 +651,7 @@ class Serial(SerialBase):
         discarding all that is in the buffer.
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         self.rfc2217_send_purge(PURGE_TRANSMIT_BUFFER)
 
     def _update_break_state(self):
@@ -664,7 +660,7 @@ class Serial(SerialBase):
         possible.
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         if self.logger:
             self.logger.info('set BREAK to {}'.format('active' if self._break_state else 'inactive'))
         if self._break_state:
@@ -675,7 +671,7 @@ class Serial(SerialBase):
     def _update_rts_state(self):
         """Set terminal status line: Request To Send."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         if self.logger:
             self.logger.info('set RTS to {}'.format('active' if self._rts_state else 'inactive'))
         if self._rts_state:
@@ -686,7 +682,7 @@ class Serial(SerialBase):
     def _update_dtr_state(self):
         """Set terminal status line: Data Terminal Ready."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         if self.logger:
             self.logger.info('set DTR to {}'.format('active' if self._dtr_state else 'inactive'))
         if self._dtr_state:
@@ -698,28 +694,28 @@ class Serial(SerialBase):
     def cts(self):
         """Read terminal status line: Clear To Send."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         return bool(self.get_modem_state() & MODEMSTATE_MASK_CTS)
 
     @property
     def dsr(self):
         """Read terminal status line: Data Set Ready."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         return bool(self.get_modem_state() & MODEMSTATE_MASK_DSR)
 
     @property
     def ri(self):
         """Read terminal status line: Ring Indicator."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         return bool(self.get_modem_state() & MODEMSTATE_MASK_RI)
 
     @property
     def cd(self):
         """Read terminal status line: Carrier Detect."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         return bool(self.get_modem_state() & MODEMSTATE_MASK_CD)
 
     # - - - platform specific - - -
@@ -743,10 +739,8 @@ class Serial(SerialBase):
                     # connection fails -> terminate loop
                     if self.logger:
                         self.logger.debug("socket error in reader thread: {}".format(e))
-                    self._read_buffer.put(None)
                     break
                 if not data:
-                    self._read_buffer.put(None)
                     break  # lost connection
                 for byte in iterbytes(data):
                     if mode == M_NORMAL:
@@ -790,6 +784,7 @@ class Serial(SerialBase):
                         self._telnet_negotiate_option(telnet_command, byte)
                         mode = M_NORMAL
         finally:
+            self._thread = None
             if self.logger:
                 self.logger.debug("read thread terminated")
 

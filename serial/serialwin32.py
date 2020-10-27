@@ -2,14 +2,12 @@
 #
 # backend for Windows ("win32" incl. 32/64 bit support)
 #
-# (C) 2001-2020 Chris Liechti <cliechti@gmx.net>
+# (C) 2001-2015 Chris Liechti <cliechti@gmx.net>
 #
 # This file is part of pySerial. https://github.com/pyserial/pyserial
 # SPDX-License-Identifier:    BSD-3-Clause
 #
 # Initial patch to use ctypes by Giovanni Bajo <rasky@develer.com>
-
-from __future__ import absolute_import
 
 # pylint: disable=invalid-name,too-few-public-methods
 import ctypes
@@ -17,7 +15,7 @@ import time
 from serial import win32
 
 import serial
-from serial.serialutil import SerialBase, SerialException, to_bytes, PortNotOpenError, SerialTimeoutException
+from serial.serialutil import SerialBase, SerialException, to_bytes, portNotOpenError, writeTimeoutError
 
 
 class Serial(SerialBase):
@@ -184,23 +182,23 @@ class Serial(SerialBase):
             # XXX verify if platform really does not have a setting for those
             if not self._rs485_mode.rts_level_for_tx:
                 raise ValueError(
-                    'Unsupported value for RS485Settings.rts_level_for_tx: {!r} (only True is allowed)'.format(
+                    'Unsupported value for RS485Settings.rts_level_for_tx: {!r}'.format(
                         self._rs485_mode.rts_level_for_tx,))
             if self._rs485_mode.rts_level_for_rx:
                 raise ValueError(
-                    'Unsupported value for RS485Settings.rts_level_for_rx: {!r} (only False is allowed)'.format(
+                    'Unsupported value for RS485Settings.rts_level_for_rx: {!r}'.format(
                         self._rs485_mode.rts_level_for_rx,))
             if self._rs485_mode.delay_before_tx is not None:
                 raise ValueError(
-                    'Unsupported value for RS485Settings.delay_before_tx: {!r} (only None is allowed)'.format(
+                    'Unsupported value for RS485Settings.delay_before_tx: {!r}'.format(
                         self._rs485_mode.delay_before_tx,))
             if self._rs485_mode.delay_before_rx is not None:
                 raise ValueError(
-                    'Unsupported value for RS485Settings.delay_before_rx: {!r} (only None is allowed)'.format(
+                    'Unsupported value for RS485Settings.delay_before_rx: {!r}'.format(
                         self._rs485_mode.delay_before_rx,))
             if self._rs485_mode.loopback:
                 raise ValueError(
-                    'Unsupported value for RS485Settings.loopback: {!r} (only False is allowed)'.format(
+                    'Unsupported value for RS485Settings.loopback: {!r}'.format(
                         self._rs485_mode.loopback,))
             comDCB.fRtsControl = win32.RTS_CONTROL_TOGGLE
             comDCB.fOutxCtsFlow = 0
@@ -266,7 +264,7 @@ class Serial(SerialBase):
         until the requested number of bytes is read.
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         if size > 0:
             win32.ResetEvent(self._overlapped_read.hEvent)
             flags = win32.DWORD()
@@ -303,7 +301,7 @@ class Serial(SerialBase):
     def write(self, data):
         """Output the given byte string over the serial port."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         #~ if not isinstance(data, (bytes, bytearray)):
             #~ raise TypeError('expected %s or bytearray, got %s' % (bytes, type(data)))
         # convert data (needed in case of memoryview instance: Py 3.1 io lib), ctypes doesn't like memoryview
@@ -322,7 +320,7 @@ class Serial(SerialBase):
                 if win32.GetLastError() == win32.ERROR_OPERATION_ABORTED:
                     return n.value  # canceled IO is no error
                 if n.value != len(data):
-                    raise SerialTimeoutException('Write timeout')
+                    raise writeTimeoutError
                 return n.value
             else:
                 errorcode = win32.ERROR_SUCCESS if success else win32.GetLastError()
@@ -351,7 +349,7 @@ class Serial(SerialBase):
     def reset_input_buffer(self):
         """Clear input buffer, discarding all that is in the buffer."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         win32.PurgeComm(self._port_handle, win32.PURGE_RXCLEAR | win32.PURGE_RXABORT)
 
     def reset_output_buffer(self):
@@ -360,13 +358,13 @@ class Serial(SerialBase):
         that is in the buffer.
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         win32.PurgeComm(self._port_handle, win32.PURGE_TXCLEAR | win32.PURGE_TXABORT)
 
     def _update_break_state(self):
         """Set break: Controls TXD. When active, to transmitting is possible."""
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         if self._break_state:
             win32.SetCommBreak(self._port_handle)
         else:
@@ -388,7 +386,7 @@ class Serial(SerialBase):
 
     def _GetCommModemStatus(self):
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         stat = win32.DWORD()
         win32.GetCommModemStatus(self._port_handle, ctypes.byref(stat))
         return stat.value
@@ -418,7 +416,7 @@ class Serial(SerialBase):
     def set_buffer_size(self, rx_size=4096, tx_size=None):
         """\
         Recommend a buffer size to the driver (device driver can ignore this
-        value). Must be called after the port is opened.
+        value). Must be called before the port is opened.
         """
         if tx_size is None:
             tx_size = rx_size
@@ -432,7 +430,7 @@ class Serial(SerialBase):
         WARNING: this function is not portable to different platforms!
         """
         if not self.is_open:
-            raise PortNotOpenError()
+            raise portNotOpenError
         if enable:
             win32.EscapeCommFunction(self._port_handle, win32.SETXON)
         else:

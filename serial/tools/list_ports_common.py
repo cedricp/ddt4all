@@ -7,13 +7,9 @@
 # (C) 2015 Chris Liechti <cliechti@gmx.net>
 #
 # SPDX-License-Identifier:    BSD-3-Clause
-
-from __future__ import absolute_import
-
 import re
 import glob
 import os
-import os.path
 
 
 def numsplit(text):
@@ -35,9 +31,9 @@ def numsplit(text):
 class ListPortInfo(object):
     """Info collection base class for serial ports"""
 
-    def __init__(self, device, skip_link_detection=False):
+    def __init__(self, device=None):
         self.device = device
-        self.name = os.path.basename(device)
+        self.name = None
         self.description = 'n/a'
         self.hwid = 'n/a'
         # USB specific data
@@ -49,7 +45,7 @@ class ListPortInfo(object):
         self.product = None
         self.interface = None
         # special handling for links
-        if not skip_link_detection and device is not None and os.path.islink(device):
+        if device is not None and os.path.islink(device):
             self.hwid = 'LINK={}'.format(os.path.realpath(device))
 
     def usb_description(self):
@@ -75,16 +71,9 @@ class ListPortInfo(object):
         self.hwid = self.usb_info()
 
     def __eq__(self, other):
-        return isinstance(other, ListPortInfo) and self.device == other.device
-
-    def __hash__(self):
-        return hash(self.device)
+        return self.device == other.device
 
     def __lt__(self, other):
-        if not isinstance(other, ListPortInfo):
-            raise TypeError('unorderable types: {}() and {}()'.format(
-                type(self).__name__,
-                type(other).__name__))
         return numsplit(self.device) < numsplit(other.device)
 
     def __str__(self):
@@ -101,7 +90,6 @@ class ListPortInfo(object):
         else:
             raise IndexError('{} > 2'.format(index))
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 def list_links(devices):
     """\
@@ -113,7 +101,6 @@ def list_links(devices):
         if os.path.islink(device) and os.path.realpath(device) in devices:
             links.append(device)
     return links
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # test

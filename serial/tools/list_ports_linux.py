@@ -8,8 +8,6 @@
 #
 # SPDX-License-Identifier:    BSD-3-Clause
 
-from __future__ import absolute_import
-
 import glob
 import os
 from serial.tools import list_ports_common
@@ -26,6 +24,7 @@ class SysFS(list_ports_common.ListPortInfo):
             is_link = True
         else:
             is_link = False
+        self.name = os.path.basename(device)
         self.usb_device_path = None
         if os.path.exists('/sys/class/tty/{}/device'.format(self.name)):
             self.device_path = os.path.realpath('/sys/class/tty/{}/device'.format(self.name))
@@ -59,7 +58,7 @@ class SysFS(list_ports_common.ListPortInfo):
 
             self.manufacturer = self.read_line(self.usb_device_path, 'manufacturer')
             self.product = self.read_line(self.usb_device_path, 'product')
-            self.interface = self.read_line(self.usb_interface_path, 'interface')
+            self.interface = self.read_line(self.device_path, 'interface')
 
         if self.subsystem in ('usb', 'usb-serial'):
             self.apply_usb_info()
@@ -91,7 +90,6 @@ class SysFS(list_ports_common.ListPortInfo):
 def comports(include_links=False):
     devices = glob.glob('/dev/ttyS*')           # built-in serial ports
     devices.extend(glob.glob('/dev/ttyUSB*'))   # usb-serial with own driver
-    devices.extend(glob.glob('/dev/ttyXRUSB*')) # xr-usb-serial port exar (DELL Edge 3001)
     devices.extend(glob.glob('/dev/ttyACM*'))   # usb-serial with CDC-ACM profile
     devices.extend(glob.glob('/dev/ttyAMA*'))   # ARM internal port (raspi)
     devices.extend(glob.glob('/dev/rfcomm*'))   # BT serial devices
@@ -105,5 +103,5 @@ def comports(include_links=False):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # test
 if __name__ == '__main__':
-    for info in sorted(comports()):
-        print("{0}: {0.subsystem}".format(info))
+    for port, desc, hwid in sorted(comports()):
+        print("{}: {} [{}]".format(port, desc, hwid))
