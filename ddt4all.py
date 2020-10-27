@@ -5,32 +5,22 @@ import sys
 import os
 import glob
 import json
+from importlib.machinery import SourceFileLoader
 
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
 try:
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
-    try:
-        import PyQt5.QtWebEngine as webkit
-        import PyQt5.QtWebEngineWidgets as webkitwidgets
-    except:
-        import PyQt5.QtWebKit as webkit
-        import PyQt5.QtWebKitWidgets as webkitwidgets
-    def utf8(string):
-        return string
-    qt5 = True
+    import PyQt5.QtWebEngine as webkit
+    import PyQt5.QtWebEngineWidgets as webkitwidgets
 except:
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
-    import PyQt4.QtWebKit as webkit
-    import PyQt4.QtWebKit as webkitwidgets
-    def utf8(string):
-        try:
-            return unicode(string.toUtf8(), encoding="UTF8")
-        except:
-            return string
-    qt5 = False
+    import PyQt5.QtWebKit as webkit
+    import PyQt5.QtWebKitWidgets as webkitwidgets
+
+
+def utf8(string):
+    return string
+
 
 import parameters, ecu
 import elm, options, locale
@@ -246,10 +236,8 @@ class Ecu_list(widgets.QWidget):
         if index.parent() == core.QModelIndex():
             return
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
-        if qt5:
-            selected = item[0]
-        else:
-            selected = utf8(item[0].toString())
+
+        selected = item[0]
         target = self.ecuscan.ecu_database.getTarget(selected)
         name = selected
         if target:
@@ -535,7 +523,7 @@ class Main_widget(widgets.QMainWindow):
         for plugin in plugins:
             try:
                 modulename = os.path.basename(plugin).replace(".py", "")
-                plug = imp.load_source(modulename, plugin)
+                plug = SourceFileLoader(modulename, plugin).load_module()
 
                 category = plug.category
                 name = plug.plugin_name
@@ -599,11 +587,9 @@ class Main_widget(widgets.QMainWindow):
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
                                                    "./ecu.zip", "*.zip")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = str(filename_tuple)
-        
+
+        filename = str(filename_tuple[0])
+
         if not filename.endswith(".zip"):
             filename += ".zip"
 
@@ -806,10 +792,8 @@ class Main_widget(widgets.QMainWindow):
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = str(filename_tuple)
+
+        filename = str(filename_tuple[0])
 
         if filename == "":
             return        
@@ -831,10 +815,8 @@ class Main_widget(widgets.QMainWindow):
     def newEcu(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = str(filename_tuple)
+
+        filename = str(filename_tuple[0])
 
         if filename == '':
             return
@@ -865,10 +847,9 @@ class Main_widget(widgets.QMainWindow):
 
     def openxml(self):
         filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = unicode(filename_tuple, encoding="UTF-8")
+
+        filename = str(filename_tuple[0])
+
         if filename == '':
             return
 
@@ -919,10 +900,9 @@ class Main_widget(widgets.QMainWindow):
 
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
-        if qt5:
-            screen = item[0]
-        else:
-            screen = utf8(item[0].toString())
+
+        screen = item[0]
+
         self.paramview.pagename = screen
         inited = self.paramview.init(screen, self.screenlogfile)
         self.diagaction.setEnabled(inited)
@@ -950,10 +930,8 @@ class Main_widget(widgets.QMainWindow):
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
-        if qt5:
-            ecu_name = item[0]
-        else:
-            ecu_name = utf8(item[0].toString())
+
+        ecu_name = item[0]
 
         isxml = True
 
@@ -1055,10 +1033,8 @@ def set_dark_style(onoff):
     if (onoff):
         stylefile = core.QFile("qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
-        if qt5:
-            StyleSheet = str(stylefile.readAll())
-        else:
-            StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
+
+        StyleSheet = str(stylefile.readAll())
     else:
         StyleSheet = ""
 

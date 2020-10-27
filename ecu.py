@@ -185,7 +185,7 @@ class Ecu_request:
                     di = Data_item(v, self.ecu_file.endianness, k)
                     self.dataitems[k] = di
 
-        elif isinstance(data, unicode):
+        elif isinstance(data, str):
             # Create a blank, new one
             self.name = data
         else:

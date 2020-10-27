@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
-try:
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
-except:
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
 
-try:
-    a = unicode("")
-except:
-    def unicode(a):
-        return str(a)
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
+
+
+def unicode(a):
+    return str(a)
 
 import options, os, zipfile
 from uiutils import *

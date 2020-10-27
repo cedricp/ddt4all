@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import time
 import os
-import ecu, elm
+import ecu
+import elm
 import displaymod
 from uiutils import *
 import options
@@ -17,27 +18,13 @@ except ImportError:
     from io import StringIO
     from io import BytesIO
 
-try:
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
 
-    def utf8(input_string):
-        return input_string
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
 
-    qt5 = True
-except:
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
-
-    def utf8(input_string):
-        try:
-            return unicode(input_string.toUtf8(), encoding="UTF8")
-        except:
-            return input_string
-
-    qt5 = False
+def utf8(input_string):
+    return input_string
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -279,10 +266,9 @@ class paramWidget(widgets.QWidget):
     def saveEcu(self, name=None):
         if not name:
             filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
-            if qt5:
-                filename = str(filename_tuple[0])
-            else:
-                filename = utf8(filename_tuple)
+
+            filename = str(filename_tuple[0])
+
             if filename == "":
                 return
         else:
