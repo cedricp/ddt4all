@@ -26,8 +26,9 @@ Redundancy Check.  Any 8, 16, 24, 32, or 64 bit polynomial can be used.
 The following are the public components of this module.
 
 Crc -- a class that creates instances providing the same interface as the
-md5 and sha modules in the Python standard library.  These instances also
-provide a method for generating a C/C++ function to compute the CRC.
+algorithms in the hashlib module in the Python standard library.  These
+instances also provide a method for generating a C/C++ function to compute
+the CRC.
 
 mkCrcFun -- create a Python function to compute the CRC using the specified
 polynomial and initial value.  This provides a much simpler interface if
@@ -41,10 +42,10 @@ __all__ = '''mkCrcFun Crc
 # If the extension module was not built, drop back to the Python implementation
 # even though it is significantly slower.
 try:
-    import _crcfunext as _crcfun
+    import crcmod._crcfunext as _crcfun
     _usingExtension = True
 except ImportError:
-    import _crcfunpy as _crcfun
+    import crcmod._crcfunpy as _crcfun
     _usingExtension = False
 
 import sys, struct
@@ -53,9 +54,9 @@ import sys, struct
 class Crc:
     '''Compute a Cyclic Redundancy Check (CRC) using the specified polynomial.
 
-    Instances of this class have the same interface as the md5 and sha modules
-    in the Python standard library.  See the documentation for these modules
-    for examples of how to use a Crc instance.
+    Instances of this class have the same interface as the algorithms in the
+    hashlib module in the Python standard library.  See the documentation of
+    this module for examples of how to use a Crc instance.
 
     The string representation of a Crc instance identifies the polynomial,
     initial value, XOR out value, and the current CRC value.  The print
@@ -68,9 +69,9 @@ class Crc:
     The following are the parameters supplied to the constructor.
 
     poly -- The generator polynomial to use in calculating the CRC.  The value
-    is specified as a Python integer or long integer.  The bits in this integer
-    are the coefficients of the polynomial.  The only polynomials allowed are
-    those that generate 8, 16, 24, 32, or 64 bit CRCs.
+    is specified as a Python integer.  The bits in this integer are the
+    coefficients of the polynomial.  The only polynomials allowed are those
+    that generate 8, 16, 24, 32, or 64 bit CRCs.
 
     initCrc -- Initial value used to start the CRC calculation.  This initial
     value should be the initial shift register value XORed with the final XOR
@@ -85,7 +86,7 @@ class Crc:
     xorOut -- Final value to XOR with the calculated CRC value.  Used by some
     CRC algorithms.  Defaults to zero.
     '''
-    def __init__(self, poly, initCrc=~0L, rev=True, xorOut=0, initialize=True):
+    def __init__(self, poly, initCrc=~0, rev=True, xorOut=0, initialize=True):
         if not initialize:
             # Don't want to perform the initialization when using new or copy
             # to create a new instance.
@@ -158,11 +159,11 @@ class Crc:
         crc = self.crcValue
         lst = []
         while n > 0:
-            lst.append(chr(crc & 0xFF))
+            lst.append(crc & 0xFF)
             crc = crc >> 8
             n -= 1
         lst.reverse()
-        return ''.join(lst)
+        return bytes(lst)
 
     def hexdigest(self):
         '''Return the current CRC value as a string of hex digits.  The length
@@ -265,7 +266,7 @@ class Crc:
         out.write(_codeTemplate % parms) 
 
 #-----------------------------------------------------------------------------
-def mkCrcFun(poly, initCrc=~0L, rev=True, xorOut=0):
+def mkCrcFun(poly, initCrc=~0, rev=True, xorOut=0):
     '''Return a function that computes the CRC using the specified polynomial.
 
     poly -- integer representation of the generator polynomial
@@ -293,9 +294,8 @@ def mkCrcFun(poly, initCrc=~0L, rev=True, xorOut=0):
 
 def _verifyPoly(poly):
     msg = 'The degree of the polynomial must be 8, 16, 24, 32 or 64'
-    poly = long(poly) # Use a common representation for all operations
     for n in (8,16,24,32,64):
-        low = 1L<<n
+        low = 1<<n
         high = low*2
         if low <= poly < high:
             return n
@@ -305,13 +305,10 @@ def _verifyPoly(poly):
 # Bit reverse the input value.
 
 def _bitrev(x, n):
-    x = long(x)
-    y = 0L
-    for i in xrange(n):
-        y = (y << 1) | (x & 1L)
+    y = 0
+    for i in range(n):
+        y = (y << 1) | (x & 1)
         x = x >> 1
-    if ((1L<<n)-1) <= sys.maxint:
-        return int(y)
     return y
 
 #-----------------------------------------------------------------------------
@@ -320,32 +317,24 @@ def _bitrev(x, n):
 # bit of the polynomial has been stripped off.
 
 def _bytecrc(crc, poly, n):
-    crc = long(crc)
-    poly = long(poly)
-    mask = 1L<<(n-1)
-    for i in xrange(8):
+    mask = 1<<(n-1)
+    for i in range(8):
         if crc & mask:
             crc = (crc << 1) ^ poly
         else:
             crc = crc << 1
-    mask = (1L<<n) - 1
+    mask = (1<<n) - 1
     crc = crc & mask
-    if mask <= sys.maxint:
-        return int(crc)
     return crc
 
 def _bytecrc_r(crc, poly, n):
-    crc = long(crc)
-    poly = long(poly)
-    for i in xrange(8):
-        if crc & 1L:
+    for i in range(8):
+        if crc & 1:
             crc = (crc >> 1) ^ poly
         else:
             crc = crc >> 1
-    mask = (1L<<n) - 1
+    mask = (1<<n) - 1
     crc = crc & mask
-    if mask <= sys.maxint:
-        return int(crc)
     return crc
 
 #-----------------------------------------------------------------------------
@@ -357,15 +346,15 @@ def _bytecrc_r(crc, poly, n):
 # have been checked for validity by the caller.
 
 def _mkTable(poly, n):
-    mask = (1L<<n) - 1
-    poly = long(poly) & mask
-    table = [_bytecrc(long(i)<<(n-8),poly,n) for i in xrange(256)]
+    mask = (1<<n) - 1
+    poly = poly & mask
+    table = [_bytecrc(i<<(n-8),poly,n) for i in range(256)]
     return table
 
 def _mkTable_r(poly, n):
-    mask = (1L<<n) - 1
-    poly = _bitrev(long(poly) & mask, n)
-    table = [_bytecrc_r(long(i),poly,n) for i in xrange(256)]
+    mask = (1<<n) - 1
+    poly = _bitrev(poly & mask, n)
+    table = [_bytecrc_r(i,poly,n) for i in range(256)]
     return table
 
 #-----------------------------------------------------------------------------
@@ -404,19 +393,20 @@ del typeCode, size
 def _verifyParams(poly, initCrc, xorOut):
     sizeBits = _verifyPoly(poly)
 
-    mask = (1L<<sizeBits) - 1
+    # First return value is the poly size (in bits)
+    out = [sizeBits]
+
+    mask = (1<<sizeBits) - 1
 
     # Adjust the initial CRC to the correct data type (unsigned value).
-    initCrc = long(initCrc) & mask
-    if mask <= sys.maxint:
-        initCrc = int(initCrc)
+    initCrc = initCrc & mask
+    out.append(initCrc)
 
     # Similar for XOR-out value.
-    xorOut = long(xorOut) & mask
-    if mask <= sys.maxint:
-        xorOut = int(xorOut)
+    xorOut = xorOut & mask
+    out.append(xorOut)
 
-    return (sizeBits, initCrc, xorOut)
+    return out
 
 #-----------------------------------------------------------------------------
 # The following function returns a Python function to compute the CRC.
