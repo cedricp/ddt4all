@@ -23,9 +23,6 @@ import PyQt5.QtGui as gui
 import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets
 
-def utf8(input_string):
-    return input_string
-
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
 __credits__ = []
@@ -105,11 +102,11 @@ class ecuCommand(widgets.QDialog):
         data_to_stream = {}
         for i in range(0, self.com_table.rowCount()):
             cellwidget = self.com_table.cellWidget(i, 1)
-            reqkey = utf8(self.com_table.item(i, 0).text())
+            reqkey = self.com_table.item(i, 0).text()
             if cellwidget:
-                curtext = utf8(cellwidget.currentText())
+                curtext = cellwidget.currentText()
             elif self.com_table.item(i, 1) is not None:
-                curtext = utf8(self.com_table.item(i, 1).text())
+                curtext = self.com_table.item(i, 1).text()
             else:
                 if check:
                     msgbox = widgets.QMessageBox()
@@ -130,7 +127,7 @@ class ecuCommand(widgets.QDialog):
         if self.current_request is None:
             return
 
-        sds = self.sds[utf8(self.sds_combo.currentText())]
+        sds = self.sds[self.sds_combo.currentText()]
         self.paramview.sendElm(sds)
 
         stream_to_send = self.compute_frame()
@@ -436,7 +433,7 @@ class paramWidget(widgets.QWidget):
         if isinstance(self.currentwidget, displaymod.labelWidget):
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == utf8(self.currentwidget.text()):
+                if txt == self.currentwidget.text():
                     nln = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter label name'))
                     if not nln[1]:
                         return
@@ -454,7 +451,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == utf8(self.currentwidget.text()):
+                if txt == self.currentwidget.text():
                     self.layoutdict['screens'][self.current_screen]['labels'].pop(count)
                     break
                 count += 1
@@ -463,7 +460,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for inp in self.layoutdict['screens'][self.current_screen]['inputs']:
                 txt = inp['text']
-                if txt == utf8(self.currentwidget.qlabel.text()):
+                if txt == self.currentwidget.qlabel.text():
                     self.layoutdict['screens'][self.current_screen]['inputs'].pop(count)
                     break
                 count += 1
@@ -472,7 +469,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for display in self.layoutdict['screens'][self.current_screen]['displays']:
                 txt = display['text']
-                if txt == utf8(self.currentwidget.qlabel.text()):
+                if txt == self.currentwidget.qlabel.text():
                     self.layoutdict['screens'][self.current_screen]['displays'].pop(count)
                     break
                 count += 1
@@ -481,7 +478,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for button in self.layoutdict['screens'][self.current_screen]['buttons']:
                 txt = button['uniquename']
-                if txt == utf8(self.currentwidget.uniquename):
+                if txt == self.currentwidget.uniquename:
                     self.layoutdict['screens'][self.current_screen]['buttons'].pop(count)
                     break
                 count += 1
@@ -687,15 +684,14 @@ class paramWidget(widgets.QWidget):
         self.dialogbox.show()
 
     def changeSDS(self, qttext):
-        text = utf8(qttext)
-        diagsession = self.sds[text]
+        diagsession = self.sds[qttext]
         self.defaultdiagsessioncommand = diagsession
         self.sendElm(diagsession)
 
     def send_manual_cmd(self):
         diagmode = self.diagsession.currentText()
         if diagmode:
-            sds = utf8(diagmode)
+            sds = diagmode
             if sds != u'None':
                 rq = self.request_editor_sds[sds]
                 self.sendElm(rq)
@@ -845,7 +841,7 @@ class paramWidget(widgets.QWidget):
                     self.sds[dataname] = sdsrequest
 
         for i in range(0, options.main_window.sdscombo.count()):
-            itemname = utf8(options.main_window.sdscombo.itemText(i))
+            itemname = options.main_window.sdscombo.itemText(i)
             if u'EXTENDED' in itemname.upper():
                 options.main_window.sdscombo.setCurrentIndex(i)
                 self.defaultdiagsessioncommand = self.sds[itemname]
@@ -1141,11 +1137,11 @@ class paramWidget(widgets.QWidget):
                 newval = ""
                 if not is_combo_widget:
                     # Get input string from user line edit
-                    input_value = utf8(widget.text())
+                    input_value = widget.text()
                     newval = input_value
                 else:
                     # Get value from user input combo box
-                    combo_value = utf8(widget.currentText())
+                    combo_value = widget.currentText()
                     newval = combo_value
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
@@ -1271,7 +1267,7 @@ class paramWidget(widgets.QWidget):
                             combovalueindex = -1
                             for i in range(data.widget.count()):
                                 itemname = data.widget.itemText(i)
-                                if utf8(itemname) == value:
+                                if itemname == value:
                                     combovalueindex = i
                                     break
 
@@ -1301,24 +1297,28 @@ class paramWidget(widgets.QWidget):
 
         if not self.allow_parameters_update:
             return
-
+        start_time = time.time()
         # <Screen> <Send/> <Screen/> tag management
         # Manage pre send commands
-        self.startDiagnosticSession()
 
-        for sendcom in self.panel.presend:
-            delay = float(sendcom['Delay'])
-            req_name = sendcom['RequestName']
+        if not options.auto_refresh:
+            self.startDiagnosticSession()
 
-            time.sleep(delay / 1000.)
-            request = self.getRequest(self.ecurequestsparser.requests, req_name)
-            if not request:
-                self.logview.append(_("Cannot call request ") + req_name)
-            self.sendElm(request.sentbytes, True)
+            for sendcom in self.panel.presend:
+                delay = float(sendcom['Delay'])
+                req_name = sendcom['RequestName']
+
+                time.sleep(delay / 1000.)
+                request = self.getRequest(self.ecurequestsparser.requests, req_name)
+                if not request:
+                    self.logview.append(_("Cannot call request ") + req_name)
+                self.sendElm(request.sentbytes, True)
 
         for request_name in self.displaydict.keys():
             self.updateDisplay(request_name, update_inputs)
 
+        elapsed_time = time.time() - start_time
+        print('Page update time {:.3f} ms'.format(elapsed_time*1000.0))
         # Stop log
         self.updatelog = False
         if options.auto_refresh:

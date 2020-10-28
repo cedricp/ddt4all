@@ -650,10 +650,10 @@ class ELM:
 
         if not options.elm_failed and rate != 1000000 and adapter_type == "OBDLINK":
             print("OBDLink Connection OK, attempting full speed UART switch")
-            res = self.send_raw("ST SBR 1000000")
+            res = self.send_raw("ST SBR 2000000")
             if "OK" in res:
                 print("OBDLINK switched to 1Mbs, changing UART speed now...")
-                self.port.change_rate(1000000)
+                self.port.change_rate(2000000)
                 time.sleep(1)
                 res = self.send_raw("STI")
                 if "STN" in res:
@@ -1271,7 +1271,8 @@ class ELM:
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
         if canline == 0:
-            if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
+            # TODO: Find a better way to detect baud rate
+            if 0 and 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
                 if CANEXT:
                     self.cmd("AT SP 9")
                 else:

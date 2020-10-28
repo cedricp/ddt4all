@@ -655,7 +655,7 @@ class Ecu_data:
             return None
 
         if self.bytesascii:
-            return value.decode('hex')
+            return bytes.fromhex(value).decode('utf-8')
 
         # I think we want Hex format for non scaled values
         if not self.scaled:
@@ -1507,7 +1507,8 @@ class Ecu_scanner:
             can_response = options.elm.request(req='22F18A', positive='', cache=False)
             if 'WRONG' in can_response:
                 return False
-        supplier = can_response.replace(' ', '')[6:132].decode('hex')
+        #supplier = can_response.replace(' ', '')[6:132].decode('hex')
+        supplier =  bytes.fromhex(can_response.replace(' ', '')[6:132]).decode('utf-8')
         supplier = filter(lambda x: x in printable_chars, supplier)
 
         # Check soft number
@@ -1531,7 +1532,8 @@ class Ecu_scanner:
             can_response = options.elm.request(req='22F194', positive='', cache=False)
             if 'WRONG' in can_response:
                 return False
-        soft = can_response.replace(' ', '')[6:38].decode('hex')
+        #soft = can_response.replace(' ', '')[6:38].decode('hex')
+        soft = bytes.fromhex(can_response.replace(' ', '')[6:38]).decode('utf-8')
         soft = filter(lambda x: x in printable_chars, soft)
 
         # Check soft version
@@ -1557,7 +1559,8 @@ class Ecu_scanner:
                 return False
 
         # Remove unwanted non-ascii FF from string
-        soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+        #soft_version = can_response.replace(' ', '')[6:38].decode('hex')
+        soft_version = bytes.fromhex(can_response.replace(' ', '')[6:38]).decode('utf-8')
         soft_version = filter(lambda x: x in printable_chars, soft_version)
         if diagversion == "":
             return False
@@ -1682,7 +1685,8 @@ class Ecu_scanner:
     def check_ecu(self, can_response, label, addr, protocol):
         if len(can_response) > 59:
             diagversion = str(int(can_response[21:23], 16))
-            supplier = can_response[24:32].replace(' ', '').decode('hex')
+            #supplier = can_response[24:32].replace(' ', '').decode('hex')
+            supplier = bytes.fromhex(can_response[24:32].replace(' ', '')).decode('utf-8')
             soft = can_response[48:53].replace(' ', '')
             version = can_response[54:59].replace(' ', '')
             self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)

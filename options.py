@@ -26,7 +26,7 @@ main_window = None
 ecu_scanner = None
 debug = 'DDTDEBUG' in os.environ
 cantimeout = 0
-refreshrate = 100
+refreshrate = 5
 mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 

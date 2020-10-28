@@ -310,7 +310,8 @@ class Main_widget(widgets.QMainWindow):
         self.infostatus.setFixedWidth(200)
 
         self.refreshtimebox = widgets.QSpinBox()
-        self.refreshtimebox.setRange(100, 2000)
+        self.refreshtimebox.setRange(5, 2000)
+        self.refreshtimebox.setValue(options.refreshrate)
         self.refreshtimebox.setSingleStep(100)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
         refrestimelabel = widgets.QLabel(_("Refresh rate (ms):"))
@@ -923,6 +924,7 @@ class Main_widget(widgets.QMainWindow):
     def closeEvent(self, event):
         self.snifferview.stopthread()
         super(Main_widget, self).closeEvent(event)
+        self.paramview.tester_timer.stop()
         try:
             del options.elm
         except:
