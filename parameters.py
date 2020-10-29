@@ -1301,9 +1301,9 @@ class paramWidget(widgets.QWidget):
         # <Screen> <Send/> <Screen/> tag management
         # Manage pre send commands
 
-        if not options.auto_refresh:
-            self.startDiagnosticSession()
+        self.startDiagnosticSession()
 
+        if not options.auto_refresh:
             for sendcom in self.panel.presend:
                 delay = float(sendcom['Delay'])
                 req_name = sendcom['RequestName']

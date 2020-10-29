@@ -922,9 +922,10 @@ class Main_widget(widgets.QMainWindow):
         self.paramview.setRefreshTime(self.refreshtimebox.value())
 
     def closeEvent(self, event):
+        if self.paramview:
+            self.paramview.tester_timer.stop()
         self.snifferview.stopthread()
         super(Main_widget, self).closeEvent(event)
-        self.paramview.tester_timer.stop()
         try:
             del options.elm
         except:

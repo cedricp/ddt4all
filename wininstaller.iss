@@ -1,5 +1,5 @@
 [Setup]
-AppName=ddt4all
+AppName=DDT4All
 AppVersion=1.0
 DefaultDirName={pf}\ddt4all
 DefaultGroupName=ddt4all
@@ -10,16 +10,19 @@ OutputBaseFilename=ddt4all-installer
 Source: "*.py"; DestDir: "{app}"
 Source: "README.md"; DestDir: "{app}"
 Source: "crcmod\*"; DestDir: "{app}\crcmod"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "Python27\*"; DestDir: "{app}\Python27"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "Python38\*"; DestDir: "{app}\Python38"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
 Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs
-Source: "importlib\*"; DestDir: "{app}\importlib"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall('{cm:AfterMyProgInstall}', ExpandConstant('{app}'))
 ; Uncheck the line below to package ecu db
 ; Source: "ecu.zip"; DestDir: "{app}";
+
+[InstallDelete]
+Type: filesandordirs; Name: "{app}\importlib"
+Type: filesandordirs; Name: "{app}\python27"
 
 [Code]
 procedure AfterMyProgInstall(S: String; P: String);
