@@ -490,9 +490,12 @@ class Main_widget(widgets.QMainWindow):
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
+        saverecordaction = diagmenu.addAction(_("Save last record"))
+        diagmenu.addSeparator()
         savevehicleaction = diagmenu.addAction(_("Save ECU list"))
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
+        saverecordaction.triggered.connect(self.saveRecord)
         newecuction.triggered.connect(self.newEcu)
         xmlopenaction.triggered.connect(self.openxml)
         identecu.triggered.connect(self.identEcu)
@@ -846,6 +849,16 @@ class Main_widget(widgets.QMainWindow):
         self.eculistwidget.init()
         self.eculistwidget.filterProject()
 
+    def saveRecord(self):
+        if not self.paramview:
+            return
+
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save record (keep '.txt' extension)"),
+                                                   "./record.txt", "*.txt")
+        filename = str(filename_tuple[0])
+
+        self.paramview.export_record(filename)
+
     def openxml(self):
         filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
 
@@ -882,7 +895,11 @@ class Main_widget(widgets.QMainWindow):
 
         if options.auto_refresh:
             if self.paramview:
+                self.paramview.prepare_recording()
                 self.paramview.updateDisplays(True)
+        else:
+            if self.paramview:
+                self.logview.append("Recorded " + str(self.paramview.get_record_size()) + " entries")
 
     def refreshParams(self):
         if self.paramview:

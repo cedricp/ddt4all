@@ -245,6 +245,8 @@ class paramWidget(widgets.QWidget):
         self.current_screen = ''
         self.movingwidgets = []
         self.allow_parameters_update = True
+        self.record_values = []
+        self.record_keys = {}
 
     def set_soft_fc(self, b):
         if options.elm is not None:
@@ -1225,6 +1227,87 @@ class paramWidget(widgets.QWidget):
                 options.elm.start_session_iso(sds)
             self.currentsession = sds
 
+    def getRequest(self, requests, reqname):
+        if reqname in requests:
+            return requests[reqname]
+        for req in requests:
+            if req.upper() == reqname.upper():
+                return requests[req]
+        return None
+
+    def prepare_recording(self):
+        self.record_values = []
+        self.record_keys = []
+        units = {}
+
+        for request_name in self.displaydict.keys():
+            request_data = self.displaydict[request_name]
+            request = request_data.request
+            if request.manualsend:
+                continue
+
+            for data_struct in request_data.data:
+                ecu_data = data_struct.data
+                data_item = request.dataitems[ecu_data.name]
+                self.record_keys.append(data_item.name)
+                units[data_item.name] = ecu_data.unit
+
+        first_entry = []
+        for key in self.record_keys:
+            first_entry.append(key + "(" + units[key] + ")")
+
+        self.record_values.append(first_entry)
+
+    def get_record_size(self):
+        return len(self.record_values)
+
+    def export_record(self, filename):
+        f = open(filename, "w")
+        for line in self.record_values:
+            f.write(';'.join(line))
+            f.write("\n")
+
+    def updateDisplays(self, update_inputs=False):
+        if not self.panel:
+            return
+
+        if not self.allow_parameters_update:
+            return
+        start_time = time.time()
+        # <Screen> <Send/> <Screen/> tag management
+        # Manage pre send commands
+
+        self.startDiagnosticSession()
+
+        if not options.auto_refresh:
+            for sendcom in self.panel.presend:
+                delay = float(sendcom['Delay'])
+                req_name = sendcom['RequestName']
+
+                time.sleep(delay / 1000.)
+                request = self.getRequest(self.ecurequestsparser.requests, req_name)
+                if not request:
+                    self.logview.append(_("Cannot call request ") + req_name)
+                self.sendElm(request.sentbytes, True)
+
+        self.recorddict = {}
+        for request_name in self.displaydict.keys():
+            self.updateDisplay(request_name, update_inputs)
+
+        if options.auto_refresh:
+            lst = []
+            for key in self.record_keys:
+                if key in self.recorddict.keys():
+                    lst.append(self.recorddict[key])
+            self.record_values.append(lst)
+
+        elapsed_time = time.time() - start_time
+        print('Page update time {:.3f} ms'.format(elapsed_time*1000.0))
+        # Stop log
+        self.updatelog = False
+        if options.auto_refresh:
+            self.timer.start(options.refreshrate)
+
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displaydict[request_name]
         request = request_data.request
@@ -1247,6 +1330,7 @@ class paramWidget(widgets.QWidget):
             data_item = request.dataitems[ecu_data.name]
             value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
             logdict[data_item.name] = value
+            self.recorddict[data_item.name] = value.replace(".", ",")
 
             if value is None:
                 qlabel.setStyleSheet("background-color: red;color: black")
@@ -1281,48 +1365,6 @@ class paramWidget(widgets.QWidget):
             self.logfile.write(u"\t\t" + string)
             self.logfile.write("\n")
             self.logfile.flush()
-
-
-    def getRequest(self, requests, reqname):
-        if reqname in requests:
-            return requests[reqname]
-        for req in requests:
-            if req.upper() == reqname.upper():
-                return requests[req]
-        return None
-
-    def updateDisplays(self, update_inputs=False):
-        if not self.panel:
-            return
-
-        if not self.allow_parameters_update:
-            return
-        start_time = time.time()
-        # <Screen> <Send/> <Screen/> tag management
-        # Manage pre send commands
-
-        self.startDiagnosticSession()
-
-        if not options.auto_refresh:
-            for sendcom in self.panel.presend:
-                delay = float(sendcom['Delay'])
-                req_name = sendcom['RequestName']
-
-                time.sleep(delay / 1000.)
-                request = self.getRequest(self.ecurequestsparser.requests, req_name)
-                if not request:
-                    self.logview.append(_("Cannot call request ") + req_name)
-                self.sendElm(request.sentbytes, True)
-
-        for request_name in self.displaydict.keys():
-            self.updateDisplay(request_name, update_inputs)
-
-        elapsed_time = time.time() - start_time
-        print('Page update time {:.3f} ms'.format(elapsed_time*1000.0))
-        # Stop log
-        self.updatelog = False
-        if options.auto_refresh:
-            self.timer.start(options.refreshrate)
 
     def setCanTimeout(self):
         if not options.simulation_mode:
