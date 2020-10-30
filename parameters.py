@@ -1239,6 +1239,7 @@ class paramWidget(widgets.QWidget):
         self.record_values = []
         self.record_keys = []
         units = {}
+        self.record_time = time.time()
 
         for request_name in self.displaydict.keys():
             request_data = self.displaydict[request_name]
@@ -1253,6 +1254,7 @@ class paramWidget(widgets.QWidget):
                 units[data_item.name] = ecu_data.unit
 
         first_entry = []
+        first_entry.append("Time (ms)")
         for key in self.record_keys:
             first_entry.append(key + "(" + units[key] + ")")
 
@@ -1295,10 +1297,16 @@ class paramWidget(widgets.QWidget):
             self.updateDisplay(request_name, update_inputs)
 
         if options.auto_refresh:
+            elapsed_time = time.time() - self.record_time
+            current_time = '{:.3f}'.format(elapsed_time*1000.0)
             lst = []
+            lst.append(current_time)
             for key in self.record_keys:
                 if key in self.recorddict.keys():
-                    lst.append(self.recorddict[key])
+                    if key in self.recorddict:
+                        lst.append(self.recorddict[key])
+                    else:
+                        lst.append("N/A")
             self.record_values.append(lst)
 
         elapsed_time = time.time() - start_time
