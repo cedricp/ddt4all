@@ -1719,7 +1719,7 @@ def dumpDOC(xdoc):
     return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
 
 
-def zipConvertXML(dbfilename = "ecu.zip"):
+def zipConvertXML(dbfilename="ecu.zip"):
     zipoutput = BytesIO()
     options.ecus_dir = "./ecus"
 

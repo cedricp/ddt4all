@@ -613,7 +613,7 @@ class ELM:
     connectionStatus = False
 
     def __init__(self, portName, rate, adapter_type="STD"):
-        for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000]:
+        for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print(_("Trying to open port") + "%s @ %i" % (portName, speed))
             self.sim_mode = options.simulation_mode
             self.portName = portName
@@ -636,6 +636,7 @@ class ELM:
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
 
+            # Purge unread data
             self.port.expect(">")
             res = self.send_raw("ATZ")
             if not 'ELM' in res:
@@ -648,11 +649,11 @@ class ELM:
                 rate = speed
                 break
 
-        if not options.elm_failed and rate != 1000000 and adapter_type == "OBDLINK":
+        if adapter_type == "OBDLINK" and not options.elm_failed and rate != 2000000:
             print("OBDLink Connection OK, attempting full speed UART switch")
             res = self.send_raw("ST SBR 2000000")
             if "OK" in res:
-                print("OBDLINK switched to 1Mbs, changing UART speed now...")
+                print("OBDLINK switched to 2Mbs, changing UART speed now...")
                 self.port.change_rate(2000000)
                 time.sleep(1)
                 res = self.send_raw("STI")
@@ -664,7 +665,7 @@ class ELM:
                     options.elm_failed = True
                     self.connectionStatus = False
             else:
-                print("Failed to switch to change OBDLink to 1Mbs, using " + str(speed))
+                print("Failed to switch to change OBDLink to 2Mbs, using " + str(speed))
 
     def __del__(self):
         try:
@@ -1255,30 +1256,30 @@ class ELM:
             TXa = dnat[addr]
             RXa = snat[addr]
 
-        RXsh = RXa
-        TXsh = TXa
-        CANEXT = False
-        if len(RXa) > 4:
+        extended_can = False
+        if len(RXa) == 8:
             # Extended (29bits) addressing
-            RXsh = RXa[2:]
-            TXsh = TXa[2:]
-            CANEXT = True
+            extended_can = True
 
-        # No need to set AT CP it should be set to 18 yet
-        self.cmd("AT SH " + TXsh)
-        self.cmd("AT CRA " + RXsh)
-        self.cmd("AT FC SH " + TXsh)
+        if extended_can:
+            self.cmd("AT CP " + TXa[:2])
+            self.cmd("AT SH " + TXa[2:])
+        else:
+            self.cmd("AT SH " + TXa)
+
+        self.cmd("AT CRA " + RXa)
+        self.cmd("AT FC SH " + TXa)
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
         if canline == 0:
             # TODO: Find a better way to detect baud rate
             if 0 and 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-                if CANEXT:
+                if extended_can:
                     self.cmd("AT SP 9")
                 else:
                     self.cmd("AT SP 8")
             else:
-                if CANEXT:
+                if extended_can:
                     self.cmd("AT SP 7")
                 else:
                     self.cmd("AT SP 6")

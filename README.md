@@ -5,7 +5,7 @@
 
 DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
 
-This application is work in progress, so be very carful when using expert mode.
+This application is work in progress, so be very careful when using expert mode.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
 
 **Important :**
@@ -17,17 +17,9 @@ Using the application in non expert mode should not be harmful for your vehicle 
 **This tool is mainly aimed for CAN ISO_TP network study**
 
 ## Dependencies :
-* Python 2.7
-* PyQt 4.8 or 5.7+
-* An ELM327 or OBDLink SX (usb preferable WiFi not tested yet)
-
-### Install dependencies on Ubuntu :
-
-QT4
-* `sudo apt-get install python-qt4`
-
-or QT5
-* `sudo apt-get install python-pyqt5 python-pyqt5.qtwebkit`
+* Python 3.8
+* PyQt 5
+* An ELM327, ELS327 or OBDLink SX 
 
 ## Windows installer
 
@@ -50,6 +42,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Internal JSON file format for high speed parsing
 * Database zip compression of converted JSON files
 * Can bus sniffing (Read/Decode non-ISOTP frames)
+* Screen recorder (via autorefresh button) and export to CSV format
 
 ## How to launch the application ?
 
