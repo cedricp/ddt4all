@@ -1283,13 +1283,23 @@ class ELM:
                     self.cmd("AT SP 7")
                 else:
                     self.cmd("AT SP 6")
+        elif canline == 1:
+            if extended_can:
+                self.cmd("AT SP 7")
+            else:
+                self.cmd("AT SP 6")
+        elif canline == 2:
+            if extended_can:
+                self.cmd("AT SP 9")
+            else:
+                self.cmd("AT SP 8")
         else:
             self.cmd("STP 53")
-            if canline == 1:
+            if canline == 3:
                 self.cmd("STPBR 500000")
-            elif canline == 2:
+            elif canline == 4:
                 self.cmd("STPBR 250000")
-            elif canline == 3:
+            elif canline == 5:
                 self.cmd("STPBR 125000")
 
         if options.cantimeout > 0:

@@ -426,13 +426,6 @@ class Main_widget(widgets.QMainWindow):
 
         self.canlinecombo = widgets.QComboBox()
         self.canlinecombo.setFixedWidth(150)
-        self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
-        self.canlinecombo.addItem("CAN Line 1")
-        self.canlinecombo.addItem("CAN Line 2@500K")
-        self.canlinecombo.addItem("CAN Line 2@250K")
-        self.canlinecombo.addItem("CAN Line 2@125K")
-        if options.elm is not None and not options.elm.adapter_type == "ELS":
-            self.canlinecombo.setEnabled(False)
 
         self.sdscombo = widgets.QComboBox()
         self.sdscombo.setFixedWidth(300)
@@ -550,6 +543,27 @@ class Main_widget(widgets.QMainWindow):
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
+
+    def set_can_combo(self, bus):
+        self.canlinecombo.clear()
+        try:
+            self.canlinecombo.clicked.disconnect()
+        except Exception:
+            pass
+        if bus == "CAN":
+            self.canlinecombo.addItem("CAN Line 1 Auto")
+            self.canlinecombo.addItem("CAN Line 1@500K")
+            self.canlinecombo.addItem("CAN Line 1@250K")
+            if options.elm is not None and not options.elm.adapter_type == "ELS":
+                self.canlinecombo.addItem("CAN Line 2@500K")
+                self.canlinecombo.addItem("CAN Line 2@250K")
+                self.canlinecombo.addItem("CAN Line 2@125K")
+            self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
+        else:
+            if bus == "KWP2000":
+                self.canlinecombo.addItem("KWP2000")
+            if bus == "ISO8":
+                self.canlinecombo.addItem("ISO8")
 
     def flow_control(self):
         enabled = self.fctrigger.isChecked()
@@ -938,6 +952,7 @@ class Main_widget(widgets.QMainWindow):
                 self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
 
         self.paramview.setRefreshTime(self.refreshtimebox.value())
+        self.set_can_combo(self.paramview.ecurequestsparser.ecu_protocol)
 
     def closeEvent(self, event):
         if self.paramview:
@@ -1001,6 +1016,7 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.destroy()
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
+        self.paramview.infobox = self.infostatus
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)

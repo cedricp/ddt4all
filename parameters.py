@@ -247,6 +247,7 @@ class paramWidget(widgets.QWidget):
         self.allow_parameters_update = True
         self.record_values = []
         self.record_keys = {}
+        self.infobox = None
 
     def set_soft_fc(self, b):
         if options.elm is not None:
@@ -1310,7 +1311,8 @@ class paramWidget(widgets.QWidget):
             self.record_values.append(lst)
 
         elapsed_time = time.time() - start_time
-        print('Page update time {:.3f} ms'.format(elapsed_time*1000.0))
+        if self.infobox:
+            self.infobox.setText('Update time {:.3f} ms'.format(elapsed_time*1000.0))
         # Stop log
         self.updatelog = False
         if options.auto_refresh:
@@ -1337,14 +1339,18 @@ class paramWidget(widgets.QWidget):
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
             value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
-            logdict[data_item.name] = value
-            self.recorddict[data_item.name] = value.replace(".", ",")
 
             if value is None:
                 qlabel.setStyleSheet("background-color: red;color: black")
                 value = "NO DATA"
             else:
                 qlabel.resetDefaultStyle()
+
+            if value is not None:
+                logdict[data_item.name] = value
+            else:
+                logdict[data_item.name] = "N/A"
+            self.recorddict[data_item.name] = logdict[data_item.name].replace(".", ",")
 
             qlabel.setText(value + ' ' + ecu_data.unit)
 
