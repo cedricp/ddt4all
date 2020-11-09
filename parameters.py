@@ -1346,11 +1346,14 @@ class paramWidget(widgets.QWidget):
             else:
                 qlabel.resetDefaultStyle()
 
+            out_value = "N/A"
             if value is not None:
-                logdict[data_item.name] = value
-            else:
-                logdict[data_item.name] = "N/A"
-            self.recorddict[data_item.name] = logdict[data_item.name].replace(".", ",")
+                out_value = value
+
+            logdict[data_item.name] = out_value
+
+            if options.auto_refresh:
+                self.recorddict[data_item.name] = out_value.replace(".", ",")
 
             qlabel.setText(value + ' ' + ecu_data.unit)
 

@@ -357,6 +357,33 @@ class Port:
         except:
             options.elm_failed = True
 
+    def read_byte(self):
+        try:
+            byte = b""
+            if self.portType == 1:
+                import socket
+                try:
+                    byte = self.hdr.recv(1)
+                    print(str(byte))
+                except socket.timeout:
+                    self.tcp_needs_reconnect = True
+                except Exception as e:
+                    print(e)
+            elif self.portType == 2:
+                if self.droid.bluetoothReadReady():
+                    byte = self.droid.bluetoothRead(1).result
+            else:
+                if self.hdr.inWaiting():
+                    byte = self.hdr.read()
+        except:
+            print('*' * 40)
+            print('*       ' + _('Connection to ELM was lost'))
+            self.connectionStatus = False
+            self.close()
+            return None
+
+        return byte
+
     def read(self):
         try:
             byte = b""
@@ -388,7 +415,6 @@ class Port:
             return ""
 
     def change_rate(self, rate):
-        print("Serial port switch to " + str(rate))
         self.hdr.baudrate = rate
 
     def write(self, data):
@@ -407,6 +433,31 @@ class Port:
             print('*       ' + _('Connection to ELM was lost'))
             self.connectionStatus = False
             self.close()
+
+
+    def expect_carriage_return(self, time_out=1):
+        tb = time.time()  # start time
+        self.buff = b""
+
+        while True:
+            if not options.simulation_mode:
+                byte = self.read_byte()
+            else:
+                byte = '>'
+
+            if byte:
+                self.buff += byte
+            tc = time.time()
+
+            if b'\r' in self.buff:
+                return self.buff.decode('utf8')
+
+            if (tc - tb) > time_out:
+                return self.buff + b"TIMEOUT"
+
+        self.close()
+        self.connectionStatus = False
+        return ''
 
     def expect(self, pattern, time_out=1):
         tb = time.time()  # start time
@@ -465,107 +516,6 @@ class Port:
         print("\n" + _("ELM not responding"))
         return False
 
-    def soft_baudrate(self, baudrate):
-
-        if options.simulation_mode:
-            return
-
-        if self.portType == 1:  # wifi is not supported
-            print(_("ERROR - wifi do not support changing baud rate"))
-            return
-
-        print(_("Changing baud rate to:"), baudrate,)
-
-        if baudrate == 38400:
-            self.write("at brd 68\r")
-        elif baudrate == 57600:
-            self.write("at brd 45\r")
-        elif baudrate == 115200:
-            self.write("at brd 23\r")
-        elif baudrate == 230400:
-            self.write("at brd 11\r")
-        elif baudrate == 500000:
-            self.write("at brd 8\r")
-
-        # search OK
-        tb = time.time()  # start time
-        self.buff = ""
-        while (True):
-            if not options.simulation_mode:
-                byte = self.read()
-            else:
-                byte = 'OK'
-            if byte == '\r' or byte == '\n':
-                self.buff = ""
-                continue
-            self.buff += byte
-            tc = time.time()
-            if 'OK' in self.buff:
-                break
-            if (tc - tb) > 1:
-                print(_("ERROR - command not supported"))
-                sys.exit()
-
-        self.hdr.timeout = 1
-        if baudrate == 38400:
-            self.hdr.baudrate = 38400
-        elif baudrate == 57600:
-            self.hdr.baudrate = 57600
-        elif baudrate == 115200:
-            self.hdr.baudrate = 115200
-        elif baudrate == 230400:
-            self.hdr.baudrate = 230400
-        elif baudrate == 500000:
-            self.hdr.baudrate = 500000
-
-        # search ELM
-        tb = time.time()  # start time
-        self.buff = ""
-        while True:
-            if not options.simulation_mode:
-                byte = self.read()
-            else:
-                byte = 'ELM'
-            if byte == '\r' or byte == '\n':
-                self.buff = ""
-                continue
-            self.buff += byte
-            tc = time.time()
-            if 'ELM' in self.buff:
-                break
-            if (tc - tb) > 1:
-                print(_("ERROR - rate not supported. Let's go back."))
-                self.hdr.timeout = self.portTimeout
-                self.hdr.baudrate = options.port_speed
-                return
-
-        self.write("\r")
-
-        # search >
-        tb = time.time()  # start time
-        self.buff = ""
-        while (True):
-            if not options.simulation_mode:
-                byte = self.read()
-            else:
-                byte = '>'
-            if byte == '\r' or byte == '\n':
-                self.buff = ""
-                continue
-            self.buff += byte
-            tc = time.time()
-            if '>' in self.buff:
-                break
-            if (tc - tb) > 1:
-                print(_("ERROR - something went wrong. Let's get back."))
-                self.hdr.timeout = self.portTimeout
-                self.hdr.baudrate = options.port_speed
-                return
-
-        print("OK")
-        return
-
-
 class ELM:
     '''ELM327 class'''
 
@@ -612,7 +562,7 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, rate, adapter_type="STD"):
+    def __init__(self, portName, rate, adapter_type="STD", maxspeed=False):
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print(_("Trying to open port") + "%s @ %i" % (portName, speed))
             self.sim_mode = options.simulation_mode
@@ -649,28 +599,65 @@ class ELM:
                 rate = speed
                 break
 
-        if adapter_type == "OBDLINK" and not options.elm_failed and rate != 2000000:
+        if adapter_type == "OBDLINK" and maxspeed and not options.elm_failed and rate != 2000000:
             print("OBDLink Connection OK, attempting full speed UART switch")
-            res = self.send_raw("ST SBR 2000000")
-            if "OK" in res:
-                print("OBDLINK switched to 2Mbs, changing UART speed now...")
-                self.port.change_rate(2000000)
-                time.sleep(1)
-                res = self.send_raw("STI")
-                if "STN" in res:
-                    print("OBDLink full speed connection OK")
-                    print("OBDLink Version " + res)
-                else:
-                    print("OBDLink full speed switch failed")
-                    options.elm_failed = True
-                    self.connectionStatus = False
+            try:
+                self.raise_odb_speed()
+            except:
+                options.elm_failed = True
+                self.connectionStatus = False
+                print("Failed to switch to change OBDLink to 2Mbs.")
+        elif rate != 115200 and maxspeed:
+            print("ELM Connection OK, attempting high speed UART switch")
+            try:
+                self.raise_elm_speed()
+            except:
+                options.elm_failed = True
+                self.connectionStatus = False
+                print("Failed to switch to change ELM to 115Kbs.")
+
+    def raise_odb_speed(self):
+        # Software speed switch to 2Mbps
+        res = self.send_raw("ST SBR 2000000")
+        if "OK" in res:
+            print("OBDLINK switched to 2Mbs, changing UART speed now...")
+            self.port.change_rate(2000000)
+            time.sleep(1)
+            res = self.send_raw("STI")
+            if "STN" in res:
+                print("OBDLink full speed connection OK")
+                print("OBDLink Version " + res)
             else:
-                print("Failed to switch to change OBDLink to 2Mbs, using " + str(speed))
+                raise
+        else:
+            raise
+
+    def raise_elm_speed(self):
+        # Software speed switch to 115Kbps
+        res = self.port.write("ATBRD 23\r".encode("utf8"))
+        res = self.port.expect_carriage_return()
+        res = self.port.expect_carriage_return()
+        if "OK" in res:
+            print("ELM switched to 115Kbs, changing UART speed now...")
+            self.port.change_rate(115200)
+            version = self.port.expect_carriage_return()
+            if "ELM327" in version:
+                self.port.write('\r'.encode('utf8'))
+                res = self.port.expect('>')
+                if "OK" in res:
+                    print("ELM full speed connection OK ")
+                    print("ELM Version " + version)
+                else:
+                    raise
+            else:
+                raise
+        else:
+            raise
 
     def __del__(self):
         try:
             print("ELM reset...")
-            self.send_raw("ATZ\r")
+            self.port.write("ATZ\r".encode("utf8"))
         except:
             pass
 
@@ -1093,7 +1080,7 @@ class ELM:
         else:
             return "WRONG RESPONSE CFC0 " + errorstr
 
-    def send_raw(self, command):
+    def send_raw(self, command, expect='>'):
         tb = time.time()  # start time
 
         # save command to log
@@ -1112,7 +1099,7 @@ class ELM:
             tc = time.time()
             if options.simulation_mode:
                 break
-            self.buff = self.port.expect('>', self.portTimeout)
+            self.buff = self.port.expect(expect, self.portTimeout)
             if not self.port.connectionStatus:
                 break
                 return ''
@@ -1215,7 +1202,7 @@ class ELM:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
-        self.cmd("AT WS")
+        #self.cmd("AT WS")
         self.cmd("AT E1")
         self.cmd("AT S0")
         self.cmd("AT H0")
@@ -1272,7 +1259,7 @@ class ELM:
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
         if canline == 0:
-            # TODO: Find a better way to detect baud rate
+            # TODO: Find a better way to detect baud rate, some XML files are wrong
             if 0 and 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
                 if extended_can:
                     self.cmd("AT SP 9")
