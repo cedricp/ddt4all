@@ -1086,7 +1086,7 @@ class portChooser(widgets.QDialog):
         self.securitycheck = False
         self.selectedportspeed = 38400
         self.adapter = "STD"
-        self.raise_obdlink_speed = False
+        self.raise_port_speed = "No"
         super(portChooser, self).__init__(None)
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
@@ -1196,11 +1196,10 @@ class portChooser(widgets.QDialog):
         layout.addLayout(darkstylelayout)
 
         obdlinkspeedlayout = widgets.QHBoxLayout()
-        self.obdlinkspeedcheck = widgets.QCheckBox()
-        self.obdlinkspeedcheck.setChecked(True)
-        obdlinkspeedlabel = widgets.QLabel(_("Raise UART link connection to max speed"))
-        obdlinkspeedlayout.addWidget(self.obdlinkspeedcheck)
+        self.obdlinkspeedcombo = widgets.QComboBox()
+        obdlinkspeedlabel = widgets.QLabel(_("Change UART speed"))
         obdlinkspeedlayout.addWidget(obdlinkspeedlabel)
+        obdlinkspeedlayout.addWidget(self.obdlinkspeedcombo)
         obdlinkspeedlayout.addStretch()
         layout.addLayout(obdlinkspeedlayout)
 
@@ -1267,7 +1266,7 @@ class portChooser(widgets.QDialog):
 
     def bt(self):
         self.adapter = "STD_BT"
-        self.obdlinkspeedcheck.setEnabled(False)
+        self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1289,7 +1288,7 @@ class portChooser(widgets.QDialog):
 
     def wifi(self):
         self.adapter = "STD_WIFI"
-        self.obdlinkspeedcheck.setEnabled(False)
+        self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1310,7 +1309,13 @@ class portChooser(widgets.QDialog):
 
     def usb(self):
         self.adapter = "STD_USB"
-        self.obdlinkspeedcheck.setEnabled(True)
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem("No")
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
+        # This mode seems to not be supported
+        #self.obdlinkspeedcombo.addItem("500000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1332,7 +1337,11 @@ class portChooser(widgets.QDialog):
 
     def obdlink(self):
         self.adapter = "OBDLINK"
-        self.obdlinkspeedcheck.setEnabled(True)
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem("No")
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")
+        self.obdlinkspeedcombo.addItem("2000000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1354,7 +1363,7 @@ class portChooser(widgets.QDialog):
 
     def els(self):
         self.adapter = "ELS"
-        self.obdlinkspeedcheck.setEnabled(False)
+        self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1395,7 +1404,7 @@ class portChooser(widgets.QDialog):
                 self.port = self.ports[portinfo][0]
                 options.port_name = self.ports[portinfo][1]
                 self.mode = 1
-                self.raise_obdlink_speed = self.obdlinkspeedcheck.isChecked()
+                self.raise_port_speed = self.obdlinkspeedcombo.currentText()
                 self.done(True)
             else:
                 msgbox = widgets.QMessageBox()
@@ -1455,7 +1464,7 @@ if __name__ == '__main__':
             msgbox.exec_()
 
         print(_("Initilizing ELM with speed %i...") % port_speed)
-        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_obdlink_speed)
+        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())

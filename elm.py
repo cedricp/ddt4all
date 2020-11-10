@@ -562,12 +562,16 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, rate, adapter_type="STD", maxspeed=False):
+    def __init__(self, portName, rate, adapter_type="STD", maxspeed="No"):
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print(_("Trying to open port") + "%s @ %i" % (portName, speed))
             self.sim_mode = options.simulation_mode
             self.portName = portName
             self.adapter_type = adapter_type
+            if maxspeed == "No":
+                maxspeed = 0
+            else:
+                maxspeed = int(maxspeed)
 
             if not options.simulation_mode:
                 self.port = Port(portName, speed, self.portTimeout)
@@ -602,26 +606,26 @@ class ELM:
         if adapter_type == "OBDLINK" and maxspeed and not options.elm_failed and rate != 2000000:
             print("OBDLink Connection OK, attempting full speed UART switch")
             try:
-                self.raise_odb_speed()
+                self.raise_odb_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print("Failed to switch to change OBDLink to 2Mbs.")
-        elif rate != 115200 and maxspeed:
+                print("Failed to switch to change OBDLink to " + str(maxspeed))
+        elif adapter_type == "STD_USB" and rate != 115200 and maxspeed:
             print("ELM Connection OK, attempting high speed UART switch")
             try:
-                self.raise_elm_speed()
+                self.raise_elm_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print("Failed to switch to change ELM to 115Kbs.")
+                print("Failed to switch to change ELM to " + str(maxspeed))
 
-    def raise_odb_speed(self):
-        # Software speed switch to 2Mbps
-        res = self.send_raw("ST SBR 2000000")
+    def raise_odb_speed(self, baudrate):
+        # Software speed switch
+        res = self.send_raw("ST SBR " + str(baudrate))
         if "OK" in res:
-            print("OBDLINK switched to 2Mbs, changing UART speed now...")
-            self.port.change_rate(2000000)
+            print("OBDLINK switched baurate OK, changing UART speed now...")
+            self.port.change_rate(baudrate)
             time.sleep(1)
             res = self.send_raw("STI")
             if "STN" in res:
@@ -632,21 +636,33 @@ class ELM:
         else:
             raise
 
-    def raise_elm_speed(self):
+    def raise_elm_speed(self, baudrate):
         # Software speed switch to 115Kbps
-        res = self.port.write("ATBRD 23\r".encode("utf8"))
+        if baudrate == 57600:
+            res = self.port.write("ATBRD 45\r".encode("utf8"))
+        elif baudrate == 115200:
+            res = self.port.write("ATBRD 23\r".encode("utf8"))
+        elif baudrate == 230400:
+            res = self.port.write("ATBRD 11\r".encode("utf8"))
+        elif baudrate == 500000:
+            res = self.port.write("ATBRD 8\r".encode("utf8"))
+        else:
+            return
+
+        # Command echo
         res = self.port.expect_carriage_return()
+        # Command result
         res = self.port.expect_carriage_return()
         if "OK" in res:
-            print("ELM switched to 115Kbs, changing UART speed now...")
-            self.port.change_rate(115200)
+            print("ELM baudrate switched OK, changing UART speed now...")
+            self.port.change_rate(baudrate)
             version = self.port.expect_carriage_return()
             if "ELM327" in version:
                 self.port.write('\r'.encode('utf8'))
                 res = self.port.expect('>')
                 if "OK" in res:
                     print("ELM full speed connection OK ")
-                    print("ELM Version " + version)
+                    print("Version " + version)
                 else:
                     raise
             else:
@@ -1151,7 +1167,7 @@ class ELM:
         if options.simulation_mode:
             return
 
-        self.cmd('AT WS')
+        #self.cmd('AT WS')
         self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT H0")
@@ -1315,7 +1331,7 @@ class ELM:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
-        self.cmd("AT WS")
+        #self.cmd("AT WS")
         self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT D1")
