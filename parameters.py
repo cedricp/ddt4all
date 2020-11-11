@@ -24,7 +24,7 @@ import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
+__copyright__ = "Copyright 2016-2020"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"

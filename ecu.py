@@ -18,7 +18,7 @@ except ImportError:
         return chr(t)
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
+__copyright__ = "Copyright 2016-2020"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -90,8 +90,10 @@ class Data_item:
 
     def dump(self):
         js = {}
-        if self.firstbyte != 0: js['firstbyte'] = self.firstbyte
-        if self.bitoffset != 0: js['bitoffset'] = self.bitoffset
+        if self.firstbyte != 0:
+            js['firstbyte'] = self.firstbyte
+        if self.bitoffset != 0:
+            js['bitoffset'] = self.bitoffset
         if self.ref != False:
             js['ref'] = self.ref
         if self.endian != '':

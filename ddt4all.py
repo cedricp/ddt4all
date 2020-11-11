@@ -31,7 +31,7 @@ import tempfile, errno
 import codecs
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
+__copyright__ = "Copyright 2016-2020"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -554,7 +554,7 @@ class Main_widget(widgets.QMainWindow):
             self.canlinecombo.addItem("CAN Line 1 Auto")
             self.canlinecombo.addItem("CAN Line 1@500K")
             self.canlinecombo.addItem("CAN Line 1@250K")
-            if options.elm is not None and not options.elm.adapter_type == "ELS":
+            if options.elm is not None and options.elm.adapter_type == "ELS":
                 self.canlinecombo.addItem("CAN Line 2@500K")
                 self.canlinecombo.addItem("CAN Line 2@250K")
                 self.canlinecombo.addItem("CAN Line 2@125K")
@@ -1071,7 +1071,7 @@ def set_dark_style(onoff):
         stylefile = core.QFile("qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
 
-        StyleSheet = str(stylefile.readAll())
+        StyleSheet = bytes(stylefile.readAll()).decode()
     else:
         StyleSheet = ""
 
@@ -1314,8 +1314,8 @@ class portChooser(widgets.QDialog):
         self.obdlinkspeedcombo.addItem("57600")
         self.obdlinkspeedcombo.addItem("115200")
         self.obdlinkspeedcombo.addItem("230400")
-        # This mode seems to not be supported
-        #self.obdlinkspeedcombo.addItem("500000")
+        # This mode seems to not be supported by all adapters
+        self.obdlinkspeedcombo.addItem("500000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)

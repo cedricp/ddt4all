@@ -278,7 +278,7 @@ def reconnect_elm():
 
 def errorval(val):
     if val not in negrsp:
-        return "not registered error"
+        return "Unregistered error"
     if val in negrsp.keys():
         return negrsp[val]
 
@@ -622,12 +622,17 @@ class ELM:
 
     def raise_odb_speed(self, baudrate):
         # Software speed switch
-        res = self.send_raw("ST SBR " + str(baudrate))
+        res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf8'))
+
+        # Command echo
+        res = self.port.expect_carriage_return()
+        # Command result
+        res = self.port.expect_carriage_return()
         if "OK" in res:
             print("OBDLINK switched baurate OK, changing UART speed now...")
             self.port.change_rate(baudrate)
-            time.sleep(1)
-            res = self.send_raw("STI")
+            time.sleep(0.5)
+            res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
             if "STN" in res:
                 print("OBDLink full speed connection OK")
                 print("OBDLink Version " + res)
@@ -668,6 +673,7 @@ class ELM:
             else:
                 raise
         else:
+            print("Your ELM does not support baudrate " + str(baudrate))
             raise
 
     def __del__(self):
@@ -1239,6 +1245,9 @@ class ELM:
     def set_can_addr(self, addr, ecu, canline=0):
         if self.currentprotocol == "can" and self.currentaddress == addr and self.canline == canline:
             return
+
+        if canline == -1:
+            canline = 0
 
         if self.lf != 0:
             self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
