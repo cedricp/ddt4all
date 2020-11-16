@@ -810,11 +810,6 @@ class ELM:
             return self.send_can_cfc0(command)
         else:
             rsp = self.send_can(command)
-            # Disabled this because it's now possible to control it via UI
-            # if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
-            #     self.ATCFC0 = True
-            #     self.cmd("at cfc0")
-            #     rsp = self.send_can_cfc0(command)
             return rsp
 
     def send_can(self, command):
@@ -847,13 +842,13 @@ class ELM:
 
         responses = []
 
-        # send farmes
+        # send frames
         for f in raw_command:
             # send next frame
             frsp = self.send_raw(f)
             # analyse response (1 phase)
             for s in frsp.split('\n'):
-                if s.strip() == f:  # echo cancelation
+                if s.strip() == f:  # echo cancellation
                     continue
                 s = s.strip().replace(' ', '')
                 if len(s) == 0:  # empty string
@@ -924,7 +919,7 @@ class ELM:
             self.l1_cache[command] = str(nframes)
 
         if len(result) / 2 >= nbytes and noerrors:
-            # Remove unnecessay bytes
+            # Remove unnecessary bytes
             result = result[0:nbytes*2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
@@ -933,7 +928,6 @@ class ELM:
             return "WRONG RESPONSE : " + errorstr + "(" + result + ")"
 
     def send_can_cfc0(self, command):
-
         command = command.strip().replace(' ', '')
 
         if len(command) % 2 != 0 or len(command) == 0: return "ODD ERROR"
@@ -941,7 +935,7 @@ class ELM:
 
         # do framing
         raw_command = []
-        cmd_len = len(command) / 2
+        cmd_len = int(len(command) / 2)
         if cmd_len < 8:  # single frame
             raw_command.append(("%0.2X" % cmd_len) + command)
         else:
@@ -963,32 +957,31 @@ class ELM:
         Fc = 0  # Current frame
         Fn = len(raw_command)  # Number of frames
 
-        if Fn > 1 or len(raw_command[0])>15: # set elm timeout to 300ms for first response
-          self.send_raw('ATST4B')
+        if Fn > 1 or len(raw_command[0]) > 15:
+            # set elm timeout to 300ms for first response
+            self.send_raw('AT ST 4B')
 
         while Fc < Fn:
-
             # enable responses
             if not self.ATR1:
-                frsp = self.send_raw('at r1')
+                frsp = self.send_raw('AT R1')
                 self.ATR1 = True
 
             tb = time.time()  # time of sending (ff)
 
             if Fn > 1 and Fc == (Fn-1):  # set elm timeout to maximum for last response on long command
-                self.send_raw('ATSTFF')
-                self.send_raw('ATAT1')
+                self.send_raw('AT ST FF')
+                self.send_raw('AT AT 1')
 
             if (Fc == 0 or Fc == (Fn-1)) and len(raw_command[Fc])<16:  #first or last frame in command and len<16 (bug in ELM)
-                frsp = self.send_raw (raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
+                frsp = self.send_raw(raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
             else:
-                frsp = self.send_raw (raw_command[Fc])
+                frsp = self.send_raw(raw_command[Fc])
 
             Fc = Fc + 1
 
             # analyse response
             for s in frsp.split('\n'):
-
                 if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:  # echo cancelation
                     continue
 
@@ -1015,14 +1008,14 @@ class ELM:
                         responses.append(s)
                         continue
 
-            # sending consequent farmes according to FlowControl
+            # sending consequent frames according to FlowControl
 
             cf = min(BS - 1, (Fn - Fc) - 1)  # number of frames to send without response
 
             # disable responses
             if cf > 0:
                 if self.ATR1:
-                    frsp = self.send_raw('at r0')
+                    self.send_raw('AT R0')
                     self.ATR1 = False
 
             while cf > 0:
@@ -1034,7 +1027,7 @@ class ELM:
                     time.sleep(ST / 1000. - (tc - tb))
                 tb = tc
 
-                frsp = self.send_raw(raw_command[Fc])
+                self.send_raw(raw_command[Fc])
                 Fc += 1
 
         # now we are going to receive data. st or ff should be in responses[0]
@@ -1064,11 +1057,13 @@ class ELM:
                 # analyse response
                 for s in frsp.split('\n'):
 
-                    if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:  # echo cancelation
+                    if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:
+                        # discard echo
                         continue
 
                     s = s.strip().replace(' ', '')
-                    if len(s) == 0:  # empty string
+                    if len(s) == 0:
+                        # empty string
                         continue
 
                     if all(c in string.hexdigits for c in s):  # some data

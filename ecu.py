@@ -1427,12 +1427,12 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
 
-    def identify_old(self, addr, label, force = False):
+    def identify_old(self, addr, label, force=False):
         if not options.simulation_mode:
             if not options.elm.start_session_can('10C0'):
                 return
 
-        if options.simulation_mode and force == False:
+        if options.simulation_mode and not force:
             # Give scanner something to eat...
             if addr == "04":
                 can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
@@ -1458,7 +1458,7 @@ class Ecu_scanner:
         soft = ""
         can_response = ""
 
-        # Check diagversion
+        # Check diag version
         if not options.simulation_mode:
             if not options.elm.start_session_can('1003'):
                 # Bad response of SDS, no need check old method (10C0)
@@ -1521,9 +1521,11 @@ class Ecu_scanner:
             elif addr == '13':
                 can_response = "62 F1 94 32 32"
             elif addr == '26':
-                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 "\
+                               "20 20 20 20 20 FF FF FF FF FF FF"
             elif addr == '62':
-                can_response = "62 F1 94 31 30 30 30 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+                can_response = "62 F1 94 31 30 30 30 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 "\
+                               "20 20 20 20 20 FF FF FF FF FF FF"
             elif addr == '01':
                 can_response = "62 F1 94 4E 33 32 52 41 46 30 30 30 31 31 00 00 00 00 00 00"
             elif addr == '04':
@@ -1532,6 +1534,7 @@ class Ecu_scanner:
             can_response = options.elm.request(req='22F194', positive='', cache=False)
             if 'WRONG' in can_response:
                 return False
+
         soft = bytes.fromhex(can_response.replace(' ', '')[6:38]).decode("utf8", "ignore")
         # Check soft version
         if options.simulation_mode:
@@ -1626,8 +1629,7 @@ class Ecu_scanner:
             # diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
             self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.json",
                                                         "KWP2000 FastInit MonoPoint", [], "7A")
-
-        if not options.simulation_mode:
+        else:
             options.elm.init_iso()
 
         project_kwp_addresses = []
@@ -1680,7 +1682,6 @@ class Ecu_scanner:
     def check_ecu(self, can_response, label, addr, protocol):
         if len(can_response) > 59:
             diagversion = str(int(can_response[21:23], 16))
-            #supplier = can_response[24:32].replace(' ', '').decode('hex')
             supplier = bytes.fromhex(can_response[24:32].replace(' ', '')).decode('utf-8')
             soft = can_response[48:53].replace(' ', '')
             version = can_response[54:59].replace(' ', '')

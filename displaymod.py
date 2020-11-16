@@ -511,10 +511,8 @@ class inputWidget(widgets.QWidget):
     def toggle_selected(self, sel):
         if sel:
             self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
-            #self.editwidget.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
             self.qlabel.setFrameStyle(widgets.QFrame.NoFrame)
-            #self.editwidget.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.Sunken)
 
     def lock(self, lock):
         self.locked = lock
@@ -577,7 +575,6 @@ class inputWidget(widgets.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-        #self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'])
         self.move(rect['left'], rect['top'])
 
