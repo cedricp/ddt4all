@@ -2,7 +2,7 @@
 
 '''module contains class for working with ELM327
    version: 160829
-   Borrowed from PyRen (modified for this use)
+   Borrowed code from PyRen (modified for this use)
 '''
 
 import options
@@ -930,8 +930,10 @@ class ELM:
     def send_can_cfc0(self, command):
         command = command.strip().replace(' ', '')
 
-        if len(command) % 2 != 0 or len(command) == 0: return "ODD ERROR"
-        if not all(c in string.hexdigits for c in command): return "HEX ERROR"
+        if len(command) % 2 != 0 or len(command) == 0:
+            return "ODD ERROR"
+        if not all(c in string.hexdigits for c in command):
+            return "HEX ERROR"
 
         # do framing
         raw_command = []

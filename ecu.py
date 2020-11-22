@@ -82,7 +82,7 @@ class Data_item:
 
             endian = item.getAttribute("Endian")
             if endian:
-                self.endian = endian.encode('ascii')
+                self.endian = endian
 
             ref = item.getAttribute("Ref")
             if ref and ref == '1':
@@ -908,25 +908,10 @@ class Ecu_file:
                     for ai in autoident:
                         autoident_dict = {}
 
-                        try:
-                            autoident_dict['diagversion'] = str(
-                                ai.getAttribute("DiagVersion").replace(unichr(160), " ").encode("ascii", errors='ignore'))
-                            autoident_dict['supplier'] = str(
-                                ai.getAttribute("Supplier").replace(unichr(160), " ").encode("ascii", errors='ignore'))
-                            autoident_dict['soft'] = str(
-                                ai.getAttribute("Soft").replace(unichr(160), " ").encode("ascii", errors='ignore'))
-                            autoident_dict['version'] = str(
-                                ai.getAttribute("Version").replace(unichr(160), " ").encode("ascii", errors='ignore'))
-                        except:
-                            autoident_dict['diagversion'] = str(
-                                ai.getAttribute("DiagVersion").replace(unichr(160), " ").encode("ascii"))
-                            autoident_dict['supplier'] = str(
-                                ai.getAttribute("Supplier").replace(unichr(160), " ").encode("ascii"))
-                            autoident_dict['soft'] = str(
-                                ai.getAttribute("Soft").replace(unichr(160), " ").encode("ascii"))
-                            autoident_dict['version'] = str(
-                                ai.getAttribute("Version").replace(unichr(160), " ").encode("ascii"))
-
+                        autoident_dict['diagversion'] = ai.getAttribute("DiagVersion")
+                        autoident_dict['supplier'] = ai.getAttribute("Supplier")
+                        autoident_dict['soft'] = ai.getAttribute("Soft")
+                        autoident_dict['version'] = ai.getAttribute("Version")
                         self.autoidents.append(autoident_dict)
 
                 projects = getChildNodesByName(target[0], u"Projects")
@@ -999,8 +984,7 @@ class Ecu_file:
                     endian = ''
                     endian_attr = request_tag.getAttribute("Endian")
                     if endian_attr:
-                        endian = endian_attr.encode('ascii')
-                        self.endianness = endian
+                        self.endianness = endian_attr
 
                     requests = request_tag.getElementsByTagName("Request")
                     for f in requests:
@@ -1111,7 +1095,7 @@ class Ecu_file:
             js['devices'].append(value.dump())
 
         dump = json.dumps(js, indent=1)
-        return re.sub('\n +', lambda match: '\n' + '\t' * (len(match.group().strip('\n')) / 2), dump)
+        return re.sub('\n +', lambda match: '\n' + '\t' * int(len(match.group().strip('\n')) / 2), dump)
 
 # Protocols:
 # KWP2000 FastInit MonoPoint            ?ATSP 5?
