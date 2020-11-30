@@ -143,6 +143,7 @@ def iterate_comports():
 
     # repeat for all possible GUIDs
     for index in range(guids_size.value):
+        bInterfaceNumber = None
         g_hdi = SetupDiGetClassDevs(
             ctypes.byref(GUIDs[index]),
             None,
@@ -210,13 +211,15 @@ def iterate_comports():
             # in case of USB, make a more readable string, similar to that form
             # that we also generate on other platforms
             if szHardwareID_str.startswith('USB'):
-                m = re.search(r'VID_([0-9a-f]{4})(&PID_([0-9a-f]{4}))?(\\(\w+))?', szHardwareID_str, re.I)
+                m = re.search(r'VID_([0-9a-f]{4})(&PID_([0-9a-f]{4}))?(&MI_(\d{2}))?(\\(\w+))?', szHardwareID_str, re.I)
                 if m:
                     info.vid = int(m.group(1), 16)
                     if m.group(3):
                         info.pid = int(m.group(3), 16)
                     if m.group(5):
-                        info.serial_number = m.group(5)
+                        bInterfaceNumber = int(m.group(5))
+                    if m.group(7):
+                        info.serial_number = m.group(7)
                 # calculate a location string
                 loc_path_str = ctypes.create_unicode_buffer(250)
                 if SetupDiGetDeviceRegistryProperty(
@@ -238,6 +241,10 @@ def iterate_comports():
                             else:
                                 location.append('-')
                             location.append(g.group(2))
+                    if bInterfaceNumber is not None:
+                        location.append(':{}.{}'.format(
+                            'x',  # XXX how to determine correct bConfigurationValue?
+                            bInterfaceNumber))
                     if location:
                         info.location = ''.join(location)
                 info.hwid = info.usb_info()
@@ -287,7 +294,7 @@ def iterate_comports():
         SetupDiDestroyDeviceInfoList(g_hdi)
 
 
-def comports():
+def comports(include_links=False):
     """Return a list of info objects about serial ports"""
     return list(iterate_comports())
 

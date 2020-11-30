@@ -5,42 +5,33 @@ import sys
 import os
 import glob
 import json
-import platform
+from importlib.machinery import SourceFileLoader
 
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
 try:
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
-    if platform.system() == 'Darwin':
-        import PyQt5.QtWebEngine as webkit
-        import PyQt5.QtWebEngineWidgets as webkitwidgets
-    else:
-        import PyQt5.QtWebKit as webkit
-        import PyQt5.QtWebKitWidgets as webkitwidgets
-    def utf8(string):
-        return string
-    qt5 = True
+    import PyQt5.QtWebEngine as webkit
+    import PyQt5.QtWebEngineWidgets as webkitwidgets
 except:
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
-    import PyQt4.QtWebKit as webkit
-    import PyQt4.QtWebKit as webkitwidgets
-    def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF-8")
-    qt5 = False
+    import PyQt5.QtWebKit as webkit
+    import PyQt5.QtWebKitWidgets as webkitwidgets
+
+
+def utf8(string):
+    return string
+
 
 import parameters, ecu
 import elm, options, locale
 import dataeditor
 import sniffer
-import imp
-import traceback
+#import imp
 import tempfile, errno
 import codecs
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
+__copyright__ = "Copyright 2016-2020"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -50,11 +41,10 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all')
 app = None
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def isWritable(path):
     try:
-        testfile = tempfile.TemporaryFile(dir = path)
+        testfile = tempfile.TemporaryFile(dir=path)
         testfile.close()
     except OSError as e:
         if e.errno == errno.EACCES:  # 13
@@ -111,7 +101,8 @@ class Ecu_list(widgets.QWidget):
             "X24 - MASCOTT", "X83 - TRAFIC II", "X83ph2 - TRAFIC II Phase 2", "X83ph3 - TRAFIC II Phase 3", "X82 - TRAFFIC III",
             "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
             "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
-            "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)", "X21 - NOTE (NISSAN)"
+            "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)",
+            "X21 - NOTE (NISSAN)"
         ]
 
         for v in vehicles:
@@ -209,8 +200,11 @@ class Ecu_list(widgets.QWidget):
             if not found:
                 stored_ecus[grp].append(row)
 
-        keys = stored_ecus.keys()
-        keys.sort(cmp=locale.strcoll)
+        keys = list(stored_ecus.keys())
+        try:
+            keys.sort(cmp=locale.strcoll)
+        except:
+            keys.sort()
         for e in keys:
             item = widgets.QTreeWidgetItem(self.list, [e])
             if e in longgroupnames:
@@ -243,10 +237,8 @@ class Ecu_list(widgets.QWidget):
         if index.parent() == core.QModelIndex():
             return
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
-        if qt5:
-            selected = item[0]
-        else:
-            selected = utf8(item[0].toString())
+
+        selected = item[0]
         target = self.ecuscan.ecu_database.getTarget(selected)
         name = selected
         if target:
@@ -255,7 +247,6 @@ class Ecu_list(widgets.QWidget):
                 group = self.ecuscan.ecu_database.addr_group_mapping[target.addr]
             else:
                 group = "Unknown"
-            print name, group
             name = "[ " + group + " ] " + name
         if selected:
             if name not in options.main_window.ecunamemap:
@@ -281,7 +272,7 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
-        print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
+        print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -290,13 +281,13 @@ class Main_widget(widgets.QMainWindow):
             msgbox.exec_()
 
         self.paramview = None
-        if platform.system() == 'Darwin':
+        try:
             self.docview = webkitwidgets.QWebEngineView()
             self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
             self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
             self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
             self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
-        else:
+        except:
             self.docview = webkitwidgets.QWebView()
             self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
             self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
@@ -320,7 +311,8 @@ class Main_widget(widgets.QMainWindow):
         self.infostatus.setFixedWidth(200)
 
         self.refreshtimebox = widgets.QSpinBox()
-        self.refreshtimebox.setRange(100, 2000)
+        self.refreshtimebox.setRange(5, 2000)
+        self.refreshtimebox.setValue(options.refreshrate)
         self.refreshtimebox.setSingleStep(100)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
         refrestimelabel = widgets.QLabel(_("Refresh rate (ms):"))
@@ -369,24 +361,12 @@ class Main_widget(widgets.QMainWindow):
         self.treeview_params = widgets.QTreeWidget()
         self.treeview_params.setSortingEnabled(True)
         self.treeview_params.sortByColumn(0, core.Qt.AscendingOrder)
-        self.screenmenu = widgets.QMenuBar()
+
         treedock_layout = widgets.QVBoxLayout()
-        treedock_layout.addWidget(self.screenmenu)
         treedock_layout.addWidget(self.treeview_params)
         screen_widget.setLayout(treedock_layout)
         self.treeview_params.setHeaderLabels([_("Screens")])
         self.treeview_params.clicked.connect(self.changeScreen)
-
-        actionmenu = self.screenmenu.addMenu(_("Action"))
-        cat_action = widgets.QAction(_("New Category"), actionmenu)
-        screen_action = widgets.QAction(_("New Screen"), actionmenu)
-        rename_action = widgets.QAction(_("Rename"), actionmenu)
-        actionmenu.addAction(cat_action)
-        actionmenu.addAction(screen_action)
-        actionmenu.addAction(rename_action)
-        cat_action.triggered.connect(self.newCategory)
-        screen_action.triggered.connect(self.newScreen)
-        rename_action.triggered.connect(self.screenRename)
 
         self.treedock_logs = widgets.QDockWidget(self)
         self.logview = widgets.QTextEdit()
@@ -446,13 +426,6 @@ class Main_widget(widgets.QMainWindow):
 
         self.canlinecombo = widgets.QComboBox()
         self.canlinecombo.setFixedWidth(150)
-        self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
-        self.canlinecombo.addItem("CAN Line 1")
-        self.canlinecombo.addItem("CAN Line 2@500K")
-        self.canlinecombo.addItem("CAN Line 2@250K")
-        self.canlinecombo.addItem("CAN Line 2@125K")
-        if options.elm is not None and not options.elm.isels:
-            self.canlinecombo.setEnabled(False)
 
         self.sdscombo = widgets.QComboBox()
         self.sdscombo.setFixedWidth(300)
@@ -511,9 +484,12 @@ class Main_widget(widgets.QMainWindow):
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
+        saverecordaction = diagmenu.addAction(_("Save last record"))
+        diagmenu.addSeparator()
         savevehicleaction = diagmenu.addAction(_("Save ECU list"))
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
+        saverecordaction.triggered.connect(self.saveRecord)
         newecuction.triggered.connect(self.newEcu)
         xmlopenaction.triggered.connect(self.openxml)
         identecu.triggered.connect(self.identEcu)
@@ -526,13 +502,26 @@ class Main_widget(widgets.QMainWindow):
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
 
+        self.screenmenu = menu.addMenu(_("Screens"))
+
+        actionmenu = self.screenmenu.addMenu(_("Action"))
+        cat_action = widgets.QAction(_("New Category"), actionmenu)
+        screen_action = widgets.QAction(_("New Screen"), actionmenu)
+        rename_action = widgets.QAction(_("Rename"), actionmenu)
+        actionmenu.addAction(cat_action)
+        actionmenu.addAction(screen_action)
+        actionmenu.addAction(rename_action)
+        cat_action.triggered.connect(self.newCategory)
+        screen_action.triggered.connect(self.newScreen)
+        rename_action.triggered.connect(self.screenRename)
+
         plugins_menu = menu.addMenu(_("Plugins"))
         category_menus = {}
         plugins = glob.glob("./ddtplugins/*.py")
         for plugin in plugins:
             try:
                 modulename = os.path.basename(plugin).replace(".py", "")
-                plug = imp.load_source(modulename, plugin)
+                plug = SourceFileLoader(modulename, plugin).load_module()
 
                 category = plug.category
                 name = plug.plugin_name
@@ -549,10 +538,32 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print _("Cannot load plugin ") + plugin + traceback.format_exc()
+                print("Cannot load plugin "  + plugin)
+                print(e)
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
+
+    def set_can_combo(self, bus):
+        self.canlinecombo.clear()
+        try:
+            self.canlinecombo.clicked.disconnect()
+        except Exception:
+            pass
+        if bus == "CAN":
+            self.canlinecombo.addItem("CAN Line 1 Auto")
+            self.canlinecombo.addItem("CAN Line 1@500K")
+            self.canlinecombo.addItem("CAN Line 1@250K")
+            if options.elm is not None and options.elm.adapter_type == "ELS":
+                self.canlinecombo.addItem("CAN Line 2@500K")
+                self.canlinecombo.addItem("CAN Line 2@250K")
+                self.canlinecombo.addItem("CAN Line 2@125K")
+            self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
+        else:
+            if bus == "KWP2000":
+                self.canlinecombo.addItem("KWP2000")
+            if bus == "ISO8":
+                self.canlinecombo.addItem("ISO8")
 
     def flow_control(self):
         enabled = self.fctrigger.isChecked()
@@ -595,11 +606,9 @@ class Main_widget(widgets.QMainWindow):
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
                                                    "./ecu.zip", "*.zip")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = str(filename_tuple)
-        
+
+        filename = str(filename_tuple[0])
+
         if not filename.endswith(".zip"):
             filename += ".zip"
 
@@ -802,10 +811,8 @@ class Main_widget(widgets.QMainWindow):
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicle (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = str(filename_tuple)
+
+        filename = str(filename_tuple[0])
 
         if filename == "":
             return        
@@ -827,10 +834,8 @@ class Main_widget(widgets.QMainWindow):
     def newEcu(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
                                                    "*.json")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = str(filename_tuple)
+
+        filename = str(filename_tuple[0])
 
         if filename == '':
             return
@@ -859,12 +864,21 @@ class Main_widget(widgets.QMainWindow):
         self.eculistwidget.init()
         self.eculistwidget.filterProject()
 
+    def saveRecord(self):
+        if not self.paramview:
+            return
+
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save record (keep '.txt' extension)"),
+                                                   "./record.txt", "*.txt")
+        filename = str(filename_tuple[0])
+
+        self.paramview.export_record(filename)
+
     def openxml(self):
         filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
-        if qt5:
-            filename = str(filename_tuple[0])
-        else:
-            filename = utf8(filename_tuple)
+
+        filename = str(filename_tuple[0])
+
         if filename == '':
             return
 
@@ -896,7 +910,11 @@ class Main_widget(widgets.QMainWindow):
 
         if options.auto_refresh:
             if self.paramview:
+                self.paramview.prepare_recording()
                 self.paramview.updateDisplays(True)
+        else:
+            if self.paramview:
+                self.logview.append("Recorded " + str(self.paramview.get_record_size()) + " entries")
 
     def refreshParams(self):
         if self.paramview:
@@ -915,10 +933,9 @@ class Main_widget(widgets.QMainWindow):
 
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
-        if qt5:
-            screen = item[0]
-        else:
-            screen = utf8(item[0].toString())
+
+        screen = item[0]
+
         self.paramview.pagename = screen
         inited = self.paramview.init(screen, self.screenlogfile)
         self.diagaction.setEnabled(inited)
@@ -935,17 +952,22 @@ class Main_widget(widgets.QMainWindow):
                 self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
 
         self.paramview.setRefreshTime(self.refreshtimebox.value())
+        self.set_can_combo(self.paramview.ecurequestsparser.ecu_protocol)
 
     def closeEvent(self, event):
+        if self.paramview:
+            self.paramview.tester_timer.stop()
         self.snifferview.stopthread()
         super(Main_widget, self).closeEvent(event)
+        try:
+            del options.elm
+        except:
+            pass
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
-        if qt5:
-            ecu_name = item[0]
-        else:
-            ecu_name = utf8(item[0].toString())
+
+        ecu_name = item[0]
 
         isxml = True
 
@@ -994,6 +1016,7 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.destroy()
 
         self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
+        self.paramview.infobox = self.infostatus
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
             self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
@@ -1047,10 +1070,8 @@ def set_dark_style(onoff):
     if (onoff):
         stylefile = core.QFile("qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
-        if qt5:
-            StyleSheet = str(stylefile.readAll())
-        else:
-            StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
+
+        StyleSheet = bytes(stylefile.readAll()).decode()
     else:
         StyleSheet = ""
 
@@ -1058,13 +1079,14 @@ def set_dark_style(onoff):
 
 class portChooser(widgets.QDialog):
     def __init__(self):
-        portSpeeds = [38400, 57600, 115200, 230400, 500000]
+        portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
         self.port = None
         self.ports = {}
         self.mode = 0
         self.securitycheck = False
         self.selectedportspeed = 38400
-        self.isels = False
+        self.adapter = "STD"
+        self.raise_port_speed = "No"
         super(portChooser, self).__init__(None)
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
@@ -1173,6 +1195,13 @@ class portChooser(widgets.QDialog):
         darkstylelayout.addStretch()
         layout.addLayout(darkstylelayout)
 
+        obdlinkspeedlayout = widgets.QHBoxLayout()
+        self.obdlinkspeedcombo = widgets.QComboBox()
+        obdlinkspeedlabel = widgets.QLabel(_("Change UART speed"))
+        obdlinkspeedlayout.addWidget(obdlinkspeedlabel)
+        obdlinkspeedlayout.addWidget(self.obdlinkspeedcombo)
+        obdlinkspeedlayout.addStretch()
+        layout.addLayout(obdlinkspeedlayout)
 
         layout.addWidget(donationwidget)
 
@@ -1191,11 +1220,11 @@ class portChooser(widgets.QDialog):
 
         self.timer = core.QTimer()
         self.timer.timeout.connect(self.rescan_ports)
-        self.timer.start(200)
+        self.timer.start(500)
         self.portcount = -1
         self.usb()
 
-        self.setWindowTitle("DDT4all")
+        self.setWindowTitle("DDT4All")
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
@@ -1206,7 +1235,7 @@ class portChooser(widgets.QDialog):
             if not currentitem:
                 self.logview.hide()
                 return
-            portinfo = utf8(currentitem.text())
+            portinfo = currentitem.text()
             port = self.ports[portinfo][0]
         speed = int(self.speedcombo.currentText())
         res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
@@ -1233,10 +1262,11 @@ class portChooser(widgets.QDialog):
             item.setText(itemname)
             self.ports[itemname] = (p[0], p[1])
 
-        self.timer.start(1000)
+        self.timer.start(500)
 
     def bt(self):
-        self.isels = False
+        self.adapter = "STD_BT"
+        self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1257,7 +1287,8 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def wifi(self):
-        self.isels = False
+        self.adapter = "STD_WIFI"
+        self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1277,7 +1308,14 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def usb(self):
-        self.isels = False
+        self.adapter = "STD_USB"
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem("No")
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
+        # This mode seems to not be supported by all adapters
+        self.obdlinkspeedcombo.addItem("500000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1298,7 +1336,12 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def obdlink(self):
-        self.isels = False
+        self.adapter = "OBDLINK"
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem("No")
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")
+        self.obdlinkspeedcombo.addItem("2000000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1319,7 +1362,8 @@ class portChooser(widgets.QDialog):
         self.elmchk.setEnabled(False)
 
     def els(self):
-        self.isels = True
+        self.adapter = "ELS"
+        self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1360,6 +1404,7 @@ class portChooser(widgets.QDialog):
                 self.port = self.ports[portinfo][0]
                 options.port_name = self.ports[portinfo][1]
                 self.mode = 1
+                self.raise_port_speed = self.obdlinkspeedcombo.currentText()
                 self.done(True)
             else:
                 msgbox = widgets.QMessageBox()
@@ -1375,6 +1420,10 @@ class portChooser(widgets.QDialog):
         self.done(True)
 
 if __name__ == '__main__':
+    try:
+        sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
+    except:
+        sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
@@ -1388,13 +1437,8 @@ if __name__ == '__main__':
 
     ecudirfound = False
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
-        print _("Using custom DDT database")
+        print(_("Using custom DDT database"))
         ecudirfound = True
-
-    #if not ecudirfound and os.path.exists("C:/DDT2000data/ecus"):
-    #    print _("Using DDT2000 default installation")
-    #    options.ecus_dir = "C:/DDT2000data/ecus/"
-    #    ecudirfound = True
 
     pc = portChooser()
     nok = True
@@ -1419,9 +1463,8 @@ if __name__ == '__main__':
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print _("Initialising ELM with speed %i...") % port_speed
-        options.elm = elm.ELM(options.port, port_speed, pc.isels)
-
+        print(_("Initilizing ELM with speed %i...") % port_speed)
+        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())

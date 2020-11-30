@@ -21,19 +21,19 @@ def zipdir(dirname):
             filename = os.path.join(root, name)
             if ".pyc" in filename:
                 continue
-            print "Adding source file %s" % filename
+            print("Adding source file %s" % filename)
             zip.write(filename)
 
 zip = zipfile.ZipFile("ddt4all_windows.zip", mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=True)
 files = glob.glob("*.py")
 
 for file in files:
-    print _("Adding source file %s") % file
+    print(_("Adding source file %s") % file)
     zip.write(file)
 
 files = glob.glob("ddtplugins/*.py")
 for file in files:
-    print _("Adding plugin file %s") % file
+    print(_("Adding plugin file %s") % file)
     zip.write(file)
 
 zip.write("ecu.zip")

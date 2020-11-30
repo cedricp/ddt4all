@@ -265,7 +265,7 @@ class Serial(SerialBase, PlatformSpecific):
             self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
         except OSError as msg:
             self.fd = None
-            raise SerialException(msg.errno, "could not open port {0}: {1}".format(self._port, msg))
+            raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
         #~ fcntl.fcntl(self.fd, fcntl.F_SETFL, 0)  # set blocking
 
         try:
@@ -302,6 +302,17 @@ class Serial(SerialBase, PlatformSpecific):
         """Set communication parameters on opened port."""
         if self.fd is None:
             raise SerialException("Can only operate on a valid file descriptor")
+
+        # if exclusive lock is requested, create it before we modify anything else
+        if self._exclusive is not None:
+            if self._exclusive:
+                try:
+                    fcntl.flock(self.fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except IOError as msg:
+                    raise SerialException(msg.errno, "Could not exclusively lock port {}: {}".format(self._port, msg))
+            else:
+                fcntl.flock(self.fd, fcntl.LOCK_UN)
+
         custom_baud = None
 
         vmin = vtime = 0                # timeout is done via select
@@ -331,7 +342,7 @@ class Serial(SerialBase, PlatformSpecific):
 
         # setup baud rate
         try:
-            ispeed = ospeed = getattr(termios, 'B{0}'.format(self._baudrate))
+            ispeed = ospeed = getattr(termios, 'B{}'.format(self._baudrate))
         except AttributeError:
             try:
                 ispeed = ospeed = self.BAUDRATE_CONSTANTS[self._baudrate]
@@ -492,31 +503,34 @@ class Serial(SerialBase, PlatformSpecific):
                 read.extend(buf)
             except OSError as e:
                 # this is for Python 3.x where select.error is a subclass of
-                # OSError ignore EAGAIN errors. all other errors are shown
-                if e.errno != errno.EAGAIN and e.errno != errno.EINTR:
+                # OSError ignore BlockingIOErrors and EINTR. other errors are shown
+                # https://www.python.org/dev/peps/pep-0475.
+                if e.errno not in (errno.EAGAIN, errno.EALREADY, errno.EWOULDBLOCK, errno.EINPROGRESS, errno.EINTR):
                     raise SerialException('read failed: {}'.format(e))
             except select.error as e:
                 # this is for Python 2.x
-                # ignore EAGAIN errors. all other errors are shown
+                # ignore BlockingIOErrors and EINTR. all errors are shown
                 # see also http://www.python.org/dev/peps/pep-3151/#select
-                if e[0] != errno.EAGAIN:
+                if e[0] not in (errno.EAGAIN, errno.EALREADY, errno.EWOULDBLOCK, errno.EINPROGRESS, errno.EINTR):
                     raise SerialException('read failed: {}'.format(e))
             if timeout.expired():
                 break
         return bytes(read)
 
     def cancel_read(self):
-        os.write(self.pipe_abort_read_w, b"x")
+        if self.is_open:
+            os.write(self.pipe_abort_read_w, b"x")
 
     def cancel_write(self):
-        os.write(self.pipe_abort_write_w, b"x")
+        if self.is_open:
+            os.write(self.pipe_abort_write_w, b"x")
 
     def write(self, data):
         """Output the given byte string over the serial port."""
         if not self.is_open:
             raise portNotOpenError
         d = to_bytes(data)
-        tx_len = len(d)
+        tx_len = length = len(d)
         timeout = Timeout(self._write_timeout)
         while tx_len > 0:
             try:
@@ -549,13 +563,21 @@ class Serial(SerialBase, PlatformSpecific):
                 tx_len -= n
             except SerialException:
                 raise
-            except OSError as v:
-                if v.errno != errno.EAGAIN:
-                    raise SerialException('write failed: {}'.format(v))
-                # still calculate and check timeout
-                if timeout.expired():
-                    raise writeTimeoutError
-        return len(data)
+            except OSError as e:
+                # this is for Python 3.x where select.error is a subclass of
+                # OSError ignore BlockingIOErrors and EINTR. other errors are shown
+                # https://www.python.org/dev/peps/pep-0475.
+                if e.errno not in (errno.EAGAIN, errno.EALREADY, errno.EWOULDBLOCK, errno.EINPROGRESS, errno.EINTR):
+                    raise SerialException('write failed: {}'.format(e))
+            except select.error as e:
+                # this is for Python 2.x
+                # ignore BlockingIOErrors and EINTR. all errors are shown
+                # see also http://www.python.org/dev/peps/pep-3151/#select
+                if e[0] not in (errno.EAGAIN, errno.EALREADY, errno.EWOULDBLOCK, errno.EINPROGRESS, errno.EINTR):
+                    raise SerialException('write failed: {}'.format(e))
+            if not timeout.is_non_blocking and timeout.expired():
+                raise writeTimeoutError
+        return length - len(d)
 
     def flush(self):
         """\

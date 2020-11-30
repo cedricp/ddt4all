@@ -39,7 +39,7 @@ class UsbCan:
         self.device = usb.core.find(idVendor=0x16c0, idProduct=0x05df)
         if self.device:
             self.descriptor = self.get_string_descriptor()
-            print "Found USB adapter : %s" % self.descriptor
+            print("Found USB adapter : %s" % self.descriptor)
             return True
 
         self.device = None
@@ -95,11 +95,11 @@ class UsbCan:
         while 1:
             leng = self.get_read_buffer_length()
             if leng == -1:
-                return "WRONG RESPONSE"
+                return("WRONG RESPONSE")
             if leng > 0:
                 break
             if time.time() - start > timeout / 1000:
-                return "TIMEOUT"
+                return("TIMEOUT")
         return self.get_data(leng)
 
 
@@ -138,7 +138,7 @@ class OBDDevice:
         self.device.set_data(req_as_bytes)
         return self.device.get_buffer(500)
 
-     def close_protocol(self):
+    def close_protocol(self):
          pass
 
     def start_session_can(self, start_session):

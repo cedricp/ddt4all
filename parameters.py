@@ -1,33 +1,30 @@
 # -*- coding: utf-8 -*-
 import time
 import os
-import ecu, elm
+import ecu
+import elm
 import displaymod
 from uiutils import *
 import options
 from xml.dom.minidom import parse
 import xml.dom.minidom
 import json, argparse, zipfile, glob
-from StringIO import StringIO
 import datetime
 
 try:
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
-    def utf8(string):
-        return string
-    qt5 = True
-except:
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
-    def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF8")
-    qt5 = False
+    from StringIO import StringIO
+    from BytesIO import BytesIO
+except ImportError:
+    from io import StringIO
+    from io import BytesIO
+
+
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
+__copyright__ = "Copyright 2016-2020"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -53,6 +50,7 @@ class ecuCommand(widgets.QDialog):
         self.sds_combo = widgets.QComboBox()
         self.com_table = widgets.QTableWidget()
         self.rcv_table = widgets.QTableWidget()
+        self.isotp_frame_edit = widgets.QLineEdit()
         self.com_table.setColumnCount(2)
         self.com_table.verticalHeader().hide()
 
@@ -64,6 +62,10 @@ class ecuCommand(widgets.QDialog):
         layout.addWidget(self.req_combo)
         layout.addWidget(widgets.QLabel("Data to send"))
         layout.addWidget(self.com_table)
+        layout.addWidget(widgets.QLabel("Computed ISOTP Frame"))
+        layout.addWidget(self.isotp_frame_edit)
+        checkbutton = widgets.QPushButton("Compute frame")
+        layout.addWidget(checkbutton)
         layout.addWidget(widgets.QLabel("Data received"))
         layout.addWidget(self.rcv_table)
         button = widgets.QPushButton("Execute")
@@ -73,6 +75,7 @@ class ecuCommand(widgets.QDialog):
         self.reqs = []
         self.send_data = []
         self.current_request = None
+        checkbutton.clicked.connect(self.recompute)
 
         reqlist = [a for a in self.ecu.requests.keys()]
         reqlist.sort()
@@ -81,7 +84,7 @@ class ecuCommand(widgets.QDialog):
             self.reqs.append(k)
         self.req_combo.currentIndexChanged.connect(self.req_changed)
 
-        for k, v in self.sds.iteritems():
+        for k, v in self.sds.items():
             self.sds_combo.addItem(k)
 
         text = "<center>This feature is experimental</center>\n"
@@ -91,26 +94,25 @@ class ecuCommand(widgets.QDialog):
         msgbox.setText(text)
         msgbox.exec_()
 
-    def execute(self):
-        if self.current_request is None:
-            return
+    def recompute(self):
+        frame = self.compute_frame(False)
+        self.isotp_frame_edit.setText(frame)
 
-        sds = self.sds[utf8(self.sds_combo.currentText())]
-        self.paramview.sendElm(sds)
-
+    def compute_frame(self, check=True):
         data_to_stream = {}
         for i in range(0, self.com_table.rowCount()):
             cellwidget = self.com_table.cellWidget(i, 1)
-            reqkey = utf8(self.com_table.item(i, 0).text())
-            if (cellwidget):
-                curtext = utf8(cellwidget.currentText())
+            reqkey = self.com_table.item(i, 0).text()
+            if cellwidget:
+                curtext = cellwidget.currentText()
             elif self.com_table.item(i, 1) is not None:
-                curtext = utf8(self.com_table.item(i, 1).text())
+                curtext = self.com_table.item(i, 1).text()
             else:
-                msgbox = widgets.QMessageBox()
-                msgbox.setText("Missing data in table")
-                msgbox.exec_()
-                return
+                if check:
+                    msgbox = widgets.QMessageBox()
+                    msgbox.setText("Missing data in table")
+                    msgbox.exec_()
+                return "Missing input data"
 
             if curtext is None:
                 # Error here
@@ -119,6 +121,16 @@ class ecuCommand(widgets.QDialog):
                 data_to_stream[reqkey] = curtext
 
         stream_to_send = " ".join(self.current_request.build_data_stream(data_to_stream))
+        return stream_to_send
+
+    def execute(self):
+        if self.current_request is None:
+            return
+
+        sds = self.sds[self.sds_combo.currentText()]
+        self.paramview.sendElm(sds)
+
+        stream_to_send = self.compute_frame()
         reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
         if reveived_stream.startswith("WRONG"):
             msgbox = widgets.QMessageBox()
@@ -129,7 +141,7 @@ class ecuCommand(widgets.QDialog):
 
         self.rcv_table.setRowCount(len(received_data))
         itemcount = 0
-        for k, v in received_data.iteritems():
+        for k, v in received_data.items():
             item = widgets.QTableWidgetItem(k)
             self.rcv_table.setItem(itemcount, 0, item)
             if v is not None:
@@ -153,7 +165,7 @@ class ecuCommand(widgets.QDialog):
         self.rcv_table.setHorizontalHeaderLabels(["Key", "Value"])
 
         itemcount = 0
-        for k, v in self.current_request.sendbyte_dataitems.iteritems():
+        for k, v in self.current_request.sendbyte_dataitems.items():
             self.send_data.append(k)
             ecudata = self.ecu.data[k]
 
@@ -233,6 +245,9 @@ class paramWidget(widgets.QWidget):
         self.current_screen = ''
         self.movingwidgets = []
         self.allow_parameters_update = True
+        self.record_values = []
+        self.record_keys = {}
+        self.infobox = None
 
     def set_soft_fc(self, b):
         if options.elm is not None:
@@ -251,10 +266,9 @@ class paramWidget(widgets.QWidget):
     def saveEcu(self, name=None):
         if not name:
             filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json", "*.json")
-            if qt5:
-                filename = str(filename_tuple[0])
-            else:
-                filename = unicode(filename_tuple, encoding="utf-8")
+
+            filename = str(filename_tuple[0])
+
             if filename == "":
                 return
         else:
@@ -298,18 +312,18 @@ class paramWidget(widgets.QWidget):
 
     def renameCategory(self, oldname, newname):
         if oldname not in self.categories:
-            print "Err, cannot rename ", oldname
+            print("Err, cannot rename ", oldname)
             return
 
         self.categories[newname] = self.categories.pop(oldname)
 
     def renameScreen(self, oldname, newname):
         if oldname not in self.xmlscreen:
-            print "Err, cannot rename ", oldname
+            print("Err, cannot rename ", oldname)
             return
 
         self.xmlscreen[newname] = self.xmlscreen.pop(oldname)
-        for key, cat in self.categories.iteritems():
+        for key, cat in self.categories.items():
             if oldname in cat:
                 cat.remove(oldname)
                 cat.append(newname)
@@ -422,7 +436,7 @@ class paramWidget(widgets.QWidget):
         if isinstance(self.currentwidget, displaymod.labelWidget):
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == utf8(self.currentwidget.text()):
+                if txt == self.currentwidget.text():
                     nln = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter label name'))
                     if not nln[1]:
                         return
@@ -440,7 +454,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
-                if txt == utf8(self.currentwidget.text()):
+                if txt == self.currentwidget.text():
                     self.layoutdict['screens'][self.current_screen]['labels'].pop(count)
                     break
                 count += 1
@@ -449,7 +463,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for inp in self.layoutdict['screens'][self.current_screen]['inputs']:
                 txt = inp['text']
-                if txt == utf8(self.currentwidget.qlabel.text()):
+                if txt == self.currentwidget.qlabel.text():
                     self.layoutdict['screens'][self.current_screen]['inputs'].pop(count)
                     break
                 count += 1
@@ -458,7 +472,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for display in self.layoutdict['screens'][self.current_screen]['displays']:
                 txt = display['text']
-                if txt == utf8(self.currentwidget.qlabel.text()):
+                if txt == self.currentwidget.qlabel.text():
                     self.layoutdict['screens'][self.current_screen]['displays'].pop(count)
                     break
                 count += 1
@@ -467,7 +481,7 @@ class paramWidget(widgets.QWidget):
             count = 0
             for button in self.layoutdict['screens'][self.current_screen]['buttons']:
                 txt = button['uniquename']
-                if txt == utf8(self.currentwidget.uniquename):
+                if txt == self.currentwidget.uniquename:
                     self.layoutdict['screens'][self.current_screen]['buttons'].pop(count)
                     break
                 count += 1
@@ -649,10 +663,10 @@ class paramWidget(widgets.QWidget):
                         name = name + "[" + sds_stream + "]"
                         self.request_editor_sds[name] = sds_stream
                         self.diagsession.addItem(name)
-                    print sds.sendbyte_dataitems[u'Session Name']
+                    print(sds.sendbyte_dataitems[u'Session Name'])
 
         if len(self.request_editor_sds) == 1:
-            for k, v in self.sds.iteritems():
+            for k, v in self.sds.items():
                 self.diagsession.addItem(k)
                 self.request_editor_sds[k] = v
 
@@ -673,15 +687,14 @@ class paramWidget(widgets.QWidget):
         self.dialogbox.show()
 
     def changeSDS(self, qttext):
-        text = utf8(qttext)
-        diagsession = self.sds[text]
+        diagsession = self.sds[qttext]
         self.defaultdiagsessioncommand = diagsession
         self.sendElm(diagsession)
 
     def send_manual_cmd(self):
         diagmode = self.diagsession.currentText()
         if diagmode:
-            sds = utf8(diagmode)
+            sds = diagmode
             if sds != u'None':
                 rq = self.request_editor_sds[sds]
                 self.sendElm(rq)
@@ -715,7 +728,7 @@ class paramWidget(widgets.QWidget):
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
-                print "Protocol not supported : " + self.ecurequestsparser.ecu_protocol
+                print("Protocol not supported : " + self.ecurequestsparser.ecu_protocol)
 
     def initJSON(self):
         self.layoutdict = None
@@ -808,7 +821,7 @@ class paramWidget(widgets.QWidget):
         self.sds["After sales (default) [10C0]"] = "10C0"
 
         # Init startDiagnosticSession combo
-        for reqname, request in self.ecurequestsparser.requests.iteritems():
+        for reqname, request in self.ecurequestsparser.requests.items():
             uppername = reqname.upper()
             if "START" in uppername and "DIAG" in uppername and "SESSION" in uppername:
                 sessionnamefound = False
@@ -816,8 +829,9 @@ class paramWidget(widgets.QWidget):
                     dataitemnameupper = di.upper()
                     if u"SESSION" in dataitemnameupper and u"NAME" in dataitemnameupper:
                         ecu_data = self.ecurequestsparser.data[di]
-                        for dataname, dataitem in ecu_data.items.iteritems():
-                            sdsrequest = "".join(request.build_data_stream({di: dataname}))
+                        for dataname, dataitem in ecu_data.items.items():
+                            datastream = request.build_data_stream({di: dataname})
+                            sdsrequest = ''.join(datastream)
                             dataname += u" [" + sdsrequest + u"]"
                             options.main_window.sdscombo.addItem(dataname)
                             self.sds[dataname] = sdsrequest
@@ -830,7 +844,7 @@ class paramWidget(widgets.QWidget):
                     self.sds[dataname] = sdsrequest
 
         for i in range(0, options.main_window.sdscombo.count()):
-            itemname = utf8(options.main_window.sdscombo.itemText(i))
+            itemname = options.main_window.sdscombo.itemText(i)
             if u'EXTENDED' in itemname.upper():
                 options.main_window.sdscombo.setCurrentIndex(i)
                 self.defaultdiagsessioncommand = self.sds[itemname]
@@ -848,8 +862,12 @@ class paramWidget(widgets.QWidget):
                     break
 
     def sendElm(self, command, auto=False, force=False):
-        elm_response = '00 ' * 70
+        if isinstance(command, bytes):
+            command = command.decode("utf-8")
+        elif not isinstance(command, str):
+            command = str(command)
 
+        elm_response = '00 ' * 70
         if not options.simulation_mode:
             if not options.elm.connectionStat():
                 options.main_window.setConnected(False)
@@ -871,7 +889,6 @@ class paramWidget(widgets.QWidget):
             if not force and not options.promode:
                 # Allow read only modes
                 if command[0:2] in options.safe_commands:
-
                     elm_response = options.elm.request(command, cache=False)
                     txt = '<font color=blue>' + _('Sending ELM request :') + '</font>'
                 else:
@@ -882,6 +899,8 @@ class paramWidget(widgets.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>' + _('Sending ELM request:') + '</font>'
         else:
+            if "1902" in command:
+                elm_response="59 40 FF 01 00 28 40 01 00 28 40 02 25 12 40 02 25 14 40 02 56 44 02 12 01 24 02 12 01 44 02 12 06 44 02 29 93 14 02 29 99 74 00 30 16 64 00 30 26 64 00 30 36 64 00 30 46 64 00 30 06 64 02 42 51 24 02 42 51 14 02 42 51 34 02 42 54 94 00 48 71 24 00 48 71 14 00 48 71 34 00 48 87 34 00 48 87 24 00 54 41 55 02 08 0F 15 02 08 0F 15 00 34 03 14 00 34 03 84 00 33 53 14 00 33 53 84 00 01 63 84 02 26 92 45 00 38 02 F4 00 38 03 16 80 38 00 94 00 67 11 24 00 67 10 94 00 67 21 24 00 67 20 94 00 67 31 24 00 67 30 94 00 67 41 24 00 67 40 94 01 20 51 24 02 42 AF 15 02 42 AF 04 02 14 61 14 02 14 64 94 00 62"
             # Only test data
             if self.ecurequestsparser.ecu_send_id == "745":
                 if "2144" in command:
@@ -896,7 +915,7 @@ class paramWidget(widgets.QWidget):
                     elm_response = "61 25 1E 0A 4C 87 14 40 14 06 0F FF FF"
                 if "216B" in command:
                     elm_response = "61 6B 10 00"
-            if "210A" in command:
+            if '210A' in command:
                 elm_response = "61 0A 16 32 32 02 58 00 B4 3C 3C 1E 3C 0A 0A 0A 0A 01 2C 5C 61 67 B5 BB C1 0A 5C"
             elif "17FF00" in command:
                 # Test for ACU4
@@ -1054,7 +1073,7 @@ class paramWidget(widgets.QWidget):
                 labeldict[qlabel] = qlabel.area
 
         # Raise the small labels so they're not hidden by bigger ones
-        for key, value in reversed(sorted(labeldict.iteritems(), key=lambda (k,v): (v,k))):
+        for key, value in [(k, labeldict[k]) for k in sorted(labeldict, key=labeldict.get, reverse=True)]:
             key.setParent(self.panel)
             key.raise_()
 
@@ -1121,11 +1140,11 @@ class paramWidget(widgets.QWidget):
                 newval = ""
                 if not is_combo_widget:
                     # Get input string from user line edit
-                    input_value = utf8(widget.text())
+                    input_value = widget.text()
                     newval = input_value
                 else:
                     # Get value from user input combo box
-                    combo_value = utf8(widget.currentText())
+                    combo_value = widget.currentText()
                     newval = combo_value
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
@@ -1209,6 +1228,96 @@ class paramWidget(widgets.QWidget):
                 options.elm.start_session_iso(sds)
             self.currentsession = sds
 
+    def getRequest(self, requests, reqname):
+        if reqname in requests:
+            return requests[reqname]
+        for req in requests:
+            if req.upper() == reqname.upper():
+                return requests[req]
+        return None
+
+    def prepare_recording(self):
+        self.record_values = []
+        self.record_keys = []
+        units = {}
+        self.record_time = time.time()
+
+        for request_name in self.displaydict.keys():
+            request_data = self.displaydict[request_name]
+            request = request_data.request
+            if request.manualsend:
+                continue
+
+            for data_struct in request_data.data:
+                ecu_data = data_struct.data
+                data_item = request.dataitems[ecu_data.name]
+                self.record_keys.append(data_item.name)
+                units[data_item.name] = ecu_data.unit
+
+        first_entry = []
+        first_entry.append("Time (ms)")
+        for key in self.record_keys:
+            first_entry.append(key + "(" + units[key] + ")")
+
+        self.record_values.append(first_entry)
+
+    def get_record_size(self):
+        return len(self.record_values)
+
+    def export_record(self, filename):
+        f = open(filename, "w")
+        for line in self.record_values:
+            f.write(';'.join(line))
+            f.write("\n")
+
+    def updateDisplays(self, update_inputs=False):
+        if not self.panel:
+            return
+
+        if not self.allow_parameters_update:
+            return
+        start_time = time.time()
+        # <Screen> <Send/> <Screen/> tag management
+        # Manage pre send commands
+
+        self.startDiagnosticSession()
+
+        if not options.auto_refresh:
+            for sendcom in self.panel.presend:
+                delay = float(sendcom['Delay'])
+                req_name = sendcom['RequestName']
+
+                time.sleep(delay / 1000.)
+                request = self.getRequest(self.ecurequestsparser.requests, req_name)
+                if not request:
+                    self.logview.append(_("Cannot call request ") + req_name)
+                self.sendElm(request.sentbytes, True)
+
+        self.recorddict = {}
+        for request_name in self.displaydict.keys():
+            self.updateDisplay(request_name, update_inputs)
+
+        if options.auto_refresh:
+            elapsed_time = time.time() - self.record_time
+            current_time = '{:.3f}'.format(elapsed_time*1000.0)
+            lst = []
+            lst.append(current_time)
+            for key in self.record_keys:
+                if key in self.recorddict.keys():
+                    if key in self.recorddict:
+                        lst.append(self.recorddict[key])
+                    else:
+                        lst.append("N/A")
+            self.record_values.append(lst)
+
+        elapsed_time = time.time() - start_time
+        if self.infobox:
+            self.infobox.setText('Update time {:.3f} ms'.format(elapsed_time*1000.0))
+        # Stop log
+        self.updatelog = False
+        if options.auto_refresh:
+            self.timer.start(options.refreshrate)
+
     def updateDisplay(self, request_name, update_inputs=False):
         request_data = self.displaydict[request_name]
         request = request_data.request
@@ -1230,13 +1339,21 @@ class paramWidget(widgets.QWidget):
             ecu_data = data_struct.data
             data_item = request.dataitems[ecu_data.name]
             value = ecu_data.getDisplayValue(elm_response, data_item, request.ecu_file.endianness)
-            logdict[data_item.name] = value
 
             if value is None:
                 qlabel.setStyleSheet("background-color: red;color: black")
                 value = "NO DATA"
             else:
                 qlabel.resetDefaultStyle()
+
+            out_value = "N/A"
+            if value is not None:
+                out_value = value
+
+            logdict[data_item.name] = out_value
+
+            if options.auto_refresh:
+                self.recorddict[data_item.name] = out_value.replace(".", ",")
 
             qlabel.setText(value + ' ' + ecu_data.unit)
 
@@ -1251,7 +1368,7 @@ class paramWidget(widgets.QWidget):
                             combovalueindex = -1
                             for i in range(data.widget.count()):
                                 itemname = data.widget.itemText(i)
-                                if utf8(itemname) == value:
+                                if itemname == value:
                                     combovalueindex = i
                                     break
 
@@ -1260,50 +1377,11 @@ class paramWidget(widgets.QWidget):
 
         if self.updatelog and self.logfile is not None:
             self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
-            self.logfile.write("\tScreen : " + self.pagename.encode('utf8') + "\tRequest : " + request_name.encode('utf8') + "\n")
+            self.logfile.write("\tScreen : " + self.pagename + "\tRequest : " + request_name + "\n")
             string = json.dumps(logdict)
             self.logfile.write(u"\t\t" + string)
             self.logfile.write("\n")
             self.logfile.flush()
-
-
-    def getRequest(self, requests, reqname):
-        if reqname in requests:
-            return requests[reqname]
-        for req in requests:
-            if req.upper() == reqname.upper():
-                return requests[req]
-        return None
-
-    def updateDisplays(self, update_inputs=False):
-        if not self.panel:
-            return
-
-        if not self.allow_parameters_update:
-            return
-
-        # <Screen> <Send/> <Screen/> tag management
-        # Manage pre send commands
-        self.startDiagnosticSession()
-
-        for sendcom in self.panel.presend:
-            delay = float(sendcom['Delay'])
-            req_name = sendcom['RequestName']
-
-            time.sleep(delay / 1000.)
-            request = self.getRequest(self.ecurequestsparser.requests, req_name)
-            if not request:
-                self.logview.append(_("Cannot call request ") + req_name)
-
-            self.sendElm(request.sentbytes, True)
-
-        for request_name in self.displaydict.keys():
-            self.updateDisplay(request_name, update_inputs)
-
-        # Stop log
-        self.updatelog = False
-        if options.auto_refresh:
-            self.timer.start(options.refreshrate)
 
     def setCanTimeout(self):
         if not options.simulation_mode:
@@ -1375,7 +1453,7 @@ class paramWidget(widgets.QWidget):
             return
 
         shiftbytecount = request.shiftbytescount
-        bytestosend = map(''.join, zip(*[iter(request.sentbytes.encode('ascii'))]*2))
+        bytestosend = list(map(''.join, zip(*[iter(request.sentbytes)]*2)))
 
         dtcread_command = ''.join(bytestosend)
         can_response = self.sendElm(dtcread_command)
@@ -1384,7 +1462,7 @@ class paramWidget(widgets.QWidget):
         if 'MoreDTC' in request.sendbyte_dataitems:
             moredtcfirstbyte = int(request.sendbyte_dataitems['MoreDTC'].firstbyte)
             bytestosend[moredtcfirstbyte - 1] = "FF"
-            moredtcread_command = ''.join(bytestosend)
+            moredtcread_command = ''.join(str(bytestosend))
 
         if "RESPONSE" in can_response:
             msgbox = widgets.QMessageBox()
@@ -1463,44 +1541,44 @@ class paramWidget(widgets.QWidget):
         self.dtcdialog.exec_()
 
     def requestNameChanged(self, oldname, newname):
-        for screen_k, screen_data in self.layoutdict['screens'].iteritems():
-            print _("Parsing screen "), screen_k
+        for screen_k, screen_data in self.layoutdict['screens'].items():
+            print(_("Parsing screen "), screen_k)
             for input_data in screen_data['inputs']:
                 if oldname == input_data['request']:
-                    print "found request in input ", screen_k
+                    print("found request in input ", screen_k)
                     input_data['request'] = newname
 
             for display_data in screen_data['displays']:
                 if oldname == display_data['request']:
-                    print "found in display ", screen_k
+                    print("found in display ", screen_k)
                     display_data['request'] = newname
 
             for button_data in screen_data['buttons']:
                 if 'send' in button_data.keys():
                     for send in button_data['send']:
                         if send['RequestName'] == oldname:
-                            print "found in button ", screen_k
+                            print("found in button ", screen_k)
                             send['RequestName'] = newname
 
             for presend_data in screen_data['presend']:
                 if 'RequestName' in presend_data:
                     if presend_data['RequestName'] == oldname:
-                        print "found in presend ", screen_k
+                        print("found in presend ", screen_k)
                         presend_data['RequestName'] = newname
 
         self.reinitScreen()
 
     def dataNameChanged(self, oldname, newname):
-        for screen_k, screen_data in self.layoutdict['screens'].iteritems():
-            print "Parsing screen ", screen_k
+        for screen_k, screen_data in self.layoutdict['screens'].items():
+            print("Parsing screen ", screen_k)
             for input_data in screen_data['inputs']:
                 if oldname == input_data['text']:
-                    print "found data in input ", screen_k
+                    print("found data in input ", screen_k)
                     input_data['text'] = newname
 
             for display_data in screen_data['displays']:
                 if oldname == display_data['text']:
-                    print "found data in display ", screen_k
+                    print("found data in display ", screen_k)
                     display_data['text'] = newname
 
         self.reinitScreen()
@@ -1556,7 +1634,7 @@ def dumpDOC(xdoc):
                 xmlscreens[screen_name] = screen
                 js_categories[category_name].append(screen_name)
 
-    for scrname, screen in xmlscreens.iteritems():
+    for scrname, screen in xmlscreens.items():
         screen_name = scrname
         js_screens[screen_name] = {}
         js_screens[screen_name]['width'] = int(screen.getAttribute("Width"))
@@ -1650,8 +1728,8 @@ def dumpDOC(xdoc):
     return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
 
 
-def zipConvertXML(dbfilename = "ecu.zip"):
-    zipoutput = StringIO()
+def zipConvertXML(dbfilename="ecu.zip"):
+    zipoutput = BytesIO()
     options.ecus_dir = "./ecus"
 
     ecus_glob = glob.glob("ecus/*.xml")
@@ -1663,7 +1741,7 @@ def zipConvertXML(dbfilename = "ecu.zip"):
                     imgs.append(os.path.join(dirpath, file))
 
     if len(ecus_glob) == 0:
-        print "Cannot zip database, no 'ecus' directory"
+        print("Cannot zip database, no 'ecus' directory")
         return
 
     ecus = []
@@ -1673,7 +1751,7 @@ def zipConvertXML(dbfilename = "ecu.zip"):
         ecus.append(e)
 
     i = 0
-    print "Starting conversion"
+    print("Starting conversion")
 
     targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
@@ -1685,12 +1763,12 @@ def zipConvertXML(dbfilename = "ecu.zip"):
                 filename = filename.replace("ecus/", "")
             else:
                 filename = filename.replace("ecus\\", "")
-            print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
+            print("Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename)
 
             i += 1
             layoutjs = dumpXML(target)
             if layoutjs is None:
-                print "Skipping current file (cannot parse it)"
+                print("Skipping current file (cannot parse it)")
                 continue
             ecufile = ecu.Ecu_file(target, True)
             js = ecufile.dumpJson()
@@ -1705,10 +1783,10 @@ def zipConvertXML(dbfilename = "ecu.zip"):
 
             targetsdict[filename] = ecu_ident
 
-        print 'Writing database'
+        print('Writing database')
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
-    print 'Writing archive'
+    print('Writing archive')
     with open(dbfilename, "wb") as f:
         f.write(zipoutput.getvalue())
 
@@ -1720,19 +1798,19 @@ def convertXML():
     ecus.remove("ecus/eculist.xml")
     i = 0
 
-    print "Opening ECU Database..."
+    print("Opening ECU Database...")
     ecu_database = ecu.Ecu_database()
-    print "Starting conversion"
+    print("Starting conversion")
 
     for target in ecus:
         filename = target.replace(".xml", ".json")
         filename = filename.replace("ecus/", "json/")
-        print "Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename
+        print("Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename)
 
         i += 1
         layoutjs = dumpXML(target)
         if layoutjs is None:
-            print "Skipping current file (cannot parse it)"
+            print("Skipping current file (cannot parse it)")
             continue
         ecufile = ecu.Ecu_file(target, True)
         js = ecufile.dumpJson()

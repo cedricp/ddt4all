@@ -16,18 +16,10 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 **This tool should be used primarily for CAN ISO_TP network study**
 
-## Dependencies:
-* Python 2.7
-* PyQt 4.8 or 5.7+
-* An ELM327 or OBDLink SX (usb preferable WiFi not tested yet)
-
-### Install dependencies on Ubuntu:
-
-QT4
-* `sudo apt-get install python-qt4`
-
-or QT5
-* `sudo apt-get install python-pyqt5 python-pyqt5.qtwebkit`
+## Dependencies :
+* Python 3.8
+* PyQt 5
+* An ELM327, ELS327 or OBDLink SX 
 
 ## Windows installer
 
@@ -50,6 +42,7 @@ Get the fully packaged installer here: [Release area](https://github.com/cedricp
 * Internal JSON file format for high speed parsing
 * Database zip compression of converted JSON files
 * Can bus sniffing (Read/Decode non-ISOTP frames)
+* Screen recorder (via autorefresh button) and export to CSV format
 
 ## How to launch the application ?
 
