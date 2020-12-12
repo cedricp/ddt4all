@@ -47,7 +47,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 ## How to launch the application ?
 
 * Windows : double click DDT4ALL.BAT file
-* Linux : from a terminal, type `python ddt4all.py`
+* Linux : from a terminal, type `python3 ddt4all.py`
 
 
 ## Platforms
