@@ -57,7 +57,7 @@ def getFontXML(xml):
     return f
 
 
-def getXMLFont(xml, scale = 1):
+def getXMLFont(xml, scale=1):
     font = getChildNodesByName(xml, "Font")[0]
     font_name = font.getAttribute("Name")
     font_size = float(font.getAttribute("Size").replace(',', '.'))
@@ -72,7 +72,7 @@ def getXMLFont(xml, scale = 1):
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
 
-    font_size = font_size / float(scale) * 14.
+    font_size = font_size / float(scale) * 25.
     qfnt = gui.QFont(font_name, font_size, fnt_flags)
     qfnt.setPixelSize(font_size)
     return qfnt
@@ -88,8 +88,8 @@ def getFontColor(xml):
 
 class displayData:
     def __init__(self, data, widget, is_combo=False):
-        self.data    = data
-        self.widget  = widget
+        self.data = data
+        self.widget = widget
         self.is_combo = is_combo
 
 
@@ -97,7 +97,7 @@ class displayDict:
     def __init__(self, request_name, request):
         self.request = request
         self.request_name = request_name
-        self.data    = []
+        self.data = []
         self.datadict = {}
 
     def addData(self, displaydata):
@@ -132,8 +132,8 @@ def jsonFont(fnt, scale):
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
 
-    font_size = font_size / float(scale) * 14.
+    font_size = font_size / float(scale) * 25.
 
-    qfnt = gui.QFont(font_name, font_size, fnt_flags);
+    qfnt = gui.QFont(font_name, font_size, fnt_flags)
     qfnt.setPixelSize(font_size)
     return qfnt

@@ -1,6 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import locale
+import options
+import errno
+import tempfile
+import elm
+import ecu
+import parameters
+import codecs
+import sniffer
+import dataeditor
 import sys
 import os
 import glob
@@ -22,13 +32,7 @@ def utf8(string):
     return string
 
 
-import parameters, ecu
-import elm, options, locale
-import dataeditor
-import sniffer
 #import imp
-import tempfile, errno
-import codecs
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2020"
@@ -42,6 +46,7 @@ __status__ = "Beta"
 _ = options.translator('ddt4all')
 app = None
 
+
 def isWritable(path):
     try:
         testfile = tempfile.TemporaryFile(dir=path)
@@ -53,6 +58,7 @@ def isWritable(path):
     except:
         return False
     return True
+
 
 class Ecu_finder(widgets.QDialog):
     def __init__(self, ecuscanner):
@@ -77,6 +83,7 @@ class Ecu_finder(widgets.QDialog):
         frame = utf8(self.ecuident.text())
         self.ecuscanner.identify_from_frame(addr, frame)
 
+
 class Ecu_list(widgets.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
         super(Ecu_list, self).__init__()
@@ -85,24 +92,31 @@ class Ecu_list(widgets.QWidget):
         self.vehicle_combo = widgets.QComboBox()
 
         self.ecu_map = {}
+        # vehicles = [
+        #     "ALL", "XBA - KWID CN", "XBB - KWID BR", "X06 - TWINGO", "X44 - TWINGO II",
+        #     "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA", "XJC - SYMBOL/THALIA II",
+        #     "X65 - CLIO II",
+        #     "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR", "XJB - CAPTUR II",
+        #     "XJE - CAPTUR II CN", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
+        #     "X84 - MEGANE/SCENIC II", "X84ph2 - MEGANE/SCENIC II Phase 2", "X95 - MEGANE/SCENIC III",
+        #     "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
+        #     "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X74ph2 - LAGUNA II Phase 2", "X91 - LAGUNA III",
+        #     "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
+        #     "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
+        #     "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
+        #     "X10 - ZOE", "X10Ph2 - ZOE Ph2", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
+        #     "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
+        #     "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
+        #     "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
+        #     "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)",
+        #     "X21 - NOTE (NISSAN)"
+        # ]
+
         vehicles = [
-            "ALL", "XBA - KWID CN", "XBB - KWID BR", "X06 - TWINGO", "X44 - TWINGO II",
-            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA", "XJC - SYMBOL/THALIA II",
-            "X65 - CLIO II",
-            "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR", "XJB - CAPTUR II",
-            "XJE - CAPTUR II CN", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
-            "X84 - MEGANE/SCENIC II", "X84ph2 - MEGANE/SCENIC II Phase 2", "X95 - MEGANE/SCENIC III",
-            "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
-            "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X74ph2 - LAGUNA II Phase 2", "X91 - LAGUNA III",
-            "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
-            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
-            "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
-            "X10 - ZOE", "X10Ph2 - ZOE Ph2", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
-            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
-            "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
-            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
-            "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)",
-            "X21 - NOTE (NISSAN)"
+            "Dokker Modelle",
+            # "X90 - LOGAN/SANDERO", "X52 - LOGAN/SANDERO II",
+            # "XJI - LOGAN/SANDERO III", "X79 - DUSTER", "X79Ph2 - DUSTER PH2", "XJD - DUSTER II",
+            "X67 - DOKKER", "XJK - DOKKER II", "X92 - LODGY", "X00 - HISTORY AREA (BETAVERSION)"
         ]
 
         for v in vehicles:
@@ -191,7 +205,8 @@ class Ecu_list(widgets.QWidget):
             supplier = ecu.supplier
             diag = ecu.diagversion
 
-            row = [ecu.name, ecu.addr, ecu.protocol, supplier, diag, soft, version, projname]
+            row = [ecu.name, ecu.addr, ecu.protocol,
+                   supplier, diag, soft, version, projname]
             found = False
             for r in stored_ecus[grp]:
                 if (r[0], r[1]) == (row[0], row[1]):
@@ -210,7 +225,8 @@ class Ecu_list(widgets.QWidget):
             if e in longgroupnames:
                 item.setToolTip(0, longgroupnames[e])
             if e in self.ecuscan.ecu_database.addr_group_mapping:
-                item.setToolTip(self.ecuscan.ecu_database.addr_group_mapping[e])
+                item.setToolTip(
+                    self.ecuscan.ecu_database.addr_group_mapping[e])
             for t in stored_ecus[e]:
                 widgets.QTreeWidgetItem(item, t)
 
@@ -236,7 +252,8 @@ class Ecu_list(widgets.QWidget):
     def ecuSel(self, index):
         if index.parent() == core.QModelIndex():
             return
-        item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
+        item = self.list.model().itemData(
+            self.list.model().index(index.row(), 0, index.parent()))
 
         selected = item[0]
         target = self.ecuscan.ecu_database.getTarget(selected)
@@ -255,7 +272,7 @@ class Ecu_list(widgets.QWidget):
 
 
 class Main_widget(widgets.QMainWindow):
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         super(Main_widget, self).__init__(parent)
 
         if not options.simulation_mode:
@@ -272,7 +289,8 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
-        print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
+        print(str(self.ecu_scan.getNumEcuDb()) +
+              " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -283,13 +301,18 @@ class Main_widget(widgets.QMainWindow):
         self.paramview = None
         try:
             self.docview = webkitwidgets.QWebEngineView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
+            self.docview.load(
+                core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            self.docview.settings().setAttribute(
+                webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
+            self.docview.settings().setAttribute(
+                webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
+            self.docview.settings().setAttribute(
+                webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
         except:
             self.docview = webkitwidgets.QWebView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            self.docview.load(
+                core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
             self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
             self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
             self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
@@ -300,7 +323,8 @@ class Main_widget(widgets.QMainWindow):
         self.setStatusBar(self.statusBar)
 
         self.connectedstatus = widgets.QLabel()
-        self.connectedstatus.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
+        self.connectedstatus.setAlignment(
+            core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         self.protocolstatus = widgets.QLabel()
         self.progressstatus = widgets.QProgressBar()
         self.infostatus = widgets.QLabel()
@@ -389,38 +413,46 @@ class Main_widget(widgets.QMainWindow):
 
         self.toolbar = self.addToolBar(_("File"))
 
-        self.diagaction = widgets.QAction(gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
+        self.diagaction = widgets.QAction(
+            gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
-        self.log = widgets.QAction(gui.QIcon("icons/log.png"), _("Full log"), self)
+        self.log = widgets.QAction(
+            gui.QIcon("icons/log.png"), _("Full log"), self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
 
-        self.expert = widgets.QAction(gui.QIcon("icons/expert.png"), _("Expert mode (enable writing)"), self)
+        self.expert = widgets.QAction(
+            gui.QIcon("icons/expert.png"), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = widgets.QAction(gui.QIcon("icons/autorefresh.png"), _("Auto refresh"), self)
+        self.autorefresh = widgets.QAction(
+            gui.QIcon("icons/autorefresh.png"), _("Auto refresh"), self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = widgets.QAction(gui.QIcon("icons/refresh.png"), _("Refresh (one shot)"), self)
+        self.refresh = widgets.QAction(
+            gui.QIcon("icons/refresh.png"), _("Refresh (one shot)"), self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = widgets.QAction(gui.QIcon("icons/hex.png"), _("Manual command"), self)
+        self.hexinput = widgets.QAction(
+            gui.QIcon("icons/hex.png"), _("Manual command"), self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
-        self.cominput = widgets.QAction(gui.QIcon("icons/command.png"), _("Manual request"), self)
+        self.cominput = widgets.QAction(
+            gui.QIcon("icons/command.png"), _("Manual request"), self)
         self.cominput.triggered.connect(self.command_editor)
         self.cominput.setEnabled(False)
 
-        self.fctrigger = widgets.QAction(gui.QIcon("icons/flowcontrol.png"), _("Software flow control"), self)
+        self.fctrigger = widgets.QAction(
+            gui.QIcon("icons/flowcontrol.png"), _("Software flow control"), self)
         self.fctrigger.setCheckable(True)
         self.fctrigger.triggered.connect(self.flow_control)
 
@@ -527,18 +559,19 @@ class Main_widget(widgets.QMainWindow):
                 name = plug.plugin_name
                 need_hw = plug.need_hw
 
-                #if options.simulation_mode and need_hw:
+                # if options.simulation_mode and need_hw:
                 #    continue
 
                 if not category in category_menus:
                     category_menus[category] = plugins_menu.addMenu(category)
 
                 plug_action = category_menus[category].addAction(name)
-                plug_action.triggered.connect(lambda state, a=plug.plugin_entry: self.launchPlugin(a))
+                plug_action.triggered.connect(
+                    lambda state, a=plug.plugin_entry: self.launchPlugin(a))
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print("Cannot load plugin "  + plugin)
+                print("Cannot load plugin " + plugin)
                 print(e)
 
         self.setConnected(True)
@@ -605,7 +638,7 @@ class Main_widget(widgets.QMainWindow):
 
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
-                                                   "./ecu.zip", "*.zip")
+                                                             "./ecu.zip", "*.zip")
 
         filename = str(filename_tuple[0])
 
@@ -614,11 +647,13 @@ class Main_widget(widgets.QMainWindow):
 
         if not isWritable(str(os.path.dirname(filename))):
             mbox = widgets.QMessageBox()
-            mbox.setText("Cannot write to directory " + os.path.dirname(filename))
+            mbox.setText("Cannot write to directory " +
+                         os.path.dirname(filename))
             mbox.exec_()
             return
 
-        self.logview.append(_("Zipping XML database... (this can take a few minutes"))
+        self.logview.append(
+            _("Zipping XML database... (this can take a few minutes"))
         core.QCoreApplication.processEvents()
         parameters.zipConvertXML(filename)
         self.logview.append(_("Zip job finished"))
@@ -636,7 +671,8 @@ class Main_widget(widgets.QMainWindow):
             return
 
         itemname = utf8(item.text(0))
-        nin = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
+        nin = widgets.QInputDialog.getText(
+            self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
@@ -656,24 +692,28 @@ class Main_widget(widgets.QMainWindow):
         item.setText(0, newitemname)
 
     def newCategory(self):
-        ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
+        ncn = widgets.QInputDialog.getText(
+            self, 'DDT4All', _('Enter category name'))
         necatname = utf8(ncn[0])
         if necatname:
             self.paramview.createCategory(necatname)
-            self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
+            self.treeview_params.addTopLevelItem(
+                widgets.QTreeWidgetItem([necatname]))
 
     def newScreen(self):
         item = self.treeview_params.currentItem()
 
         if not item:
-            self.logview.append("<font color=red>" + _("Please select a category before creating new screen") + "</font>")
+            self.logview.append(
+                "<font color=red>" + _("Please select a category before creating new screen") + "</font>")
             return
 
         if item.parent() is not None:
             item = item.parent()
 
         category = utf8(item.text(0))
-        nsn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
+        nsn = widgets.QInputDialog.getText(
+            self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
@@ -769,7 +809,8 @@ class Main_widget(widgets.QMainWindow):
 
         self.ecu_scan.clear()
         if scancan:
-            self.ecu_scan.scan(self.progressstatus, self.infostatus, None, self.canlinecombo.currentIndex())
+            self.ecu_scan.scan(self.progressstatus, self.infostatus,
+                               None, self.canlinecombo.currentIndex())
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
 
@@ -798,24 +839,27 @@ class Main_widget(widgets.QMainWindow):
 
     def setConnected(self, on):
         if options.simulation_mode:
-            self.connectedstatus.setStyleSheet("background-color : orange; color: black")
+            self.connectedstatus.setStyleSheet(
+                "background-color : orange; color: black")
             self.connectedstatus.setText(_("EDITION MODE"))
             return
         if on:
-            self.connectedstatus.setStyleSheet("background-color : green; color: black")
+            self.connectedstatus.setStyleSheet(
+                "background-color : green; color: black")
             self.connectedstatus.setText(_("CONNECTED"))
         else:
-            self.connectedstatus.setStyleSheet("background-color : red; color: black")
+            self.connectedstatus.setStyleSheet(
+                "background-color : red; color: black")
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
-                                                    "./vehicles/mycar.ecu", "*.ecu")
+                                                             "./vehicles/mycar.ecu", "*.ecu")
 
         filename = str(filename_tuple[0])
 
         if filename == "":
-            return        
+            return
 
         eculist = []
         numecus = self.treeview_ecu.count()
@@ -833,7 +877,7 @@ class Main_widget(widgets.QMainWindow):
 
     def newEcu(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
-                                                   "*.json")
+                                                             "*.json")
 
         filename = str(filename_tuple[0])
 
@@ -869,13 +913,14 @@ class Main_widget(widgets.QMainWindow):
             return
 
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save record (keep '.txt' extension)"),
-                                                   "./record.txt", "*.txt")
+                                                             "./record.txt", "*.txt")
         filename = str(filename_tuple[0])
 
         self.paramview.export_record(filename)
 
     def openxml(self):
-        filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
+        filename_tuple = widgets.QFileDialog.getOpenFileName(
+            self, "Open File", "./", "XML files (*.xml *.XML)")
 
         filename = str(filename_tuple[0])
 
@@ -914,7 +959,8 @@ class Main_widget(widgets.QMainWindow):
                 self.paramview.updateDisplays(True)
         else:
             if self.paramview:
-                self.logview.append("Recorded " + str(self.paramview.get_record_size()) + " entries")
+                self.logview.append(
+                    "Recorded " + str(self.paramview.get_record_size()) + " entries")
 
     def refreshParams(self):
         if self.paramview:
@@ -949,7 +995,8 @@ class Main_widget(widgets.QMainWindow):
 
         if options.simulation_mode and self.paramview.layoutdict:
             if screen in self.paramview.layoutdict['screens']:
-                self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
+                self.buttonEditor.set_layout(
+                    self.paramview.layoutdict['screens'][screen])
 
         self.paramview.setRefreshTime(self.refreshtimebox.value())
         self.set_can_combo(self.paramview.ecurequestsparser.ecu_protocol)
@@ -1015,7 +1062,8 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.close()
             self.paramview.destroy()
 
-        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
+        self.paramview = parameters.paramWidget(
+            self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
         self.paramview.infobox = self.infostatus
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
@@ -1052,10 +1100,12 @@ class donationWidget(widgets.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
-        msgbox.setText(_("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
+        msgbox.setText(
+            _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
         msgbox.addButton(okbutton, widgets.QMessageBox.YesRole)
-        msgbox.addButton(widgets.QPushButton(_("No, I don't")), widgets.QMessageBox.NoRole)
+        msgbox.addButton(widgets.QPushButton(
+            _("No, I don't")), widgets.QMessageBox.NoRole)
         okbutton.clicked.connect(self.donate)
         msgbox.exec_()
 
@@ -1063,8 +1113,10 @@ class donationWidget(widgets.QLabel):
         url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
-        msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
+        msgbox.setText(
+            _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
+
 
 def set_dark_style(onoff):
     if (onoff):
@@ -1076,6 +1128,7 @@ def set_dark_style(onoff):
         StyleSheet = ""
 
     app.setStyleSheet(StyleSheet)
+
 
 class portChooser(widgets.QDialog):
     def __init__(self):
@@ -1094,7 +1147,7 @@ class portChooser(widgets.QDialog):
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = donationWidget()
         self.setLayout(layout)
-        
+
         self.listview = widgets.QListWidget(self)
 
         layout.addWidget(label)
@@ -1179,7 +1232,8 @@ class portChooser(widgets.QDialog):
         safetychecklayout = widgets.QHBoxLayout()
         self.safetycheck = widgets.QCheckBox()
         self.safetycheck.setChecked(False)
-        safetylabel = widgets.QLabel(_("I'm aware that I can harm my car if badly used"))
+        safetylabel = widgets.QLabel(
+            _("I'm aware that I can harm my car if badly used"))
         safetychecklayout.addWidget(self.safetycheck)
         safetychecklayout.addWidget(safetylabel)
         safetychecklayout.addStretch()
@@ -1193,7 +1247,7 @@ class portChooser(widgets.QDialog):
         darkstylelayout.addWidget(self.darklayoutcheck)
         darkstylelayout.addWidget(darkstylelabel)
         darkstylelayout.addStretch()
-        layout.addLayout(darkstylelayout)
+        # layout.addLayout(darkstylelayout)
 
         obdlinkspeedlayout = widgets.QHBoxLayout()
         self.obdlinkspeedcombo = widgets.QComboBox()
@@ -1203,7 +1257,7 @@ class portChooser(widgets.QDialog):
         obdlinkspeedlayout.addStretch()
         layout.addLayout(obdlinkspeedlayout)
 
-        layout.addWidget(donationwidget)
+        # layout.addWidget(donationwidget)
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
@@ -1419,9 +1473,11 @@ class portChooser(widgets.QDialog):
         options.report_data = False
         self.done(True)
 
+
 if __name__ == '__main__':
     try:
-        sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
+        sys.stdout = open(sys.stdout.fileno(), mode='w',
+                          encoding='utf8', buffering=1)
     except:
         sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
@@ -1430,7 +1486,7 @@ if __name__ == '__main__':
     app = widgets.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
-        font = gui.QFont("Sans", 9)
+        font = gui.QFont("Menlo", 16)
         font.setBold(False)
         app.setFont(font)
         app.setStyle("plastic")
@@ -1464,12 +1520,14 @@ if __name__ == '__main__':
             msgbox.exec_()
 
         print(_("Initilizing ELM with speed %i...") % port_speed)
-        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
+        options.elm = elm.ELM(options.port, port_speed,
+                              pc.adapter, pc.raise_port_speed)
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = widgets.QMessageBox()
-            msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
+            msgbox.setText(
+                _("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:
             nok = False
