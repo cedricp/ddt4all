@@ -285,7 +285,7 @@ class Main_widget(widgets.QMainWindow):
         self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
-        self.setWindowTitle(_("DDT4All"))
+        self.setWindowTitle(_("DDT4All macOs Version"))
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
@@ -1278,7 +1278,7 @@ class portChooser(widgets.QDialog):
         self.portcount = -1
         self.usb()
 
-        self.setWindowTitle("DDT4All")
+        self.setWindowTitle("DDT4All macOs Version")
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
