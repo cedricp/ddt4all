@@ -1248,7 +1248,7 @@ class portChooser(widgets.QDialog):
         darkstylelayout.addWidget(self.darklayoutcheck)
         darkstylelayout.addWidget(darkstylelabel)
         darkstylelayout.addStretch()
-        layout.addLayout(darkstylelayout)
+        # layout.addLayout(darkstylelayout)
 
         obdlinkspeedlayout = widgets.QHBoxLayout()
         self.obdlinkspeedcombo = widgets.QComboBox()
@@ -1258,7 +1258,7 @@ class portChooser(widgets.QDialog):
         obdlinkspeedlayout.addStretch()
         layout.addLayout(obdlinkspeedlayout)
 
-        layout.addWidget(donationwidget)
+       # layout.addWidget(donationwidget)
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
