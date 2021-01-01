@@ -568,10 +568,6 @@ class ELM:
             self.sim_mode = options.simulation_mode
             self.portName = portName
             self.adapter_type = adapter_type
-            if maxspeed == "No":
-                maxspeed = 0
-            else:
-                maxspeed = int(maxspeed)
 
             if not options.simulation_mode:
                 self.port = Port(portName, speed, self.portTimeout)
@@ -603,7 +599,12 @@ class ELM:
                 rate = speed
                 break
 
-        if adapter_type == "OBDLINK" and maxspeed and not options.elm_failed and rate != 2000000:
+        try:
+            maxspeed = int(maxspeed)
+        except:
+            maxspeed = 0
+
+        if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
             print("OBDLink Connection OK, attempting full speed UART switch")
             try:
                 self.raise_odb_speed(maxspeed)
@@ -611,7 +612,7 @@ class ELM:
                 options.elm_failed = True
                 self.connectionStatus = False
                 print("Failed to switch to change OBDLink to " + str(maxspeed))
-        elif adapter_type == "STD_USB" and rate != 115200 and maxspeed:
+        elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
             print("ELM Connection OK, attempting high speed UART switch")
             try:
                 self.raise_elm_speed(maxspeed)

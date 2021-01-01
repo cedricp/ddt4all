@@ -1,0 +1,13 @@
+### ddt4all specific
+/ecu.zip
+/ecus/
+/logs/
+
+### Python generic ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+### IDE generic ###
+/.vscode/
