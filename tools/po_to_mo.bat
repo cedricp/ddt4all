@@ -2,6 +2,7 @@
 
 SET PROGRAM-NAME=DDT4All
 SET FILE-NAME=ddt4all
+
 SET MSGFMT-OPTIONS=
 
 CLS
@@ -22,7 +23,7 @@ ECHO * Convert PO files in MO files
 ECHO ******************************************
 ECHO.
 
-for %%x in (de es fr hu it nl pl pt ru sr) do (
+for %%x in (de es fr hu it nl pl pt ro ru sr uk) do (
 
 ECHO **** Country = %%x - Compiling '%FILE-NAME%.po' in '%FILE-NAME%.mo'....
 msgfmt %MSGFMT-OPTIONS% ..\locale\%%x\lc_messages\%FILE-NAME%.po -o ..\locale\%%x\lc_messages\%FILE-NAME%.mo > NUL

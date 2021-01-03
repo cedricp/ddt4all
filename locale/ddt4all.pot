@@ -608,7 +608,7 @@ msgstr ""
 
 #: ../ddt4all.py:1413
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr ""
 
 #: ../ddt4all.py:1420

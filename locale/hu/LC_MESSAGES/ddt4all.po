@@ -254,7 +254,7 @@ msgstr "Protokoll"
 msgid "Diag"
 msgstr ""
 
-msgid "Projets"
+msgid "Projects"
 msgstr "Projektek"
 
 msgid "DDT4All"
@@ -404,7 +404,7 @@ msgstr "CSATLAKOZVA"
 msgid "DISCONNECTED"
 msgstr "NINCS KAPCSOLAT"
 
-msgid "Save vehicule (keep '.ecu' extension)"
+msgid "Save vehicle (keep '.ecu' extension)"
 msgstr "Jármű mentése ('.ecu' kiteresztés megtartása)"
 
 msgid "Save ECU (keep '.json' extension)"
@@ -446,7 +446,7 @@ msgstr "Tisztában vagyok vele, hogy a helytelen használat kárt tehet a járm�
 msgid "Dark style"
 msgstr ""
 
-msgid "You must check the recommandations"
+msgid "You must check the recommendations"
 msgstr "Tudomásul kell venned a figyelmeztetést"
 
 msgid "Please select a communication port"
@@ -459,7 +459,7 @@ msgid "No COM port selected"
 msgstr "Nincs COM port kiválasztva"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initialising ELM with speed %i..."
 msgstr "ELM inicializálása %i sebességgel..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -557,7 +557,7 @@ msgstr ""
 msgid "Remove element"
 msgstr "Elem eltávolítása"
 
-msgid "Diagnotic session"
+msgid "Diagnostic session"
 msgstr "Diagnózis munkaszakasz"
 
 msgid "Input"
@@ -605,7 +605,7 @@ msgstr "Gomb parancs nem létezik: "
 msgid "Sending request :"
 msgstr "Parancs küldése:"
 
-msgid "Request aborted (look at red paramters entries): "
+msgid "Request aborted (look at red parameters entries): "
 msgstr "Parancs visszautasítva (ellenőrizd a piros paramétereket): "
 
 msgid "Invalid"

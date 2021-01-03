@@ -98,7 +98,7 @@ class Ecu_list(widgets.QWidget):
             "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
             "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
             "X10 - ZOE", "X10Ph2 - ZOE Ph2", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
-            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
+            "X24 - MASCOTT", "X83 - TRAFIC II", "X83ph2 - TRAFIC II Phase 2", "X83ph3 - TRAFIC II Phase 3", "X82 - TRAFFIC III",
             "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
             "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
             "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)",
@@ -140,7 +140,7 @@ class Ecu_list(widgets.QWidget):
         self.list.model().setHeaderData(4, core.Qt.Horizontal, _('Diag'))
         self.list.model().setHeaderData(5, core.Qt.Horizontal, _('Soft'))
         self.list.model().setHeaderData(6, core.Qt.Horizontal, _('Version'))
-        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projets'))
+        self.list.model().setHeaderData(7, core.Qt.Horizontal, _('Projects'))
         stored_ecus = {"Custom": []}
 
         custom_files = glob.glob("./json/*.json.targets")
@@ -809,7 +809,7 @@ class Main_widget(widgets.QMainWindow):
             self.connectedstatus.setText(_("DISCONNECTED"))
 
     def saveEcus(self):
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicle (keep '.ecu' extension)"),
                                                     "./vehicles/mycar.ecu", "*.ecu")
 
         filename = str(filename_tuple[0])
@@ -1389,7 +1389,7 @@ class portChooser(widgets.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
             msgbox = widgets.QMessageBox()
-            msgbox.setText(_("You must check the recommandations"))
+            msgbox.setText(_("You must check the recommendations"))
             msgbox.exec_()
             return
 
