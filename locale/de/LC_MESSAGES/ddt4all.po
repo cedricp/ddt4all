@@ -25,19 +25,19 @@ msgid "Remove"
 msgstr "Entfernen"
 
 msgid "Add to screen"
-msgstr "Bildschirm hinzufuegen"
+msgstr "Zum Bildschirm hinzufuegen"
 
 msgid "Request name;Bytes;Manual"
-msgstr ""
+msgstr "Name;Bytes;Manuell anfordern"
 
 msgid "Add"
 msgstr "Hinzufuegen"
 
 msgid "Send request bytes (HEX)"
-msgstr "Anfragebytes (HEX)"
+msgstr "Sende Anfragebytes (HEX)"
 
 msgid "Receive bytes (HEX)"
-msgstr "Antwortbytes (HEX)"
+msgstr "Empfangbytes (HEX)"
 
 msgid "Data length"
 msgstr "Datenlaenge"
@@ -58,13 +58,13 @@ msgid "Inherits globals"
 msgstr "Inherits globals"
 
 msgid "No SDS"
-msgstr ""
+msgstr "Kein SDS (Sprachdialogsystem)"
 
 msgid "Plant"
 msgstr ""
 
 msgid "After Sale"
-msgstr ""
+msgstr "Nachverkauf"
 
 msgid "Engineering"
 msgstr ""
@@ -121,10 +121,10 @@ msgid "New"
 msgstr "Neu"
 
 msgid "Duplicate selected"
-msgstr ""
+msgstr "Auswahl duplizieren"
 
 msgid "Remove selected"
-msgstr ""
+msgstr "Auswahl entfernen"
 
 msgid "Reload"
 msgstr "Neu laden"
@@ -149,7 +149,7 @@ msgstr "Hex"
 
 #, python-format
 msgid "Data is used by request %s"
-msgstr ""
+msgstr "Daten in Zugriff von Anfrage %s"
 
 msgid "New data"
 msgstr "Neue Daten"
@@ -164,7 +164,7 @@ msgid "Del"
 msgstr "Loeschen"
 
 msgid "Refresh"
-msgstr "Auffrischen"
+msgstr "Aktualisieren"
 
 msgid "Move up"
 msgstr "Nach oben"
@@ -222,7 +222,7 @@ msgid "Little Endian"
 msgstr "Little Endian"
 
 msgid "ECU Auto identification"
-msgstr ""
+msgstr "ECU Automatische Identifizierung"
 
 msgid "Diag version;Supplier;Soft;Version"
 msgstr "Diag version;Supplier;Soft;Version"
@@ -246,7 +246,7 @@ msgid "ECU name"
 msgstr "ECU Namen"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Protocol"
 msgstr "Protokoll"
@@ -258,10 +258,10 @@ msgid "Projets"
 msgstr "Projekte"
 
 msgid "DDT4All"
-msgstr "DDT4All - dacianer.de Edition"
+msgstr "DDT4All"
 
 msgid "loaded ECUs in database."
-msgstr "ECUs wurden geladen."
+msgstr "ECUs in Datenbank geladen."
 
 msgid "Refresh rate (ms):"
 msgstr "Aktualisierung nach (ms):"
@@ -270,7 +270,7 @@ msgid "Can timeout (ms) [0:AUTO] :"
 msgstr ""
 
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 msgid "Screen"
 msgstr "Bildschirm"
@@ -312,10 +312,10 @@ msgid "Read DTC"
 msgstr "Fehler lesen"
 
 msgid "Full log"
-msgstr "Daten speichern"
+msgstr "Vollstaendiges Protokoll"
 
 msgid "Expert mode (enable writing)"
-msgstr "Expertenmodus ermoeglicht Daten in ECU schreiben"
+msgstr "Expertenmodus (aktiviert das Schreiben in ECU)"
 
 msgid "Auto refresh"
 msgstr "Daten automatisch aktualisieren"
@@ -327,7 +327,7 @@ msgid "Manual command"
 msgstr "Manuelle Befehle senden"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Manuelle Anfrage"
 
 msgid "Zoom In"
 msgstr ""
@@ -336,13 +336,13 @@ msgid "Zoom Out"
 msgstr ""
 
 msgid "UI Edit"
-msgstr ""
+msgstr "UI bearbeiten"
 
 msgid "Open XML"
-msgstr ""
+msgstr "Öffne XML"
 
 msgid "Identify ECU"
-msgstr ""
+msgstr "Identifiziere ECU"
 
 msgid "Create New ECU"
 msgstr "Neues ECU erstellen"
@@ -360,16 +360,16 @@ msgid "Plugins"
 msgstr ""
 
 msgid "Cannot load plugin "
-msgstr ""
+msgstr "Plug-In laden fehlgeschlagen"
 
 msgid "Save database (keep '.zip' extension)"
-msgstr ""
+msgstr "Speichere Datenbank (erhalte" '.zip' Format)"
 
 msgid "Zipping XML database... (this can take a few minutes"
-msgstr ""
+msgstr "Packe XML Datenbank... (dies kann einige Minuten dauern)"
 
 msgid "Zip job finished"
-msgstr ""
+msgstr "Zip Job beendet"
 
 msgid "Enter new name"
 msgstr "Neuen Namen eingeben"
@@ -423,7 +423,7 @@ msgid "<center>Thank you for you contribution, if nothing happens, please go to 
 msgstr "<center>Vielen Dank fuer Ihren Beitrag, wenn nichts passiert, bitte gehen Sie zu : https://github.com/cedricp/ddt4all</center>"
 
 msgid "ELM port selection"
-msgstr "Anschluss auswaehlen"
+msgstr "ELM-Port auswaehlen"
 
 msgid "Port speed"
 msgstr "Baudrate auswaehlen (OBDLink 115200)"
@@ -444,7 +444,7 @@ msgid "I'm aware that I can harm my car if badly used"
 msgstr "Ich bin mir bewusst, dass falsche Benutzung meinem Auto schaden kann"
 
 msgid "Dark style"
-msgstr ""
+msgstr "dunkler Modus"
 
 msgid "You must check the recommandations"
 msgstr ";-) Du musst das Lesen der Warnung bestaetigen"
@@ -552,7 +552,7 @@ msgid "Rename label"
 msgstr "Schriftfeld umbenennen"
 
 msgid "Change color"
-msgstr ""
+msgstr "Farbe ändern"
 
 msgid "Remove element"
 msgstr "Element entfernen"
@@ -573,13 +573,13 @@ msgid "Invalid DDT file"
 msgstr "Ungueltige ECU Datei"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "Verbindung zu ELM verloren, versuche erneute Verbindung"
 
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Kann Verbindung nicht wiederherstellen..."
 
 msgid "Switching to session mode"
-msgstr "Start der Verbindung"
+msgstr "Wechsle zum Sitzungsmodus"
 
 msgid "Sending ELM request :"
 msgstr "ELM Anfrage senden:"
@@ -648,10 +648,10 @@ msgid "Parsing screen "
 msgstr "Bildschirm lesen "
 
 msgid "Values"
-msgstr ""
+msgstr "Werte"
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Warten..."
 
 msgid "Frame hex error : "
 msgstr ""
@@ -669,22 +669,22 @@ msgid "Check ACU Virgin"
 msgstr ""
 
 msgid "Waiting"
-msgstr ""
+msgstr "Warten"
 
 msgid "Virginize ACU"
 msgstr ""
 
 msgid "Cannot connect to ECU"
-msgstr ""
+msgstr "Kann nicht zum ECU verbinden"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='orange'>UNERWARTETE ANTWORT</font>"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='red'>CRASH ERKANNT</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='green'>KEIN CRASH ERKANNT</font>"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr ""
@@ -693,16 +693,16 @@ msgid "<font color='red'>CLEAR FAILED</font>"
 msgstr ""
 
 msgid "Megane/Scenic II card programming"
-msgstr ""
+msgstr "Megane/Scenic II Karten-Programmierung"
 
 msgid "Keys"
-msgstr ""
+msgstr "Schlüssel"
 
 msgid "ENTER AFTER SALE MODE"
 msgstr ""
 
 msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
-msgstr ""
+msgstr "<font color='red'>MEGANE II KARTEN-PROGRAMMIERUNG<br>EXPERIMENTELL : BISHER NICHT GETESTET</font>"
 
 msgid "LEARN"
 msgstr ""
@@ -729,7 +729,7 @@ msgid "Cannot get ISK, check connections and UCH compatibility"
 msgstr ""
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
-msgstr ""
+msgstr "<font color='red'>PIN CODE NICHT ANERKANNT</font>"
 
 msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
 msgstr ""
@@ -753,25 +753,25 @@ msgid "Virginize EPS"
 msgstr ""
 
 msgid "VIN - READ"
-msgstr ""
+msgstr "VIN - LESEN"
 
 msgid "VIN - WRITE"
-msgstr ""
+msgstr "VIN - SCHREIBEN"
 
 msgid "Write VIN"
-msgstr ""
+msgstr "Schreibe VIN"
 
 msgid "<font color='red'>VIN - INVALID</font>"
-msgstr ""
+msgstr "<font color='red'>VIN - UNGÜLTIG</font>"
 
 msgid "<font color='res'>VIN - BAD LENGTH</font>"
-msgstr ""
+msgstr "<font color='res'>VIN - FALSCHE LÄNGE</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
-msgstr ""
+msgstr "<font color='orange'>VIN SCHREIBEN FEHLGESCHLAGEN</font>"
 
 msgid "<font color='green'>VIN WRITE OK</font>"
-msgstr ""
+msgstr "<font color='green'>VIN SCHREIBEN OK</font>"
 
 msgid "<font color='green'>EPS virgin</font>"
 msgstr ""
