@@ -46,9 +46,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Screen recorder (via autorefresh button) and export to CSV format
 
 ## How to launch the application ?
-
-* Windows : double click DDT4ALL.BAT file
-* Linux : from a terminal, type `python ddt4all.py`
+* A terminal, type `python ddt4all.py`
 
 
 ## Platforms

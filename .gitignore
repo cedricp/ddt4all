@@ -13,3 +13,5 @@ __pycache__/
 /.vscode/
 /Python38/
 /.idea/
+/venv/
+/vehicles/
