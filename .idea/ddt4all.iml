@@ -8,6 +8,14 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/.idea" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crcmod" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ddtplugins" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/icons" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/json" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/locale" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/serial" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tools" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/logs" />
       <excludeFolder url="file://$MODULE_DIR$/vehicles" />
