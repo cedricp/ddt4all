@@ -15,3 +15,13 @@ __pycache__/
 /.idea/
 /venv/
 /vehicles/
+/checkBaseDDT/
+/EDT/
+/failures/
+/FlashingTimeAnalysis/
+/images/
+/graphics/
+/btpDB/
+/zipper/
+*.xml
+*.htm
