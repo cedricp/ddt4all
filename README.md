@@ -1,8 +1,7 @@
 # DDT4All
 DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
 
-# NEW : Android port
-[Wiki](https://github.com/cedricp/ddt4all/wiki/Android-port)
+# NEW: [Wiki Android port](https://github.com/cedricp/ddt4all/wiki/Android-port)
 
 ## Notes:
 This application is work in progress, so be very careful when using expert mode.
