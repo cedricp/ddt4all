@@ -1,10 +1,10 @@
+# DDT4All
+DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
+
 # NEW : Android port
 [Wiki](https://github.com/cedricp/ddt4all/wiki/Android-port)
 
-# DDT4All
-
-DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
-
+## Notes:
 This application is work in progress, so be very careful when using expert mode.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
 
@@ -20,6 +20,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * Python 3.8
 * PyQt 5
 * An ELM327, ELS327 or OBDLink SX 
+* [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
 ## Windows installer
 

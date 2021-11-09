@@ -12,3 +12,4 @@ __pycache__/
 ### IDE generic ###
 /.vscode/
 /Python38/
+/.idea/
