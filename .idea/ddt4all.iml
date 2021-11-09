@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Python" name="Python">
+      <configuration sdkName="Python 3.8" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/vehicles" />
+      <excludeFolder url="file://$MODULE_DIR$/btpDB" />
+      <excludeFolder url="file://$MODULE_DIR$/checkBaseDDT" />
+      <excludeFolder url="file://$MODULE_DIR$/ecus" />
+      <excludeFolder url="file://$MODULE_DIR$/EDT" />
+      <excludeFolder url="file://$MODULE_DIR$/failures" />
+      <excludeFolder url="file://$MODULE_DIR$/FlashingTimeAnalysis" />
+      <excludeFolder url="file://$MODULE_DIR$/graphics" />
+      <excludeFolder url="file://$MODULE_DIR$/images" />
+      <excludeFolder url="file://$MODULE_DIR$/zipper" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
