@@ -13,3 +13,10 @@ __pycache__/
 /.vscode/
 /venv/
 /vehicles/
+/EDT/
+/failures/
+/FlashingTimeAnalysis/
+/images/
+/checkBaseDDT/
+/btpDB/
+/zipper/
