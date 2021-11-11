@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>DDT2000 Data Local</title>
+<style type="text/css">
+body {
+  background-color: #C6C3BD;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:12pt;
+  margin:0;
+}
+
+h2 {
+  padding-top:1em;
+}
+
+p, h2 {
+  text-align:center;
+}
+
+p {
+  font-size:12pt;
+  margin:auto;
+  width:80%;
+  padding-bottom:2em;
+  border-bottom:1px solid black;
+}
+
+a {
+  color: white;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+span.alternate {
+  font-size:8pt;
+}
+
+</style>
+<script type="text/javascript">
+var tID;
+var REDIRECT_TIME = 5; /* in seconds */
+var counter = 0;
+
+function startPage() {
+  showCounters();
+  tID = window.setInterval("redirect()", 1000);
+}
+
+function redirect() {
+  counter++;
+  showCounters();
+  if (counter >= REDIRECT_TIME) {
+    window.clearInterval(tID);
+    /* alert("redirect"); */
+    self.location = "http://www-diag.intra.renault.fr/DDT2000Data/";
+  }
+}
+
+function showCounters() {
+  var msg_fr = "dans " + (REDIRECT_TIME - counter);
+  var msg_en = "in " + (REDIRECT_TIME - counter);
+
+  if ((REDIRECT_TIME - counter) > 1) {
+  	document.getElementById("counter_fr").innerHTML = msg_fr + " secondes";
+  	document.getElementById("counter_en").innerHTML = msg_en + " seconds";
+  }
+  else {
+    if ((REDIRECT_TIME - counter) > 0) {
+      document.getElementById("counter_fr").innerHTML = msg_fr + " seconde";
+      document.getElementById("counter_en").innerHTML = msg_en + " second";
+    }
+    else {
+      document.getElementById("counter_fr").innerHTML = "maintenant !";
+      document.getElementById("counter_en").innerHTML = "now!";
+    }
+  }
+}
+</script>
+</head>
+
+<body onload="startPage()">
+<h2>DDT2000Data</h2>
+<p></p>
+<p id="lang-fr">
+<br>
+Vous allez être redirigé sur <b>DDT2000Data</b> <span id="counter_fr">dans 5 secondes</span>.
+<br>
+<br>
+<span class="alternate">Si cela ne fonctionne pas, merci de <a href="http://www-diag.intra.renault.fr/DDT2000Data/">cliquer ici</a>.</span>
+</p>
+
+<p id="lang-en">
+<br>
+You will be redirected to <b>DDT2000Data</b> <span id="counter_en">in 5 seconds</span>.
+<br>
+<br>
+<span class="alternate">If it doesn't work, please <a href="http://www-diag.intra.renault.fr/DDT2000Data/">click here</a>.</span>
+</p>
+<br>
+</body>
+
+</html>

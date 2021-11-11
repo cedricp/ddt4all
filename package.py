@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
 import os, zipfile, glob, options
 
 __author__ = "Cedric PAILLE"
@@ -41,7 +41,7 @@ zip.write("DDT4ALL.BAT")
 zip.write("json/")
 zip.write("logs/")
 
-zipdir("./Python27")
+zipdir("./venv")
 zipdir("./importlib")
 zipdir("./serial")
 zipdir("./icons")

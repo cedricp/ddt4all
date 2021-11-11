@@ -11,3 +11,13 @@ __pycache__/
 
 ### IDE generic ###
 /.vscode/
+/venv/
+/vehicles/
+/EDT/
+/failures/
+/FlashingTimeAnalysis/
+/images/
+/checkBaseDDT/
+/btpDB/
+/zipper/
+/.idea/
