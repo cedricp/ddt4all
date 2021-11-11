@@ -23,3 +23,4 @@ __pycache__/
 *.htm
 *.xml
 /images/
+/graphics/
