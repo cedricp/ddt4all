@@ -1,11 +1,14 @@
 @echo off
-echo Activate venv
+echo Install new venv ...
+python -m venv ./venv
+echo Activate venv ...
 call venv\Scripts\activate.bat
-pip install -U pip virtualenv
-virtualenv --system-site-packages -p python ./venv
-rem pip install --upgrade pip
+echo update pip ...
+python.exe -m pip install --upgrade pip
+echo Install requirements ...
 pip install -r requirements.txt
+echo Run's app ...
 python.exe ddt4all.py
-echo Deactivate venv
+echo Deactivate venv ...
 call venv\Scripts\deactivate.bat
 pause
