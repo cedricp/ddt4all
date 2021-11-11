@@ -173,5 +173,5 @@ if __name__ == '__main__':
     dev = OBDDevice()
     dev.init_can()
     dev.set_can_addr(26, {})
-    print dev.start_session_can("10C0")
+    print(dev.start_session_can("10C0"))
 
