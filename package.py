@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+import PyQt5.QtGui as gui
+import PyQt5.QtCore as core
 import os, zipfile, glob, options
 
 __author__ = "Cedric PAILLE"
