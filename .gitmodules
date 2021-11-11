@@ -1,0 +1,3 @@
+[submodule "ddtplugins"]
+	path = ddtplugins
+	url = https://github.com/cedricp/ddtplugins.git
