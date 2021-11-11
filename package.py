@@ -41,7 +41,7 @@ zip.write("DDT4ALL.BAT")
 zip.write("json/")
 zip.write("logs/")
 
-zipdir("./Python27")
+zipdir("./venv")
 zipdir("./importlib")
 zipdir("./serial")
 zipdir("./icons")
