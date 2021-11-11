@@ -21,3 +21,5 @@ __pycache__/
 /btpDB/
 /zipper/
 /.idea/
+*.xml
+*.htm
