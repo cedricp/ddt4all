@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
-import math, string
-import options
-import elm
-import zipfile
-from xml.dom.minidom import parse
-import xml.dom.minidom
-import json, os
-import re
-import glob
 import argparse
+import glob
+import math
+import re
+import string
+import xml.dom.minidom
+import zipfile
+from io import StringIO
+from xml.dom.minidom import parse
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-    def unichr(t):
-        return chr(t)
+import elm
+import json
+import options
+import os
+
+
+def unichr(t):
+    return chr(t)
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2020"
@@ -247,7 +248,9 @@ class Ecu_request:
                         di = Data_item(dataitem, self.ecu_file.endianness)
                         self.sendbyte_dataitems[di.name] = di
 
-    def send_request(self, inputvalues={}, test_data=None):
+    def send_request(self, inputvalues=None, test_data=None):
+        if inputvalues is None:
+            inputvalues = {}
         request_stream = self.build_data_stream(inputvalues)
         request_stream = " ".join(request_stream)
 
@@ -1173,6 +1176,7 @@ class Ecu_database:
     jsonfile = "json/ecus.zip"
 
     def __init__(self, forceXML=False):
+        global ecu_ident, protocol
         self.targets = []
         self.vehiclemap = {}
         self.numecu = 0
@@ -1202,7 +1206,7 @@ class Ecu_database:
                                    "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES", "7A": u"Injection",
                                    "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"}
 
-        f = open("./json/addressing.json", "r")
+        f = open("./address/addressing.json", "r")
         js = json.loads(f.read())
         f.close()
 
@@ -1672,6 +1676,7 @@ class Ecu_scanner:
             self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
 
     def check_ecu2(self, diagversion, supplier, soft, version, label, addr, protocol):
+        global tgt
         approximate_ecu = []
         found_exact = False
         found_approximate = False

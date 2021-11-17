@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-import locale
-import sys
 import gettext
 import os
+import sys
+
+import locale
 
 simulation_mode = False
 port_speed = 38400

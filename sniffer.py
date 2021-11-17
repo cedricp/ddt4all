@@ -1,29 +1,23 @@
 # -*- coding: utf-8 -*-
 
 import time
-import ecu
-from uiutils import *
-try:
-    a = unicode("")
-except:
-    def unicode(a):
-        return a
-try: 
-    qt5 = True
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
-    def utf8(string):
-        return string
-except:
-    qt5 = False
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
-    def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF8")
 
-import options, string
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
+
+import ecu
+import options
+import string
+
+qt5 = True
+
+
+def unicode(a):
+    return a
+
+
+def utf8(string):
+    return string
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"

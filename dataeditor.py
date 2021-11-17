@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import ecu
+import codecs
+import copy
 import math
 import string
+
+import ecu
 import options
-import copy
-import codecs
+
 hex_decoder = codecs.getdecoder("hex_codec")
 
 import PyQt5.QtGui as gui
@@ -731,9 +733,6 @@ class requestEditor(widgets.QWidget):
         self.sendbyteeditor.set_ecufile(self.ecurequestsparser)
         self.receivebyteeditor.set_ecufile(self.ecurequestsparser)
 
-    def refresh_data(self):
-        self.sendbyteeditor.refresh_data()
-        self.receivebyteeditor.refresh_data()
 
     def init_sds(self, req):
         self.checknosds.setChecked(req.sds['nosds'])

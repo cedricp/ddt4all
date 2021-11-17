@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import usb
+
+import array
+import time
+
 import elm
-import array, time
 
 # HID TYPES
 USBRQ_HID_GET_REPORT = 0x01
@@ -173,5 +175,5 @@ if __name__ == '__main__':
     dev = OBDDevice()
     dev.init_can()
     dev.set_can_addr(26, {})
-    print dev.start_session_can("10C0")
+    print(dev.start_session_can("10C0"))
 

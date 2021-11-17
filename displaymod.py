@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import PyQt5.QtGui as gui
 import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets
 

@@ -1,34 +1,28 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-import sys
-import os
+import argparse
+import codecs
+import errno
 import glob
-import json
+import os
+import sys
+import tempfile
 from importlib.machinery import SourceFileLoader
 
-import PyQt5.QtGui as gui
 import PyQt5.QtCore as core
+import PyQt5.QtGui as gui
+import PyQt5.QtWebEngine as webkit
+import PyQt5.QtWebEngineWidgets as webkitwidgets
 import PyQt5.QtWidgets as widgets
-try:
-    import PyQt5.QtWebEngine as webkit
-    import PyQt5.QtWebEngineWidgets as webkitwidgets
-except:
-    import PyQt5.QtWebKit as webkit
-    import PyQt5.QtWebKitWidgets as webkitwidgets
+import json
 
-
-def utf8(string):
-    return string
-
-
-import parameters, ecu
-import elm, options, locale
 import dataeditor
+import ecu
+import elm
+import locale
+import options
+import parameters
 import sniffer
-#import imp
-import tempfile, errno
-import codecs
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2020"
@@ -41,6 +35,16 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all')
 app = None
+
+# args
+parser = argparse.ArgumentParser()
+parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
+args = parser.parse_args()
+not_qt5_show = args.git_workfallowmode
+
+def utf8(string):
+    return string
+
 
 def isWritable(path):
     try:
@@ -1420,6 +1424,8 @@ class portChooser(widgets.QDialog):
         self.done(True)
 
 if __name__ == '__main__':
+    if not_qt5_show:
+        exit(0)
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
     except:
@@ -1430,7 +1436,7 @@ if __name__ == '__main__':
     app = widgets.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
-        font = gui.QFont("Sans", 9)
+        font = gui.QFont("Arial", 11)
         font.setBold(False)
         app.setFont(font)
         app.setStyle("plastic")

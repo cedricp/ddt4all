@@ -5,17 +5,16 @@
    Borrowed code from PyRen (modified for this use)
 '''
 
-import options
-
-import serial
-from serial.tools import list_ports
-
-import sys
 import os
 import re
-import time
 import string
+import sys
+import time
 from datetime import datetime
+
+import options
+import serial
+from serial.tools import list_ports
 
 _ = options.translator('ddt4all')
 

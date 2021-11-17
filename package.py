@@ -1,8 +1,10 @@
 #!/usr/bin/python
 
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
-import os, zipfile, glob, options
+
+import glob
+import options
+import os
+import zipfile
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2017"
@@ -15,6 +17,7 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all')
 
+
 def zipdir(dirname):
     for root, dirs, files in os.walk(dirname, topdown=False):
         for name in files:
@@ -24,25 +27,28 @@ def zipdir(dirname):
             print("Adding source file %s" % filename)
             zip.write(filename)
 
-zip = zipfile.ZipFile("ddt4all_windows.zip", mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=True)
+
+if not os.path.exists("./Output"):
+    os.mkdir("./Output")
+
+zip = zipfile.ZipFile("./Output/ddt4all_windows.zip", mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=True)
 files = glob.glob("*.py")
 
 for file in files:
     print(_("Adding source file %s") % file)
     zip.write(file)
 
-files = glob.glob("ddtplugins/*.py")
+files = glob.glob("./ddtplugins/*.py")
 for file in files:
     print(_("Adding plugin file %s") % file)
     zip.write(file)
 
-zip.write("ecu.zip")
-zip.write("DDT4ALL.BAT")
-zip.write("json/")
-zip.write("logs/")
+if os.path.exists('./ecu.zip'):
+    zip.write("ecu.zip")
 
-zipdir("./Python27")
-zipdir("./importlib")
+zip.write("./DDT4ALL.BAT")
+zip.write("./requirements.txt")
+zipdir("./venv")
 zipdir("./serial")
 zipdir("./icons")
 zipdir("./locale")

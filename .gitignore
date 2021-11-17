@@ -1,7 +1,21 @@
 ### ddt4all specific
-/ecu.zip
 /ecus/
 /logs/
+/btpDB/
+/checkBaseDDT/
+/EDT/
+/failures/
+/FlashingTimeAnalysis/
+/vehicles/
+/venv/
+/zipper/
+*.htm
+*.xml
+*.zip
+/images/
+/graphics/
+/Output/
+/json/
 
 ### Python generic ###
 # Byte-compiled / optimized / DLL files
@@ -11,3 +25,4 @@ __pycache__/
 
 ### IDE generic ###
 /.vscode/
+/.idea/
