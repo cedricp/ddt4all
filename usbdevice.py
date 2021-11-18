@@ -3,6 +3,8 @@
 import array
 import time
 
+from usb import util, core, legacy
+
 import elm
 
 # HID TYPES
@@ -25,12 +27,12 @@ CAN_MONITOR_MODE = 0x00
 CAN_ISOTP_MODE = 0x01
 
 # HELPERS
-REQUEST_TYPE_SEND = usb.util.build_request_type(usb.util.CTRL_OUT,
-                                                usb.util.CTRL_TYPE_CLASS,
-                                                usb.util.CTRL_RECIPIENT_DEVICE)
-REQUEST_TYPE_RECV = usb.util.build_request_type(usb.util.CTRL_IN,
-                                                usb.util.CTRL_TYPE_CLASS,
-                                                usb.util.CTRL_RECIPIENT_DEVICE)
+REQUEST_TYPE_SEND = util.build_request_type(util.CTRL_OUT,
+                                                util.CTRL_TYPE_CLASS,
+                                                util.CTRL_RECIPIENT_DEVICE)
+REQUEST_TYPE_RECV = util.build_request_type(util.CTRL_IN,
+                                                util.CTRL_TYPE_CLASS,
+                                                util.CTRL_RECIPIENT_DEVICE)
 
 
 class UsbCan:
@@ -40,7 +42,7 @@ class UsbCan:
         self.init()
 
     def init(self):
-        self.device = usb.core.find(idVendor=0x16c0, idProduct=0x05df)
+        self.device = core.find(idVendor=0x16c0, idProduct=0x05df)
         if self.device:
             self.descriptor = self.get_string_descriptor()
             print("Found USB adapter : %s" % self.descriptor)
@@ -53,21 +55,21 @@ class UsbCan:
         return self.device is not None
 
     def get_string_descriptor(self, index):
-        response = self.device.ctrl_transfer(usb.util.ENDPOINT_IN,
-                                             usb.legacy.REQ_GET_DESCRIPTOR,
-                                             (usb.util.DESC_TYPE_STRING << 8) | index,
+        response = self.device.ctrl_transfer(util.ENDPOINT_IN,
+                                             legacy.REQ_GET_DESCRIPTOR,
+                                             (util.DESC_TYPE_STRING << 8) | index,
                                              0,  # language id
                                              255)  # length
         return response[2:].tostring().decode('utf-16')
 
     def get_vendor_request(self, vendor_id):
-        bytes = self.device.ctrl_transfer(bmRequestType=usb.util.CTRL_IN | usb.util.CTRL_TYPE_VENDOR,
+        bytes = self.device.ctrl_transfer(bmRequestType=util.CTRL_IN | util.CTRL_TYPE_VENDOR,
                                           bRequest=CUSTOM_RQ_GET_STATUS,
                                           wIndex=vendor_id)
         return bytes
 
     def set_vendor_request(self, vendor_id, value):
-        bytes = self.device.ctrl_transfer(bmRequestType=usb.util.CTRL_OUT | usb.util.CTRL_TYPE_VENDOR,
+        bytes = self.device.ctrl_transfer(bmRequestType=util.CTRL_OUT | util.CTRL_TYPE_VENDOR,
                                           bRequest=CUSTOM_RQ_SET_STATUS,
                                           wIndex=vendor_id,
                                           wValue=value)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import string
 import time
 
 import PyQt5.QtCore as core
@@ -7,9 +8,6 @@ import PyQt5.QtWidgets as widgets
 
 import ecu
 import options
-import string
-
-qt5 = True
 
 
 def unicode(a):
@@ -146,10 +144,7 @@ class sniffer(widgets.QWidget):
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
-        if not qt5:
-            self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
-        else:
-            self.table.horizontalHeader().setSectionResizeMode(0, widgets.QHeaderView.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(0, widgets.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:
