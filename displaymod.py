@@ -7,6 +7,7 @@ import PyQt5.QtWidgets as widgets
 def unicode(a):
     return str(a)
 
+
 import options, os, zipfile
 from uiutils import *
 
@@ -20,6 +21,7 @@ __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
 _ = options.translator('ddt4all')
+
 
 class labelWidget(widgets.QLabel):
     def __init__(self, parent, uiscale):
@@ -204,6 +206,7 @@ class screenWidget(widgets.QFrame):
             self.jsondata['width'] = self.width() * self.uiscale
             self.jsondata['height'] = self.height() * self.uiscale
 
+
 class buttonRequest(widgets.QPushButton):
     def __init__(self, parent, uiscale, ecureq, count):
         super(buttonRequest, self).__init__(parent)
@@ -220,10 +223,10 @@ class buttonRequest(widgets.QPushButton):
 
     def toggle_selected(self, sel):
         if sel:
-            #self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
+            # self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
             pass
         else:
-            #self.setFrameStyle(0)
+            # self.setFrameStyle(0)
             pass
 
     def change_ratio(self, x):
@@ -289,6 +292,7 @@ class styleLabel(widgets.QLabel):
 
     def resetDefaultStyle(self):
         self.setStyleSheet(self.defaultStyle)
+
 
 class displayWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
@@ -496,6 +500,7 @@ class displayWidget(widgets.QWidget):
         self.jsondata = display
         self.toggle_selected(False)
 
+
 class inputWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(inputWidget, self).__init__(parent)
@@ -654,7 +659,6 @@ class inputWidget(widgets.QWidget):
 
             for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
-
 
             self.editwidget.move(width, 0)
             if data.comment:

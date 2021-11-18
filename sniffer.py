@@ -19,6 +19,7 @@ def unicode(a):
 def utf8(string):
     return string
 
+
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
 __credits__ = []
@@ -29,6 +30,7 @@ __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
 _ = options.translator('ddt4all')
+
 
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
@@ -70,6 +72,7 @@ class snifferThread(core.QThread):
             options.elm.monitor_can_bus(self.senddata)
 
         self.running = False
+
 
 class sniffer(widgets.QWidget):
     def __init__(self, parent=None):

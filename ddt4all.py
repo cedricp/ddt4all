@@ -42,6 +42,7 @@ parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', he
 args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
 
+
 def utf8(string):
     return string
 
@@ -57,6 +58,7 @@ def isWritable(path):
     except:
         return False
     return True
+
 
 class Ecu_finder(widgets.QDialog):
     def __init__(self, ecuscanner):
@@ -80,6 +82,7 @@ class Ecu_finder(widgets.QDialog):
         addr = utf8(self.ecuaddr.text())
         frame = utf8(self.ecuident.text())
         self.ecuscanner.identify_from_frame(addr, frame)
+
 
 class Ecu_list(widgets.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
@@ -259,7 +262,7 @@ class Ecu_list(widgets.QWidget):
 
 
 class Main_widget(widgets.QMainWindow):
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         super(Main_widget, self).__init__(parent)
 
         if not options.simulation_mode:
@@ -531,7 +534,7 @@ class Main_widget(widgets.QMainWindow):
                 name = plug.plugin_name
                 need_hw = plug.need_hw
 
-                #if options.simulation_mode and need_hw:
+                # if options.simulation_mode and need_hw:
                 #    continue
 
                 if not category in category_menus:
@@ -542,7 +545,7 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print("Cannot load plugin "  + plugin)
+                print("Cannot load plugin " + plugin)
                 print(e)
 
         self.setConnected(True)
@@ -609,7 +612,7 @@ class Main_widget(widgets.QMainWindow):
 
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
-                                                   "./ecu.zip", "*.zip")
+                                                             "./ecu.zip", "*.zip")
 
         filename = str(filename_tuple[0])
 
@@ -670,7 +673,8 @@ class Main_widget(widgets.QMainWindow):
         item = self.treeview_params.currentItem()
 
         if not item:
-            self.logview.append("<font color=red>" + _("Please select a category before creating new screen") + "</font>")
+            self.logview.append(
+                "<font color=red>" + _("Please select a category before creating new screen") + "</font>")
             return
 
         if item.parent() is not None:
@@ -814,12 +818,12 @@ class Main_widget(widgets.QMainWindow):
 
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
-                                                    "./vehicles/mycar.ecu", "*.ecu")
+                                                             "./vehicles/mycar.ecu", "*.ecu")
 
         filename = str(filename_tuple[0])
 
         if filename == "":
-            return        
+            return
 
         eculist = []
         numecus = self.treeview_ecu.count()
@@ -836,8 +840,9 @@ class Main_widget(widgets.QMainWindow):
         jsonfile.close()
 
     def newEcu(self):
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
-                                                   "*.json")
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"),
+                                                             "./json/myecu.json",
+                                                             "*.json")
 
         filename = str(filename_tuple[0])
 
@@ -873,7 +878,7 @@ class Main_widget(widgets.QMainWindow):
             return
 
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save record (keep '.txt' extension)"),
-                                                   "./record.txt", "*.txt")
+                                                             "./record.txt", "*.txt")
         filename = str(filename_tuple[0])
 
         self.paramview.export_record(filename)
@@ -1019,7 +1024,8 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.close()
             self.paramview.destroy()
 
-        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
+        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview,
+                                                self.protocolstatus, self.canlinecombo.currentIndex())
         self.paramview.infobox = self.infostatus
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
@@ -1056,7 +1062,8 @@ class donationWidget(widgets.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
-        msgbox.setText(_("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
+        msgbox.setText(
+            _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
         msgbox.addButton(okbutton, widgets.QMessageBox.YesRole)
         msgbox.addButton(widgets.QPushButton(_("No, I don't")), widgets.QMessageBox.NoRole)
@@ -1064,11 +1071,15 @@ class donationWidget(widgets.QLabel):
         msgbox.exec_()
 
     def donate(self):
-        url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
+        url = core.QUrl(
+            "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted",
+            core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
-        msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
+        msgbox.setText(
+            _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
+
 
 def set_dark_style(onoff):
     if (onoff):
@@ -1080,6 +1091,7 @@ def set_dark_style(onoff):
         StyleSheet = ""
 
     app.setStyleSheet(StyleSheet)
+
 
 class portChooser(widgets.QDialog):
     def __init__(self):
@@ -1098,7 +1110,7 @@ class portChooser(widgets.QDialog):
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = donationWidget()
         self.setLayout(layout)
-        
+
         self.listview = widgets.QListWidget(self)
 
         layout.addWidget(label)
@@ -1422,6 +1434,7 @@ class portChooser(widgets.QDialog):
         self.mode = 2
         options.report_data = False
         self.done(True)
+
 
 if __name__ == '__main__':
     if not_qt5_show:

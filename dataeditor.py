@@ -215,6 +215,7 @@ class dataTable(widgets.QTableWidget):
             menu.exec_(event.globalPos())
             event.accept()
 
+
 class requestTable(widgets.QTableWidget):
     def __init__(self, parent=None):
         super(requestTable, self).__init__(parent)
@@ -226,7 +227,7 @@ class requestTable(widgets.QTableWidget):
         self.setSelectionBehavior(widgets.QAbstractItemView.SelectRows)
         self.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
         self.verticalHeader().hide()
-        #self.setShowGrid(False)
+        # self.setShowGrid(False)
         self.currentreq = None
         self.sdsupdate = True
 
@@ -338,6 +339,7 @@ class requestTable(widgets.QTableWidget):
 
 class paramEditor(widgets.QFrame):
     """Manages send/receive requests"""
+
     def __init__(self, issend=True, parent=None):
         super(paramEditor, self).__init__(parent)
         self.send = issend
@@ -391,7 +393,7 @@ class paramEditor(widgets.QFrame):
         self.table.verticalHeader().hide()
         self.table.setSelectionBehavior(widgets.QAbstractItemView.SelectRows)
         self.table.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
-        #self.table.setShowGrid(False)
+        # self.table.setShowGrid(False)
         self.layoutv.addWidget(self.table)
         self.ecufile = None
         self.current_request = None
@@ -468,7 +470,7 @@ class paramEditor(widgets.QFrame):
 
     def update_bitview_value(self, dataname):
         bytestosend = str(self.inputreq.text())
-        byteslisttosend = [bytestosend[a*2:a*2+2] for a in range(len(bytestosend) // 2)]
+        byteslisttosend = [bytestosend[a * 2:a * 2 + 2] for a in range(len(bytestosend) // 2)]
         self.bitviewer.set_bytes_value(byteslisttosend)
 
     def set_ecufile(self, ef):
@@ -569,7 +571,7 @@ class paramEditor(widgets.QFrame):
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
         self.table.sortItems(1)
-        self.bitviewer.init(int(bytescount)+2)
+        self.bitviewer.init(int(bytescount) + 2)
 
     def shift_bytes_change(self):
         if not self.current_request:
@@ -636,6 +638,7 @@ class paramEditor(widgets.QFrame):
 
 class requestEditor(widgets.QWidget):
     """Main container for reauest editor"""
+
     def __init__(self, parent=None):
         super(requestEditor, self).__init__(parent)
         self.ecurequestsparser = None
@@ -732,7 +735,6 @@ class requestEditor(widgets.QWidget):
         self.requesttable.init(self.ecurequestsparser.requests)
         self.sendbyteeditor.set_ecufile(self.ecurequestsparser)
         self.receivebyteeditor.set_ecufile(self.ecurequestsparser)
-
 
     def init_sds(self, req):
         self.checknosds.setChecked(req.sds['nosds'])
@@ -846,7 +848,7 @@ class numericListPanel(widgets.QFrame):
         count = 0
         for k, v in self.data.items.items():
             spinvalue = widgets.QSpinBox()
-            spinvalue.setRange(-1000000,1000000)
+            spinvalue.setRange(-1000000, 1000000)
             spinvalue.setValue(int(v))
             self.itemtable.setCellWidget(count, 0, spinvalue)
             self.itemtable.setItem(count, 0, widgets.QTableWidgetItem(str(v).zfill(5)))
@@ -858,7 +860,7 @@ class numericListPanel(widgets.QFrame):
         self.itemtable.resizeColumnsToContents()
         self.itemtable.resizeRowsToContents()
         self.itemtable.sortItems(0, core.Qt.AscendingOrder)
-        #self.itemtable.setSortingEnabled(True)
+        # self.itemtable.setSortingEnabled(True)
 
 
 class otherPanel(widgets.QFrame):
@@ -914,6 +916,7 @@ class otherPanel(widgets.QFrame):
             self.inputtype.setCurrentIndex(0)
         else:
             self.inputtype.setCurrentIndex(1)
+
 
 class numericPanel(widgets.QFrame):
     def __init__(self, dataitem, parent=None):
@@ -996,6 +999,7 @@ class numericPanel(widgets.QFrame):
 
 class dataEditor(widgets.QWidget):
     """Main container for data item editor"""
+
     def __init__(self, parent=None):
         super(dataEditor, self).__init__(parent)
         self.ecurequestsparser = None
@@ -1029,10 +1033,9 @@ class dataEditor(widgets.QWidget):
         self.datatable.verticalHeader().hide()
         self.datatable.setSelectionBehavior(widgets.QAbstractItemView.SelectRows)
         self.datatable.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
-        #self.datatable.setShowGrid(False)
+        # self.datatable.setShowGrid(False)
 
         self.layouth.addWidget(self.datatable)
-
 
         self.editorcontent = widgets.QFrame()
         self.editorcontent.setFrameStyle(widgets.QFrame.Sunken)
@@ -1210,7 +1213,6 @@ class dataEditor(widgets.QWidget):
 
         r = self.datatable.selectedItems()[-1].row()
 
-
         dataname = self.datatable.item(r, 0).text()
         self.currentecudata = self.ecurequestsparser.data[dataname]
         self.descpriptioneditor.setText(self.currentecudata.comment)
@@ -1359,7 +1361,7 @@ class buttonData(widgets.QFrame):
         self.requesttable.verticalHeader().hide()
         self.requesttable.setSelectionBehavior(widgets.QAbstractItemView.SelectRows)
         self.requesttable.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
-        #self.requesttable.setShowGrid(False)
+        # self.requesttable.setShowGrid(False)
 
     def check_data(self):
         if not self.ecurequests or not self.buttonlayout:
@@ -1392,10 +1394,12 @@ class buttonData(widgets.QFrame):
                         break
 
         if len(itemsfound) == numfound:
-            options.main_window.logview.append(_("<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>") % requestname)
+            options.main_window.logview.append(
+                _("<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>") % requestname)
             return
 
-        options.main_window.logview.append(_("<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>") % requestname)
+        options.main_window.logview.append(
+            _("<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>") % requestname)
         for k, v in itemsfound.items():
             if not v:
                 options.main_window.logview.append(_("<font color=orange> - '%s'</font>") % k)
@@ -1504,6 +1508,7 @@ class buttonData(widgets.QFrame):
 
 class buttonEditor(widgets.QWidget):
     """Main container for button editor"""
+
     def __init__(self, parent=None):
         super(buttonEditor, self).__init__(parent)
         self.ecurequestsparser = None
@@ -1526,7 +1531,7 @@ class buttonEditor(widgets.QWidget):
         self.buttontable.verticalHeader().hide()
         self.buttontable.setSelectionBehavior(widgets.QAbstractItemView.SelectRows)
         self.buttontable.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
-        #self.buttontable.setShowGrid(False)
+        # self.buttontable.setShowGrid(False)
         self.buttontable.itemSelectionChanged.connect(self.selection_changed)
         self.enable_view(False)
 
@@ -1649,11 +1654,12 @@ class hexSpinBox(widgets.QSpinBox):
             return (gui.QValidator.Acceptable, input, pos)
 
         try:
-            value = int("0x" + str(input)[pos-1], 16)
+            value = int("0x" + str(input)[pos - 1], 16)
         except:
             return (gui.QValidator.Invalid, input, pos)
 
         return (gui.QValidator.Acceptable, input, pos)
+
 
 class ecuParamEditor(widgets.QFrame):
     def __init__(self, parent=None):

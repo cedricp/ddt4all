@@ -31,6 +31,8 @@ REQUEST_TYPE_SEND = usb.util.build_request_type(usb.util.CTRL_OUT,
 REQUEST_TYPE_RECV = usb.util.build_request_type(usb.util.CTRL_IN,
                                                 usb.util.CTRL_TYPE_CLASS,
                                                 usb.util.CTRL_RECIPIENT_DEVICE)
+
+
 class UsbCan:
     def __init__(self):
         self.device = None
@@ -52,10 +54,10 @@ class UsbCan:
 
     def get_string_descriptor(self, index):
         response = self.device.ctrl_transfer(usb.util.ENDPOINT_IN,
-                                        usb.legacy.REQ_GET_DESCRIPTOR,
-                                        (usb.util.DESC_TYPE_STRING << 8) | index,
-                                        0,  # language id
-                                        255)  # length
+                                             usb.legacy.REQ_GET_DESCRIPTOR,
+                                             (usb.util.DESC_TYPE_STRING << 8) | index,
+                                             0,  # language id
+                                             255)  # length
         return response[2:].tostring().decode('utf-16')
 
     def get_vendor_request(self, vendor_id):
@@ -75,35 +77,34 @@ class UsbCan:
         response = self.device.ctrl_transfer(bmRequestType=REQUEST_TYPE_RECV,
                                              bRequest=USBRQ_HID_GET_REPORT,
                                              data_or_wLength=length)
-        return " ".join([ hex(b)[2:].upper().zfill(2) for b in response])
+        return " ".join([hex(b)[2:].upper().zfill(2) for b in response])
 
     def set_data(self, data):
         response = self.device.ctrl_transfer(bmRequestType=REQUEST_TYPE_SEND,
                                              bRequest=USBRQ_HID_GET_REPORT,
                                              data_or_wLength=data)
-        return " ".join([ hex(b)[2:].upper().zfill(2) for b in response])
+        return " ".join([hex(b)[2:].upper().zfill(2) for b in response])
 
     def get_read_buffer_length(self):
         ret = self.set_vendor_request(VENDOR_CAN_RX_SIZE, 0)
-        length = int("0x" + "".join([ hex(b)[2:].upper().zfill(2) for b in ret]), 16)
+        length = int("0x" + "".join([hex(b)[2:].upper().zfill(2) for b in ret]), 16)
         if length == 0xFFFF:
             return -1
         if length == 0xFFFE:
             return 0
         return length
 
-    def get_buffer(self, timeout = 500):
+    def get_buffer(self, timeout=500):
         start = time.time()
         while 1:
             leng = self.get_read_buffer_length()
             if leng == -1:
-                return("WRONG RESPONSE")
+                return ("WRONG RESPONSE")
             if leng > 0:
                 break
             if time.time() - start > timeout / 1000:
-                return("TIMEOUT")
+                return ("TIMEOUT")
         return self.get_data(leng)
-
 
     def set_tx_addr(self, addr):
         self.set_vendor_request(VENDOR_CAN_TX, addr)
@@ -136,12 +137,12 @@ class OBDDevice:
         self.rsp_cache = {}
 
     def request(self, req, positive='', cache=True, serviceDelay="0"):
-        req_as_bytes = array.array('B', [int("0x"+a, 16) for a in req.split(" ")])
+        req_as_bytes = array.array('B', [int("0x" + a, 16) for a in req.split(" ")])
         self.device.set_data(req_as_bytes)
         return self.device.get_buffer(500)
 
     def close_protocol(self):
-         pass
+        pass
 
     def start_session_can(self, start_session):
         self.startSession = start_session
@@ -171,9 +172,9 @@ class OBDDevice:
         self.device.set_tx_addr(TXa)
         self.device.set_rx_addr(RXa)
 
+
 if __name__ == '__main__':
     dev = OBDDevice()
     dev.init_can()
     dev.set_can_addr(26, {})
     print(dev.start_session_can("10C0"))
-
