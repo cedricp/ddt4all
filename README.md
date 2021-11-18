@@ -19,6 +19,9 @@ Using the application in non expert mode should not be harmful for your vehicle 
 ### `Dependencies :`
 * Python 3.8
 * PyQt 5
+* pyusb
+* pyserial
+* crcmod
 * An ELM327, ELS327 or OBDLink SX
 * [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
