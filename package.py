@@ -2,6 +2,8 @@
 
 
 import glob
+import sys
+
 import options
 import os
 import zipfile
@@ -31,7 +33,16 @@ def zipdir(dirname):
 if not os.path.exists("./Output"):
     os.mkdir("./Output")
 
-zip = zipfile.ZipFile("./Output/ddt4all_windows.zip", mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=True)
+default_file = "ddt4all.zip"
+
+if sys.platform[:3] == "win":
+    default_file = "ddt4all_windows.zip"
+elif sys.platform[:3] == "mac":
+    default_file = "ddt4all_macos.zip"
+elif sys.platform[:3] == "lin":
+    default_file = "ddt4all_linux.zip"
+
+zip = zipfile.ZipFile("./Output/" + default_file, mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=True)
 files = glob.glob("*.py")
 
 for file in files:
@@ -44,14 +55,12 @@ for file in files:
     zip.write(file)
 
 if os.path.exists('./ecu.zip'):
-    zip.write("ecu.zip")
+    zip.write("./ecu.zip")
 
 zip.write("./DDT4ALL.BAT")
 zip.write("./requirements.txt")
 zipdir("./venv")
-zipdir("./serial")
 zipdir("./icons")
 zipdir("./locale")
-zipdir("./crcmod")
 
 zip.close()
