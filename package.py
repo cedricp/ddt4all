@@ -37,7 +37,7 @@ default_file = "ddt4all.zip"
 
 if sys.platform[:3] == "win":
     default_file = "ddt4all_windows.zip"
-elif sys.platform[:3] == "mac":
+elif sys.platform[:3] == "dar":
     default_file = "ddt4all_macos.zip"
 elif sys.platform[:3] == "lin":
     default_file = "ddt4all_linux.zip"
@@ -57,7 +57,11 @@ for file in files:
 if os.path.exists('./ecu.zip'):
     zip.write("./ecu.zip")
 
-zip.write("./DDT4ALL.BAT")
+if sys.platform[:3] == "win":
+    zip.write("./DDT4ALL.BAT")
+else:
+    zip.write("./ddt4all.sh")
+
 zip.write("./requirements.txt")
 zipdir("./venv")
 zipdir("./icons")
