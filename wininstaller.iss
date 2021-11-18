@@ -14,13 +14,11 @@ Source: "requirements.txt"; DestDir: "{app}"
 Source: "license.txt"; DestDir: "{app}"
 Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist
 Source: "*.py"; DestDir: "{app}"
-Source: "crcmod\*"; DestDir: "{app}\crcmod"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "venv\*"; DestDir: "{app}\venv"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
-Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs
+Source: "address\*"; DestDir: "{app}\address"; Flags: ignoreversion recursesubdirs
 Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
-Source: "serial\*"; DestDir: "{app}\serial"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 
 [InstallDelete]
 Type: filesandordirs; Name: "{app}\importlib"
