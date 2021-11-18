@@ -12,13 +12,14 @@ Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
 Source: "README.md"; DestDir: "{app}"
 Source: "requirements.txt"; DestDir: "{app}"
 Source: "license.txt"; DestDir: "{app}"
-Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "*.py"; DestDir: "{app}"
 Source: "venv\*"; DestDir: "{app}\venv"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
 Source: "address\*"; DestDir: "{app}\address"; Flags: ignoreversion recursesubdirs
 Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
+Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
 
 [InstallDelete]
 Type: filesandordirs; Name: "{app}\importlib"

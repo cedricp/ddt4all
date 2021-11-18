@@ -61,6 +61,7 @@ zip.write("./DDT4ALL.BAT")
 zip.write("./requirements.txt")
 zipdir("./venv")
 zipdir("./icons")
+zipdir("./json")
 zipdir("./locale")
 
 zip.close()

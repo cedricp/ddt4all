@@ -1459,6 +1459,12 @@ if __name__ == '__main__':
         print(_("Using custom DDT database"))
         ecudirfound = True
 
+    if not os.path.exists("./json"):
+        os.mkdir("./json")
+
+    if not os.path.exists("./logs"):
+        os.mkdir("./logs")
+
     pc = portChooser()
     nok = True
     while nok:
