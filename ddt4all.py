@@ -1449,7 +1449,12 @@ if __name__ == '__main__':
     app = widgets.QApplication(sys.argv)
 
     if sys.platform[:3] != "win":
-        font = gui.QFont("Arial", 11)
+        fsize = 11
+        fname = "Arial"
+        if sys.platform[:3] == "lin":
+            fsize = 9
+            fname = "Sans"
+        font = gui.QFont(fname, fsize)
         font.setBold(False)
         app.setFont(font)
         app.setStyle("plastic")

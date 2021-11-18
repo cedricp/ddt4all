@@ -60,7 +60,7 @@ def getXMLFont(xml, scale=1):
     font = getChildNodesByName(xml, "Font")[0]
     font_name = font.getAttribute("Name")
     font_size = float(font.getAttribute("Size").replace(',', '.'))
-    if sys.platform[:3] != "win":
+    if sys.platform[:3] == "dar":
         font_name = "Arial"
         font_size = 11
     font_bold = font.getAttribute("Bold")
@@ -109,7 +109,7 @@ class displayDict:
 def jsonFont(fnt, scale):
     font_name = fnt['name']
     font_size = fnt['size']
-    if sys.platform[:3] != "win":
+    if sys.platform[:3] == "dar":
         font_name = "Arial"
         font_size = 11
     if 'bold' in fnt:
