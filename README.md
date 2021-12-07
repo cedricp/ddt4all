@@ -1,6 +1,8 @@
 # NEW : Android port
 [Wiki](https://github.com/cedricp/ddt4all/wiki/Android-port)
 
+[![CodeQL](https://github.com/sullixxx/ddt4all/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/sullixxx/ddt4all/actions/workflows/codeql-analysis.yml)
+
 # DDT4All
 
 DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
