@@ -65,6 +65,7 @@ else:
 zip.write("./requirements.txt")
 zipdir("./venv")
 zipdir("./icons")
+zipdir("./address")
 zipdir("./json")
 zipdir("./locale")
 
