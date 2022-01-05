@@ -24,7 +24,7 @@ def zipdir(dirname):
     for root, dirs, files in os.walk(dirname, topdown=False):
         for name in files:
             filename = os.path.join(root, name)
-            if ".pyc" in filename:
+            if ".pyc" in filename or ".DS_Store" in filename:
                 continue
             print("Adding source file %s" % filename)
             zip.write(filename)
