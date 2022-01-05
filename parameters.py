@@ -1595,7 +1595,7 @@ def dumpXML(xmlname):
 
 
 def dumpAddressing():
-    xdom = xml.dom.minidom.parse("GenericAddressing.xml")
+    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
     xdoc = xdom.documentElement
     dict = {}
     xml_funcs = getChildNodesByName(xdoc, u"Function")
@@ -1607,8 +1607,8 @@ def dumpAddressing():
             dict[hex(int(address))[2:].upper()] = (shortname, longname)
             break
 
-    js = json.dumps(dict)
-    f = open("json/addressing.json", "w")
+    js = json.dumps(dict, indent=True)
+    f = open("address/addressing.json", "w")
     f.write(js)
     f.close()
 
