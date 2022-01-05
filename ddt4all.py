@@ -153,7 +153,10 @@ class Ecu_list(widgets.QWidget):
         self.init()
 
     def scanselvehicle(self):
-        project = str(self.vehicle_combo.currentText()[0:3])
+        if str(self.vehicle_combo.currentText().strip()) == 'ALL':
+            project = str(self.vehicle_combo.currentText().strip())
+        else:
+            project = str(self.vehicle_combo.currentText().split(' - ')[0].strip())#[0:3])
         self.parent().parent().scan_project(project)
 
     def init(self):
