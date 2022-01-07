@@ -1603,7 +1603,10 @@ def dumpAddressing():
         shortname = func.getAttribute(u"Name")
         address = func.getAttribute(u"Address")
         for name in getChildNodesByName(func, u"Name"):
-            longname = name.firstChild.nodeValue
+            try:
+                longname = name.firstChild.nodeValue
+            except:
+                longname = shortname
             dict[hex(int(address))[2:].upper()] = (shortname, longname)
             break
 
