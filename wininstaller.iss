@@ -6,6 +6,12 @@ DefaultGroupName=ddt4all
 SetupIconFile=icons\obd.ico
 OutputBaseFilename=ddt4all-win-installer
 UsePreviousPrivileges=True
+AppPublisher=Cedric PAILLE
+AppContact=cedricpaille@gmail.com
+AppPublisherURL=https://github.com/cedricp/ddt4all
+AppSupportURL=https://github.com/cedricp/ddt4all
+AppUpdatesURL=https://github.com/cedricp/ddt4all
+AppReadmeFile=https://github.com/cedricp/ddt4all/blob/master/README.md
 
 [Files]
 Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
@@ -14,7 +20,8 @@ Source: "requirements.txt"; DestDir: "{app}"
 Source: "license.txt"; DestDir: "{app}"
 Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "*.py"; DestDir: "{app}"
-Source: "venv\*"; DestDir: "{app}\venv"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "*.qss"; DestDir: "{app}"
+Source: "\Python39-32\*"; DestDir: "{app}\Python39"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
 Source: "address\*"; DestDir: "{app}\address"; Flags: ignoreversion recursesubdirs
@@ -42,8 +49,8 @@ Name: "{app}\vehicles"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{group}\ddt4all"; Filename: "{app}\venv\Scripts\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
-Name: "{userdesktop}\ddt4all"; Filename: "{app}\venv\Scripts\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
+Name: "{group}\ddt4all"; Filename: "{app}\Python39\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
+Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python39\python.exe"; Parameters: """{app}\ddt4all.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
 
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to 
