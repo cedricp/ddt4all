@@ -1,6 +1,6 @@
 PyQt5==5.15.6
 PyQtWebEngine==5.15.5
-PyQt5-stubs==5.15.2.0
+PyQt5-stubs==5.15.6.0
 pyusb==1.2.1
 crcmod==1.7
 pyserial==3.5
