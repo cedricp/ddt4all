@@ -17,12 +17,12 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ## `Cloning Source Code`
 ### `Dependencies :`
-* Python 3.8
-* PyQt 5
-* pyusb
-* pyserial
-* crcmod
-* An ELM327, ELS327 or OBDLink SX
+* [Python 3.9](https://www.python.org/downloads/release/python-390/) 
+* [PyQt 5](https://pypi.org/project/PyQt5/)
+* [pyusb](https://pypi.org/project/pyusb/)
+* [pyserial](https://pypi.org/project/pyserial/)
+* [crcmod](https://pypi.org/project/crcmod/)
+* _**Hardware:**_ _An ELM327, ELS327 or OBDLink SX_ 
 * [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
 Next, you need to get the source code.  This source code repository uses git submodules. So when you clone the source code, you will need to clone recursively:

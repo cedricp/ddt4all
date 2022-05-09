@@ -1,10 +1,10 @@
 ﻿[Setup]
 AppName=DDT4All
-AppVersion=1.0
+AppVersion=2.0.1
 DefaultDirName={pf}\ddt4all
 DefaultGroupName=ddt4all
 SetupIconFile=icons\obd.ico
-OutputBaseFilename=ddt4all-win-installer
+OutputBaseFilename=ddt4all-win-installer_2.0.1
 UsePreviousPrivileges=True
 AppPublisher=Cedric PAILLE
 AppContact=cedricpaille@gmail.com
@@ -14,11 +14,11 @@ AppUpdatesURL=https://github.com/cedricp/ddt4all
 AppReadmeFile=https://github.com/cedricp/ddt4all/blob/master/README.md
 
 [Files]
-Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
-Source: "README.md"; DestDir: "{app}"
-Source: "requirements.txt"; DestDir: "{app}"
-Source: "license.txt"; DestDir: "{app}"
-Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
+//Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
+//Source: "README.md"; DestDir: "{app}"
+//Source: "requirements.txt"; DestDir: "{app}"
+//Source: "license.txt"; DestDir: "{app}"
+//Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "*.py"; DestDir: "{app}"
 Source: "*.qss"; DestDir: "{app}"
 Source: "\Python39-32\*"; DestDir: "{app}\Python39"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
