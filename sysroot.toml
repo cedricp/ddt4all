@@ -1,0 +1,114 @@
+# The sysroot for the demo application.
+
+# OpenSSL #####################################################################
+[OpenSSL]
+disabled_targets = ["ios"]
+version = "1.1.1g"
+
+[OpenSSL.linux]
+install_from_source = false
+
+# Python ######################################################################
+[Python]
+version = "3.7.8"
+install_host_from_source = true
+
+[Python.win]
+install_host_from_source = false
+
+# PyQt ########################################################################
+[PyQt]
+version = "5.15.6"
+
+[PyQt.android]
+disabled_features = ["PyQt_Desktop_OpenGL", "PyQt_Printer"]
+installed_modules = ["QtCore", "QtGui", "QtNetwork", "QtWidgets", "QtAndroidExtras"]
+
+[PyQt.ios]
+disabled_features = ["PyQt_Desktop_OpenGL", "PyQt_MacOSXOnly", "PyQt_MacCocoaViewContainer", "PyQt_Printer", "PyQt_Process", "PyQt_NotBootstrapped"]
+installed_modules = ["QtCore", "QtGui", "QtNetwork", "QtWidgets", "QtMacExtras"]
+
+[PyQt.linux]
+installed_modules = ["QtCore", "QtGui", "QtNetwork", "QtWidgets", "QtX11Extras"]
+
+[PyQt.macos]
+installed_modules = ["QtCore", "QtGui", "QtNetwork", "QtWidgets",
+        "QtMacExtras"]
+
+[PyQt.win]
+disabled_features = ["PyQt_Desktop_OpenGL"]
+installed_modules = ["QtCore", "QtGui", "QtNetwork", "QtWidgets", "QtWinExtras"]
+
+# PyQt3D ######################################################################
+[PyQt3D]
+version = "5.15.5"
+
+
+# PyQtChart ###################################################################
+[PyQtChart]
+version = "5.15.5"
+
+
+# PyQtDataVisualization #######################################################
+[PyQtDataVisualization]
+version = "5.15.5"
+
+# PyQtPurchasing ##############################################################
+[PyQtPurchasing]
+version = "5.15.5"
+
+# QScintilla ##################################################################
+[QScintilla]
+version = "2.11.5"
+
+# Qt ##########################################################################
+[Qt]
+version = "5.12.12"
+edition = "opensource"
+configure_options = ["-opengl", "desktop", "-no-dbus", "-qt-pcre"]
+skip = ["qtactiveqt", "qtconnectivity", "qtdoc", "qtgamepad", "qtlocation",
+        "qtmultimedia", "qtnetworkauth", "qtquickcontrols", "qtquickcontrols2",
+        "qtremoteobjects", "qtscript", "qtscxml", "qtsensors", "qtserialbus",
+        "qtserialport", "qtspeech", "qtsvg", "qttools", "qttranslations",
+        "qtwayland", "qtwebchannel", "qtwebengine", "qtwebsockets",
+        "qtwebview", "qtxmlpatterns"]
+
+[Qt.android]
+install_from_source = false
+ssl = "openssl-linked"
+
+[Qt.ios]
+install_from_source = false
+ssl = "securetransport"
+
+[Qt.linux]
+ssl = "openssl-runtime"
+
+[Qt.macos]
+ssl = "openssl-linked"
+
+[Qt.win]
+ssl = "openssl-linked"
+static_msvc_runtime = true
+
+# SIP #########################################################################
+[SIP]
+version = "12.8.1"
+module_name = "PyQt5.sip"
+
+# PyQtWebEngine ###############################################################
+# [PyQtWebEngine]
+# version = "5.15.5"
+# module_name = "PyQtWebEngine"
+
+# zlib ########################################################################
+[zlib]
+version = "1.2.11"
+install_from_source = false
+
+[zlib.android]
+version = "1.2.7"
+
+[zlib.win]
+install_from_source = true
+static_msvc_runtime = true
