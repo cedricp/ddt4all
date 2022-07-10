@@ -131,11 +131,11 @@ class labelWidget(widgets.QLabel):
         self.jsondata = jsdata
 
     def resize(self, x, y):
-        super(labelWidget, self).resize(x, y)
+        super(labelWidget, self).resize(int(x), int(y))
         self.update_json()
 
     def move(self, x, y):
-        super(labelWidget, self).move(x, y)
+        super(labelWidget, self).move(int(x), int(y))
         self.update_json()
 
     def update_json(self):
@@ -190,7 +190,7 @@ class screenWidget(widgets.QFrame):
         self.jsondata = jsdata
 
     def resize(self, x, y):
-        super(screenWidget, self).resize(x, y)
+        super(screenWidget, self).resize(int(x), int(y))
         self.update_json()
 
     def lock(self, lock):
@@ -264,11 +264,11 @@ class buttonRequest(widgets.QPushButton):
         return super(buttonRequest, self).mousePressEvent(event)
 
     def resize(self, x, y):
-        super(buttonRequest, self).resize(x, y)
+        super(buttonRequest, self).resize(int(x), int(y))
         self.update_json()
 
     def move(self, x, y):
-        super(buttonRequest, self).move(x, y)
+        super(buttonRequest, self).move(int(x), int(y))
         self.update_json()
 
     def update_json(self):
@@ -314,7 +314,7 @@ class displayWidget(widgets.QWidget):
 
     def resize(self, x, y):
         oldwidth = self.width()
-        super(displayWidget, self).resize(x, y)
+        super(displayWidget, self).resize(int(x), int(y))
         newwidth = self.width()
 
         if not self.qlabelval or not self.qlabel:
@@ -327,7 +327,7 @@ class displayWidget(widgets.QWidget):
         self.update_json()
 
     def move(self, x, y):
-        super(displayWidget, self).move(x, y)
+        super(displayWidget, self).move(int(x), int(y))
         self.update_json()
 
     def update_json(self):
@@ -356,7 +356,7 @@ class displayWidget(widgets.QWidget):
         text = display.getAttribute("DataName")
         req_name = display.getAttribute("RequestName")
         color = display.getAttribute("Color")
-        width = int(display.getAttribute("Width")) / self.uiscale
+        width = int(display.getAttribute("Width")) // self.uiscale
         rect = getRectangleXML(getChildNodesByName(display, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(display, self.uiscale)
         if req_name not in self.ecurequestsparser.requests:
@@ -519,7 +519,7 @@ class inputWidget(widgets.QWidget):
 
     def resize(self, x, y):
         oldwidth = self.width()
-        super(inputWidget, self).resize(x, y)
+        super(inputWidget, self).resize(int(x), int(y))
         newwidth = self.width()
 
         if not self.qlabel or not self.editwidget:
@@ -532,7 +532,7 @@ class inputWidget(widgets.QWidget):
         self.update_json()
 
     def move(self, x, y):
-        super(inputWidget, self).move(x, y)
+        super(inputWidget, self).move(int(x), int(y))
         self.update_json()
 
     def update_json(self):
@@ -562,7 +562,7 @@ class inputWidget(widgets.QWidget):
         text = input.getAttribute("DataName")
         req_name = input.getAttribute("RequestName")
         color = input.getAttribute("Color")
-        width = int(input.getAttribute("Width")) / self.uiscale
+        width = int(input.getAttribute("Width")) // self.uiscale
         rect = getRectangleXML(getChildNodesByName(input, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(input, self.uiscale)
 
@@ -629,7 +629,7 @@ class inputWidget(widgets.QWidget):
         text = jsoninput['text']
         req_name = jsoninput['request']
         color = jsoninput['color']
-        width = jsoninput['width'] / self.uiscale
+        width = jsoninput['width'] // self.uiscale
         rect = jsoninput['rect']
         qfnt = jsonFont(jsoninput['font'], self.uiscale)
         fntcolor = jsoninput['fontcolor']
