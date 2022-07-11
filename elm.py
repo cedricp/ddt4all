@@ -798,7 +798,7 @@ class ELM:
         return cmdrsp
 
     def set_can_timeout(self, value):
-        val = value / 4
+        val = value // 4
         if val > 255:
             val = 255
         val = hex(val)[2:].upper()
