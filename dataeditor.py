@@ -9,6 +9,7 @@ import options
 
 from PySide2 import QtWidgets as widgets
 from PySide2 import QtCore as core
+from PySide2.QtCore import Signal
 from PySide2 import QtGui as gui
 
 hex_decoder = codecs.getdecoder("hex_codec")
@@ -164,8 +165,8 @@ class checkBox(widgets.QCheckBox):
 
 
 class dataTable(widgets.QTableWidget):
-    gotoitem = core.Signal(object)
-    removeitem = core.Signal(object)
+    gotoitem = Signal(object)
+    removeitem = Signal(object)
 
     def __init__(self, parent=None):
         super(dataTable, self).__init__(parent)

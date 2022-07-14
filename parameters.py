@@ -1356,7 +1356,10 @@ class paramWidget(widgets.QWidget):
             if options.auto_refresh:
                 self.recorddict[data_item.name] = out_value.replace(".", ",")
 
-            qlabel.setText(value + ' ' + ecu_data.unit)
+            try:
+                qlabel.setText(value + ' ' + ecu_data.unit)
+            except ValueError:
+                qlabel.setText('NO DATA')
 
             if update_inputs:
                 for inputkey in self.inputdict:
@@ -1364,7 +1367,10 @@ class paramWidget(widgets.QWidget):
                     if ecu_data.name in input.datadict:
                         data = input.datadict[ecu_data.name]
                         if not data.is_combo:
-                            data.widget.setText(value)
+                            try:
+                                data.widget.setText(value)
+                            except ValueError:
+                                data.widget.setText("NO DATA")
                         else:
                             combovalueindex = -1
                             for i in range(data.widget.count()):
