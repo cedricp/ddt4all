@@ -9,8 +9,8 @@ import xml.dom.minidom
 import zipfile
 from io import BytesIO
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as widgets
+from PySide2 import QtWidgets as widgets
+from PySide2 import QtCore as core
 
 import displaymod
 import ecu

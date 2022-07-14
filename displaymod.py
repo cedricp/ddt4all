@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as widgets
+from PySide2 import QtWidgets as widgets
+from PySide2 import QtCore as core
 
 
 def unicode(a):

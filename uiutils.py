@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-import PyQt5.QtGui as gui
+from PySide2 import QtGui as gui
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"

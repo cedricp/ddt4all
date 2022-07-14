@@ -7,11 +7,11 @@ import string
 import ecu
 import options
 
-hex_decoder = codecs.getdecoder("hex_codec")
+from PySide2 import QtWidgets as widgets
+from PySide2 import QtCore as core
+from PySide2 import QtGui as gui
 
-import PyQt5.QtGui as gui
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as widgets
+hex_decoder = codecs.getdecoder("hex_codec")
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -164,8 +164,8 @@ class checkBox(widgets.QCheckBox):
 
 
 class dataTable(widgets.QTableWidget):
-    gotoitem = core.pyqtSignal(object)
-    removeitem = core.pyqtSignal(object)
+    gotoitem = core.Signal(object)
+    removeitem = core.Signal(object)
 
     def __init__(self, parent=None):
         super(dataTable, self).__init__(parent)

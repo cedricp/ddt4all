@@ -3,8 +3,8 @@
 import string
 import time
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as widgets
+from PySide2 import QtWidgets as widgets
+from PySide2 import QtCore as core
 
 import ecu
 import options
@@ -33,9 +33,9 @@ _ = options.translator('ddt4all')
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
     try:
-        dataready = core.pyqtSignal(basestring)
+        dataready = core.Signal(basestring)
     except:
-        dataready = core.pyqtSignal(str)
+        dataready = core.Signal(str)
 
     def __init__(self, address, br):
         super(snifferThread, self).__init__()

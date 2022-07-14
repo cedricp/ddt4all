@@ -9,11 +9,12 @@ import sys
 import tempfile
 from importlib.machinery import SourceFileLoader
 
-import PyQt5.QtCore as core
-import PyQt5.QtGui as gui
-import PyQt5.QtWebEngine as webkit
-import PyQt5.QtWebEngineWidgets as webkitwidgets
-import PyQt5.QtWidgets as widgets
+from PySide2 import QtWidgets as widgets
+from PySide2 import QtCore as core
+from PySide2 import QtGui as gui
+from PySide2 import QtWebEngine as webkit
+from PySide2 import QtWebEngineWidgets as webkitwidgets
+
 import json
 
 import dataeditor
@@ -563,7 +564,7 @@ class Main_widget(widgets.QMainWindow):
                     category_menus[category] = plugins_menu.addMenu(category)
 
                 plug_action = category_menus[category].addAction(name)
-                plug_action.triggered.connect(lambda state, a=plug.plugin_entry: self.launchPlugin(a))
+                plug_action.triggered[bool].connect(lambda state, a=plug.plugin_entry: self.launchPlugin(a))
 
                 self.plugins[modulename] = plug
             except Exception as e:
