@@ -965,9 +965,9 @@ class Main_widget(widgets.QMainWindow):
 
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
-
         screen = item[0]
-
+        if screen not in self.paramview.layoutdict['screens']:
+            return
         self.paramview.pagename = screen
         inited = self.paramview.init(screen, self.screenlogfile)
         self.diagaction.setEnabled(inited)
