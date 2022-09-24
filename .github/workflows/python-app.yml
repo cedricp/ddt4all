@@ -32,5 +32,5 @@ jobs:
         # venv\scripts\activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        python ddt4all.py -git_test
+        python main.py -git_test
         #venv\scripts\deactivate
