@@ -8,27 +8,28 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-24 14:43+0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: bovirus <bovirus@gmail.com>\n"
+"PO-Revision-Date: 2022-09-24 14:56+0200\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: sr\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n"
+"%100<=19) ? 1 : 2);\n"
 "X-Generator: Poedit 3.1.1\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../dataeditor.py:201
 msgid "Goto data"
-msgstr "Idi na podatke"
+msgstr ""
 
 #: ../dataeditor.py:202
 msgid "Remove"
-msgstr "Ukloni"
+msgstr ""
 
 #: ../dataeditor.py:207
 msgid "Add to screen"
-msgstr "Dodaj na prikaz"
+msgstr ""
 
 #: ../dataeditor.py:319
 msgid "Request name;Bytes;Manual"
@@ -36,40 +37,39 @@ msgstr ""
 
 #: ../dataeditor.py:354 ../dataeditor.py:1331
 msgid "Add"
-msgstr "Dodaj"
+msgstr ""
 
 #: ../dataeditor.py:361
 msgid "Send request bytes (HEX)"
-msgstr "Posalji zahtev u bajtima (HEX)"
+msgstr ""
 
 #: ../dataeditor.py:363
 msgid "Receive bytes (HEX)"
-msgstr "Primljeni bajtovi (HEX)"
+msgstr ""
 
 #: ../dataeditor.py:374
 msgid "Data length"
-msgstr "Duzina podataka"
+msgstr ""
 
 #: ../dataeditor.py:376
 msgid "Shift byte count"
-msgstr "Pomeranje brojackog registra"
+msgstr ""
 
 #: ../dataeditor.py:514
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr ""
-"Naziv podataka;Pocetni bajt;Bit pomeraja;Bit brojaca;Nacin smestanja bajtova"
 
 #: ../dataeditor.py:532 ../dataeditor.py:592
 msgid "Little"
-msgstr "Mali"
+msgstr ""
 
 #: ../dataeditor.py:533 ../dataeditor.py:594
 msgid "Big"
-msgstr "Veliki"
+msgstr ""
 
 #: ../dataeditor.py:534 ../dataeditor.py:590
 msgid "Inherits globals"
-msgstr "Inherits globals"
+msgstr ""
 
 #: ../dataeditor.py:649
 msgid "No SDS"
@@ -89,71 +89,71 @@ msgstr ""
 
 #: ../dataeditor.py:653 ../dataeditor.py:1728 ../ddt4all.py:169
 msgid "Supplier"
-msgstr "Proizvodjac"
+msgstr ""
 
 #: ../dataeditor.py:668
 msgid "Reload requests"
-msgstr "Zahtev za ponovno ucitavanje"
+msgstr ""
 
 #: ../dataeditor.py:669
 msgid "Add request"
-msgstr "Dodaj zahtev"
+msgstr ""
 
 #: ../dataeditor.py:687
 msgid "Send bytes"
-msgstr "Posalji bajtove"
+msgstr ""
 
 #: ../dataeditor.py:688
 msgid "Receive bytes"
-msgstr "Primi bajtove"
+msgstr ""
 
 #: ../dataeditor.py:762
 msgid "Number of bits"
-msgstr "Broj bitova"
+msgstr ""
 
 #: ../dataeditor.py:763 ../dataeditor.py:932
 msgid "Signed"
-msgstr "Potpisano"
+msgstr ""
 
 #: ../dataeditor.py:764
 msgid "Add item"
-msgstr "Dodaj stavku"
+msgstr ""
 
 #: ../dataeditor.py:765
 msgid "Del item"
-msgstr "Obrisi stavku"
+msgstr ""
 
 #: ../dataeditor.py:804
 msgid "New item"
-msgstr "Nova stavka"
+msgstr ""
 
 #: ../dataeditor.py:859
 msgid "Value;Text"
-msgstr "Vrednost;Tekst"
+msgstr ""
 
 #: ../dataeditor.py:875
 msgid "Number of bytes"
-msgstr "Broj bajtova"
+msgstr ""
 
 #: ../dataeditor.py:876 ../dataeditor.py:931
 msgid "Unit"
-msgstr "Jedinica mere"
+msgstr ""
 
 #: ../dataeditor.py:930
 msgid "Number of bit"
-msgstr "Broj bitova"
+msgstr ""
 
 #: ../dataeditor.py:933
 msgid "Format"
-msgstr "Format"
+msgstr ""
 
 #: ../dataeditor.py:934
 msgid "Value = (AX+B) / C"
-msgstr "Vrednost = (AX+B) / C"
+msgstr ""
 
 #: ../dataeditor.py:1010
 msgid "New"
-msgstr "Nov"
+msgstr ""
 
 #: ../dataeditor.py:1011
 msgid "Duplicate selected"
@@ -165,31 +165,31 @@ msgstr ""
 
 #: ../dataeditor.py:1013
 msgid "Reload"
-msgstr "Ponovo ucitaj"
+msgstr ""
 
 #: ../dataeditor.py:1014
 msgid "Validate changes"
-msgstr "Potvrdi promene"
+msgstr ""
 
 #: ../dataeditor.py:1050
 msgid "Description"
-msgstr "Opis"
+msgstr ""
 
 #: ../dataeditor.py:1056
 msgid "Data type"
-msgstr "Vrsta podataka"
+msgstr ""
 
 #: ../dataeditor.py:1058
 msgid "Numeric"
-msgstr "Brojcani"
+msgstr ""
 
 #: ../dataeditor.py:1059
 msgid "Numeric items"
-msgstr "Brojcane stavke"
+msgstr ""
 
 #: ../dataeditor.py:1060
 msgid "Hex"
-msgstr "HEX"
+msgstr ""
 
 #: ../dataeditor.py:1090 ../dataeditor.py:1096
 #, python-format
@@ -198,36 +198,36 @@ msgstr ""
 
 #: ../dataeditor.py:1143
 msgid "New data"
-msgstr "Novi podaci"
+msgstr ""
 
 #: ../dataeditor.py:1149
 msgid "Replace me with request description"
-msgstr "Zameni me sa opisom zahteva"
+msgstr ""
 
 #: ../dataeditor.py:1295
 msgid "Data name;Description"
-msgstr "Naziv podataka;Opis"
+msgstr ""
 
 #: ../dataeditor.py:1332
 msgid "Del"
-msgstr "Brisanje"
+msgstr ""
 
 #: ../dataeditor.py:1333
 msgid "Refresh"
-msgstr "Osvezi"
+msgstr ""
 
 #: ../dataeditor.py:1334
 msgid "Move up"
-msgstr "Pomeri gore"
+msgstr ""
 
 #: ../dataeditor.py:1335
 msgid "Check"
-msgstr "Proveri"
+msgstr ""
 
 #: ../dataeditor.py:1379
 #, python-format
 msgid "Request %s not found"
-msgstr "Zahtev %s nije pronadjen"
+msgstr ""
 
 #: ../dataeditor.py:1399
 #, python-format
@@ -235,8 +235,6 @@ msgid ""
 "<font color=green>Request <font color=blue>'%s'</font> has no missing input "
 "values</font>"
 msgstr ""
-"<font color=green>Zahtev <font color=blue>'%s'</font> nema nedostajuce "
-"ulazne vrednosti</font>"
 
 #: ../dataeditor.py:1403
 #, python-format
@@ -244,57 +242,55 @@ msgid ""
 "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
 "font>"
 msgstr ""
-"<font color=red>Zahtev <font color=blue>'%s'</font> ima nedostajuce ulazne "
-"vrednosti :</font>"
 
 #: ../dataeditor.py:1406
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr ""
 
 #: ../dataeditor.py:1504
 msgid "Delay;Request"
-msgstr "Kasnjenje;Zahtev"
+msgstr ""
 
 #: ../dataeditor.py:1597
 msgid "Screen initialization"
-msgstr "Inicijalizacija prikaza"
+msgstr ""
 
 #: ../dataeditor.py:1598
 msgid "Requests to send before screen drawing"
-msgstr "Zahtevano slanje pre iscrtavanja prikaza"
+msgstr ""
 
 #: ../dataeditor.py:1612
 msgid "Button name;Unique name"
-msgstr "Ime dugmeta;Jedinstveno ime"
+msgstr ""
 
 #: ../dataeditor.py:1682
 msgid "ECU Function address"
-msgstr "Adresa funkcije ECU"
+msgstr ""
 
 #: ../dataeditor.py:1685
 msgid "ECU Protocol"
-msgstr "ECU protokol"
+msgstr ""
 
 #: ../dataeditor.py:1687 ../dataeditor.py:1809
 msgid "Tool > Ecu ID (Hex)"
-msgstr "Alatka > Ecu ID (Hex)"
+msgstr ""
 
 #: ../dataeditor.py:1689 ../dataeditor.py:1810
 msgid "Ecu > Tool ID (Hex)"
-msgstr "Ecu > Alatka ID (Hex)"
+msgstr ""
 
 #: ../dataeditor.py:1691
 msgid "Coding"
-msgstr "Kodiranje"
+msgstr ""
 
 #: ../dataeditor.py:1695
 msgid "Big Endian"
-msgstr "Big Endian"
+msgstr ""
 
 #: ../dataeditor.py:1696
 msgid "Little Endian"
-msgstr "Little Endian"
+msgstr ""
 
 #: ../dataeditor.py:1703
 msgid "ECU Auto identification"
@@ -302,31 +298,31 @@ msgstr ""
 
 #: ../dataeditor.py:1715
 msgid "Diag version;Supplier;Soft;Version"
-msgstr "Verzija dijagnostike;Proizvodjac;Softver;Verzija"
+msgstr ""
 
 #: ../dataeditor.py:1723
 msgid "Add new"
-msgstr "Dodaj novo"
+msgstr ""
 
 #: ../dataeditor.py:1724
 msgid "Delete selected"
-msgstr "Obrisi izabrano"
+msgstr ""
 
 #: ../dataeditor.py:1725
 msgid "Diag version"
-msgstr "Verzija dijagnostike"
+msgstr ""
 
 #: ../dataeditor.py:1731 ../ddt4all.py:171
 msgid "Soft"
-msgstr "Softver"
+msgstr ""
 
 #: ../dataeditor.py:1734 ../ddt4all.py:172
 msgid "Version"
-msgstr "Verzija"
+msgstr ""
 
 #: ../ddt4all.py:166
 msgid "ECU name"
-msgstr "ECU naziv"
+msgstr ""
 
 #: ../ddt4all.py:167
 msgid "ID"
@@ -334,7 +330,7 @@ msgstr ""
 
 #: ../ddt4all.py:168
 msgid "Protocol"
-msgstr "Protokol"
+msgstr ""
 
 #: ../ddt4all.py:170
 msgid "Diag"
@@ -342,19 +338,19 @@ msgstr ""
 
 #: ../ddt4all.py:173
 msgid "Projets"
-msgstr "Projekti"
+msgstr ""
 
 #: ../ddt4all.py:301
 msgid "DDT4All"
-msgstr "DDT4All - daciaforum.in.rs Edition"
+msgstr ""
 
 #: ../ddt4all.py:305
 msgid "loaded ECUs in database."
-msgstr "ucitane ECU jedinice u bazu podataka."
+msgstr ""
 
 #: ../ddt4all.py:348
 msgid "Refresh rate (ms):"
-msgstr "Vreme osvezavanja (ms):"
+msgstr ""
 
 #: ../ddt4all.py:355
 msgid "Can timeout (ms) [0:AUTO] :"
@@ -366,7 +362,7 @@ msgstr ""
 
 #: ../ddt4all.py:375
 msgid "Screen"
-msgstr "Prikaz"
+msgstr ""
 
 #: ../ddt4all.py:376
 msgid "CAN Sniffer"
@@ -374,51 +370,51 @@ msgstr ""
 
 #: ../ddt4all.py:383
 msgid "Requests"
-msgstr "Zahtevi"
+msgstr ""
 
 #: ../ddt4all.py:384
 msgid "Data"
-msgstr "Podaci"
+msgstr ""
 
 #: ../ddt4all.py:385
 msgid "Buttons"
-msgstr "Dugmad"
+msgstr ""
 
 #: ../ddt4all.py:386
 msgid "Ecu parameters"
-msgstr "ECU parametri"
+msgstr ""
 
 #: ../ddt4all.py:398 ../ddt4all.py:535
 msgid "Screens"
-msgstr "Prikazi"
+msgstr ""
 
 #: ../ddt4all.py:420 ../ddt4all.py:511
 msgid "File"
-msgstr "Fajl"
+msgstr ""
 
 #: ../ddt4all.py:422
 msgid "Read DTC"
-msgstr "Citaj DTC"
+msgstr ""
 
 #: ../ddt4all.py:426
 msgid "Full log"
-msgstr "Pun izvestaj"
+msgstr ""
 
 #: ../ddt4all.py:431
 msgid "Expert mode (enable writing)"
-msgstr "Ekspertski mod (omoguceno upisivanje)"
+msgstr ""
 
 #: ../ddt4all.py:436
 msgid "Auto refresh"
-msgstr "Automatsko osvezavanje"
+msgstr ""
 
 #: ../ddt4all.py:441
 msgid "Refresh (one shot)"
-msgstr "Osvezavanje (jednom)"
+msgstr ""
 
 #: ../ddt4all.py:445
 msgid "Manual command"
-msgstr "Rucna komanda"
+msgstr ""
 
 #: ../ddt4all.py:449
 msgid "Manual request"
@@ -450,11 +446,11 @@ msgstr ""
 
 #: ../ddt4all.py:514
 msgid "Create New ECU"
-msgstr "Kreiraj novi ECU"
+msgstr ""
 
 #: ../ddt4all.py:515
 msgid "Save current ECU"
-msgstr "Sacuvaj trenutni ECU"
+msgstr ""
 
 #: ../ddt4all.py:517
 msgid "Save last record"
@@ -462,7 +458,7 @@ msgstr ""
 
 #: ../ddt4all.py:519
 msgid "Save ECU list"
-msgstr "Sacuvaj listu ECU"
+msgstr ""
 
 #: ../ddt4all.py:527
 msgid "Zip database"
@@ -470,19 +466,19 @@ msgstr ""
 
 #: ../ddt4all.py:537
 msgid "Action"
-msgstr "Radnja"
+msgstr ""
 
 #: ../ddt4all.py:538
 msgid "New Category"
-msgstr "Nova kategorija"
+msgstr ""
 
 #: ../ddt4all.py:539
 msgid "New Screen"
-msgstr "Novi prikaz"
+msgstr ""
 
 #: ../ddt4all.py:540
 msgid "Rename"
-msgstr "Promeni naziv"
+msgstr ""
 
 #: ../ddt4all.py:548
 msgid "Plugins"
@@ -502,23 +498,23 @@ msgstr ""
 
 #: ../ddt4all.py:673
 msgid "Enter new name"
-msgstr "Unesi novo ime"
+msgstr ""
 
 #: ../ddt4all.py:693
 msgid "Enter category name"
-msgstr "Unesi ime kategorije"
+msgstr ""
 
 #: ../ddt4all.py:704
 msgid "Please select a category before creating new screen"
-msgstr "Molim odaberite kategoriju pre nego sto napravite novi prikaz"
+msgstr ""
 
 #: ../ddt4all.py:711
 msgid "Enter screen name"
-msgstr "Unesite ime prikaza"
+msgstr ""
 
 #: ../ddt4all.py:774
 msgid "Scan options"
-msgstr "Opcije skeniranja"
+msgstr ""
 
 #: ../ddt4all.py:781 ../ddtplugins/card_programming.py:135
 msgid "CANCEL"
@@ -526,89 +522,83 @@ msgstr ""
 
 #: ../ddt4all.py:792
 msgid "Scanning CAN"
-msgstr "Skeniranje CAN"
+msgstr ""
 
 #: ../ddt4all.py:796
 msgid "Scanning KWP"
-msgstr "Skeniranje KWP"
+msgstr ""
 
 #: ../ddt4all.py:837
 msgid "EDITION MODE"
-msgstr "MOD IZMENA"
+msgstr ""
 
 #: ../ddt4all.py:841
 msgid "CONNECTED"
-msgstr "POVEZAN"
+msgstr ""
 
 #: ../ddt4all.py:844
 msgid "DISCONNECTED"
-msgstr "PREKINUTA VEZA"
+msgstr ""
 
 #: ../ddt4all.py:847
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
+msgstr ""
 
 #: ../ddt4all.py:870 ../parameters.py:266
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Sacuvaj ECU (zadrzi '.json' ekstenziju)"
+msgstr ""
 
 #: ../ddt4all.py:907
-#, fuzzy
-#| msgid "Save vehicule (keep '.ecu' extension)"
 msgid "Save record (keep '.txt' extension)"
-msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
+msgstr ""
 
 #: ../ddt4all.py:1093
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
-"<center>Ovaj program je besplatan, ali je novac potreban da kupim kablove/"
-"ECU jedinice i načinim ovu aplikaciju pouzdanijom</center>"
 
 #: ../ddt4all.py:1094
 msgid "Yes I contribute"
-msgstr "Da, doprineću"
+msgstr ""
 
 #: ../ddt4all.py:1096
 msgid "No, I don't"
-msgstr "Ne, neću"
+msgstr ""
 
 #: ../ddt4all.py:1107
 msgid ""
 "<center>Thank you for you contribution, if nothing happens, please go to : "
 "https://github.com/cedricp/ddt4all</center>"
 msgstr ""
-"<center>Hvala na vašem doprinosu. Ako se ništa ne desi molaim Vas idite na : "
-"https://github.com/cedricp/ddt4all</center>"
 
 #: ../ddt4all.py:1136
 msgid "ELM port selection"
-msgstr "Izbor ELM porta"
+msgstr ""
 
 #: ../ddt4all.py:1197
 msgid "Port speed"
-msgstr "Brzina porta"
+msgstr ""
 
 #: ../ddt4all.py:1209
 msgid "Connected mode"
-msgstr "Mod povezivanja"
+msgstr ""
 
 #: ../ddt4all.py:1210
 msgid "Edition mode"
-msgstr "Mod izmena"
+msgstr ""
 
 #: ../ddt4all.py:1211
 msgid "ELM benchmark"
-msgstr "ELM rezultati testa"
+msgstr ""
 
 #: ../ddt4all.py:1215
 msgid "WiFi port : "
-msgstr "WiFi port: "
+msgstr ""
 
 #: ../ddt4all.py:1225
 msgid "I'm aware that I can harm my car if badly used"
-msgstr "Upozoren sam da mogu oštetiti moje vozilo ako pogrešno koristim"
+msgstr ""
 
 #: ../ddt4all.py:1235
 msgid "Dark style"
@@ -620,92 +610,92 @@ msgstr ""
 
 #: ../ddt4all.py:1440
 msgid "You must check the recommandations"
-msgstr "Morate proveriti preporuke"
+msgstr ""
 
 #: ../ddt4all.py:1459
 msgid "Please select a communication port"
-msgstr "Molim izaberite port za komunikaciju"
+msgstr ""
 
 #: ../ddt4all.py:1499
 msgid "Using custom DDT database"
-msgstr "Koristi prilagodjenu DDT bazu podataka"
+msgstr ""
 
 #: ../ddt4all.py:1528
 msgid "No COM port selected"
-msgstr "Nije izabran COM port"
+msgstr ""
 
 #: ../ddt4all.py:1531
 #, python-format
 msgid "Initilizing ELM with speed %i..."
-msgstr "Initilizing ELM sa brzinom %i..."
+msgstr ""
 
 #: ../ddt4all.py:1537
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "Nema ELM327 ili OBDLINK-SX uredjaja na COM portu  "
+msgstr ""
 
 #: ../elm.py:327 ../elm.py:329
 msgid "Error:"
-msgstr "Greska:"
+msgstr ""
 
 #: ../elm.py:328
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM nije povezan ili je pogresan COM port"
+msgstr ""
 
 #: ../elm.py:379 ../elm.py:406 ../elm.py:432
 msgid "Connection to ELM was lost"
-msgstr "Izgubljena veza sa ELM jedinicom"
+msgstr ""
 
 #: ../elm.py:478
 msgid "TIMEOUT"
-msgstr "Isteklo vreme"
+msgstr ""
 
 #: ../elm.py:489
 msgid "Checking port speed:"
-msgstr "Provera brzine porta:"
+msgstr ""
 
 #: ../elm.py:508
 msgid "Start COM speed :"
-msgstr "Pocetna brzina COM porta:"
+msgstr ""
 
 #: ../elm.py:513
 msgid "ELM not responding"
-msgstr "ELM se ne odaziva"
+msgstr ""
 
 #: ../elm.py:565
 msgid "Trying to open port"
-msgstr "Pokusavam da otvorim port"
+msgstr ""
 
 #: ../elm.py:592
 msgid "No ELM interface on port"
-msgstr "Nema ELM interfejsa na portu"
+msgstr ""
 
 #: ../elm.py:1439
 msgid "FAIL"
-msgstr "Neuspesno"
+msgstr ""
 
 #: ../elm.py:1444
 msgid "OK/TIMEOUT"
-msgstr "U redu/Isteklo vreme"
+msgstr ""
 
 #: ../elm.py:1449
 msgid "OK"
-msgstr "U redu"
+msgstr ""
 
 #: ../elm.py:1457
 msgid "Incompatible adapter on ARM core"
-msgstr "Neodgovarajuci adapter na ARM portu"
+msgstr ""
 
 #: ../elm.py:1459
 msgid "Result: "
-msgstr "Rezultat: "
+msgstr ""
 
 #: ../elm.py:1459
 msgid " succeeded from "
-msgstr " uspesno od "
+msgstr ""
 
 #: ../elm.py:1459
 msgid "ELM Max version:"
-msgstr "ELM Max verzija:"
+msgstr ""
 
 #: ../package.py:49
 #, python-format
@@ -719,23 +709,23 @@ msgstr ""
 
 #: ../parameters.py:349 ../parameters.py:378 ../parameters.py:402
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "Da bi mogli da izmenite svoj prikaz, isti prvo izvezite u JSON formatu"
+msgstr ""
 
 #: ../parameters.py:441
 msgid "Enter label name"
-msgstr "Unesite ime oznake"
+msgstr ""
 
 #: ../parameters.py:507
 msgid "Add button"
-msgstr "Dodaj dugme"
+msgstr ""
 
 #: ../parameters.py:508
 msgid "Add label"
-msgstr "Dodaj oznaku"
+msgstr ""
 
 #: ../parameters.py:516
 msgid "Rename label"
-msgstr "Preimenuj oznaku"
+msgstr ""
 
 #: ../parameters.py:517
 msgid "Change color"
@@ -743,27 +733,27 @@ msgstr ""
 
 #: ../parameters.py:523
 msgid "Remove element"
-msgstr "Ukloni element"
+msgstr ""
 
 #: ../parameters.py:639
 msgid "Diagnotic session"
-msgstr "Dijagnosticka sesija"
+msgstr ""
 
 #: ../parameters.py:640
 msgid "Input"
-msgstr "Ulazni"
+msgstr ""
 
 #: ../parameters.py:641
 msgid "Output"
-msgstr "Izlazni"
+msgstr ""
 
 #: ../parameters.py:791
 msgid "XML file not found : "
-msgstr "XML fajl nije pronadjen: "
+msgstr ""
 
 #: ../parameters.py:798
 msgid "Invalid DDT file"
-msgstr "Pogresan DDT fajl"
+msgstr ""
 
 #: ../parameters.py:874
 msgid "Connection to ELM lost, trying to reconnect..."
@@ -775,23 +765,23 @@ msgstr ""
 
 #: ../parameters.py:885
 msgid "Switching to session mode"
-msgstr "Prebacivanje u mod sesije"
+msgstr ""
 
 #: ../parameters.py:893
 msgid "Sending ELM request :"
-msgstr "Slanje ELM zahteva:"
+msgstr ""
 
 #: ../parameters.py:895
 msgid "Blocked ELM request :"
-msgstr "Blokiran ELM zahtev:"
+msgstr ""
 
 #: ../parameters.py:900
 msgid "Sending ELM request:"
-msgstr "Slanje ELM zahteva:"
+msgstr ""
 
 #: ../parameters.py:928
 msgid "Sending simulated ELM request :"
-msgstr "Slanje simuliranog ELM zahteva:"
+msgstr ""
 
 #: ../parameters.py:939
 msgid "Bad ELM response :"
@@ -799,23 +789,23 @@ msgstr ""
 
 #: ../parameters.py:942
 msgid "ELM response : "
-msgstr "ELM odgovor: "
+msgstr ""
 
 #: ../parameters.py:1094
 msgid "Button request not found : "
-msgstr "Zahtev dugmeta nije pronadjen: "
+msgstr ""
 
 #: ../parameters.py:1108
 msgid "Sending request :"
-msgstr "Slanje zahteva:"
+msgstr ""
 
 #: ../parameters.py:1158
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Zahtev odbacen (pogledati parametre obelezene crvenom bojom): "
+msgstr ""
 
 #: ../parameters.py:1200
 msgid "Invalid"
-msgstr "Pogresno"
+msgstr ""
 
 #: ../parameters.py:1221
 msgid "ECU uses SDS "
@@ -823,27 +813,27 @@ msgstr ""
 
 #: ../parameters.py:1294
 msgid "Cannot call request "
-msgstr "Nije moguce pozvati zahtev "
+msgstr ""
 
 #: ../parameters.py:1398
 msgid "Clearing DTC information"
-msgstr "Brisanje DTC informacija"
+msgstr ""
 
 #: ../parameters.py:1410
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Nema zahteva za brisanje DTC za taj ECU, poslace uobicajen 14FF00"
+msgstr ""
 
 #: ../parameters.py:1414
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<center>Ovim brisete dijagnosticke kodove gresaka<\\center>"
+msgstr ""
 
 #: ../parameters.py:1415
 msgid "<center>Ae you sure this is what you want.</center>"
-msgstr "<center>Da li ste sigurni da to zelite?</center>"
+msgstr ""
 
 #: ../parameters.py:1476
 msgid "Invalid response for ReadDTC command"
-msgstr "Pogresan odziv za CitanjeDTC komandu"
+msgstr ""
 
 #: ../parameters.py:1485
 msgid "Read DTC returned an error"
@@ -851,19 +841,19 @@ msgstr ""
 
 #: ../parameters.py:1493
 msgid "No DTC"
-msgstr "Nema DTC"
+msgstr ""
 
 #: ../parameters.py:1516
 msgid "Clear ALL DTC"
-msgstr "Obrisi SVE DTC"
+msgstr ""
 
 #: ../parameters.py:1522
 msgid "ECU trouble codes"
-msgstr "ECU kodovi gresaka"
+msgstr ""
 
 #: ../parameters.py:1552
 msgid "Parsing screen "
-msgstr "Čitati ekran "
+msgstr ""
 
 #: ../sniffer.py:139
 msgid "Values"
@@ -1105,7 +1095,7 @@ msgstr ""
 #: ../ddtplugins/laguna2_uch_reset.py:15 ../ddtplugins/laguna3_uch_reset.py:14
 #: ../ddtplugins/megane2_uch_reset.py:15 ../ddtplugins/megane3_uch_reset.py:14
 msgid "UCH Tools"
-msgstr "UCH alat"
+msgstr ""
 
 #: ../ddtplugins/laguna2_uch_reset.py:26
 msgid ""
@@ -1206,18 +1196,3 @@ msgstr ""
 #: ../ddtplugins/vin_crc.py:44
 msgid "CRC CALCULATOR"
 msgstr ""
-
-#~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "GRESKA - WiFi ne podrzava promenu brzine (baud rate)"
-
-#~ msgid "Changing baud rate to:"
-#~ msgstr "Promeni brzinu (baud rate) na:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "GRESKA - komanda nije podrzana"
-
-#~ msgid "ERROR - rate not supported. Let's go back."
-#~ msgstr "GRESKA - brzina (rate) nije podrzan. Vratite se nazad."
-
-#~ msgid "ERROR - something went wrong. Let's get back."
-#~ msgstr "GRESKA - nesto nije u redu. Vratite se nazad."
