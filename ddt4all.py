@@ -1470,16 +1470,19 @@ if __name__ == '__main__':
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
 
-    if sys.platform[:3] != "win":
-        fsize = 11
+    fsize = 10
+    fname = "Sans"
+
+    if sys.platform[:3] == "dar":
+        fsize = 12
         fname = "Arial"
-        if sys.platform[:3] == "lin":
-            fsize = 9
-            fname = "Sans"
-        font = gui.QFont(fname, fsize)
-        font.setBold(False)
-        app.setFont(font)
-        app.setStyle("plastic")
+    if sys.platform[:3] == "lin":
+        fsize = 9
+        fname = "Sans"
+    font = gui.QFont(fname, fsize)
+    font.setBold(False)
+    app.setFont(font)
+    app.setStyle("plastic")
 
     ecudirfound = False
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
