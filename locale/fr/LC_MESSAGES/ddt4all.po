@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Goto data"
-msgstr "Aller a la donnée"
+msgstr "Aller à la donnée"
 
 msgid "Remove"
 msgstr "Enlever"
 
 msgid "Add to screen"
-msgstr "Ajouter a l'écran"
+msgstr "Ajouter à l'écran"
 
 msgid "Request name;Bytes;Manual"
 msgstr "Nom requête;Octet;Manuel"
@@ -37,16 +37,16 @@ msgid "Send request bytes (HEX)"
 msgstr "Envoie octets requête (HEXA)"
 
 msgid "Receive bytes (HEX)"
-msgstr "Reception Octet"
+msgstr "Réception Octet"
 
 msgid "Data length"
 msgstr "Longueur de donnée"
 
 msgid "Shift byte count"
-msgstr "Déclalage octets"
+msgstr "Décalage octets"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nom donnée;Octet démarrage;Décalage bit;Endianess"
+msgstr "Nom donnée;Octet de départ;Décalage bit;Endianess"
 
 msgid "Little"
 msgstr "Petit"
@@ -121,10 +121,10 @@ msgid "New"
 msgstr "Nouveau"
 
 msgid "Duplicate selected"
-msgstr "Dupliquer selection"
+msgstr "Dupliquer sélection"
 
 msgid "Remove selected"
-msgstr "Supprimer selectionné"
+msgstr "Supprimer sélection"
 
 msgid "Reload"
 msgstr "Recharger"
@@ -133,16 +133,16 @@ msgid "Validate changes"
 msgstr "Valider changements"
 
 msgid "Description"
-msgstr "Déscription"
+msgstr "Description"
 
 msgid "Data type"
 msgstr "Type de donnée"
 
 msgid "Numeric"
-msgstr "Numerique"
+msgstr "Numérique"
 
 msgid "Numeric items"
-msgstr "Entrées numeriques"
+msgstr "Entrées numériques"
 
 msgid "Hex"
 msgstr "Hexa"
@@ -155,10 +155,10 @@ msgid "New data"
 msgstr "Nouvelle donnée"
 
 msgid "Replace me with request description"
-msgstr "Remplacez moi par une déscription"
+msgstr "Remplacez moi par une description"
 
 msgid "Data name;Description"
-msgstr "Nom de donnée;Déscription"
+msgstr "Nom de donnée;Description"
 
 msgid "Del"
 msgstr "Supprimer"
@@ -195,7 +195,7 @@ msgid "Screen initialization"
 msgstr "Initialisation écran"
 
 msgid "Requests to send before screen drawing"
-msgstr "Requête a envoyer avant affichage écran"
+msgstr "Requête à envoyer avant affichage écran"
 
 msgid "Button name;Unique name"
 msgstr "Nom bouton;Nom unique"
@@ -231,7 +231,7 @@ msgid "Add new"
 msgstr "Ajouter nouveau"
 
 msgid "Delete selected"
-msgstr "Supprimer selectionné"
+msgstr "Supprimer sélection"
 
 msgid "Diag version"
 msgstr "Version diag"
@@ -327,13 +327,13 @@ msgid "Manual command"
 msgstr "Commande manuelle"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Requête manuelle"
 
 msgid "Zoom In"
 msgstr "Agrandir"
 
 msgid "Zoom Out"
-msgstr "Rétrécir"
+msgstr "Diminuer"
 
 msgid "UI Edit"
 msgstr "Edition interface"
@@ -342,7 +342,7 @@ msgid "Open XML"
 msgstr "Ouvrir XML"
 
 msgid "Identify ECU"
-msgstr ""
+msgstr "Identifier ECU"
 
 msgid "Create New ECU"
 msgstr "Créer un ECU"
@@ -360,10 +360,10 @@ msgid "Plugins"
 msgstr "Extensions"
 
 msgid "Cannot load plugin "
-msgstr ""
+msgstr "Ne peut pas charger le plugin"
 
 msgid "Save database (keep '.zip' extension)"
-msgstr ""
+msgstr "Sauvegarder la base (Gardez l'extension '.zip'"
 
 msgid "Zipping XML database... (this can take a few minutes"
 msgstr "Compresser XML (peut prendre quelques minutes)"
@@ -405,10 +405,10 @@ msgid "DISCONNECTED"
 msgstr "DECONNECTÉ"
 
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Savegarde ECU (Gardez l'extension '.ecu')"
+msgstr "Sauvegarde ECU (Gardez l'extension '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Savegarde ECU (Gardez l'extension '.json')"
+msgstr "Sauvegarde ECU (Gardez l'extension '.json')"
 
 msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
 msgstr "<center>Cette application est libre d'utilisation, mais j'ai besoin d'argent pour rendre cette application plus fiable et acheter du materiel</center>"
@@ -444,7 +444,7 @@ msgid "I'm aware that I can harm my car if badly used"
 msgstr "Je suis conscient que je risque d'endomager mon véhicule avec cette application si je ne suis pas vigilant"
 
 msgid "Dark style"
-msgstr ""
+msgstr "Thème sombre"
 
 msgid "You must check the recommandations"
 msgstr "Vous devez cocher les recommandations"
@@ -469,13 +469,13 @@ msgid "Error:"
 msgstr "Erreur:"
 
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM no detecté ou port erroné"
+msgstr "ELM non detecté ou port erroné"
 
 msgid "Connection to ELM was lost"
 msgstr "Connexion ELM perdue"
 
 msgid "TIMEOUT"
-msgstr "TEMPS DEPASSE"
+msgstr "TEMPS DEPASSÉ"
 
 msgid "Checking port speed:"
 msgstr "Vérfication vitesse de port:"
@@ -487,7 +487,7 @@ msgid "ELM not responding"
 msgstr "Pas de réponse ELM"
 
 msgid "ERROR - wifi do not support changing baud rate"
-msgstr "ERREUR - Le mode WiFi ne supporte pas les changement de vitesse"
+msgstr "ERREUR - Le mode WiFi ne supporte pas les changements de vitesse"
 
 msgid "Changing baud rate to:"
 msgstr "Changement débit à:"
@@ -499,7 +499,7 @@ msgid "ERROR - rate not supported. Let's go back."
 msgstr "ERREUR: Débit non supporté, retour en arrière."
 
 msgid "ERROR - something went wrong. Let's get back."
-msgstr "ERREUR - Quelque chose c'est mal passé, retour en arrière."
+msgstr "ERREUR - Quelque chose s'est mal passé, retour en arrière."
 
 msgid "Trying to open port"
 msgstr "Tentative d'ouverture du port"
@@ -511,7 +511,7 @@ msgid "FAIL"
 msgstr "ECHEC"
 
 msgid "OK/TIMEOUT"
-msgstr "OK/TEMPS DEPASSE"
+msgstr "OK/TEMPS DEPASSÉ"
 
 msgid "OK"
 msgstr "OK"
@@ -561,7 +561,7 @@ msgid "Diagnotic session"
 msgstr "Session de dianostic"
 
 msgid "Input"
-msgstr "Entree"
+msgstr "Entrée"
 
 msgid "Output"
 msgstr "Sortie"
@@ -573,7 +573,7 @@ msgid "Invalid DDT file"
 msgstr "Fichier DDT invalide"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "Connexion à l'ELM perdue, tentative de reconnexion..."
 
 msgid "Cannot reconnect..."
 msgstr "Reconnexion impossible"
@@ -594,7 +594,7 @@ msgid "Sending simulated ELM request :"
 msgstr "Envoie requête ELM simulée:"
 
 msgid "Bad ELM response :"
-msgstr ""
+msgstr "Mauvaise réponse ELM : "
 
 msgid "ELM response : "
 msgstr "Réponse ELM : "
@@ -606,7 +606,7 @@ msgid "Sending request :"
 msgstr "Envoie requête :"
 
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Requête abandonée (verifiez les parametres en rouges): "
+msgstr "Requête abandonée (verifiez les paramètres en rouges): "
 
 msgid "Invalid"
 msgstr "Invalide"
@@ -648,7 +648,7 @@ msgid "Parsing screen "
 msgstr "Analyse des écrans "
 
 msgid "Values"
-msgstr ""
+msgstr "Valeurs"
 
 msgid "Waiting..."
 msgstr "Attente..."
@@ -741,7 +741,7 @@ msgid "Modus/Clio III EPS Reset"
 msgstr "Modus/Clio III EPS (DAE) RAZ"
 
 msgid "EPS Tools"
-msgstr ""
+msgstr "Outils EPS"
 
 msgid "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr "Modus/Clio III DAE VIRGINISEUR<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES D'IMMOBILISATION<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
