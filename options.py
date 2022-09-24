@@ -45,7 +45,7 @@ def translator(filename):
         os.environ['LANG'] = lang
     except:
         # defaul tranlation if err en_US
-        # os.environ["LANG"] = 'fr_FR'
+        os.environ["LANG"] = 'fr_FR'
         pass
 
     # Set up message catalog access
