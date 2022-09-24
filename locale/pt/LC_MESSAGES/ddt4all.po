@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-24 14:43+0200\n"
-"PO-Revision-Date: 2022-09-24 15:00+0200\n"
+"PO-Revision-Date: 2022-09-24 15:12+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -32,7 +32,7 @@ msgstr "Adicionar ecrã"
 
 #: ../dataeditor.py:319
 msgid "Request name;Bytes;Manual"
-msgstr ""
+msgstr "Nome da solicitação;Bytes;Manual"
 
 #: ../dataeditor.py:354 ../dataeditor.py:1331
 msgid "Add"
@@ -72,19 +72,19 @@ msgstr "Herdados globais"
 
 #: ../dataeditor.py:649
 msgid "No SDS"
-msgstr ""
+msgstr "Sem SDS"
 
 #: ../dataeditor.py:650
 msgid "Plant"
-msgstr ""
+msgstr "Plantar"
 
 #: ../dataeditor.py:651
 msgid "After Sale"
-msgstr ""
+msgstr "Pós-venda"
 
 #: ../dataeditor.py:652
 msgid "Engineering"
-msgstr ""
+msgstr "Engenharia"
 
 #: ../dataeditor.py:653 ../dataeditor.py:1728 ../ddt4all.py:169
 msgid "Supplier"
@@ -156,11 +156,11 @@ msgstr "Novo"
 
 #: ../dataeditor.py:1011
 msgid "Duplicate selected"
-msgstr ""
+msgstr "Duplicar selecionado"
 
 #: ../dataeditor.py:1012
 msgid "Remove selected"
-msgstr ""
+msgstr "Remover selecionado"
 
 #: ../dataeditor.py:1013
 msgid "Reload"
@@ -193,7 +193,7 @@ msgstr "Hex"
 #: ../dataeditor.py:1090 ../dataeditor.py:1096
 #, python-format
 msgid "Data is used by request %s"
-msgstr ""
+msgstr "Os dados são usados pela solicitação %s"
 
 #: ../dataeditor.py:1143
 msgid "New data"
@@ -297,7 +297,7 @@ msgstr "Pequeno endian"
 
 #: ../dataeditor.py:1703
 msgid "ECU Auto identification"
-msgstr ""
+msgstr "Identificação automática da ECU"
 
 #: ../dataeditor.py:1715
 msgid "Diag version;Supplier;Soft;Version"
@@ -329,7 +329,7 @@ msgstr "ECU"
 
 #: ../ddt4all.py:167
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../ddt4all.py:168
 msgid "Protocol"
@@ -337,7 +337,7 @@ msgstr "Protocolo"
 
 #: ../ddt4all.py:170
 msgid "Diag"
-msgstr ""
+msgstr "Diag"
 
 #: ../ddt4all.py:173
 msgid "Projets"
@@ -357,11 +357,11 @@ msgstr "Racio de refresco (ms):"
 
 #: ../ddt4all.py:355
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr ""
+msgstr "Pode atingir o tempo limite (ms) [0:AUTO] :"
 
 #: ../ddt4all.py:374
 msgid "Documentation"
-msgstr ""
+msgstr "Documentação"
 
 #: ../ddt4all.py:375
 msgid "Screen"
@@ -369,7 +369,7 @@ msgstr "Ecrã"
 
 #: ../ddt4all.py:376
 msgid "CAN Sniffer"
-msgstr ""
+msgstr "CAN Sniffer"
 
 #: ../ddt4all.py:383
 msgid "Requests"
@@ -423,27 +423,27 @@ msgstr "Comando manual"
 
 #: ../ddt4all.py:449
 msgid "Manual request"
-msgstr ""
+msgstr "Solicitação manual"
 
 #: ../ddt4all.py:453
 msgid "Software flow control"
-msgstr ""
+msgstr "Controle de fluxo de software"
 
 #: ../ddt4all.py:465
 msgid "Zoom In"
-msgstr ""
+msgstr "Mais Zoom"
 
 #: ../ddt4all.py:466
 msgid "Zoom Out"
-msgstr ""
+msgstr "Reduzir o zoom"
 
 #: ../ddt4all.py:493
 msgid "UI Edit"
-msgstr ""
+msgstr "Editar interface do usuário"
 
 #: ../ddt4all.py:512
 msgid "Open XML"
-msgstr ""
+msgstr "Abrir XML"
 
 #: ../ddt4all.py:513
 msgid "Identify ECU"
