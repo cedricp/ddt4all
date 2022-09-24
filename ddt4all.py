@@ -157,7 +157,7 @@ class Ecu_list(widgets.QWidget):
         if str(self.vehicle_combo.currentText().strip()) == 'ALL':
             project = str(self.vehicle_combo.currentText().strip())
         else:
-            project = str(self.vehicle_combo.currentText().split(' - ')[0].strip())#[0:3])
+            project = str(self.vehicle_combo.currentText().split(' - ')[0].strip())  # [0:3])
         self.parent().parent().scan_project(project)
 
     def init(self):
@@ -287,7 +287,7 @@ class Ecu_list(widgets.QWidget):
 class Main_widget(widgets.QMainWindow):
     def __init__(self, parent=None):
         super(Main_widget, self).__init__(parent)
-
+        self.setIcon()
         if not options.simulation_mode:
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
@@ -573,6 +573,10 @@ class Main_widget(widgets.QMainWindow):
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
+
+    def setIcon(self):
+        appIcon = gui.QIcon("icons/obd.png")
+        self.setWindowIcon(appIcon)
 
     def set_can_combo(self, bus):
         self.canlinecombo.clear()
@@ -1264,6 +1268,11 @@ class portChooser(widgets.QDialog):
         self.usb()
 
         self.setWindowTitle("DDT4All")
+        self.setIcon()
+
+    def setIcon(self):
+        appIcon = gui.QIcon("icons/obd.png")
+        self.setWindowIcon(appIcon)
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
