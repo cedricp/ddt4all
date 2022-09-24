@@ -587,15 +587,15 @@ class ELM:
             # Purge unread data
             self.port.expect(">")
             res = self.send_raw("ATZ")
-            if not 'ELM' in res:
-                options.elm_failed = True
-                options.last_error = _("No ELM interface on port") + " %s" % portName
-            else:
+            if 'ELM' in res or 'OBDII' in res:
                 options.last_error = ""
                 options.elm_failed = False
                 self.connectionStatus = True
                 rate = speed
                 break
+            else:
+                options.elm_failed = True
+                options.last_error = _("No ELM interface on port") + " %s" % portName
 
         try:
             maxspeed = int(maxspeed)
