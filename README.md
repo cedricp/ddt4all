@@ -25,7 +25,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * [crcmod](https://pypi.org/project/crcmod/)
 * [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
-## Supported diagnostic adapters (so far)
+### Supported diagnostic adapters (so far)
 
 * **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
 * **ObdLink** SX
@@ -63,7 +63,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Screen recorder (via autorefresh button) and export to CSV format
 
 ## How to launch the application ?
-* A terminal, type `python ddt4all.py`
+* A terminal, type `python main.py`
 
 
 ## Platforms
@@ -90,8 +90,6 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
   * Try to disable antivirus software
 
 ## Informations
-
-[Windows archive with embedded Python/PyQt here](https://github.com/cedricp/ddt4all/releases)
 
 Bugtracking here : https://github.com/cedricp/ddt4all
 
