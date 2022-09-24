@@ -14,6 +14,6 @@ printf "Activate venv ...\n"
 printf "Install requirements ...\n"
 ./venv/bin/pip install -r ./requirements.txt
 printf "Runs app ...\n"
-./venv/bin/python ./ddt4all.py
+./venv/bin/python ./main.py
 #printf "Deactivate venv ..."
 #./venv/bin/deactivate
