@@ -23,8 +23,13 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * [pyusb](https://pypi.org/project/pyusb/)
 * [pyserial](https://pypi.org/project/pyserial/)
 * [crcmod](https://pypi.org/project/crcmod/)
-* _**Hardware:**_ _An ELM327, ELS327 or OBDLink SX_ 
 * [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
+
+## Supported diagnostic adapters (so far)
+
+* **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
+* **ObdLink** SX
+* **ELS27**
 
 Next, you need to get the source code.  This source code repository uses git submodules. So when you clone the source code, you will need to clone recursively:
 
@@ -43,12 +48,6 @@ git submodule update --init --recursive
 ## Windows installer
 
 Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
-
-## Supported diagnostic adapters (so far)
-
-* **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
-* **ObdLink** SX
-* **ELS27**
 
 ## Features :
 
