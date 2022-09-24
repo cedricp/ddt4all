@@ -526,6 +526,7 @@ class Main_widget(widgets.QMainWindow):
         diagmenu.addSeparator()
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
+        diagmenu.addSeparator()
         closeAllThis = diagmenu.addAction(_("Exit"))
         closeAllThis.triggered.connect(self.exit_all)
         diagmenu.addSeparator()
