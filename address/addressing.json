@@ -161,7 +161,7 @@
  ],
  "2D": [
   "ABS-VDC_29b",
-  "ABS-VDC_29b"
+  "ABS-VDC-EBAM_29b"
  ],
  "2E": [
   "UBP",
@@ -206,6 +206,10 @@
  "3A": [
   "CAN Adapter - BAC",
   "Network CAN Adapter"
+ ],
+ "3B": [
+  "e-shifter",
+  "e-shifter"
  ],
  "3C": [
   "PTC AMP",
@@ -294,6 +298,10 @@
  "55": [
   "BSG 48v",
   "BSG 48v"
+ ],
+ "56": [
+  "e-ShiftAct",
+  "e-ShiftAct"
  ],
  "58": [
   "Navigation-UCC-ITM",
@@ -448,8 +456,8 @@
   "Wireless Charger Base Station"
  ],
  "85": [
-  "DIU",
-  "Digital-Display Interface Unit"
+  "DIU-MID",
+  "Digital-Display Interface Unit - Meter Information Display"
  ],
  "86": [
   "AAU",
@@ -462,6 +470,10 @@
  "89": [
   "HUD2",
   "Head Up Display (P2)"
+ ],
+ "8B": [
+  "RSCU3R",
+  "Rear Seat Control Unit for 3rd seat"
  ],
  "8D": [
   "FCP",
@@ -663,6 +675,10 @@
   "S-GW2",
   "Gateway Z2"
  ],
+ "EC": [
+  "ATCU 2",
+  "Automatic Transmission Control Unit"
+ ],
  "EE": [
   "Controlographe",
   "Tachograph"
@@ -723,6 +739,10 @@
   "Selective Catalytic Reduction",
   "Selective Catalytic Reduction Control Module "
  ],
+ "40B": [
+  "Tacograph",
+  "Tachograph Control Module "
+ ],
  "40C": [
   "Steering Wheel Switch",
   "Steering Wheel Switch Pad "
@@ -730,10 +750,6 @@
  "40D": [
   "Transfert Case",
   "Transfer Case "
- ],
- "40B": [
-  "Tacograph",
-  "Tachograph Control Module "
  ],
  "40E": [
   "HeadUnit",
@@ -826,33 +842,5 @@
  "501": [
   "PIU CMZ3",
   "PIU Cabin master Z3"
- ],
- "502": [
-  "PIU Rleft",
-  "PIU Rear Left"
- ],
- "503": [
-  "PIU Rright",
-  "PIU Rear Right"
- ],
- "504": [
-  "PIU Hleft",
-  "PIU Hood Left Z3"
- ],
- "505": [
-  "PIU Scabin",
-  "PIU SubCabin Z3"
- ],
- "506": [
-  "PCU Aurix",
-  "PCU Aurix"
- ],
- "507": [
-  "PCU Rcar B",
-  "PCU Rcar Bicore"
- ],
- "508": [
-  "PCU Rcar R",
-  "PCU Rcar R7"
  ]
 }
