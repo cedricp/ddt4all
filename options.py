@@ -44,7 +44,7 @@ def translator(filename):
         lang, enc = locale.getdefaultlocale()
         os.environ['LANG'] = lang
     except:
-        # default if err = en_US
+        # defaul tranlation if err en_US
         # os.environ["LANG"] = 'fr_FR'
         pass
 
