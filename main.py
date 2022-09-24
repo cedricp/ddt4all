@@ -526,6 +526,8 @@ class Main_widget(widgets.QMainWindow):
         diagmenu.addSeparator()
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
+        closeAllThis = diagmenu.addAction(_("Exit"))
+        closeAllThis.triggered.connect(self.exit_all)
         diagmenu.addSeparator()
 
         for ecuf in ecu_files:
@@ -636,6 +638,10 @@ class Main_widget(widgets.QMainWindow):
             currenttext = self.sdscombo.currentText()
             if len(currenttext):
                 self.paramview.changeSDS(currenttext)
+
+    def exit_all(self):
+        self.close()
+        exit(0)
 
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
