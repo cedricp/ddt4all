@@ -1470,8 +1470,10 @@ if __name__ == '__main__':
 
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
-    fsize = 10
-    fname = "Sans"
+
+    fsize = 9
+    fname = "Tahoma"
+
     if sys.platform[:3] == "dar":
         fsize = 12
         fname = "Arial"
