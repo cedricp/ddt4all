@@ -5,9 +5,9 @@ name: Python App
 
 on:
   push:
-    branches: [ master, update ]
+    branches: [ master, update, pyside2 ]
   pull_request:
-    branches: [ master, update ]
+    branches: [ master, update, pyside2 ]
 
 
 jobs:
