@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 '''module contains class for working with ELM327
@@ -319,7 +320,7 @@ class Port:
             self.portType = 0
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout,
-                                         parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+                                         parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE).
                 print(self.hdr)
                 self.connectionStatus = True
                 return

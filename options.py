@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 import gettext
 import os
@@ -44,7 +45,7 @@ def translator(filename):
         lang, enc = locale.getdefaultlocale()
         os.environ['LANG'] = lang
     except:
-        # defaul tranlation if err en_US
+        # default tranlation if err en_US
         os.environ["LANG"] = 'fr_FR'
         pass
 
