@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-24 14:43+0200\n"
-"PO-Revision-Date: 2022-09-24 14:47+0200\n"
+"PO-Revision-Date: 2022-11-02 19:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../dataeditor.py:201
@@ -349,7 +349,7 @@ msgstr "DDT4All"
 
 #: ../ddt4all.py:305
 msgid "loaded ECUs in database."
-msgstr "ECU chargées en base de donnée."
+msgstr "ecu chargés dans la base de données."
 
 #: ../ddt4all.py:348
 msgid "Refresh rate (ms):"
@@ -770,7 +770,7 @@ msgstr "Connexion à l'ELM perdue, tentative de reconnexion..."
 
 #: ../parameters.py:877
 msgid "Cannot reconnect..."
-msgstr "Reconnexion impossible"
+msgstr "Reconnexion impossible..."
 
 #: ../parameters.py:885
 msgid "Switching to session mode"
@@ -794,7 +794,7 @@ msgstr "Envoie requête ELM simulée:"
 
 #: ../parameters.py:939
 msgid "Bad ELM response :"
-msgstr "Mauvaise réponse ELM : "
+msgstr "Mauvaise réponse ELM :"
 
 #: ../parameters.py:942
 msgid "ELM response : "
@@ -874,7 +874,7 @@ msgstr "Attente..."
 
 #: ../sniffer.py:183
 msgid "Frame hex error : "
-msgstr "Erreur trame hexa :"
+msgstr "Erreur trame hexa : "
 
 #: ../ddtplugins/ab90_reset.py:13
 msgid "AB90 AIRBAG Reset"
