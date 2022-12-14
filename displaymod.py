@@ -131,11 +131,11 @@ class labelWidget(widgets.QLabel):
         self.jsondata = jsdata
 
     def resize(self, x, y):
-        super(labelWidget, self).resize(x, y)
+        super(labelWidget, self).resize(int(x), int(y))
         self.update_json()
 
     def move(self, x, y):
-        super(labelWidget, self).move(x, y)
+        super(labelWidget, self).move(int(x), int(y))
         self.update_json()
 
     def update_json(self):
@@ -190,7 +190,7 @@ class screenWidget(widgets.QFrame):
         self.jsondata = jsdata
 
     def resize(self, x, y):
-        super(screenWidget, self).resize(x, y)
+        super(screenWidget, self).resize(int(x), int(y))
         self.update_json()
 
     def lock(self, lock):
@@ -264,11 +264,11 @@ class buttonRequest(widgets.QPushButton):
         return super(buttonRequest, self).mousePressEvent(event)
 
     def resize(self, x, y):
-        super(buttonRequest, self).resize(x, y)
+        super(buttonRequest, self).resize(int(x), int(y))
         self.update_json()
 
     def move(self, x, y):
-        super(buttonRequest, self).move(x, y)
+        super(buttonRequest, self).move(int(x), int(y))
         self.update_json()
 
     def update_json(self):
@@ -314,16 +314,23 @@ class displayWidget(widgets.QWidget):
 
     def resize(self, x, y):
         oldwidth = self.width()
-        super(displayWidget, self).resize(x, y)
+        super(displayWidget, self).resize(int(x), int(y))
         newwidth = self.width()
 
         if not self.qlabelval or not self.qlabel:
             return
 
         diff = newwidth - oldwidth
-        self.qlabel.resize(self.qlabel.width() + diff, self.height())
-        self.qlabelval.resize(self.qlabelval.width(), self.height())
-        self.qlabelval.move(self.qlabelval.pos().x() + diff, 0)
+        self.qlabel.resize(
+            int(self.qlabel.width() + diff),
+            int(self.height())
+        )
+        self.qlabelval.resize(
+            int(self.qlabelval.width()),
+            int(self.height())
+        )
+        self.qlabelval.move(
+            int(self.qlabelval.pos().x() + diff), 0)
         self.update_json()
 
     def move(self, x, y):
@@ -347,8 +354,8 @@ class displayWidget(widgets.QWidget):
 
         oldlabelsize = self.qlabel.width()
         oldvalsize = self.qlabelval.width()
-        self.qlabel.resize(oldlabelsize + x, self.height())
-        self.qlabelval.resize(oldvalsize - x, self.height())
+        self.qlabel.resize(int(oldlabelsize + x), int(self.height()))
+        self.qlabelval.resize(int(oldvalsize - x), int(self.height()))
         self.qlabelval.move(valnewx, 0)
         self.update_json()
 
@@ -393,7 +400,7 @@ class displayWidget(widgets.QWidget):
         self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
-        self.qlabel.resize(width, rect['height'])
+        self.qlabel.resize(int(width), int(rect['height']))
         self.qlabel.setStyleSheet("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
@@ -401,9 +408,9 @@ class displayWidget(widgets.QWidget):
         self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
-        self.qlabelval.resize(rect['width'] - width, rect['height'])
+        self.qlabelval.resize(int(rect['width'] - width), int(rect['height']))
         self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
-        self.qlabelval.move(width, 0)
+        self.qlabelval.move(int(width), 0)
 
         endianess = req.ecu_file.endianness
         if dataitem.endian != "":
@@ -461,7 +468,7 @@ class displayWidget(widgets.QWidget):
         self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
-        self.qlabel.resize(width, rect['height'] / self.uiscale)
+        self.qlabel.resize(int(width), int(rect['height'] / self.uiscale))
         self.qlabel.setStyleSheet("background-color: %s; color: %s" % (color, fontcolor))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
@@ -469,9 +476,9 @@ class displayWidget(widgets.QWidget):
         self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
-        self.qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
+        self.qlabelval.resize(int(rect['width'] / self.uiscale - width), int(rect['height'] / self.uiscale))
         self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (color, fontcolor))
-        self.qlabelval.move(width, 0)
+        self.qlabelval.move(int(width), 0)
 
         infos = req_name + u'\n'
         if data.comment:
@@ -519,16 +526,25 @@ class inputWidget(widgets.QWidget):
 
     def resize(self, x, y):
         oldwidth = self.width()
-        super(inputWidget, self).resize(x, y)
+        super(inputWidget, self).resize(int(x), int(y))
         newwidth = self.width()
 
         if not self.qlabel or not self.editwidget:
             return
 
         diff = newwidth - oldwidth
-        self.qlabel.resize(self.qlabel.width() + diff, self.height())
-        self.editwidget.resize(self.editwidget.width(), self.height())
-        self.editwidget.move(self.editwidget.pos().x() + diff, 0)
+        self.qlabel.resize(
+            int(self.qlabel.width() + diff),
+            int(self.height())
+        )
+        self.editwidget.resize(
+            int(self.editwidget.width()),
+            int(self.height())
+        )
+        self.editwidget.move(
+            int(self.editwidget.pos().x() + diff),
+            0
+        )
         self.update_json()
 
     def move(self, x, y):
@@ -553,9 +569,9 @@ class inputWidget(widgets.QWidget):
 
         oldlabelsize = self.qlabel.width()
         oldvalsize = self.editwidget.width()
-        self.qlabel.resize(oldlabelsize + x, self.height())
-        self.editwidget.resize(oldvalsize - x, self.height())
-        self.editwidget.move(valnewx, 0)
+        self.qlabel.resize(int(oldlabelsize + x), int(self.height()))
+        self.editwidget.resize(int(oldvalsize - x), int(self.height()))
+        self.editwidget.move(int(valnewx), 0)
         self.update_json()
 
     def initXML(self, input, inputdict):
@@ -575,7 +591,7 @@ class inputWidget(widgets.QWidget):
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-        self.qlabel.resize(width, rect['height'])
+        self.qlabel.resize(int(width), int(rect['height']))
         self.move(rect['left'], rect['top'])
 
         try:
@@ -591,8 +607,11 @@ class inputWidget(widgets.QWidget):
             for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
 
-            self.editwidget.resize(rect['width'] - width, rect['height'])
-            self.editwidget.move(width, 0)
+            self.editwidget.resize(
+                    int(rect['width'] - width),
+                    int(rect['height'])
+            )
+            self.editwidget.move(int(width), 0)
             if data.comment:
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
             else:
@@ -607,9 +626,9 @@ class inputWidget(widgets.QWidget):
                 self.editwidget.setEnabled(False)
             self.editwidget.setFont(qfnt)
             self.editwidget.setText(_("No Value"))
-            self.editwidget.resize(rect['width'] - width, rect['height'])
+            self.editwidget.resize(int(rect['width'] - width), int(rect['height']))
             self.editwidget.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-            self.editwidget.move(width, 0)
+            self.editwidget.move(int(width), 0)
             if data.comment:
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
             else:
@@ -642,7 +661,7 @@ class inputWidget(widgets.QWidget):
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
         self.qlabel.setWordWrap(True)
-        self.qlabel.resize(width, rect['height'] / self.uiscale)
+        self.qlabel.resize(int(width), int(rect['height'] / self.uiscale))
 
         if not text in self.ecurequestsparser.data:
             print(_("Cannot find data "), text)
@@ -687,8 +706,11 @@ class inputWidget(widgets.QWidget):
         if options.simulation_mode and options.mode_edit:
             self.editwidget.setEnabled(False)
 
-        self.editwidget.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
-        self.editwidget.move(width, 0)
+        self.editwidget.resize(
+            int(rect['width'] / self.uiscale - width),
+            int(rect['height'] / self.uiscale)
+        )
+        self.editwidget.move(int(width), 0)
 
         if not req_name in inputdict:
             req = self.ecurequestsparser.requests[req_name]

@@ -73,8 +73,8 @@ def getXMLFont(xml, scale = 1):
         fnt_flags |= gui.QFont.StyleItalic
 
     font_size = font_size / float(scale) * 14.
-    qfnt = gui.QFont(font_name, font_size, fnt_flags)
-    qfnt.setPixelSize(font_size)
+    qfnt = gui.QFont(font_name, int(font_size), fnt_flags)
+    qfnt.setPixelSize(int(font_size))
     return qfnt
 
 

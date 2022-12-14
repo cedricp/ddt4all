@@ -979,7 +979,10 @@ class paramWidget(widgets.QWidget):
             self.panel.initJson(screen)
 
         self.setContentsMargins(0, 0, 0, 0)
-        self.resize(self.panel.screen_width + 50, self.panel.screen_height + 50)
+        self.resize(
+                int(self.panel.screen_width + 50),
+                int(self.panel.screen_height + 50)
+        )
 
         self.drawLabels(screen)
         self.drawDisplays(screen)
