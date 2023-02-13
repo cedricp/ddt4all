@@ -56,8 +56,8 @@
   "Hand Free Car Kit"
  ],
  "10": [
-  "Injection Nissan",
-  "ECM - NISSAN"
+  "Injection Nissan-EVC",
+  "ECM - EVC - NISSAN"
  ],
  "11": [
   "ADAS-Sub",
@@ -102,6 +102,10 @@
  "1C": [
   "TCU",
   "Top Control Unit"
+ ],
+ "1D": [
+  "HFE",
+  "HYDROGENE FUEL CELL ECU"
  ],
  "1E": [
   "4WD",
@@ -191,6 +195,10 @@
   "Charger",
   "Battery Charger"
  ],
+ "35": [
+  "DC-DC Conv",
+  "DC-DC Conv"
+ ],
  "37": [
   "Battery Controller",
   "Battery Controller"
@@ -228,8 +236,8 @@
   "Stolen Vehicle Tracker"
  ],
  "40": [
-  "LKS",
-  "Lane Keep System"
+  "LKS - eHBox",
+  "Lane Keep System - eHorizonBox"
  ],
  "41": [
   "GW",
@@ -302,6 +310,10 @@
  "56": [
   "e-ShiftAct",
   "e-ShiftAct"
+ ],
+ "57": [
+  "ESS",
+  "Emergency Stop Signal"
  ],
  "58": [
   "Navigation-UCC-ITM",
@@ -455,6 +467,10 @@
   "WBCB",
   "Wireless Charger Base Station"
  ],
+ "84": [
+  "IVC Sub",
+  "IVC Sub"
+ ],
  "85": [
   "DIU-MID",
   "Digital-Display Interface Unit - Meter Information Display"
@@ -519,6 +535,10 @@
   "COMP",
   "Compressor"
  ],
+ "9A": [
+  "PIU_ZPU Sub",
+  "PIU_ZPU Sub "
+ ],
  "A0": [
   "BLE RP",
   "Blue tooth ECU Remote Park"
@@ -555,6 +575,10 @@
   "LBC2",
   "Lithium Battery Controller 2"
  ],
+ "A9": [
+  "EMCU",
+  "Auto Trunk System"
+ ],
  "AA": [
   "DMS",
   "Driving Modes Selector"
@@ -574,6 +598,14 @@
  "C2": [
   "VXU",
   "VehicleToVehicle Unit"
+ ],
+ "C8": [
+  "PIUMFWU",
+  "PIU Master Fast Wake up "
+ ],
+ "C9": [
+  "PIU_ZPU Hood",
+  "PIU_ZPU Hood"
  ],
  "CE": [
   "SOW Front Left",
@@ -667,9 +699,17 @@
   "INV-RE1_29b",
   "INV-RE1_29bits"
  ],
+ "E6": [
+  "DCDC EHC",
+  "DCDC Exhaust Heater Catalyz"
+ ],
+ "E9": [
+  "INV-RL",
+  "INV-Rear Left"
+ ],
  "EA": [
-  "INV-RE2_29b",
-  "INV-RE2_29b"
+  "INV-RR",
+  "INV-Rear Right"
  ],
  "EB": [
   "S-GW2",
@@ -679,9 +719,17 @@
   "ATCU 2",
   "Automatic Transmission Control Unit"
  ],
+ "ED": [
+  "PCU CP3",
+  "PCU CP3"
+ ],
  "EE": [
   "Controlographe",
   "Tachograph"
+ ],
+ "EF": [
+  "PIU Master",
+  "PIU Master"
  ],
  "F7": [
   "MemoSeatPassenger - LDCM",
@@ -835,12 +883,8 @@
   "SCCM_29",
   "SCCM_29"
  ],
- "500": [
-  "PIU CMZ2",
-  "PIU Cabin master Z2"
- ],
- "501": [
-  "PIU CMZ3",
-  "PIU Cabin master Z3"
+ "429": [
+  "OLU",
+  "CARTOGRAPHY DATA ECU"
  ]
 }
