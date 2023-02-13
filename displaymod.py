@@ -396,7 +396,7 @@ class displayWidget(widgets.QWidget):
         self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
-        self.qlabel.resize(width, rect['height'])
+        self.qlabel.resize(int(width), rect['height'])
         self.qlabel.setStyleSheet("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
@@ -404,9 +404,9 @@ class displayWidget(widgets.QWidget):
         self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
-        self.qlabelval.resize(rect['width'] - width, rect['height'])
+        self.qlabelval.resize(rect['width'] - int(width), rect['height'])
         self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
-        self.qlabelval.move(width, 0)
+        self.qlabelval.move(int(width), 0)
 
         endianess = req.ecu_file.endianness
         if dataitem.endian != "":
@@ -595,8 +595,8 @@ class inputWidget(widgets.QWidget):
             for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
 
-            self.editwidget.resize(int(rect['width'] - width), int(rect['height']))
-            self.editwidget.move(width, 0)
+            self.editwidget.resize(rect['width'] - int(width), rect['height'])
+            self.editwidget.move(int(width), 0)
             if data.comment:
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
             else:
@@ -611,9 +611,9 @@ class inputWidget(widgets.QWidget):
                 self.editwidget.setEnabled(False)
             self.editwidget.setFont(qfnt)
             self.editwidget.setText(_("No Value"))
-            self.editwidget.resize(int(rect['width'] - width), int(rect['height']))
+            self.editwidget.resize(rect['width'] - int(width), rect['height'])
             self.editwidget.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-            self.editwidget.move(width, 0)
+            self.editwidget.move(int(width), 0)
             if data.comment:
                 infos = data.comment + u'\n' + req_name + u' : ' + text + u'\nNumBits=' + unicode(data.bitscount)
             else:
