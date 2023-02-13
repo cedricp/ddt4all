@@ -562,7 +562,7 @@ class ELM:
 
     def __init__(self, portName, rate, adapter_type="STD", maxspeed="No"):
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
-            print(_("Trying to open port") + "%s @ %i" % (portName, speed))
+            print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
             self.sim_mode = options.simulation_mode
             self.portName = portName
             self.adapter_type = adapter_type

@@ -5,9 +5,9 @@ name: Python App
 
 on:
   push:
-    branches: [ master, pyqt5_mode, pyside2 ]
+    branches: [ master]
   pull_request:
-    branches: [ master, pyqt5_mode, pyside2 ]
+    branches: [ master ]
 
 
 jobs:
