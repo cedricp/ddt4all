@@ -1,5 +1,5 @@
 ../dataeditor.py
-../ddt4all.py
+../main.py
 ../elm.py 
 ../package.py
 ../parameters.py

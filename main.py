@@ -233,7 +233,7 @@ class Ecu_list(widgets.QWidget):
 
         keys = list(stored_ecus.keys())
         try:
-            keys.sort(cmp=locale.strcoll)
+            keys.sort(key=locale.strcoll)
         except:
             keys.sort()
         for e in keys:
@@ -241,7 +241,7 @@ class Ecu_list(widgets.QWidget):
             if e in longgroupnames:
                 item.setToolTip(0, longgroupnames[e])
             if e in self.ecuscan.ecu_database.addr_group_mapping:
-                item.setToolTip(self.ecuscan.ecu_database.addr_group_mapping[e])
+                item.setToolTip(0, self.ecuscan.ecu_database.addr_group_mapping[e])
             for t in stored_ecus[e]:
                 widgets.QTreeWidgetItem(item, t)
 
@@ -307,23 +307,16 @@ class Main_widget(widgets.QMainWindow):
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
-            msgbox.setText("No database found")
-            msgbox.setInformativeText("Check documentation")
+            msgbox.setText(_("No database found"))
+            msgbox.setInformativeText(_("Check documentation"))
             msgbox.exec_()
 
         self.paramview = None
-        try:
-            self.docview = webkitwidgets.QWebEngineView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
-        except:
-            self.docview = webkitwidgets.QWebView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-            self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
-            self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
-            self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
+        self.docview = webkitwidgets.QWebEngineView()
+        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
 
         self.screennames = []
 
