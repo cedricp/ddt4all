@@ -292,7 +292,7 @@ class Main_widget(widgets.QMainWindow):
         if not options.simulation_mode:
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
-            self.screenlogfile = open("./logs/screens.txt", "at")
+            self.screenlogfile = open("./logs/screens.txt", "at", encoding="utf-8")
         else:
             self.screenlogfile = None
 
