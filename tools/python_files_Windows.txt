@@ -1,9 +1,14 @@
 ..\dataeditor.py
+..\displaymod.py
+..\ecu.py
+..\elm.py
 ..\main.py
-..\elm.py 
+..\options.py
 ..\package.py
 ..\parameters.py
 ..\sniffer.py
+..\uiutils.py
+..\usbdevice.py
 ..\ddtplugins\ab90_reset.py
 ..\ddtplugins\card_programming.py
 ..\ddtplugins\clio3_eps_reset.py

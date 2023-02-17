@@ -63,7 +63,8 @@ else:
     zip.write("./ddt4all.sh")
 
 zip.write("./requirements.txt")
-zipdir("./venv")
+# Need a real python installation
+# zipdir("./venv")
 zipdir("./icons")
 zipdir("./address")
 zipdir("./json")

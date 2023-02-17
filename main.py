@@ -11,7 +11,6 @@ from importlib.machinery import SourceFileLoader
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
-import PyQt5.QtWebEngine as webkit
 import PyQt5.QtWebEngineWidgets as webkitwidgets
 import PyQt5.QtWidgets as widgets
 import json
