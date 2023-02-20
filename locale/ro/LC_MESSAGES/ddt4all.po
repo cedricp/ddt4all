@@ -1,190 +1,189 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# NeeK <numaialmeu@yahoo.com>, 2019.09
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-24 14:43+0200\n"
-"PO-Revision-Date: 2022-09-24 15:12+0200\n"
-"Last-Translator: bovirus <bovirus@gmail.com>\n"
-"Language-Team: Portuguese\n"
-"Language: pt_PT\n"
+"POT-Creation-Date: 2022-09-24 16:16+0200\n"
+"PO-Revision-Date: 2022-09-24 16:16+0200\n"
+"Last-Translator: NeeK <numaialmeu@yahoo.com>\n"
+"Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.1.1\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../dataeditor.py:201
 msgid "Goto data"
-msgstr "Ir a Dados"
+msgstr "Accesati datele"
 
 #: ../dataeditor.py:202
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Elimina"
 
 #: ../dataeditor.py:207
 msgid "Add to screen"
-msgstr "Adicionar ecrã"
+msgstr "Adaugati pe ecran"
 
 #: ../dataeditor.py:319
 msgid "Request name;Bytes;Manual"
-msgstr "Nome da solicitação;Bytes;Manual"
+msgstr "Numele solicitarii;Octeti;Manual"
 
 #: ../dataeditor.py:354 ../dataeditor.py:1331
 msgid "Add"
-msgstr "Adicionar"
+msgstr "Adauga"
 
 #: ../dataeditor.py:361
 msgid "Send request bytes (HEX)"
-msgstr "Enviar bytes ecrã (HEX)"
+msgstr "Trimiteti octeti de solicitare (HEX)"
 
 #: ../dataeditor.py:363
 msgid "Receive bytes (HEX)"
-msgstr "Bytes recebidos (HEXA)"
+msgstr "Primiti octeti (HEX)"
 
 #: ../dataeditor.py:374
 msgid "Data length"
-msgstr "Comprimento dos dados"
+msgstr "Lungimea datelor"
 
 #: ../dataeditor.py:376
 msgid "Shift byte count"
-msgstr "Contagem octets desfasadoss"
+msgstr "Shift byte count"
 
 #: ../dataeditor.py:514
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nome dados;Byte de inicio;Desfasagem bit;Quantidade de bits;Endianess"
+msgstr "Nume date;Byte Start;Bit de offset;Numar de biti;Endianness"
 
 #: ../dataeditor.py:532 ../dataeditor.py:592
 msgid "Little"
-msgstr "Pequeno"
+msgstr "Mic"
 
 #: ../dataeditor.py:533 ../dataeditor.py:594
 msgid "Big"
-msgstr "Grande"
+msgstr "Mare"
 
 #: ../dataeditor.py:534 ../dataeditor.py:590
 msgid "Inherits globals"
-msgstr "Herdados globais"
+msgstr "Mosteniri globale"
 
 #: ../dataeditor.py:649
 msgid "No SDS"
-msgstr "Sem SDS"
+msgstr "Fara SDS"
 
 #: ../dataeditor.py:650
 msgid "Plant"
-msgstr "Plantar"
+msgstr "Instalatie"
 
 #: ../dataeditor.py:651
 msgid "After Sale"
-msgstr "Pós-venda"
+msgstr "Dupa vanzare"
 
 #: ../dataeditor.py:652
 msgid "Engineering"
-msgstr "Engenharia"
+msgstr "Inginerie"
 
 #: ../dataeditor.py:653 ../dataeditor.py:1728 ../ddt4all.py:169
 msgid "Supplier"
-msgstr "Fornecedor"
+msgstr "Furnizor"
 
 #: ../dataeditor.py:668
 msgid "Reload requests"
-msgstr "Recarregar pedidos"
+msgstr "Reincarcare cereri"
 
 #: ../dataeditor.py:669
 msgid "Add request"
-msgstr "Adicionar pedido"
+msgstr "Adaugati o solicitare"
 
 #: ../dataeditor.py:687
 msgid "Send bytes"
-msgstr "Bytes enviados"
+msgstr "Trimiteti octeti"
 
 #: ../dataeditor.py:688
 msgid "Receive bytes"
-msgstr "Bytes recebidos"
+msgstr "Primiti octeti"
 
 #: ../dataeditor.py:762
 msgid "Number of bits"
-msgstr "Numero de bits"
+msgstr "Numar de biti"
 
 #: ../dataeditor.py:763 ../dataeditor.py:932
 msgid "Signed"
-msgstr "Assinado"
+msgstr "Semnat"
 
 #: ../dataeditor.py:764
 msgid "Add item"
-msgstr "Adicionar entrada"
+msgstr "Adaugare element"
 
 #: ../dataeditor.py:765
 msgid "Del item"
-msgstr "Apagar entrada"
+msgstr "Sterge element"
 
 #: ../dataeditor.py:804
 msgid "New item"
-msgstr "Nova entrada"
+msgstr "Element nou"
 
 #: ../dataeditor.py:859
 msgid "Value;Text"
-msgstr "Valor;Texto"
+msgstr "Valoare; Text"
 
 #: ../dataeditor.py:875
 msgid "Number of bytes"
-msgstr "Numero de bytes"
+msgstr "Numar de octeti"
 
 #: ../dataeditor.py:876 ../dataeditor.py:931
 msgid "Unit"
-msgstr "Unidade"
+msgstr "Unitate"
 
 #: ../dataeditor.py:930
 msgid "Number of bit"
-msgstr "Numero de bits"
+msgstr "Numar de biti"
 
 #: ../dataeditor.py:933
 msgid "Format"
-msgstr "Formato"
+msgstr "Format"
 
 #: ../dataeditor.py:934
 msgid "Value = (AX+B) / C"
-msgstr "Valor =(AX+B) / C"
+msgstr "Valoare = (AX+B) / C"
 
 #: ../dataeditor.py:1010
 msgid "New"
-msgstr "Novo"
+msgstr "Nou"
 
 #: ../dataeditor.py:1011
 msgid "Duplicate selected"
-msgstr "Duplicar selecionado"
+msgstr "Duplicare selectie"
 
 #: ../dataeditor.py:1012
 msgid "Remove selected"
-msgstr "Remover selecionado"
+msgstr "Sterge selectia"
 
 #: ../dataeditor.py:1013
 msgid "Reload"
-msgstr "Recarregar"
+msgstr "Reincarca"
 
 #: ../dataeditor.py:1014
 msgid "Validate changes"
-msgstr "Validar mudanças"
+msgstr "Validati modificarile"
 
 #: ../dataeditor.py:1050
 msgid "Description"
-msgstr "Descrição"
+msgstr "Descriere"
 
 #: ../dataeditor.py:1056
 msgid "Data type"
-msgstr "Tipo de dados"
+msgstr "Tipul de date"
 
 #: ../dataeditor.py:1058
 msgid "Numeric"
-msgstr "Numérico"
+msgstr "Numeric"
 
 #: ../dataeditor.py:1059
 msgid "Numeric items"
-msgstr "Itens numéricos"
+msgstr "Articole numerice"
 
 #: ../dataeditor.py:1060
 msgid "Hex"
@@ -193,40 +192,40 @@ msgstr "Hex"
 #: ../dataeditor.py:1090 ../dataeditor.py:1096
 #, python-format
 msgid "Data is used by request %s"
-msgstr "Os dados são usados pela solicitação %s"
+msgstr "Datele sunt utilizate la cererea %s"
 
 #: ../dataeditor.py:1143
 msgid "New data"
-msgstr "Novo dado"
+msgstr "Date noi"
 
 #: ../dataeditor.py:1149
 msgid "Replace me with request description"
-msgstr "Substitua-me com o descritivo do pedido"
+msgstr "Inlocuiti-ma cu descrierea cererii"
 
 #: ../dataeditor.py:1295
 msgid "Data name;Description"
-msgstr "Nome dado;Descritivo"
+msgstr "Nume date;Descriere"
 
 #: ../dataeditor.py:1332
 msgid "Del"
-msgstr "Apagar"
+msgstr "Sterge"
 
 #: ../dataeditor.py:1333
 msgid "Refresh"
-msgstr "Refrescar"
+msgstr "Reimprospateaza"
 
 #: ../dataeditor.py:1334
 msgid "Move up"
-msgstr "Para cima"
+msgstr "Muta in sus"
 
 #: ../dataeditor.py:1335
 msgid "Check"
-msgstr "Verificar"
+msgstr "Verifica"
 
 #: ../dataeditor.py:1379
 #, python-format
 msgid "Request %s not found"
-msgstr "Pedido %s não encontrado"
+msgstr "Cererea %s nu a fost gasita"
 
 #: ../dataeditor.py:1399
 #, python-format
@@ -234,8 +233,8 @@ msgid ""
 "<font color=green>Request <font color=blue>'%s'</font> has no missing input "
 "values</font>"
 msgstr ""
-"<font color=green>Pedido <font color=blue>'%s'</font> não tem os valores "
-"seguintes perdidos</font>"
+"<font color=green>Cererea <font color=blue>'%s'</font> nu are nici o intrare "
+"lipsavalues</font>"
 
 #: ../dataeditor.py:1403
 #, python-format
@@ -243,8 +242,8 @@ msgid ""
 "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
 "font>"
 msgstr ""
-"<font color=red>Pedido <font color=blue>'%s'</font> tem os valores perdidos: "
-"</font>"
+"<font color=red>Cererea <font color=blue>'%s'</font> are intrari lipsa :</"
+"font>"
 
 #: ../dataeditor.py:1406
 #, python-format
@@ -253,67 +252,67 @@ msgstr "<font color=orange> - '%s'</font>"
 
 #: ../dataeditor.py:1504
 msgid "Delay;Request"
-msgstr "Atraso;Pedido"
+msgstr "Intarziere;Cerere"
 
 #: ../dataeditor.py:1597
 msgid "Screen initialization"
-msgstr "Inicialização ecrã"
+msgstr "Initializarea ecranului"
 
 #: ../dataeditor.py:1598
 msgid "Requests to send before screen drawing"
-msgstr "Pedidos a enviar antes fixar o ecrã"
+msgstr "Trimite cereri inainte de afisarea ecranului"
 
 #: ../dataeditor.py:1612
 msgid "Button name;Unique name"
-msgstr "Nome botão;Nome único"
+msgstr "Nume buton;Nume unic"
 
 #: ../dataeditor.py:1682
 msgid "ECU Function address"
-msgstr "Endereço da função ECU"
+msgstr "ECU Adresa functiei"
 
 #: ../dataeditor.py:1685
 msgid "ECU Protocol"
-msgstr "Protocolo ECU"
+msgstr "ECU Protocol"
 
 #: ../dataeditor.py:1687 ../dataeditor.py:1809
 msgid "Tool > Ecu ID (Hex)"
-msgstr "Ferramentas > ID Ecu (Hex)"
+msgstr "Instrument > Ecu ID (Hex)"
 
 #: ../dataeditor.py:1689 ../dataeditor.py:1810
 msgid "Ecu > Tool ID (Hex)"
-msgstr "Ecu > ID Ferramentas (Hex)"
+msgstr "Ecu > Instrument ID (Hex)"
 
 #: ../dataeditor.py:1691
 msgid "Coding"
-msgstr "Codificação"
+msgstr "Codificare"
 
 #: ../dataeditor.py:1695
 msgid "Big Endian"
-msgstr "Grande endian"
+msgstr "Mare Endian"
 
 #: ../dataeditor.py:1696
 msgid "Little Endian"
-msgstr "Pequeno endian"
+msgstr "Mic Endian"
 
 #: ../dataeditor.py:1703
 msgid "ECU Auto identification"
-msgstr "Identificação automática da ECU"
+msgstr "ECU Identificare automata"
 
 #: ../dataeditor.py:1715
 msgid "Diag version;Supplier;Soft;Version"
-msgstr "Versão Diag;Fornecedor;Soft; Versão"
+msgstr "Versiune Diag;Furnizor;Soft;Versiune"
 
 #: ../dataeditor.py:1723
 msgid "Add new"
-msgstr "Adicionar novo"
+msgstr "Adauga nou"
 
 #: ../dataeditor.py:1724
 msgid "Delete selected"
-msgstr "Apagar selecionado"
+msgstr "Sterge selectia"
 
 #: ../dataeditor.py:1725
 msgid "Diag version"
-msgstr "Versão diagnóstico"
+msgstr "Versiune Diag"
 
 #: ../dataeditor.py:1731 ../ddt4all.py:171
 msgid "Soft"
@@ -321,11 +320,11 @@ msgstr "Soft"
 
 #: ../dataeditor.py:1734 ../ddt4all.py:172
 msgid "Version"
-msgstr "Versão"
+msgstr "Versiune"
 
 #: ../ddt4all.py:166
 msgid "ECU name"
-msgstr "ECU"
+msgstr "ECU nume"
 
 #: ../ddt4all.py:167
 msgid "ID"
@@ -333,15 +332,17 @@ msgstr "ID"
 
 #: ../ddt4all.py:168
 msgid "Protocol"
-msgstr "Protocolo"
+msgstr "Protocol"
 
 #: ../ddt4all.py:170
 msgid "Diag"
 msgstr "Diag"
 
 #: ../ddt4all.py:173
+#, fuzzy
+#| msgid "Projects"
 msgid "Projets"
-msgstr "Projetos"
+msgstr "Proiecte"
 
 #: ../ddt4all.py:301
 msgid "DDT4All"
@@ -349,23 +350,23 @@ msgstr "DDT4All"
 
 #: ../ddt4all.py:305
 msgid "loaded ECUs in database."
-msgstr "ECU carregadas na base de dados."
+msgstr "ECU incarcate in baza de date"
 
 #: ../ddt4all.py:348
 msgid "Refresh rate (ms):"
-msgstr "Racio de refresco (ms):"
+msgstr "Rata de actualizare (ms):"
 
 #: ../ddt4all.py:355
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr "Pode atingir o tempo limite (ms) [0:AUTO] :"
+msgstr "Se poate expira timpul (ms) [0: AUTO] :"
 
 #: ../ddt4all.py:374
 msgid "Documentation"
-msgstr "Documentação"
+msgstr "Documentatie"
 
 #: ../ddt4all.py:375
 msgid "Screen"
-msgstr "Ecrã"
+msgstr "Ecran"
 
 #: ../ddt4all.py:376
 msgid "CAN Sniffer"
@@ -373,89 +374,87 @@ msgstr "CAN Sniffer"
 
 #: ../ddt4all.py:383
 msgid "Requests"
-msgstr "Pedidos"
+msgstr "Cereri"
 
 #: ../ddt4all.py:384
 msgid "Data"
-msgstr "Dados"
+msgstr "Date"
 
 #: ../ddt4all.py:385
 msgid "Buttons"
-msgstr "Botões"
+msgstr "Butoane"
 
 #: ../ddt4all.py:386
 msgid "Ecu parameters"
-msgstr "Parametros ECU"
+msgstr "Parametri ECU"
 
 #: ../ddt4all.py:398 ../ddt4all.py:535
 msgid "Screens"
-msgstr "Ecrãs"
+msgstr "Ecrane"
 
 #: ../ddt4all.py:420 ../ddt4all.py:511
 msgid "File"
-msgstr "Ficheiro"
+msgstr "Fisier"
 
 #: ../ddt4all.py:422
 msgid "Read DTC"
-msgstr "Ler DTC"
+msgstr "Cititi DTC"
 
 #: ../ddt4all.py:426
 msgid "Full log"
-msgstr "Log completo"
+msgstr "Jurnal complet"
 
 #: ../ddt4all.py:431
 msgid "Expert mode (enable writing)"
-msgstr ""
-"<font color=red>Modo Perito <font color=blue> Atenção! Modo Escritura</"
-"font></font>"
+msgstr "Mod expert (activare scriere)"
 
 #: ../ddt4all.py:436
 msgid "Auto refresh"
-msgstr "Auto refrescar"
+msgstr "Reimprospatare automata"
 
 #: ../ddt4all.py:441
 msgid "Refresh (one shot)"
-msgstr "Refrescar (uma vez)"
+msgstr "Reimprospatati (o singura data)"
 
 #: ../ddt4all.py:445
 msgid "Manual command"
-msgstr "Comando manual"
+msgstr "Comanda manuala"
 
 #: ../ddt4all.py:449
 msgid "Manual request"
-msgstr "Solicitação manual"
+msgstr "Cerere manuala"
 
 #: ../ddt4all.py:453
 msgid "Software flow control"
-msgstr "Controle de fluxo de software"
+msgstr ""
 
 #: ../ddt4all.py:465
 msgid "Zoom In"
-msgstr "Mais Zoom"
+msgstr "Mareste"
 
 #: ../ddt4all.py:466
 msgid "Zoom Out"
-msgstr "Reduzir o zoom"
+msgstr "Micsoreaza"
 
 #: ../ddt4all.py:493
 msgid "UI Edit"
-msgstr "Editar interface do usuário"
+msgstr "Editare UI"
 
 #: ../ddt4all.py:512
 msgid "Open XML"
-msgstr "Abrir XML"
+msgstr "Deschideti XML"
 
 #: ../ddt4all.py:513
 msgid "Identify ECU"
-msgstr ""
+msgstr "Identificati ECU"
 
 #: ../ddt4all.py:514
 msgid "Create New ECU"
-msgstr "Criar nova ECU"
+msgstr "Creati un nou ECU"
 
 #: ../ddt4all.py:515
 msgid "Save current ECU"
-msgstr "Salvar ECU atual"
+msgstr "Salvati ECU curent"
 
 #: ../ddt4all.py:517
 msgid "Save last record"
@@ -463,228 +462,231 @@ msgstr ""
 
 #: ../ddt4all.py:519
 msgid "Save ECU list"
-msgstr "Salvar lista de ECUs"
+msgstr "Salvati lista ECU"
 
 #: ../ddt4all.py:527
 msgid "Zip database"
-msgstr ""
+msgstr "Baza de date zip"
 
 #: ../ddt4all.py:537
 msgid "Action"
-msgstr "Ação"
+msgstr "Actiune"
 
 #: ../ddt4all.py:538
 msgid "New Category"
-msgstr "Nova categoria"
+msgstr "Categorie noua"
 
 #: ../ddt4all.py:539
 msgid "New Screen"
-msgstr "Novo ecrã"
+msgstr "Ecran nou"
 
 #: ../ddt4all.py:540
 msgid "Rename"
-msgstr "Renomear"
+msgstr "Redenumiti"
 
 #: ../ddt4all.py:548
 msgid "Plugins"
-msgstr ""
+msgstr "Plugin-uri"
 
 #: ../ddt4all.py:641
 msgid "Save database (keep '.zip' extension)"
-msgstr ""
+msgstr "Salvati baza de date (pastrati extensia \".zip\")"
 
 #: ../ddt4all.py:655
 msgid "Zipping XML database... (this can take a few minutes"
-msgstr ""
+msgstr "Arhivarea bazei de date XML ... (poate dura cateva minute)"
 
 #: ../ddt4all.py:658
 msgid "Zip job finished"
-msgstr ""
+msgstr "S-a terminat arhivarea"
 
 #: ../ddt4all.py:673
 msgid "Enter new name"
-msgstr "Introduzir novo nome"
+msgstr "Introduceti un nume nou"
 
 #: ../ddt4all.py:693
 msgid "Enter category name"
-msgstr "Introduzir nova categoria"
+msgstr "Introduceti numele categoriei"
 
 #: ../ddt4all.py:704
 msgid "Please select a category before creating new screen"
-msgstr "Por favor selecione uma categoria antes de criar novo ecrã"
+msgstr "Va rugam sa selectati o categorie inainte de a crea un ecran nou"
 
 #: ../ddt4all.py:711
 msgid "Enter screen name"
-msgstr "Introduza nome do ecrã"
+msgstr "Introduceti numele ecranului"
 
 #: ../ddt4all.py:774
 msgid "Scan options"
-msgstr "Opções de escaneo"
+msgstr "Optiuni de scanare"
 
 #: ../ddt4all.py:781 ../ddtplugins/card_programming.py:135
 msgid "CANCEL"
-msgstr ""
+msgstr "ANULARE"
 
 #: ../ddt4all.py:792
 msgid "Scanning CAN"
-msgstr "Escaneando CAN"
+msgstr "Scanare CAN"
 
 #: ../ddt4all.py:796
 msgid "Scanning KWP"
-msgstr "Escaneando KWP"
+msgstr "Scanarea KWP"
 
 #: ../ddt4all.py:837
 msgid "EDITION MODE"
-msgstr "MODO EDITOR"
+msgstr "MOD DE EDITARE"
 
 #: ../ddt4all.py:841
 msgid "CONNECTED"
-msgstr "CONECTADO"
+msgstr "CONECTAT"
 
 #: ../ddt4all.py:844
 msgid "DISCONNECTED"
-msgstr "DESCONETADO"
+msgstr "DECONECTAT"
 
 #: ../ddt4all.py:847
+#, fuzzy
+#| msgid "Save vehicle (keep '.ecu' extension)"
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Salvar ECU (manter extensão '.ecu')"
+msgstr "Salvati vehiculul (pastrati extensia '.ecu')"
 
 #: ../ddt4all.py:870 ../parameters.py:266
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Salvar ECU (manter extensão '.json')"
+msgstr "Salvati ECU (pastrati extensia \".json\")"
 
 #: ../ddt4all.py:907
+#, fuzzy
+#| msgid "Save vehicle (keep '.ecu' extension)"
 msgid "Save record (keep '.txt' extension)"
-msgstr "Salvar registro (manter a extensão '.txt')"
+msgstr "Salvati vehiculul (pastrati extensia '.ecu')"
 
 #: ../ddt4all.py:1093
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
-"<center>Este software é gratuito, portanto necessito dinheiro para comprar "
-"cabos/ECUs e por esta aplicação mais estavel</center>"
 
 #: ../ddt4all.py:1094
 msgid "Yes I contribute"
-msgstr "Sim, quero contribuir"
+msgstr "Da, contribui"
 
 #: ../ddt4all.py:1096
 msgid "No, I don't"
-msgstr "Não, obrigado"
+msgstr "Nu, nu vreu"
 
 #: ../ddt4all.py:1107
 msgid ""
 "<center>Thank you for you contribution, if nothing happens, please go to : "
 "https://github.com/cedricp/ddt4all</center>"
 msgstr ""
-"<center>Obrigado pela sua contribuição, se não ocorre nada, por favor va a: "
-"https://github.com/cedricp/ddt4all</center>"
 
 #: ../ddt4all.py:1136
 msgid "ELM port selection"
-msgstr "Seleção de porto ELM"
+msgstr "Selectie port ELM"
 
 #: ../ddt4all.py:1197
 msgid "Port speed"
-msgstr "Velocidade do porto"
+msgstr "Viteza portului"
 
 #: ../ddt4all.py:1209
 msgid "Connected mode"
-msgstr "Modo conetado"
+msgstr "Mod conectat"
 
 #: ../ddt4all.py:1210
 msgid "Edition mode"
-msgstr "Modo Editor"
+msgstr "Mod editare"
 
 #: ../ddt4all.py:1211
 msgid "ELM benchmark"
-msgstr "Testar ELM"
+msgstr "Referinta ELM"
 
 #: ../ddt4all.py:1215
 msgid "WiFi port : "
-msgstr "Porto WIFI: "
+msgstr "Port WiFi :"
 
 #: ../ddt4all.py:1225
 msgid "I'm aware that I can harm my car if badly used"
-msgstr "Estou consciente de que posso danificar o carro ao usar incorretamente"
+msgstr "Sunt constient ca imi pot strica masina daca este folosita prost"
 
 #: ../ddt4all.py:1235
 msgid "Dark style"
-msgstr ""
+msgstr "Stil intunecat"
 
 #: ../ddt4all.py:1243
 msgid "Change UART speed"
 msgstr ""
 
 #: ../ddt4all.py:1440
+#, fuzzy
+#| msgid "You must check the recommendations"
 msgid "You must check the recommandations"
-msgstr "Deve aceitar as recomendações"
+msgstr "Trebuie sa verificati recomandarile"
 
 #: ../ddt4all.py:1459
 msgid "Please select a communication port"
-msgstr "Deve elegir um porto de comunicação"
+msgstr "Va rugam sa selectati un port de comunicare"
 
 #: ../ddt4all.py:1499
 msgid "Using custom DDT database"
-msgstr "Usando base de dados DDT personalizada"
+msgstr "Utilizarea bazei de date DDT personalizate"
 
 #: ../ddt4all.py:1528
 msgid "No COM port selected"
-msgstr "Porto COM não selecionado"
+msgstr "Niciun port COM nu a fost selectat"
 
 #: ../ddt4all.py:1531
-#, python-format
+#, fuzzy, python-format
+#| msgid "Initialising ELM with speed %i..."
 msgid "Initilizing ELM with speed %i..."
-msgstr "Iniciando ELM à velocidade de %i..."
+msgstr "Initializeaza ELM cu viteza %i..."
 
 #: ../ddt4all.py:1537
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "Erro, Interface OBDLink-SX ou ELM não detetado "
+msgstr "Niciun ELM327 sau OBDLINK-SX nu a fost detectat in portul COM"
 
 #: ../elm.py:327 ../elm.py:329
 msgid "Error:"
-msgstr "Erro:"
+msgstr "Eroare:"
 
 #: ../elm.py:328
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM não conetado ou porto COM errado"
+msgstr "ELM nu este conectat sau port COM gresit"
 
 #: ../elm.py:379 ../elm.py:406 ../elm.py:432
 msgid "Connection to ELM was lost"
-msgstr "Coneção ELM perdida"
+msgstr "Conexiunea cu ELM a fost pierduta"
 
 #: ../elm.py:478
 msgid "TIMEOUT"
-msgstr "TIMEOUT Tempo esgotado"
+msgstr "TIMP EXPIRAT"
 
 #: ../elm.py:489
 msgid "Checking port speed:"
-msgstr "Verificando velocidade do porto:"
+msgstr "Verificarea vitezei portului:"
 
 #: ../elm.py:508
 msgid "Start COM speed :"
-msgstr "Iniciando COM a velocidade de:"
+msgstr ""
 
 #: ../elm.py:513
 msgid "ELM not responding"
-msgstr "ELM não responde"
+msgstr "ELM nu raspunde"
 
 #: ../elm.py:565
 msgid "Trying to open port"
-msgstr "Tentando abrir porto"
+msgstr "Incercare de a deschide portul"
 
 #: ../elm.py:592
 msgid "No ELM interface on port"
-msgstr "No há interface ELM neste porto"
+msgstr "Nu exista interfata ELM in port"
 
 #: ../elm.py:1439
 msgid "FAIL"
-msgstr "FALHA"
+msgstr "ESEC"
 
 #: ../elm.py:1444
 msgid "OK/TIMEOUT"
-msgstr "OK/TIMEOUT TEMPO ESGOTADO"
+msgstr "OK/TIMP EXPIRAT"
 
 #: ../elm.py:1449
 msgid "OK"
@@ -692,198 +694,206 @@ msgstr "OK"
 
 #: ../elm.py:1457
 msgid "Incompatible adapter on ARM core"
-msgstr "Adaptador com ARM incompatível"
+msgstr "Adaptor incompatibil pe miezul ARM"
 
 #: ../elm.py:1459
 msgid "Result: "
-msgstr "Resultado: "
+msgstr "Rezultat: "
 
 #: ../elm.py:1459
 msgid " succeeded from "
-msgstr " bem sucedidos sobre "
+msgstr " reusit din "
 
 #: ../elm.py:1459
 msgid "ELM Max version:"
-msgstr "Versão ELM máxima:"
+msgstr "ELM Versiune max:"
 
 #: ../package.py:49
 #, python-format
 msgid "Adding source file %s"
-msgstr ""
+msgstr "Adaugarea fisierului sursa %s"
 
 #: ../package.py:54
 #, python-format
 msgid "Adding plugin file %s"
-msgstr ""
+msgstr "Adaugarea fisierului plugin %s"
 
 #: ../parameters.py:349 ../parameters.py:378 ../parameters.py:402
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "Para editar este ecrã, primero deve exportar-se em formato .JSON"
+msgstr "Pentru a putea edita ecranul, exportati-l mai intai in format JSON"
 
 #: ../parameters.py:441
 msgid "Enter label name"
-msgstr "Introduzir nome etiqueta"
+msgstr "Introduceti numele etichetei"
 
 #: ../parameters.py:507
 msgid "Add button"
-msgstr "Adicionar botão"
+msgstr "Adaugati butonul"
 
 #: ../parameters.py:508
 msgid "Add label"
-msgstr "Adicionar etiqueta"
+msgstr "Adaugati eticheta"
 
 #: ../parameters.py:516
 msgid "Rename label"
-msgstr "Renomear etiqueta"
+msgstr "Redenumiti eticheta"
 
 #: ../parameters.py:517
 msgid "Change color"
-msgstr ""
+msgstr "Schimbare culoare"
 
 #: ../parameters.py:523
 msgid "Remove element"
-msgstr "Apagar elemento"
+msgstr "Eliminati elementul"
 
 #: ../parameters.py:639
+#, fuzzy
+#| msgid "Diagnostic session"
 msgid "Diagnotic session"
-msgstr "Sessão de dianóstico"
+msgstr "Sesiune de diagnosticare"
 
 #: ../parameters.py:640
 msgid "Input"
-msgstr "Entrada"
+msgstr "Intrare"
 
 #: ../parameters.py:641
 msgid "Output"
-msgstr "Saída"
+msgstr "Iesire"
 
 #: ../parameters.py:791
 msgid "XML file not found : "
-msgstr "Fichero XML não encontrado: "
+msgstr "Fisierul XML nu a fost gasit : "
 
 #: ../parameters.py:798
 msgid "Invalid DDT file"
-msgstr "Fichero DDT não valido"
+msgstr "Fisier DDT nevalid"
 
 #: ../parameters.py:874
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "S-a pierdut conexiunea cu ELM, incerc reconectarea ..."
 
 #: ../parameters.py:877
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Nu se poate reconecta ..."
 
 #: ../parameters.py:885
 msgid "Switching to session mode"
-msgstr "Mudar para modo sessão"
+msgstr "Trecere la modul sesiune"
 
 #: ../parameters.py:893
 msgid "Sending ELM request :"
-msgstr "Enviando petido ELM:"
+msgstr "Trimite solicitarea ELM :"
 
 #: ../parameters.py:895
 msgid "Blocked ELM request :"
-msgstr "Pedido ELM bloqueado:"
+msgstr "Cerere ELM blocata :"
 
 #: ../parameters.py:900
 msgid "Sending ELM request:"
-msgstr "Enviando pedido ELM:"
+msgstr "Trimite solicitarea ELM:"
 
 #: ../parameters.py:928
 msgid "Sending simulated ELM request :"
-msgstr "Enviando pedido ELM simulado:"
+msgstr "Trimite o cerere ELM simulata :"
 
 #: ../parameters.py:939
 msgid "Bad ELM response :"
-msgstr ""
+msgstr "Raspuns fals ELM :"
 
 #: ../parameters.py:942
 msgid "ELM response : "
-msgstr "Resposta ELM : "
+msgstr "Raspuns ELM : "
 
 #: ../parameters.py:1094
 msgid "Button request not found : "
-msgstr "Butão pedido não encontrado: "
+msgstr "Cerere de buton nu a fost gasita : "
 
 #: ../parameters.py:1108
 msgid "Sending request :"
-msgstr "Enviando pedido:"
+msgstr "Trimite solicitare :"
 
 #: ../parameters.py:1158
+#, fuzzy
+#| msgid "Request aborted (look at red parameters entries): "
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Pedido abortado (ver entradas de parametros em vermelho): "
+msgstr "Solicitare anulata (consultati intrarile cu parametri rosii): "
 
 #: ../parameters.py:1200
 msgid "Invalid"
-msgstr "Inválido"
+msgstr "Invalid"
 
 #: ../parameters.py:1221
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "ECU utilizeaza SDS "
 
 #: ../parameters.py:1294
 msgid "Cannot call request "
-msgstr "Não se pode realizar pedido de chamada "
+msgstr "Nu se poate apela cererea "
 
 #: ../parameters.py:1398
 msgid "Clearing DTC information"
-msgstr "Apagando informação DTC"
+msgstr "Stergerea informatiilor DTC"
 
 #: ../parameters.py:1410
+#, fuzzy
+#| msgid "No Clear DTC request for that ECU, will send default 14FF00"
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Não há pedidos ClearDTC para esta ECU, se enviará por defeito 14FF00"
+msgstr ""
+"Nici o solicitare de stergere DTC pentru acest ECU, se va trimite 14FF00 "
+"implicit"
 
 #: ../parameters.py:1414
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<center>Está prestes a apagar os erros DTC<center>"
+msgstr "<Center>Esti pe cale sa stergi codurile de diagnosticare</center>"
 
 #: ../parameters.py:1415
 msgid "<center>Ae you sure this is what you want.</center>"
-msgstr "<center>Tem a certeza que é isso que quer?</center>"
+msgstr "<center>Sunteti sigur ca asta doriti.</center>"
 
 #: ../parameters.py:1476
 msgid "Invalid response for ReadDTC command"
-msgstr "Resposta não válida para o comando ReadDTC"
+msgstr "Raspuns nevalid pentru comanda de citire DTC"
 
 #: ../parameters.py:1485
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "Citeste DTC a returnat o eroare"
 
 #: ../parameters.py:1493
 msgid "No DTC"
-msgstr "Sem DTC"
+msgstr "Fara DTC"
 
 #: ../parameters.py:1516
 msgid "Clear ALL DTC"
-msgstr "Apagar todos os DTC"
+msgstr "Stergeti TOT DTC"
 
 #: ../parameters.py:1522
 msgid "ECU trouble codes"
-msgstr "Códigos de erros ECU"
+msgstr "codurile de eroare ECU"
 
 #: ../parameters.py:1552
 msgid "Parsing screen "
-msgstr "Analizando ecrã "
+msgstr "Ecran de analiza "
 
 #: ../sniffer.py:139
 msgid "Values"
-msgstr ""
+msgstr "Valori"
 
 #: ../sniffer.py:142
 msgid "Waiting..."
-msgstr ""
+msgstr "Aşteptare..."
 
 #: ../sniffer.py:183
 msgid "Frame hex error : "
-msgstr ""
+msgstr "Cadru de eroare hex:"
 
 #: ../ddtplugins/ab90_reset.py:13
 msgid "AB90 AIRBAG Reset"
-msgstr ""
+msgstr "Resetare AIRBAG AB90"
 
 #: ../ddtplugins/ab90_reset.py:14 ../ddtplugins/megane3_ab_reset.py:14
 #: ../ddtplugins/rsat4_reset.py:14
 msgid "Airbag Tools"
-msgstr ""
+msgstr "Instrumente pentru airbag"
 
 #: ../ddtplugins/ab90_reset.py:24
 msgid ""
@@ -891,11 +901,13 @@ msgid ""
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
 msgstr ""
+"AB90 (Clio III)/2<br>VIRGINIZATOR AIRBAG<br><font color='red\">ACEST PLUGIN "
+"VA DEBLOCA "
 
 #: ../ddtplugins/ab90_reset.py:28 ../ddtplugins/megane3_ab_reset.py:28
 #: ../ddtplugins/rsat4_reset.py:28
 msgid "Check ACU Virgin"
-msgstr ""
+msgstr "Verificare ACU Virgin"
 
 #: ../ddtplugins/ab90_reset.py:29 ../ddtplugins/clio3_eps_reset.py:44
 #: ../ddtplugins/clio4_eps_reset.py:28 ../ddtplugins/laguna2_uch_reset.py:29
@@ -903,12 +915,12 @@ msgstr ""
 #: ../ddtplugins/megane3_ab_reset.py:29 ../ddtplugins/megane3_eps_reset.py:27
 #: ../ddtplugins/megane3_uch_reset.py:28 ../ddtplugins/rsat4_reset.py:29
 msgid "Waiting"
-msgstr ""
+msgstr "Asteptare"
 
 #: ../ddtplugins/ab90_reset.py:31 ../ddtplugins/megane3_ab_reset.py:31
 #: ../ddtplugins/rsat4_reset.py:31
 msgid "Virginize ACU"
-msgstr ""
+msgstr "Virginizeaza ACU"
 
 #: ../ddtplugins/ab90_reset.py:45 ../ddtplugins/card_programming.py:220
 #: ../ddtplugins/clio3_eps_reset.py:108 ../ddtplugins/clio4_eps_reset.py:44
@@ -917,23 +929,23 @@ msgstr ""
 #: ../ddtplugins/megane3_eps_reset.py:43 ../ddtplugins/megane3_uch_reset.py:44
 #: ../ddtplugins/rsat4_reset.py:45
 msgid "Cannot connect to ECU"
-msgstr ""
+msgstr "Nu se poate conecta la ECU"
 
 #: ../ddtplugins/ab90_reset.py:55 ../ddtplugins/clio3_eps_reset.py:133
 #: ../ddtplugins/laguna2_uch_reset.py:69 ../ddtplugins/megane2_uch_reset.py:65
 #: ../ddtplugins/megane3_ab_reset.py:55 ../ddtplugins/megane3_eps_reset.py:70
 #: ../ddtplugins/megane3_uch_reset.py:67 ../ddtplugins/rsat4_reset.py:65
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='orange'>RASPUNS NEASTEPTAT</font>"
 
 #: ../ddtplugins/ab90_reset.py:60 ../ddtplugins/megane3_ab_reset.py:63
 #: ../ddtplugins/rsat4_reset.py:59
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='red'>AVARIE DETECTATA</font>"
 
 #: ../ddtplugins/ab90_reset.py:62 ../ddtplugins/rsat4_reset.py:62
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='green'>NICI O AVARIE DETECTATA</font>"
 
 #: ../ddtplugins/ab90_reset.py:80 ../ddtplugins/clio3_eps_reset.py:161
 #: ../ddtplugins/clio4_eps_reset.py:97 ../ddtplugins/laguna2_uch_reset.py:94
@@ -941,7 +953,7 @@ msgstr ""
 #: ../ddtplugins/megane3_ab_reset.py:92 ../ddtplugins/megane3_eps_reset.py:95
 #: ../ddtplugins/megane3_uch_reset.py:84 ../ddtplugins/rsat4_reset.py:83
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr ""
+msgstr "<font color='green'>CURATARE EXECUTATA</font>"
 
 #: ../ddtplugins/ab90_reset.py:82 ../ddtplugins/clio3_eps_reset.py:163
 #: ../ddtplugins/clio4_eps_reset.py:99 ../ddtplugins/laguna2_uch_reset.py:96
@@ -949,222 +961,238 @@ msgstr ""
 #: ../ddtplugins/megane3_ab_reset.py:94 ../ddtplugins/megane3_eps_reset.py:97
 #: ../ddtplugins/megane3_uch_reset.py:86 ../ddtplugins/rsat4_reset.py:85
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr ""
+msgstr "<font color='red'>CURATARE ESUATA</font>\""
 
 #: ../ddtplugins/card_programming.py:16
 msgid "Megane/Scenic II card programming"
-msgstr ""
+msgstr "Programare carduri Megane/Scenic II"
 
 #: ../ddtplugins/card_programming.py:17
 msgid "Keys"
-msgstr ""
+msgstr "Chei"
 
 #: ../ddtplugins/card_programming.py:119
 msgid "ENTER AFTER SALE MODE"
-msgstr ""
+msgstr "INTRATI IN MODUL DE DUPA VANZARE"
 
 #: ../ddtplugins/card_programming.py:131
 msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
+"<font color='red'>MEGANE II PROGRAMARE CARD<br>EXPERIMENTAL : NU ESTE TESTAT "
+"YET</font>"
 
 #: ../ddtplugins/card_programming.py:133
 msgid "LEARN"
-msgstr ""
+msgstr "INVATA"
 
 #: ../ddtplugins/card_programming.py:134
 msgid "VALIDATE"
-msgstr ""
+msgstr "VALIDEAZA"
 
 #: ../ddtplugins/card_programming.py:137
 msgid "Algo 2"
-msgstr ""
+msgstr "Algo 2"
 
 #: ../ddtplugins/card_programming.py:148
 msgid "ISK"
-msgstr ""
+msgstr "ISK"
 
 #: ../ddtplugins/card_programming.py:150
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 #: ../ddtplugins/card_programming.py:155
 msgid "Num key learnt"
-msgstr ""
+msgstr "Nume cheie invatat"
 
 #: ../ddtplugins/card_programming.py:157
 msgid "CARD IDE"
-msgstr ""
+msgstr "CARD IDE"
 
 #: ../ddtplugins/card_programming.py:211
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
+msgstr "Nu se poate obtine ISK, verifica conexiunile si compatibilitatea UCH"
 
 #: ../ddtplugins/card_programming.py:246
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
-msgstr ""
+msgstr "<font color='red'>COD PIN NERECUNOSCUT</font>"
 
 #: ../ddtplugins/card_programming.py:252
 msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>COD PIN BUN / INVATARE CHEIE</font>"
 
 #: ../ddtplugins/card_programming.py:258
 msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>COD PIN BUN / INVATARE UCH</font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:17
 msgid "Modus/Clio III EPS Reset"
-msgstr ""
+msgstr "Resetare EPS Modus/Clio III"
 
 #: ../ddtplugins/clio3_eps_reset.py:18 ../ddtplugins/clio4_eps_reset.py:14
 #: ../ddtplugins/megane3_eps_reset.py:14
 msgid "EPS Tools"
-msgstr ""
+msgstr "Instrumente pentru EPS"
 
 #: ../ddtplugins/clio3_eps_reset.py:41
 msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Modus/Clio III VIRGINIZATOR EPS<br><font color='red'>ACEST PLUGIN VA RESETA "
+"DATELE EPS IMMO<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</"
+"font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:43
 msgid "BLANK STATUS & VIN READ"
-msgstr ""
+msgstr "STERGE STATUS SI CITESTE VIN"
 
 #: ../ddtplugins/clio3_eps_reset.py:46 ../ddtplugins/clio4_eps_reset.py:30
 #: ../ddtplugins/megane3_eps_reset.py:29
 msgid "Virginize EPS"
-msgstr ""
+msgstr "Virginizare EPS"
 
 #: ../ddtplugins/clio3_eps_reset.py:52
 msgid "VIN - READ"
-msgstr ""
+msgstr "VIN - CITESTE"
 
 #: ../ddtplugins/clio3_eps_reset.py:57
 msgid "VIN - WRITE"
-msgstr ""
+msgstr "VIN - SCRIE"
 
 #: ../ddtplugins/clio3_eps_reset.py:61
 msgid "Write VIN"
-msgstr ""
+msgstr "Scrie VIN"
 
 #: ../ddtplugins/clio3_eps_reset.py:88
 msgid "<font color='red'>VIN - INVALID</font>"
-msgstr ""
+msgstr "<font color='red'>VIN - INVALID</font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:92
 msgid "<font color='res'>VIN - BAD LENGTH</font>"
-msgstr ""
+msgstr "<font color='res'>VIN - LUNGIME FALSA</font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:100
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
-msgstr ""
+msgstr "<font color='orange'>SCRIERE VIN ESUATA</font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:103
 msgid "<font color='green'>VIN WRITE OK</font>"
-msgstr ""
+msgstr "<font color='green'>SCRIERE VIN BINE</font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:126 ../ddtplugins/clio4_eps_reset.py:64
 #: ../ddtplugins/megane3_eps_reset.py:62
 msgid "<font color='green'>EPS virgin</font>"
-msgstr ""
+msgstr "<font color='green'>EPS virgin</font>"
 
 #: ../ddtplugins/clio3_eps_reset.py:130 ../ddtplugins/clio4_eps_reset.py:69
 #: ../ddtplugins/megane3_eps_reset.py:67
 msgid "<font color='red'>EPS coded</font>"
-msgstr ""
+msgstr "<font color='red'>EPS codat</font>"
 
 #: ../ddtplugins/clio4_eps_reset.py:13
 msgid "Clio IV EPS Reset"
-msgstr ""
+msgstr "Clio IV EPS Reset"
 
 #: ../ddtplugins/clio4_eps_reset.py:25
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Clio IV VIRGINIZATOR EPS<br><font color='red'>ACEST PLUGIN VA RESETA DATELE "
+"IMMO<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/clio4_eps_reset.py:27 ../ddtplugins/megane3_eps_reset.py:26
 msgid "Check EPS Virgin"
-msgstr ""
+msgstr "Verifica EPS Virgin"
 
 #: ../ddtplugins/clio4_eps_reset.py:59 ../ddtplugins/megane3_eps_reset.py:57
 msgid "<font color='green'>EPS not operational</font>"
-msgstr ""
+msgstr "<font color='green'>EPS nu functioneaza</font>"
 
 #: ../ddtplugins/clio4_eps_reset.py:72
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='red'>RASPUNS NEASTEPTAT</font>"
 
 #: ../ddtplugins/laguna2_uch_reset.py:14
 msgid "Laguna II UCH Reset"
-msgstr ""
+msgstr "Laguna II UCH Reset"
 
 #: ../ddtplugins/laguna2_uch_reset.py:15 ../ddtplugins/laguna3_uch_reset.py:14
 #: ../ddtplugins/megane2_uch_reset.py:15 ../ddtplugins/megane3_uch_reset.py:14
 msgid "UCH Tools"
-msgstr "Ferramentas UCH"
+msgstr "Instrumente pentru UCH"
 
 #: ../ddtplugins/laguna2_uch_reset.py:26
 msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA II VIRGINIZATOR UCH<br><font color='red'>ACEST PLUGIN VA STERGE UCH-"
+"ul TAU<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/laguna2_uch_reset.py:28 ../ddtplugins/laguna3_uch_reset.py:27
 #: ../ddtplugins/megane2_uch_reset.py:27 ../ddtplugins/megane3_uch_reset.py:27
 msgid "Check UCH Virgin"
-msgstr ""
+msgstr "Verifica UCH Virgin"
 
 #: ../ddtplugins/laguna2_uch_reset.py:31 ../ddtplugins/laguna3_uch_reset.py:30
 #: ../ddtplugins/megane2_uch_reset.py:30 ../ddtplugins/megane3_uch_reset.py:30
 msgid "Virginize UCH"
-msgstr ""
+msgstr "Virginizare UCH"
 
 #: ../ddtplugins/laguna2_uch_reset.py:61 ../ddtplugins/laguna3_uch_reset.py:58
 #: ../ddtplugins/megane2_uch_reset.py:57 ../ddtplugins/megane3_uch_reset.py:59
 msgid "<font color='green'>UCH virgin</font>"
-msgstr ""
+msgstr "<font color='green'>UCH virgin</font>"
 
 #: ../ddtplugins/laguna2_uch_reset.py:66 ../ddtplugins/laguna3_uch_reset.py:63
 #: ../ddtplugins/megane2_uch_reset.py:62 ../ddtplugins/megane3_uch_reset.py:64
 msgid "<font color='red'>UCH coded</font>"
-msgstr ""
+msgstr "<font color='red'>UCH codat</font>"
 
 #: ../ddtplugins/laguna3_uch_reset.py:13
 msgid "Laguna III UCH Reset"
-msgstr ""
+msgstr "Laguna III UCH Reset"
 
 #: ../ddtplugins/laguna3_uch_reset.py:25
 msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA III VIRGINIZATOR UCH<br><font color='red'>ACEST PLUGIN VA STERGE UCH-"
+"ul TAU<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/megane2_uch_reset.py:14
 msgid "Megane/Scenic II UCH Reset"
-msgstr ""
+msgstr "Megane/Scenic II UCH Reset"
 
 #: ../ddtplugins/megane2_uch_reset.py:25
 msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE II VIRGINIZATOR UCH<br><font color='red'>ACEST PLUGIN VA STERGE UCH-"
+"ul TAU<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/megane3_ab_reset.py:13
 msgid "Megane3 AIRBAG Reset"
-msgstr ""
+msgstr "Megane3 AIRBAG Reset"
 
 #: ../ddtplugins/megane3_ab_reset.py:24
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Megane III<br>VIRGINIZATOR AIRBAG<br><font color='red'>ACEST PLUGIN VA "
+"DEBLOCA DATELE DE AVARIE A AIRBAG-ului<br>NU MERGE MAI DEPARTE, DACA NU AI "
+"IDEE CE INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/megane3_eps_reset.py:13
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
-msgstr ""
+msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 
 #: ../ddtplugins/megane3_eps_reset.py:24
 msgid ""
@@ -1172,20 +1200,25 @@ msgid ""
 "PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
 "MEANS</font>"
 msgstr ""
+"ZOE/FLENCE/Megane III/Scenic III VIRGINIZATOR EPS<br><font color='red'>ACEST "
+"PLUGIN VA RESETA DATELE EPS IMMO<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE "
+"INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/megane3_uch_reset.py:13
 msgid "Megane/Scenic III UCH Reset"
-msgstr ""
+msgstr "Megane/Scenic III UCH Reset"
 
 #: ../ddtplugins/megane3_uch_reset.py:25
 msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE III VIRGINIZATOR UCH<br><font color='red'>ACEST PLUGIN VA STERGE UCH-"
+"ul TAU<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/rsat4_reset.py:13
 msgid "RSAT4 AIRBAG Reset"
-msgstr ""
+msgstr "RSAT4 AIRBAG Reset"
 
 #: ../ddtplugins/rsat4_reset.py:24
 msgid ""
@@ -1193,30 +1226,37 @@ msgid ""
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY "
+"ph1/2<br>VIRGINIZATOR AIRBAG<br><font color='red'>ACEST PLUGIN VA DEBLOCA "
+"DATELE DE AVARIE ALE AIRBAG-ului<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE "
+"INSEAMNA ASTA</font>"
 
 #: ../ddtplugins/vin_crc.py:18
 msgid "CRC calculator"
-msgstr ""
+msgstr "Calculator CRC"
 
 #: ../ddtplugins/vin_crc.py:19
 msgid "VIN"
-msgstr ""
+msgstr "VIN"
 
 #: ../ddtplugins/vin_crc.py:44
 msgid "CRC CALCULATOR"
-msgstr ""
+msgstr "CALCULATOR CRC"
+
+#~ msgid "Cannot load plugin "
+#~ msgstr "Pluginul nu se poate incarca"
 
 #~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "ERRO - WIFI não suporta racio de bauds"
+#~ msgstr "EROARE - Wifi nu accepta modificarea ratei de transfer"
 
 #~ msgid "Changing baud rate to:"
-#~ msgstr "Trocando bauds a:"
+#~ msgstr "Schimbarea ratei de transfer la:"
 
 #~ msgid "ERROR - command not supported"
-#~ msgstr "ERRO - comando não suportado"
+#~ msgstr "EROARE - comanda nu este acceptata"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
-#~ msgstr "ERROR: racio não suportado, voltando atrás."
+#~ msgstr "EROARE - rata nu este acceptata. Hai sa ne intoarcem."
 
 #~ msgid "ERROR - something went wrong. Let's get back."
-#~ msgstr "ERRO - Algo correu mal, voltando atrás."
+#~ msgstr "EROARE - ceva nu a mers bine. Hai sa ne intoarcem."

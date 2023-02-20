@@ -1,29 +1,22 @@
 # -*- coding: utf-8 -*-
 
+import string
 import time
-import ecu
-from uiutils import *
-try:
-    a = unicode("")
-except:
-    def unicode(a):
-        return a
-try: 
-    qt5 = True
-    import PyQt5.QtGui as gui
-    import PyQt5.QtCore as core
-    import PyQt5.QtWidgets as widgets
-    def utf8(string):
-        return string
-except:
-    qt5 = False
-    import PyQt4.QtGui as gui
-    import PyQt4.QtGui as widgets
-    import PyQt4.QtCore as core
-    def utf8(string):
-        return unicode(string.toUtf8(), encoding="UTF8")
 
-import options, string
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as widgets
+
+import ecu
+import options
+
+
+def unicode(a):
+    return a
+
+
+def utf8(string):
+    return string
+
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -35,6 +28,7 @@ __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
 _ = options.translator('ddt4all')
+
 
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
@@ -76,6 +70,7 @@ class snifferThread(core.QThread):
             options.elm.monitor_can_bus(self.senddata)
 
         self.running = False
+
 
 class sniffer(widgets.QWidget):
     def __init__(self, parent=None):
@@ -149,10 +144,7 @@ class sniffer(widgets.QWidget):
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
-        if not qt5:
-            self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
-        else:
-            self.table.horizontalHeader().setSectionResizeMode(0, widgets.QHeaderView.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(0, widgets.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:

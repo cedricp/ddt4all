@@ -5,51 +5,50 @@
    Borrowed code from PyRen (modified for this use)
 '''
 
-import options
-
-import serial
-from serial.tools import list_ports
-
-import sys
 import os
 import re
-import time
 import string
+import sys
+import time
 from datetime import datetime
+
+import options
+import serial
+from serial.tools import list_ports
 
 _ = options.translator('ddt4all')
 
 snat = {
-        "01": "760", "02": "724", "04": "762", "06": "791", "07": "771", "08": "778", "09": "7EB", "0D": "775",
-        "0E": "76E", "0F": "770", "11": "7C9", "13": "732", "16": "18DAF271", "1A": "731", "1B": "7AC", "1C": "76B",
-        "1E": "768", "23": "773", "24": "77D", "25": "700", "26": "765", "27": "76D", "28": "7D7", "29": "764",
-        "2A": "76F", "2B": "735", "2C": "772", "2D": "18DAF12D", "2E": "7BC", "2F": "76C", "32": "776", "3A": "7D2",
-        "40": "727", "41": "18DAF1D2", "46": "7CF", "47": "7A8", "4D": "7BD", "50": "738", "51": "763", "57": "767",
-        "58": "767", "59": "734", "5B": "7A5", "60": "18DAF160", "61": "7BA", "62": "7DD", "63": "73E", "64": "7D5",
-        "66": "739", "67": "793", "68": "77E", "6B": "7B5", "6E": "7E9", "73": "18DAF273", "77": "7DA", "78": "7BD",
-        "79": "7EA", "7A": "7E8", "7C": "77C", "81": "761", "82": "7AD", "86": "7A2", "87": "7A0", "91": "7ED",
-        "93": "7BB", "95": "7EC", "97": "7C8", "A1": "76C", "A5": "725", "A6": "726", "A7": "733", "A8": "7B6",
-        "C0": "7B9", "D0": "18DAF1D0", "D1": "7EE", "D2": "18DAF1D2", "D3": "7EE", "D6": "18DAF2D6", "DA": "18DAF1DA",
-        "DB": "18DAF1DB", "DE": "69C", "DF": "18DAF1DF", "E0": "18DAF1E0", "E1": "18DAF1E1", "E2": "18DAF1E2",
-        "E3": "18DAF1E3", "E4": "757", "E6": "484", "E7": "7EC", "E8": "5C4", "E9": "762", "EA": "4B3", "EB": "5B8",
-        "EC": "5B7", "ED": "704", "F7": "736", "F8": "737", "FA": "77B", "FD": "76F", "FE": "76C", "FF": "7D0"
+    "01": "760", "02": "724", "04": "762", "06": "791", "07": "771", "08": "778", "09": "7EB", "0D": "775",
+    "0E": "76E", "0F": "770", "11": "7C9", "13": "732", "16": "18DAF271", "1A": "731", "1B": "7AC", "1C": "76B",
+    "1E": "768", "23": "773", "24": "77D", "25": "700", "26": "765", "27": "76D", "28": "7D7", "29": "764",
+    "2A": "76F", "2B": "735", "2C": "772", "2D": "18DAF12D", "2E": "7BC", "2F": "76C", "32": "776", "3A": "7D2",
+    "40": "727", "41": "18DAF1D2", "46": "7CF", "47": "7A8", "4D": "7BD", "50": "738", "51": "763", "57": "767",
+    "58": "767", "59": "734", "5B": "7A5", "60": "18DAF160", "61": "7BA", "62": "7DD", "63": "73E", "64": "7D5",
+    "66": "739", "67": "793", "68": "77E", "6B": "7B5", "6E": "7E9", "73": "18DAF273", "77": "7DA", "78": "7BD",
+    "79": "7EA", "7A": "7E8", "7C": "77C", "81": "761", "82": "7AD", "86": "7A2", "87": "7A0", "91": "7ED",
+    "93": "7BB", "95": "7EC", "97": "7C8", "A1": "76C", "A5": "725", "A6": "726", "A7": "733", "A8": "7B6",
+    "C0": "7B9", "D0": "18DAF1D0", "D1": "7EE", "D2": "18DAF1D2", "D3": "7EE", "D6": "18DAF2D6", "DA": "18DAF1DA",
+    "DB": "18DAF1DB", "DE": "69C", "DF": "18DAF1DF", "E0": "18DAF1E0", "E1": "18DAF1E1", "E2": "18DAF1E2",
+    "E3": "18DAF1E3", "E4": "757", "E6": "484", "E7": "7EC", "E8": "5C4", "E9": "762", "EA": "4B3", "EB": "5B8",
+    "EC": "5B7", "ED": "704", "F7": "736", "F8": "737", "FA": "77B", "FD": "76F", "FE": "76C", "FF": "7D0"
 }
 
 dnat = {
-        "01": "740", "02": "704", "04": "742", "06": "790", "07": "751", "08": "758", "09": "7E3", "0D": "755",
-        "0E": "74E", "0F": "750", "11": "7C3", "13": "712", "15": "18DA15F1", "16": "18DA71F2", "18": "18DA18F1",
-        "1A": "711", "1B": "7A4", "1C": "74B", "1E": "748", "23": "753", "24": "75D", "25": "70C", "26": "745",
-        "27": "74D", "28": "78A", "29": "744", "2A": "74F", "2B": "723", "2C": "752", "2D": "18DA2DF1", "2E": "79C",
-        "2F": "74C", "32": "756", "3A": "7D6", "40": "707", "41": "18DAD0F1", "46": "7CD", "47": "788", "4D": "79D",
-        "50": "718", "51": "743", "57": "747", "58": "747", "59": "714", "5B": "785", "60": "18DA60F1", "61": "7B7",
-        "62": "7DC", "63": "73D", "64": "7D4", "66": "719", "67": "792", "68": "75A", "6B": "795", "6E": "7E1",
-        "73": "18DA73F2", "77": "7CA", "78": "746", "79": "7E2", "7A": "7E0", "7B": "18DA72F2", "7C": "75C",
-        "81": "73F", "82": "7AA", "86": "782", "87": "780", "91": "7E5", "93": "79B", "95": "7E4", "97": "7D8",
-        "A1": "74C", "A5": "705", "A6": "706", "A7": "713", "A8": "796", "C0": "799", "D0": "18DAD0F1", "D1": "7E6",
-        "D2": "18DAD2F1", "D3": "7E6", "D6": "18DAD6F2", "DA": "18DADAF1", "DB": "18DADBF1", "DE": "6BC",
-        "DF": "18DADFF1", "E0": "18DAE0F1", "E1": "18DAE1F1", "E2": "18DAE2F1", "E3": "18DAE3F1", "E4": "74F",
-        "E6": "622", "E7": "7E4", "E8": "644", "E9": "742", "EA": "79A", "EB": "638", "EC": "637", "ED": "714",
-        "F7": "716", "F8": "717", "FA": "75B", "FD": "74F", "FE": "74C", "FF": "7D0"
+    "01": "740", "02": "704", "04": "742", "06": "790", "07": "751", "08": "758", "09": "7E3", "0D": "755",
+    "0E": "74E", "0F": "750", "11": "7C3", "13": "712", "15": "18DA15F1", "16": "18DA71F2", "18": "18DA18F1",
+    "1A": "711", "1B": "7A4", "1C": "74B", "1E": "748", "23": "753", "24": "75D", "25": "70C", "26": "745",
+    "27": "74D", "28": "78A", "29": "744", "2A": "74F", "2B": "723", "2C": "752", "2D": "18DA2DF1", "2E": "79C",
+    "2F": "74C", "32": "756", "3A": "7D6", "40": "707", "41": "18DAD0F1", "46": "7CD", "47": "788", "4D": "79D",
+    "50": "718", "51": "743", "57": "747", "58": "747", "59": "714", "5B": "785", "60": "18DA60F1", "61": "7B7",
+    "62": "7DC", "63": "73D", "64": "7D4", "66": "719", "67": "792", "68": "75A", "6B": "795", "6E": "7E1",
+    "73": "18DA73F2", "77": "7CA", "78": "746", "79": "7E2", "7A": "7E0", "7B": "18DA72F2", "7C": "75C",
+    "81": "73F", "82": "7AA", "86": "782", "87": "780", "91": "7E5", "93": "79B", "95": "7E4", "97": "7D8",
+    "A1": "74C", "A5": "705", "A6": "706", "A7": "713", "A8": "796", "C0": "799", "D0": "18DAD0F1", "D1": "7E6",
+    "D2": "18DAD2F1", "D3": "7E6", "D6": "18DAD6F2", "DA": "18DADAF1", "DB": "18DADBF1", "DE": "6BC",
+    "DF": "18DADFF1", "E0": "18DAE0F1", "E1": "18DAE1F1", "E2": "18DAE2F1", "E3": "18DAE3F1", "E4": "74F",
+    "E6": "622", "E7": "7E4", "E8": "644", "E9": "742", "EA": "79A", "EB": "638", "EC": "637", "ED": "714",
+    "F7": "716", "F8": "717", "FA": "75B", "FD": "74F", "FE": "74C", "FF": "7D0"
 }
 
 # Code snippet from https://github.com/rbei-etas/busmaster
@@ -106,7 +105,6 @@ negrsp = {"10": "NR: General Reject",
           "92": "NR: Voltage Too High",
           "93": "NR: Voltage Too Low"
           }
-
 
 cmdb = '''
 #v1.0 ;AC P; ATZ                   ; Z                  ; reset all
@@ -224,6 +222,7 @@ cmdb = '''
 #v2.1 ;AC  ; ATCTM5                ; CTM5               ; set Timer Multiplier to 5
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
+
 
 def get_can_addr(txa):
     for d in dnat.keys():
@@ -434,7 +433,6 @@ class Port:
             self.connectionStatus = False
             self.close()
 
-
     def expect_carriage_return(self, time_out=1):
         tb = time.time()  # start time
         self.buff = b""
@@ -479,7 +477,6 @@ class Port:
             if (tc - tb) > time_out:
                 return self.buff + _("TIMEOUT")
 
-
         self.close()
         self.connectionStatus = False
         return ''
@@ -489,7 +486,7 @@ class Port:
         self.hdr.timeout = 2
 
         for s in [38400, 115200, 230400, 57600, 9600, 500000]:
-            print("\r\t\t\t\t\r" + _("Checking port speed:"), s,)
+            print("\r\t\t\t\t\r" + _("Checking port speed:"), s, )
             sys.stdout.flush()
 
             self.hdr.baudrate = s
@@ -515,6 +512,7 @@ class Port:
                     break
         print("\n" + _("ELM not responding"))
         return False
+
 
 class ELM:
     '''ELM327 class'''
@@ -564,7 +562,7 @@ class ELM:
 
     def __init__(self, portName, rate, adapter_type="STD", maxspeed="No"):
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
-            print(_("Trying to open port") + "%s @ %i" % (portName, speed))
+            print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
             self.sim_mode = options.simulation_mode
             self.portName = portName
             self.adapter_type = adapter_type
@@ -589,15 +587,15 @@ class ELM:
             # Purge unread data
             self.port.expect(">")
             res = self.send_raw("ATZ")
-            if not 'ELM' in res:
-                options.elm_failed = True
-                options.last_error = _("No ELM interface on port") + " %s" % portName
-            else:
+            if 'ELM' in res or 'OBDII' in res:
                 options.last_error = ""
                 options.elm_failed = False
                 self.connectionStatus = True
                 rate = speed
                 break
+            else:
+                options.elm_failed = True
+                options.last_error = _("No ELM interface on port") + " %s" % portName
 
         try:
             maxspeed = int(maxspeed)
@@ -692,7 +690,6 @@ class ELM:
         '''
         self.rsp_cache = {}
 
-
     def request(self, req, positive='', cache=True, serviceDelay="0"):
         ''' Check if request is saved in L2 cache.
             If not then
@@ -761,14 +758,14 @@ class ELM:
 
         # If we use wifi and there was more than keepAlive seconds of silence then reinit tcp
         if (tb - self.lastCMDtime) > self.keepAlive:
-          self.port.init_wifi(True)
+            self.port.init_wifi(True)
 
         # If we are on CAN and there was more than keepAlive seconds of silence and
         # start_session_can was executed then send startSession command again
         # if ((tb-self.lastCMDtime)>self.keepAlive and self.currentprotocol=="can"
         if ((tb - self.lastCMDtime) > self.keepAlive
-            and self.currentprotocol == "can"
-            and len(self.startSession) > 0):
+                and self.currentprotocol == "can"
+                and len(self.startSession) > 0):
 
             # log KeepAlive event
             if self.lf != 0:
@@ -798,7 +795,7 @@ class ELM:
         return cmdrsp
 
     def set_can_timeout(self, value):
-        val = value / 4
+        val = value // 4
         if val > 255:
             val = 255
         val = hex(val)[2:].upper()
@@ -921,7 +918,7 @@ class ELM:
 
         if len(result) / 2 >= nbytes and noerrors:
             # Remove unnecessary bytes
-            result = result[0:nbytes*2]
+            result = result[0:nbytes * 2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
@@ -972,11 +969,12 @@ class ELM:
 
             tb = time.time()  # time of sending (ff)
 
-            if Fn > 1 and Fc == (Fn-1):  # set elm timeout to maximum for last response on long command
+            if Fn > 1 and Fc == (Fn - 1):  # set elm timeout to maximum for last response on long command
                 self.send_raw('AT ST FF')
                 self.send_raw('AT AT 1')
 
-            if (Fc == 0 or Fc == (Fn-1)) and len(raw_command[Fc])<16:  #first or last frame in command and len<16 (bug in ELM)
+            if (Fc == 0 or Fc == (Fn - 1)) and len(
+                    raw_command[Fc]) < 16:  # first or last frame in command and len<16 (bug in ELM)
                 frsp = self.send_raw(raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
             else:
                 frsp = self.send_raw(raw_command[Fc])
@@ -1093,7 +1091,7 @@ class ELM:
             noerrors = False
 
         if len(result) / 2 >= nbytes and noerrors:
-            result = result[0:nbytes*2]
+            result = result[0:nbytes * 2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
@@ -1171,7 +1169,7 @@ class ELM:
         if options.simulation_mode:
             return
 
-        #self.cmd('AT WS')
+        # self.cmd('AT WS')
         self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT H0")
@@ -1222,7 +1220,7 @@ class ELM:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
-        #self.cmd("AT WS")
+        # self.cmd("AT WS")
         self.cmd("AT E1")
         self.cmd("AT S0")
         self.cmd("AT H0")
@@ -1338,7 +1336,7 @@ class ELM:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
-        #self.cmd("AT WS")
+        # self.cmd("AT WS")
         self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT D1")
@@ -1362,14 +1360,14 @@ class ELM:
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("AT SH 81 " + addr + " F1")     # set address
-        self.cmd("AT SW 96")                     # wakeup message period 3 seconds
+        self.cmd("AT SH 81 " + addr + " F1")  # set address
+        self.cmd("AT SW 96")  # wakeup message period 3 seconds
         self.cmd("AT WM 81 " + addr + " F1 3E")  # set wakeup message
-        self.cmd("AT IB10")                      # baud rate 10400
-        self.cmd("AT ST FF")                     # set timeout to 1 second
+        self.cmd("AT IB10")  # baud rate 10400
+        self.cmd("AT ST FF")  # set timeout to 1 second
         self.cmd("AT SP 3")
-        self.cmd("AT AT 0")                      # enable adaptive timing
-        self.cmd("AT SI")                        # ISO8 needs slow init
+        self.cmd("AT AT 0")  # enable adaptive timing
+        self.cmd("AT SI")  # ISO8 needs slow init
         self.cmd("AT AT 1")
 
     def set_iso_addr(self, addr, ecu):
@@ -1388,26 +1386,26 @@ class ELM:
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("AT SH 81 " + addr + " F1")     # set address
-        self.cmd("AT SW 96")                     # wakeup message period 3 seconds
+        self.cmd("AT SH 81 " + addr + " F1")  # set address
+        self.cmd("AT SW 96")  # wakeup message period 3 seconds
         self.cmd("AT WM 81 " + addr + " F1 3E")  # set wakeup message
-        self.cmd("AT IB10")                      # baud rate 10400
-        self.cmd("AT ST FF")                     # set timeout to 1 second
-        self.cmd("AT AT 0")                      # disable adaptive timing
+        self.cmd("AT IB10")  # baud rate 10400
+        self.cmd("AT ST FF")  # set timeout to 1 second
+        self.cmd("AT AT 0")  # disable adaptive timing
 
         if options.opt_si:
-            self.cmd("AT SP 4")                  # slow init mode 4
-            self.cmd("AT IIA " + addr)           # address for slow init
+            self.cmd("AT SP 4")  # slow init mode 4
+            self.cmd("AT IIA " + addr)  # address for slow init
             rsp = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
 
         if 'OK' not in self.lastinitrsp:
-            self.cmd("AT SP 5")                   # fast init mode 5
+            self.cmd("AT SP 5")  # fast init mode 5
             self.lastinitrsp = self.cmd("AT FI")  # perform fast init mode 5
 
         if 'OK' not in self.lastinitrsp:
             return False
 
-        self.cmd("AT AT 1")                       # enable adaptive timing
+        self.cmd("AT AT 1")  # enable adaptive timing
         return True
 
 
@@ -1457,5 +1455,6 @@ def elm_checker(port, speed, logview, app):
 
     if pycom > 0:
         logview.append('<font color=red>' + _('Incompatible adapter on ARM core') + '</font> \n')
-    logview.append(_('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n' + _('ELM Max version:') + vers + '\n')
+    logview.append(
+        _('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n' + _('ELM Max version:') + vers + '\n')
     return True

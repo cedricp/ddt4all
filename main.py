@@ -1,34 +1,27 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-import sys
-import os
+import argparse
+import codecs
+import errno
 import glob
-import json
+import os
+import sys
+import tempfile
 from importlib.machinery import SourceFileLoader
 
-import PyQt5.QtGui as gui
 import PyQt5.QtCore as core
+import PyQt5.QtGui as gui
+import PyQt5.QtWebEngineWidgets as webkitwidgets
 import PyQt5.QtWidgets as widgets
-try:
-    import PyQt5.QtWebEngine as webkit
-    import PyQt5.QtWebEngineWidgets as webkitwidgets
-except:
-    import PyQt5.QtWebKit as webkit
-    import PyQt5.QtWebKitWidgets as webkitwidgets
+import json
 
-
-def utf8(string):
-    return string
-
-
-import parameters, ecu
-import elm, options, locale
 import dataeditor
+import ecu
+import elm
+import locale
+import options
+import parameters
 import sniffer
-#import imp
-import tempfile, errno
-import codecs
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2020"
@@ -42,6 +35,17 @@ __status__ = "Beta"
 _ = options.translator('ddt4all')
 app = None
 
+# args
+parser = argparse.ArgumentParser()
+parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
+args = parser.parse_args()
+not_qt5_show = args.git_workfallowmode
+
+
+def utf8(string):
+    return string
+
+
 def isWritable(path):
     try:
         testfile = tempfile.TemporaryFile(dir=path)
@@ -53,6 +57,7 @@ def isWritable(path):
     except:
         return False
     return True
+
 
 class Ecu_finder(widgets.QDialog):
     def __init__(self, ecuscanner):
@@ -77,6 +82,7 @@ class Ecu_finder(widgets.QDialog):
         frame = utf8(self.ecuident.text())
         self.ecuscanner.identify_from_frame(addr, frame)
 
+
 class Ecu_list(widgets.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
         super(Ecu_list, self).__init__()
@@ -86,23 +92,44 @@ class Ecu_list(widgets.QWidget):
 
         self.ecu_map = {}
         vehicles = [
-            "ALL", "XBA - KWID CN", "XBB - KWID BR", "X06 - TWINGO", "X44 - TWINGO II",
-            "X07 - TWINGO III", "X77 - MODUS", "X35 - SYMBOL/THALIA", "XJC - SYMBOL/THALIA II",
-            "X65 - CLIO II",
-            "X85 - CLIO III", "X98 - CLIO IV", "XJA - CLIO V", "X87 - CAPTUR", "XJB - CAPTUR II",
-            "XJE - CAPTUR II CN", "X38 - FLUENCE", "XFF - FLUENCE II", "X64 - MEGANE/SCENIC I",
-            "X84 - MEGANE/SCENIC II", "X84ph2 - MEGANE/SCENIC II Phase 2", "X95 - MEGANE/SCENIC III",
-            "XFB - MEGANE IV", "XFF - MEGANE IV SEDAN",
-            "XFA - SCENIC IV", "X56 - LAGUNA", "X74 - LAGUNA II", "X74ph2 - LAGUNA II Phase 2", "X91 - LAGUNA III",
-            "X47 - LAGUNA III (tricorps)", "X66 - ESPACE III", "X81 - ESPACE IV", "XFC - ESPACE V",
-            "X73 - VELSATIS", "X43 - LATITUDE", "XFD - TALISMAN", "H45 - KOLEOS", "XZG - KOLEOS II",
-            "XZJ - KOLEOS II CN", "HFE - KADJAR", "XZH - KADJAR CN", "X33 - WIND", "X09 - TWIZY",
-            "X10 - ZOE", "X10Ph2 - ZOE Ph2", "X76 - KANGOO I", "X61 - KANGOO II", "XFK - KANGOO III",
-            "X24 - MASCOTT", "X83 - TRAFFIC II", "X82 - TRAFFIC III",
-            "X70 - MASTER II", "X62 - MASTER III", "X90 - LOGAN/SANDERO",
-            "X52 - LOGAN/SANDERO II", "X79 - DUSTER", "X79Ph2 - DUSTER Ph2", "XJD - DUSTER II", "X67 - DOKKER",
-            "X92 - LODGY", "XGA - BM LADA", "AS1 - ALPINE", "X02 - MICRA (NISSAN)", "X02E - MICRA (NISSAN)",
-            "X21 - NOTE (NISSAN)"
+            "ALL", "J32V - (J32V)", "P32 - (P32)", "P33A - (P33A)", "P33B - (P33B)", "P42Q - (P42Q)",
+            "P42R - (P42R)", "XNN - (PB1D)", "PY1B - (PY1B)", "W176 - (w176)", "W205 - (w205)", "XFJ - (x38_Chine)",
+            "X89 - (X89)", "X94 - (x94)", "X96 - (X96)", "XFG - (xFG)", "XJN - (XJN)", "XJO - (XJO)", "XJP - [Captur]",
+            "X13A - [Juke]", "PZ1A - [Leaf]", "PZ1C - [PZ1C]", "XHC - [SUV]Chine", "XR210 - [Twizy] EZ1",
+            "X1317 - 4Ever (EV)", "AS1 - A110", "U60 - Alaskan/(u55, xND)", "ALMERA - Almera", "XEF - Alpine A110",
+            "X1316A - Alpine ECHO", "X60B - Andrew (xMZ, xNE)", "XJC - Arkana", "XHN - Austral", "XHNPH2 - Austral Sweet400",
+            "X66 - Avantime", "XGA - BM Lada", "XFI - C/Hatch China (C1A)", "X87 - Captur", "X87PH2 - Captur Phase 2",
+            "VS10 - Citan", "XJA - Clio (C1A)", "XJAPH2 - Clio (C1A) Phase2", "X65 - Clio II", "X85 - Clio III",
+            "X98 - Clio IV", "X98PH2 - Clio IV Phase 2", "XCOP_BEFORE_C1A - Contrôle COP Before C1A",
+            "XCOP_C1A - Contrôle COP C1A", "XCOP_C1AHS - Contrôle COP C1A HS", "XPIV_C1A - DDT/Training C1A",
+            "XPIV_C1AHS - DDT/Training C1A HS", "XJK - Docker II", "X67 - Docker/Kangoo", "X79 - Duster",
+            "X1310 - Duster II", "X79PH2 - Duster Phase 2", "XJD - Duster Phase 3", "DZ110 - DZ110", "X81 - Espace IV",
+            "X81PH2 - Espace IV Phase 2", "X81PH3 - Espace IV Phase 3", "X81PH4 - Espace IV Phase 4", "XFC - Espace V",
+            "XFCPH2 - Espace V Ph2", "X38 - Fluence", "XJL - Fluence/Korea", "XJLPH2 - Fluence/Korea Phase 2",
+            "HFE - Kadjar", "XZH - Kadjar CN", "XZHPH2 - Kadjar CN Ph2", "HFEPH2 - Kadjar Ph2", "XZI - Kadjar Rus",
+            "X76 - Kangoo", "X61 - Kangoo II", "X61PH2 - Kangoo II Phase 2", "XHA - Kaptur/Captur (BAR/IN/RU)",
+            "XHAPH2 - Kaptur/Captur (BAR/IN/RU) Ph2", "KJA - KJA", "H45 - Koleos", "XZG - Koleos II",
+            "XZGPH2 - Koleos II Ph2", "XZGPH3 - Koleos II Ph3", "XZJ - Koleos II/Chine", "XZJPH2 - Koleos II/Chine Ph2",
+            "XBA - Kwid", "XBB - Kwid BR", "XBG - Kwid EV", "XBGPH2 - Kwid EV Sweet400", "X56 - Laguna", "X74 - Laguna II",
+            "X74PH2 - Laguna II Phase 2", "X91 - Laguna III", "X91PH2 - Laguna III Phase 2", "X91PH3 - Laguna III Phase 3",
+            "X47 - Laguna III Tricorps", "RF90 - Largus", "X43 - Latitude", "X92 - Lodgy", "X52 - Logan", "XJI - Logan III",
+            "XJF - Logan III Badge Renault", "X90 - Logan/Sandero", "MARCH - March/Micra", "X24 - Mascott",
+            "XDC - Master Chine", "X70 - Master II", "X70PH3 - Master II Phase 3", "X62 - Master III",
+            "X62PH2 - Master III Phase 2", "XDD - Master IV", "XDE - Master IV Double Cabin", "X64 - Megane &amp; Scenic",
+            "XCB - Megane E/Tech Electrique", "XCBPH2 - Megane E/Tech Electrique Sweet400", "X84 - Megane II",
+            "X84BUGABS - Megane II hors ABS", "X84ABSONLY - Megane II only ABS", "X84PH2 - Megane II Phase 2",
+            "X95 - Megane III", "X95PH2 - Megane III Phase 2", "XFB - Megane IV", "XFBPH2 - Megane IV Ph2",
+            "XFF - Megane IV/Sedan", "XFFPH2 - Megane IV/Sedan Ph2", "X02E - Micra", "X77 - Modus", "X77PH2 - Modus Phase2",
+            "X60A - Navarra (xND)", "XJB - New Captur (C1A)", "XJBPH2 - New Captur (C1A)Ph2", "XJE - New Captur (Chine)",
+            "VS11 - New Citan", "LZ2A - New EV ((C1A HS EVO) SWEET 400 Nissan)", "XCC - New EV (C1A HS Evo Sweet400)",
+            "XCD - New EV China version (C1A HS Evo Sweet400)", "XFK - New Kangoo", "X1312 - New Kaptur/Captur (BAR/IN/RU)",
+            "P13C - New Kaptur/Captur (Nissan)", "X21B - Note", "L21B - Note", "NOVA - Nova", "PRIMERA - Primera",
+            "X1316 - R5 Elec", "X54 - Safrane", "XFA - Scenic IV", "XFAPH2 - Scenic IV phase2", "X35 - Symbol/Thalia",
+            "XFD - Talisman", "XFDPH2 - Talisman Phase II", "X83 - Trafic II", "X83PH2 - Trafic II Phase 2",
+            "X83PH3 - Trafic II Phase 3", "X82 - Trafic III", "X82PH2 - Trafic III Phase2", "XBC - Triber/Kiger India",
+            "X06 - Twingo", "X44 - Twingo II", "X44PH2 - Twingo II Phase2", "X07 - Twingo III", "X07PH2 - Twingo III Ph2",
+            "X09 - Twizy", "X73 - VelSatis", "X73PH2 - VelSatis Phase 2", "XGF - Vesta", "X33 - Wind",
+            "EDISON - X07 Daimler", "XJH - xJH", "X10 - Zoe", "X10PH2 - Zoe (C1A/Neo)"
         ]
 
         for v in vehicles:
@@ -127,7 +154,10 @@ class Ecu_list(widgets.QWidget):
         self.init()
 
     def scanselvehicle(self):
-        project = str(self.vehicle_combo.currentText()[0:3])
+        if str(self.vehicle_combo.currentText().strip()) == 'ALL':
+            project = str(self.vehicle_combo.currentText().strip())
+        else:
+            project = str(self.vehicle_combo.currentText().split(' - ')[0].strip())  # [0:3])
         self.parent().parent().scan_project(project)
 
     def init(self):
@@ -202,7 +232,7 @@ class Ecu_list(widgets.QWidget):
 
         keys = list(stored_ecus.keys())
         try:
-            keys.sort(cmp=locale.strcoll)
+            keys.sort(key=locale.strcoll)
         except:
             keys.sort()
         for e in keys:
@@ -210,7 +240,7 @@ class Ecu_list(widgets.QWidget):
             if e in longgroupnames:
                 item.setToolTip(0, longgroupnames[e])
             if e in self.ecuscan.ecu_database.addr_group_mapping:
-                item.setToolTip(self.ecuscan.ecu_database.addr_group_mapping[e])
+                item.setToolTip(0, self.ecuscan.ecu_database.addr_group_mapping[e])
             for t in stored_ecus[e]:
                 widgets.QTreeWidgetItem(item, t)
 
@@ -255,13 +285,13 @@ class Ecu_list(widgets.QWidget):
 
 
 class Main_widget(widgets.QMainWindow):
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         super(Main_widget, self).__init__(parent)
-
+        self.setIcon()
         if not options.simulation_mode:
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
-            self.screenlogfile = open("./logs/screens.txt", "at")
+            self.screenlogfile = open("./logs/screens.txt", "at", encoding="utf-8")
         else:
             self.screenlogfile = None
 
@@ -276,23 +306,16 @@ class Main_widget(widgets.QMainWindow):
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
-            msgbox.setText("No database found")
-            msgbox.setInformativeText("Check documentation")
+            msgbox.setText(_("No database found"))
+            msgbox.setInformativeText(_("Check documentation"))
             msgbox.exec_()
 
         self.paramview = None
-        try:
-            self.docview = webkitwidgets.QWebEngineView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
-            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
-        except:
-            self.docview = webkitwidgets.QWebView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-            self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
-            self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
-            self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
+        self.docview = webkitwidgets.QWebEngineView()
+        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
 
         self.screennames = []
 
@@ -497,6 +520,9 @@ class Main_widget(widgets.QMainWindow):
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
         diagmenu.addSeparator()
+        closeAllThis = diagmenu.addAction(_("Exit"))
+        closeAllThis.triggered.connect(self.exit_all)
+        diagmenu.addSeparator()
 
         for ecuf in ecu_files:
             ecuaction = diagmenu.addAction(ecuf)
@@ -527,7 +553,7 @@ class Main_widget(widgets.QMainWindow):
                 name = plug.plugin_name
                 need_hw = plug.need_hw
 
-                #if options.simulation_mode and need_hw:
+                # if options.simulation_mode and need_hw:
                 #    continue
 
                 if not category in category_menus:
@@ -538,11 +564,15 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print("Cannot load plugin "  + plugin)
+                print("Cannot load plugin " + plugin)
                 print(e)
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
+
+    def setIcon(self):
+        appIcon = gui.QIcon("icons/obd.png")
+        self.setWindowIcon(appIcon)
 
     def set_can_combo(self, bus):
         self.canlinecombo.clear()
@@ -603,9 +633,13 @@ class Main_widget(widgets.QMainWindow):
             if len(currenttext):
                 self.paramview.changeSDS(currenttext)
 
+    def exit_all(self):
+        self.close()
+        exit(0)
+
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
-                                                   "./ecu.zip", "*.zip")
+                                                             "./ecu.zip", "*.zip")
 
         filename = str(filename_tuple[0])
 
@@ -666,7 +700,8 @@ class Main_widget(widgets.QMainWindow):
         item = self.treeview_params.currentItem()
 
         if not item:
-            self.logview.append("<font color=red>" + _("Please select a category before creating new screen") + "</font>")
+            self.logview.append(
+                "<font color=red>" + _("Please select a category before creating new screen") + "</font>")
             return
 
         if item.parent() is not None:
@@ -810,12 +845,12 @@ class Main_widget(widgets.QMainWindow):
 
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
-                                                    "./vehicles/mycar.ecu", "*.ecu")
+                                                             "./vehicles/mycar.ecu", "*.ecu")
 
         filename = str(filename_tuple[0])
 
         if filename == "":
-            return        
+            return
 
         eculist = []
         numecus = self.treeview_ecu.count()
@@ -832,8 +867,9 @@ class Main_widget(widgets.QMainWindow):
         jsonfile.close()
 
     def newEcu(self):
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
-                                                   "*.json")
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"),
+                                                             "./json/myecu.json",
+                                                             "*.json")
 
         filename = str(filename_tuple[0])
 
@@ -869,7 +905,7 @@ class Main_widget(widgets.QMainWindow):
             return
 
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save record (keep '.txt' extension)"),
-                                                   "./record.txt", "*.txt")
+                                                             "./record.txt", "*.txt")
         filename = str(filename_tuple[0])
 
         self.paramview.export_record(filename)
@@ -1015,7 +1051,8 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.close()
             self.paramview.destroy()
 
-        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
+        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview,
+                                                self.protocolstatus, self.canlinecombo.currentIndex())
         self.paramview.infobox = self.infostatus
         if options.simulation_mode:
             self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
@@ -1052,7 +1089,8 @@ class donationWidget(widgets.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
-        msgbox.setText(_("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
+        msgbox.setText(
+            _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
         msgbox.addButton(okbutton, widgets.QMessageBox.YesRole)
         msgbox.addButton(widgets.QPushButton(_("No, I don't")), widgets.QMessageBox.NoRole)
@@ -1060,11 +1098,15 @@ class donationWidget(widgets.QLabel):
         msgbox.exec_()
 
     def donate(self):
-        url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
+        url = core.QUrl(
+            "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted",
+            core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
-        msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
+        msgbox.setText(
+            _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
+
 
 def set_dark_style(onoff):
     if (onoff):
@@ -1076,6 +1118,7 @@ def set_dark_style(onoff):
         StyleSheet = ""
 
     app.setStyleSheet(StyleSheet)
+
 
 class portChooser(widgets.QDialog):
     def __init__(self):
@@ -1094,7 +1137,7 @@ class portChooser(widgets.QDialog):
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = donationWidget()
         self.setLayout(layout)
-        
+
         self.listview = widgets.QListWidget(self)
 
         layout.addWidget(label)
@@ -1225,6 +1268,11 @@ class portChooser(widgets.QDialog):
         self.usb()
 
         self.setWindowTitle("DDT4All")
+        self.setIcon()
+
+    def setIcon(self):
+        appIcon = gui.QIcon("icons/obd.png")
+        self.setWindowIcon(appIcon)
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
@@ -1419,7 +1467,10 @@ class portChooser(widgets.QDialog):
         options.report_data = False
         self.done(True)
 
+
 if __name__ == '__main__':
+    if not_qt5_show:
+        exit(0)
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
     except:
@@ -1429,16 +1480,30 @@ if __name__ == '__main__':
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
 
-    if sys.platform[:3] != "win":
-        font = gui.QFont("Sans", 9)
-        font.setBold(False)
-        app.setFont(font)
-        app.setStyle("plastic")
+    fsize = 9
+    fname = "Tahoma"
+
+    if sys.platform[:3] == "dar":
+        fsize = 12
+        fname = "Arial"
+    if sys.platform[:3] == "lin":
+        fsize = 9
+        fname = "Sans"
+    font = gui.QFont(fname, fsize)
+    font.setBold(False)
+    app.setFont(font)
+    app.setStyle("plastic")
 
     ecudirfound = False
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
         print(_("Using custom DDT database"))
         ecudirfound = True
+
+    if not os.path.exists("./json"):
+        os.mkdir("./json")
+
+    if not os.path.exists("./logs"):
+        os.mkdir("./logs")
 
     pc = portChooser()
     nok = True

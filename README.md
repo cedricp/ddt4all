@@ -1,10 +1,9 @@
-# NEW : Android port
-[Wiki](https://github.com/cedricp/ddt4all/wiki/Android-port)
-
-# DDT4All
-
+# DDT4All [![Python App](https://github.com/Furtif/ddt4all/actions/workflows/python-app.yml/badge.svg?branch=update)](https://github.com/Furtif/ddt4all/actions/workflows/python-app.yml) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
 
+### NEW: [Wiki Android port](https://github.com/cedricp/ddt4all/wiki/Android-port)
+
+### Notes:
 This application is work in progress, so be very careful when using expert mode.
 Using the application in non expert mode should not be harmful for your vehicle (leave the expert mode button released).
 
@@ -16,20 +15,39 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 **This tool is mainly aimed for CAN ISO_TP network study**
 
-## Dependencies :
-* Python 3.8
-* PyQt 5
-* An ELM327, ELS327 or OBDLink SX 
+## `Cloning Source Code`
+### `Dependencies :`
+<img src="https://user-images.githubusercontent.com/11718525/135937807-fd3e0fd2-a31a-47a4-90c6-b0bb1d0704d4.png"></img>
+* [Python 3.10](https://www.python.org/downloads/release/python-3105/) 
+* [PyQt 5](https://pypi.org/project/PyQt5/)
+* [pyusb](https://pypi.org/project/pyusb/)
+* [pyserial](https://pypi.org/project/pyserial/)
+* [crcmod](https://pypi.org/project/crcmod/)
+* [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
-## Windows installer
-
-Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
-
-## Supported diagnostic adapters (so far)
+### Supported diagnostic adapters (so far)
 
 * **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
 * **ObdLink** SX
 * **ELS27**
+
+Next, you need to get the source code.  This source code repository uses git submodules. So when you clone the source code, you will need to clone recursively:
+
+```
+git clone --recursive https://github.com/cedricp/ddt4all.git
+```
+
+Or if you already cloned without the recursive option, you can update the submodules by running:
+
+```
+git clone --recursive https://github.com/cedricp/ddt4all.git
+cd ddt4all
+git submodule update --init --recursive
+```
+
+## Windows installer
+
+Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
 
 ## Features :
 
@@ -45,9 +63,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Screen recorder (via autorefresh button) and export to CSV format
 
 ## How to launch the application ?
-
-* Windows : double click DDT4ALL.BAT file
-* Linux : from a terminal, type `python ddt4all.py`
+* A terminal, type `python main.py`
 
 
 ## Platforms
@@ -75,11 +91,8 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## Informations
 
-[Windows archive with embedded Python/PyQt here](https://github.com/cedricp/ddt4all/releases)
-
 Bugtracking here : https://github.com/cedricp/ddt4all
 
 Happy CAN-Hacking :)
 
 To make this application more reliable, I need to buy hardware, cables and devices, so please consider contributing by making a donation (hardware or money). Of course you can contribute by filling bug reports and sending patches.
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
