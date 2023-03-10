@@ -1,17 +1,44 @@
-﻿[Setup]
-AppName=DDT4All
-AppVersion=2.0.1
-DefaultDirName={pf}\ddt4all
-DefaultGroupName=ddt4all
+﻿#define MyAppName       "DDT4All"
+#define MyAppVersion    "2.0.1"
+#define MyAppDir        "ddtall"
+#define MyAppAuthor     "Cedric PAILLE"
+#define MyAppCompany    "Cedric PAILLE"
+#define MyAppContact    "cedricpaille@gmail.com"  
+#define MyAppSupportURL "https://github.com/cedricp/ddt4all" 
+#define MyAppReadmeMd   "https://github.com/cedricp/ddt4all/blob/master/README.md"
+#define C_StartingYear  "2011"
+#define C_EndingYear    GetDateTimeString('yyyy','','')
+
+[Setup]
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
+
+AppPublisherURL={#MyAppSupportURL}
+AppSupportURL={#MyAppSupportURL}
+AppUpdatesURL={#MyAppSupportURL}
+AppReadmeFile={#MyAppReadmeMd}
+AppContact={#MyAppContact}
+
+;--------------------- Info for exe file properties
+VersionInfoDescription={#MyAppName} installer
+VersionInfoVersion={#MyAppVersion}
+VersionInfoProductName={#MyAppName}
+AppCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
+
+;--------------------- Info Windows program list
+UninstallDisplayIcon={app}\icons\obd.ico
+UninstallDisplayName={#MyAppName}
+AppPublisher={#MyAppCompany}
+
+WizardStyle=modern
+UsepreviousLanguage=No
+
+DefaultDirName={pf}\{#MyAppDir}
+DefaultGroupName={#MyAppDir}
 SetupIconFile=icons\obd.ico
-OutputBaseFilename=ddt4all-win-installer_2.0.1
+OutputBaseFilename={#MyAppDir}-win-installer_{#MyAppVersion}
 UsePreviousPrivileges=True
-AppPublisher=Cedric PAILLE
-AppContact=cedricpaille@gmail.com
-AppPublisherURL=https://github.com/cedricp/ddt4all
-AppSupportURL=https://github.com/cedricp/ddt4all
-AppUpdatesURL=https://github.com/cedricp/ddt4all
-AppReadmeFile=https://github.com/cedricp/ddt4all/blob/master/README.md
 
 [Files]
 //Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
@@ -53,25 +80,25 @@ Name: "{group}\ddt4all"; Filename: "{app}\Python39\python.exe"; Parameters: """{
 Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python39\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
 
 [CustomMessages]
-en.AfterMyProgInstall=Do not forget to install database to 
-de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in
-fr.AfterMyProgInstall=Pensez a installer une base de donnée dans
-es.AfterMyProgInstall=Considere instalar una base de datos en
-it.AfterMyProgInstall=Non dimenticare di installare il database in
-nl.AfterMyProgInstall=Overweeg een database te installeren in
-pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w
-ptbr.AfterMyProgInstall=Considere instalar um banco de dados em
-pt.AfterMyProgInstall=Considere instalar um banco de dados em
-ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в
+en.AfterMyProgInstall=Do not forget to install database to %n%n
+de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in%n%n
+fr.AfterMyProgInstall=Pensez a installer une base de donnée dans%n%n
+es.AfterMyProgInstall=Considere instalar una base de datos en%n%n
+it.AfterMyProgInstall=Non dimenticare di installare il database in%n%n
+nl.AfterMyProgInstall=Overweeg een database te installeren in%n%n
+pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w%n%n
+ptbr.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
+pt.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
+ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в%n%n
 
 [Languages]
-Name: "en"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Default.isl"
-Name: "de"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\German.isl"
-Name: "fr"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\French.isl"
-Name: "es"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Spanish.isl"
-Name: "it"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Italian.isl"
-Name: "nl"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Dutch.isl"
-Name: "pl"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Polish.isl"
+Name: "en";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Default.isl"
+Name: "de";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\German.isl"
+Name: "fr";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\French.isl"
+Name: "es";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Spanish.isl"
+Name: "it";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Italian.isl"
+Name: "nl";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Dutch.isl"
+Name: "pl";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Polish.isl"
 Name: "ptbr"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\BrazilianPortuguese.isl"
-Name: "pt"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Portuguese.isl"
-Name: "ru"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Russian.isl"
+Name: "pt";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Portuguese.isl"
+Name: "ru";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Russian.isl"
