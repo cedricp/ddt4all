@@ -1,5 +1,5 @@
 ﻿#define MyAppName       "DDT4All"
-#define MyAppVersion    "2.0.1"
+#define MyAppVersion    GetDateTimeString('yy.mm.dd','','')
 #define MyAppDir        "ddtall"
 #define MyAppAuthor     "Cedric PAILLE"
 #define MyAppCompany    "Cedric PAILLE"
@@ -8,6 +8,7 @@
 #define MyAppReadmeMd   "https://github.com/cedricp/ddt4all/blob/master/README.md"
 #define C_StartingYear  "2011"
 #define C_EndingYear    GetDateTimeString('yyyy','','')
+#define DateEUR         GetDateTimeString('dd.mm.yyyy','','')
 
 [Setup]
 AppName={#MyAppName}
@@ -37,7 +38,7 @@ UsepreviousLanguage=No
 DefaultDirName={pf}\{#MyAppDir}
 DefaultGroupName={#MyAppDir}
 SetupIconFile=icons\obd.ico
-OutputBaseFilename={#MyAppDir}-win-installer_{#MyAppVersion}
+OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}
 UsePreviousPrivileges=True
 
 [Files]
