@@ -664,7 +664,7 @@ class Ecu_data:
             return None
 
         if self.bytesascii:
-            return bytes.fromhex(value).decode('utf-8')
+            return bytes.fromhex(value).decode('utf-8',errors="ignore")
 
         # I think we want Hex format for non scaled values
         if not self.scaled:
