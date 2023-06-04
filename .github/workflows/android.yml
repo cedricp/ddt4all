@@ -25,4 +25,3 @@ jobs:
         cd EcuTweaker
         chmod +x gradlew
         ./gradlew build
-        cd ..
