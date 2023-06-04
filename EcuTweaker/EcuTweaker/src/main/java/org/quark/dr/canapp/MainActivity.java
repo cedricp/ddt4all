@@ -19,10 +19,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
@@ -78,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
     final static int PERMISSIONS_ACCESS_COARSE_LOCATION = 1;
     final static int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 2;
     // Intent request codes
-    private static final int    REQUEST_CONNECT_DEVICE = 1;
-    private static final int    REQUEST_SCREEN         = 2;
-    private static final int    REQUEST_ENABLE_BT      = 3;
-    public static final String  DEFAULT_PREF_TAG = "default";
+    private static final int REQUEST_CONNECT_DEVICE = 1;
+    private static final int REQUEST_SCREEN = 2;
+    private static final int REQUEST_ENABLE_BT = 3;
+    public static final String DEFAULT_PREF_TAG = "default";
 
-    public static final int     LINK_WIFI=0;
-    public static final int     LINK_BLUETOOTH=1;
-    public static final int     LINK_USB=2;
+    public static final int LINK_WIFI = 0;
+    public static final int LINK_BLUETOOTH = 1;
+    public static final int LINK_USB = 2;
 
     public static final String PREF_DEVICE_ADDRESS = "btAdapterAddress";
     public static final String PREF_DEVICE_USBSERIAL = "usbSerialNumber";
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREF_FONT_SCALE = "fontScale";
     public static final String PREF_ECUZIPFILE = "ecuZipFile";
     public static final String PREF_PROJECT = "project";
-    public static final String PREF_LINK_MODE =  "BT";
+    public static final String PREF_LINK_MODE = "BT";
     public static final String PREF_SOFTFLOW = "softFlowControl";
 
     public static String mLastLog;
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     private String readFileAsString(String filePath) {
         StringBuilder result = new StringBuilder("No log file found");
         File file = new File(filePath);
-        if ( file.exists() ) {
+        if (file.exists()) {
             result = new StringBuilder();
             FileInputStream fis = null;
             try {
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         return result.toString();
     }
 
-    private void initialize(){
+    private void initialize() {
         long id = new BigInteger(Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID), 16).longValue();
         mLicenseLock = new LicenseLock(id);
@@ -187,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (linkMode.equals("BT")) {
             mLinkMode = LINK_BLUETOOTH;
-        } else if (linkMode.equals("WIFI")){
+        } else if (linkMode.equals("WIFI")) {
             mLinkMode = LINK_WIFI;
         } else {
             mLinkMode = LINK_USB;
@@ -199,16 +201,16 @@ public class MainActivity extends AppCompatActivity {
             try {
                 MainActivity.this.copyLogs();
                 return;
-            } catch (IOException e){
+            } catch (IOException e) {
                 mLogView.append("Error : Cannot copy logs\n");
             }
 
             mLastLog = readFileAsString(
                     MainActivity.this.getApplicationContext().getFilesDir().
                             getAbsolutePath() + "/log.txt");
-            System.out.println("?? "  + MainActivity.this.getApplicationContext().getFilesDir().
+            System.out.println("?? " + MainActivity.this.getApplicationContext().getFilesDir().
                     getAbsolutePath());
-            LayoutInflater inflater= LayoutInflater.from(MainActivity.this);
+            LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
             View view = inflater.inflate(R.layout.custom_scroll, null);
 
             TextView textview = view.findViewById(R.id.textmsg);
@@ -218,12 +220,12 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.setTitle("LOGS");
             alertDialog.setView(view);
             AlertDialog alert = alertDialog.create();
-            alert.setButton(AlertDialog.BUTTON_NEUTRAL,getResources().
-                    getString(R.string.COPY_TO_CLIPBOARD),
+            alert.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().
+                            getString(R.string.COPY_TO_CLIPBOARD),
                     (dialog, which) -> {
-                        ClipboardManager  clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                         ClipData clip = ClipData.newPlainText("EcuTeakerLog", mLastLog);
-                        if(clipboard != null) clipboard.setPrimaryClip(clip);
+                        if (clipboard != null) clipboard.setPrimaryClip(clip);
                     });
             alert.show();
         });
@@ -238,8 +240,8 @@ public class MainActivity extends AppCompatActivity {
             String logFilename = MainActivity.this.getApplicationContext().getFilesDir().
                     getAbsolutePath() + "/log.txt";
             File logFile = new File(logFilename);
-            if (logFile.exists()){
-                if (logFile.delete()){
+            if (logFile.exists()) {
+                if (logFile.delete()) {
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.LOGFILE_DELETED),
                             Toast.LENGTH_SHORT).show();
@@ -262,12 +264,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mSpecificEcuListView.setOnItemClickListener((parent, view, position, id12) -> {
-            if ( mCurrentEcuInfoList == null || mEcuFilePath == null){
+            if (mCurrentEcuInfoList == null || mEcuFilePath == null) {
                 return;
             }
-            String stringToSearch = ((TextView)view).getText().toString();
-            for (EcuDatabase.EcuInfo ecuinfo : mCurrentEcuInfoList){
-                if (stringToSearch.equals(ecuinfo.ecuName)){
+            String stringToSearch = ((TextView) view).getText().toString();
+            for (EcuDatabase.EcuInfo ecuinfo : mCurrentEcuInfoList) {
+                if (stringToSearch.equals(ecuinfo.ecuName)) {
                     startScreen(mEcuFilePath, ecuinfo.href);
                     break;
                 }
@@ -304,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED){
+                == PackageManager.PERMISSION_GRANTED) {
             parseDatabase();
         } else {
             askStoragePermission();
@@ -312,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED) {
             askStorageWritePermission();
         }
 
@@ -326,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 + getResources().getString(R.string.VERSION) + "\n");
     }
 
-    private void setLink(){
+    private void setLink() {
         /*
          * First disconnect chat
          */
@@ -335,16 +337,26 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences defaultPrefs = this.getSharedPreferences(DEFAULT_PREF_TAG, MODE_PRIVATE);
         SharedPreferences.Editor edit = defaultPrefs.edit();
-        if (mLinkMode == LINK_BLUETOOTH){
+        if (mLinkMode == LINK_BLUETOOTH) {
             mLinkChooser.setImageResource(R.drawable.ic_bt_connected);
             mBtButton.setEnabled(true);
             edit.putString(PREF_LINK_MODE, "BT");
             edit.apply();
 
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            if (!mActivateBluetoothAsked && btAdapter != null && !btAdapter.isEnabled()){
+            if (!mActivateBluetoothAsked && btAdapter != null && !btAdapter.isEnabled()) {
                 mActivateBluetoothAsked = true;
                 Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
             }
         } else if (mLinkMode == LINK_WIFI){
@@ -749,6 +761,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSIONS_ACCESS_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -792,6 +805,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CONNECT_DEVICE:
                 // When DeviceListActivity returns with a device to connect
@@ -807,7 +821,7 @@ public class MainActivity extends AppCompatActivity {
                         edit.apply();
                         mBtDeviceAddress = address;
                         startConnectionTimer();
-                    } else if (data.getExtras().containsKey(UsbDeviceActivity.EXTRA_DEVICE_SERIAL)){
+                    } else if (data.getExtras().containsKey(UsbDeviceActivity.EXTRA_DEVICE_SERIAL)) {
                         // USB
                         String serial =
                                 data.getExtras().getString(UsbDeviceActivity.EXTRA_DEVICE_SERIAL);

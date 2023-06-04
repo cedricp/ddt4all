@@ -1,0 +1,7 @@
+/.idea/
+/.gradle/
+/EcuTweaker/build/
+/gradle/
+.DS_Store
+
+/local.properties
