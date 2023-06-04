@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+    signingConfigs {
+    }
+    compileSdkVersion 33
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 33
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+    }
+    namespace 'org.quark.dr.ecu'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+}
