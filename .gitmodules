@@ -1,3 +1,7 @@
 [submodule "ddtplugins"]
 	path = ddtplugins
 	url = https://github.com/cedricp/ddtplugins.git
+[submodule "EcuTweaker"]
+	path = EcuTweaker
+	url = https://gitlab.com/DrQuark/android_can.git
+	branch = master
