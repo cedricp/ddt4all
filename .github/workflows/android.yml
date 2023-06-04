@@ -23,10 +23,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: |
         cd EcuTweaker
-        chmod +x ./gradlew
-        cd ..
-    - name: Build with Gradle
-      run: |     
-        cd EcuTweaker
+        chmod +x gradlew
         ./gradlew build
         cd ..
