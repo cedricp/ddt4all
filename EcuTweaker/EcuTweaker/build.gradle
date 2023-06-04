@@ -36,6 +36,10 @@ android {
     namespace 'org.quark.dr.canapp'
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -44,7 +48,6 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     testImplementation 'junit:junit:4.12'
-
     implementation project(':ecu')
     implementation project(path: ':usbserial')
 }
