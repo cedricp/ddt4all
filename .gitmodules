@@ -3,5 +3,5 @@
 	url = https://github.com/cedricp/ddtplugins.git
 [submodule "EcuTweaker"]
 	path = EcuTweaker
-	url = https://gitlab.com/DrQuark/android_can.git
+	url = git@gitlab.com:DrQuark/android_can.git
 	branch = master
