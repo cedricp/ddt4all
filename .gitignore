@@ -34,3 +34,7 @@ __pycache__/
 /setup.py
 /setup.cfg
 /pyproject.toml
+/EcuTweaker/.idea/
+/EcuTweaker/EcuTweaker/build/
+/EcuTweaker/.gradle/
+/EcuTweaker/local.properties
