@@ -21,8 +21,8 @@ jobs:
         cache: gradle
 
     - name: Change work folder
-      run: cd ./EcuTweaker
+      run: cd EcuTweaker
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: chmod +x ./gradlew
     - name: Build with Gradle
       run: ./gradlew build
