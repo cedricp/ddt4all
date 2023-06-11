@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 '''module contains class for working with ELM327
@@ -12,9 +13,10 @@ import sys
 import time
 from datetime import datetime
 
-import options
 import serial
 from serial.tools import list_ports
+
+import options
 
 _ = options.translator('ddt4all')
 

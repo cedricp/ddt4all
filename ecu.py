@@ -1,32 +1,33 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import argparse
 import glob
 import math
+import os
 import re
 import string
 import xml.dom.minidom
 import zipfile
 from io import StringIO
-from xml.dom.minidom import parse
 
 import elm
 import json
 import options
-import os
+import version
 
 
 def unichr(t):
     return chr(t)
 
 
-__author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2020"
-__credits__ = []
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Cedric PAILLE"
-__email__ = "cedricpaille@gmail.com"
-__status__ = "Beta"
+__author__ = version.__author__
+__copyright__ = version.__copyright__
+__credits__ = version.__credits__
+__license__ = version.__license__
+__version__ = version.__version__
+__maintainer__ = version.__maintainer__
+__email__ = version.__email__
+__status__ = version.__status__
 
 
 # Returns signed value from 16 bits (2 bytes)
@@ -664,7 +665,7 @@ class Ecu_data:
             return None
 
         if self.bytesascii:
-            return bytes.fromhex(value).decode('utf-8',errors="ignore")
+            return bytes.fromhex(value).decode('utf-8', errors="ignore")
 
         # I think we want Hex format for non scaled values
         if not self.scaled:

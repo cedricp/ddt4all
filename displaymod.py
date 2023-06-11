@@ -1,24 +1,29 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
+import os
+import zipfile
 
 import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets
+
+import options
+import version
+from uiutils import *
 
 
 def unicode(a):
     return str(a)
 
 
-import options, os, zipfile
-from uiutils import *
-
-__author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
-__credits__ = []
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Cedric PAILLE"
-__email__ = "cedricpaille@gmail.com"
-__status__ = "Beta"
+__author__ = version.__author__
+__copyright__ = version.__copyright__
+__credits__ = version.__credits__
+__license__ = version.__license__
+__version__ = version.__version__
+__maintainer__ = version.__maintainer__
+__email__ = version.__email__
+__status__ = version.__status__
 
 _ = options.translator('ddt4all')
 
@@ -317,7 +322,7 @@ class displayWidget(widgets.QWidget):
 
     def resize(self, x, y):
         oldwidth = self.width()
-        super(displayWidget, self).resize(int(x),int(y))
+        super(displayWidget, self).resize(int(x), int(y))
         newwidth = self.width()
 
         if not self.qlabelval or not self.qlabel:

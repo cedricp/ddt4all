@@ -1,8 +1,8 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import argparse
 import datetime
 import glob
-import json
 import os
 import time
 import xml.dom.minidom
@@ -15,17 +15,19 @@ import PyQt5.QtWidgets as widgets
 import displaymod
 import ecu
 import elm
+import json
 import options
+import version
 from uiutils import *
 
-__author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2020"
-__credits__ = []
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Cedric PAILLE"
-__email__ = "cedricpaille@gmail.com"
-__status__ = "Beta"
+__author__ = version.__author__
+__copyright__ = version.__copyright__
+__credits__ = version.__credits__
+__license__ = version.__license__
+__version__ = version.__version__
+__maintainer__ = version.__maintainer__
+__email__ = version.__email__
+__status__ = version.__status__
 
 _ = options.translator('ddt4all')
 

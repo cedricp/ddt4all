@@ -1,5 +1,5 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
 import array
 import time
 
@@ -28,11 +28,11 @@ CAN_ISOTP_MODE = 0x01
 
 # HELPERS
 REQUEST_TYPE_SEND = util.build_request_type(util.CTRL_OUT,
-                                                util.CTRL_TYPE_CLASS,
-                                                util.CTRL_RECIPIENT_DEVICE)
+                                            util.CTRL_TYPE_CLASS,
+                                            util.CTRL_RECIPIENT_DEVICE)
 REQUEST_TYPE_RECV = util.build_request_type(util.CTRL_IN,
-                                                util.CTRL_TYPE_CLASS,
-                                                util.CTRL_RECIPIENT_DEVICE)
+                                            util.CTRL_TYPE_CLASS,
+                                            util.CTRL_RECIPIENT_DEVICE)
 
 
 class UsbCan:
