@@ -70,7 +70,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 ## Platforms
 
 * Gnu/Linux (**Ubuntu approved**)
-* Windows (**For winXP, 2000, vista, try the 'winXP' branch**)
+* Windows (**For winXP, 2000, vista, try the [winXP](https://github.com/cedricp/ddt4all/tree/winXP) branch**)
 * MacOS
 
 ## Videos
@@ -92,7 +92,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## Informations
 
-DataBase not included, do not forget to install database as zip or full mode in to root clone repo.
+**_DataBase not included, do not forget to install database as ecu.zip or full mode in to root clone repo._**
 
 Bugtracking here : https://github.com/cedricp/ddt4all
 
