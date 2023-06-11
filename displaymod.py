@@ -196,14 +196,15 @@ class screenWidget(widgets.QFrame):
         self.jsondata = jsdata
 
     def resize(self, x, y):
-        super(screenWidget, self).resize(x, y)
+        super(screenWidget, self).resize(int(x), int(y))
         self.update_json()
 
     def lock(self, lock):
         pass
 
     def move(self, x, y):
-        return
+        super(screenWidget, self).move(int(x), int(y))
+        self.update_json()
 
     def update_json(self):
         if self.jsondata:
