@@ -54,10 +54,10 @@ class UsbCan:
     def is_init(self):
         return self.device is not None
 
-    def get_string_descriptor(self, index):
+    def get_string_descriptor(self):
         response = self.device.ctrl_transfer(util.ENDPOINT_IN,
                                              legacy.REQ_GET_DESCRIPTOR,
-                                             (util.DESC_TYPE_STRING << 8) | index,
+                                             util.DESC_TYPE_STRING,
                                              0,  # language id
                                              255)  # length
         return response[2:].tostring().decode('utf-16')
@@ -114,11 +114,11 @@ class UsbCan:
     def set_rx_addr(self, addr):
         self.set_vendor_request(VENDOR_CAN_RX, addr)
 
-    def get_tx_addr(self, addr):
-        return self.get_vendor_request(VENDOR_CAN_TX, addr)
+    def get_tx_addr(self):
+        return self.get_vendor_request(VENDOR_CAN_TX)
 
-    def get_rx_addr(self, addr):
-        return self.get_vendor_request(VENDOR_CAN_RX, addr)
+    def get_rx_addr(self):
+        return self.get_vendor_request(VENDOR_CAN_RX)
 
     def set_can_mode_isotp(self):
         self.set_vendor_request(VENDOR_CAN_MODE, CAN_ISOTP_MODE)
@@ -166,7 +166,7 @@ class OBDDevice:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
-            self.currentaddress = elm.ELM.get_can_addr(TXa)
+            self.currentaddress = elm.get_can_addr(TXa)
         else:
             TXa = elm.dnat[addr]
             RXa = elm.snat[addr]

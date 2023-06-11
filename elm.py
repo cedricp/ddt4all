@@ -516,6 +516,13 @@ class Port:
         return False
 
 
+def get_can_addr(txa):
+    for d in dnat.keys():
+        if dnat[d] == txa:
+            return d
+    return None
+
+
 class ELM:
     '''ELM327 class'''
 
@@ -1233,12 +1240,6 @@ class ELM:
 
         self.lastCMDtime = 0
 
-    def get_can_addr(self, txa):
-        for d in dnat.keys():
-            if dnat[d] == txa:
-                return d
-        return None
-
     def set_can_addr(self, addr, ecu, canline=0):
         if self.currentprotocol == "can" and self.currentaddress == addr and self.canline == canline:
             return
@@ -1260,7 +1261,7 @@ class ELM:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
-            self.currentaddress = get_can_addr(TXa)
+            self.currentaddress = elm.get_can_addr(TXa)
         else:
             TXa = dnat[addr]
             RXa = snat[addr]
