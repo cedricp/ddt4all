@@ -94,7 +94,17 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 **_DataBase not included, do not forget to install database as ecu.zip or full mode in to root clone repo._**
 
-Bugtracking here : https://github.com/cedricp/ddt4all
+### Report bugs
+Report bugs you found in [issues](https://github.com/cedricp/ddt4all/issues).
+In order to help us fix the problem, please take a screenshot of the error you get and also attach your log file (under the Logs folder) as well. Add [Bug] to the title to help us quickly identify the category of the issue.
+
+### Suggestions/ideas
+Tell us what you think we can do better in [discussions](https://github.com/cedricp/ddt4all/discussions).
+Give detailed discription to help us understand what you are looking for. Add [Suggestion] to the title to help us quickly identify the category of the issue. Your suggestion might not be accept, but hey, maybe we will accept your suggestion next time! :)
+
+### Legal Disclaimer
+This Website and Project is in no way affiliated with, authorized, maintained, sponsored or endorsed by ANYONE. This is an independent and unofficial project for educational use ONLY. Do not use for any other purpose than education, testing and research.
+
 
 Happy CAN-Hacking :)
 
