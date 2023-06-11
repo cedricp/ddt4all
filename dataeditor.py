@@ -552,7 +552,7 @@ class paramEditor(widgets.QFrame):
             item_name.setFlags(item_name.flags() ^ core.Qt.ItemIsEditable)
             item_bc.setFlags(item_bc.flags() ^ core.Qt.ItemIsEditable)
 
-            item_bc.setTextAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
+            item_bc.setTextAlignment(int(core.Qt.AlignHCenter) | int(core.Qt.AlignVCenter))
 
             item_sb.valueChanged.connect(lambda state,
                                                 di=dataitem, slf=item_sb: self.start_byte_changed(di, slf))

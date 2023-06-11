@@ -455,9 +455,9 @@ class Port:
             if (tc - tb) > time_out:
                 return self.buff + b"TIMEOUT"
 
-        self.close()
-        self.connectionStatus = False
-        return ''
+        # self.close()
+        # self.connectionStatus = False
+        # return ''
 
     def expect(self, pattern, time_out=1):
         tb = time.time()  # start time
@@ -479,9 +479,9 @@ class Port:
             if (tc - tb) > time_out:
                 return self.buff + _("TIMEOUT")
 
-        self.close()
-        self.connectionStatus = False
-        return ''
+        # self.close()
+        # self.connectionStatus = False
+        # return ''
 
     def check_elm(self):
 
@@ -1054,7 +1054,7 @@ class ELM:
             # receiving consecutive frames
             while len(responses) < nframes:
                 # now we should send ff
-                sBS = hex(min(nframes - len(responses), 0xf))[2:]
+                sBS = hex(min(int(nframes) - len(responses), 0xf))[2:]
                 frsp = self.send_raw('300' + sBS + '00' + sBS)
 
                 # analyse response
@@ -1122,7 +1122,6 @@ class ELM:
             self.buff = self.port.expect(expect, self.portTimeout)
             if not self.port.connectionStatus:
                 break
-                return ''
             tc = time.time()
             if (tc - tb) > self.portTimeout and "TIMEOUT" not in self.buff:
                 self.buff += " TIMEOUT"
