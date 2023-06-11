@@ -49,7 +49,7 @@ UsePreviousPrivileges=True
 //Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "*.py"; DestDir: "{app}"
 Source: "*.qss"; DestDir: "{app}"
-Source: "\Python39-32\*"; DestDir: "{app}\Python39"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "\Python311\*"; DestDir: "{app}\Python311"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
 Source: "address\*"; DestDir: "{app}\address"; Flags: ignoreversion recursesubdirs
@@ -60,6 +60,8 @@ Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onl
 Type: filesandordirs; Name: "{app}\importlib"
 Type: filesandordirs; Name: "{app}\python27"
 Type: filesandordirs; Name: "{app}\Python38"
+Type: filesandordirs; Name: "{app}\Python39"
+Type: filesandordirs; Name: "{app}\Python310"
 
 [Code]
 procedure AfterMyProgInstall;
@@ -77,8 +79,8 @@ Name: "{app}\vehicles"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{group}\ddt4all"; Filename: "{app}\Python39\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
-Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python39\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
+Name: "{group}\ddt4all"; Filename: "{app}\Python311\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
+Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python311\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
 
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to %n%n
