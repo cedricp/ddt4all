@@ -49,5 +49,5 @@ def translator(filename):
         pass
 
     # Set up message catalog access
-    t = gettext.translation(filename, 'locale', fallback=True, codeset="utf-8")
+    t = gettext.translation(filename, 'locale', fallback=True) # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext

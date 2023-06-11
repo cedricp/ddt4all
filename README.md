@@ -18,8 +18,8 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ## `Cloning Source Code`
 ### `Dependencies :`
-![python_3.10.x](icons/py3_engaged.png)
-* [Python 3.10](https://www.python.org/downloads/release/python-3105/) 
+![python_3.11.x](icons/py3_engaged.png)
+* [Python 3.11](https://www.python.org/downloads/release/python-3110/) 
 * [PyQt 5](https://pypi.org/project/PyQt5/)
 * [pyusb](https://pypi.org/project/pyusb/)
 * [pyserial](https://pypi.org/project/pyserial/)
@@ -91,6 +91,8 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
   * Try to disable antivirus software
 
 ## Informations
+
+DataBase not included, do not forget to install database as zip or full mode in to root clone repo.
 
 Bugtracking here : https://github.com/cedricp/ddt4all
 
