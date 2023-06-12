@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 import glob
+import io
 import math
 import os
 import re
@@ -1784,7 +1785,7 @@ class Ecu_scanner:
 
 def make_zipfs():
     options.ecus_dir = "./ecus"
-    zipoutput = StringIO()
+    zipoutput = BytesIO()
     i = 0
     ecus = glob.glob("ecus/*.xml")
     ecus.remove("ecus/eculist.xml")
@@ -1805,7 +1806,7 @@ def make_zipfs():
             # if i == 15:
             #    break
 
-    with open("json/ecus.zip", "w") as f:
+    with open("json/ecus.zip", "wb") as f:
         f.write(zipoutput.getvalue())
 
 
