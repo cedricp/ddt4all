@@ -574,7 +574,8 @@ class ELM:
 
             if options.elm_failed:
                 self.connectionStatus = False
-                return
+                # Try one other speed ...
+                continue
 
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
