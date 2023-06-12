@@ -299,7 +299,7 @@ class Main_widget(widgets.QMainWindow):
         self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
-        self.setWindowTitle(_("DDT4All"))
+        self.setWindowTitle(_("DDT4All") + " " + __version__)
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
@@ -1268,7 +1268,7 @@ class portChooser(widgets.QDialog):
         self.portcount = -1
         self.usb()
 
-        self.setWindowTitle("DDT4All")
+        self.setWindowTitle(_("DDT4All") + " " + __version__)
         self.setIcon()
 
     def setIcon(self):
@@ -1481,7 +1481,7 @@ if __name__ == '__main__':
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
 
-    fsize = 9
+    fsize = 10
     fname = "Tahoma"
 
     if sys.platform[:3] == "dar":
