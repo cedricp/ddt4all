@@ -28,11 +28,10 @@ VersionInfoProductName={#MyAppName}
 AppCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
 
 ;--------------------- Info Windows program list
-UninstallDisplayIcon={app}\icons\obd.ico
+UninstallDisplayIcon={uninstallexe},4
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
 
-WizardStyle=modern
 UsepreviousLanguage=No
 
 DefaultDirName={pf}\{#MyAppDir}
@@ -40,15 +39,19 @@ DefaultGroupName={#MyAppDir}
 SetupIconFile=icons\obd.ico
 OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}
 UsePreviousPrivileges=True
+VersionInfoCompany={#MyAppCompany}
+VersionInfoTextVersion={#MyAppVersion}
+VersionInfoCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
+VersionInfoProductVersion={#MyAppVersion}
+VersionInfoProductTextVersion={#MyAppVersion}
+VersionInfoOriginalFileName={#MyAppName}
+LicenseFile=license.txt
+WizardStyle=modern
 
 [Files]
-//Source: "DDT4ALL.BAT"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
-//Source: "README.md"; DestDir: "{app}"
-//Source: "requirements.txt"; DestDir: "{app}"
-//Source: "license.txt"; DestDir: "{app}"
 //Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
-Source: "*.py"; DestDir: "{app}"
-Source: "*.qss"; DestDir: "{app}"
+Source: "*.py"; DestDir: "{app}"; Excludes: "*.pyc"
+Source: "*.qss"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
 Source: "\Python311\*"; DestDir: "{app}\Python311"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
@@ -57,11 +60,15 @@ Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
 
 [InstallDelete]
+Type: filesandordirs; Name: "{app}\__pycache__"
 Type: filesandordirs; Name: "{app}\importlib"
 Type: filesandordirs; Name: "{app}\python27"
 Type: filesandordirs; Name: "{app}\Python38"
 Type: filesandordirs; Name: "{app}\Python39"
 Type: filesandordirs; Name: "{app}\Python310"
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}"
 
 [Code]
 procedure AfterMyProgInstall;
@@ -76,7 +83,7 @@ Name: "{app}\json"; Permissions: users-full
 Name: "{app}\vehicles"; Permissions: users-full
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}";GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
 Name: "{group}\ddt4all"; Filename: "{app}\Python311\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
