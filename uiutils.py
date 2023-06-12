@@ -134,6 +134,6 @@ def jsonFont(fnt, scale):
 
     font_size = int(font_size / float(scale) * 14.)
 
-    qfnt = gui.QFont(font_name, font_size, fnt_flags);
+    qfnt = gui.QFont(font_name, font_size, fnt_flags)
     qfnt.setPixelSize(font_size)
     return qfnt
