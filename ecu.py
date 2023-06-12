@@ -897,10 +897,8 @@ class Ecu_file:
                 if not os.path.exists(data):
                     print("Cannot load ECU file", data)
                     return
-                xdom = xml.dom.minidom.parse(data)
-                self.xmldoc = xdom.documentElement
-            else:
-                self.xmldoc = data
+            xdom = xml.dom.minidom.parse(data)
+            self.xmldoc = xdom.documentElement
 
             if not self.xmldoc:
                 print("XML not found")
