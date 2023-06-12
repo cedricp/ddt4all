@@ -1006,6 +1006,7 @@ class paramWidget(widgets.QWidget):
                 displaywidget.initJson(disp, self.displaydict)
 
     def drawButtons(self, screen):
+        global smap
         self.button_requests = {}
         self.button_messages = {}
         if self.parser == 'xml':
