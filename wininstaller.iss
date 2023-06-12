@@ -6,7 +6,7 @@
 #define MyAppContact    "cedricpaille@gmail.com"  
 #define MyAppSupportURL "https://github.com/cedricp/ddt4all" 
 #define MyAppReadmeMd   "https://github.com/cedricp/ddt4all/blob/master/README.md"
-#define C_StartingYear  "2011"
+#define C_StartingYear  "2016"
 #define C_EndingYear    GetDateTimeString('yyyy','','')
 #define DateEUR         GetDateTimeString('dd.mm.yyyy','','')
 
@@ -37,7 +37,7 @@ UsepreviousLanguage=No
 DefaultDirName={pf}\{#MyAppDir}
 DefaultGroupName={#MyAppDir}
 SetupIconFile=icons\obd.ico
-OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}
+OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}-python-3.11.4-64bits
 UsePreviousPrivileges=True
 VersionInfoCompany={#MyAppCompany}
 VersionInfoTextVersion={#MyAppVersion}
@@ -66,6 +66,9 @@ Type: filesandordirs; Name: "{app}\python27"
 Type: filesandordirs; Name: "{app}\Python38"
 Type: filesandordirs; Name: "{app}\Python39"
 Type: filesandordirs; Name: "{app}\Python310"
+Type: filesandordirs; Name: "{app}\Python38-32"
+Type: filesandordirs; Name: "{app}\Python39-32"
+Type: filesandordirs; Name: "{app}\Python310-32"
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
@@ -92,7 +95,7 @@ Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python311\python.exe"; Parameter
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to %n%n
 de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in%n%n
-fr.AfterMyProgInstall=Pensez a installer une base de donnée dans%n%n
+fr.AfterMyProgInstall=Pensez a installer une base de données dans%n%n
 es.AfterMyProgInstall=Considere instalar una base de datos en%n%n
 it.AfterMyProgInstall=Non dimenticare di installare il database in%n%n
 nl.AfterMyProgInstall=Overweeg een database te installeren in%n%n

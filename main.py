@@ -299,7 +299,7 @@ class Main_widget(widgets.QMainWindow):
         self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
-        self.setWindowTitle(_("DDT4All") + " " + __version__)
+        self.setWindowTitle(_("DDT4All") + " - Version: " + __version__ + " - Build status: " + __status__)
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
@@ -1268,7 +1268,7 @@ class portChooser(widgets.QDialog):
         self.portcount = -1
         self.usb()
 
-        self.setWindowTitle(_("DDT4All") + " " + __version__)
+        self.setWindowTitle(_("DDT4All") + " -  Version: " + __version__ + " - Build status: " + __status__)
         self.setIcon()
 
     def setIcon(self):
