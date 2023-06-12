@@ -10,15 +10,6 @@ import ecu
 import options
 import version
 
-
-def unicode(a):
-    return a
-
-
-def utf8(string):
-    return string
-
-
 __author__ = version.__author__
 __copyright__ = version.__copyright__
 __credits__ = version.__credits__
@@ -122,7 +113,7 @@ class sniffer(widgets.QWidget):
         self.stopthread()
         self.startbutton.setChecked(False)
         self.names = []
-        framename = utf8(self.framecombo.currentText())
+        framename = self.framecombo.currentText()
         self.currentrequest = self.ecurequests.requests[framename]
         self.ecu_filter = self.currentrequest.sentbytes
         self.addressinfo.setText(self.ecu_filter)
