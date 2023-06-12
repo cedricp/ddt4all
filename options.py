@@ -42,7 +42,7 @@ def get_last_error():
 
 def translator(filename):
     try:
-        lang, enc = locale.getdefaultlocale()
+        lang, enc = locale.getlocale()
         os.environ['LANG'] = lang
     except:
         # defaul tranlation if err en_US
