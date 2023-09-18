@@ -163,6 +163,7 @@ class Ecu_list(widgets.QWidget):
 
     def init(self):
         self.list.clear()
+        self.list.setSortingEnabled(True)
         self.list.setColumnCount(8)
         self.list.model().setHeaderData(0, core.Qt.Horizontal, _('ECU name'))
         self.list.model().setHeaderData(1, core.Qt.Horizontal, _('ID'))
