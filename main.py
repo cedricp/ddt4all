@@ -571,6 +571,7 @@ class Main_widget(widgets.QMainWindow):
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
+        self.showMaximized()
 
     def setIcon(self):
         appIcon = gui.QIcon("icons/obd.png")
