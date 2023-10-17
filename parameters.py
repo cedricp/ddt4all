@@ -793,7 +793,7 @@ class paramWidget(widgets.QWidget):
                 print(_("XML file not found : ") + self.ddtfile)
                 return
 
-            self.ecurequestsparser = ecu.Ecu_file(xdoc)
+            self.ecurequestsparser = ecu.Ecu_file(self.ddtfile, True)
 
             target = self.getChildNodesByName(xdoc, u"Target")[0]
             if not target:
