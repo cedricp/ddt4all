@@ -581,8 +581,8 @@ class ELM:
                 os.mkdir("./logs")
 
             if len(options.log) > 0:
-                self.lf = open("./logs/elm_" + options.log + ".txt", "at")
-                self.vf = open("./logs/ecu_" + options.log + ".txt", "at")
+                self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
+                self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
