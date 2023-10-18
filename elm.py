@@ -583,6 +583,7 @@ class ELM:
             if len(options.log) > 0:
                 self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
                 self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
+                self.vf.write("Timestamp;ECU_CAN_Address_HEX;Raw_Command_HEX;Raw_Response_HEX_or_STR;Error_message_if_happens\n")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
@@ -735,9 +736,9 @@ class ELM:
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",  ",0x") + ";" +"\n")
             else:
-                print("Unknown address ", self.currentaddress, req, rsp)
+                print("Unknown address: ", self.currentaddress, "0x" + req, "0x" + rsp)
             self.vf.flush()
 
         return rsp
@@ -912,7 +913,7 @@ class ELM:
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
-                    tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
+                    tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache
