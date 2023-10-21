@@ -961,8 +961,11 @@ class ELM:
         Fn = len(raw_command)  # Number of frames
 
         if Fn > 1 or len(raw_command[0]) > 15:
-            # set elm timeout to 300ms for first response
-            self.send_raw('AT ST 4B')
+            if options.cantimeout > 0:
+                self.set_can_timeout( options.cantimeout )
+            else:
+                # set elm timeout to 300ms for first response
+                self.send_raw('AT ST 4B')
 
         while Fc < Fn:
             # enable responses
