@@ -801,7 +801,7 @@ class ELM:
         val = value // 4
         if val > 255:
             val = 255
-        val = hex(val)[2:].upper()
+        val = hex(val)[2:].upper().zfill(2)
         self.cmd("AT ST %s" % val)
 
     def send_cmd(self, command):
