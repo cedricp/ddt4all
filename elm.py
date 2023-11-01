@@ -581,8 +581,9 @@ class ELM:
                 os.mkdir("./logs")
 
             if len(options.log) > 0:
-                self.lf = open("./logs/elm_" + options.log, "at")
-                self.vf = open("./logs/ecu_" + options.log, "at")
+                self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
+                self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
+                self.vf.write("Timestamp;ECU_CAN_Address_HEX;Raw_Command_HEX;Raw_Response_HEX_or_STR;Error_message_if_happens\n")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
@@ -624,7 +625,7 @@ class ELM:
 
     def raise_odb_speed(self, baudrate):
         # Software speed switch
-        res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf8'))
+        res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
 
         # Command echo
         res = self.port.expect_carriage_return()
@@ -646,13 +647,13 @@ class ELM:
     def raise_elm_speed(self, baudrate):
         # Software speed switch to 115Kbps
         if baudrate == 57600:
-            res = self.port.write("ATBRD 45\r".encode("utf8"))
+            res = self.port.write("ATBRD 45\r".encode("utf-8"))
         elif baudrate == 115200:
-            res = self.port.write("ATBRD 23\r".encode("utf8"))
+            res = self.port.write("ATBRD 23\r".encode("utf-8"))
         elif baudrate == 230400:
-            res = self.port.write("ATBRD 11\r".encode("utf8"))
+            res = self.port.write("ATBRD 11\r".encode("utf-8"))
         elif baudrate == 500000:
-            res = self.port.write("ATBRD 8\r".encode("utf8"))
+            res = self.port.write("ATBRD 8\r".encode("utf-8"))
         else:
             return
 
@@ -665,7 +666,7 @@ class ELM:
             self.port.change_rate(baudrate)
             version = self.port.expect_carriage_return()
             if "ELM327" in version:
-                self.port.write('\r'.encode('utf8'))
+                self.port.write('\r'.encode('utf-8'))
                 res = self.port.expect('>')
                 if "OK" in res:
                     print("ELM full speed connection OK ")
@@ -681,7 +682,7 @@ class ELM:
     def __del__(self):
         try:
             print("ELM reset...")
-            self.port.write("ATZ\r".encode("utf8"))
+            self.port.write("ATZ\r".encode("utf-8"))
         except:
             pass
 
@@ -735,9 +736,9 @@ class ELM:
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",  ",0x") + ";" +"\n")
             else:
-                print("Unknown address ", self.currentaddress, req, rsp)
+                print("Unknown address: ", self.currentaddress, "0x" + req, "0x" + rsp)
             self.vf.flush()
 
         return rsp
@@ -912,7 +913,7 @@ class ELM:
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
-                    tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
+                    tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache
@@ -1193,7 +1194,7 @@ class ELM:
         if options.simulation_mode:
             pass
         else:
-            self.port.write("AT MA\r")
+            self.port.write("AT MA\r".encode('utf-8'))
             stream = ""
             while not self.monitorstop:
                 byte = self.port.read()
@@ -1211,7 +1212,7 @@ class ELM:
                 if byte:
                     stream += byte
 
-            self.port.write("AT\r")
+            self.port.write("AT\r".encode('utf-8'))
             self.port.expect('>')
 
     def init_can(self):
