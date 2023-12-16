@@ -1,5 +1,5 @@
 {
- "0": [
+ "00": [
   "CAN",
   "Primary CAN network"
  ],
@@ -7,51 +7,51 @@
   "CAN2",
   "Secondary CAN network"
  ],
- "1": [
+ "01": [
   "ABS-VDC",
   "ABS-VDC"
  ],
- "2": [
+ "02": [
   "ESUS-VADA-AIRSUS",
   "Suspension Power Module-Variable Damping"
  ],
- "3": [
+ "03": [
   "EBA",
   "EBA"
  ],
- "4": [
+ "04": [
   "EPS",
   "Electric Power Steering"
  ],
- "6": [
+ "06": [
   "EMCU",
   "Energy Management Control Unit"
  ],
- "7": [
+ "07": [
   "HLS",
   "High Beam Lighting System"
  ],
- "8": [
+ "08": [
   "TPMS",
   "Tyre Pressure Measurement System"
  ],
- "9": [
+ "09": [
   "MC HEV",
   "Motor Control (Hybrid Vehicle)"
  ],
- "B": [
+ "0B": [
   "LIB 12V",
   "LIB"
  ],
- "D": [
+ "0D": [
   "APB",
   "Automatic Parking Brake"
  ],
- "E": [
+ "0E": [
   "Parking Sonar",
   "Parking Sonar"
  ],
- "F": [
+ "0F": [
   "HFCK",
   "Hand Free Car Kit"
  ],

@@ -1613,7 +1613,9 @@ def dumpAddressing():
                     longname = name.firstChild.nodeValue
             except:
                 longname = shortname
-            dict[hex(int(address))[2:].upper()] = (shortname, longname)
+
+            strHex = "%0.2X" % int(address)
+            dict[strHex] = (shortname, longname)
             break
 
     js = json.dumps(dict, indent=True)
