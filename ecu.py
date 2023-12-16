@@ -2,24 +2,17 @@
 # -*- coding: utf-8 -*-
 import argparse
 import glob
-import io
 import math
 import os
 import re
 import string
 import xml.dom.minidom
 import zipfile
-from io import StringIO
 
 import elm
 import json
 import options
 import version
-
-
-def unichr(t):
-    return chr(t)
-
 
 __author__ = version.__author__
 __copyright__ = version.__copyright__
@@ -1620,7 +1613,7 @@ class Ecu_scanner:
                 print("Skipping CAN extended address (not supported yet) ", addr)
                 continue
 
-            print("Scanning ECU %s" %  self.ecu_database.addr_group_mapping[addr]) #.encode('ascii', 'ignore'))
+            print("Scanning ECU %s" % self.ecu_database.addr_group_mapping[addr])  # .encode('ascii', 'ignore'))
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
