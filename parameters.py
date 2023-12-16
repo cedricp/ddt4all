@@ -1621,6 +1621,52 @@ def dumpAddressing():
     f.write(js)
     f.close()
 
+def dumpSNAT():
+    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
+    xdoc = xdom.documentElement
+    dict = {}
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        address = func.getAttribute(u"Address")
+        protolist = getChildNodesByName(func, u"ProtocolList")
+        for rid in protolist:
+            proto = getChildNodesByName(rid, u"Protocol")
+            for prtc in proto:
+                grid = getChildNodesByName(prtc, u"Address")
+                for ok in grid:
+                    rid_add = ok.getAttribute(u"Rid")
+                    strHex = "%0.2X" % int(address)
+                    dict[strHex] = (rid_add)
+                    break
+
+    js = json.dumps(dict)
+    f = open("address/snat.json", "w")
+    f.write(js)
+    f.close()
+
+def dumpDNAT():
+    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
+    xdoc = xdom.documentElement
+    dict = {}
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        address = func.getAttribute(u"Address")
+        protolist = getChildNodesByName(func, u"ProtocolList")
+        for xid in protolist:
+            proto = getChildNodesByName(xid, u"Protocol")
+            for prtc in proto:
+                gxid = getChildNodesByName(prtc, u"Address")
+                for ok in gxid:
+                    xid_add = ok.getAttribute(u"Xid")
+                    strHex = "%0.2X" % int(address)
+                    dict[strHex] = (xid_add)
+                    break
+
+    js = json.dumps(dict)
+    f = open("address/dnat.json", "w")
+    f.write(js)
+    f.close()
+
 
 def dumpDOC(xdoc):
     target = getChildNodesByName(xdoc, u"Target")
@@ -1854,6 +1900,8 @@ def convertXML():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dumpaddressing', action="store_true", default=None, help="Dump addressing")
+    parser.add_argument('--dumpsnat', action="store_true", default=None, help="Dump SNAT")
+    parser.add_argument('--dumpdnat', action="store_true", default=None, help="Dump DNAT")
     parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
     parser.add_argument('--zipconvert', action="store_true", default=None,
                         help="Convert all XML to JSON in a Zip archive")
@@ -1867,3 +1915,9 @@ if __name__ == '__main__':
 
     if args.dumpaddressing:
         dumpAddressing()
+
+    if args.dumpsnat:
+        dumpSNAT()
+
+    if args.dumpdnat:
+        dumpDNAT()

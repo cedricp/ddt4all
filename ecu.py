@@ -1620,7 +1620,7 @@ class Ecu_scanner:
                 print("Skipping CAN extended address (not supported yet) ", addr)
                 continue
 
-            print("Scanning ECU %s" % self.ecu_database.addr_group_mapping[addr].encode('ascii', 'ignore'))
+            print("Scanning ECU %s" %  self.ecu_database.addr_group_mapping[addr]) #.encode('ascii', 'ignore'))
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
