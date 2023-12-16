@@ -1623,6 +1623,7 @@ def dumpAddressing():
     f.write(js)
     f.close()
 
+
 def dumpSNAT():
     xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
     xdoc = xdom.documentElement
@@ -1645,6 +1646,7 @@ def dumpSNAT():
     f = open("address/snat.json", "w")
     f.write(js)
     f.close()
+
 
 def dumpDNAT():
     xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")

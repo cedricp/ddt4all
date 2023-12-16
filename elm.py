@@ -767,7 +767,7 @@ class ELM:
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",  ",0x") + ";" +"\n")
+                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
             else:
                 print("Unknown address: ", self.currentaddress, "0x" + req, "0x" + rsp)
             self.vf.flush()
@@ -994,7 +994,7 @@ class ELM:
 
         if Fn > 1 or len(raw_command[0]) > 15:
             if options.cantimeout > 0:
-                self.set_can_timeout( options.cantimeout )
+                self.set_can_timeout(options.cantimeout)
             else:
                 # set elm timeout to 300ms for first response
                 self.send_raw('AT ST 4B')
