@@ -1608,8 +1608,8 @@ class Ecu_scanner:
             if addr not in elm.dnat:
                 print("Warning, address %s is not mapped" % addr)
                 continue
-
-            if len(elm.dnat[addr]) > 3:
+            # need test comment this in mode online
+            if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
                 print("Skipping CAN extended address (not supported yet) ", addr)
                 continue
 
