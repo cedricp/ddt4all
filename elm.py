@@ -264,20 +264,6 @@ def get_can_addr(txa):
     return None
 
 
-def getcandnat(addr):
-    a = str(addr).upper()
-    if a in dnat:
-        return dnat[a]
-    return "??"
-
-
-def getcansnat(addr):
-    a = str(addr).upper()
-    if a in snat:
-        return snat[a]
-    return "??"
-
-
 def item_count(iter):
     return sum(1 for _ in iter)
 

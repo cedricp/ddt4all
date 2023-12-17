@@ -43,10 +43,6 @@ args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
 
 
-def utf8(string):
-    return string
-
-
 def isWritable(path):
     try:
         testfile = tempfile.TemporaryFile(dir=path)
@@ -79,8 +75,8 @@ class Ecu_finder(widgets.QDialog):
         button.clicked.connect(self.check)
 
     def check(self):
-        addr = utf8(self.ecuaddr.text())
-        frame = utf8(self.ecuident.text())
+        addr = self.ecuaddr.text()
+        frame = self.ecuident.text()
         self.ecuscanner.identify_from_frame(addr, frame)
 
 
@@ -672,13 +668,13 @@ class Main_widget(widgets.QMainWindow):
         if not item:
             return
 
-        itemname = utf8(item.text(0))
+        itemname = item.text(0)
         nin = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
 
-        newitemname = utf8(nin[0])
+        newitemname = nin[0]
 
         if newitemname == itemname:
             return
@@ -694,7 +690,7 @@ class Main_widget(widgets.QMainWindow):
 
     def newCategory(self):
         ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
-        necatname = utf8(ncn[0])
+        necatname = ncn[0]
         if necatname:
             self.paramview.createCategory(necatname)
             self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
@@ -710,13 +706,13 @@ class Main_widget(widgets.QMainWindow):
         if item.parent() is not None:
             item = item.parent()
 
-        category = utf8(item.text(0))
+        category = item.text(0)
         nsn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
 
-        newscreenname = utf8(nsn[0])
+        newscreenname = nsn[0]
         if newscreenname:
             self.paramview.createScreen(newscreenname, category)
 
@@ -859,7 +855,7 @@ class Main_widget(widgets.QMainWindow):
         numecus = self.treeview_ecu.count()
         for i in range(numecus):
             item = self.treeview_ecu.item(i)
-            itemname = utf8(item.text())
+            itemname = item.text()
             if itemname in self.ecunamemap:
                 eculist.append((itemname, self.ecunamemap[itemname]))
             else:
@@ -879,7 +875,7 @@ class Main_widget(widgets.QMainWindow):
         if filename == '':
             return
 
-        basename = os.path.basename(utf8(filename))
+        basename = os.path.basename(filename)
         filename = os.path.join("./json", basename)
         ecufile = ecu.Ecu_file(None)
         layout = open(filename + ".layout", "w")
@@ -1451,7 +1447,7 @@ class portChooser(widgets.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                portinfo = utf8(currentitem.text())
+                portinfo = currentitem.text()
                 self.port = self.ports[portinfo][0]
                 options.port_name = self.ports[portinfo][1]
                 self.mode = 1
