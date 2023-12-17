@@ -1597,8 +1597,8 @@ def dumpXML(xmlname):
     return dumpDOC(xdoc)
 
 
-def dumpAddressing():
-    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
+def dumpAddressing(file="vehicles/GenericAddressing.xml"):
+    xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
     dict = {}
     xml_funcs = getChildNodesByName(xdoc, u"Function")
@@ -1618,14 +1618,29 @@ def dumpAddressing():
             dict[strHex] = (shortname, longname)
             break
 
-    js = json.dumps(dict, indent=True)
+    # try to leave old
+    try:
+        f_old = open("address/addressing.json", "r")
+        js_old = json.loads(f_old.read())
+        f_old.close()
+        for j in js_old:
+            if j not in dict.keys():
+                dict[j] = js_old[j]
+    except:
+        pass
+
+    sd = sorted(dict.items())
+    new_dict = {}
+    for k, v in sd:
+        new_dict[k] = v
+    js = json.dumps(new_dict, ensure_ascii=False, indent=True)
     f = open("address/addressing.json", "w")
     f.write(js)
     f.close()
 
 
-def dumpSNAT():
-    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
+def dumpSNAT(file="vehicles/GenericAddressing.xml"):
+    xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
     dict = {}
     xml_funcs = getChildNodesByName(xdoc, u"Function")
@@ -1641,15 +1656,29 @@ def dumpSNAT():
                     strHex = "%0.2X" % int(address)
                     dict[strHex] = (rid_add)
                     break
+    # try to leave old
+    try:
+        f_old = open("address/snat.json", "r")
+        js_old = json.loads(f_old.read())
+        f_old.close()
+        for j in js_old:
+            if j not in dict.keys():
+                dict[j] = js_old[j]
+    except:
+        pass
 
-    js = json.dumps(dict)
+    sd = sorted(dict.items())
+    new_dict = {}
+    for k, v in sd:
+        new_dict[k] = v
+    js = json.dumps(new_dict)
     f = open("address/snat.json", "w")
     f.write(js)
     f.close()
 
 
-def dumpDNAT():
-    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
+def dumpDNAT(file="vehicles/GenericAddressing.xml"):
+    xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
     dict = {}
     xml_funcs = getChildNodesByName(xdoc, u"Function")
@@ -1665,8 +1694,22 @@ def dumpDNAT():
                     strHex = "%0.2X" % int(address)
                     dict[strHex] = (xid_add)
                     break
+    # try to leave old
+    try:
+        f_old = open("address/dnat.json", "r")
+        js_old = json.loads(f_old.read())
+        f_old.close()
+        for j in js_old:
+            if j not in dict.keys():
+                dict[j] = js_old[j]
+    except:
+        pass
 
-    js = json.dumps(dict)
+    sd = sorted(dict.items())
+    new_dict = {}
+    for k, v in sd:
+        new_dict[k] = v
+    js = json.dumps(new_dict)
     f = open("address/dnat.json", "w")
     f.write(js)
     f.close()
@@ -1901,11 +1944,31 @@ def convertXML():
             jsfile.close()
 
 
+def dumpVehiclesFolder():
+    for folder_path, _, file_names in os.walk("vehicles"):
+        for file_name in file_names:
+            if file_name.endswith('.xml') and "addressing" in file_name.lower():
+                file_path = os.path.join(folder_path, file_name)
+                try:
+                    print(file_path)
+                    dumpAddressing(file_path)
+                    dumpSNAT(file_path)
+                    dumpDNAT(file_path)
+                except:
+                    print("ERROR -> " + file_path)
+                    pass
+    # normalise names from GenericAddressing.xml
+    dumpAddressing()
+    dumpSNAT()
+    dumpDNAT()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dumpaddressing', action="store_true", default=None, help="Dump addressing")
     parser.add_argument('--dumpsnat', action="store_true", default=None, help="Dump SNAT")
     parser.add_argument('--dumpdnat', action="store_true", default=None, help="Dump DNAT")
+    parser.add_argument('--dumpvehiclesfolder', action="store_true", default=None, help="Dump All content of vehicles forder")
     parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
     parser.add_argument('--zipconvert', action="store_true", default=None,
                         help="Convert all XML to JSON in a Zip archive")
@@ -1925,3 +1988,6 @@ if __name__ == '__main__':
 
     if args.dumpdnat:
         dumpDNAT()
+
+    if args.dumpvehiclesfolder:
+        dumpVehiclesFolder()
