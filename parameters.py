@@ -1947,8 +1947,11 @@ def convertXML():
 def dumpVehiclesFolder():
     for folder_path, _, file_names in os.walk("vehicles"):
         for file_name in file_names:
+            file_path = os.path.join(folder_path, file_name)
+            if file_name == "projects.xml":
+                print(file_path)
+                dumpVehicles(file_path)
             if file_name.endswith('.xml') and "addressing" in file_name.lower():
-                file_path = os.path.join(folder_path, file_name)
                 try:
                     print(file_path)
                     dumpAddressing(file_path)
@@ -1961,6 +1964,7 @@ def dumpVehiclesFolder():
     dumpAddressing()
     dumpSNAT()
     dumpDNAT()
+    dumpVehicles()
 
 
 def dumpVehicles(file="vehicles/projects.xml"):
