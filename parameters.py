@@ -1654,7 +1654,7 @@ def dumpSNAT(file="vehicles/GenericAddressing.xml"):
                 for ok in grid:
                     rid_add = ok.getAttribute(u"Rid")
                     strHex = "%0.2X" % int(address)
-                    dict[strHex] = (rid_add)
+                    dict[strHex] = rid_add
                     break
     # try to leave old
     try:
@@ -1692,7 +1692,7 @@ def dumpDNAT(file="vehicles/GenericAddressing.xml"):
                 for ok in gxid:
                     xid_add = ok.getAttribute(u"Xid")
                     strHex = "%0.2X" % int(address)
-                    dict[strHex] = (xid_add)
+                    dict[strHex] = xid_add
                     break
     # try to leave old
     try:
@@ -1963,6 +1963,34 @@ def dumpVehiclesFolder():
     dumpDNAT()
 
 
+def dumpVehicles(file="vehicles/projects.xml"):
+    xdom = xml.dom.minidom.parse(file)
+    xdoc = xdom.documentElement
+    dict = {}
+    dict["All"] = "ALL"
+    manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
+    for manufacturer in manufacturers:
+        name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
+        # print(name)
+        projects = getChildNodesByName(manufacturer, u"project")
+        for project in projects:
+            code = project.getAttribute(u"code")
+            p_name = project.getAttribute(u"name")
+            project_name = "%s %s" % (name, p_name)
+            if name.lower().replace("_", "").replace("-", "") in p_name.lower().replace("_", "").replace("-", ""):
+                project_name = p_name
+            dict[project_name] = str(code).upper()
+
+    sd = sorted(dict.items())
+    new_dict = {}
+    for k, v in sd:
+        new_dict[k] = v
+    js = json.dumps(new_dict, ensure_ascii=False)
+    f = open("address/vehicles.json", "w")
+    f.write(js)
+    f.close()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dumpaddressing', action="store_true", default=None, help="Dump addressing")
@@ -1972,6 +2000,7 @@ if __name__ == '__main__':
     parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
     parser.add_argument('--zipconvert', action="store_true", default=None,
                         help="Convert all XML to JSON in a Zip archive")
+    parser.add_argument('--dumpprojects', action="store_true", default=None, help="Dump Vehicles")
     args = parser.parse_args()
 
     if args.zipconvert:
@@ -1991,3 +2020,6 @@ if __name__ == '__main__':
 
     if args.dumpvehiclesfolder:
         dumpVehiclesFolder()
+
+    if args.dumpprojects:
+        dumpVehicles()
