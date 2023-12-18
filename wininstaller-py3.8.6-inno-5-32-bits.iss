@@ -51,7 +51,8 @@ WizardStyle=modern
 //Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "*.py"; DestDir: "{app}"; Excludes: "*.pyc"
 Source: "*.qss"; DestDir: "{app}" ; AfterInstall: AfterMyProgInstall
-Source: "\Python38-32\*"; DestDir: "{app}\Python38-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "\DDT4ALL-Dist-Versions\Python38-32\*"; DestDir: "{app}\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\32bits\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
 Source: "address\*"; DestDir: "{app}\address"; Flags: ignoreversion recursesubdirs
@@ -62,6 +63,8 @@ Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onl
 Type: filesandordirs; Name: "{app}\__pycache__"
 Type: filesandordirs; Name: "{app}\importlib"
 Type: filesandordirs; Name: "{app}\python27"
+Type: filesandordirs; Name: "{app}\python38-32"
+Type: filesandordirs; Name: "{app}\Git"
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
@@ -82,8 +85,8 @@ Name: "{app}\vehicles"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{group}\ddt4all"; Filename: "{app}\Python38-32\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
-Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python38-32\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
+Name: "{group}\ddt4all"; Filename: "{app}\Python386-32\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"
+Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python386-32\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\icons\obd.ico"; Tasks: desktopicon
 
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to %n%n

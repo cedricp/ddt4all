@@ -576,9 +576,39 @@ class Main_widget(widgets.QMainWindow):
                 print("Cannot load plugin " + plugin)
                 print(e)
 
+        # Help menu
+        help_menu = menu.addMenu(_("Help"))
+        wiki_about = help_menu.addAction(_("About Dtt4All"))
+        wiki_about.triggered.connect(self.wiki_about)
+        help_menu.addSeparator()
+        devs = help_menu.addMenu(_("About Developers"))
+        about_cedric = devs.addAction("Cedric PAILLE")
+        about_cedric.triggered.connect(self.about_cedric)
+        about_furtif = devs.addAction("--=FurtiF™=--")
+        about_furtif.triggered.connect(self.about_furtif)
+        help_menu.addSeparator()
+        githubupdate = help_menu.addAction(_("Get Git update"))
+        githubupdate.triggered.connect(self.git_update)
+
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
         self.showMaximized()
+
+    def wiki_about(self):
+        url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def about_cedric(self):
+        url = core.QUrl("https://github.com/cedricp", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def about_furtif(self):
+        url = core.QUrl("https://github.com/Furtif", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def git_update(self):
+        url = core.QUrl("https://github.com/cedricp/ddt4all/releases", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
 
     def setIcon(self):
         appIcon = gui.QIcon("icons/obd.png")
