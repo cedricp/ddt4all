@@ -1182,44 +1182,51 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
-        self.addr_group_mapping_long = {}
-        self.addr_group_mapping = {"02": u"Suspension pilotée", "51": u"Tableau de bord", "29": u"Climatisation",
-                                   "D2": u"GATEWAY", "00": u"CAN Vehicle Network", "1E": u"4WD",
-                                   "01": u"ABS-VDC - ABS-ESP",
-                                   "95": u"EVC", "26": u"UCBIC/BFR", "60": u"HMD", "50": u"Tachometer", "A1": u"HFM",
-                                   "93": u"LBC", "6E": u"BVA", "04": u"Direction assistée", "68": u"PEB",
-                                   "58": u"Navigation",
-                                   "2B": u"RADAR", "F7": u"LDCM", "08": u"TPMS", "C0": u"HFM", "13": u"Audio",
-                                   "59": u"MIU",
-                                   "F8": u"RDCM", "24": u"ACC", "27": u"EMM", "A8": u"LBC2", "23": u"4WS",
-                                   "11": u"ADAS-Sub",
-                                   "2E": u"UBP", "67": u"BCB", "0E": u"Aide au parking",
-                                   "0D": u"Frein de parking électrique",
-                                   "28": u"CSHV", "FF": u"CAN2", "62": u"FCAM", "DA": u"EVC-HCM-VCM_29b", "E8": u"SVS",
-                                   "2F": u"IKEY",
-                                   "64": u"SOW_right", "07": u"HLS", "D3": u"UDM", "77": u"DCM Renault", "86": u"AAU",
-                                   "3A": u"AAM",
-                                   "4D": u"SCU", "DF": u"Cluster", "A5": u"DCM", "10": u"Injection NISSAN",
-                                   "0B": u"ACC", "61": u"AVM",
-                                   "46": u"Engineering", "EA": u"TCASE", "87": u"C-Box", "1B": u"DIFF LOCK",
-                                   "72": u"Lampes à décharge à droite 84",
-                                   "ED": u"Audio", "EC": u"TPAD", "1C": u"Pilotage capote", "37": u"Onduleur",
-                                   "D0": u"GATEWAY",
-                                   "32": u"Superviseur", "A6": u"PDCM", "66": u"VCCU", "71": u"HLL_DDL2", "E9": u"EPS",
-                                   "25": u"IDM", "79": u"GPL", "E2": u"C-Display", "A7": u"PBD", "6B": u"BSW",
-                                   "2D": u"ABS-VDC",
-                                   "97": u"PLC/PLGW", "DE": u"ASBMD", "31": u"Transpondeur", "63": u"SOW Left",
-                                   "E6": u"SCCM",
-                                   "2A": u"ADP", "0F": u"HFCK", "EB": u"HU", "78": u"DCM", "73": u"Embrayage piloté",
-                                   "5B": u"ADAS Insulator", "5A": u"ODS_DDL2", "3F": u"Navigation", "81": u"VSP",
-                                   "40": u"TSR_FRONTCAM",
-                                   "06": u"EMCU", "E1": u"CCU", "1A": u"Additional Heater", "E3": u"HMI GateWay",
-                                   "AE": u"UCBIC ISO8", "91": u"LBC (HEV) CPC", "09": u"MC HEV FSCM",
-                                   "EE": u"Controlographe",
-                                   "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM", "41": u"GATEWAY",
-                                   "2C": u"Airbag",
-                                   "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES", "7A": u"Injection",
-                                   "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"}
+        self.addr_group_mapping_long = {
+            "02": u"Suspension pilotée", "51": u"Tableau de bord", "29": u"Climatisation", "D2": u"GATEWAY",
+            "00": u"CAN Vehicle Network", "1E": u"4WD", "01": u"ABS-VDC - ABS-ESP", "95": u"EVC", "26": u"UCBIC/BFR",
+            "60": u"HMD", "50": u"Tachometer", "A1": u"HFM", "93": u"LBC", "6E": u"BVA", "04": u"Direction assistée",
+            "68": u"PEB", "58": u"Navigation", "2B": u"RADAR", "F7": u"LDCM", "08": u"TPMS", "C0": u"HFM",
+            "13": u"Audio", "59": u"MIU", "F8": u"RDCM", "24": u"ACC", "27": u"EMM", "A8": u"LBC2", "23": u"4WS",
+            "11": u"ADAS-Sub", "2E": u"UBP", "67": u"BCB", "0E": u"Aide au parking", "0D": u"Frein de parking électrique",
+            "28": u"CSHV", "FF": u"CAN2", "62": u"FCAM", "DA": u"EVC-HCM-VCM_29b", "E8": u"SVS", "2F": u"IKEY",
+            "64": u"SOW_right", "07": u"HLS", "D3": u"UDM", "77": u"DCM Renault", "86": u"AAU", "3A": u"AAM",
+            "4D": u"SCU", "DF": u"Cluster", "A5": u"DCM", "10": u"Injection NISSAN", "0B": u"ACC", "61": u"AVM",
+            "46": u"Engineering", "EA": u"TCASE", "87": u"C-Box", "1B": u"DIFF LOCK",
+            "72": u"Lampes à décharge à droite 84", "ED": u"Audio", "EC": u"TPAD", "1C": u"Pilotage capote",
+            "37": u"Onduleur", "D0": u"GATEWAY", "32": u"Superviseur", "A6": u"PDCM", "66": u"VCCU", "71": u"HLL_DDL2",
+            "E9": u"EPS", "25": u"IDM", "79": u"GPL", "E2": u"C-Display", "A7": u"PBD", "6B": u"BSW", "2D": u"ABS-VDC",
+            "97": u"PLC/PLGW", "DE": u"ASBMD", "31": u"Transpondeur", "63": u"SOW Left", "E6": u"SCCM", "2A": u"ADP",
+            "0F": u"HFCK", "EB": u"HU", "78": u"DCM", "73": u"Embrayage piloté", "5B": u"ADAS Insulator",
+            "5A": u"ODS_DDL2", "3F": u"Navigation", "81": u"VSP", "40": u"TSR_FRONTCAM", "06": u"EMCU", "E1": u"CCU",
+            "1A": u"Additional Heater", "E3": u"HMI GateWay", "AE": u"UCBIC ISO8", "91": u"LBC (HEV) CPC",
+            "09": u"MC HEV FSCM", "EE": u"Controlographe", "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM",
+            "41": u"GATEWAY", "2C": u"Airbag", "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES",
+            "7A": u"Injection", "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"
+        }
+
+        self.addr_group_mapping = {
+            "02": u"Suspension pilotée", "51": u"Tableau de bord", "29": u"Climatisation", "D2": u"GATEWAY",
+            "00": u"CAN Vehicle Network", "1E": u"4WD", "01": u"ABS-VDC - ABS-ESP", "95": u"EVC", "26": u"UCBIC/BFR",
+            "60": u"HMD", "50": u"Tachometer", "A1": u"HFM", "93": u"LBC", "6E": u"BVA", "04": u"Direction assistée",
+            "68": u"PEB", "58": u"Navigation", "2B": u"RADAR", "F7": u"LDCM", "08": u"TPMS", "C0": u"HFM",
+            "13": u"Audio", "59": u"MIU", "F8": u"RDCM", "24": u"ACC", "27": u"EMM", "A8": u"LBC2", "23": u"4WS",
+            "11": u"ADAS-Sub", "2E": u"UBP", "67": u"BCB", "0E": u"Aide au parking", "0D": u"Frein de parking électrique",
+            "28": u"CSHV", "FF": u"CAN2", "62": u"FCAM", "DA": u"EVC-HCM-VCM_29b", "E8": u"SVS", "2F": u"IKEY",
+            "64": u"SOW_right", "07": u"HLS", "D3": u"UDM", "77": u"DCM Renault", "86": u"AAU", "3A": u"AAM",
+            "4D": u"SCU", "DF": u"Cluster", "A5": u"DCM", "10": u"Injection NISSAN", "0B": u"ACC", "61": u"AVM",
+            "46": u"Engineering", "EA": u"TCASE", "87": u"C-Box", "1B": u"DIFF LOCK",
+            "72": u"Lampes à décharge à droite 84", "ED": u"Audio", "EC": u"TPAD", "1C": u"Pilotage capote",
+            "37": u"Onduleur", "D0": u"GATEWAY", "32": u"Superviseur", "A6": u"PDCM", "66": u"VCCU", "71": u"HLL_DDL2",
+            "E9": u"EPS", "25": u"IDM", "79": u"GPL", "E2": u"C-Display", "A7": u"PBD", "6B": u"BSW", "2D": u"ABS-VDC",
+            "97": u"PLC/PLGW", "DE": u"ASBMD", "31": u"Transpondeur", "63": u"SOW Left", "E6": u"SCCM", "2A": u"ADP",
+            "0F": u"HFCK", "EB": u"HU", "78": u"DCM", "73": u"Embrayage piloté", "5B": u"ADAS Insulator",
+            "5A": u"ODS_DDL2", "3F": u"Navigation", "81": u"VSP", "40": u"TSR_FRONTCAM", "06": u"EMCU", "E1": u"CCU",
+            "1A": u"Additional Heater", "E3": u"HMI GateWay", "AE": u"UCBIC ISO8", "91": u"LBC (HEV) CPC",
+            "09": u"MC HEV FSCM", "EE": u"Controlographe", "52": u"Synthèse de la parole", "D1": u"UDM", "E7": u"SCRCM",
+            "41": u"GATEWAY", "2C": u"Airbag", "70": u"Lampes à décharge 84", "E4": u"IBS", "E0": u"HERMES",
+            "7A": u"Injection", "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"
+        }
 
         f = open("./address/addressing.json", "r")
         js = json.loads(f.read())
@@ -1613,7 +1620,8 @@ class Ecu_scanner:
                 print("Skipping CAN extended address (not supported yet) ", addr)
                 continue
 
-            print("Scanning ECU %s" % self.ecu_database.addr_group_mapping[addr])  # .encode('ascii', 'ignore'))
+            print("Scanning [ADDR]: %s [ECU]: %s [DESC]: %s" % (addr, self.ecu_database.addr_group_mapping[addr],
+                                                                self.ecu_database.addr_group_mapping_long[addr]))
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
