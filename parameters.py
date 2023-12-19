@@ -1672,7 +1672,7 @@ def dumpSNAT(file="vehicles/GenericAddressing.xml"):
     for k, v in sd:
         new_dict[k] = v
     js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("address/snat.json", "w", encoding="UTF-8" )
+    f = open("address/snat.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 

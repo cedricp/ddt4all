@@ -8,7 +8,6 @@ import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets
 
 import options
-import version
 from uiutils import *
 
 

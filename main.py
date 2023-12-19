@@ -4,6 +4,7 @@ import argparse
 import codecs
 import errno
 import glob
+import locale
 import os
 import sys
 import tempfile
@@ -18,7 +19,6 @@ import dataeditor
 import ecu
 import elm
 import json
-import locale
 import options
 import parameters
 import sniffer
