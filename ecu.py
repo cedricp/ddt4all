@@ -1576,13 +1576,12 @@ class Ecu_scanner:
                 print("Warning, address %s is not mapped" % addr)
                 continue
 
-            # need test comment in mode online
+            # need test this comment in mode online
             # if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
             #     print("Skipping CAN extended address (not supported yet) ", addr)
             #     continue
 
-            print(f"{'Scanning: ' + addr:<15} ECU: {self.ecu_database.addr_group_mapping[addr]:<30} DESC: {self.ecu_database.addr_group_mapping_long[addr]}")
-
+            print(f"{'Scanning address: ' + addr:<25} ECU: {self.ecu_database.addr_group_mapping[addr]:<30} DESC: {self.ecu_database.addr_group_mapping_long[addr]}")
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
