@@ -17,7 +17,6 @@ import ecu
 import elm
 import json
 import options
-import version
 from uiutils import *
 
 __author__ = version.__author__
