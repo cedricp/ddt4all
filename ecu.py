@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 import glob
+import json
 import math
 import os
 import re
@@ -11,7 +12,6 @@ import zipfile
 from io import BytesIO
 
 import elm
-import json
 import options
 import version
 
