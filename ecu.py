@@ -1184,8 +1184,7 @@ class Ecu_database:
         self.available_addr_kwp = []
         self.available_addr_can = []
         self.addr_group_mapping_long = {"E7": u"SCRCM", "E8": u"SVS"}
-
-        self.addr_group_mapping = {"E7": u"SCRCM", "E8": u"SVS"}
+        self.addr_group_mapping = {}
 
         f = open("./address/addressing.json", "r", encoding="UTF-8")
         js = json.loads(f.read())
