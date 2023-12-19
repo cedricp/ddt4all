@@ -4,7 +4,6 @@
 ../elm.py
 ../main.py
 ../options.py
-../package.py
 ../parameters.py
 ../sniffer.py
 ../uiutils.py

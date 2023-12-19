@@ -1228,7 +1228,7 @@ class Ecu_database:
             "7A": u"Injection", "AB": u"Régulateur de vitesse (ISO 8)", "B0": u"Transpondeur (ISO8)", "82": u"WCGS"
         }
 
-        f = open("./address/addressing.json", "r")
+        f = open("./address/addressing.json", "r", encoding="UTF-8")
         js = json.loads(f.read())
         f.close()
 

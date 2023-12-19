@@ -369,7 +369,7 @@ class displayWidget(widgets.QWidget):
         rect = getRectangleXML(getChildNodesByName(display, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(display, self.uiscale)
         if req_name not in self.ecurequestsparser.requests:
-            print(_("No request named "), req_name)
+            print(_("No request named"), req_name)
             return
         req = self.ecurequestsparser.requests[req_name]
         dataitem = None

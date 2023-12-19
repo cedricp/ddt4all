@@ -1634,7 +1634,7 @@ def dumpAddressing(file="vehicles/GenericAddressing.xml"):
     for k, v in sd:
         new_dict[k] = v
     js = json.dumps(new_dict, ensure_ascii=False, indent=True)
-    f = open("address/addressing.json", "w")
+    f = open("address/addressing.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -1671,8 +1671,8 @@ def dumpSNAT(file="vehicles/GenericAddressing.xml"):
     new_dict = {}
     for k, v in sd:
         new_dict[k] = v
-    js = json.dumps(new_dict)
-    f = open("address/snat.json", "w")
+    js = json.dumps(new_dict, ensure_ascii=False)
+    f = open("address/snat.json", "w", encoding="UTF-8" )
     f.write(js)
     f.close()
 
@@ -1709,8 +1709,8 @@ def dumpDNAT(file="vehicles/GenericAddressing.xml"):
     new_dict = {}
     for k, v in sd:
         new_dict[k] = v
-    js = json.dumps(new_dict)
-    f = open("address/dnat.json", "w")
+    js = json.dumps(new_dict, ensure_ascii=False)
+    f = open("address/dnat.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -1975,7 +1975,6 @@ def dumpVehicles(file="vehicles/projects.xml"):
     manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
     for manufacturer in manufacturers:
         name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
-        # print(name)
         projects = getChildNodesByName(manufacturer, u"project")
         for project in projects:
             code = project.getAttribute(u"code")
@@ -1990,7 +1989,7 @@ def dumpVehicles(file="vehicles/projects.xml"):
     for k, v in sd:
         new_dict[k] = v
     js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("address/vehicles.json", "w")
+    f = open("address/vehicles.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
