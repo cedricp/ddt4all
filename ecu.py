@@ -1183,10 +1183,12 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
-        self.addr_group_mapping_long = {"E7": u"SCRCM", "E8": u"SVS"}
-        self.addr_group_mapping = {}
+        # TODO bug missing
+        entries = {"E7": u"SCRCM", "E8": u"SVS"}
+        self.addr_group_mapping_long = entries
 
-        f = open("./address/addressing.json", "r", encoding="UTF-8")
+        self.addr_group_mapping = {}
+        f = open("dtt4all_data/addressing.json", "r", encoding="UTF-8")
         js = json.loads(f.read())
         f.close()
 
@@ -1573,13 +1575,14 @@ class Ecu_scanner:
             if addr not in elm.dnat:
                 print("Warning, address %s is not mapped" % addr)
                 continue
-            # need test comment this in mode online
-            if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
-                print("Skipping CAN extended address (not supported yet) ", addr)
-                continue
 
-            print("Scanning [ADDR]: %s [ECU]: %s [DESC]: %s" % (addr, self.ecu_database.addr_group_mapping[addr],
-                                                                self.ecu_database.addr_group_mapping_long[addr]))
+            # need test comment in mode online
+            # if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
+            #     print("Skipping CAN extended address (not supported yet) ", addr)
+            #     continue
+
+            print(f"{'Scanning: ' + addr:<20} ECU: {self.ecu_database.addr_group_mapping[addr]:<20} DESC: {self.ecu_database.addr_group_mapping_long[addr]:<20}")
+
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)

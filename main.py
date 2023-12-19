@@ -41,60 +41,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
 args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
-vehicles = {
-    "All": "ALL", "Alpine A110": "AS1", "Alpine DZ110": "DZ110", "Alpine ECHO": "X1316A",
-    "Contrôle COP Before C1A": "XCOP_BEFORE_C1A", "Contrôle COP C1A": "XCOP_C1A",
-    "Contrôle COP C1A HS": "XCOP_C1AHS", "DDT-Training C1A": "XPIV_C1A", "DDT-Training C1A HS": "XPIV_C1AHS",
-    "Dacia Arkana": "XJC", "Dacia BM Lada": "XGA", "Dacia Docker - Kangoo": "X67", "Dacia Duster": "X79",
-    "Dacia Duster II": "X1310", "Dacia Duster Phase 2": "X79PH2", "Dacia Duster Phase 3": "XJD",
-    "Dacia Kaptur - Captur (BAR/IN/RU)": "XHA", "Dacia Kaptur - Captur (BAR/IN/RU) Ph2": "XHAPH2",
-    "Dacia Lodgy": "X92", "Dacia Logan": "X52", "Dacia Logan / Sandero": "X90", "Dacia Logan III": "XJI",
-    "Dacia New Kaptur - Captur (BAR/IN/RU)": "X1312", "Dacia Nova": "NOVA", "Daimler (w176)": "W176",
-    "Daimler (w205)": "W205", "Daimler Andrew (xMZ, xNE)": "X60B", "Daimler Citan": "VS10", "Daimler New Citan": "VS11",
-    "Lada (XJN)": "XJN", "Lada (XJO)": "XJO", "Lada Largus": "RF90", "Lada Vesta": "XGF",
-    "Logan III Badge Renault": "XJF", "Mobilize [Twizy] EZ1": "XR210", "New EV ((C1A HS EVO) SWEET 400 Nissan)": "LZ2A",
-    "New Kaptur - Captur (Nissan)": "P13C", "Nissan (J32V)": "J32V", "Nissan (P32)": "P32", "Nissan (P33A)": "P33A",
-    "Nissan (P33B)": "P33B", "Nissan (P42Q)": "P42Q", "Nissan (P42R)": "P42R", "Nissan (PB1D)": "XNN",
-    "Nissan (PY1B)": "PY1B", "Nissan Almera": "ALMERA", "Nissan March-Micra": "MARCH", "Nissan Micra": "X02E",
-    "Nissan Navarra (xND)": "X60A", "Nissan Note": "L21B", "Nissan Primera": "PRIMERA", "Nissan [Juke]": "X13A",
-    "Nissan [Leaf]": "PZ1A", "Nissan [PZ1C]": "PZ1C", "Renault (X89)": "X89", "Renault (X96)": "X96",
-    "Renault (x38_Chine)": "XFJ", "Renault (x94)": "X94", "Renault (xFG)": "XFG", "Renault 4Ever (EV)": "X1317",
-    "Renault Alaskan - (u55, xND)": "U60", "Renault Alpine A110": "XEF", "Renault Austral ": "XHN",
-    "Renault Austral Sweet400": "XHNPH2", "Renault Avantime": "X66", "Renault C-Hatch China (C1A)": "XFI",
-    "Renault Captur": "X87", "Renault Captur Phase 2": "X87PH2", "Renault Clio (C1A)": "XJA",
-    "Renault Clio (C1A) Phase2": "XJAPH2", "Renault Clio II": "X65", "Renault Clio III": "X85",
-    "Renault Clio IV": "X98", "Renault Clio IV Phase 2": "X98PH2", "Renault Docker II": "XJK",
-    "Renault Espace IV": "X81", "Renault Espace IV Phase 2": "X81PH2", "Renault Espace IV Phase 3": "X81PH3",
-    "Renault Espace IV Phase 4": "X81PH4", "Renault Espace V": "XFC", "Renault Espace V Ph2": "XFCPH2",
-    "Renault Fluence": "X38", "Renault Fluence - Korea": "XJL", "Renault Fluence - Korea Phase 2": "XJLPH2",
-    "Renault Kadjar": "HFE", "Renault Kadjar CN": "XZH", "Renault Kadjar CN Ph2": "XZHPH2",
-    "Renault Kadjar Ph2": "HFEPH2", "Renault Kadjar Rus": "XZI", "Renault Kangoo": "X76", "Renault Kangoo II": "X61",
-    "Renault Kangoo II Phase 2": "X61PH2", "Renault Koleos II": "XZG", "Renault Koleos II - Chine": "XZJ",
-    "Renault Koleos II - Chine Ph2": "XZJPH2", "Renault Koleos II Ph2": "XZGPH2", "Renault Koleos II Ph3": "XZGPH3",
-    "Renault Kwid": "XBA", "Renault Kwid BR": "XBB", "Renault Kwid EV": "XBG", "Renault Kwid EV Sweet400": "XBGPH2",
-    "Renault Laguna": "X56", "Renault Laguna II": "X74", "Renault Laguna II Phase 2": "X74PH2",
-    "Renault Laguna III": "X91", "Renault Laguna III Phase 2": "X91PH2", "Renault Laguna III Phase 3": "X91PH3",
-    "Renault Laguna III Tricorps": "X47", "Renault Latitude": "X43", "Renault Mascott": "X24",
-    "Renault Master Chine": "XDC", "Renault Master II": "X70", "Renault Master II Phase 3": "X70PH3",
-    "Renault Master III": "X62", "Renault Master III Phase 2": "X62PH2", "Renault Master IV": "XDD",
-    "Renault Master IV Double Cabin": "XDE", "Renault Megane & Scenic": "X64", "Renault Megane E-Tech Electrique": "XCB",
-    "Renault Megane E-Tech Electrique Sweet400": "XCBPH2", "Renault Megane II": "X84",
-    "Renault Megane II Phase 2": "X84PH2", "Renault Megane II hors ABS": "X84BUGABS",
-    "Renault Megane II only ABS": "X84ABSONLY", "Renault Megane III": "X95", "Renault Megane III Phase 2": "X95PH2",
-    "Renault Megane IV": "XFB", "Renault Megane IV - Sedan": "XFF", "Renault Megane IV - Sedan Ph2": "XFFPH2",
-    "Renault Megane IV Ph2": "XFBPH2", "Renault Modus": "X77", "Renault Modus Phase2": "X77PH2",
-    "Renault New Captur (C1A)": "XJB", "Renault New Captur (C1A)Ph2": "XJBPH2", "Renault New Captur Chine)": "XJE",
-    "Renault New EV (C1A HS Evo Sweet400)": "XCC", "Renault New EV China version (C1A HS Evo Sweet400)": "XCD",
-    "Renault New Kangoo": "XFK", "Renault R5 Elec": "X1316", "Renault Safrane": "X54", "Renault Scenic IV": "XFA",
-    "Renault Scenic IV phase2": "XFAPH2", "Renault Symbol / Thalia": "X35", "Renault Talisman": "XFD",
-    "Renault Talisman Phase II": "XFDPH2", "Renault Trafic II": "X83", "Renault Trafic II Phase 2": "X83PH2",
-    "Renault Trafic II Phase 3": "X83PH3", "Renault Trafic III": "X82", "Renault Trafic III Phase2": "X82PH2",
-    "Renault Triber-Kiger India": "XBC", "Renault Twingo": "X06", "Renault Twingo II": "X44",
-    "Renault Twingo II Phase2": "X44PH2", "Renault Twingo III": "X07", "Renault Twingo III Ph2": "X07PH2",
-    "Renault Twizy": "X09", "Renault VelSatis": "X73", "Renault VelSatis Phase 2": "X73PH2", "Renault Wind": "X33",
-    "Renault Zoe": "X10", "Renault Zoe (C1A-Neo)": "X10PH2", "Renault [Captur] ": "XJP", "Renault [SUV]Chine": "XHC",
-    "Renault xJH": "XJH", "Rsm KJA": "KJA", "Rsm Koleos": "H45", "X07 Daimler": "EDISON"
-}
+
+f = open("dtt4all_data/vehicles.json", "r", encoding="UTF-8")
+vehicles = json.loads(f.read())
+f.close()
 
 
 def isWritable(path):

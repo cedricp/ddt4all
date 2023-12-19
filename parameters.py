@@ -1619,7 +1619,7 @@ def dumpAddressing(file="vehicles/GenericAddressing.xml"):
 
     # try to leave old
     try:
-        f_old = open("address/addressing.json", "r")
+        f_old = open("dtt4all_data/addressing.json", "r")
         js_old = json.loads(f_old.read())
         f_old.close()
         for j in js_old:
@@ -1632,8 +1632,8 @@ def dumpAddressing(file="vehicles/GenericAddressing.xml"):
     new_dict = {}
     for k, v in sd:
         new_dict[k] = v
-    js = json.dumps(new_dict, ensure_ascii=False, indent=True)
-    f = open("address/addressing.json", "w", encoding="UTF-8")
+    js = json.dumps(new_dict, ensure_ascii=False)
+    f = open("dtt4all_data/addressing.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -1657,7 +1657,7 @@ def dumpSNAT(file="vehicles/GenericAddressing.xml"):
                     break
     # try to leave old
     try:
-        f_old = open("address/snat.json", "r")
+        f_old = open("dtt4all_data/snat.json", "r")
         js_old = json.loads(f_old.read())
         f_old.close()
         for j in js_old:
@@ -1671,7 +1671,7 @@ def dumpSNAT(file="vehicles/GenericAddressing.xml"):
     for k, v in sd:
         new_dict[k] = v
     js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("address/snat.json", "w", encoding="UTF-8")
+    f = open("dtt4all_data/snat.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -1695,7 +1695,7 @@ def dumpDNAT(file="vehicles/GenericAddressing.xml"):
                     break
     # try to leave old
     try:
-        f_old = open("address/dnat.json", "r")
+        f_old = open("dtt4all_data/dnat.json", "r")
         js_old = json.loads(f_old.read())
         f_old.close()
         for j in js_old:
@@ -1709,7 +1709,7 @@ def dumpDNAT(file="vehicles/GenericAddressing.xml"):
     for k, v in sd:
         new_dict[k] = v
     js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("address/dnat.json", "w", encoding="UTF-8")
+    f = open("dtt4all_data/dnat.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -1988,7 +1988,7 @@ def dumpVehicles(file="vehicles/projects.xml"):
     for k, v in sd:
         new_dict[k] = v
     js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("address/vehicles.json", "w", encoding="UTF-8")
+    f = open("dtt4all_data/vehicles.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
