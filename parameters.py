@@ -1910,20 +1910,22 @@ def dumpVehicles(file="vehicles/projects.xml"):
                 project_name = p_name
             dict["projects"][project_name] = {}
             dict["projects"][project_name]["code"] = str(code).upper()
+            default_v = os.path.join("vehicles", code, "addressing.xml")
+            default = os.path.join("vehicles", "GenericAddressing.xml")
             try:
-                dict["projects"][project_name]["addressing"] = dumpAddressing("./vehicles/" + code + "/addressing.xml")
+                dict["projects"][project_name]["addressing"] = dumpAddressing(default_v)
             except:
-                dict["projects"][project_name]["addressing"] = dumpAddressing("./vehicles/GenericAddressing.xml")
+                dict["projects"][project_name]["addressing"] = dumpAddressing(default)
                 pass
             try:
-                dict["projects"][project_name]["snat"] = dumpSNAT("./vehicles/" + code + "/addressing.xml")
+                dict["projects"][project_name]["snat"] = dumpSNAT(default_v)
             except:
-                dict["projects"][project_name]["snat"] = dumpSNAT("./vehicles/GenericAddressing.xml")
+                dict["projects"][project_name]["snat"] = dumpSNAT(default)
                 pass
             try:
-                dict["projects"][project_name]["dnat"] = dumpDNAT("./vehicles/" + code + "/addressing.xml")
+                dict["projects"][project_name]["dnat"] = dumpDNAT(default_v)
             except:
-                dict["projects"][project_name]["dnat"] = dumpDNAT("./vehicles/GenericAddressing.xml")
+                dict["projects"][project_name]["dnat"] = dumpDNAT(default)
                 pass
 
     sd = sorted(dict["projects"].items())
