@@ -42,9 +42,16 @@ parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', he
 args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
 
-f = open("dtt4all_data/vehicles.json", "r", encoding="UTF-8")
-vehicles = json.loads(f.read())
-f.close()
+try:
+    f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
+    vehicles = json.loads(f.read())
+    f.close()
+    ecu.addressing = vehicles["projects"]["All"]["addressing"]
+    elm.snat = vehicles["projects"]["All"]["snat"]
+    elm.dnat = vehicles["projects"]["All"]["dnat"]
+except:
+    print("dtt4all_data/projects.json not found or not ok.")
+    exit(-1)
 
 
 def isWritable(path):
@@ -93,8 +100,11 @@ class Ecu_list(widgets.QWidget):
 
         self.ecu_map = {}
 
-        for k in vehicles.keys():
+        for k in vehicles["projects"].keys():
             self.vehicle_combo.addItem(k)
+            ecu.addressing = vehicles["projects"][k]["addressing"]
+            elm.snat = vehicles["projects"][k]["snat"]
+            elm.dnat = vehicles["projects"][k]["dnat"]
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
@@ -115,7 +125,10 @@ class Ecu_list(widgets.QWidget):
         self.init()
 
     def scanselvehicle(self):
-        project = str(vehicles[self.vehicle_combo.currentText()])
+        project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
+        ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
+        elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
+        elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
         self.parent().parent().scan_project(project)
 
     def init(self):
@@ -206,7 +219,7 @@ class Ecu_list(widgets.QWidget):
         self.list.resizeColumnToContents(0)
 
     def filterProject(self):
-        project = str(vehicles[self.vehicle_combo.currentText()])
+        project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
         root = self.list.invisibleRootItem()
         root_items = [root.child(i) for i in range(root.childCount())]
 

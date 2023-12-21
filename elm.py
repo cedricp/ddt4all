@@ -11,7 +11,6 @@ import re
 import string
 import sys
 import time
-import json
 from datetime import datetime
 
 import serial
@@ -21,13 +20,12 @@ import options
 
 _ = options.translator('ddt4all')
 
-f = open("dtt4all_data/snat.json", "r", encoding="UTF-8")
-snat = json.loads(f.read())
-f.close()
+# //TODO missing entries this need look side ecu addressing missing entries or ignore {} 
+dnat_entries = {"E7": "7E4", "E8": "644"}
+snat_entries = {"E7": "7EC", "E8": "5C4"}
 
-f = open("dtt4all_data/dnat.json", "r", encoding="UTF-8")
-dnat = json.loads(f.read())
-f.close()
+snat = snat_entries
+dnat = dnat_entries
 
 # Code snippet from https://github.com/rbei-etas/busmaster
 negrsp = {"10": "NR: General Reject",

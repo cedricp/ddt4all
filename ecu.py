@@ -24,6 +24,10 @@ __maintainer__ = version.__maintainer__
 __email__ = version.__email__
 __status__ = version.__status__
 
+addressing = {}
+# //TODO addressing missing entries
+addressing_entries = {"E7": u"SCRCM", "E8": u"SVS"}
+
 
 # Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
@@ -1183,16 +1187,10 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
-        # TODO bug missing
-        entries = {"E7": u"SCRCM", "E8": u"SVS"}
-        self.addr_group_mapping_long = entries
+        self.addr_group_mapping_long = addressing_entries
+        self.addr_group_mapping = addressing_entries
 
-        self.addr_group_mapping = {}
-        f = open("dtt4all_data/addressing.json", "r", encoding="UTF-8")
-        js = json.loads(f.read())
-        f.close()
-
-        for k, v in js.items():
+        for k, v in addressing.items():
             self.addr_group_mapping[k] = v[0]
             self.addr_group_mapping_long[k] = v[1]
 
