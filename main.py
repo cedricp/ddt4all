@@ -4,6 +4,7 @@ import argparse
 import codecs
 import errno
 import glob
+import locale
 import os
 import sys
 import tempfile
@@ -18,7 +19,6 @@ import dataeditor
 import ecu
 import elm
 import json
-import locale
 import options
 import parameters
 import sniffer
@@ -42,9 +42,16 @@ parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', he
 args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
 
-
-def utf8(string):
-    return string
+try:
+    f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
+    vehicles = json.loads(f.read())
+    f.close()
+    ecu.addressing = vehicles["projects"]["All"]["addressing"]
+    elm.snat = vehicles["projects"]["All"]["snat"]
+    elm.dnat = vehicles["projects"]["All"]["dnat"]
+except:
+    print("dtt4all_data/projects.json not found or not ok.")
+    exit(-1)
 
 
 def isWritable(path):
@@ -79,8 +86,8 @@ class Ecu_finder(widgets.QDialog):
         button.clicked.connect(self.check)
 
     def check(self):
-        addr = utf8(self.ecuaddr.text())
-        frame = utf8(self.ecuident.text())
+        addr = self.ecuaddr.text()
+        frame = self.ecuident.text()
         self.ecuscanner.identify_from_frame(addr, frame)
 
 
@@ -92,56 +99,19 @@ class Ecu_list(widgets.QWidget):
         self.vehicle_combo = widgets.QComboBox()
 
         self.ecu_map = {}
-        vehicles = [
-            "ALL", "J32V - (J32V)", "P32 - (P32)", "P33A - (P33A)", "P33B - (P33B)", "P42Q - (P42Q)",
-            "P42R - (P42R)", "XNN - (PB1D)", "PY1B - (PY1B)", "W176 - (w176)", "W205 - (w205)", "XFJ - (x38_Chine)",
-            "X89 - (X89)", "X94 - (x94)", "X96 - (X96)", "XFG - (xFG)", "XJN - (XJN)", "XJO - (XJO)", "XJP - [Captur]",
-            "X13A - [Juke]", "PZ1A - [Leaf]", "PZ1C - [PZ1C]", "XHC - [SUV]Chine", "XR210 - [Twizy] EZ1",
-            "X1317 - 4Ever (EV)", "AS1 - A110", "U60 - Alaskan/(u55, xND)", "ALMERA - Almera", "XEF - Alpine A110",
-            "X1316A - Alpine ECHO", "X60B - Andrew (xMZ, xNE)", "XJC - Arkana", "XHN - Austral", "XHNPH2 - Austral Sweet400",
-            "X66 - Avantime", "XGA - BM Lada", "XFI - C/Hatch China (C1A)", "X87 - Captur", "X87PH2 - Captur Phase 2",
-            "VS10 - Citan", "XJA - Clio (C1A)", "XJAPH2 - Clio (C1A) Phase2", "X65 - Clio II", "X85 - Clio III",
-            "X98 - Clio IV", "X98PH2 - Clio IV Phase 2", "XCOP_BEFORE_C1A - Contrôle COP Before C1A",
-            "XCOP_C1A - Contrôle COP C1A", "XCOP_C1AHS - Contrôle COP C1A HS", "XPIV_C1A - DDT/Training C1A",
-            "XPIV_C1AHS - DDT/Training C1A HS", "XJK - Docker II", "X67 - Docker/Kangoo", "X79 - Duster",
-            "X1310 - Duster II", "X79PH2 - Duster Phase 2", "XJD - Duster Phase 3", "DZ110 - DZ110", "X81 - Espace IV",
-            "X81PH2 - Espace IV Phase 2", "X81PH3 - Espace IV Phase 3", "X81PH4 - Espace IV Phase 4", "XFC - Espace V",
-            "XFCPH2 - Espace V Ph2", "X38 - Fluence", "XJL - Fluence/Korea", "XJLPH2 - Fluence/Korea Phase 2",
-            "HFE - Kadjar", "XZH - Kadjar CN", "XZHPH2 - Kadjar CN Ph2", "HFEPH2 - Kadjar Ph2", "XZI - Kadjar Rus",
-            "X76 - Kangoo", "X61 - Kangoo II", "X61PH2 - Kangoo II Phase 2", "XHA - Kaptur/Captur (BAR/IN/RU)",
-            "XHAPH2 - Kaptur/Captur (BAR/IN/RU) Ph2", "KJA - KJA", "H45 - Koleos", "XZG - Koleos II",
-            "XZGPH2 - Koleos II Ph2", "XZGPH3 - Koleos II Ph3", "XZJ - Koleos II/Chine", "XZJPH2 - Koleos II/Chine Ph2",
-            "XBA - Kwid", "XBB - Kwid BR", "XBG - Kwid EV", "XBGPH2 - Kwid EV Sweet400", "X56 - Laguna", "X74 - Laguna II",
-            "X74PH2 - Laguna II Phase 2", "X91 - Laguna III", "X91PH2 - Laguna III Phase 2", "X91PH3 - Laguna III Phase 3",
-            "X47 - Laguna III Tricorps", "RF90 - Largus", "X43 - Latitude", "X92 - Lodgy", "X52 - Logan", "XJI - Logan III",
-            "XJF - Logan III Badge Renault", "X90 - Logan/Sandero", "MARCH - March/Micra", "X24 - Mascott",
-            "XDC - Master Chine", "X70 - Master II", "X70PH3 - Master II Phase 3", "X62 - Master III",
-            "X62PH2 - Master III Phase 2", "XDD - Master IV", "XDE - Master IV Double Cabin", "X64 - Megane &amp; Scenic",
-            "XCB - Megane E/Tech Electrique", "XCBPH2 - Megane E/Tech Electrique Sweet400", "X84 - Megane II",
-            "X84BUGABS - Megane II hors ABS", "X84ABSONLY - Megane II only ABS", "X84PH2 - Megane II Phase 2",
-            "X95 - Megane III", "X95PH2 - Megane III Phase 2", "XFB - Megane IV", "XFBPH2 - Megane IV Ph2",
-            "XFF - Megane IV/Sedan", "XFFPH2 - Megane IV/Sedan Ph2", "X02E - Micra", "X77 - Modus", "X77PH2 - Modus Phase2",
-            "X60A - Navarra (xND)", "XJB - New Captur (C1A)", "XJBPH2 - New Captur (C1A)Ph2", "XJE - New Captur (Chine)",
-            "VS11 - New Citan", "LZ2A - New EV ((C1A HS EVO) SWEET 400 Nissan)", "XCC - New EV (C1A HS Evo Sweet400)",
-            "XCD - New EV China version (C1A HS Evo Sweet400)", "XFK - New Kangoo", "X1312 - New Kaptur/Captur (BAR/IN/RU)",
-            "P13C - New Kaptur/Captur (Nissan)", "X21B - Note", "L21B - Note", "NOVA - Nova", "PRIMERA - Primera",
-            "X1316 - R5 Elec", "X54 - Safrane", "XFA - Scenic IV", "XFAPH2 - Scenic IV phase2", "X35 - Symbol/Thalia",
-            "XFD - Talisman", "XFDPH2 - Talisman Phase II", "X83 - Trafic II", "X83PH2 - Trafic II Phase 2",
-            "X83PH3 - Trafic II Phase 3", "X82 - Trafic III", "X82PH2 - Trafic III Phase2", "XBC - Triber/Kiger India",
-            "X06 - Twingo", "X44 - Twingo II", "X44PH2 - Twingo II Phase2", "X07 - Twingo III", "X07PH2 - Twingo III Ph2",
-            "X09 - Twizy", "X73 - VelSatis", "X73PH2 - VelSatis Phase 2", "XGF - Vesta", "X33 - Wind",
-            "EDISON - X07 Daimler", "XJH - xJH", "X10 - Zoe", "X10PH2 - Zoe (C1A/Neo)"
-        ]
 
-        for v in vehicles:
-            self.vehicle_combo.addItem(v)
+        for k in vehicles["projects"].keys():
+            self.vehicle_combo.addItem(k)
+            ecu.addressing = vehicles["projects"][k]["addressing"]
+            elm.snat = vehicles["projects"][k]["snat"]
+            elm.dnat = vehicles["projects"][k]["dnat"]
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
         layout = widgets.QVBoxLayout()
         layouth = widgets.QHBoxLayout()
         scanbutton = widgets.QPushButton()
-        scanbutton.setIcon(gui.QIcon("icons/scan.png"))
+        scanbutton.setIcon(gui.QIcon("dtt4all_data/icons/scan.png"))
         scanbutton.clicked.connect(self.scanselvehicle)
         layouth.addWidget(self.vehicle_combo)
         layouth.addWidget(scanbutton)
@@ -155,10 +125,10 @@ class Ecu_list(widgets.QWidget):
         self.init()
 
     def scanselvehicle(self):
-        if str(self.vehicle_combo.currentText().strip()) == 'ALL':
-            project = str(self.vehicle_combo.currentText().strip())
-        else:
-            project = str(self.vehicle_combo.currentText().split(' - ')[0].strip())  # [0:3])
+        project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
+        ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
+        elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
+        elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
         self.parent().parent().scan_project(project)
 
     def init(self):
@@ -249,7 +219,7 @@ class Ecu_list(widgets.QWidget):
         self.list.resizeColumnToContents(0)
 
     def filterProject(self):
-        project = str(self.vehicle_combo.currentText().split(" ")[0])
+        project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
         root = self.list.invisibleRootItem()
         root_items = [root.child(i) for i in range(root.childCount())]
 
@@ -414,38 +384,38 @@ class Main_widget(widgets.QMainWindow):
 
         self.toolbar = self.addToolBar(_("File"))
 
-        self.diagaction = widgets.QAction(gui.QIcon("icons/dtc.png"), _("Read DTC"), self)
+        self.diagaction = widgets.QAction(gui.QIcon("dtt4all_data/icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
-        self.log = widgets.QAction(gui.QIcon("icons/log.png"), _("Full log"), self)
+        self.log = widgets.QAction(gui.QIcon("dtt4all_data/icons/log.png"), _("Full log"), self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
 
-        self.expert = widgets.QAction(gui.QIcon("icons/expert.png"), _("Expert mode (enable writing)"), self)
+        self.expert = widgets.QAction(gui.QIcon("dtt4all_data/icons/expert.png"), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = widgets.QAction(gui.QIcon("icons/autorefresh.png"), _("Auto refresh"), self)
+        self.autorefresh = widgets.QAction(gui.QIcon("dtt4all_data/icons/autorefresh.png"), _("Auto refresh"), self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = widgets.QAction(gui.QIcon("icons/refresh.png"), _("Refresh (one shot)"), self)
+        self.refresh = widgets.QAction(gui.QIcon("dtt4all_data/icons/refresh.png"), _("Refresh (one shot)"), self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = widgets.QAction(gui.QIcon("icons/hex.png"), _("Manual command"), self)
+        self.hexinput = widgets.QAction(gui.QIcon("dtt4all_data/icons/hex.png"), _("Manual command"), self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
-        self.cominput = widgets.QAction(gui.QIcon("icons/command.png"), _("Manual request"), self)
+        self.cominput = widgets.QAction(gui.QIcon("dtt4all_data/icons/command.png"), _("Manual request"), self)
         self.cominput.triggered.connect(self.command_editor)
         self.cominput.setEnabled(False)
 
-        self.fctrigger = widgets.QAction(gui.QIcon("icons/flowcontrol.png"), _("Software flow control"), self)
+        self.fctrigger = widgets.QAction(gui.QIcon("dtt4all_data/icons/flowcontrol.png"), _("Software flow control"), self)
         self.fctrigger.setCheckable(True)
         self.fctrigger.triggered.connect(self.flow_control)
 
@@ -569,12 +539,42 @@ class Main_widget(widgets.QMainWindow):
                 print("Cannot load plugin " + plugin)
                 print(e)
 
+        # Help menu
+        help_menu = menu.addMenu(_("Help"))
+        wiki_about = help_menu.addAction(_("About Dtt4All"))
+        wiki_about.triggered.connect(self.wiki_about)
+        help_menu.addSeparator()
+        devs = help_menu.addMenu(_("About Developers"))
+        about_cedric = devs.addAction("Cedric PAILLE")
+        about_cedric.triggered.connect(self.about_cedric)
+        about_furtif = devs.addAction("--=FurtiF™=--")
+        about_furtif.triggered.connect(self.about_furtif)
+        help_menu.addSeparator()
+        githubupdate = help_menu.addAction(_("Get Git update"))
+        githubupdate.triggered.connect(self.git_update)
+
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
         self.showMaximized()
 
+    def wiki_about(self):
+        url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def about_cedric(self):
+        url = core.QUrl("https://github.com/cedricp", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def about_furtif(self):
+        url = core.QUrl("https://github.com/Furtif", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def git_update(self):
+        url = core.QUrl("https://github.com/cedricp/ddt4all/releases", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
     def setIcon(self):
-        appIcon = gui.QIcon("icons/obd.png")
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
 
     def set_can_combo(self, bus):
@@ -672,13 +672,13 @@ class Main_widget(widgets.QMainWindow):
         if not item:
             return
 
-        itemname = utf8(item.text(0))
+        itemname = item.text(0)
         nin = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
 
-        newitemname = utf8(nin[0])
+        newitemname = nin[0]
 
         if newitemname == itemname:
             return
@@ -694,7 +694,7 @@ class Main_widget(widgets.QMainWindow):
 
     def newCategory(self):
         ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
-        necatname = utf8(ncn[0])
+        necatname = ncn[0]
         if necatname:
             self.paramview.createCategory(necatname)
             self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
@@ -710,13 +710,13 @@ class Main_widget(widgets.QMainWindow):
         if item.parent() is not None:
             item = item.parent()
 
-        category = utf8(item.text(0))
+        category = item.text(0)
         nsn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
 
-        newscreenname = utf8(nsn[0])
+        newscreenname = nsn[0]
         if newscreenname:
             self.paramview.createScreen(newscreenname, category)
 
@@ -859,7 +859,7 @@ class Main_widget(widgets.QMainWindow):
         numecus = self.treeview_ecu.count()
         for i in range(numecus):
             item = self.treeview_ecu.item(i)
-            itemname = utf8(item.text())
+            itemname = item.text()
             if itemname in self.ecunamemap:
                 eculist.append((itemname, self.ecunamemap[itemname]))
             else:
@@ -879,7 +879,7 @@ class Main_widget(widgets.QMainWindow):
         if filename == '':
             return
 
-        basename = os.path.basename(utf8(filename))
+        basename = os.path.basename(filename)
         filename = os.path.join("./json", basename)
         ecufile = ecu.Ecu_file(None)
         layout = open(filename + ".layout", "w")
@@ -1085,7 +1085,7 @@ class Main_widget(widgets.QMainWindow):
 class donationWidget(widgets.QLabel):
     def __init__(self):
         super(donationWidget, self).__init__()
-        img = gui.QPixmap("icons/donate.png")
+        img = gui.QPixmap("dtt4all_data/icons/donate.png")
         self.setPixmap(img)
         self.setAlignment(core.Qt.AlignCenter)
         self.setFrameStyle((widgets.QFrame.Panel | widgets.QFrame.StyledPanel))
@@ -1148,7 +1148,7 @@ class portChooser(widgets.QDialog):
 
         medialayout = widgets.QHBoxLayout()
         self.usbbutton = widgets.QPushButton()
-        self.usbbutton.setIcon(gui.QIcon("icons/usb.png"))
+        self.usbbutton.setIcon(gui.QIcon("dtt4all_data/icons/usb.png"))
         self.usbbutton.setIconSize(core.QSize(60, 60))
         self.usbbutton.setFixedHeight(64)
         self.usbbutton.setFixedWidth(64)
@@ -1156,7 +1156,7 @@ class portChooser(widgets.QDialog):
         medialayout.addWidget(self.usbbutton)
 
         self.wifibutton = widgets.QPushButton()
-        self.wifibutton.setIcon(gui.QIcon("icons/wifi.png"))
+        self.wifibutton.setIcon(gui.QIcon("dtt4all_data/icons/wifi.png"))
         self.wifibutton.setIconSize(core.QSize(60, 60))
         self.wifibutton.setFixedHeight(64)
         self.wifibutton.setFixedWidth(64)
@@ -1164,7 +1164,7 @@ class portChooser(widgets.QDialog):
         medialayout.addWidget(self.wifibutton)
 
         self.btbutton = widgets.QPushButton()
-        self.btbutton.setIcon(gui.QIcon("icons/bt.png"))
+        self.btbutton.setIcon(gui.QIcon("dtt4all_data/icons/bt.png"))
         self.btbutton.setIconSize(core.QSize(60, 60))
         self.btbutton.setFixedHeight(64)
         self.btbutton.setFixedWidth(64)
@@ -1172,7 +1172,7 @@ class portChooser(widgets.QDialog):
         medialayout.addWidget(self.btbutton)
 
         self.obdlinkbutton = widgets.QPushButton()
-        self.obdlinkbutton.setIcon(gui.QIcon("icons/obdlink.png"))
+        self.obdlinkbutton.setIcon(gui.QIcon("dtt4all_data/icons/obdlink.png"))
         self.obdlinkbutton.setIconSize(core.QSize(60, 60))
         self.obdlinkbutton.setFixedHeight(64)
         self.obdlinkbutton.setFixedWidth(64)
@@ -1180,7 +1180,7 @@ class portChooser(widgets.QDialog):
         medialayout.addWidget(self.obdlinkbutton)
 
         self.elsbutton = widgets.QPushButton()
-        self.elsbutton.setIcon(gui.QIcon("icons/els27.png"))
+        self.elsbutton.setIcon(gui.QIcon("dtt4all_data/icons/els27.png"))
         self.elsbutton.setIconSize(core.QSize(60, 60))
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
@@ -1274,7 +1274,7 @@ class portChooser(widgets.QDialog):
         self.setIcon()
 
     def setIcon(self):
-        appIcon = gui.QIcon("icons/obd.png")
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
 
     def check_elm(self):
@@ -1451,7 +1451,7 @@ class portChooser(widgets.QDialog):
         else:
             currentitem = self.listview.currentItem()
             if currentitem:
-                portinfo = utf8(currentitem.text())
+                portinfo = currentitem.text()
                 self.port = self.ports[portinfo][0]
                 options.port_name = self.ports[portinfo][1]
                 self.mode = 1

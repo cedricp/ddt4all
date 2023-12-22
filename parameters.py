@@ -17,7 +17,6 @@ import ecu
 import elm
 import json
 import options
-import version
 from uiutils import *
 
 __author__ = version.__author__
@@ -1597,10 +1596,10 @@ def dumpXML(xmlname):
     return dumpDOC(xdoc)
 
 
-def dumpAddressing():
-    xdom = xml.dom.minidom.parse("vehicles/GenericAddressing.xml")
+def dumpAddressing(file):
+    xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
-    dict = {}
+    dict = ecu.addressing
     xml_funcs = getChildNodesByName(xdoc, u"Function")
     for func in xml_funcs:
         shortname = func.getAttribute(u"Name")
@@ -1613,13 +1612,51 @@ def dumpAddressing():
                     longname = name.firstChild.nodeValue
             except:
                 longname = shortname
-            dict[hex(int(address))[2:].upper()] = (shortname, longname)
-            break
 
-    js = json.dumps(dict, indent=True)
-    f = open("address/addressing.json", "w")
-    f.write(js)
-    f.close()
+            strHex = "%0.2X" % int(address)
+            dict[strHex] = (shortname, longname)
+            break
+    return dict
+
+
+def dumpSNAT(file):
+    xdom = xml.dom.minidom.parse(file)
+    xdoc = xdom.documentElement
+    dict = elm.snat_entries
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        address = func.getAttribute(u"Address")
+        protolist = getChildNodesByName(func, u"ProtocolList")
+        for rid in protolist:
+            proto = getChildNodesByName(rid, u"Protocol")
+            for prtc in proto:
+                grid = getChildNodesByName(prtc, u"Address")
+                for ok in grid:
+                    rid_add = ok.getAttribute(u"Rid")
+                    strHex = "%0.2X" % int(address)
+                    dict[strHex] = rid_add
+                    break
+    return dict
+
+
+def dumpDNAT(file):
+    xdom = xml.dom.minidom.parse(file)
+    xdoc = xdom.documentElement
+    dict = elm.dnat_entries
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        address = func.getAttribute(u"Address")
+        protolist = getChildNodesByName(func, u"ProtocolList")
+        for xid in protolist:
+            proto = getChildNodesByName(xid, u"Protocol")
+            for prtc in proto:
+                gxid = getChildNodesByName(prtc, u"Address")
+                for ok in gxid:
+                    xid_add = ok.getAttribute(u"Xid")
+                    strHex = "%0.2X" % int(address)
+                    dict[strHex] = xid_add
+                    break
+    return dict
 
 
 def dumpDOC(xdoc):
@@ -1851,12 +1888,63 @@ def convertXML():
             jsfile.close()
 
 
+def dumpVehicles(file="vehicles/projects.xml"):
+    xdom = xml.dom.minidom.parse(file)
+    xdoc = xdom.documentElement
+    dict = {}
+    dict["projects"] = {}
+    dict["projects"]["All"] = {}
+    dict["projects"]["All"]["code"] = "ALL"
+    dict["projects"]["All"]["addressing"] = dumpAddressing("./vehicles/GenericAddressing.xml")
+    dict["projects"]["All"]["snat"] = dumpSNAT("./vehicles/GenericAddressing.xml")
+    dict["projects"]["All"]["dnat"] = dumpDNAT("./vehicles/GenericAddressing.xml")
+    manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
+    for manufacturer in manufacturers:
+        name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
+        projects = getChildNodesByName(manufacturer, u"project")
+        for project in projects:
+            code = project.getAttribute(u"code")
+            p_name = project.getAttribute(u"name")
+            project_name = "%s %s" % (name, p_name)
+            if name.lower().replace("_", "").replace("-", "") in p_name.lower().replace("_", "").replace("-", ""):
+                project_name = p_name
+            dict["projects"][project_name] = {}
+            dict["projects"][project_name]["code"] = str(code).upper()
+            default_v = os.path.join("vehicles", code, "addressing.xml")
+            default = os.path.join("vehicles", "GenericAddressing.xml")
+            try:
+                dict["projects"][project_name]["addressing"] = dumpAddressing(default_v)
+            except:
+                dict["projects"][project_name]["addressing"] = dumpAddressing(default)
+                pass
+            try:
+                dict["projects"][project_name]["snat"] = dumpSNAT(default_v)
+            except:
+                dict["projects"][project_name]["snat"] = dumpSNAT(default)
+                pass
+            try:
+                dict["projects"][project_name]["dnat"] = dumpDNAT(default_v)
+            except:
+                dict["projects"][project_name]["dnat"] = dumpDNAT(default)
+                pass
+
+    sd = sorted(dict["projects"].items())
+    new_dict = {}
+    new_dict["projects"] = {}
+    for k, v in sd:
+        new_dict["projects"][k] = v
+    js = json.dumps(new_dict, ensure_ascii=False, indent=True)
+    f = open("dtt4all_data/projects.json", "w", encoding="UTF-8")
+    f.write(js)
+    f.close()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dumpaddressing', action="store_true", default=None, help="Dump addressing")
     parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
     parser.add_argument('--zipconvert', action="store_true", default=None,
                         help="Convert all XML to JSON in a Zip archive")
+    parser.add_argument('--dumpprojects', action="store_true", default=None, help="Dump Vehicles")
     args = parser.parse_args()
 
     if args.zipconvert:
@@ -1865,5 +1953,5 @@ if __name__ == '__main__':
     if args.convert:
         convertXML()
 
-    if args.dumpaddressing:
-        dumpAddressing()
+    if args.dumpprojects:
+        dumpVehicles()

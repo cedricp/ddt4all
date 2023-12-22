@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import gettext
 import os
-import sys
 
 import locale
 
@@ -50,5 +49,5 @@ def translator(filename):
         pass
 
     # Set up message catalog access
-    t = gettext.translation(filename, 'locale', fallback=True) # not ok in python 3.11.x, codeset="utf-8")
+    t = gettext.translation(filename, 'dtt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext
