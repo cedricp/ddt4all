@@ -28,7 +28,7 @@ VersionInfoProductName={#MyAppName}
 AppCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
 
 ;--------------------- Info Windows program list
-UninstallDisplayIcon={app}\icons\obd.ico
+UninstallDisplayIcon={app}\dtt4all_data\icons\obd.ico
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
 
@@ -36,7 +36,7 @@ UsepreviousLanguage=No
 
 DefaultDirName={pf}\{#MyAppDir}
 DefaultGroupName={#MyAppDir}
-SetupIconFile=icons\obd.ico
+SetupIconFile=..\..\dtt4all_data\icons\obd.ico
 OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}-python-3.11.4-64bits
 UsePreviousPrivileges=True
 VersionInfoCompany={#MyAppCompany}
@@ -45,33 +45,22 @@ VersionInfoCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear}
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoProductTextVersion={#MyAppVersion}
 VersionInfoOriginalFileName={#MyAppName}
-LicenseFile=license.txt
+LicenseFile=..\..\license.txt
 WizardStyle=modern
 
 [Files]
-//Source: "ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
-Source: "*.py"; DestDir: "{app}"; Excludes: "*.pyc"
-Source: "*.qss"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall
+;Source: "..\..\ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "\DDT4ALL-Dist-Versions\Python311\*"; DestDir: "{app}\Python311-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs
-Source: "address\*"; DestDir: "{app}\address"; Flags: ignoreversion recursesubdirs
-Source: "locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
-Source: "json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
+;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
+Source: "..\..\ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
+Source: "..\..\dtt4all_data\*"; DestDir: "{app}\dtt4all_data"; Flags: ignoreversion recursesubdirs; Excludes: "inno-win-setup\*"
+Source: "..\..\*.py"; DestDir: "{app}"; Excludes: "*.pyc"
+Source: "..\..\*.qss"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall;
+;Source: "..\..\*.qss"; DestDir: "{app}"
 
 [InstallDelete]
-Type: filesandordirs; Name: "{app}\__pycache__"
-Type: filesandordirs; Name: "{app}\importlib"
-Type: filesandordirs; Name: "{app}\python27"
-Type: filesandordirs; Name: "{app}\Python38"
-Type: filesandordirs; Name: "{app}\Python39"
-Type: filesandordirs; Name: "{app}\Python310"
-Type: filesandordirs; Name: "{app}\Python38-32"
-Type: filesandordirs; Name: "{app}\Python39-32"
-Type: filesandordirs; Name: "{app}\Python310-32"
-Type: filesandordirs; Name: "{app}\Python311"
-Type: filesandordirs; Name: "{app}\Git"
+Type: filesandordirs; Name: "{app}\*"
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
@@ -83,10 +72,10 @@ begin
 end;
 
 [Dirs]
-Name: "{app}"; Permissions: users-full
 Name: "{app}\logs"; Permissions: users-full
 Name: "{app}\json"; Permissions: users-full
 Name: "{app}\vehicles"; Permissions: users-full
+Name: "{app}\dtt4all_data"; Permissions: users-full
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
