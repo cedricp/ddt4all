@@ -1799,7 +1799,7 @@ def zipConvertXML(dbfilename="ecu.zip"):
             continue
         ecus.append(e)
 
-    i = 0
+    i = 1
     print("Starting conversion")
 
     targetsdict = {}
@@ -1845,7 +1845,7 @@ def convertXML():
 
     ecus = glob.glob("ecus/*.xml")
     ecus.remove("ecus/eculist.xml")
-    i = 0
+    i = 1
 
     print("Opening ECU Database...")
     ecu_database = ecu.Ecu_database()
