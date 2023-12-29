@@ -1153,6 +1153,7 @@ class portChooser(widgets.QDialog):
         self.usbbutton.setFixedHeight(64)
         self.usbbutton.setFixedWidth(64)
         self.usbbutton.setCheckable(True)
+        self.usbbutton.setToolTip('USB')
         medialayout.addWidget(self.usbbutton)
 
         self.wifibutton = widgets.QPushButton()
@@ -1161,6 +1162,7 @@ class portChooser(widgets.QDialog):
         self.wifibutton.setFixedHeight(64)
         self.wifibutton.setFixedWidth(64)
         self.wifibutton.setCheckable(True)
+        self.wifibutton.setToolTip('WiFi')
         medialayout.addWidget(self.wifibutton)
 
         self.btbutton = widgets.QPushButton()
@@ -1169,6 +1171,7 @@ class portChooser(widgets.QDialog):
         self.btbutton.setFixedHeight(64)
         self.btbutton.setFixedWidth(64)
         self.btbutton.setCheckable(True)
+        self.btbutton.setToolTip('Bluetooth')
         medialayout.addWidget(self.btbutton)
 
         self.obdlinkbutton = widgets.QPushButton()
@@ -1177,6 +1180,7 @@ class portChooser(widgets.QDialog):
         self.obdlinkbutton.setFixedHeight(64)
         self.obdlinkbutton.setFixedWidth(64)
         self.obdlinkbutton.setCheckable(True)
+        self.obdlinkbutton.setToolTip('OBDLINK')
         medialayout.addWidget(self.obdlinkbutton)
 
         self.elsbutton = widgets.QPushButton()
@@ -1185,6 +1189,7 @@ class portChooser(widgets.QDialog):
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
         self.elsbutton.setCheckable(True)
+        self.elsbutton.setToolTip('ELS27')
         medialayout.addWidget(self.elsbutton)
 
         layout.addLayout(medialayout)
