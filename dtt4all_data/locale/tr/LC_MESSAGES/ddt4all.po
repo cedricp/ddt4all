@@ -6,230 +6,177 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-24 16:16+0200\n"
-"PO-Revision-Date: 2023-11-08 21:31+0300\n"
-"Last-Translator: Abdullah YILMAZ (TA1AUB) <h.abdullahyilmaz@hotmail.com>\n"
+"POT-Creation-Date: 2023-12-30 20:32+0100\n"
+"PO-Revision-Date: 2023-12-30 20:50+0100\n"
+"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../dataeditor.py:200
 msgid "Goto data"
 msgstr "Veriye Git"
 
-#: ../dataeditor.py:201
 msgid "Remove"
 msgstr "Kaldır"
 
-#: ../dataeditor.py:206
 msgid "Add to screen"
 msgstr "Ekrana ekle"
 
-#: ../dataeditor.py:318
 msgid "Request name;Bytes;Manual"
 msgstr "İstek adı;Bayt;Manuel"
 
-#: ../dataeditor.py:353 ../dataeditor.py:1330
 msgid "Add"
 msgstr "Ekle"
 
-#: ../dataeditor.py:360
 msgid "Send request bytes (HEX)"
 msgstr "Alınan istek baytları (HEX)"
 
-#: ../dataeditor.py:362
 msgid "Receive bytes (HEX)"
 msgstr "Alınan bayt (HEXA)"
 
-#: ../dataeditor.py:373
 msgid "Data length"
 msgstr "Veri uzunluğu"
 
-#: ../dataeditor.py:375
 msgid "Shift byte count"
 msgstr "Bayt sayısını değiştir"
 
-#: ../dataeditor.py:513
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr ""
 "Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
 
-#: ../dataeditor.py:531 ../dataeditor.py:591
 msgid "Little"
 msgstr "Küçük"
 
-#: ../dataeditor.py:532 ../dataeditor.py:593
 msgid "Big"
 msgstr "Büyük"
 
-#: ../dataeditor.py:533 ../dataeditor.py:589
 msgid "Inherits globals"
 msgstr "Globalleri devralır"
 
-#: ../dataeditor.py:648
 msgid "No SDS"
 msgstr "SDS yok"
 
-#: ../dataeditor.py:649
 msgid "Plant"
 msgstr "Ek"
 
-#: ../dataeditor.py:650
 msgid "After Sale"
 msgstr "Satış Sonrası"
 
-#: ../dataeditor.py:651
 msgid "Engineering"
 msgstr "Mühendislik"
 
-#: ../dataeditor.py:652 ../dataeditor.py:1727 ../main.py:170
 msgid "Supplier"
 msgstr "Tedarikçi"
 
-#: ../dataeditor.py:667
 msgid "Reload requests"
 msgstr "İstekleri yeniden yükle"
 
-#: ../dataeditor.py:668
 msgid "Add request"
 msgstr "İstek Ekle"
 
-#: ../dataeditor.py:686
 msgid "Send bytes"
 msgstr "Gönderilen bayt"
 
-#: ../dataeditor.py:687
 msgid "Receive bytes"
 msgstr "Alınan bayt"
 
-#: ../dataeditor.py:761
 msgid "Number of bits"
 msgstr "Bit sayısı"
 
-#: ../dataeditor.py:762 ../dataeditor.py:931
 msgid "Signed"
 msgstr "İmzalı"
 
-#: ../dataeditor.py:763
 msgid "Add item"
 msgstr "Parça Ekle"
 
-#: ../dataeditor.py:764
 msgid "Del item"
 msgstr "Parça sil"
 
-#: ../dataeditor.py:803
 msgid "New item"
 msgstr "Yeni parça"
 
-#: ../dataeditor.py:858
 msgid "Value;Text"
 msgstr "Değer;Metin"
 
-#: ../dataeditor.py:874
 msgid "Number of bytes"
 msgstr "Bayt Sayısı"
 
-#: ../dataeditor.py:875 ../dataeditor.py:930
 msgid "Unit"
 msgstr "Birim"
 
-#: ../dataeditor.py:929
 msgid "Number of bit"
 msgstr "Bit Sayısı"
 
-#: ../dataeditor.py:932
 msgid "Format"
 msgstr "Biçim"
 
-#: ../dataeditor.py:933
 msgid "Value = (AX+B) / C"
 msgstr "Değer =(AX+B) / C"
 
-#: ../dataeditor.py:1009
 msgid "New"
 msgstr "Yeni"
 
-#: ../dataeditor.py:1010
 msgid "Duplicate selected"
 msgstr "Seçilenleri Çoğalt"
 
-#: ../dataeditor.py:1011
 msgid "Remove selected"
 msgstr "Seçilenleri Sil"
 
-#: ../dataeditor.py:1012
 msgid "Reload"
 msgstr "Tekrar yükle"
 
-#: ../dataeditor.py:1013
 msgid "Validate changes"
 msgstr "Değişiklikleri Doğrula"
 
-#: ../dataeditor.py:1049
 msgid "Description"
 msgstr "Açıklama"
 
-#: ../dataeditor.py:1055
 msgid "Data type"
 msgstr "Veri Türü"
 
-#: ../dataeditor.py:1057
 msgid "Numeric"
 msgstr "Sayısal"
 
-#: ../dataeditor.py:1058
 msgid "Numeric items"
 msgstr "Sayısal Parçalar"
 
-#: ../dataeditor.py:1059
 msgid "Hex"
 msgstr "Hex"
 
-#: ../dataeditor.py:1089 ../dataeditor.py:1095
 #, python-format
 msgid "Data is used by request %s"
 msgstr "Veriler %s isteği tarafından kullanılıyor"
 
-#: ../dataeditor.py:1142
 msgid "New data"
 msgstr "Yeni Veri"
 
-#: ../dataeditor.py:1148
 msgid "Replace me with request description"
 msgstr "Beni istek açıklamasıyla değiştir"
 
-#: ../dataeditor.py:1294
 msgid "Data name;Description"
 msgstr "Veri adı;Açıklama"
 
-#: ../dataeditor.py:1331
 msgid "Del"
 msgstr "Sil"
 
-#: ../dataeditor.py:1332
 msgid "Refresh"
 msgstr "Yenile"
 
-#: ../dataeditor.py:1333
 msgid "Move up"
 msgstr "Yukarı Taşı"
 
-#: ../dataeditor.py:1334
 msgid "Check"
 msgstr "Kontrol"
 
-#: ../dataeditor.py:1378
 #, python-format
 msgid "Request %s not found"
 msgstr "%s isteği bulunamadı"
 
-#: ../dataeditor.py:1398
 #, python-format
 msgid ""
 "<font color=green>Request <font color=blue>'%s'</font> has no missing input "
@@ -238,7 +185,6 @@ msgstr ""
 "<font color=green>İstek <font color=blue>'%s'</font> eksik girdi değeri "
 "içermiyor</font>"
 
-#: ../dataeditor.py:1402
 #, python-format
 msgid ""
 "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
@@ -247,416 +193,325 @@ msgstr ""
 "<font color=red>İstek <font color=blue>'%s'</font> eksik girdi içeriyor :</"
 "font>"
 
-#: ../dataeditor.py:1405
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
-#: ../dataeditor.py:1503
 msgid "Delay;Request"
 msgstr "Gecikme; İstek"
 
-#: ../dataeditor.py:1596
 msgid "Screen initialization"
 msgstr "Ekran başlatma"
 
-#: ../dataeditor.py:1597
 msgid "Requests to send before screen drawing"
 msgstr "Ekran çiziminden önce gönderilecek istekler"
 
-#: ../dataeditor.py:1611
 msgid "Button name;Unique name"
 msgstr "Buton adı; Benzersiz ad"
 
-#: ../dataeditor.py:1681
 msgid "ECU Function address"
 msgstr "ECU İşlev adresi"
 
-#: ../dataeditor.py:1684
 msgid "ECU Protocol"
 msgstr "ECU Protokolü"
 
-#: ../dataeditor.py:1686 ../dataeditor.py:1808
 msgid "Tool > Ecu ID (Hex)"
 msgstr "Araç > Ecu Kimliği (Hex)"
 
-#: ../dataeditor.py:1688 ../dataeditor.py:1809
 msgid "Ecu > Tool ID (Hex)"
 msgstr "Ecu > Araç Kimliği (Hex)"
 
-#: ../dataeditor.py:1690
 msgid "Coding"
 msgstr "Kodlama"
 
-#: ../dataeditor.py:1694
 msgid "Big Endian"
 msgstr "Big Endian(önemli byte solda)"
 
-#: ../dataeditor.py:1695
 msgid "Little Endian"
 msgstr "Little Endian (önemli byte sağda)"
 
-#: ../dataeditor.py:1702
 msgid "ECU Auto identification"
 msgstr "ECU Otomatik kimlik"
 
-#: ../dataeditor.py:1714
 msgid "Diag version;Supplier;Soft;Version"
 msgstr "Tanılama sürümü;Tedarikçi;Yazılım;Sürüm"
 
-#: ../dataeditor.py:1722
 msgid "Add new"
 msgstr "Yeni Ekle"
 
-#: ../dataeditor.py:1723
 msgid "Delete selected"
 msgstr "Seçilenleri Sil"
 
-#: ../dataeditor.py:1724
 msgid "Diag version"
 msgstr "Tanılama sürümü"
 
-#: ../dataeditor.py:1730 ../main.py:172
 msgid "Soft"
 msgstr "Yazılım"
 
-#: ../dataeditor.py:1733 ../main.py:173
 msgid "Version"
 msgstr "Sürüm"
 
-#: ../displaymod.py:366
-msgid "No request named "
-msgstr "Adlandırılmış istek yok "
+msgid "No request named"
+msgstr "Adlandırılmış istek yok"
 
-#: ../displaymod.py:377
 msgid "Found similar"
 msgstr "Benzer bulundu"
 
-#: ../displaymod.py:387 ../displaymod.py:652
 msgid "Cannot find data "
 msgstr "Veri bulunamıyor "
 
-#: ../displaymod.py:456
 msgid "DataItem not found"
 msgstr "Veri Öğesi bulunamadı"
 
-#: ../displaymod.py:588
 msgid "Cannot draw input "
 msgstr "Giriş çizilemiyor "
 
-#: ../displaymod.py:613
 msgid "No Value"
 msgstr "Değer Yok"
 
-#: ../elm.py:327 ../elm.py:329
 msgid "Error:"
 msgstr "Hata:"
 
-#: ../elm.py:328
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM bağlı değil veya yanlış COM port"
 
-#: ../elm.py:379 ../elm.py:406 ../elm.py:432
 msgid "Connection to ELM was lost"
 msgstr "ELM ile bağlantı kesildi"
 
-#: ../elm.py:478
 msgid "TIMEOUT"
 msgstr "ZAMAN AŞIMI"
 
-#: ../elm.py:489
 msgid "Checking port speed:"
 msgstr "Kontrol edilen port hızı:"
 
-#: ../elm.py:508
 msgid "Start COM speed :"
 msgstr "Başlangıç Com hızı :"
 
-#: ../elm.py:513
 msgid "ELM not responding"
 msgstr "ELM yanıt vermiyor"
 
-#: ../elm.py:565
-msgid "Trying to open port"
-msgstr "Bağlantı noktası (port) açmaya çalışılıyor"
+msgid "Trying to open port "
+msgstr "Bağlantı noktası (port) açmaya çalışılıyor "
 
-#: ../elm.py:598
 msgid "No ELM interface on port"
 msgstr "Bağlantı noktasında ELM arayüzü yok"
 
-#: ../elm.py:1439
 msgid "FAIL"
 msgstr "BAŞARISIZ"
 
-#: ../elm.py:1444
 msgid "OK/TIMEOUT"
 msgstr "TAMAM/ZAMAN AŞIMI"
 
-#: ../elm.py:1449
 msgid "OK"
 msgstr "TAMAM"
 
-#: ../elm.py:1457
 msgid "Incompatible adapter on ARM core"
 msgstr "ARM çekirdeğinde uyumsuz adaptör"
 
-#: ../elm.py:1459
 msgid "Result: "
 msgstr "Sonuç: "
 
-#: ../elm.py:1459
 msgid " succeeded from "
 msgstr " Başarılı Oldu "
 
-#: ../elm.py:1459
 msgid "ELM Max version:"
 msgstr "ELM Max sürümü:"
 
-#: ../main.py:167
 msgid "ECU name"
 msgstr "ECU Adı"
 
-#: ../main.py:168
 msgid "ID"
 msgstr "ID"
 
-#: ../main.py:169
 msgid "Protocol"
 msgstr "Protokol"
 
-#: ../main.py:171
 msgid "Diag"
 msgstr "Tanılama"
 
-#: ../main.py:174
 msgid "Projets"
 msgstr "Projeler"
 
-#: ../main.py:302
 msgid "DDT4All"
 msgstr "DDT4All TA1AUB"
 
-#: ../main.py:306
 msgid "loaded ECUs in database."
 msgstr "adet ECU veritabanında yüklü."
 
-#: ../main.py:310
 msgid "No database found"
 msgstr "Veritabanı bulunamadı"
 
-#: ../main.py:311
 msgid "Check documentation"
 msgstr "Belgeleri kontrol edin"
 
-#: ../main.py:342
 msgid "Refresh rate (ms):"
 msgstr "Yenileme hızı (ms):"
 
-#: ../main.py:349
 msgid "Can timeout (ms) [0:AUTO] :"
 msgstr "Zaman aşım süresi(ms) [0:OTOMATİK] :"
 
-#: ../main.py:368
 msgid "Documentation"
 msgstr "Belgeler"
 
-#: ../main.py:369
 msgid "Screen"
 msgstr "Ekran"
 
-#: ../main.py:370
 msgid "CAN Sniffer"
 msgstr "CAN Dinleyici"
 
-#: ../main.py:377
 msgid "Requests"
 msgstr "İstekler"
 
-#: ../main.py:378
 msgid "Data"
 msgstr "Veri"
 
-#: ../main.py:379
 msgid "Buttons"
 msgstr "Butonlar"
 
-#: ../main.py:380
 msgid "Ecu parameters"
 msgstr "ECU parametreleri"
 
-#: ../main.py:392 ../main.py:532
 msgid "Screens"
 msgstr "Ekranlar"
 
-#: ../main.py:414 ../main.py:505
 msgid "File"
 msgstr "Dosya"
 
-#: ../main.py:416
 msgid "Read DTC"
 msgstr "DTC oku"
 
-#: ../main.py:420
 msgid "Full log"
 msgstr "Tam günlük"
 
-#: ../main.py:425
 msgid "Expert mode (enable writing)"
 msgstr "Uzman modu (yazmayı etkinleştir)"
 
-#: ../main.py:430
 msgid "Auto refresh"
 msgstr "Otomatik yenileme"
 
-#: ../main.py:435
 msgid "Refresh (one shot)"
 msgstr "Yenile (bir sefer)"
 
-#: ../main.py:439
 msgid "Manual command"
 msgstr "Manuel komut"
 
-#: ../main.py:443
 msgid "Manual request"
 msgstr "Manuel istek"
 
-#: ../main.py:447
 msgid "Software flow control"
 msgstr "Yazılım akış kontrolü"
 
-#: ../main.py:459
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
-#: ../main.py:460
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
-#: ../main.py:487
 msgid "UI Edit"
 msgstr "UI Düzenle"
 
-#: ../main.py:506
 msgid "Open XML"
 msgstr "XML aç"
 
-#: ../main.py:507
 msgid "Identify ECU"
 msgstr "ECU tanımla"
 
-#: ../main.py:508
 msgid "Create New ECU"
 msgstr "Yeni ECU Oluştur"
 
-#: ../main.py:509
 msgid "Save current ECU"
 msgstr "Mevcut ECU'yu kaydet"
 
-#: ../main.py:511
 msgid "Save last record"
 msgstr "Son kaydı kaydet"
 
-#: ../main.py:513
 msgid "Save ECU list"
 msgstr "ECU listesini kaydet"
 
-#: ../main.py:521
 msgid "Zip database"
 msgstr "Veritabanını sıkıştır"
 
-#: ../main.py:524
 msgid "Exit"
 msgstr "Çıkış"
 
-#: ../main.py:534
 msgid "Action"
 msgstr "Eylem"
 
-#: ../main.py:535
 msgid "New Category"
 msgstr "Yeni kategori"
 
-#: ../main.py:536
 msgid "New Screen"
 msgstr "Yeni Ekran"
 
-#: ../main.py:537
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
-#: ../main.py:545
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: ../main.py:642
+msgid "Help"
+msgstr ""
+
+msgid "About Dtt4All"
+msgstr ""
+
+msgid "About Developers"
+msgstr ""
+
+msgid "Get Git update"
+msgstr ""
+
 msgid "Save database (keep '.zip' extension)"
 msgstr "Veritabanını kaydet ('.zip' uzantısını koru)"
 
-#: ../main.py:656
 msgid "Zipping XML database... (this can take a few minutes"
 msgstr "XML veritabanı sıkıştırılıyor... (bu işlem birkaç dakika sürebilir)"
 
-#: ../main.py:659
 msgid "Zip job finished"
 msgstr "Sıkıştırma işlemi tamamlandı"
 
-#: ../main.py:674
 msgid "Enter new name"
 msgstr "Yeni ad girin"
 
-#: ../main.py:694
 msgid "Enter category name"
 msgstr "Kategori adını girin"
 
-#: ../main.py:705
 msgid "Please select a category before creating new screen"
 msgstr "Lütfen yeni ekran oluşturmadan önce bir kategori seçin"
 
-#: ../main.py:712
 msgid "Enter screen name"
 msgstr "Ekran adını girin"
 
-#: ../main.py:775
 msgid "Scan options"
 msgstr "Tarama seçenekleri"
 
-#: ../main.py:782 ../ddtplugins/card_programming.py:135
 msgid "CANCEL"
 msgstr "İPTAL"
 
-#: ../main.py:793
 msgid "Scanning CAN"
 msgstr "CAN Taranıyor"
 
-#: ../main.py:797
 msgid "Scanning KWP"
 msgstr "KWP Taranıyor"
 
-#: ../main.py:838
 msgid "EDITION MODE"
 msgstr "DENEME MODU"
 
-#: ../main.py:842
 msgid "CONNECTED"
 msgstr "BAĞLANDI"
 
-#: ../main.py:845
 msgid "DISCONNECTED"
 msgstr "BAĞLANTI KESİLDİ"
 
-#: ../main.py:848
 msgid "Save vehicule (keep '.ecu' extension)"
 msgstr "Aracı kaydet ('.ecu' uzantısını koru)"
 
-#: ../main.py:871 ../parameters.py:266
 msgid "Save ECU (keep '.json' extension)"
 msgstr "ECU'yu kaydet ('.json' uzantısını koru)"
 
-#: ../main.py:908
 msgid "Save record (keep '.txt' extension)"
 msgstr "Kaydı kaydet ('.txt' uzantısını koru)"
 
-#: ../main.py:1094
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -664,15 +519,12 @@ msgstr ""
 "<center>Bu Yazılım ücretsizdir, ancak kablolar/ECU'lar satın almak ve bu "
 "uygulamayı daha güvenli hale getirmek için paraya ihtiyacım var</center>"
 
-#: ../main.py:1095
 msgid "Yes I contribute"
 msgstr "Evet katkıda bulunurum"
 
-#: ../main.py:1097
 msgid "No, I don't"
 msgstr "Hayır, yapmam"
 
-#: ../main.py:1108
 msgid ""
 "<center>Thank you for you contribution, if nothing happens, please go to : "
 "https://github.com/cedricp/ddt4all</center>"
@@ -680,247 +532,178 @@ msgstr ""
 "<center>Katkılarınız için teşekkür ederiz, herhangi bir şey olmazsa lütfen "
 "şu adrese gidin: https://github.com/cedricp/ddt4all</center>"
 
-#: ../main.py:1137
 msgid "ELM port selection"
 msgstr "ELM bağlantı noktası (port) seçimi"
 
-#: ../main.py:1198
 msgid "Port speed"
 msgstr "Bağlantı noktası (port) hızı"
 
-#: ../main.py:1210
 msgid "Connected mode"
 msgstr "Bağlantı modu"
 
-#: ../main.py:1211
 msgid "Edition mode"
 msgstr "Deneme modu"
 
-#: ../main.py:1212
 msgid "ELM benchmark"
 msgstr "ELM değerlendirme testi"
 
-#: ../main.py:1216
 msgid "WiFi port : "
 msgstr "WiFi bağlantı noktası : "
 
-#: ../main.py:1226
 msgid "I'm aware that I can harm my car if badly used"
 msgstr "Hatalı kullanırsam arabama zarar verebileceğimin farkındayım"
 
-#: ../main.py:1236
 msgid "Dark style"
 msgstr "Karanlık mod"
 
-#: ../main.py:1244
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
 
-#: ../main.py:1441
 msgid "You must check the recommandations"
 msgstr "Önerileri kontrol etmelisiniz"
 
-#: ../main.py:1460
 msgid "Please select a communication port"
 msgstr "Lütfen bir bağlantı noktası (port) seçin"
 
-#: ../main.py:1500
 msgid "Using custom DDT database"
 msgstr "Özel DDT veritabanı kullanımı"
 
-#: ../main.py:1529
 msgid "No COM port selected"
 msgstr "COM port seçilmedi"
 
-#: ../main.py:1532
 #, python-format
 msgid "Initilizing ELM with speed %i..."
 msgstr "ELM %i hızıyla başlatılıyor..."
 
-#: ../main.py:1538
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "COM portta ELM327 veya OBDLINK-SX algılanmadı "
 
-#: ../package.py:49
-#, python-format
-msgid "Adding source file %s"
-msgstr "%s kaynak dosyası ekleniyor"
-
-#: ../package.py:54
-#, python-format
-msgid "Adding plugin file %s"
-msgstr "%s eklenti dosyası ekleniyor"
-
-#: ../parameters.py:349 ../parameters.py:378 ../parameters.py:402
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Ekranınızı düzenleyebilmek için önce JSON formatında dışa aktarın"
 
-#: ../parameters.py:441
 msgid "Enter label name"
 msgstr "Etiket adını girin"
 
-#: ../parameters.py:507
 msgid "Add button"
 msgstr "Buton ekle"
 
-#: ../parameters.py:508
 msgid "Add label"
 msgstr "Etiket ekle"
 
-#: ../parameters.py:516
 msgid "Rename label"
 msgstr "Etiketi yeniden adlandır"
 
-#: ../parameters.py:517
 msgid "Change color"
 msgstr "Rengi değiştir"
 
-#: ../parameters.py:523
 msgid "Remove element"
 msgstr "Öğeyi kaldır"
 
-#: ../parameters.py:639
 msgid "Diagnotic session"
 msgstr "Tanılama oturumu"
 
-#: ../parameters.py:640
 msgid "Input"
 msgstr "Giriş"
 
-#: ../parameters.py:641
 msgid "Output"
 msgstr "Çıkış"
 
-#: ../parameters.py:791
 msgid "XML file not found : "
 msgstr "XML dosyası bulunamadı: "
 
-#: ../parameters.py:798
 msgid "Invalid DDT file"
 msgstr "Geçersiz DDT dosyası"
 
-#: ../parameters.py:874
 msgid "Connection to ELM lost, trying to reconnect..."
 msgstr "ELM ile bağlantı kesildi, yeniden bağlanmaya çalışılıyor..."
 
-#: ../parameters.py:877
 msgid "Cannot reconnect..."
 msgstr "Yeniden bağlanılamıyor..."
 
-#: ../parameters.py:885
 msgid "Switching to session mode"
 msgstr "Oturum moduna geçiş"
 
-#: ../parameters.py:893
 msgid "Sending ELM request :"
 msgstr "Gönderilen ELM isteği:"
 
-#: ../parameters.py:895
 msgid "Blocked ELM request :"
 msgstr "Engellenen ELM isteği:"
 
-#: ../parameters.py:900
 msgid "Sending ELM request:"
 msgstr "Gönderilen ELM isteği:"
 
-#: ../parameters.py:928
 msgid "Sending simulated ELM request :"
 msgstr "Simüle edilerek gönderilen ELM isteği:"
 
-#: ../parameters.py:939
 msgid "Bad ELM response :"
 msgstr "Kötü ELM yanıtı:"
 
-#: ../parameters.py:942
 msgid "ELM response : "
 msgstr "ELM yanıtı: "
 
-#: ../parameters.py:1094
 msgid "Button request not found : "
 msgstr "Buton isteği bulunamadı: "
 
-#: ../parameters.py:1108
 msgid "Sending request :"
 msgstr "Gönderilen istek :"
 
-#: ../parameters.py:1158
 msgid "Request aborted (look at red paramters entries): "
 msgstr "İstek iptal edildi (kırmızı parametre girişlerine bakın): "
 
-#: ../parameters.py:1200
 msgid "Invalid"
 msgstr "Geçersiz"
 
-#: ../parameters.py:1221
 msgid "ECU uses SDS "
 msgstr "ECU, SDS kullanır "
 
-#: ../parameters.py:1294
 msgid "Cannot call request "
 msgstr "İstek aranamıyor "
 
-#: ../parameters.py:1392
 msgid "Clearing DTC information"
 msgstr "DTC bilgilerini temizleniyor"
 
-#: ../parameters.py:1404
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Bu ECU için Net DTC talebi yok, varsayılan olarak 14FF00 gönderecek"
 
-#: ../parameters.py:1408
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Tanılama arıza kodlarını temizlemek üzeresiniz</center>"
 
-#: ../parameters.py:1409
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>İstediğinizin bu olduğundan emin misiniz.</center>"
 
-#: ../parameters.py:1470
 msgid "Invalid response for ReadDTC command"
 msgstr "DTC Oku komutu için geçersiz yanıt"
 
-#: ../parameters.py:1479
 msgid "Read DTC returned an error"
 msgstr "DTC'yi oku bir hata ile karşılaştı"
 
-#: ../parameters.py:1487
 msgid "No DTC"
 msgstr "DTC yok"
 
-#: ../parameters.py:1510
 msgid "Clear ALL DTC"
 msgstr "TÜM DTC'leri Temizle"
 
-#: ../parameters.py:1516
 msgid "ECU trouble codes"
 msgstr "ECU arıza kodları"
 
-#: ../parameters.py:1546
 msgid "Parsing screen "
 msgstr "Ayrıştırma ekranı "
 
-#: ../sniffer.py:138
 msgid "Values"
 msgstr "Değerler"
 
-#: ../sniffer.py:141
 msgid "Waiting..."
 msgstr "Bekle..."
 
-#: ../sniffer.py:182
 msgid "Frame hex error : "
 msgstr "Çerçeve hex hatası : "
 
-#: ../ddtplugins/ab90_reset.py:13
 msgid "AB90 AIRBAG Reset"
 msgstr "AB90 HAVA YASTIĞI Sıfırlama"
 
-#: ../ddtplugins/ab90_reset.py:14 ../ddtplugins/megane3_ab_reset.py:14
-#: ../ddtplugins/rsat4_reset.py:15
 msgid "Airbag Tools"
 msgstr "Hava Yastığı Araçları"
 
-#: ../ddtplugins/ab90_reset.py:24
 msgid ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
@@ -930,78 +713,42 @@ msgstr ""
 "YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİNE İLİŞKİN BİR "
 "FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/ab90_reset.py:28 ../ddtplugins/megane3_ab_reset.py:28
-#: ../ddtplugins/rsat4_reset.py:29
 msgid "Check ACU Virgin"
 msgstr "Sıfır ACU'yu kontrol et"
 
-#: ../ddtplugins/ab90_reset.py:29 ../ddtplugins/clio3_eps_reset.py:43
-#: ../ddtplugins/clio4_eps_reset.py:28 ../ddtplugins/laguna2_uch_reset.py:29
-#: ../ddtplugins/laguna3_uch_reset.py:28 ../ddtplugins/megane2_uch_reset.py:28
-#: ../ddtplugins/megane3_ab_reset.py:29 ../ddtplugins/megane3_eps_reset.py:27
-#: ../ddtplugins/megane3_uch_reset.py:29 ../ddtplugins/rsat4_reset.py:30
 msgid "Waiting"
 msgstr "Bekleniyor"
 
-#: ../ddtplugins/ab90_reset.py:31 ../ddtplugins/megane3_ab_reset.py:31
-#: ../ddtplugins/rsat4_reset.py:32
 msgid "Virginize ACU"
 msgstr "ACU Sıfırla"
 
-#: ../ddtplugins/ab90_reset.py:45 ../ddtplugins/card_programming.py:220
-#: ../ddtplugins/clio3_eps_reset.py:107 ../ddtplugins/clio4_eps_reset.py:44
-#: ../ddtplugins/laguna2_uch_reset.py:47 ../ddtplugins/laguna3_uch_reset.py:44
-#: ../ddtplugins/megane2_uch_reset.py:44 ../ddtplugins/megane3_ab_reset.py:45
-#: ../ddtplugins/megane3_eps_reset.py:43 ../ddtplugins/megane3_uch_reset.py:45
-#: ../ddtplugins/rsat4_reset.py:46
 msgid "Cannot connect to ECU"
 msgstr "ECU'ya bağlanılamıyor"
 
-#: ../ddtplugins/ab90_reset.py:55 ../ddtplugins/clio3_eps_reset.py:132
-#: ../ddtplugins/laguna2_uch_reset.py:69 ../ddtplugins/megane2_uch_reset.py:65
-#: ../ddtplugins/megane3_ab_reset.py:55 ../ddtplugins/megane3_eps_reset.py:70
-#: ../ddtplugins/megane3_uch_reset.py:68 ../ddtplugins/rsat4_reset.py:66
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='orange'>BEKLENMEYEN YANIT</font>"
 
-#: ../ddtplugins/ab90_reset.py:60 ../ddtplugins/megane3_ab_reset.py:63
-#: ../ddtplugins/rsat4_reset.py:60
 msgid "<font color='red'>CRASH DETECTED</font>"
 msgstr "<font color='red'>KAZA ALGILANDI</font>"
 
-#: ../ddtplugins/ab90_reset.py:62 ../ddtplugins/rsat4_reset.py:63
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>KAZA ALGILANMADI</font>"
 
-#: ../ddtplugins/ab90_reset.py:80 ../ddtplugins/clio3_eps_reset.py:160
-#: ../ddtplugins/clio4_eps_reset.py:97 ../ddtplugins/laguna2_uch_reset.py:94
-#: ../ddtplugins/laguna3_uch_reset.py:83 ../ddtplugins/megane2_uch_reset.py:90
-#: ../ddtplugins/megane3_ab_reset.py:92 ../ddtplugins/megane3_eps_reset.py:95
-#: ../ddtplugins/megane3_uch_reset.py:85 ../ddtplugins/rsat4_reset.py:84
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
 
-#: ../ddtplugins/ab90_reset.py:82 ../ddtplugins/clio3_eps_reset.py:162
-#: ../ddtplugins/clio4_eps_reset.py:99 ../ddtplugins/laguna2_uch_reset.py:96
-#: ../ddtplugins/laguna3_uch_reset.py:85 ../ddtplugins/megane2_uch_reset.py:92
-#: ../ddtplugins/megane3_ab_reset.py:94 ../ddtplugins/megane3_eps_reset.py:97
-#: ../ddtplugins/megane3_uch_reset.py:87 ../ddtplugins/rsat4_reset.py:86
 msgid "<font color='red'>CLEAR FAILED</font>"
 msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 
-#: ../ddtplugins/card_programming.py:16
 msgid "Megane/Scenic II card programming"
 msgstr "Megane/Scenic II kart programlama"
 
-#: ../ddtplugins/card_programming.py:17
 msgid "Keys"
 msgstr "Anahtarlar"
 
-#: ../ddtplugins/card_programming.py:119
 msgid "ENTER AFTER SALE MODE"
 msgstr "SATIŞ SONRASI MODUNA GİRİN"
 
-#: ../ddtplugins/card_programming.py:131
 msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
@@ -1009,64 +756,49 @@ msgstr ""
 "<font color='red'>MEGANE II KART PROGRAMLAMA<br>DENEYSEL : HENÜZ TEST "
 "EDİLMEDİ</font>"
 
-#: ../ddtplugins/card_programming.py:133
 msgid "LEARN"
 msgstr "ÖĞREN"
 
-#: ../ddtplugins/card_programming.py:134
 msgid "VALIDATE"
 msgstr "DOĞRULA"
 
-#: ../ddtplugins/card_programming.py:137
 msgid "Algo 2"
 msgstr "2 şey"
 
-#: ../ddtplugins/card_programming.py:148
 msgid "ISK"
 msgstr "ISK"
 
-#: ../ddtplugins/card_programming.py:150
 msgid "PIN"
 msgstr "PIN"
 
-#: ../ddtplugins/card_programming.py:155
 msgid "Num key learnt"
 msgstr "Sayı anahtarı öğrenildi"
 
-#: ../ddtplugins/card_programming.py:157
 msgid "CARD IDE"
 msgstr "KART IDE"
 
-#: ../ddtplugins/card_programming.py:211
 msgid "Cannot get ISK, check connections and UCH compatibility"
 msgstr ""
 "ISK alınamıyor, bağlantıları ve UCH (Araç İçi Merkezi Kontrol Ünitesi) "
 "uyumluluğunu kontrol et"
 
-#: ../ddtplugins/card_programming.py:246
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
 msgstr "<font color='red'>PIN KODU TANINMADI</font>"
 
-#: ../ddtplugins/card_programming.py:252
 msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
 msgstr "<font color='green'>PIN KODU TAMAM / ANAHTAR ÖĞRENME</font>"
 
-#: ../ddtplugins/card_programming.py:258
 msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
 msgstr ""
 "<font color='green'>PIN KODU TAMAM / UCH (Araç İçi Merkezi Kontrol Ünitesi) "
 "ÖĞRENME</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:16
 msgid "Modus/Clio III EPS Reset"
 msgstr "Modus/Clio III EPS Sıfırlama"
 
-#: ../ddtplugins/clio3_eps_reset.py:17 ../ddtplugins/clio4_eps_reset.py:14
-#: ../ddtplugins/megane3_eps_reset.py:14
 msgid "EPS Tools"
 msgstr "EPS Araçları"
 
-#: ../ddtplugins/clio3_eps_reset.py:40
 msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1075,58 +807,42 @@ msgstr ""
 "VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
 "UZAK DURUN</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:42
 msgid "BLANK STATUS & VIN READ"
 msgstr "BOŞ DURUM & VIN (ŞASİ NO) OKUMA"
 
-#: ../ddtplugins/clio3_eps_reset.py:45 ../ddtplugins/clio4_eps_reset.py:30
-#: ../ddtplugins/megane3_eps_reset.py:29
 msgid "Virginize EPS"
 msgstr "EPS Sıfırla"
 
-#: ../ddtplugins/clio3_eps_reset.py:51
 msgid "VIN - READ"
 msgstr "VIN (ŞASİ NO) - OKU"
 
-#: ../ddtplugins/clio3_eps_reset.py:56
 msgid "VIN - WRITE"
 msgstr "VIN (ŞASİ NO) - YAZ"
 
-#: ../ddtplugins/clio3_eps_reset.py:60
 msgid "Write VIN"
 msgstr "VIN (Şasi no) yaz"
 
-#: ../ddtplugins/clio3_eps_reset.py:87
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN (ŞASİ NO) - GEÇERSİZ</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:91
 msgid "<font color='res'>VIN - BAD LENGTH</font>"
 msgstr "<font color='res'>VIN (ŞASİ NO) - YANLIŞ UZUNLUKTA</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:99
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
 msgstr "<font color='orange'>VIN (ŞASİ NO) YAZMA BAŞARISIZ</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:102
 msgid "<font color='green'>VIN WRITE OK</font>"
 msgstr "<font color='green'>VIN (ŞASİ NO) YAZMA TAMAMLANDI</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:125 ../ddtplugins/clio4_eps_reset.py:64
-#: ../ddtplugins/megane3_eps_reset.py:62
 msgid "<font color='green'>EPS virgin</font>"
 msgstr "<font color='green'>EPS temiz</font>"
 
-#: ../ddtplugins/clio3_eps_reset.py:129 ../ddtplugins/clio4_eps_reset.py:69
-#: ../ddtplugins/megane3_eps_reset.py:67
 msgid "<font color='red'>EPS coded</font>"
 msgstr "<font color='red'>EPS kodlanmış</font>"
 
-#: ../ddtplugins/clio4_eps_reset.py:13
 msgid "Clio IV EPS Reset"
 msgstr "Clio IV EPS Sıfırlama"
 
-#: ../ddtplugins/clio4_eps_reset.py:25
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1135,28 +851,21 @@ msgstr ""
 "SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA UZAK "
 "DURUN</font>V"
 
-#: ../ddtplugins/clio4_eps_reset.py:27 ../ddtplugins/megane3_eps_reset.py:26
 msgid "Check EPS Virgin"
 msgstr "Sıfır EPS'yi kontrol et"
 
-#: ../ddtplugins/clio4_eps_reset.py:59 ../ddtplugins/megane3_eps_reset.py:57
 msgid "<font color='green'>EPS not operational</font>"
 msgstr "<font color='green'>EPS çalışmıyor</font>"
 
-#: ../ddtplugins/clio4_eps_reset.py:72
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='red'>BEKLENMEYEN YANIT</font>"
 
-#: ../ddtplugins/laguna2_uch_reset.py:14
 msgid "Laguna II UCH Reset"
 msgstr "Laguna II UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-#: ../ddtplugins/laguna2_uch_reset.py:15 ../ddtplugins/laguna3_uch_reset.py:14
-#: ../ddtplugins/megane2_uch_reset.py:15 ../ddtplugins/megane3_uch_reset.py:15
 msgid "UCH Tools"
 msgstr "UCH (Araç İçi Merkezi Kontrol Ünitesi) Araçları"
 
-#: ../ddtplugins/laguna2_uch_reset.py:26
 msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1165,33 +874,23 @@ msgstr ""
 "Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
 "FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/laguna2_uch_reset.py:28 ../ddtplugins/laguna3_uch_reset.py:27
-#: ../ddtplugins/megane2_uch_reset.py:27 ../ddtplugins/megane3_uch_reset.py:28
 msgid "Check UCH Virgin"
 msgstr "Sıfır UCH'yi (Araç İçi Merkezi Kontrol Ünitesini) kontrol et"
 
-#: ../ddtplugins/laguna2_uch_reset.py:31 ../ddtplugins/laguna3_uch_reset.py:30
-#: ../ddtplugins/megane2_uch_reset.py:30 ../ddtplugins/megane3_uch_reset.py:31
 msgid "Virginize UCH"
 msgstr "UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırla"
 
-#: ../ddtplugins/laguna2_uch_reset.py:61 ../ddtplugins/laguna3_uch_reset.py:58
-#: ../ddtplugins/megane2_uch_reset.py:57 ../ddtplugins/megane3_uch_reset.py:60
 msgid "<font color='green'>UCH virgin</font>"
 msgstr ""
 "<font color='green'>UCH (Araç İçi Merkezi Kontrol Ünitesi) temiz</font>"
 
-#: ../ddtplugins/laguna2_uch_reset.py:66 ../ddtplugins/laguna3_uch_reset.py:63
-#: ../ddtplugins/megane2_uch_reset.py:62 ../ddtplugins/megane3_uch_reset.py:65
 msgid "<font color='red'>UCH coded</font>"
 msgstr ""
 "<font color='red'>UCH (Araç İçi Merkezi Kontrol Ünitesi) kodlanmış</font>"
 
-#: ../ddtplugins/laguna3_uch_reset.py:13
 msgid "Laguna III UCH Reset"
 msgstr "Laguna III UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-#: ../ddtplugins/laguna3_uch_reset.py:25
 msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1200,11 +899,9 @@ msgstr ""
 "Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
 "FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/megane2_uch_reset.py:14
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-#: ../ddtplugins/megane2_uch_reset.py:25
 msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1213,11 +910,9 @@ msgstr ""
 "Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
 "FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/megane3_ab_reset.py:13
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 HAVA YASTIĞI Sıfırlama"
 
-#: ../ddtplugins/megane3_ab_reset.py:24
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1226,11 +921,9 @@ msgstr ""
 "YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA "
 "HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/megane3_eps_reset.py:13
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Sıfırlama"
 
-#: ../ddtplugins/megane3_eps_reset.py:24
 msgid ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
 "PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
@@ -1240,11 +933,9 @@ msgstr ""
 "EKLENTİ EPS IMMO VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA "
 "HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/megane3_uch_reset.py:14
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-#: ../ddtplugins/megane3_uch_reset.py:26
 msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
@@ -1253,11 +944,9 @@ msgstr ""
 "Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
 "FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/rsat4_reset.py:14
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 HAVA YASTIĞI Sıfırlama"
 
-#: ../ddtplugins/rsat4_reset.py:25
 msgid ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
@@ -1268,14 +957,19 @@ msgstr ""
 "VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ "
 "YOKSA UZAK DURUN</font>"
 
-#: ../ddtplugins/vin_crc.py:17
 msgid "CRC calculator"
 msgstr "CRC hesaplayıcı"
 
-#: ../ddtplugins/vin_crc.py:18
 msgid "VIN"
 msgstr "VIN (Şasi Numarası)"
 
-#: ../ddtplugins/vin_crc.py:43
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
+
+#, python-format
+#~ msgid "Adding source file %s"
+#~ msgstr "%s kaynak dosyası ekleniyor"
+
+#, python-format
+#~ msgid "Adding plugin file %s"
+#~ msgstr "%s eklenti dosyası ekleniyor"

@@ -1,4 +1,5 @@
 @echo off
+cls
 
 SET PROGRAM-NAME=DDT4All
 SET FILE-NAME=ddt4all
