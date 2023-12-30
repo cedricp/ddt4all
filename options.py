@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import gettext
-import os
-
 import locale
+import os
 
 simulation_mode = False
 port_speed = 38400
@@ -46,14 +45,16 @@ def translator(domain):
         lang, enc = locale.getlocale()
         check = lang
     except:
+        pass
+
+    if check == 'en_US':
         try:
             lang, enc = locale.getdefaultlocale()
             check = lang
         except:
             pass
-        pass
-    os.environ['LANG'] = check
 
     # Set up message catalog access
+    os.environ['LANG'] = check
     t = gettext.translation(domain, 'dtt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext
