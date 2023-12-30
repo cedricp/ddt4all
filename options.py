@@ -39,15 +39,21 @@ def get_last_error():
     return err
 
 
-def translator(filename):
+def translator(domain):
+    # default translation if err set to en_US
+    check = 'en_US'
     try:
         lang, enc = locale.getlocale()
-        os.environ['LANG'] = lang
+        check = lang
     except:
-        # defaul tranlation if err en_US
-        os.environ["LANG"] = 'fr_FR'
+        try:
+            lang, enc = locale.getdefaultlocale()
+            check = lang
+        except:
+            pass
         pass
+    os.environ['LANG'] = check
 
     # Set up message catalog access
-    t = gettext.translation(filename, 'dtt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
+    t = gettext.translation(domain, 'dtt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext
