@@ -21,8 +21,8 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ## `Cloning Source Code`
 ### `Dependencies :`
-![python_3.11.x](dtt4all_data/icons/py3_engaged.png)
-* [Python 3.11](https://www.python.org/downloads/release/python-3110/) 
+![python_3.12.x](dtt4all_data/icons/Python-3-12-new.png)
+* [Python 3.12](https://www.python.org/downloads/release/python-3120/) 
 * [PyQt 5](https://pypi.org/project/PyQt5/)
 * [pyusb](https://pypi.org/project/pyusb/)
 * [pyserial](https://pypi.org/project/pyserial/)
