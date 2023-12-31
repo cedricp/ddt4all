@@ -37,7 +37,7 @@ UsepreviousLanguage=No
 DefaultDirName={pf}\{#MyAppDir}
 DefaultGroupName={#MyAppDir}
 SetupIconFile=..\..\dtt4all_data\icons\obd.ico
-OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}-python-3.11.4-64bits
+OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}-python-3.12.1-64bits
 UsePreviousPrivileges=True
 VersionInfoCompany={#MyAppCompany}
 VersionInfoTextVersion={#MyAppVersion}
@@ -50,7 +50,7 @@ WizardStyle=modern
 
 [Files]
 ;Source: "..\..\ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
-Source: "\DDT4ALL-Dist-Versions\Python311\*"; DestDir: "{app}\Python311-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "\DDT4ALL-Dist-Versions\Python312\*"; DestDir: "{app}\Python312-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
 Source: "..\..\ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
@@ -81,8 +81,8 @@ Name: "{app}\dtt4all_data"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{group}\ddt4all"; Filename: "{app}\Python311-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"
-Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python311-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Tasks: desktopicon
+Name: "{group}\ddt4all"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"
+Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Tasks: desktopicon
 
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to %n%n
