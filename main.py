@@ -1209,7 +1209,7 @@ class portChooser(widgets.QDialog):
         # langlayout.addWidget(self.langcombo)
         # for s in options.lang_list:
         #     self.langcombo.addItem(str(s))
-        # 
+        #
         # self.langcombo.setCurrentIndex(0)
         #
         # layout.addLayout(langlayout)
