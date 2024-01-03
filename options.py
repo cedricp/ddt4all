@@ -111,7 +111,7 @@ def get_translator_lang():
             loc_lang = lang
         except:
             pass
-    return None # loc_lang
+    return loc_lang
 
 
 def translator(domain):
