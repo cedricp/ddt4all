@@ -1202,17 +1202,17 @@ class portChooser(widgets.QDialog):
 
         # languages setting
         # // TODO: need make this better configurable.
-        langlayout = widgets.QHBoxLayout()
-        self.langcombo = widgets.QComboBox()
-        langlabels= widgets.QLabel(_("Interface language"))
-        langlayout.addWidget(langlabels)
-        langlayout.addWidget(self.langcombo)
-        for s in options.lang_list:
-            self.langcombo.addItem(str(s))
-
-        self.langcombo.setCurrentIndex(0)
-
-        layout.addLayout(langlayout)
+        # langlayout = widgets.QHBoxLayout()
+        # self.langcombo = widgets.QComboBox()
+        # langlabels= widgets.QLabel(_("Interface language"))
+        # langlayout.addWidget(langlabels)
+        # langlayout.addWidget(self.langcombo)
+        # for s in options.lang_list:
+        #     self.langcombo.addItem(str(s))
+        # 
+        # self.langcombo.setCurrentIndex(0)
+        #
+        # layout.addLayout(langlayout)
         #
 
         speedlayout = widgets.QHBoxLayout()
