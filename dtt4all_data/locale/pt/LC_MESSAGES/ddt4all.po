@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-30 20:19+0100\n"
-"PO-Revision-Date: 2024-01-04 06:01+0100\n"
+"PO-Revision-Date: 2024-01-04 06:19+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -325,19 +325,19 @@ msgstr "Versão"
 
 #: ../../displaymod.py:371
 msgid "No request named"
-msgstr ""
+msgstr "Nenhuma solicitação nomeada"
 
 #: ../../displaymod.py:382
 msgid "Found similar"
-msgstr ""
+msgstr "Encontrado semelhante"
 
 #: ../../displaymod.py:392 ../../displaymod.py:657
 msgid "Cannot find data "
-msgstr ""
+msgstr "Não é possível encontrar dados "
 
 #: ../../displaymod.py:461
 msgid "DataItem not found"
-msgstr ""
+msgstr "DataItem não encontrado"
 
 #: ../../displaymod.py:593
 msgid "Cannot draw input "
@@ -543,7 +543,7 @@ msgstr "Abrir XML"
 
 #: ../../main.py:478
 msgid "Identify ECU"
-msgstr ""
+msgstr "Identificar ECU"
 
 #: ../../main.py:479
 msgid "Create New ECU"
@@ -555,7 +555,7 @@ msgstr "Salvar ECU atual"
 
 #: ../../main.py:482
 msgid "Save last record"
-msgstr ""
+msgstr "Salvar último registro"
 
 #: ../../main.py:484
 msgid "Save ECU list"
@@ -587,35 +587,35 @@ msgstr "Renomear"
 
 #: ../../main.py:516
 msgid "Plugins"
-msgstr ""
+msgstr "Plug-ins"
 
 #: ../../main.py:543
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
 
 #: ../../main.py:544
 msgid "About Dtt4All"
-msgstr ""
+msgstr "Sobre Dtt4All"
 
 #: ../../main.py:547
 msgid "About Developers"
-msgstr ""
+msgstr "Sobre desenvolvedores"
 
 #: ../../main.py:553
 msgid "Get Git update"
-msgstr ""
+msgstr "Obtenha atualização do Git"
 
 #: ../../main.py:644
 msgid "Save database (keep '.zip' extension)"
-msgstr ""
+msgstr "Salvar banco de dados (manter a extensão '.zip')"
 
 #: ../../main.py:658
 msgid "Zipping XML database... (this can take a few minutes"
-msgstr ""
+msgstr "Compactando o banco de dados XML... (isso pode levar alguns minutos"
 
 #: ../../main.py:661
 msgid "Zip job finished"
-msgstr ""
+msgstr "Trabalho zip concluído"
 
 #: ../../main.py:676
 msgid "Enter new name"
@@ -727,11 +727,11 @@ msgstr "Estou consciente de que posso danificar o carro ao usar incorretamente"
 
 #: ../../main.py:1243
 msgid "Dark style"
-msgstr ""
+msgstr "Estilo escuro"
 
 #: ../../main.py:1251
 msgid "Change UART speed"
-msgstr ""
+msgstr "Alterar a velocidade UART"
 
 #: ../../main.py:1448
 msgid "You must check the recommandations"
@@ -780,7 +780,7 @@ msgstr "Renomear etiqueta"
 
 #: ../../parameters.py:518
 msgid "Change color"
-msgstr ""
+msgstr "Mudar cor"
 
 #: ../../parameters.py:524
 msgid "Remove element"
@@ -808,11 +808,11 @@ msgstr "Fichero DDT não valido"
 
 #: ../../parameters.py:875
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "Conexão com ELM perdida, tentando reconectar..."
 
 #: ../../parameters.py:878
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Não é possível reconectar..."
 
 #: ../../parameters.py:886
 msgid "Switching to session mode"
@@ -836,7 +836,7 @@ msgstr "Enviando pedido ELM simulado:"
 
 #: ../../parameters.py:940
 msgid "Bad ELM response :"
-msgstr ""
+msgstr "Resposta ruim do ELM:"
 
 #: ../../parameters.py:943
 msgid "ELM response : "
@@ -860,7 +860,7 @@ msgstr "Inválido"
 
 #: ../../parameters.py:1223
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "ECU usa SDS "
 
 #: ../../parameters.py:1296
 msgid "Cannot call request "
@@ -888,7 +888,7 @@ msgstr "Resposta não válida para o comando ReadDTC"
 
 #: ../../parameters.py:1481
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "Ler DTC retornou um erro"
 
 #: ../../parameters.py:1489
 msgid "No DTC"
@@ -916,16 +916,16 @@ msgstr "Esperando..."
 
 #: ../../sniffer.py:174
 msgid "Frame hex error : "
-msgstr ""
+msgstr "Erro hexadecimal de quadro: "
 
 #: ../../ddtplugins/ab90_reset.py:13
 msgid "AB90 AIRBAG Reset"
-msgstr ""
+msgstr "Reinicialização do AIRBAG AB90"
 
 #: ../../ddtplugins/ab90_reset.py:14 ../../ddtplugins/megane3_ab_reset.py:14
 #: ../../ddtplugins/rsat4_reset.py:15
 msgid "Airbag Tools"
-msgstr ""
+msgstr "Ferramentas de airbag"
 
 #: ../../ddtplugins/ab90_reset.py:24
 msgid ""
@@ -937,7 +937,7 @@ msgstr ""
 #: ../../ddtplugins/ab90_reset.py:28 ../../ddtplugins/megane3_ab_reset.py:28
 #: ../../ddtplugins/rsat4_reset.py:29
 msgid "Check ACU Virgin"
-msgstr ""
+msgstr "Verifique ACU Virgem"
 
 #: ../../ddtplugins/ab90_reset.py:29 ../../ddtplugins/clio3_eps_reset.py:43
 #: ../../ddtplugins/clio4_eps_reset.py:28
@@ -953,7 +953,7 @@ msgstr "Esperando"
 #: ../../ddtplugins/ab90_reset.py:31 ../../ddtplugins/megane3_ab_reset.py:31
 #: ../../ddtplugins/rsat4_reset.py:32
 msgid "Virginize ACU"
-msgstr ""
+msgstr "Virginizar ACU"
 
 #: ../../ddtplugins/ab90_reset.py:45 ../../ddtplugins/card_programming.py:220
 #: ../../ddtplugins/clio3_eps_reset.py:107
