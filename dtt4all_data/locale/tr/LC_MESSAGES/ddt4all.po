@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 05:34+0100\n"
-"PO-Revision-Date: 2024-01-04 05:44+0100\n"
+"POT-Creation-Date: 2024-01-04 06:30+0100\n"
+"PO-Revision-Date: 2024-01-04 06:34+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -464,7 +464,7 @@ msgstr "Git güncellemesini alın"
 msgid "Save database (keep '.zip' extension)"
 msgstr "Veritabanını kaydet ('.zip' uzantısını koru)"
 
-msgid "Zipping XML database... (this can take a few minutes"
+msgid "Zipping XML database... (this can take a few minutes)"
 msgstr "XML veritabanı sıkıştırılıyor... (bu işlem birkaç dakika sürebilir)"
 
 msgid "Zip job finished"
@@ -550,8 +550,6 @@ msgstr "Deneme modu"
 msgid "ELM benchmark"
 msgstr "ELM değerlendirme testi"
 
-#, fuzzy
-#| msgid "Save last record"
 msgid "Save and close"
 msgstr "Son kaydı kaydet"
 

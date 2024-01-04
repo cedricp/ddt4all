@@ -661,7 +661,7 @@ class Main_widget(widgets.QMainWindow):
             mbox.exec_()
             return
 
-        self.logview.append(_("Zipping XML database... (this can take a few minutes"))
+        self.logview.append(_("Zipping XML database... (this can take a few minutes)"))
         core.QCoreApplication.processEvents()
         parameters.zipConvertXML(filename)
         self.logview.append(_("Zip job finished"))
