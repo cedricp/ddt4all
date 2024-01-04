@@ -33,6 +33,22 @@ __maintainer__ = version.__maintainer__
 __email__ = version.__email__
 __status__ = version.__status__
 
+
+def load_this():
+    try:
+        f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
+        vehicles_loc = json.loads(f.read())
+        f.close()
+        ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
+        elm.snat = vehicles_loc["projects"]["All"]["snat"]
+        elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
+        return vehicles_loc
+    except:
+        print("dtt4all_data/projects.json not found or not ok.")
+        exit(-1)
+
+
+vehicles = load_this()
 _ = options.translator('ddt4all')
 app = None
 
@@ -41,17 +57,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
 args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
-
-try:
-    f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
-    vehicles = json.loads(f.read())
-    f.close()
-    ecu.addressing = vehicles["projects"]["All"]["addressing"]
-    elm.snat = vehicles["projects"]["All"]["snat"]
-    elm.dnat = vehicles["projects"]["All"]["dnat"]
-except:
-    print("dtt4all_data/projects.json not found or not ok.")
-    exit(-1)
 
 
 def isWritable(path):
@@ -1202,17 +1207,18 @@ class main_window_options(widgets.QDialog):
 
         # languages setting
         # // TODO: need make this better configurable.
-        # langlayout = widgets.QHBoxLayout()
-        # self.langcombo = widgets.QComboBox()
-        # langlabels= widgets.QLabel(_("Interface language"))
-        # langlayout.addWidget(langlabels)
-        # langlayout.addWidget(self.langcombo)
-        # for s in options.lang_list:
-        #     self.langcombo.addItem(str(s))
-        #
-        # self.langcombo.setCurrentIndex(0)
-        #
-        # layout.addLayout(langlayout)
+        langlayout = widgets.QHBoxLayout()
+        self.langcombo = widgets.QComboBox()
+        langlabels= widgets.QLabel(_("DEMO Interface language"))
+        langlayout.addWidget(langlabels)
+        langlayout.addWidget(self.langcombo)
+        for s in options.lang_list:
+            self.langcombo.addItem(str(s))
+
+        self.langcombo.setCurrentIndex(0)
+
+        layout.addLayout(langlayout)
+        # // TODO: reload it as..
         #
 
         speedlayout = widgets.QHBoxLayout()
