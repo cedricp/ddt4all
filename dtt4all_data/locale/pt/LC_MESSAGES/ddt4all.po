@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-30 20:19+0100\n"
-"PO-Revision-Date: 2023-12-30 20:30+0100\n"
+"PO-Revision-Date: 2024-01-04 06:01+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -353,7 +353,7 @@ msgstr "Erro:"
 
 #: ../../elm.py:290
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM não conetado ou porto COM errado"
+msgstr "ELM não conetado ou porta COM errado"
 
 #: ../../elm.py:341 ../../elm.py:368 ../../elm.py:394
 msgid "Connection to ELM was lost"
@@ -365,7 +365,7 @@ msgstr "TIMEOUT Tempo esgotado"
 
 #: ../../elm.py:451
 msgid "Checking port speed:"
-msgstr "Verificando velocidade do porto:"
+msgstr "Verificando velocidade da porta:"
 
 #: ../../elm.py:470
 msgid "Start COM speed :"
@@ -381,7 +381,7 @@ msgstr "Tentando abrir a porta "
 
 #: ../../elm.py:562
 msgid "No ELM interface on port"
-msgstr "No há interface ELM neste porto"
+msgstr "No há interface ELM neste porta"
 
 #: ../../elm.py:1399
 msgid "FAIL"
@@ -699,11 +699,11 @@ msgstr ""
 
 #: ../../main.py:1139
 msgid "ELM port selection"
-msgstr "Seleção de porto ELM"
+msgstr "Seleção da porta ELM"
 
 #: ../../main.py:1205
 msgid "Port speed"
-msgstr "Velocidade do porto"
+msgstr "Velocidade da porta"
 
 #: ../../main.py:1217
 msgid "Connected mode"
@@ -719,7 +719,7 @@ msgstr "Testar ELM"
 
 #: ../../main.py:1223
 msgid "WiFi port : "
-msgstr "Porto WIFI: "
+msgstr "Porta WIFI: "
 
 #: ../../main.py:1233
 msgid "I'm aware that I can harm my car if badly used"
@@ -739,7 +739,7 @@ msgstr "Deve aceitar as recomendações"
 
 #: ../../main.py:1467
 msgid "Please select a communication port"
-msgstr "Deve elegir um porto de comunicação"
+msgstr "Deve elegir uma porta de comunicação"
 
 #: ../../main.py:1507
 msgid "Using custom DDT database"
@@ -747,7 +747,7 @@ msgstr "Usando base de dados DDT personalizada"
 
 #: ../../main.py:1536
 msgid "No COM port selected"
-msgstr "Porto COM não selecionado"
+msgstr "Porta COM não selecionado"
 
 #: ../../main.py:1539
 #, python-format
