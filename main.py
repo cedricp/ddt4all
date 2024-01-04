@@ -33,6 +33,23 @@ __maintainer__ = version.__maintainer__
 __email__ = version.__email__
 __status__ = version.__status__
 
+
+def load_this():
+    try:
+        f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
+        vehicles_loc = json.loads(f.read())
+        f.close()
+        ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
+        elm.snat = vehicles_loc["projects"]["All"]["snat"]
+        elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
+        return vehicles_loc
+    except:
+        print("dtt4all_data/projects.json not found or not ok.")
+        exit(-1)
+
+
+# options = options.load_configuration()
+vehicles = load_this()
 _ = options.translator('ddt4all')
 app = None
 
@@ -41,17 +58,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
 args = parser.parse_args()
 not_qt5_show = args.git_workfallowmode
-
-try:
-    f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
-    vehicles = json.loads(f.read())
-    f.close()
-    ecu.addressing = vehicles["projects"]["All"]["addressing"]
-    elm.snat = vehicles["projects"]["All"]["snat"]
-    elm.dnat = vehicles["projects"]["All"]["dnat"]
-except:
-    print("dtt4all_data/projects.json not found or not ok.")
-    exit(-1)
 
 
 def isWritable(path):
@@ -1123,7 +1129,7 @@ def set_dark_style(onoff):
     app.setStyleSheet(StyleSheet)
 
 
-class portChooser(widgets.QDialog):
+class main_window_options(widgets.QDialog):
     def __init__(self):
         portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
         self.port = None
@@ -1133,7 +1139,7 @@ class portChooser(widgets.QDialog):
         self.selectedportspeed = 38400
         self.adapter = "STD"
         self.raise_port_speed = "No"
-        super(portChooser, self).__init__(None)
+        super(main_window_options, self).__init__(None)
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
         label.setText(_("ELM port selection"))
@@ -1200,6 +1206,20 @@ class portChooser(widgets.QDialog):
         self.obdlinkbutton.toggled.connect(self.obdlink)
         self.elsbutton.toggled.connect(self.els)
 
+        # languages setting
+        # // TODO: need make this better configurable.
+        langlayout = widgets.QHBoxLayout()
+        self.langcombo = widgets.QComboBox()
+        langlabels = widgets.QLabel(_("Interface language (need save and close)"))
+        langlayout.addWidget(langlabels)
+        langlayout.addWidget(self.langcombo)
+        for s in options.lang_list:
+            self.langcombo.addItem(s)
+        self.langcombo.setCurrentIndex(0)
+        layout.addLayout(langlayout)
+        # // TODO: reload it as..
+        #
+
         speedlayout = widgets.QHBoxLayout()
         self.speedcombo = widgets.QComboBox()
         speedlabel = widgets.QLabel(_("Port speed"))
@@ -1217,6 +1237,8 @@ class portChooser(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
+        button_save = widgets.QPushButton(_("Save and close"))
+
         self.elmchk = button_elm_chk
 
         wifilayout = widgets.QHBoxLayout()
@@ -1258,6 +1280,7 @@ class portChooser(widgets.QDialog):
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
+        button_layout.addWidget(button_save)
         button_layout.addWidget(button_elm_chk)
         layout.addLayout(button_layout)
 
@@ -1267,6 +1290,7 @@ class portChooser(widgets.QDialog):
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
+        button_save.clicked.connect(self.save_config)
         button_elm_chk.clicked.connect(self.check_elm)
 
         self.timer = core.QTimer()
@@ -1281,6 +1305,11 @@ class portChooser(widgets.QDialog):
     def setIcon(self):
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
+
+    def save_config(self):
+        options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
+        options.save_config()
+        exit(0)
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
@@ -1513,7 +1542,7 @@ if __name__ == '__main__':
     if not os.path.exists("./logs"):
         os.mkdir("./logs")
 
-    pc = portChooser()
+    pc = main_window_options()
     nok = True
     while nok:
         pcres = pc.exec_()

@@ -675,7 +675,7 @@ class paramWidget(widgets.QWidget):
         self.input.returnPressed.connect(self.send_manual_cmd)
         self.output = widgets.QLineEdit()
         self.output.setReadOnly(True)
-        hexvalidaor = core.QRegExp(("^[\s0-9a-fA-F]+"))
+        hexvalidaor = core.QRegExp(("^[\\s0-9a-fA-F]+"))
         rev = gui.QRegExpValidator(hexvalidaor, self)
         self.input.setValidator(rev)
         wlayout.addWidget(diaglabel)

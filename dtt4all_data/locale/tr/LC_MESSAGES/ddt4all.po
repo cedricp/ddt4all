@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 20:32+0100\n"
-"PO-Revision-Date: 2024-01-03 17:33+0300\n"
-"Last-Translator: Abdullah YILMAZ (TA1AUB) <h.abdullahyilmaz@hotmail.com>\n"
+"POT-Creation-Date: 2024-01-04 05:34+0100\n"
+"PO-Revision-Date: 2024-01-04 05:44+0100\n"
+"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -535,6 +535,9 @@ msgstr ""
 msgid "ELM port selection"
 msgstr "ELM bağlantı noktası (port) seçimi"
 
+msgid "Interface language (need save and close)"
+msgstr ""
+
 msgid "Port speed"
 msgstr "Bağlantı noktası (port) hızı"
 
@@ -546,6 +549,11 @@ msgstr "Deneme modu"
 
 msgid "ELM benchmark"
 msgstr "ELM değerlendirme testi"
+
+#, fuzzy
+#| msgid "Save last record"
+msgid "Save and close"
+msgstr "Son kaydı kaydet"
 
 msgid "WiFi port : "
 msgstr "WiFi bağlantı noktası : "

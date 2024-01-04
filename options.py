@@ -4,6 +4,8 @@ import gettext
 import locale
 import os
 
+import json
+
 simulation_mode = False
 port_speed = 38400
 port_name = ""
@@ -29,6 +31,60 @@ cantimeout = 0
 refreshrate = 5
 mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
+configuration = {
+    "lang": None
+}
+lang_list = {
+    "English": "en_US",
+    "German": "de",
+    "Spanish": "es",
+    "French": "fr",
+    "Hungarian": "hu",
+    "Italian": "it",
+    "Dutch": "nl",
+    "Polish": "pl",
+    "Portuguese": "pt",
+    "Romanian": "ro",
+    "Russian": "ru",
+    "Serbian": "sr",
+    "Turkish": "tr",
+    "Ukrainian": "uk_UA"
+}
+
+
+def save_config():
+    print(f'Save dtt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
+    js = json.dumps(configuration, ensure_ascii=False, indent=True)
+    f = open("dtt4all_data/config.json", "w", encoding="UTF-8")
+    f.write(js)
+    f.close()
+
+
+def create_new_config():
+    print("configuration not found or not ok. Create one new")
+    print("Possible translations:")
+    codes = ''
+    for i in lang_list:
+        print(i + " code: " + lang_list[i])
+        codes += lang_list[i] + " "
+    lang = get_translator_lang()
+    if not lang:
+        lang = "en_US"
+    configuration["lang"] = lang
+    print("\nEdit it only if it not ok for you country language.")
+    print(f'Edit the `dtt4all_data/config.json`\nConfiguration however you want this to be translated.\nThe self-assigned code is: {lang}')
+    print(f'Close and edit the configuration for list: \n\t{codes.strip()} \nAnd reopen the application.')
+    save_config()
+
+
+def load_configuration():
+    try:
+        f = open("dtt4all_data/config.json", "r", encoding="UTF-8")
+        configuration = json.loads(f.read())
+        os.environ['LANG'] = configuration["lang"]
+        f.close()
+    except:
+        create_new_config()
 
 
 def get_last_error():
@@ -38,23 +94,23 @@ def get_last_error():
     return err
 
 
-def translator(domain):
+def get_translator_lang():
     # default translation if err set to en_US
-    check = 'en_US'
+    loc_lang = None
     try:
-        lang, enc = locale.getlocale()
-        check = lang
+        lang, enc = locale.getdefaultlocale()
+        loc_lang = lang
     except:
-        pass
-
-    if check == 'en_US':
         try:
-            lang, enc = locale.getdefaultlocale()
-            check = lang
+            lang, enc = locale.getlocale()
+            loc_lang = lang
         except:
             pass
+    return loc_lang
 
+
+def translator(domain):
+    load_configuration()
     # Set up message catalog access
-    os.environ['LANG'] = check
     t = gettext.translation(domain, 'dtt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext

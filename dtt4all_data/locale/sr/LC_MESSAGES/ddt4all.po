@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 20:32+0100\n"
+"POT-Creation-Date: 2024-01-04 05:34+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
@@ -535,6 +535,9 @@ msgstr ""
 msgid "ELM port selection"
 msgstr "Izbor ELM porta"
 
+msgid "Interface language (need save and close)"
+msgstr ""
+
 msgid "Port speed"
 msgstr "Brzina porta"
 
@@ -546,6 +549,9 @@ msgstr "Mod izmena"
 
 msgid "ELM benchmark"
 msgstr "ELM rezultati testa"
+
+msgid "Save and close"
+msgstr ""
 
 msgid "WiFi port : "
 msgstr "WiFi port: "

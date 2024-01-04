@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 20:32+0100\n"
-"PO-Revision-Date: 2023-12-30 20:36+0100\n"
+"POT-Creation-Date: 2024-01-04 05:34+0100\n"
+"PO-Revision-Date: 2024-01-04 05:40+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -534,6 +534,9 @@ msgstr ""
 msgid "ELM port selection"
 msgstr "ELM port kiválasztása"
 
+msgid "Interface language (need save and close)"
+msgstr ""
+
 msgid "Port speed"
 msgstr "Port sebessége"
 
@@ -545,6 +548,9 @@ msgstr "Szerkesztés mód"
 
 msgid "ELM benchmark"
 msgstr "ELM kiértékelése"
+
+msgid "Save and close"
+msgstr ""
 
 msgid "WiFi port : "
 msgstr "WiFi port: "
