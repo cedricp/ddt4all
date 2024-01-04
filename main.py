@@ -1123,7 +1123,7 @@ def set_dark_style(onoff):
     app.setStyleSheet(StyleSheet)
 
 
-class portChooser(widgets.QDialog):
+class main_window_options(widgets.QDialog):
     def __init__(self):
         portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
         self.port = None
@@ -1133,7 +1133,7 @@ class portChooser(widgets.QDialog):
         self.selectedportspeed = 38400
         self.adapter = "STD"
         self.raise_port_speed = "No"
-        super(portChooser, self).__init__(None)
+        super(main_window_options, self).__init__(None)
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
         label.setText(_("ELM port selection"))
@@ -1528,7 +1528,7 @@ if __name__ == '__main__':
     if not os.path.exists("./logs"):
         os.mkdir("./logs")
 
-    pc = portChooser()
+    pc = main_window_options()
     nok = True
     while nok:
         pcres = pc.exec_()
