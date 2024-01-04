@@ -48,6 +48,7 @@ def load_this():
         exit(-1)
 
 
+# options = options.load_configuration()
 vehicles = load_this()
 _ = options.translator('ddt4all')
 app = None
@@ -1209,14 +1210,12 @@ class main_window_options(widgets.QDialog):
         # // TODO: need make this better configurable.
         langlayout = widgets.QHBoxLayout()
         self.langcombo = widgets.QComboBox()
-        langlabels= widgets.QLabel(_("DEMO Interface language"))
+        langlabels = widgets.QLabel(_("Interface language"))
         langlayout.addWidget(langlabels)
         langlayout.addWidget(self.langcombo)
         for s in options.lang_list:
-            self.langcombo.addItem(str(s))
-
+            self.langcombo.addItem(s)
         self.langcombo.setCurrentIndex(0)
-
         layout.addLayout(langlayout)
         # // TODO: reload it as..
         #
@@ -1238,6 +1237,8 @@ class main_window_options(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
+        button_save = widgets.QPushButton(_("Save configurationn"))
+
         self.elmchk = button_elm_chk
 
         wifilayout = widgets.QHBoxLayout()
@@ -1279,6 +1280,7 @@ class main_window_options(widgets.QDialog):
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
+        button_layout.addWidget(button_save)
         button_layout.addWidget(button_elm_chk)
         layout.addLayout(button_layout)
 
@@ -1288,6 +1290,7 @@ class main_window_options(widgets.QDialog):
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
+        button_save.clicked.connect(self.save_config)
         button_elm_chk.clicked.connect(self.check_elm)
 
         self.timer = core.QTimer()
@@ -1302,6 +1305,11 @@ class main_window_options(widgets.QDialog):
     def setIcon(self):
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
+
+    def save_config(self):
+        options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
+        options.save_config()
+        exit(0)
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
