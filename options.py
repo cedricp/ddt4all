@@ -55,8 +55,10 @@ lang_list = {
 def create_new_config():
     print("configuration not found or not ok. Create one new")
     print("Possible translations:")
+    codes = []
     for i in lang_list:
         print(i + " code: " + lang_list[i])
+        codes.append(lang_list[i])
     lang = get_translator_lang()
     if not lang:
         lang = "en_US"
@@ -66,8 +68,8 @@ def create_new_config():
     f.write(js)
     f.close()
     print("\nEdit it only if it not ok for you country language.")
-    print(f'Edit configuration `dtt4all_data/config.json` as you code. Ex: {lang}')
-    print("Start again app and set code country in dtt4all_data/config.json lang, if ok pass.")
+    print(f'Edit the `dtt4all_data/config.json` configuration however you want this to be translated. The self-assigned code is: {lang}')
+    print(f'Close and edit the configuration for list {codes} and reopen the application.')
 
 
 def load_configuration():
@@ -99,14 +101,11 @@ def get_translator_lang():
     # default translation if err set to en_US
     loc_lang = None
     try:
-        lang, enc = locale.getlocale()
+        lang, enc = locale.getdefaultlocale()
         loc_lang = lang
     except:
-        pass
-
-    if not loc_lang:
         try:
-            lang, enc = locale.getdefaultlocale()
+            lang, enc = locale.getlocale()
             loc_lang = lang
         except:
             pass
