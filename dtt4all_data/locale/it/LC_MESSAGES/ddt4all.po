@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 20:32+0100\n"
-"PO-Revision-Date: 2023-12-30 20:37+0100\n"
+"POT-Creation-Date: 2024-01-04 05:34+0100\n"
+"PO-Revision-Date: 2024-01-04 05:41+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -535,6 +535,9 @@ msgstr ""
 msgid "ELM port selection"
 msgstr "Selezione porta ELM"
 
+msgid "Interface language (need save and close)"
+msgstr ""
+
 msgid "Port speed"
 msgstr "Velocità porta"
 
@@ -546,6 +549,11 @@ msgstr "Modo demo"
 
 msgid "ELM benchmark"
 msgstr "Prestazioni ELM"
+
+#, fuzzy
+#| msgid "Save last record"
+msgid "Save and close"
+msgstr "Salva l'ultimo record"
 
 msgid "WiFi port : "
 msgstr "Porta Wi-Fi : "

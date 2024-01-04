@@ -1210,7 +1210,7 @@ class main_window_options(widgets.QDialog):
         # // TODO: need make this better configurable.
         langlayout = widgets.QHBoxLayout()
         self.langcombo = widgets.QComboBox()
-        langlabels = widgets.QLabel(_("Interface language"))
+        langlabels = widgets.QLabel(_("Interface language (need save and close)"))
         langlayout.addWidget(langlabels)
         langlayout.addWidget(self.langcombo)
         for s in options.lang_list:
@@ -1237,7 +1237,7 @@ class main_window_options(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
-        button_save = widgets.QPushButton(_("Save configurationn"))
+        button_save = widgets.QPushButton(_("Save and close"))
 
         self.elmchk = button_elm_chk
 

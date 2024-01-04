@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 20:32+0100\n"
-"PO-Revision-Date: 2023-12-30 20:35+0100\n"
+"POT-Creation-Date: 2024-01-04 05:34+0100\n"
+"PO-Revision-Date: 2024-01-04 05:40+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -534,6 +534,9 @@ msgstr ""
 msgid "ELM port selection"
 msgstr "Sélection du port ELM"
 
+msgid "Interface language (need save and close)"
+msgstr "Langue (besoin de sauvegarder et de fermer)"
+
 msgid "Port speed"
 msgstr "Vitesse du port"
 
@@ -545,6 +548,9 @@ msgstr "Mode édition"
 
 msgid "ELM benchmark"
 msgstr "Tests ELM"
+
+msgid "Save and close"
+msgstr "Sauver et fermer"
 
 msgid "WiFi port : "
 msgstr "Port WIFI : "
