@@ -48,7 +48,6 @@ def load_this():
         exit(-1)
 
 
-# options = options.load_configuration()
 vehicles = load_this()
 _ = options.translator('ddt4all')
 app = None
@@ -1215,7 +1214,9 @@ class main_window_options(widgets.QDialog):
         langlayout.addWidget(self.langcombo)
         for s in options.lang_list:
             self.langcombo.addItem(s)
-        self.langcombo.setCurrentIndex(0)
+            if options.lang_list[s].split("_")[0] == os.environ['LANG'].split("_")[0]:
+                self.langcombo.setCurrentText(s)
+        #self.langcombo.setCurrentIndex(0)
         layout.addLayout(langlayout)
         # // TODO: reload it as..
         #

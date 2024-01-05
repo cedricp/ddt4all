@@ -154,7 +154,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-     image: url("icons/down_arrow.png");
+     image: url("dtt4all_data/icons/down_arrow.png");
 }
 
 QGroupBox:focus
@@ -462,7 +462,7 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
 
 QCheckBox::indicator:checked
 {
-    image:url("icons/checkbox.png");
+    image:url("dtt4all_data/icons/checkbox.png");
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
