@@ -1206,7 +1206,6 @@ class main_window_options(widgets.QDialog):
         self.elsbutton.toggled.connect(self.els)
 
         # languages setting
-        # // TODO: need make this better configurable.
         langlayout = widgets.QHBoxLayout()
         self.langcombo = widgets.QComboBox()
         langlabels = widgets.QLabel(_("Interface language (need save and close)"))
@@ -1216,9 +1215,8 @@ class main_window_options(widgets.QDialog):
             self.langcombo.addItem(s)
             if options.lang_list[s].split("_")[0] == os.environ['LANG'].split("_")[0]:
                 self.langcombo.setCurrentText(s)
-        #self.langcombo.setCurrentIndex(0)
+        # self.langcombo.setCurrentIndex(0)
         layout.addLayout(langlayout)
-        # // TODO: reload it as..
         #
 
         speedlayout = widgets.QHBoxLayout()
