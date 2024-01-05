@@ -67,10 +67,7 @@ def create_new_config():
     # for i in lang_list:
     #     print(i + " code: " + lang_list[i])
     #     codes += lang_list[i] + " "
-    lang = get_translator_lang()
-    if not lang:
-        lang = "en_US"
-    configuration["lang"] = lang
+    configuration["lang"] = get_translator_lang()
     # print("\nEdit it only if it not ok for you country language.")
     # print(f'Edit the `dtt4all_data/config.json`\nConfiguration however you want this to be translated.\nThe self-assigned code is: {lang}')
     # print(f'Close and edit the configuration for list: \n\t{codes.strip()} \nAnd reopen the application.')
@@ -96,7 +93,7 @@ def get_last_error():
 
 def get_translator_lang():
     # default translation if err set to en_US
-    loc_lang = None
+    loc_lang = "en_US"
     try:
         lang, enc = locale.getdefaultlocale()
         loc_lang = lang
