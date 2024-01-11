@@ -29,7 +29,7 @@ VersionInfoProductName={#MyAppName}
 AppCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
 
 ;--------------------- Info Windows program list
-UninstallDisplayIcon={app}\icons\obd.ico
+UninstallDisplayIcon=..\..\dtt4all_data\icons\obd.ico
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
 
