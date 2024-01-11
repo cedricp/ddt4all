@@ -5,7 +5,7 @@ DDT4All is tool to create your own ECU parameters screens and connect to a CAN n
 
 ### Android porting: 
   - [Wiki Android port](https://github.com/cedricp/ddt4all/wiki/Android-port)
-  - [Base Source Code of apk in gitlab](https://gitlab.com/DrQuark/android_can)
+  - [Source Code](https://github.com/cedricp/ecutweaker)
   - [Download](https://github.com/cedricp/ddt4all/releases)
 
 ### Notes:
