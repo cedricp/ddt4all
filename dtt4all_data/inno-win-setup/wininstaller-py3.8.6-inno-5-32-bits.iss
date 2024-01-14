@@ -96,6 +96,7 @@ pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w%n%n
 ptbr.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
 pt.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
 ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в%n%n
+tr.AfterMyProgInstall=Veritabanını şuraya yüklemeyi unutmayın %n%n
 
 [Languages]
 Name: "en";   MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Default.isl"
@@ -108,3 +109,4 @@ Name: "pl";   MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Polis
 Name: "ptbr"; MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\BrazilianPortuguese.isl"
 Name: "pt";   MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Portuguese.isl"
 Name: "ru";   MessagesFile: "C:\Program Files (x86)\Inno Setup 5\Languages\Russian.isl"
+Name: "tr";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Turkish.isl"
