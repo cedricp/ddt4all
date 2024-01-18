@@ -1906,17 +1906,27 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             code = project.getAttribute(u"code")
             p_name = project.getAttribute(u"name")
             addressing = os.path.join("vehicles", "GenericAddressing.xml")
+            parts = []
             try:
                 parts = str(project.getElementsByTagName(u"addressing")[0].childNodes[0].nodeValue).split('/')
-                if len(parts) > 2:
-                    print("parts as: " + len(parts) + " please review dumpVehicles def.")
-                    addressing = os.path.join("vehicles", parts[0], parts[1], parts[2])
-                else:
-                    addressing = os.path.join("vehicles", parts[0], parts[1])
-                if not os.path.isfile(addressing):
-                    addressing = os.path.join("vehicles", "GenericAddressing.xml")
             except:
                 pass
+            if len(parts) == 0:
+                addressing = os.path.join("vehicles", "GenericAddressing.xml")
+            elif len(parts) == 2:
+                addressing = os.path.join("vehicles", parts[0], parts[1])
+            elif len(parts) == 3:
+                addressing = os.path.join("vehicles", parts[0], parts[1], parts[2])
+            elif len(parts) == 4:
+                addressing = os.path.join("vehicles", parts[0], parts[1], parts[2], parts[3])
+            elif len(parts) > 4:
+                print("parts as: " + len(parts) + " please review dumpVehicles def.")
+                addressing = os.path.join("vehicles", "GenericAddressing.xml")
+            else:
+                raise "Error in dumpVehicles def."
+            if not os.path.isfile(addressing):
+                addressing = os.path.join("vehicles", "GenericAddressing.xml")
+
             project_name = "%s %s" % (name, p_name)
             if name.lower().replace("_", "").replace("-", "") in p_name.lower().replace("_", "").replace("-", ""):
                 project_name = p_name
