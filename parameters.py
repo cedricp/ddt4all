@@ -1888,16 +1888,16 @@ def convertXML():
             jsfile.close()
 
 
-def dumpVehicles(file="vehicles/projects.xml"):
+def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
     dict = {}
     dict["projects"] = {}
     dict["projects"]["All"] = {}
     dict["projects"]["All"]["code"] = "ALL"
-    dict["projects"]["All"]["addressing"] = dumpAddressing("./vehicles/GenericAddressing.xml")
-    dict["projects"]["All"]["snat"] = dumpSNAT("./vehicles/GenericAddressing.xml")
-    dict["projects"]["All"]["dnat"] = dumpDNAT("./vehicles/GenericAddressing.xml")
+    dict["projects"]["All"]["addressing"] = dumpAddressing(os.path.join("vehicles", "GenericAddressing.xml"))
+    dict["projects"]["All"]["snat"] = dumpSNAT(os.path.join("vehicles", "GenericAddressing.xml"))
+    dict["projects"]["All"]["dnat"] = dumpDNAT(os.path.join("vehicles", "GenericAddressing.xml"))
     manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
     for manufacturer in manufacturers:
         name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
@@ -1905,28 +1905,27 @@ def dumpVehicles(file="vehicles/projects.xml"):
         for project in projects:
             code = project.getAttribute(u"code")
             p_name = project.getAttribute(u"name")
+            addressing = os.path.join("vehicles", "GenericAddressing.xml")
+            try:
+                parts = str(project.getElementsByTagName(u"addressing")[0].childNodes[0].nodeValue).split('/')
+                if len(parts) > 2:
+                    print("parts as: " + len(parts) + " please review dumpVehicles def.")
+                    addressing = os.path.join("vehicles", parts[0], parts[1], parts[2])
+                else:
+                    addressing = os.path.join("vehicles", parts[0], parts[1])
+                if not os.path.isfile(addressing):
+                    addressing = os.path.join("vehicles", "GenericAddressing.xml")
+            except:
+                pass
             project_name = "%s %s" % (name, p_name)
             if name.lower().replace("_", "").replace("-", "") in p_name.lower().replace("_", "").replace("-", ""):
                 project_name = p_name
             dict["projects"][project_name] = {}
             dict["projects"][project_name]["code"] = str(code).upper()
-            default_v = os.path.join("vehicles", code, "addressing.xml")
-            default = os.path.join("vehicles", "GenericAddressing.xml")
-            try:
-                dict["projects"][project_name]["addressing"] = dumpAddressing(default_v)
-            except:
-                dict["projects"][project_name]["addressing"] = dumpAddressing(default)
-                pass
-            try:
-                dict["projects"][project_name]["snat"] = dumpSNAT(default_v)
-            except:
-                dict["projects"][project_name]["snat"] = dumpSNAT(default)
-                pass
-            try:
-                dict["projects"][project_name]["dnat"] = dumpDNAT(default_v)
-            except:
-                dict["projects"][project_name]["dnat"] = dumpDNAT(default)
-                pass
+            dict["projects"][project_name]["addressing"] = dumpAddressing(addressing)
+            dict["projects"][project_name]["snat"] = dumpSNAT(addressing)
+            dict["projects"][project_name]["dnat"] = dumpDNAT(addressing)
+            print(f'{code:18} => {addressing:40} => OK')
 
     sd = sorted(dict["projects"].items())
     new_dict = {}
