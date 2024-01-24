@@ -1206,6 +1206,8 @@ class main_window_options(widgets.QDialog):
         self.elsbutton.toggled.connect(self.els)
 
         # languages setting
+        if "LANG" not in os.environ:
+            os.environ["LANG"] = "en_US"
         langlayout = widgets.QHBoxLayout()
         self.langcombo = widgets.QComboBox()
         langlabels = widgets.QLabel(_("Interface language (need save and close)"))
