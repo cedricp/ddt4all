@@ -6,7 +6,7 @@
 #define MyAppContact    "cedricpaille@gmail.com"  
 #define MyAppSupportURL "https://github.com/cedricp/ddt4all" 
 #define MyAppReadmeMd   "https://github.com/cedricp/ddt4all/blob/master/README.md"
-#define C_StartingYear  "2016"
+#define C_StartingYear  "©2016"
 #define C_EndingYear    GetDateTimeString('yyyy','','')
 #define DateEUR         GetDateTimeString('dd.mm.yyyy','','')
 
@@ -28,14 +28,14 @@ VersionInfoProductName={#MyAppName}
 AppCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
 
 ;--------------------- Info Windows program list
-UninstallDisplayIcon=..\..\dtt4all_data\icons\obd.ico
+UninstallDisplayIcon={uninstallexe}
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
 
 UsepreviousLanguage=No
 
 DefaultDirName={pf}\{#MyAppDir}
-DefaultGroupName={#MyAppDir}
+DefaultGroupName={#MyAppName}
 SetupIconFile=..\..\dtt4all_data\icons\obd.ico
 OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}-python-3.12.1-64bits
 UsePreviousPrivileges=True
@@ -47,6 +47,7 @@ VersionInfoProductTextVersion={#MyAppVersion}
 VersionInfoOriginalFileName={#MyAppName}
 LicenseFile=..\..\license.txt
 WizardStyle=modern
+AppId={{3E70988F-0D77-4639-800D-2CD9DB2617B1}
 
 [Files]
 ;Source: "..\..\ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
@@ -60,9 +61,11 @@ Source: "..\..\*.qss"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall;
 ;Source: "..\..\*.qss"; DestDir: "{app}"
 
 [InstallDelete]
-Type: filesandordirs; Name: "{app}\*"
+Type: filesandordirs; Name: "{group}";
+Type: filesandordirs; Name: "{app}"
 
 [UninstallDelete]
+Type: filesandordirs; Name: "{group}";
 Type: filesandordirs; Name: "{app}"
 
 [Code]
@@ -84,8 +87,8 @@ Name: "{app}\dtt4all_data"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{group}\ddt4all"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"
-Name: "{userdesktop}\ddt4all"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Tasks: desktopicon
 
 [CustomMessages]
 en.AfterMyProgInstall=Do not forget to install database to %n%n
