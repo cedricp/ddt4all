@@ -1,6 +1,6 @@
 ﻿#define MyAppName       "DDT4All"
 #define MyAppVersion    GetDateTimeString('yy.mm.dd','','')
-#define MyAppDir        "ddtall"
+#define MyAppDir        "ddt4all"
 #define MyAppAuthor     "Cedric PAILLE"
 #define MyAppCompany    "Cedric PAILLE"
 #define MyAppContact    "cedricpaille@gmail.com"  
