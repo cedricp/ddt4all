@@ -69,6 +69,8 @@ Type: filesandordirs; Name: "{app}"
 procedure AfterMyProgInstall;
 begin
     MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
+    // remove developement config.json file
+    DeleteFile(ExpandConstant('{app}\dtt4all_data\config.json'));
 end;
 
 [Dirs]
