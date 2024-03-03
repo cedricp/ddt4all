@@ -1582,7 +1582,7 @@ class Ecu_scanner:
             #     continue
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<25} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
+            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
