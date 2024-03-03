@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
-"PO-Revision-Date: 2024-01-04 06:37+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
+"PO-Revision-Date: 2024-03-03 06:54+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -255,10 +255,13 @@ msgstr ""
 msgid "Found similar"
 msgstr ""
 
+msgid "DataItem not found"
+msgstr ""
+
 msgid "Cannot find data "
 msgstr ""
 
-msgid "DataItem not found"
+msgid " vs "
 msgstr ""
 
 msgid "Cannot draw input "
@@ -267,14 +270,90 @@ msgstr "Pluginul nu se poate incarca "
 msgid "No Value"
 msgstr "Valori"
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Trimiteti octeti de solicitare (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Primiti octeti"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot find file "
+msgstr "Pluginul nu se poate incarca "
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "Fisierul XML nu a fost gasit : "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "ECU Adresa functiei"
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+#, fuzzy
+#| msgid "Error:"
+msgid "Error: "
 msgstr "Eroare:"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM nu este conectat sau port COM gresit"
 
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Viteza portului"
+
 msgid "Connection to ELM was lost"
 msgstr "Conexiunea cu ELM a fost pierduta"
+
+#, fuzzy
+#| msgid "Cannot connect to ECU"
+msgid "Cannot decode bytes "
+msgstr "Nu se poate conecta la ECU"
 
 msgid "TIMEOUT"
 msgstr "TIMP EXPIRAT"
@@ -293,6 +372,53 @@ msgstr "Incercare de a deschide portul "
 
 msgid "No ELM interface on port"
 msgstr "Nu exista interfata ELM in port"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Versiune Diag"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Versiune"
+
+#, fuzzy
+#| msgid "ERROR - wifi do not support changing baud rate"
+msgid "Your ELM does not support baudrate "
+msgstr "EROARE - Wifi nu accepta modificarea ratei de transfer"
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "ECU Adresa functiei"
 
 msgid "FAIL"
 msgstr "ESEC"
@@ -314,6 +440,9 @@ msgstr " reusit din "
 
 msgid "ELM Max version:"
 msgstr "ELM Versiune max:"
+
+msgid "dtt4all_data/projects.json not found or not ok."
+msgstr ""
 
 msgid "ECU name"
 msgstr "ECU nume"
@@ -447,6 +576,11 @@ msgstr "Redenumiti"
 msgid "Plugins"
 msgstr "Plugin-uri"
 
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot load plugin "
+msgstr "Pluginul nu se poate incarca "
+
 msgid "Help"
 msgstr ""
 
@@ -457,6 +591,23 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "DTT4ALL version:"
+msgstr "Versiune Diag"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -580,6 +731,9 @@ msgstr "Initializeaza ELM cu viteza %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Niciun ELM327 sau OBDLINK-SX nu a fost detectat in portul COM "
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Pentru a putea edita ecranul, exportati-l mai intai in format JSON"
 
@@ -609,6 +763,9 @@ msgstr "Intrare"
 
 msgid "Output"
 msgstr "Iesire"
+
+msgid "Protocol not supported : "
+msgstr ""
 
 msgid "XML file not found : "
 msgstr "Fisierul XML nu a fost gasit : "
@@ -693,14 +850,72 @@ msgstr "codurile de eroare ECU"
 msgid "Parsing screen "
 msgstr "Ecran de analiza "
 
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Cerere de buton nu a fost gasita : "
+
+msgid "found in display "
+msgstr ""
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Adaugati butonul"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Versiune Diag"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr "Valori"
 
 msgid "Waiting..."
 msgstr "Aşteptare..."
 
-msgid "Frame hex error : "
+#, fuzzy
+#| msgid "Frame hex error : "
+msgid "Frame length error: "
 msgstr "Cadru de eroare hex: "
+
+#, fuzzy
+#| msgid "Frame hex error : "
+msgid "Frame hex error: "
+msgstr "Cadru de eroare hex: "
+
+msgid "Found USB adapter:"
+msgstr ""
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Resetare AIRBAG AB90"
@@ -965,9 +1180,6 @@ msgstr "CALCULATOR CRC"
 #, python-format
 #~ msgid "Adding plugin file %s"
 #~ msgstr "Adaugarea fisierului plugin %s"
-
-#~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "EROARE - Wifi nu accepta modificarea ratei de transfer"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Schimbarea ratei de transfer la:"

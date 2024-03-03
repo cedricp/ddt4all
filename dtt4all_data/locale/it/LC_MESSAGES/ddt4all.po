@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
-"PO-Revision-Date: 2024-01-04 06:36+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
+"PO-Revision-Date: 2024-03-03 06:52+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -256,11 +256,14 @@ msgstr "Nessuna richiesta denominata"
 msgid "Found similar"
 msgstr "Trova similare"
 
+msgid "DataItem not found"
+msgstr "Elemento dati non trovato"
+
 msgid "Cannot find data "
 msgstr "Impossibile trovare i dati "
 
-msgid "DataItem not found"
-msgstr "Elemento dati non trovato"
+msgid " vs "
+msgstr ""
 
 msgid "Cannot draw input "
 msgstr "Impossibile disegnare l'input "
@@ -268,14 +271,92 @@ msgstr "Impossibile disegnare l'input "
 msgid "No Value"
 msgstr "Nessun valore"
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Invio byte richiesta (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Ricevi byte"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot find data "
+msgid "Cannot find file "
+msgstr "Impossibile trovare i dati "
+
+#, fuzzy
+#| msgid "Cannot load plugin "
+msgid "Cannot load ECU file"
+msgstr "Impossibile caricare plugin "
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "File XML non trovato : "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "Indirizzo funzione ECU"
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+#, fuzzy
+#| msgid "Error:"
+msgid "Error: "
 msgstr "Errore:"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM non connesso o porta COM errata"
 
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Velocità porta"
+
 msgid "Connection to ELM was lost"
 msgstr "Persa connessione a ELM"
+
+#, fuzzy
+#| msgid "Cannot connect to ECU"
+msgid "Cannot decode bytes "
+msgstr "Impossibile riconnettersi"
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
@@ -294,6 +375,53 @@ msgstr "Tentativo apertura porta "
 
 msgid "No ELM interface on port"
 msgstr "Nessuna interfaccia ELM collegata alla porta"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Versione diagnostica"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Versione"
+
+#, fuzzy
+#| msgid "ERROR - wifi do not support changing baud rate"
+msgid "Your ELM does not support baudrate "
+msgstr "Errore - Il Wi-Fi non supporta la modifica della velocità"
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "Indirizzo funzione ECU"
 
 msgid "FAIL"
 msgstr "FALLITO"
@@ -315,6 +443,9 @@ msgstr " completato da "
 
 msgid "ELM Max version:"
 msgstr "Versione max ELM:"
+
+msgid "dtt4all_data/projects.json not found or not ok."
+msgstr ""
 
 msgid "ECU name"
 msgstr "Nome ECU"
@@ -448,6 +579,9 @@ msgstr "Rinomina"
 msgid "Plugins"
 msgstr "Plugin"
 
+msgid "Cannot load plugin "
+msgstr "Impossibile caricare plugin "
+
 msgid "Help"
 msgstr ""
 
@@ -458,6 +592,23 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "DTT4ALL version:"
+msgstr "Versione diagnostica"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -587,6 +738,9 @@ msgstr "Inizializzazione ELM con velocità %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nessun ELM o OBDLINK-SX rilevato sulla porta COM "
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Per poter modificare la schermata, prima esportala in formato JSON"
 
@@ -616,6 +770,9 @@ msgstr "Ingresso"
 
 msgid "Output"
 msgstr "Uscita"
+
+msgid "Protocol not supported : "
+msgstr ""
 
 msgid "XML file not found : "
 msgstr "File XML non trovato : "
@@ -699,14 +856,74 @@ msgstr "Codici guasto ECU"
 msgid "Parsing screen "
 msgstr "Analisi schermata "
 
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Richiesta pulsante non trovata : "
+
+#, fuzzy
+#| msgid "Found similar"
+msgid "found in display "
+msgstr "Trova similare"
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Aggiungi pulsante"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Versione diagnostica"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr "Valori"
 
 msgid "Waiting..."
 msgstr "Attendi..."
 
-msgid "Frame hex error : "
+#, fuzzy
+#| msgid "Frame hex error : "
+msgid "Frame length error: "
 msgstr "Errore hex frame: "
+
+#, fuzzy
+#| msgid "Frame hex error : "
+msgid "Frame hex error: "
+msgstr "Errore hex frame: "
+
+msgid "Found USB adapter:"
+msgstr ""
 
 msgid "AB90 AIRBAG Reset"
 msgstr "AR90 - Airbag - Ripristino"
@@ -974,12 +1191,6 @@ msgstr "CALCOLATORE CRC"
 
 #~ msgid "Trying to open port"
 #~ msgstr "Apertura porta COM"
-
-#~ msgid "Cannot load plugin "
-#~ msgstr "Impossibile caricare plugin "
-
-#~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "Errore - Il Wi-Fi non supporta la modifica della velocità"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Modifica velocità a:"

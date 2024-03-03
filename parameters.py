@@ -312,14 +312,14 @@ class paramWidget(widgets.QWidget):
 
     def renameCategory(self, oldname, newname):
         if oldname not in self.categories:
-            print("Err, cannot rename ", oldname)
+            print(_("Err, cannot rename "), oldname)
             return
 
         self.categories[newname] = self.categories.pop(oldname)
 
     def renameScreen(self, oldname, newname):
         if oldname not in self.xmlscreen:
-            print("Err, cannot rename ", oldname)
+            print(_("Err, cannot rename "), oldname)
             return
 
         self.xmlscreen[newname] = self.xmlscreen.pop(oldname)
@@ -729,7 +729,7 @@ class paramWidget(widgets.QWidget):
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
-                print("Protocol not supported : " + self.ecurequestsparser.ecu_protocol)
+                print(_("Protocol not supported : ") + self.ecurequestsparser.ecu_protocol)
 
     def initJSON(self):
         self.layoutdict = None
@@ -1548,40 +1548,40 @@ class paramWidget(widgets.QWidget):
             print(_("Parsing screen "), screen_k)
             for input_data in screen_data['inputs']:
                 if oldname == input_data['request']:
-                    print("found request in input ", screen_k)
+                    print(_("found request in input "), screen_k)
                     input_data['request'] = newname
 
             for display_data in screen_data['displays']:
                 if oldname == display_data['request']:
-                    print("found in display ", screen_k)
+                    print(_("found in display "), screen_k)
                     display_data['request'] = newname
 
             for button_data in screen_data['buttons']:
                 if 'send' in button_data.keys():
                     for send in button_data['send']:
                         if send['RequestName'] == oldname:
-                            print("found in button ", screen_k)
+                            print(_("found in button "), screen_k)
                             send['RequestName'] = newname
 
             for presend_data in screen_data['presend']:
                 if 'RequestName' in presend_data:
                     if presend_data['RequestName'] == oldname:
-                        print("found in presend ", screen_k)
+                        print(_("found in presend "), screen_k)
                         presend_data['RequestName'] = newname
 
         self.reinitScreen()
 
     def dataNameChanged(self, oldname, newname):
         for screen_k, screen_data in self.layoutdict['screens'].items():
-            print("Parsing screen ", screen_k)
+            print(_("Parsing screen "), screen_k)
             for input_data in screen_data['inputs']:
                 if oldname == input_data['text']:
-                    print("found data in input ", screen_k)
+                    print(_("found data in input "), screen_k)
                     input_data['text'] = newname
 
             for display_data in screen_data['displays']:
                 if oldname == display_data['text']:
-                    print("found data in display ", screen_k)
+                    print(_("found data in display "), screen_k)
                     display_data['text'] = newname
 
         self.reinitScreen()
@@ -1790,7 +1790,7 @@ def zipConvertXML(dbfilename="ecu.zip"):
                     imgs.append(os.path.join(dirpath, file))
 
     if len(ecus_glob) == 0:
-        print("Cannot zip database, no 'ecus' directory")
+        print(_("Cannot zip database, no 'ecus' directory"))
         return
 
     ecus = []
@@ -1800,7 +1800,7 @@ def zipConvertXML(dbfilename="ecu.zip"):
         ecus.append(e)
 
     i = 1
-    print("Starting conversion")
+    print(_("Starting conversion"))
 
     targetsdict = {}
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
@@ -1812,12 +1812,12 @@ def zipConvertXML(dbfilename="ecu.zip"):
                 filename = filename.replace("ecus/", "")
             else:
                 filename = filename.replace("ecus\\", "")
-            print("Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename)
+            print(_("Starting processing ") + target + " " + str(i) + "/" + str(len(ecus)) + _(" to ") + filename)
 
             i += 1
             layoutjs = dumpXML(target)
             if layoutjs is None:
-                print("Skipping current file (cannot parse it)")
+                print(_("Skipping current file (cannot parse it)"))
                 continue
             ecufile = ecu.Ecu_file(target, True)
             js = ecufile.dumpJson()
@@ -1847,19 +1847,19 @@ def convertXML():
     ecus.remove("ecus/eculist.xml")
     i = 1
 
-    print("Opening ECU Database...")
+    print(_("Opening ECU Database..."))
     ecu_database = ecu.Ecu_database()
-    print("Starting conversion")
+    print(_("Starting conversion"))
 
     for target in ecus:
         filename = target.replace(".xml", ".json")
         filename = filename.replace("ecus/", "json/")
-        print("Starting processing " + target + " " + str(i) + "/" + str(len(ecus)) + " to " + filename)
+        print(_("Starting processing ") + target + " " + str(i) + "/" + str(len(ecus)) + _(" to ") + filename)
 
         i += 1
         layoutjs = dumpXML(target)
         if layoutjs is None:
-            print("Skipping current file (cannot parse it)")
+            print(_("Skipping current file (cannot parse it)"))
             continue
         ecufile = ecu.Ecu_file(target, True)
         js = ecufile.dumpJson()
@@ -1920,7 +1920,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             elif len(parts) == 4:
                 addressing = os.path.join("vehicles", parts[0], parts[1], parts[2], parts[3])
             elif len(parts) > 4:
-                print("parts as: " + len(parts) + " please review dumpVehicles def.")
+                print(_("parts as: ") + len(parts) + _(" please review dumpVehicles def."))
                 addressing = os.path.join("vehicles", "GenericAddressing.xml")
             else:
                 raise "Error in dumpVehicles def."

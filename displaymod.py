@@ -383,7 +383,7 @@ class displayWidget(widgets.QWidget):
                     break
 
         if not dataitem:
-            print("DataItem not found", text)
+            print(_("DataItem not found"), text)
             return
 
         try:
@@ -454,7 +454,7 @@ class displayWidget(widgets.QWidget):
             for k in keys:
                 if k.upper() == text.upper():
                     dataitem = req.dataitems[k]
-                    print("Found similar", k, " vs ", text)
+                    print(_("Found similar"), k, _(" vs "), text)
                     break
 
         if not dataitem:

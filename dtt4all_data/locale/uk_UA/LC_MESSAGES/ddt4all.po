@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
-"PO-Revision-Date: 2024-01-04 06:39+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
+"PO-Revision-Date: 2024-03-03 06:55+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -258,10 +258,13 @@ msgstr ""
 msgid "Found similar"
 msgstr ""
 
+msgid "DataItem not found"
+msgstr ""
+
 msgid "Cannot find data "
 msgstr ""
 
-msgid "DataItem not found"
+msgid " vs "
 msgstr ""
 
 msgid "Cannot draw input "
@@ -270,14 +273,90 @@ msgstr "Не вдалось завантажити плагін "
 msgid "No Value"
 msgstr "Значення"
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Відправити запит байт (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Receive bytes"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot find file "
+msgstr "Не вдалось завантажити плагін "
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "XML файл не знайдено : "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "ECU Function address"
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+#, fuzzy
+#| msgid "Error:"
+msgid "Error: "
 msgstr "Помилка:"
 
 msgid "ELM not connected or wrong COM port"
 msgstr ""
 
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Швидкість порта"
+
 msgid "Connection to ELM was lost"
 msgstr "Звязок з ELM втрачено"
+
+#, fuzzy
+#| msgid "Cannot reconnect..."
+msgid "Cannot decode bytes "
+msgstr "Не можу переконектитись..."
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
@@ -296,6 +375,51 @@ msgstr "Пробую відкрити порт "
 
 msgid "No ELM interface on port"
 msgstr "ELM на порту не виявлено"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Diag version"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Версія"
+
+msgid "Your ELM does not support baudrate "
+msgstr ""
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "ECU Function address"
 
 msgid "FAIL"
 msgstr "Помилка"
@@ -317,6 +441,9 @@ msgstr " успішних із "
 
 msgid "ELM Max version:"
 msgstr "Максимальна версія ELM:"
+
+msgid "dtt4all_data/projects.json not found or not ok."
+msgstr ""
 
 msgid "ECU name"
 msgstr "Назва ЕБУ"
@@ -450,6 +577,11 @@ msgstr "Перейменувати"
 msgid "Plugins"
 msgstr "Плагіни"
 
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot load plugin "
+msgstr "Не вдалось завантажити плагін "
+
 msgid "Help"
 msgstr ""
 
@@ -460,6 +592,23 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "DTT4ALL version:"
+msgstr "Diag version"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -585,6 +734,9 @@ msgstr "Ініціаалізація ELM на швидкості %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 чи OBDLINK-SX не виявлено на COM порті "
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Для редагування екрана спочатку збережіть його у форматі JSON"
 
@@ -614,6 +766,9 @@ msgstr "Поле вводу"
 
 msgid "Output"
 msgstr "Поле виводу"
+
+msgid "Protocol not supported : "
+msgstr ""
 
 msgid "XML file not found : "
 msgstr "XML файл не знайдено : "
@@ -696,13 +851,67 @@ msgstr "DTC ЕБУ"
 msgid "Parsing screen "
 msgstr "Екран розшифровки "
 
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Немає параметрів для кнопки : "
+
+msgid "found in display "
+msgstr ""
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Додати кнопку"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Diag version"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr "Значення"
 
 msgid "Waiting..."
 msgstr "Очікування..."
 
-msgid "Frame hex error : "
+msgid "Frame length error: "
+msgstr ""
+
+msgid "Frame hex error: "
+msgstr ""
+
+msgid "Found USB adapter:"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"

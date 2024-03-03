@@ -167,11 +167,11 @@ class sniffer(widgets.QWidget):
             return
 
         if len(data) > 16:
-            print("Frame length error : ", data)
+            print(_("Frame length error: "), data)
             return
 
         if not all(c in string.hexdigits for c in data):
-            print(_("Frame hex error : "), data)
+            print(_("Frame hex error: "), data)
             return
 
         data = data.replace(' ', '').ljust(16, "0")

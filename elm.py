@@ -286,15 +286,15 @@ class Port:
                 self.connectionStatus = True
                 return
             except Exception as e:
-                print(_("Error:") + str(e))
+                print(_("Error: ") + str(e))
                 print(_("ELM not connected or wrong COM port"), portName)
-                options.last_error = _("Error:") + str(e)
+                options.last_error = _("Error: ") + str(e)
                 options.elm_failed = True
 
     def close(self):
         try:
             self.hdr.close()
-            print("Port closed")
+            print(_("Port closed"))
         except:
             pass
 
@@ -372,7 +372,7 @@ class Port:
         try:
             return byte.decode("utf-8")
         except:
-            print("Cannot decode bytes " + str(byte))
+            print(_("Cannot decode bytes ") + str(byte))
             return ""
 
     def change_rate(self, rate):
@@ -567,21 +567,21 @@ class ELM:
             maxspeed = 0
 
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print("OBDLink Connection OK, attempting full speed UART switch")
+            print(_("OBDLink Connection OK, attempting full speed UART switch"))
             try:
                 self.raise_odb_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print("Failed to switch to change OBDLink to " + str(maxspeed))
+                print(_("Failed to switch to change OBDLink to ") + str(maxspeed))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print("ELM Connection OK, attempting high speed UART switch")
+            print(_("ELM Connection OK, attempting high speed UART switch"))
             try:
                 self.raise_elm_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print("Failed to switch to change ELM to " + str(maxspeed))
+                print(_("Failed to switch to change ELM to ") + str(maxspeed))
 
     def raise_odb_speed(self, baudrate):
         # Software speed switch
@@ -592,13 +592,13 @@ class ELM:
         # Command result
         res = self.port.expect_carriage_return()
         if "OK" in res:
-            print("OBDLINK switched baurate OK, changing UART speed now...")
+            print(_("OBDLINK switched baurate OK, changing UART speed now..."))
             self.port.change_rate(baudrate)
             time.sleep(0.5)
             res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
             if "STN" in res:
-                print("OBDLink full speed connection OK")
-                print("OBDLink Version " + res)
+                print(_("OBDLink full speed connection OK"))
+                print(_("OBDLink Version ") + res)
             else:
                 raise
         else:
@@ -622,26 +622,26 @@ class ELM:
         # Command result
         res = self.port.expect_carriage_return()
         if "OK" in res:
-            print("ELM baudrate switched OK, changing UART speed now...")
+            print(_("ELM baudrate switched OK, changing UART speed now..."))
             self.port.change_rate(baudrate)
             version = self.port.expect_carriage_return()
             if "ELM327" in version:
                 self.port.write('\r'.encode('utf-8'))
                 res = self.port.expect('>')
                 if "OK" in res:
-                    print("ELM full speed connection OK ")
-                    print("Version " + version)
+                    print(_("ELM full speed connection OK "))
+                    print(_("Version ") + version)
                 else:
                     raise
             else:
                 raise
         else:
-            print("Your ELM does not support baudrate " + str(baudrate))
+            print(_("Your ELM does not support baudrate ") + str(baudrate))
             raise
 
     def __del__(self):
         try:
-            print("ELM reset...")
+            print(_("ELM reset..."))
             self.port.write("ATZ\r".encode("utf-8"))
         except:
             pass
@@ -698,7 +698,7 @@ class ELM:
             if self.currentaddress in dnat:
                 self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
             else:
-                print("Unknown address: ", self.currentaddress, "0x" + req, "0x" + rsp)
+                print(_("Unknown address: "), self.currentaddress, "0x" + req, "0x" + rsp)
             self.vf.flush()
 
         return rsp
