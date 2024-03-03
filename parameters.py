@@ -1928,8 +1928,9 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
                 addressing = os.path.join("vehicles", "GenericAddressing.xml")
 
             project_name = "%s %s" % (name, p_name)
-            if name.lower().replace("_", "").replace("-", "") in p_name.lower().replace("_", "").replace("-", ""):
-                project_name = p_name
+            if project_name in  dict["projects"].keys():
+                project_name = "%s %s (%s)" % (name, p_name, str(code).upper())
+
             dict["projects"][project_name] = {}
             dict["projects"][project_name]["code"] = str(code).upper()
             dict["projects"][project_name]["addressing"] = dumpAddressing(addressing)
