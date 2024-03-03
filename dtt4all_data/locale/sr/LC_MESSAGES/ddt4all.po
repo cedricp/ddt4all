@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
@@ -334,6 +334,18 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "Adresa funkcije ECU"
+
+msgid "Identified ECU"
+msgstr ""
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -668,6 +680,12 @@ msgstr "Sacuvaj ECU (zadrzi '.json' ekstenziju)"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -773,8 +791,15 @@ msgstr "Ulazni"
 msgid "Output"
 msgstr "Izlazni"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "GRESKA - komanda nije podrzana"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "GRESKA - komanda nije podrzana"
 
 msgid "XML file not found : "
 msgstr "XML fajl nije pronadjen: "
@@ -815,8 +840,27 @@ msgstr "Zahtev dugmeta nije pronadjen: "
 msgid "Sending request :"
 msgstr "Slanje zahteva:"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "Adresa funkcije ECU"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Zahtev odbacen (pogledati parametre obelezene crvenom bojom): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Pogresno"
@@ -826,6 +870,9 @@ msgstr ""
 
 msgid "Cannot call request "
 msgstr "Nije moguce pozvati zahtev "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "Brisanje DTC informacija"
@@ -838,6 +885,19 @@ msgstr "<center>Ovim brisete dijagnosticke kodove gresaka<\\center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Da li ste sigurni da to zelite?</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Brisanje DTC informacija"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "Nema zahteva za brisanje DTC za taj ECU, poslace uobicajen 14FF00"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Pogresan odziv za CitanjeDTC komandu"
@@ -1151,9 +1211,6 @@ msgstr ""
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Promeni brzinu (baud rate) na:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "GRESKA - komanda nije podrzana"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr "GRESKA - brzina (rate) nije podrzan. Vratite se nazad."

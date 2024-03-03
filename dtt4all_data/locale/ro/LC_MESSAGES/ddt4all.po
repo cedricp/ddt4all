@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:29+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:47+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -332,6 +332,20 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "ECU Adresa functiei"
+
+#, fuzzy
+#| msgid "Identify ECU"
+msgid "Identified ECU"
+msgstr "Identificati ECU"
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -668,6 +682,12 @@ msgstr "Salvati ECU (pastrati extensia \".json\")"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Salvati vehiculul (pastrati extensia '.ecu')"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -769,8 +789,15 @@ msgstr "Intrare"
 msgid "Output"
 msgstr "Iesire"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "EROARE - comanda nu este acceptata"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "EROARE - comanda nu este acceptata"
 
 msgid "XML file not found : "
 msgstr "Fisierul XML nu a fost gasit : "
@@ -811,8 +838,27 @@ msgstr "Cerere de buton nu a fost gasita : "
 msgid "Sending request :"
 msgstr "Trimite solicitare :"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "ECU Adresa functiei"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Solicitare anulata (consultati intrarile cu parametri rosii): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Invalid"
@@ -822,6 +868,9 @@ msgstr "ECU utilizeaza SDS "
 
 msgid "Cannot call request "
 msgstr "Nu se poate apela cererea "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "Stergerea informatiilor DTC"
@@ -836,6 +885,21 @@ msgstr "<Center>Esti pe cale sa stergi codurile de diagnosticare</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Sunteti sigur ca asta doriti.</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Stergerea informatiilor DTC"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr ""
+"Nici o solicitare de stergere DTC pentru acest ECU, se va trimite 14FF00 "
+"implicit"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Raspuns nevalid pentru comanda de citire DTC"
@@ -1188,9 +1252,6 @@ msgstr "CALCULATOR CRC"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Schimbarea ratei de transfer la:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "EROARE - comanda nu este acceptata"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr "EROARE - rata nu este acceptata. Hai sa ne intoarcem."

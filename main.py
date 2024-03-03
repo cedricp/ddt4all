@@ -986,7 +986,7 @@ class Main_widget(widgets.QMainWindow):
                 self.paramview.updateDisplays(True)
         else:
             if self.paramview:
-                self.logview.append("Recorded " + str(self.paramview.get_record_size()) + " entries")
+                self.logview.append(_("Recorded ") + str(self.paramview.get_record_size()) + _(" entries"))
 
     def refreshParams(self):
         if self.paramview:

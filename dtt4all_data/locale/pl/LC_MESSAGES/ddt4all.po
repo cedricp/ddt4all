@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:29+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:46+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -330,6 +330,18 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "Adres funkcji ECU"
+
+msgid "Identified ECU"
+msgstr ""
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -664,6 +676,12 @@ msgstr "Zapisz ECU (Zapisz rozszerzenie '.json')"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Zapisz pojazd (zapisz rozszerzenie'.ecu')"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -769,8 +787,15 @@ msgstr "Wejscie"
 msgid "Output"
 msgstr "Wyjscie"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "Blad - polecenie nie przyjete"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "Blad - polecenie nie przyjete"
 
 msgid "XML file not found : "
 msgstr "Nieobecny plik XML : "
@@ -811,8 +836,27 @@ msgstr "Przycisk polecenia nieobecny : "
 msgid "Sending request :"
 msgstr "Wysli polecenie :"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "Adres funkcji ECU"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Polecenie przerwane (zobacz na parametry-czerwone wpisy): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Niewazne"
@@ -822,6 +866,9 @@ msgstr ""
 
 msgid "Cannot call request "
 msgstr "Nie mozna zglosic zadania "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "Wyczysc informacje DTC"
@@ -836,6 +883,21 @@ msgstr "<center>Chcesz usunac kody bledow diagnostycznych</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Jestes pewny czego chcesz.</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Wyczysc informacje DTC"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr ""
+"Brak wyrazniego Zadania DTC dla ECU spowoduje wyslanie domyslnego numeru "
+"14FF00"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Nieprawidlowa odpowiedz dla komendy DTC"
@@ -1149,9 +1211,6 @@ msgstr ""
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Zmiana predkosci:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "Blad - polecenie nie przyjete"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr "Blad Predkosc nie obslugiwana. Wroc do tylu."

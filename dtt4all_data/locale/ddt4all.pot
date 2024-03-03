@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -311,6 +311,18 @@ msgid "is not mapped"
 msgstr ""
 
 msgid "Scanning address: "
+msgstr ""
+
+msgid "Identified ECU"
+msgstr ""
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
 msgstr ""
 
 msgid "Writing vehicles database..."
@@ -628,6 +640,12 @@ msgstr ""
 msgid "Save record (keep '.txt' extension)"
 msgstr ""
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
 msgstr ""
 
@@ -725,7 +743,10 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
-msgid "Protocol not supported : "
+msgid "Protocol not supported"
+msgstr ""
+
+msgid "Protocol not supported: "
 msgstr ""
 
 msgid "XML file not found : "
@@ -767,7 +788,24 @@ msgstr ""
 msgid "Sending request :"
 msgstr ""
 
+msgid "Unknown request "
+msgstr ""
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
+msgstr ""
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
 msgstr ""
 
 msgid "Invalid"
@@ -777,6 +815,9 @@ msgid "ECU uses SDS "
 msgstr ""
 
 msgid "Cannot call request "
+msgstr ""
+
+msgid "Update time"
 msgstr ""
 
 msgid "Clearing DTC information"
@@ -789,6 +830,15 @@ msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr ""
 
 msgid "<center>Ae you sure this is what you want.</center>"
+msgstr ""
+
+msgid "Clear DTC failed"
+msgstr ""
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+msgid "No ReadDTC request for that ECU"
 msgstr ""
 
 msgid "Invalid response for ReadDTC command"

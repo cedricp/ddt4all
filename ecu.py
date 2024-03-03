@@ -1687,7 +1687,7 @@ class Ecu_scanner:
                     label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Identified ECU [%s]@%s : %s DIAGVERSION [%s]" \
+                line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
                        "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
                        % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
 
@@ -1731,14 +1731,14 @@ class Ecu_scanner:
                 if label is not None:
                     label.setText("Found %i ecu" % self.num_ecu_found)
 
-                line = "<font color='red'>Found ECU [%s] (not perfect match) :" \
+                line = "<font color='red'>" + _("Found ECU") + " [%s] " + _("(not perfect match)") + " :" \
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
                        % (ecu_type, kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
                 options.main_window.logview.append(line)
 
         if not found_exact and not found_approximate:
-            line = "<font color='red'>Found ECU [%s] (no relevant ECU file found) :" \
+            line = "<font color='red'>" + _("Found ECU") + " [%s] " + _("(no relevant ECU file found)") + " :" \
                    "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
                    % (ecu_type, diagversion, supplier, soft, version)
 

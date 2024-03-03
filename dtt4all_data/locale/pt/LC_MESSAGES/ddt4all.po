@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:29+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:46+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -333,6 +333,20 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "Endereço da função ECU"
+
+#, fuzzy
+#| msgid "Identify ECU"
+msgid "Identified ECU"
+msgstr "Identificar ECU"
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -673,6 +687,12 @@ msgstr "Salvar ECU (manter extensão '.json')"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Salvar registro (manter a extensão '.txt')"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -780,8 +800,15 @@ msgstr "Entrada"
 msgid "Output"
 msgstr "Saída"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "ERRO - comando não suportado"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "ERRO - comando não suportado"
 
 msgid "XML file not found : "
 msgstr "Fichero XML não encontrado: "
@@ -822,8 +849,27 @@ msgstr "Butão pedido não encontrado: "
 msgid "Sending request :"
 msgstr "Enviando pedido:"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "Endereço da função ECU"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Pedido abortado (ver entradas de parametros em vermelho): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Inválido"
@@ -833,6 +879,9 @@ msgstr "ECU usa SDS "
 
 msgid "Cannot call request "
 msgstr "Não se pode realizar pedido de chamada "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "Apagando informação DTC"
@@ -845,6 +894,19 @@ msgstr "<center>Está prestes a apagar os erros DTC<center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Tem a certeza que é isso que quer?</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Apagando informação DTC"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "Não há pedidos ClearDTC para esta ECU, se enviará por defeito 14FF00"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Resposta não válida para o comando ReadDTC"
@@ -1167,9 +1229,6 @@ msgstr "CRC CALCULATOR"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Trocando bauds a:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "ERRO - comando não suportado"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr "ERROR: racio não suportado, voltando atrás."

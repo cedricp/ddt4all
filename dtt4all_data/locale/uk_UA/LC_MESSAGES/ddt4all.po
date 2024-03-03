@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:30+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:48+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -335,6 +335,20 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "ECU Function address"
+
+#, fuzzy
+#| msgid "Identify ECU"
+msgid "Identified ECU"
+msgstr "Ідентифікація ЕБУ"
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -667,6 +681,12 @@ msgstr "Зберегти ЕБУ (формат .json)"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Зберегти список моїх ЕБУ (.ecu)"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -772,8 +792,15 @@ msgstr "Поле вводу"
 msgid "Output"
 msgstr "Поле виводу"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "ПОМИЛКА - команда не підтримується"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "ПОМИЛКА - команда не підтримується"
 
 msgid "XML file not found : "
 msgstr "XML файл не знайдено : "
@@ -814,8 +841,27 @@ msgstr "Немає параметрів для кнопки : "
 msgid "Sending request :"
 msgstr "Відпрака запиту :"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "ECU Function address"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Запит перервано (перевірта чевоні значення): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Invalid"
@@ -824,6 +870,9 @@ msgid "ECU uses SDS "
 msgstr ""
 
 msgid "Cannot call request "
+msgstr ""
+
+msgid "Update time"
 msgstr ""
 
 msgid "Clearing DTC information"
@@ -837,6 +886,19 @@ msgstr "<center>Зараз будуть витерті діагностичні 
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Впевнені?</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Скидання помилок DTC"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "У ЕБУ немає запиту ClearDTC, посилаю стандартний 14FF00"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Неправильна відповідь на команду читання DTC"
@@ -1150,9 +1212,6 @@ msgstr ""
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Зміна швидкості порта на:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "ПОМИЛКА - команда не підтримується"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr "ПОМИЛКА - Швидкість не підтримується. Повертаємось."

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:29+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:47+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -333,6 +333,18 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "ECU Function address"
+
+msgid "Identified ECU"
+msgstr ""
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -665,6 +677,12 @@ msgstr "Создание нового ЭБУ (.json)"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Сохранить список моих ЭБУ (.ecu)"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -770,8 +788,15 @@ msgstr "Поле ввода"
 msgid "Output"
 msgstr "Поле вывода"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "ОШИБКА - команда не поддерживается"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "ОШИБКА - команда не поддерживается"
 
 msgid "XML file not found : "
 msgstr "XML файл не найден : "
@@ -812,8 +837,27 @@ msgstr "Нет параметров для кнопки : "
 msgid "Sending request :"
 msgstr "Отправка запроса :"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "ECU Function address"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Запрос прерван (проверьте красные записи): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Не считано"
@@ -823,6 +867,9 @@ msgstr ""
 
 msgid "Cannot call request "
 msgstr "Не могу сформировать запрос "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "Сброс ошибок DTC"
@@ -835,6 +882,19 @@ msgstr "<center>Ошибки DTC сейчас будут стерты</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Вы уверены?</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Сброс ошибок DTC"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "У ЭБУ нет запроса ClearDTC, буду посылать стандартный 14FF00"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Неверный отклик на команду чтения ошибок"
@@ -1148,9 +1208,6 @@ msgstr ""
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Изменение скорости порта на:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "ОШИБКА - команда не поддерживается"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr ""

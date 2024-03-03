@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:30+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:48+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -334,6 +334,20 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "ECU İşlev adresi"
+
+#, fuzzy
+#| msgid "Identify ECU"
+msgid "Identified ECU"
+msgstr "ECU tanımla"
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -668,6 +682,12 @@ msgstr "ECU'yu kaydet ('.json' uzantısını koru)"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Kaydı kaydet ('.txt' uzantısını koru)"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -773,7 +793,10 @@ msgstr "Giriş"
 msgid "Output"
 msgstr "Çıkış"
 
-msgid "Protocol not supported : "
+msgid "Protocol not supported"
+msgstr ""
+
+msgid "Protocol not supported: "
 msgstr ""
 
 msgid "XML file not found : "
@@ -815,8 +838,27 @@ msgstr "Buton isteği bulunamadı: "
 msgid "Sending request :"
 msgstr "Gönderilen istek :"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "ECU İşlev adresi"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "İstek iptal edildi (kırmızı parametre girişlerine bakın): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Geçersiz"
@@ -826,6 +868,9 @@ msgstr "ECU, SDS kullanır "
 
 msgid "Cannot call request "
 msgstr "İstek aranamıyor "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "DTC bilgilerini temizleniyor"
@@ -838,6 +883,19 @@ msgstr "<center>Tanılama arıza kodlarını temizlemek üzeresiniz</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>İstediğinizin bu olduğundan emin misiniz.</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "DTC bilgilerini temizleniyor"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "Bu ECU için Net DTC talebi yok, varsayılan olarak 14FF00 gönderecek"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "DTC Oku komutu için geçersiz yanıt"

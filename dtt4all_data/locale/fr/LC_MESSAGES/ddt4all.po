@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:27+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:43+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -321,6 +321,18 @@ msgstr "n'est pas cartographié"
 
 msgid "Scanning address: "
 msgstr "Adresse de numérisation: "
+
+msgid "Identified ECU"
+msgstr "ECU identifié"
+
+msgid "Found ECU"
+msgstr "ECU trouvé"
+
+msgid "(not perfect match)"
+msgstr "(pas de correspondance parfaite)"
+
+msgid "(no relevant ECU file found)"
+msgstr "(aucun fichier ECU pertinent trouvé)"
 
 msgid "Writing vehicles database..."
 msgstr "Écriture d'une base de données de véhicules..."
@@ -638,6 +650,12 @@ msgstr "Sauvegarde ECU (Gardez l'extension '.json')"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Enregistrer l'enregistrement (conserver l'extension '.txt')"
 
+msgid "Recorded "
+msgstr "Enregistré "
+
+msgid " entries"
+msgstr " entrées"
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -745,8 +763,11 @@ msgstr "Entrée"
 msgid "Output"
 msgstr "Sortie"
 
-msgid "Protocol not supported : "
-msgstr "Protocole non supporté : "
+msgid "Protocol not supported"
+msgstr "Protocole non pris en charge"
+
+msgid "Protocol not supported: "
+msgstr "Protocole non supporté: "
 
 msgid "XML file not found : "
 msgstr "Fichier XML non trouvé : "
@@ -787,8 +808,27 @@ msgstr "Requête bouton non trouvée : "
 msgid "Sending request :"
 msgstr "Envoie requête :"
 
+msgid "Unknown request "
+msgstr "Demande inconnue "
+
+msgid "Command aborted "
+msgstr "Commande abandonnée "
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Requête abandonée (verifiez les paramètres en rouges): "
+
+msgid "Delay"
+msgstr "Retard"
+
+msgid "For your safety"
+msgstr "Pour votre sécurité"
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
+"<center>COMMANDE BLOQUÉE</center>\n"
+"Activez le mode expert pour débloquer"
 
 msgid "Invalid"
 msgstr "Invalide"
@@ -798,6 +838,9 @@ msgstr "UCE utilise diagnostic session "
 
 msgid "Cannot call request "
 msgstr "Appel requête impossible "
+
+msgid "Update time"
+msgstr "Temps de mise à jour"
 
 msgid "Clearing DTC information"
 msgstr "Effacement information DTC"
@@ -810,6 +853,15 @@ msgstr "<center>Vous êtes sur le point d'effacer les DTC<center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Etes vous sur que c'est ce que vous voulez.</center>"
+
+msgid "Clear DTC failed"
+msgstr "Échec de la suppression du DTC"
+
+msgid "Clear DTC successfully done"
+msgstr "Effacer le DTC effectué avec succès"
+
+msgid "No ReadDTC request for that ECU"
+msgstr "Aucune demande ReadDTC pour cet ECU"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Réponse invalide de la requête ReadDTC"
@@ -1146,6 +1198,11 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
+
+#, fuzzy
+#~| msgid "<font color='red'>EPS coded</font>"
+#~ msgid "<font color='red'>Protocol not supported</font>"
+#~ msgstr "<font color='red'>DAE codée</font>"
 
 #~ msgid "About Dtt4All"
 #~ msgstr "Web Wiki"

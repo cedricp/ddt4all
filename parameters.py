@@ -721,7 +721,7 @@ class paramWidget(widgets.QWidget):
     def initELM(self):
         connection_status = self.ecurequestsparser.connect_to_hardware(self.canline)
         if not connection_status:
-            self.logview.append("<font color='red'>Protocol not supported</font>")
+            self.logview.append("<font color='red'>" + _("Protocol not supported") + "</font>")
             return
 
         if self.main_protocol_status:
@@ -738,7 +738,7 @@ class paramWidget(widgets.QWidget):
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
-                print(_("Protocol not supported : ") + self.ecurequestsparser.ecu_protocol)
+                print(_("Protocol not supported: ") + self.ecurequestsparser.ecu_protocol)
 
     def initJSON(self):
         self.layoutdict = None
@@ -1123,8 +1123,8 @@ class paramWidget(widgets.QWidget):
 
             ecu_request = self.ecurequestsparser.get_request(request_name)
             if ecu_request is None:
-                self.logview.append("Unknown request " + request_name)
-                self.logview.append("Command aborted ")
+                self.logview.append(_("Unknown request ") + request_name)
+                self.logview.append(_("Command aborted "))
 
             sendbytes_data_items = ecu_request.sendbyte_dataitems
             rcvbytes_data_items = ecu_request.dataitems
@@ -1176,7 +1176,7 @@ class paramWidget(widgets.QWidget):
 
             # Manage delay
             blocked = False
-            self.logview.append("Delay %d ms" % request_delay)
+            self.logview.append(_("Delay") + " %d ms" % request_delay)
             time.sleep(request_delay / 1000.0)
             # Then show received values
             elm_response = self.sendElm(' '.join(elm_data_stream))
@@ -1184,8 +1184,8 @@ class paramWidget(widgets.QWidget):
                 msgbox = widgets.QMessageBox()
                 appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
-                msgbox.setWindowTitle("For your safety")
-                msgbox.setText("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock")
+                msgbox.setWindowTitle(_("For your safety"))
+                msgbox.setText(_("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock"))
                 msgbox.exec_()
                 blocked = True
 
@@ -1329,7 +1329,8 @@ class paramWidget(widgets.QWidget):
 
         elapsed_time = time.time() - start_time
         if self.infobox:
-            self.infobox.setText('Update time {:.3f} ms'.format(elapsed_time * 1000.0))
+            text = _("Update time")
+            self.infobox.setText(f'{text} {elapsed_time * 1000.0:.3f} ms')
         # Stop log
         self.updatelog = False
         if options.auto_refresh:
@@ -1456,9 +1457,9 @@ class paramWidget(widgets.QWidget):
             msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText("There was an error clearing DTC")
             msgbox.exec_()
-            options.main_window.logview.append("<font color=red>Clear DTC failed</font>")
+            options.main_window.logview.append("<font color=red>" + _("Clear DTC failed") + "</font>")
         else:
-            options.main_window.logview.append("<font color=green>Clear DTC successfully done</font>")
+            options.main_window.logview.append("<font color=green>" + _("Clear DTC successfully done") + "</font>")
 
     def readDTC(self):
         if not options.simulation_mode:
@@ -1472,7 +1473,7 @@ class paramWidget(widgets.QWidget):
         elif "ReadDTC" in self.ecurequestsparser.requests:
             request = self.ecurequestsparser.requests["ReadDTC"]
         else:
-            self.logview.append("No ReadDTC request for that ECU")
+            self.logview.append(_("No ReadDTC request for that ECU"))
             return
 
         shiftbytecount = request.shiftbytescount

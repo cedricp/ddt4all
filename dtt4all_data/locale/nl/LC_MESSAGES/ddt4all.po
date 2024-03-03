@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:25+0100\n"
-"PO-Revision-Date: 2024-03-03 21:28+0100\n"
+"POT-Creation-Date: 2024-03-03 22:38+0100\n"
+"PO-Revision-Date: 2024-03-03 22:46+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -334,6 +334,18 @@ msgstr ""
 #| msgid "ECU Function address"
 msgid "Scanning address: "
 msgstr "ECU Functie Adres"
+
+msgid "Identified ECU"
+msgstr ""
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
 
 msgid "Writing vehicles database..."
 msgstr ""
@@ -668,6 +680,12 @@ msgstr "ECU opslaan (bewaar '.json extensie)"
 msgid "Save record (keep '.txt' extension)"
 msgstr "Voertuig opslaan (bewaar '.ecu' extensie)"
 
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
@@ -773,8 +791,15 @@ msgstr "Ingang"
 msgid "Output"
 msgstr "Uitgang"
 
-msgid "Protocol not supported : "
-msgstr ""
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "Fout - commando niet ondersteund"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "Fout - commando niet ondersteund"
 
 msgid "XML file not found : "
 msgstr "XML bestand niet gevonden: "
@@ -815,8 +840,27 @@ msgstr "Knop aanvraag niet gevonden: "
 msgid "Sending request :"
 msgstr "Aanvraag verzenden:"
 
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "ECU Functie Adres"
+
+msgid "Command aborted "
+msgstr ""
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Aanvraag afgebroken (bekijk rood gemarkeerde parameter waarden): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
 
 msgid "Invalid"
 msgstr "Ongeldig"
@@ -826,6 +870,9 @@ msgstr ""
 
 msgid "Cannot call request "
 msgstr "Kan aanvraag niet uitvoeren "
+
+msgid "Update time"
+msgstr ""
 
 msgid "Clearing DTC information"
 msgstr "DTC informatie opschonen"
@@ -840,6 +887,19 @@ msgstr ""
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Weet je zeker dat dit is wat je wilt?</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "DTC informatie opschonen"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "Geen ClearDTC voor die ECU, standaard 14FF00 wordt verstuurd"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Ongeldig antwoord voor ReadDTC commando"
@@ -1153,9 +1213,6 @@ msgstr ""
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Wissel baudrate naar:"
-
-#~ msgid "ERROR - command not supported"
-#~ msgstr "Fout - commando niet ondersteund"
 
 #~ msgid "ERROR - rate not supported. Let's go back."
 #~ msgstr "Fout - baudrate wordt niet ondersteund, ga terug."
