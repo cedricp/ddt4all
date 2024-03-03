@@ -312,7 +312,7 @@ class Main_widget(widgets.QMainWindow):
         self.connectedstatus.setFixedWidth(100)
         self.protocolstatus.setFixedWidth(200)
         self.progressstatus.setFixedWidth(150)
-        self.infostatus.setFixedWidth(200)
+        self.infostatus.setFixedWidth(250)
 
         self.refreshtimebox = widgets.QSpinBox()
         self.refreshtimebox.setRange(5, 2000)
