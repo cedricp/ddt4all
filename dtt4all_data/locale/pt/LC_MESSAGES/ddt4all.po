@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-03 22:38+0100\n"
-"PO-Revision-Date: 2024-03-03 22:46+0100\n"
+"PO-Revision-Date: 2024-03-03 23:39+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -263,7 +263,7 @@ msgid "Cannot find data "
 msgstr "Não é possível encontrar dados "
 
 msgid " vs "
-msgstr ""
+msgstr " contra "
 
 msgid "Cannot draw input "
 msgstr "Não se pode realizar pedido de chamada "
@@ -272,108 +272,88 @@ msgid "No Value"
 msgstr "Não tem valor"
 
 msgid "Generated stream "
-msgstr ""
+msgstr "Fluxo gerado "
 
-#, fuzzy
-#| msgid "Send request bytes (HEX)"
 msgid "Send request stream "
-msgstr "Enviar bytes ecrã (HEX)"
+msgstr "Enviar fluxo de solicitação "
 
-#, fuzzy
-#| msgid "Receive bytes"
 msgid "Received stream "
-msgstr "Bytes recebidos"
+msgstr "Transmissão recebida "
 
 msgid "Request ECU Error"
-msgstr ""
+msgstr "Solicitar erro de ECU"
 
 msgid "Decoded values"
-msgstr ""
+msgstr "Valores decodificados"
 
 msgid "Warning, cannot get signed value for"
-msgstr ""
+msgstr "Aviso, não é possível obter o valor assinado para"
 
 msgid "Division by zero, please check data item: "
-msgstr ""
+msgstr "Divisão por zero, verifique o item de dados: "
 
 msgid "getHexValue >> abnormal remaining bytes "
-msgstr ""
+msgstr "getHexValue >> bytes restantes anormais "
 
-#, fuzzy
-#| msgid "Cannot find data "
 msgid "Cannot find file "
-msgstr "Não é possível encontrar dados "
+msgstr "Não é possível encontrar o arquivo "
 
 msgid "Cannot load ECU file"
-msgstr ""
+msgstr "Não é possível carregar o arquivo ECU"
 
-#, fuzzy
-#| msgid "XML file not found : "
 msgid "XML not found"
-msgstr "Fichero XML não encontrado: "
+msgstr "XML não encontrado"
 
 msgid "Cannot retrieve functionnal address of ECU"
-msgstr ""
+msgstr "Não é possível recuperar o endereço funcional da ECU"
 
 msgid "Adding group "
-msgstr ""
+msgstr "Adicionando grupo "
 
 msgid "Unable to find eculist"
-msgstr ""
+msgstr "Não foi possível encontrar o eculista"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Warning, address"
-msgstr "Endereço da função ECU"
+msgstr "Aviso, endereço"
 
 msgid "is not mapped"
-msgstr ""
+msgstr "não está mapeado"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Scanning address: "
-msgstr "Endereço da função ECU"
+msgstr "Endereço de digitalização: "
 
-#, fuzzy
-#| msgid "Identify ECU"
 msgid "Identified ECU"
-msgstr "Identificar ECU"
+msgstr "ECU identificada"
 
 msgid "Found ECU"
-msgstr ""
+msgstr "ECU encontrada"
 
 msgid "(not perfect match)"
-msgstr ""
+msgstr "(não combinação perfeita)"
 
 msgid "(no relevant ECU file found)"
-msgstr ""
+msgstr "(nenhum arquivo ECU relevante encontrado)"
 
 msgid "Writing vehicles database..."
-msgstr ""
+msgstr "Escrevendo banco de dados de veículos..."
 
 msgid "Starting zipping "
-msgstr ""
+msgstr "Começando a compactar "
 
-#, fuzzy
-#| msgid "Error:"
 msgid "Error: "
-msgstr "Erro:"
+msgstr "Erro: "
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM não conetado ou porta COM errado"
 
-#, fuzzy
-#| msgid "Port speed"
 msgid "Port closed"
-msgstr "Velocidade da porta"
+msgstr "Porta fechada"
 
 msgid "Connection to ELM was lost"
 msgstr "Coneção ELM perdida"
 
-#, fuzzy
-#| msgid "Cannot reconnect..."
 msgid "Cannot decode bytes "
-msgstr "Não é possível reconectar..."
+msgstr "Não é possível decodificar bytes "
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT Tempo esgotado"
@@ -394,51 +374,44 @@ msgid "No ELM interface on port"
 msgstr "No há interface ELM neste porta"
 
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr ""
+msgstr "Conexão OBDLink OK, tentando switch UART de velocidade total"
 
 msgid "Failed to switch to change OBDLink to "
-msgstr ""
+msgstr "Falha ao mudar para alterar OBDLink para "
 
 msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr ""
+msgstr "Conexão ELM OK, tentando comutação UART de alta velocidade"
 
 msgid "Failed to switch to change ELM to "
-msgstr ""
+msgstr "Falha ao mudar para alterar o ELM para "
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
-msgstr ""
+msgstr "OBDLINK mudou baurate OK, mudando a velocidade do UART agora..."
 
 msgid "OBDLink full speed connection OK"
-msgstr ""
+msgstr "Conexão OBDLink de velocidade total OK"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "OBDLink Version "
-msgstr "Versão diagnóstico"
+msgstr "Versão OBDLink "
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr ""
+"Taxa de transmissão do ELM ativada, alterando a velocidade do UART agora..."
 
 msgid "ELM full speed connection OK "
-msgstr ""
+msgstr "Conexão ELM de velocidade total OK "
 
-#, fuzzy
-#| msgid "Version"
 msgid "Version "
-msgstr "Versão"
+msgstr "Versão "
 
-#, fuzzy
-#| msgid "ERROR - wifi do not support changing baud rate"
 msgid "Your ELM does not support baudrate "
-msgstr "ERRO - WIFI não suporta racio de bauds"
+msgstr "O seu WIFI não suporta racio de bauds "
 
 msgid "ELM reset..."
-msgstr ""
+msgstr "Reinicialização do ELM..."
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Unknown address: "
-msgstr "Endereço da função ECU"
+msgstr "Endereço desconhecido: "
 
 msgid "FAIL"
 msgstr "FALHA"
@@ -462,7 +435,7 @@ msgid "ELM Max version:"
 msgstr "Versão ELM máxima:"
 
 msgid "dtt4all_data/projects.json not found or not ok."
-msgstr ""
+msgstr "dtt4all_data/projects.json não encontrado ou não está ok."
 
 msgid "ECU name"
 msgstr "ECU"
@@ -598,16 +571,14 @@ msgstr "Renomear"
 msgid "Plugins"
 msgstr "Plug-ins"
 
-#, fuzzy
-#| msgid "Cannot draw input "
 msgid "Cannot load plugin "
-msgstr "Não se pode realizar pedido de chamada "
+msgstr "Não é possível carregar o plugin "
 
 msgid "Help"
 msgstr "Ajuda"
 
 msgid "Web Wiki"
-msgstr ""
+msgstr "WebWiki"
 
 msgid "About Developers"
 msgstr "Sobre desenvolvedores"
@@ -616,31 +587,25 @@ msgid "Get Git update"
 msgstr "Obtenha atualização do Git"
 
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
-#, fuzzy
-#| msgid "About Dtt4All"
 msgid "About DTT4ALL"
-msgstr "Sobre Dtt4All"
+msgstr "Sobre DTT4ALL"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "DTT4ALL version:"
-msgstr "Versão diagnóstico"
+msgstr "Versão DTT4ALL:"
 
 msgid "Created by:"
-msgstr ""
+msgstr "Criado por:"
 
 msgid "Contributors:"
-msgstr ""
+msgstr "Contribuidores:"
 
 msgid "Save database (keep '.zip' extension)"
 msgstr "Salvar banco de dados (manter a extensão '.zip')"
 
-#, fuzzy
-#| msgid "Zipping XML database... (this can take a few minutes"
 msgid "Zipping XML database... (this can take a few minutes)"
-msgstr "Compactando o banco de dados XML... (isso pode levar alguns minutos"
+msgstr "Compactando o banco de dados XML... (isso pode levar alguns minutos)"
 
 msgid "Zip job finished"
 msgstr "Trabalho zip concluído"
@@ -688,10 +653,10 @@ msgid "Save record (keep '.txt' extension)"
 msgstr "Salvar registro (manter a extensão '.txt')"
 
 msgid "Recorded "
-msgstr ""
+msgstr "Gravado "
 
 msgid " entries"
-msgstr ""
+msgstr " entradas"
 
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
@@ -717,7 +682,7 @@ msgid "ELM port selection"
 msgstr "Seleção da porta ELM"
 
 msgid "Interface language (need save and close)"
-msgstr ""
+msgstr "Idioma da interface (é necessário salvar e fechar)"
 
 msgid "Port speed"
 msgstr "Velocidade da porta"
@@ -731,10 +696,8 @@ msgstr "Modo Editor"
 msgid "ELM benchmark"
 msgstr "Testar ELM"
 
-#, fuzzy
-#| msgid "Save last record"
 msgid "Save and close"
-msgstr "Salvar último registro"
+msgstr "Salvar e fechar"
 
 msgid "WiFi port : "
 msgstr "Porta WIFI: "
@@ -768,7 +731,7 @@ msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Erro, Interface OBDLink-SX ou ELM não detetado "
 
 msgid "Err, cannot rename "
-msgstr ""
+msgstr "Erro, não é possível renomear "
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Para editar este ecrã, primero deve exportar-se em formato .JSON"
@@ -800,15 +763,11 @@ msgstr "Entrada"
 msgid "Output"
 msgstr "Saída"
 
-#, fuzzy
-#| msgid "ERROR - command not supported"
 msgid "Protocol not supported"
-msgstr "ERRO - comando não suportado"
+msgstr "Protocolo não suportado"
 
-#, fuzzy
-#| msgid "ERROR - command not supported"
 msgid "Protocol not supported: "
-msgstr "ERRO - comando não suportado"
+msgstr "Protocolo não suportado: "
 
 msgid "XML file not found : "
 msgstr "Fichero XML não encontrado: "
@@ -849,27 +808,27 @@ msgstr "Butão pedido não encontrado: "
 msgid "Sending request :"
 msgstr "Enviando pedido:"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Unknown request "
-msgstr "Endereço da função ECU"
+msgstr "Solicitação desconhecida "
 
 msgid "Command aborted "
-msgstr ""
+msgstr "Comando abortado "
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Pedido abortado (ver entradas de parametros em vermelho): "
 
 msgid "Delay"
-msgstr ""
+msgstr "Atraso"
 
 msgid "For your safety"
-msgstr ""
+msgstr "Para sua segurança"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
 "Activate expert mode to unlock"
 msgstr ""
+"<center>COMANDO BLOQUEADO</center>\n"
+"Ative o modo especialista para desbloquear"
 
 msgid "Invalid"
 msgstr "Inválido"
@@ -881,7 +840,7 @@ msgid "Cannot call request "
 msgstr "Não se pode realizar pedido de chamada "
 
 msgid "Update time"
-msgstr ""
+msgstr "Tempo de atualização"
 
 msgid "Clearing DTC information"
 msgstr "Apagando informação DTC"
@@ -895,18 +854,14 @@ msgstr "<center>Está prestes a apagar os erros DTC<center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Tem a certeza que é isso que quer?</center>"
 
-#, fuzzy
-#| msgid "Clearing DTC information"
 msgid "Clear DTC failed"
-msgstr "Apagando informação DTC"
+msgstr "Falha ao limpar DTC"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "Limpar DTC concluído com sucesso"
 
-#, fuzzy
-#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgid "No ReadDTC request for that ECU"
-msgstr "Não há pedidos ClearDTC para esta ECU, se enviará por defeito 14FF00"
+msgstr "Nenhuma solicitação ReadDTC para essa ECU"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Resposta não válida para o comando ReadDTC"
@@ -926,55 +881,47 @@ msgstr "Códigos de erros ECU"
 msgid "Parsing screen "
 msgstr "Analizando ecrã "
 
-#, fuzzy
-#| msgid "Button request not found : "
 msgid "found request in input "
-msgstr "Butão pedido não encontrado: "
+msgstr "solicitação encontrada na entrada "
 
-#, fuzzy
-#| msgid "Found similar"
 msgid "found in display "
-msgstr "Encontrado semelhante"
+msgstr "encontrado em exibição "
 
-#, fuzzy
-#| msgid "Add button"
 msgid "found in button "
-msgstr "Adicionar botão"
+msgstr "encontrado no botão "
 
 msgid "found in presend "
-msgstr ""
+msgstr "encontrado no presend "
 
 msgid "found data in input "
-msgstr ""
+msgstr "dados encontrados na entrada "
 
 msgid "found data in display "
-msgstr ""
+msgstr "dados encontrados no display "
 
 msgid "Cannot zip database, no 'ecus' directory"
-msgstr ""
+msgstr "Não é possível compactar o banco de dados, não há diretório 'ecus'"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "Starting conversion"
-msgstr "Versão diagnóstico"
+msgstr "Iniciando conversão"
 
 msgid "Starting processing "
-msgstr ""
+msgstr "Iniciando processamento "
 
 msgid " to "
-msgstr ""
+msgstr " a "
 
 msgid "Skipping current file (cannot parse it)"
-msgstr ""
+msgstr "Ignorando o arquivo atual (não é possível analisá-lo)"
 
 msgid "Opening ECU Database..."
-msgstr ""
+msgstr "Abrindo banco de dados ECU..."
 
 msgid "parts as: "
-msgstr ""
+msgstr "peças como: "
 
 msgid " please review dumpVehicles def."
-msgstr ""
+msgstr " por favor revise dumpVehicles def."
 
 msgid "Values"
 msgstr "Valores"
@@ -982,18 +929,14 @@ msgstr "Valores"
 msgid "Waiting..."
 msgstr "Esperando..."
 
-#, fuzzy
-#| msgid "Frame hex error : "
 msgid "Frame length error: "
-msgstr "Erro hexadecimal de quadro: "
+msgstr "Erro no comprimento do quadro: "
 
-#, fuzzy
-#| msgid "Frame hex error : "
 msgid "Frame hex error: "
 msgstr "Erro hexadecimal de quadro: "
 
 msgid "Found USB adapter:"
-msgstr ""
+msgstr "Adaptador USB encontrado:"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Reinicialização do AIRBAG AB90"
@@ -1006,6 +949,9 @@ msgid ""
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
 msgstr ""
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ "
+"DESBLOQUEAR DADOS DE CRASH DO AIRBAG<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
 
 msgid "Check ACU Virgin"
 msgstr "Verifique ACU Virgem"
@@ -1017,133 +963,139 @@ msgid "Virginize ACU"
 msgstr "Virginizar ACU"
 
 msgid "Cannot connect to ECU"
-msgstr ""
+msgstr "Não é possível conectar à ECU"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='orange'>RESPOSTA INESPERADA</font>"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='red'>CRASH DETECTADO</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='green'>NENHUM CRASH DETECTADO</font>"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr ""
+msgstr "<font color='green'>LIMPAR EXECUTADO</font>"
 
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr ""
+msgstr "<font color='red'>LIMPAR FALHA</font>"
 
 msgid "Megane/Scenic II card programming"
-msgstr ""
+msgstr "Programação de cartão Megane/Scenic II"
 
 msgid "Keys"
-msgstr ""
+msgstr "Chaves"
 
 msgid "ENTER AFTER SALE MODE"
-msgstr ""
+msgstr "ENTRE NO MODO PÓS-VENDA"
 
 msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
+"<font color='red'>PROGRAMAÇÃO DO CARTÃO MEGANE II<br>EXPERIMENTAL: AINDA NÃO "
+"TESTADO</font>"
 
 msgid "LEARN"
-msgstr ""
+msgstr "APRENDER"
 
 msgid "VALIDATE"
-msgstr ""
+msgstr "VALIDAR"
 
 msgid "Algo 2"
-msgstr ""
+msgstr "Algo 2"
 
 msgid "ISK"
-msgstr ""
+msgstr "ISK"
 
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 msgid "Num key learnt"
-msgstr ""
+msgstr "Tecla numérica aprendida"
 
 msgid "CARD IDE"
-msgstr ""
+msgstr "IDE DO CARTÃO"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
+msgstr "Não é possível obter ISK, verificar conexões e compatibilidade com UCH"
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
-msgstr ""
+msgstr "<font color='red'>CÓDIGO PIN NÃO RECONHECIDO</font>"
 
 msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>CÓDIGO PIN OK / APRENDIZAGEM DE CHAVE</font>"
 
 msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>CÓDIGO PIN OK / UCH APRENDIZAGEM</font>"
 
 msgid "Modus/Clio III EPS Reset"
-msgstr ""
+msgstr "Modus/Clio III EPS Redefinir"
 
 msgid "EPS Tools"
-msgstr ""
+msgstr "Ferramentas EPS"
 
 msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ "
+"DADOS EPS IMMO<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "BLANK STATUS & VIN READ"
-msgstr ""
+msgstr "STATUS EM BRANCO E LEITURA DE VIN"
 
 msgid "Virginize EPS"
-msgstr ""
+msgstr "Virginizar EPS"
 
 msgid "VIN - READ"
-msgstr ""
+msgstr "VIN - LEITURA"
 
 msgid "VIN - WRITE"
-msgstr ""
+msgstr "VIN - ESCREVER"
 
 msgid "Write VIN"
-msgstr ""
+msgstr "Escrever VIN"
 
 msgid "<font color='red'>VIN - INVALID</font>"
-msgstr ""
+msgstr "<font color='red'>VIN - INVÁLIDO</font>"
 
 msgid "<font color='res'>VIN - BAD LENGTH</font>"
-msgstr ""
+msgstr "<font color='res'>VIN - COMPRIMENTO RUIM</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
-msgstr ""
+msgstr "<font color='orange'>VIN ESCRITA FALHA</font>"
 
 msgid "<font color='green'>VIN WRITE OK</font>"
-msgstr ""
+msgstr "<font color='green'>VIN ESCRITA OK</font>"
 
 msgid "<font color='green'>EPS virgin</font>"
-msgstr ""
+msgstr "<font color='green'>EPS virgem</font>"
 
 msgid "<font color='red'>EPS coded</font>"
-msgstr ""
+msgstr "<font color='red'>Codificado EPS</font>"
 
 msgid "Clio IV EPS Reset"
-msgstr ""
+msgstr "Reinicialização do Clio IV EPS"
 
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ DADOS EPS "
+"IMMO<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "Check EPS Virgin"
-msgstr ""
+msgstr "Verificação EPS Virgem"
 
 msgid "<font color='green'>EPS not operational</font>"
-msgstr ""
+msgstr "<font color='green'>EPS não operacional</font>"
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='red'>RESPOSTA INESPERADA</font>"
 
 msgid "Laguna II UCH Reset"
-msgstr ""
+msgstr "Laguna II UCH Reinicialização"
 
 msgid "UCH Tools"
 msgstr "Ferramentas UCH"
@@ -1152,42 +1104,51 @@ msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "Check UCH Virgin"
-msgstr ""
+msgstr "Verificação UCH Virgem"
 
 msgid "Virginize UCH"
-msgstr ""
+msgstr "Virginizar UCH"
 
 msgid "<font color='green'>UCH virgin</font>"
-msgstr ""
+msgstr "<font color='green'>UCH virgem</font>"
 
 msgid "<font color='red'>UCH coded</font>"
-msgstr ""
+msgstr "<font color='red'>Codificado UCH</font>"
 
 msgid "Laguna III UCH Reset"
-msgstr ""
+msgstr "Laguna III UCH Reinicialização"
 
 msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "Megane/Scenic II UCH Reset"
-msgstr ""
+msgstr "Reinicialização do Megane/Scenic II UCH"
 
 msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "Megane3 AIRBAG Reset"
-msgstr ""
+msgstr "Reinicialização do AIRBAG Megane 3"
 
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ "
+"DESBLOQUEAR DADOS DE CRASH DO AIRBAG<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
@@ -1197,6 +1158,9 @@ msgid ""
 "PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
 "MEANS</font>"
 msgstr ""
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>ESTE "
+"PLUGIN REINICIARÁ DADOS EPS IMMO<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III UCH Reset"
@@ -1205,6 +1169,8 @@ msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 AIRBAG Reset"
@@ -1214,6 +1180,9 @@ msgid ""
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ DESBLOQUEAR DADOS DE CRASH "
+"DO AIRBAG<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
 
 msgid "CRC calculator"
 msgstr "CRC calculator"
