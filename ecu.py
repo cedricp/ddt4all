@@ -1581,7 +1581,8 @@ class Ecu_scanner:
             #     print(_("Skipping CAN extended address (not supported yet) "), addr)
             #     continue
 
-            print(f"{_('Scanning address: ') + addr:<25} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
+            text = _("Scanning address: ")
+            print(f"{text + addr:<25} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)

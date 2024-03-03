@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:09+0100\n"
-"PO-Revision-Date: 2024-03-03 21:14+0100\n"
+"POT-Creation-Date: 2024-03-03 21:25+0100\n"
+"PO-Revision-Date: 2024-03-03 21:29+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -327,6 +327,11 @@ msgstr "ECU Adresa functiei"
 
 msgid "is not mapped"
 msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Scanning address: "
+msgstr "ECU Adresa functiei"
 
 msgid "Writing vehicles database..."
 msgstr ""

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 21:09+0100\n"
-"PO-Revision-Date: 2024-03-03 21:12+0100\n"
+"POT-Creation-Date: 2024-03-03 21:25+0100\n"
+"PO-Revision-Date: 2024-03-03 21:27+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -328,6 +328,11 @@ msgstr "ECU Funktionsadresse"
 
 msgid "is not mapped"
 msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Scanning address: "
+msgstr "ECU Funktionsadresse"
 
 msgid "Writing vehicles database..."
 msgstr ""
