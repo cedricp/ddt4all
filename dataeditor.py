@@ -1088,12 +1088,18 @@ class dataEditor(widgets.QWidget):
             for rcvname, rcvdi in request.dataitems.items():
                 if rcvname == dataname:
                     msgbox = widgets.QMessageBox()
+                    appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                    msgbox.setWindowIcon(appIcon)
+                    msgbox.setWindowTitle("DTT4ALL")
                     msgbox.setText(_("Data is used by request %s") % reqname)
                     msgbox.exec_()
                     return
             for sndname, snddi in request.sendbyte_dataitems.items():
                 if sndname == dataname:
                     msgbox = widgets.QMessageBox()
+                    appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                    msgbox.setWindowIcon(appIcon)
+                    msgbox.setWindowTitle("DTT4ALL")
                     msgbox.setText(_("Data is used by request %s") % reqname)
                     msgbox.exec_()
                     return

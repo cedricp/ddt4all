@@ -89,6 +89,9 @@ class ecuCommand(widgets.QDialog):
         text += "<center>Use it at your own risk</center>\n"
         text += "<center>and if you know exactely what you do</center>\n"
         msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle("DTT4ALL")
         msgbox.setText(text)
         msgbox.exec_()
 
@@ -108,6 +111,9 @@ class ecuCommand(widgets.QDialog):
             else:
                 if check:
                     msgbox = widgets.QMessageBox()
+                    appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                    msgbox.setWindowIcon(appIcon)
+                    msgbox.setWindowTitle("DTT4ALL")
                     msgbox.setText("Missing data in table")
                     msgbox.exec_()
                 return "Missing input data"
@@ -132,6 +138,9 @@ class ecuCommand(widgets.QDialog):
         reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
         if reveived_stream.startswith("WRONG"):
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText("ECU returned error (check logview)")
             msgbox.exec_()
             return
@@ -1100,6 +1109,9 @@ class paramWidget(widgets.QWidget):
             messages = self.button_messages[txt]
             for message in messages:
                 msgbox = widgets.QMessageBox()
+                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                msgbox.setWindowIcon(appIcon)
+                msgbox.setWindowTitle("DTT4ALL")
                 msgbox.setText(message)
                 msgbox.exec_()
 
@@ -1170,6 +1182,8 @@ class paramWidget(widgets.QWidget):
             elm_response = self.sendElm(' '.join(elm_data_stream))
             if elm_response == "BLOCKED":
                 msgbox = widgets.QMessageBox()
+                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle("For your safety")
                 msgbox.setText("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock")
                 msgbox.exec_()
@@ -1407,6 +1421,9 @@ class paramWidget(widgets.QWidget):
             request = "14FF00"
 
         msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle("DTT4ALL")
         msgbox.setText(_("<center>You are about to clear diagnostic troubles codes</center>") +
                        _("<center>Ae you sure this is what you want.</center>"))
 
@@ -1434,6 +1451,9 @@ class paramWidget(widgets.QWidget):
 
         if 'WRONG' in response:
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText("There was an error clearing DTC")
             msgbox.exec_()
             options.main_window.logview.append("<font color=red>Clear DTC failed</font>")
@@ -1469,6 +1489,9 @@ class paramWidget(widgets.QWidget):
 
         if "RESPONSE" in can_response:
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText(_("Invalid response for ReadDTC command"))
             msgbox.exec_()
             return
@@ -1478,6 +1501,9 @@ class paramWidget(widgets.QWidget):
         # Handle error
         if can_response[0].upper() == "7F":
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText(_("Read DTC returned an error"))
             msgbox.exec_()
             return
@@ -1486,6 +1512,9 @@ class paramWidget(widgets.QWidget):
         if len(can_response) == 2:
             # No errors
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText(_("No DTC"))
             msgbox.exec_()
             return

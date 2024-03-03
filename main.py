@@ -285,6 +285,7 @@ class Main_widget(widgets.QMainWindow):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setIcon(widgets.QMessageBox.Warning)
             msgbox.setText(_("No database found"))
             msgbox.setInformativeText(_("Check documentation"))
@@ -679,6 +680,7 @@ class Main_widget(widgets.QMainWindow):
             mbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             mbox.setWindowIcon(appIcon)
+            mbox.setWindowTitle("DTT4ALL")
             mbox.setText("Cannot write to directory " + os.path.dirname(filename))
             mbox.exec_()
             return
@@ -804,6 +806,7 @@ class Main_widget(widgets.QMainWindow):
         msgBox = widgets.QMessageBox()
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgBox.setWindowIcon(appIcon)
+        msgBox.setWindowTitle("DTT4ALL")
         msgBox.setText(_('Scan options'))
         scancan = False
         scancan2 = False
@@ -1124,6 +1127,7 @@ class donationWidget(widgets.QLabel):
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle("DTT4ALL")
         msgbox.setText(
             _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
@@ -1138,6 +1142,7 @@ class donationWidget(widgets.QLabel):
             core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
+        msgbox.setWindowTitle("DTT4ALL")
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setText(
@@ -1506,6 +1511,7 @@ class main_window_options(widgets.QDialog):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
@@ -1527,6 +1533,7 @@ class main_window_options(widgets.QDialog):
                 msgbox = widgets.QMessageBox()
                 appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
+                msgbox.setWindowTitle("DTT4ALL")
                 msgbox.setText(_("Please select a communication port"))
                 msgbox.exec_()
 
@@ -1598,6 +1605,7 @@ if __name__ == '__main__':
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
@@ -1609,6 +1617,7 @@ if __name__ == '__main__':
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle("DTT4ALL")
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:
