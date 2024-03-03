@@ -549,7 +549,7 @@ class Main_widget(widgets.QMainWindow):
 
         # Help menu
         help_menu = menu.addMenu(_("Help"))
-        wiki_about = help_menu.addAction(_("About Dtt4All"))
+        wiki_about = help_menu.addAction(_("Web Wiki"))
         wiki_about.triggered.connect(self.wiki_about)
         help_menu.addSeparator()
         devs = help_menu.addMenu(_("About Developers"))

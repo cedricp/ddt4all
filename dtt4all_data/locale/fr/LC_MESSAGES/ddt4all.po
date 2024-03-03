@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 06:45+0100\n"
-"PO-Revision-Date: 2024-03-03 20:11+0100\n"
+"POT-Creation-Date: 2024-03-03 21:09+0100\n"
+"PO-Revision-Date: 2024-03-03 21:11+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -560,8 +560,8 @@ msgstr "Impossible de charger le plugin "
 msgid "Help"
 msgstr "Aide"
 
-msgid "About Dtt4All"
-msgstr "A propos"
+msgid "Web Wiki"
+msgstr "Wiki Web"
 
 msgid "About Developers"
 msgstr "A Propos des Develepeurs"
@@ -1143,6 +1143,9 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
+
+#~ msgid "About Dtt4All"
+#~ msgstr "Web Wiki"
 
 #, python-format
 #~ msgid "Adding source file %s"

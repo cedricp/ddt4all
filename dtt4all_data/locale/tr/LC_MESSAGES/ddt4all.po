@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 06:45+0100\n"
-"PO-Revision-Date: 2024-03-03 06:55+0100\n"
+"POT-Creation-Date: 2024-03-03 21:09+0100\n"
+"PO-Revision-Date: 2024-03-03 21:16+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -584,8 +584,8 @@ msgstr "Giriş çizilemiyor "
 msgid "Help"
 msgstr "Yardım"
 
-msgid "About Dtt4All"
-msgstr "Dtt4All Hakkında"
+msgid "Web Wiki"
+msgstr ""
 
 msgid "About Developers"
 msgstr "Geliştiriciler Hakkında"
@@ -1188,6 +1188,9 @@ msgstr "VIN (Şasi Numarası)"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
+
+#~ msgid "About Dtt4All"
+#~ msgstr "Dtt4All Hakkında"
 
 #, python-format
 #~ msgid "Adding source file %s"
