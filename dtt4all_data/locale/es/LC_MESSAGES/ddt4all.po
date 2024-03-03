@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
-"PO-Revision-Date: 2024-01-04 06:31+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
+"PO-Revision-Date: 2024-03-03 06:50+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -256,10 +256,13 @@ msgstr ""
 msgid "Found similar"
 msgstr ""
 
+msgid "DataItem not found"
+msgstr ""
+
 msgid "Cannot find data "
 msgstr ""
 
-msgid "DataItem not found"
+msgid " vs "
 msgstr ""
 
 msgid "Cannot draw input "
@@ -268,14 +271,90 @@ msgstr "No se puede realizar petición de llamada "
 msgid "No Value"
 msgstr ""
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Enviar bytes petición (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Bytes recibidos"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot find file "
+msgstr "No se puede realizar petición de llamada "
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "Fichero XML no encontrado: "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "Dirección de función ECU"
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+#, fuzzy
+#| msgid "Error:"
+msgid "Error: "
 msgstr "Error:"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM no conectado o puerto COM erroneo"
 
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Velocidad del puerto"
+
 msgid "Connection to ELM was lost"
 msgstr "Conexión ELM perdida"
+
+#, fuzzy
+#| msgid "Cannot call request "
+msgid "Cannot decode bytes "
+msgstr "No se puede realizar petición de llamada "
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
@@ -294,6 +373,53 @@ msgstr "Intentando abrir Puerto "
 
 msgid "No ELM interface on port"
 msgstr "No hay interface ELM en el puerto"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Version diagnostico"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Versión"
+
+#, fuzzy
+#| msgid "ERROR - wifi do not support changing baud rate"
+msgid "Your ELM does not support baudrate "
+msgstr "ERROR - WIFI no soporta cambiar ratio de baudios"
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "Dirección de función ECU"
 
 msgid "FAIL"
 msgstr "FALLO"
@@ -315,6 +441,9 @@ msgstr " logrado desde "
 
 msgid "ELM Max version:"
 msgstr "Versión ELM maxima:"
+
+msgid "dtt4all_data/projects.json not found or not ok."
+msgstr ""
 
 msgid "ECU name"
 msgstr "Nombre ECU"
@@ -448,6 +577,11 @@ msgstr "Renombrar"
 msgid "Plugins"
 msgstr ""
 
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot load plugin "
+msgstr "No se puede realizar petición de llamada "
+
 msgid "Help"
 msgstr ""
 
@@ -458,6 +592,23 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "DTT4ALL version:"
+msgstr "Version diagnostico"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -583,6 +734,9 @@ msgstr "Iniciando ELM a velocidad %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "No se ha detectado OBDLink-SX o ELM "
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Para editar esta pantalla, primero debe exportarse a formato JSON"
 
@@ -612,6 +766,9 @@ msgstr "Entrada"
 
 msgid "Output"
 msgstr "Salida"
+
+msgid "Protocol not supported : "
+msgstr ""
 
 msgid "XML file not found : "
 msgstr "Fichero XML no encontrado: "
@@ -695,13 +852,67 @@ msgstr "Codigos de problema ECU"
 msgid "Parsing screen "
 msgstr "Analizando Pantalla "
 
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Botón petición no encontrado: "
+
+msgid "found in display "
+msgstr ""
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Añadir boton"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Version diagnostico"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr ""
 
 msgid "Waiting..."
 msgstr ""
 
-msgid "Frame hex error : "
+msgid "Frame length error: "
+msgstr ""
+
+msgid "Frame hex error: "
+msgstr ""
+
+msgid "Found USB adapter:"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"
@@ -932,9 +1143,6 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
-
-#~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "ERROR - WIFI no soporta cambiar ratio de baudios"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Cambiando baudios a:"

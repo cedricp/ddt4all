@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
@@ -257,10 +257,13 @@ msgstr ""
 msgid "Found similar"
 msgstr ""
 
+msgid "DataItem not found"
+msgstr ""
+
 msgid "Cannot find data "
 msgstr ""
 
-msgid "DataItem not found"
+msgid " vs "
 msgstr ""
 
 msgid "Cannot draw input "
@@ -269,14 +272,90 @@ msgstr "Nije moguce pozvati zahtev "
 msgid "No Value"
 msgstr ""
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Posalji zahtev u bajtima (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Primi bajtove"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot find file "
+msgstr "Nije moguce pozvati zahtev "
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "XML fajl nije pronadjen: "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "Adresa funkcije ECU"
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+#, fuzzy
+#| msgid "Error:"
+msgid "Error: "
 msgstr "Greska:"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM nije povezan ili je pogresan COM port"
 
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Brzina porta"
+
 msgid "Connection to ELM was lost"
 msgstr "Izgubljena veza sa ELM jedinicom"
+
+#, fuzzy
+#| msgid "Cannot call request "
+msgid "Cannot decode bytes "
+msgstr "Nije moguce pozvati zahtev "
 
 msgid "TIMEOUT"
 msgstr "Isteklo vreme"
@@ -295,6 +374,53 @@ msgstr "Pokusavam da otvorim port "
 
 msgid "No ELM interface on port"
 msgstr "Nema ELM interfejsa na portu"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Verzija dijagnostike"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Verzija"
+
+#, fuzzy
+#| msgid "ERROR - wifi do not support changing baud rate"
+msgid "Your ELM does not support baudrate "
+msgstr "GRESKA - WiFi ne podrzava promenu brzine (baud rate)"
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "Adresa funkcije ECU"
 
 msgid "FAIL"
 msgstr "Neuspesno"
@@ -316,6 +442,9 @@ msgstr " uspesno od "
 
 msgid "ELM Max version:"
 msgstr "ELM Max verzija:"
+
+msgid "dtt4all_data/projects.json not found or not ok."
+msgstr ""
 
 msgid "ECU name"
 msgstr "ECU naziv"
@@ -449,6 +578,11 @@ msgstr "Promeni naziv"
 msgid "Plugins"
 msgstr ""
 
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot load plugin "
+msgstr "Nije moguce pozvati zahtev "
+
 msgid "Help"
 msgstr ""
 
@@ -459,6 +593,23 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "DTT4ALL version:"
+msgstr "Verzija dijagnostike"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -584,6 +735,9 @@ msgstr "Initilizing ELM sa brzinom %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nema ELM327 ili OBDLINK-SX uredjaja na COM portu  "
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Da bi mogli da izmenite svoj prikaz, isti prvo izvezite u JSON formatu"
 
@@ -613,6 +767,9 @@ msgstr "Ulazni"
 
 msgid "Output"
 msgstr "Izlazni"
+
+msgid "Protocol not supported : "
+msgstr ""
 
 msgid "XML file not found : "
 msgstr "XML fajl nije pronadjen: "
@@ -695,13 +852,67 @@ msgstr "ECU kodovi gresaka"
 msgid "Parsing screen "
 msgstr "Čitati ekran "
 
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Zahtev dugmeta nije pronadjen: "
+
+msgid "found in display "
+msgstr ""
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Dodaj dugme"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Verzija dijagnostike"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr ""
 
 msgid "Waiting..."
 msgstr ""
 
-msgid "Frame hex error : "
+msgid "Frame length error: "
+msgstr ""
+
+msgid "Frame hex error: "
+msgstr ""
+
+msgid "Found USB adapter:"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"
@@ -932,9 +1143,6 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
-
-#~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "GRESKA - WiFi ne podrzava promenu brzine (baud rate)"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Promeni brzinu (baud rate) na:"

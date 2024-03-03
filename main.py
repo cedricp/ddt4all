@@ -33,6 +33,9 @@ __maintainer__ = version.__maintainer__
 __email__ = version.__email__
 __status__ = version.__status__
 
+_ = options.translator('ddt4all')
+app = None
+
 
 def load_this():
     try:
@@ -44,13 +47,11 @@ def load_this():
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
         return vehicles_loc
     except:
-        print("dtt4all_data/projects.json not found or not ok.")
+        print(_("dtt4all_data/projects.json not found or not ok."))
         exit(-1)
 
 
 vehicles = load_this()
-_ = options.translator('ddt4all')
-app = None
 
 # args
 parser = argparse.ArgumentParser()
@@ -282,6 +283,8 @@ class Main_widget(widgets.QMainWindow):
         print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
             msgbox.setIcon(widgets.QMessageBox.Warning)
             msgbox.setText(_("No database found"))
             msgbox.setInformativeText(_("Check documentation"))
@@ -541,7 +544,7 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print("Cannot load plugin " + plugin)
+                print(_("Cannot load plugin ") + plugin)
                 print(e)
 
         # Help menu
@@ -557,10 +560,28 @@ class Main_widget(widgets.QMainWindow):
         help_menu.addSeparator()
         githubupdate = help_menu.addAction(_("Get Git update"))
         githubupdate.triggered.connect(self.git_update)
+        help_menu.addSeparator()
+        about_content = help_menu.addAction(_("About"))
+        about_content.triggered.connect(self.about_content_msg)
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
         self.showMaximized()
+
+    def about_content_msg(self):
+        msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setIcon(widgets.QMessageBox.Information)
+        msgbox.setWindowTitle(_("About DTT4ALL"))
+        text_about = _("DTT4ALL version:") + " %s" % version.__version__
+        msgbox.setText(text_about)
+        contrib = _("Created by:") + " %s\n\n %s\n" % (version.__author__, _("Contributors:"))
+        for c in version.__contributors__:
+            contrib += "%s\n" % c
+        msgbox.setInformativeText(contrib)
+        msgbox.exec_()
+
 
     def wiki_about(self):
         url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
@@ -656,6 +677,8 @@ class Main_widget(widgets.QMainWindow):
 
         if not isWritable(str(os.path.dirname(filename))):
             mbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            mbox.setWindowIcon(appIcon)
             mbox.setText("Cannot write to directory " + os.path.dirname(filename))
             mbox.exec_()
             return
@@ -779,6 +802,8 @@ class Main_widget(widgets.QMainWindow):
 
     def scan(self):
         msgBox = widgets.QMessageBox()
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        msgBox.setWindowIcon(appIcon)
         msgBox.setText(_('Scan options'))
         scancan = False
         scancan2 = False
@@ -1097,6 +1122,8 @@ class donationWidget(widgets.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        msgbox.setWindowIcon(appIcon)
         msgbox.setText(
             _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
@@ -1111,6 +1138,8 @@ class donationWidget(widgets.QLabel):
             core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        msgbox.setWindowIcon(appIcon)
         msgbox.setText(
             _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
@@ -1475,6 +1504,8 @@ class main_window_options(widgets.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
             msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
@@ -1494,6 +1525,8 @@ class main_window_options(widgets.QDialog):
                 self.done(True)
             else:
                 msgbox = widgets.QMessageBox()
+                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                msgbox.setWindowIcon(appIcon)
                 msgbox.setText(_("Please select a communication port"))
                 msgbox.exec_()
 
@@ -1563,6 +1596,8 @@ if __name__ == '__main__':
 
         if not options.port:
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
@@ -1572,6 +1607,8 @@ if __name__ == '__main__':
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:

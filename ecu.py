@@ -24,6 +24,8 @@ __maintainer__ = version.__maintainer__
 __email__ = version.__email__
 __status__ = version.__status__
 
+_ = options.translator('ddt4all')
+
 addressing = {}
 # //TODO addressing missing entries
 addressing_entries = {"E7": u"SCRCM", "E8": u"SVS"}
@@ -257,12 +259,12 @@ class Ecu_request:
         request_stream = " ".join(request_stream)
 
         if options.debug:
-            print("Generated stream ", request_stream)
+            print(_("Generated stream "), request_stream)
 
         if options.simulation_mode:
             if test_data is not None:
                 elmstream = test_data
-                print("Send request stream", request_stream)
+                print(_("Send request stream "), request_stream)
             else:
                 # return default reply bytes...
                 elmstream = self.replybytes
@@ -270,20 +272,20 @@ class Ecu_request:
             elmstream = options.elm.request(request_stream)
 
         if options.debug:
-            print("Received stream ", elmstream)
+            print(_("Received stream "), elmstream)
 
         if elmstream.startswith('WRONG RESPONSE'):
             return None
 
         if elmstream.startswith('7F'):
             nrsp = options.elm.errorval(elmstream[6:8])
-            print("Request ECU Error", nrsp)
+            print(_("Request ECU Error"), nrsp)
             return None
 
         values = self.get_values_from_stream(elmstream)
 
         if options.debug:
-            print("Decoded values", values)
+            print(_("Decoded values"), values)
 
         return values
 
@@ -677,7 +679,7 @@ class Ecu_data:
                 elif self.bytescount == 2:
                     val = hex16_tosigned(val)
                 else:
-                    print("Warning, cannot get signed value for %s" % dataitem.name)
+                    print(_("Warning, cannot get signed value for") + " %s" % dataitem.name)
 
             # Manage mapped values if exists
             if val in self.lists:
@@ -696,7 +698,7 @@ class Ecu_data:
                 value = hex16_tosigned(value)
 
         if self.divideby == 0:
-            print("Division by zero, please check data item : ", dataitem.name)
+            print(_("Division by zero, please check data item: "), dataitem.name)
             return None
 
         res = (float(value) * float(self.step) + float(self.offset)) / float(self.divideby)
@@ -783,7 +785,7 @@ class Ecu_data:
                 totalremainingbits -= offset1 - offset2
 
             if totalremainingbits != 0:
-                print("getHexValue >> abnormal remaining bytes ", bits, totalremainingbits)
+                print(_("getHexValue >> abnormal remaining bytes "), bits, totalremainingbits)
             hexval = hex(int("0b" + tmp_bin, 2))[2:].replace("L", "")
         else:
             valtmp = "0b" + hextobin[startBit:startBit + bits]
@@ -848,7 +850,7 @@ class Ecu_file:
                     elif os.path.basename(data) in zf.namelist():
                         jsdata = zf.read(os.path.basename(data))
                     else:
-                        print("Cannot find file ", data)
+                        print(_("Cannot find file "), data)
                         return
 
             if jsdata is None:
@@ -894,13 +896,13 @@ class Ecu_file:
         else:
             if isfile:
                 if not os.path.exists(data):
-                    print("Cannot load ECU file", data)
+                    print(_("Cannot load ECU file"), data)
                     return
             xdom = xml.dom.minidom.parse(data)
             self.xmldoc = xdom.documentElement
 
             if not self.xmldoc:
-                print("XML not found")
+                print(_("XML not found"))
                 return
 
             target = getChildNodesByName(self.xmldoc, u"Target")
@@ -1015,7 +1017,7 @@ class Ecu_file:
         if self.ecu_protocol == 'CAN':
             short_addr = elm.get_can_addr(self.ecu_send_id)
             if short_addr is None:
-                print("Cannot retrieve functionnal address of ECU %s @ %s" % (self.ecuname, self.ecu_send_id))
+                print(_("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
                 return False
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
@@ -1223,7 +1225,7 @@ class Ecu_database:
                         self.available_addr_can.append(str(addr))
 
                 if str(addr) not in self.addr_group_mapping:
-                    print("Adding group ", addr, ecu_dict['group'])
+                    print(_("Adding group "), addr, ecu_dict['group'])
                     self.addr_group_mapping[str(addr)] = ecu_dict['group']
 
                 ecu_ident = Ecu_ident(diagversion, ecu_dict['supplier_code'],
@@ -1287,7 +1289,7 @@ class Ecu_database:
             self.xmldoc = xdom.documentElement
 
             if not self.xmldoc:
-                print("Unable to find eculist")
+                print(_("Unable to find eculist"))
                 return
 
             functions = self.xmldoc.getElementsByTagName("Function")
@@ -1571,15 +1573,15 @@ class Ecu_scanner:
                 continue
 
             if addr not in elm.dnat:
-                print("Warning, address %s is not mapped" % addr)
+                print(_("Warning, address") + " %s " +_("is not mapped") % addr)
                 continue
 
             # need test this comment in mode online
             # if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
-            #     print("Skipping CAN extended address (not supported yet) ", addr)
+            #     print(_("Skipping CAN extended address (not supported yet) "), addr)
             #     continue
 
-            print(f"{'Scanning address: ' + addr:<25} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
+            print(f"{_('Scanning address: ') + addr:<25} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
             if not options.simulation_mode:
                 options.elm.init_can()
                 options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
@@ -1750,13 +1752,13 @@ def make_zipfs():
     ecus.remove("ecus/eculist.xml")
 
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
-        print("Writing vehicles database...")
+        print(_("Writing vehicles database..."))
         db = Ecu_database(True)
         zf.writestr("db.json", str(db.dump()))
 
         for target in ecus:
             name = target
-            print("Starting zipping " + target + " " + str(i) + "/" + str(len(ecus)))
+            print(_("Starting zipping ") + target + " " + str(i) + "/" + str(len(ecus)))
             fileout = name.replace('.xml', '.json')
             ecur = Ecu_file(name, True)
 

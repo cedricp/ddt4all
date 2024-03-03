@@ -34,6 +34,8 @@ REQUEST_TYPE_RECV = util.build_request_type(util.CTRL_IN,
                                             util.CTRL_TYPE_CLASS,
                                             util.CTRL_RECIPIENT_DEVICE)
 
+_ = options.translator('ddt4all')
+
 
 class UsbCan:
     def __init__(self):
@@ -45,7 +47,7 @@ class UsbCan:
         self.device = core.find(idVendor=0x16c0, idProduct=0x05df)
         if self.device:
             self.descriptor = self.get_string_descriptor()
-            print("Found USB adapter : %s" % self.descriptor)
+            print(_("Found USB adapter:") + " %s" % self.descriptor)
             return True
 
         self.device = None

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
-"PO-Revision-Date: 2024-01-04 06:38+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
+"PO-Revision-Date: 2024-03-03 06:54+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -256,10 +256,13 @@ msgstr ""
 msgid "Found similar"
 msgstr ""
 
+msgid "DataItem not found"
+msgstr ""
+
 msgid "Cannot find data "
 msgstr ""
 
-msgid "DataItem not found"
+msgid " vs "
 msgstr ""
 
 msgid "Cannot draw input "
@@ -268,14 +271,88 @@ msgstr "Не могу сформировать запрос "
 msgid "No Value"
 msgstr ""
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Send request bytes (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Receive bytes"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot find file "
+msgstr "Не могу сформировать запрос "
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "XML файл не найден : "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "ECU Function address"
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+msgid "Error: "
 msgstr ""
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM не подключен или неверный COM порт"
 
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Скорость порта"
+
 msgid "Connection to ELM was lost"
 msgstr "Связь с ELM потеряна"
+
+#, fuzzy
+#| msgid "Cannot call request "
+msgid "Cannot decode bytes "
+msgstr "Не могу сформировать запрос "
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
@@ -294,6 +371,53 @@ msgstr "Пытаемся открыть порт "
 
 msgid "No ELM interface on port"
 msgstr "ELM не обнаружен"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Diag version"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Version"
+
+#, fuzzy
+#| msgid "ERROR - wifi do not support changing baud rate"
+msgid "Your ELM does not support baudrate "
+msgstr "ОШИБКА - wifi не поддерживает изменение скорости порта"
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "ECU Function address"
 
 msgid "FAIL"
 msgstr "ОШИБКА"
@@ -315,6 +439,9 @@ msgstr " успешных из "
 
 msgid "ELM Max version:"
 msgstr "Максимальная версия ELM:"
+
+msgid "dtt4all_data/projects.json not found or not ok."
+msgstr ""
 
 msgid "ECU name"
 msgstr "Название ЭБУ"
@@ -448,6 +575,11 @@ msgstr "Переименовать"
 msgid "Plugins"
 msgstr ""
 
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot load plugin "
+msgstr "Не могу сформировать запрос "
+
 msgid "Help"
 msgstr ""
 
@@ -458,6 +590,23 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "DTT4ALL version:"
+msgstr "Diag version"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -583,6 +732,9 @@ msgstr "Инициализация ELM на скорости %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 или OBDLINK-SX не обнаружены на COM порту "
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Для редактирования экрана сначала сохраните его в JSON"
 
@@ -612,6 +764,9 @@ msgstr "Поле ввода"
 
 msgid "Output"
 msgstr "Поле вывода"
+
+msgid "Protocol not supported : "
+msgstr ""
 
 msgid "XML file not found : "
 msgstr "XML файл не найден : "
@@ -694,13 +849,67 @@ msgstr "Считанные ошибки"
 msgid "Parsing screen "
 msgstr "Расшифровка "
 
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Нет параметров для кнопки : "
+
+msgid "found in display "
+msgstr ""
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Добавить кнопку"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Diag version"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr ""
 
 msgid "Waiting..."
 msgstr ""
 
-msgid "Frame hex error : "
+msgid "Frame length error: "
+msgstr ""
+
+msgid "Frame hex error: "
+msgstr ""
+
+msgid "Found USB adapter:"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"
@@ -931,9 +1140,6 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
-
-#~ msgid "ERROR - wifi do not support changing baud rate"
-#~ msgstr "ОШИБКА - wifi не поддерживает изменение скорости порта"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Изменение скорости порта на:"

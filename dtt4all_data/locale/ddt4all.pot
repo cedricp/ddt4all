@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:30+0100\n"
+"POT-Creation-Date: 2024-03-03 06:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,10 +247,13 @@ msgstr ""
 msgid "Found similar"
 msgstr ""
 
+msgid "DataItem not found"
+msgstr ""
+
 msgid "Cannot find data "
 msgstr ""
 
-msgid "DataItem not found"
+msgid " vs "
 msgstr ""
 
 msgid "Cannot draw input "
@@ -259,13 +262,73 @@ msgstr ""
 msgid "No Value"
 msgstr ""
 
-msgid "Error:"
+msgid "Generated stream "
+msgstr ""
+
+msgid "Send request stream "
+msgstr ""
+
+msgid "Received stream "
+msgstr ""
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+msgid "Cannot find file "
+msgstr ""
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+msgid "XML not found"
+msgstr ""
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+msgid "Warning, address"
+msgstr ""
+
+msgid "is not mapped"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+msgid "Error: "
 msgstr ""
 
 msgid "ELM not connected or wrong COM port"
 msgstr ""
 
+msgid "Port closed"
+msgstr ""
+
 msgid "Connection to ELM was lost"
+msgstr ""
+
+msgid "Cannot decode bytes "
 msgstr ""
 
 msgid "TIMEOUT"
@@ -284,6 +347,45 @@ msgid "Trying to open port "
 msgstr ""
 
 msgid "No ELM interface on port"
+msgstr ""
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+msgid "OBDLink Version "
+msgstr ""
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+msgid "Version "
+msgstr ""
+
+msgid "Your ELM does not support baudrate "
+msgstr ""
+
+msgid "ELM reset..."
+msgstr ""
+
+msgid "Unknown address: "
 msgstr ""
 
 msgid "FAIL"
@@ -305,6 +407,9 @@ msgid " succeeded from "
 msgstr ""
 
 msgid "ELM Max version:"
+msgstr ""
+
+msgid "dtt4all_data/projects.json not found or not ok."
 msgstr ""
 
 msgid "ECU name"
@@ -439,6 +544,9 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
+msgid "Cannot load plugin "
+msgstr ""
+
 msgid "Help"
 msgstr ""
 
@@ -449,6 +557,21 @@ msgid "About Developers"
 msgstr ""
 
 msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DTT4ALL"
+msgstr ""
+
+msgid "DTT4ALL version:"
+msgstr ""
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -566,6 +689,9 @@ msgstr ""
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr ""
 
+msgid "Err, cannot rename "
+msgstr ""
+
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr ""
 
@@ -594,6 +720,9 @@ msgid "Input"
 msgstr ""
 
 msgid "Output"
+msgstr ""
+
+msgid "Protocol not supported : "
 msgstr ""
 
 msgid "XML file not found : "
@@ -677,13 +806,61 @@ msgstr ""
 msgid "Parsing screen "
 msgstr ""
 
+msgid "found request in input "
+msgstr ""
+
+msgid "found in display "
+msgstr ""
+
+msgid "found in button "
+msgstr ""
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+msgid "Starting conversion"
+msgstr ""
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
 msgid "Values"
 msgstr ""
 
 msgid "Waiting..."
 msgstr ""
 
-msgid "Frame hex error : "
+msgid "Frame length error: "
+msgstr ""
+
+msgid "Frame hex error: "
+msgstr ""
+
+msgid "Found USB adapter:"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"
