@@ -1573,15 +1573,17 @@ class Ecu_scanner:
                 continue
 
             if addr not in elm.dnat:
-                print(_("Warning, address") + " %s " +_("is not mapped") % addr)
+                print(_("Warning, address") + " %s " + _("is not mapped") % addr)
                 continue
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
+            text1 = _("Skipping CAN extended address (not supported yet)")
 
             if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
-                print(_("Skipping CAN extended address (not supported yet)"), addr)
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]:<65} [{text1}]")
                 continue
+            else:
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.elm.init_can()
@@ -1630,7 +1632,7 @@ class Ecu_scanner:
                 self.qapp.processEvents()
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]:<30}")
+            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.opt_si = True
