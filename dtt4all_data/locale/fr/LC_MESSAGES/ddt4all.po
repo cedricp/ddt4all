@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 22:38+0100\n"
-"PO-Revision-Date: 2024-03-03 22:43+0100\n"
+"POT-Creation-Date: 2024-03-04 17:35+0100\n"
+"PO-Revision-Date: 2024-03-04 17:53+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -321,6 +321,9 @@ msgstr "n'est pas cartographié"
 
 msgid "Scanning address: "
 msgstr "Adresse de numérisation: "
+
+msgid "Skipping CAN extended address (not supported yet)"
+msgstr "Sauter l'adresse étendue CAN (pas encore supporté)"
 
 msgid "Identified ECU"
 msgstr "ECU identifié"
@@ -966,7 +969,7 @@ msgid "Cannot connect to ECU"
 msgstr "Impossible de se connecter a l'ECU"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr "<font color='orange'>RESPONSE INATTENDUE</font>"
+msgstr "<font color='orange'>REPONSE INATTENDUE</font>"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
 msgstr "<font color='red'>CRASH DETECTE</font>"
@@ -1003,7 +1006,7 @@ msgid "VALIDATE"
 msgstr "VALIDER"
 
 msgid "Algo 2"
-msgstr "Algo #2"
+msgstr "Algo 2"
 
 msgid "ISK"
 msgstr "ISK"
@@ -1079,20 +1082,20 @@ msgid "<font color='red'>EPS coded</font>"
 msgstr "<font color='red'>DAE codée</font>"
 
 msgid "Clio IV EPS Reset"
-msgstr "Clio IV DAE RAZ"
+msgstr "Clio IV EPS RAZ"
 
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Clio IV DAE VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES "
+"Clio IV EPS VIERGE<br><font color='red'>CETTE EXTENSION EFFACERA LES DONNEES "
 "DAE<br>NE PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 msgid "Check EPS Virgin"
 msgstr "Vérifier état vierge DAE"
 
 msgid "<font color='green'>EPS not operational</font>"
-msgstr "<font color='green'>DAE non opérationelle</font>"
+msgstr "<font color='green'>DAE non opérationnelle</font>"
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='red'>REPONSE INATTENDUE</font>"
@@ -1191,7 +1194,7 @@ msgstr ""
 "PAS CONTINUER SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</font>"
 
 msgid "CRC calculator"
-msgstr "Caculateur CRC"
+msgstr "Calculateur CRC"
 
 msgid "VIN"
 msgstr "VIN"
