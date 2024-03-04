@@ -21,6 +21,7 @@ elm_failed = False
 # KWP2000 Slow init
 opt_si = False
 report_data = True
+dark_mode = False
 ecus_dir = "ecus/"
 graphics_dir = "graphics/"
 last_error = ""

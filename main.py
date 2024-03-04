@@ -401,8 +401,10 @@ class Main_widget(widgets.QMainWindow):
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
-
-        self.expert = widgets.QAction(gui.QIcon("dtt4all_data/icons/expert.png"), _("Expert mode (enable writing)"), self)
+        if options.dark_mode:
+            self.expert = widgets.QAction(gui.QIcon("dtt4all_data/icons/expert-b.png"), _("Expert mode (enable writing)"), self)
+        else:
+            self.expert = widgets.QAction(gui.QIcon("dtt4all_data/icons/expert.png"), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
@@ -443,9 +445,11 @@ class Main_widget(widgets.QMainWindow):
 
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.log)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(self.expert)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.autorefresh)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(self.refresh)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.diagaction)
@@ -453,6 +457,7 @@ class Main_widget(widgets.QMainWindow):
         self.toolbar.addAction(self.hexinput)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.cominput)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(self.fctrigger)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.canlinecombo)
@@ -460,10 +465,10 @@ class Main_widget(widgets.QMainWindow):
         self.toolbar.addWidget(self.sdscombo)
         self.toolbar.addSeparator()
         self.toolbar.addWidget(self.zoominbutton)
+        self.toolbar.addSeparator()
         self.toolbar.addWidget(self.zoomoutbutton)
 
         if options.simulation_mode:
-            self.toolbar.addSeparator()
             self.ui_edit_button = widgets.QPushButton(_("UI Edit"))
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
@@ -1154,10 +1159,11 @@ def set_dark_style(onoff):
     if (onoff):
         stylefile = core.QFile("qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
-
+        options.dark_mode = True
         StyleSheet = bytes(stylefile.readAll()).decode()
     else:
         StyleSheet = ""
+        options.dark_mode = False
 
     app.setStyleSheet(StyleSheet)
 
@@ -1558,8 +1564,8 @@ if __name__ == '__main__':
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
 
-    fsize = 10
-    fname = "Tahoma"
+    fsize = 9
+    fname = "Segoe UI"
 
     if sys.platform[:3] == "dar":
         fsize = 12
