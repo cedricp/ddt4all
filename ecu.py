@@ -1731,16 +1731,20 @@ class Ecu_scanner:
                 if label is not None:
                     label.setText("Found %i ecu" % self.num_ecu_found)
 
-                line = "<font color='red'>" + _("Found ECU") + " [%s] " + _("(not perfect match)") + " :" \
+                text = _("Found ECU")
+                text1 = _("(not perfect match)")
+                line = f"<font color='red'>{text} {ecu_type} {text1} :" \
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
-                       % (ecu_type, kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
+                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
                 options.main_window.logview.append(line)
 
         if not found_exact and not found_approximate:
-            line = "<font color='red'>" + _("Found ECU") + " [%s] " + _("(no relevant ECU file found)") + " :" \
+            text = _("Found ECU")
+            text1 = _("(no relevant ECU file found)")
+            line = f"<font color='red'>{text} {ecu_type} {text1} :" \
                    "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                   % (ecu_type, diagversion, supplier, soft, version)
+                   % (diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
 
