@@ -25,7 +25,9 @@ _ = options.translator('ddt4all')
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
     try:
-        dataready = core.pyqtSignal(basestring)
+        # TODO:// basestring not defined use bytes.
+        # dataready = core.pyqtSignal(basestring)
+        dataready = core.pyqtSignal(bytes)
     except:
         dataready = core.pyqtSignal(str)
 

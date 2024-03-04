@@ -6,6 +6,7 @@ import time
 from usb import util, core, legacy
 
 import elm
+import options
 
 # HID TYPES
 USBRQ_HID_GET_REPORT = 0x01
