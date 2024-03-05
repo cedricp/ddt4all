@@ -1303,7 +1303,7 @@ class main_window_options(widgets.QDialog):
 
         darkstylelayout = widgets.QHBoxLayout()
         self.darklayoutcheck = widgets.QCheckBox()
-        self.darklayoutcheck.setChecked(False)
+        self.darklayoutcheck.setChecked(options.dark_mode)
         self.darklayoutcheck.stateChanged.connect(set_dark_style)
         darkstylelabel = widgets.QLabel(_("Dark style"))
         darkstylelayout.addWidget(self.darklayoutcheck)
@@ -1351,8 +1351,9 @@ class main_window_options(widgets.QDialog):
 
     def save_config(self):
         options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
+        options.configuration["dark"] = options.dark_mode
         options.save_config()
-        exit(0)
+        app.exit(0)
 
     def check_elm(self):
         currentitem = self.listview.currentItem()
@@ -1566,11 +1567,17 @@ if __name__ == '__main__':
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
 
-    stylefile = core.QFile("dtt4all_data/qstyle.qss")
-    stylefile.open(core.QFile.ReadOnly)
-    options.dark_mode = False
-    StyleSheet = bytes(stylefile.readAll()).decode()
-    app.setStyleSheet(StyleSheet)
+    try:
+        f = open("dtt4all_data/config.json", "r", encoding="UTF-8")
+        configuration = json.loads(f.read())
+        f.close()
+        if configuration["dark"]:
+            set_dark_style(2)
+        else:
+            set_dark_style(0)
+    except:
+        set_dark_style(0)
+        pass
 
     fsize = 9
     fname = "Segoe UI"

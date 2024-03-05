@@ -33,7 +33,8 @@ refreshrate = 5
 mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 configuration = {
-    "lang": None
+    "lang": None,
+    "dark": False
 }
 lang_list = {
     "English": "en_US",
@@ -69,6 +70,7 @@ def create_new_config():
     #     print(i + " code: " + lang_list[i])
     #     codes += lang_list[i] + " "
     configuration["lang"] = get_translator_lang()
+    configuration["dark"] = False
     # print("\nEdit it only if it not ok for you country language.")
     # print(f'Edit the `dtt4all_data/config.json`\nConfiguration however you want this to be translated.\nThe self-assigned code is: {lang}')
     # print(f'Close and edit the configuration for list: \n\t{codes.strip()} \nAnd reopen the application.')
