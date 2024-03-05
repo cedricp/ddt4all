@@ -297,6 +297,7 @@ QProgressBar {
 
 /* Styling for progress bar chunk */
 QProgressBar::chunk {
+    background-color: green;
     width: 2.15px;
     margin: 0.5px;
 }
