@@ -393,6 +393,7 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover {
 
 /* Styling for checked checkbox indicator */
 QCheckBox::indicator:checked {
+    image: url("dtt4all_data/icons/checkbox.png");
     width: 15px; /* Width */
     height: 15px; /* Height */
 }
