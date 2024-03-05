@@ -204,6 +204,12 @@ QRadioButton::indicator:checked {
     background-color: #ffaa00; /* Background color when checked */
 }
 
+/* Styles for QCheckBox */
+QCheckBox::indicator {
+    width: 15px; /* Width */
+    height: 15px; /* Height */
+}
+
 /* Styles for hovered QRadioButton and QCheckBox indicators */
 QRadioButton::indicator:hover,
 QCheckBox::indicator:hover {

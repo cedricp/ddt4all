@@ -1157,13 +1157,15 @@ class donationWidget(widgets.QLabel):
 
 def set_dark_style(onoff):
     if (onoff):
-        stylefile = core.QFile("qstyle.qss")
+        stylefile = core.QFile("dtt4all_data/qstyle-d.qss")
         stylefile.open(core.QFile.ReadOnly)
         options.dark_mode = True
         StyleSheet = bytes(stylefile.readAll()).decode()
     else:
-        StyleSheet = ""
+        stylefile = core.QFile("dtt4all_data/qstyle.qss")
+        stylefile.open(core.QFile.ReadOnly)
         options.dark_mode = False
+        StyleSheet = bytes(stylefile.readAll()).decode()
 
     app.setStyleSheet(StyleSheet)
 
@@ -1563,6 +1565,12 @@ if __name__ == '__main__':
 
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
+
+    stylefile = core.QFile("dtt4all_data/qstyle.qss")
+    stylefile.open(core.QFile.ReadOnly)
+    options.dark_mode = False
+    StyleSheet = bytes(stylefile.readAll()).decode()
+    app.setStyleSheet(StyleSheet)
 
     fsize = 9
     fname = "Segoe UI"

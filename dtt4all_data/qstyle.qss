@@ -1,0 +1,29 @@
+/* Specific styles for QComboBox */
+QComboBox {
+    width: 370px;
+}
+
+/* Styles for toolbar handles */
+QToolBar::handle {
+    background: url("dtt4all_data/icons/handle.png"); /* Handle icon */
+}
+
+/* Styles for progress bars */
+QProgressBar {
+    border: 2px solid gray; /* Border */
+    border-radius: 5px; /* Rounded border */
+    text-align: center; /* Text alignment */
+}
+
+/* Styles for progress bar chunks */
+QProgressBar::chunk {
+    background-color: green; /* Chunk color */
+    width: 5px; /* Width */
+    margin: 0.5px; /* Margin */
+}
+
+/* Styles for QCheckBox */
+QCheckBox::indicator {
+    width: 15px; /* Width */
+    height: 15px; /* Height */
+}
