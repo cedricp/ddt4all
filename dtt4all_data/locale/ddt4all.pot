@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 17:35+0100\n"
+"POT-Creation-Date: 2024-03-05 15:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -316,6 +316,9 @@ msgstr ""
 msgid "Skipping CAN extended address (not supported yet)"
 msgstr ""
 
+msgid "Found: "
+msgstr ""
+
 msgid "Identified ECU"
 msgstr ""
 
@@ -443,9 +446,6 @@ msgid "Diag"
 msgstr ""
 
 msgid "Projets"
-msgstr ""
-
-msgid "DDT4All"
 msgstr ""
 
 msgid "loaded ECUs in database."
@@ -583,7 +583,7 @@ msgstr ""
 msgid "About DTT4ALL"
 msgstr ""
 
-msgid "DTT4ALL version:"
+msgid " version:"
 msgstr ""
 
 msgid "Created by:"
@@ -893,6 +893,12 @@ msgid " to "
 msgstr ""
 
 msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Writing database"
+msgstr ""
+
+msgid "Writing archive"
 msgstr ""
 
 msgid "Opening ECU Database..."

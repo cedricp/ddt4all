@@ -15,15 +15,6 @@ import json
 import options
 import version
 
-__author__ = version.__author__
-__copyright__ = version.__copyright__
-__credits__ = version.__credits__
-__license__ = version.__license__
-__version__ = version.__version__
-__maintainer__ = version.__maintainer__
-__email__ = version.__email__
-__status__ = version.__status__
-
 _ = options.translator('ddt4all')
 
 addressing = {}
@@ -1689,7 +1680,7 @@ class Ecu_scanner:
                 self.ecus[ecuname] = target
                 self.num_ecu_found += 1
                 if label is not None:
-                    label.setText("Found %i ecu" % self.num_ecu_found)
+                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
                 line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
@@ -1734,7 +1725,7 @@ class Ecu_scanner:
                 self.approximate_ecus[kept_ecu.name] = kept_ecu
                 self.num_ecu_found += 1
                 if label is not None:
-                    label.setText("Found %i ecu" % self.num_ecu_found)
+                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
 
                 text = _("Found ECU")
                 text1 = _("(not perfect match)")

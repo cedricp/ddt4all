@@ -24,15 +24,6 @@ import parameters
 import sniffer
 import version
 
-__author__ = version.__author__
-__copyright__ = version.__copyright__
-__credits__ = version.__credits__
-__license__ = version.__license__
-__version__ = version.__version__
-__maintainer__ = version.__maintainer__
-__email__ = version.__email__
-__status__ = version.__status__
-
 _ = options.translator('ddt4all')
 app = None
 
@@ -276,7 +267,7 @@ class Main_widget(widgets.QMainWindow):
         self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
-        self.setWindowTitle(_("DDT4All") + " - Version: " + __version__ + " - Build status: " + __status__)
+        self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
@@ -285,7 +276,7 @@ class Main_widget(widgets.QMainWindow):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setIcon(widgets.QMessageBox.Warning)
             msgbox.setText(_("No database found"))
             msgbox.setInformativeText(_("Check documentation"))
@@ -580,7 +571,7 @@ class Main_widget(widgets.QMainWindow):
         msgbox.setWindowIcon(appIcon)
         msgbox.setIcon(widgets.QMessageBox.Information)
         msgbox.setWindowTitle(_("About DTT4ALL"))
-        text_about = _("DTT4ALL version:") + " %s" % version.__version__
+        text_about = version.__appname__ + _(" version:") + " %s" % version.__version__
         msgbox.setText(text_about)
         contrib = _("Created by:") + " %s\n\n %s\n" % (version.__author__, _("Contributors:"))
         for c in version.__contributors__:
@@ -685,7 +676,7 @@ class Main_widget(widgets.QMainWindow):
             mbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             mbox.setWindowIcon(appIcon)
-            mbox.setWindowTitle("DTT4ALL")
+            mbox.setWindowTitle(version.__appname__)
             mbox.setText("Cannot write to directory " + os.path.dirname(filename))
             mbox.exec_()
             return
@@ -698,6 +689,16 @@ class Main_widget(widgets.QMainWindow):
     def launchPlugin(self, pim):
         if self.paramview:
             self.paramview.init('')
+        if self.ecu_scan.getNumEcuDb() == 0:
+            msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle(version.__appname__)
+            msgbox.setIcon(widgets.QMessageBox.Warning)
+            msgbox.setText(_("No database found"))
+            msgbox.setInformativeText(_("Check documentation"))
+            msgbox.exec_()
+            return
         pim()
         if self.paramview:
             self.paramview.initELM()
@@ -731,6 +732,16 @@ class Main_widget(widgets.QMainWindow):
         ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
         necatname = ncn[0]
         if necatname:
+            if self.ecu_scan.getNumEcuDb() == 0:
+                msgbox = widgets.QMessageBox()
+                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                msgbox.setWindowIcon(appIcon)
+                msgbox.setWindowTitle(version.__appname__)
+                msgbox.setIcon(widgets.QMessageBox.Warning)
+                msgbox.setText(_("No database found"))
+                msgbox.setInformativeText(_("Check documentation"))
+                msgbox.exec_()
+                return
             self.paramview.createCategory(necatname)
             self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
 
@@ -811,7 +822,7 @@ class Main_widget(widgets.QMainWindow):
         msgBox = widgets.QMessageBox()
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgBox.setWindowIcon(appIcon)
-        msgBox.setWindowTitle("DTT4ALL")
+        msgBox.setWindowTitle(version.__appname__)
         msgBox.setText(_('Scan options'))
         scancan = False
         scancan2 = False
@@ -1132,7 +1143,7 @@ class donationWidget(widgets.QLabel):
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
-        msgbox.setWindowTitle("DTT4ALL")
+        msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(
             _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
@@ -1147,7 +1158,7 @@ class donationWidget(widgets.QLabel):
             core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
-        msgbox.setWindowTitle("DTT4ALL")
+        msgbox.setWindowTitle(version.__appname__)
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setText(
@@ -1168,6 +1179,8 @@ def set_dark_style(onoff):
         StyleSheet = bytes(stylefile.readAll()).decode()
 
     app.setStyleSheet(StyleSheet)
+    options.configuration["dark"] = options.dark_mode
+    options.save_config()
 
 
 class main_window_options(widgets.QDialog):
@@ -1341,8 +1354,7 @@ class main_window_options(widgets.QDialog):
         self.timer.start(500)
         self.portcount = -1
         self.usb()
-
-        self.setWindowTitle(_("DDT4All") + " -  Version: " + __version__ + " - Build status: " + __status__)
+        self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
         self.setIcon()
 
     def setIcon(self):
@@ -1520,7 +1532,7 @@ class main_window_options(widgets.QDialog):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
@@ -1542,7 +1554,7 @@ class main_window_options(widgets.QDialog):
                 msgbox = widgets.QMessageBox()
                 appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
-                msgbox.setWindowTitle("DTT4ALL")
+                msgbox.setWindowTitle(version.__appname__)
                 msgbox.setText(_("Please select a communication port"))
                 msgbox.exec_()
 
@@ -1578,6 +1590,20 @@ if __name__ == '__main__':
     except:
         set_dark_style(0)
         pass
+
+    # For InnoSetup version.h auto generator
+    if os.path.isdir('dtt4all_data/inno-win-setup'):
+        try:
+            f = open("dtt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8")
+            f.write(f'#define __appname__ "{version.__appname__}"\n')
+            f.write(f'#define __author__ "{version.__author__}"\n')
+            f.write(f'#define __copyright__ "{version.__copyright__}"\n')
+            f.write(f'#define __version__ "{version.__version__}"\n')
+            f.write(f'#define __email__ "{version.__email__}"\n')
+            f.write(f'#define __status__ "{version.__status__}"')
+            f.close()
+        except:
+            pass
 
     fsize = 9
     fname = "Segoe UI"
@@ -1626,7 +1652,7 @@ if __name__ == '__main__':
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
@@ -1638,7 +1664,7 @@ if __name__ == '__main__':
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:

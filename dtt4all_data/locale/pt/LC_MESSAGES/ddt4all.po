@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 17:35+0100\n"
-"PO-Revision-Date: 2024-03-04 17:38+0100\n"
+"POT-Creation-Date: 2024-03-05 15:31+0100\n"
+"PO-Revision-Date: 2024-03-05 15:39+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -325,6 +325,9 @@ msgstr "Endereço de digitalização: "
 msgid "Skipping CAN extended address (not supported yet)"
 msgstr "Saltar o endereço alargado CAN (ainda não suportado)"
 
+msgid "Found: "
+msgstr "Encontrados: "
+
 msgid "Identified ECU"
 msgstr "ECU identificada"
 
@@ -454,9 +457,6 @@ msgstr "Diag"
 
 msgid "Projets"
 msgstr "Projetos"
-
-msgid "DDT4All"
-msgstr "DDT4All"
 
 msgid "loaded ECUs in database."
 msgstr "eCUs carregadas na base de dados."
@@ -595,8 +595,8 @@ msgstr "Sobre"
 msgid "About DTT4ALL"
 msgstr "Sobre DTT4ALL"
 
-msgid "DTT4ALL version:"
-msgstr "Versão DTT4ALL:"
+msgid " version:"
+msgstr " versão:"
 
 msgid "Created by:"
 msgstr "Criado por:"
@@ -917,6 +917,12 @@ msgstr " a "
 msgid "Skipping current file (cannot parse it)"
 msgstr "Ignorando o arquivo atual (não é possível analisá-lo)"
 
+msgid "Writing database"
+msgstr "Escrita de banco de dados"
+
+msgid "Writing archive"
+msgstr "Escrita de arquivo"
+
 msgid "Opening ECU Database..."
 msgstr "Abrindo banco de dados ECU..."
 
@@ -1195,6 +1201,12 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC CALCULATOR"
+
+#~ msgid "DDT4All"
+#~ msgstr "DDT4All"
+
+#~ msgid "DTT4ALL version:"
+#~ msgstr "Versão DTT4ALL:"
 
 #~ msgid "About Dtt4All"
 #~ msgstr "Sobre Dtt4All"

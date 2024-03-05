@@ -36,3 +36,4 @@ __pycache__/
 /pyproject.toml
 /dtt4all_data/inno-win-setup/Output/
 /dtt4all_data/config.json
+/dtt4all_data/inno-win-setup/version.h

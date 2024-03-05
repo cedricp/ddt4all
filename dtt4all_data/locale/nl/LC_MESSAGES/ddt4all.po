@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 17:35+0100\n"
-"PO-Revision-Date: 2024-03-04 17:41+0100\n"
+"POT-Creation-Date: 2024-03-05 15:31+0100\n"
+"PO-Revision-Date: 2024-03-05 15:38+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -338,6 +338,9 @@ msgstr "ECU Functie Adres"
 msgid "Skipping CAN extended address (not supported yet)"
 msgstr ""
 
+msgid "Found: "
+msgstr ""
+
 msgid "Identified ECU"
 msgstr ""
 
@@ -481,9 +484,6 @@ msgstr ""
 msgid "Projets"
 msgstr "Projecten"
 
-msgid "DDT4All"
-msgstr "DDT4All - Daciamodellen.nl Editie"
-
 msgid "loaded ECUs in database."
 msgstr "eCU's in database geladen."
 
@@ -623,7 +623,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "Diag version"
-msgid "DTT4ALL version:"
+msgid " version:"
 msgstr "Diag versie"
 
 msgid "Created by:"
@@ -961,6 +961,12 @@ msgstr ""
 msgid "Skipping current file (cannot parse it)"
 msgstr ""
 
+msgid "Writing database"
+msgstr ""
+
+msgid "Writing archive"
+msgstr ""
+
 msgid "Opening ECU Database..."
 msgstr ""
 
@@ -1213,6 +1219,14 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
+
+#~ msgid "DDT4All"
+#~ msgstr "DDT4All - Daciamodellen.nl Editie"
+
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "DTT4ALL version:"
+#~ msgstr "Diag versie"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Wissel baudrate naar:"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 17:35+0100\n"
-"PO-Revision-Date: 2024-03-04 17:40+0100\n"
+"POT-Creation-Date: 2024-03-05 15:31+0100\n"
+"PO-Revision-Date: 2024-03-05 15:33+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -337,6 +337,9 @@ msgstr "Dirección de función ECU"
 msgid "Skipping CAN extended address (not supported yet)"
 msgstr ""
 
+msgid "Found: "
+msgstr ""
+
 msgid "Identified ECU"
 msgstr ""
 
@@ -480,9 +483,6 @@ msgstr ""
 msgid "Projets"
 msgstr "Proyectos"
 
-msgid "DDT4All"
-msgstr "DDT4All - loganbreak.mforos.com edición"
-
 msgid "loaded ECUs in database."
 msgstr "eCUs cargadas en base de datos."
 
@@ -622,7 +622,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "Diag version"
-msgid "DTT4ALL version:"
+msgid " version:"
 msgstr "Version diagnostico"
 
 msgid "Created by:"
@@ -960,6 +960,12 @@ msgstr ""
 msgid "Skipping current file (cannot parse it)"
 msgstr ""
 
+msgid "Writing database"
+msgstr ""
+
+msgid "Writing archive"
+msgstr ""
+
 msgid "Opening ECU Database..."
 msgstr ""
 
@@ -1212,6 +1218,14 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
+
+#~ msgid "DDT4All"
+#~ msgstr "DDT4All - loganbreak.mforos.com edición"
+
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "DTT4ALL version:"
+#~ msgstr "Version diagnostico"
 
 #~ msgid "Changing baud rate to:"
 #~ msgstr "Cambiando baudios a:"

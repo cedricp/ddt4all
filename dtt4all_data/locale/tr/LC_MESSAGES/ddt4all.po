@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 17:35+0100\n"
-"PO-Revision-Date: 2024-03-04 17:44+0100\n"
+"POT-Creation-Date: 2024-03-05 15:31+0100\n"
+"PO-Revision-Date: 2024-03-05 15:41+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -339,6 +339,11 @@ msgid "Skipping CAN extended address (not supported yet)"
 msgstr ""
 
 #, fuzzy
+#| msgid "Found similar"
+msgid "Found: "
+msgstr "Benzer bulundu"
+
+#, fuzzy
 #| msgid "Identify ECU"
 msgid "Identified ECU"
 msgstr "ECU tanımla"
@@ -481,9 +486,6 @@ msgstr "Tanılama"
 msgid "Projets"
 msgstr "Projeler"
 
-msgid "DDT4All"
-msgstr "DDT4All"
-
 msgid "loaded ECUs in database."
 msgstr "adet ECU veritabanında yüklü."
 
@@ -625,7 +627,7 @@ msgstr "Dtt4All Hakkında"
 
 #, fuzzy
 #| msgid "Diag version"
-msgid "DTT4ALL version:"
+msgid " version:"
 msgstr "Tanılama sürümü"
 
 msgid "Created by:"
@@ -959,6 +961,14 @@ msgstr ""
 msgid "Skipping current file (cannot parse it)"
 msgstr ""
 
+#, fuzzy
+#| msgid "Zip database"
+msgid "Writing database"
+msgstr "Veritabanını sıkıştır"
+
+msgid "Writing archive"
+msgstr ""
+
 msgid "Opening ECU Database..."
 msgstr ""
 
@@ -1254,6 +1264,14 @@ msgstr "VIN (Şasi Numarası)"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
+
+#~ msgid "DDT4All"
+#~ msgstr "DDT4All"
+
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "DTT4ALL version:"
+#~ msgstr "Tanılama sürümü"
 
 #~ msgid "About Dtt4All"
 #~ msgstr "Dtt4All Hakkında"

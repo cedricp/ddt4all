@@ -19,17 +19,7 @@ import json
 import options
 from uiutils import *
 
-__author__ = version.__author__
-__copyright__ = version.__copyright__
-__credits__ = version.__credits__
-__license__ = version.__license__
-__version__ = version.__version__
-__maintainer__ = version.__maintainer__
-__email__ = version.__email__
-__status__ = version.__status__
-
 _ = options.translator('ddt4all')
-
 
 # TODO :
 # Read freezeframe data // Done (partially)
@@ -91,7 +81,7 @@ class ecuCommand(widgets.QDialog):
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
-        msgbox.setWindowTitle("DTT4ALL")
+        msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(text)
         msgbox.exec_()
 
@@ -113,7 +103,7 @@ class ecuCommand(widgets.QDialog):
                     msgbox = widgets.QMessageBox()
                     appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
                     msgbox.setWindowIcon(appIcon)
-                    msgbox.setWindowTitle("DTT4ALL")
+                    msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText("Missing data in table")
                     msgbox.exec_()
                 return "Missing input data"
@@ -140,7 +130,7 @@ class ecuCommand(widgets.QDialog):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText("ECU returned error (check logview)")
             msgbox.exec_()
             return
@@ -1111,7 +1101,7 @@ class paramWidget(widgets.QWidget):
                 msgbox = widgets.QMessageBox()
                 appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
-                msgbox.setWindowTitle("DTT4ALL")
+                msgbox.setWindowTitle(version.__appname__)
                 msgbox.setText(message)
                 msgbox.exec_()
 
@@ -1424,7 +1414,7 @@ class paramWidget(widgets.QWidget):
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
-        msgbox.setWindowTitle("DTT4ALL")
+        msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(_("<center>You are about to clear diagnostic troubles codes</center>") +
                        _("<center>Ae you sure this is what you want.</center>"))
 
@@ -1454,7 +1444,7 @@ class paramWidget(widgets.QWidget):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText("There was an error clearing DTC")
             msgbox.exec_()
             options.main_window.logview.append("<font color=red>" + _("Clear DTC failed") + "</font>")
@@ -1492,7 +1482,7 @@ class paramWidget(widgets.QWidget):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("Invalid response for ReadDTC command"))
             msgbox.exec_()
             return
@@ -1504,7 +1494,7 @@ class paramWidget(widgets.QWidget):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("Read DTC returned an error"))
             msgbox.exec_()
             return
@@ -1515,7 +1505,7 @@ class paramWidget(widgets.QWidget):
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle("DTT4ALL")
+            msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No DTC"))
             msgbox.exec_()
             return
@@ -1862,10 +1852,10 @@ def zipConvertXML(dbfilename="ecu.zip"):
 
             targetsdict[filename] = ecu_ident
 
-        print('Writing database')
+        print(_("Writing database"))
         zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
 
-    print('Writing archive')
+    print(_("Writing archive"))
     with open(dbfilename, "wb") as f:
         f.write(zipoutput.getvalue())
 

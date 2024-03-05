@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 17:35+0100\n"
-"PO-Revision-Date: 2024-03-04 17:41+0100\n"
+"POT-Creation-Date: 2024-03-05 15:31+0100\n"
+"PO-Revision-Date: 2024-03-05 15:37+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -340,6 +340,11 @@ msgid "Skipping CAN extended address (not supported yet)"
 msgstr ""
 
 #, fuzzy
+#| msgid "Found similar"
+msgid "Found: "
+msgstr "Trova similare"
+
+#, fuzzy
 #| msgid "Identify ECU"
 msgid "Identified ECU"
 msgstr "Identifica ECU"
@@ -484,9 +489,6 @@ msgstr "Diag"
 msgid "Projets"
 msgstr "Progetti"
 
-msgid "DDT4All"
-msgstr "DDT4All"
-
 msgid "loaded ECUs in database."
 msgstr "eCUs caricate nel database."
 
@@ -624,7 +626,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "Diag version"
-msgid "DTT4ALL version:"
+msgid " version:"
 msgstr "Versione diagnostica"
 
 msgid "Created by:"
@@ -968,6 +970,14 @@ msgstr ""
 msgid "Skipping current file (cannot parse it)"
 msgstr ""
 
+#, fuzzy
+#| msgid "Zip database"
+msgid "Writing database"
+msgstr "Comprimi database"
+
+msgid "Writing archive"
+msgstr ""
+
 msgid "Opening ECU Database..."
 msgstr ""
 
@@ -1251,6 +1261,14 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCOLATORE CRC"
+
+#~ msgid "DDT4All"
+#~ msgstr "DDT4All"
+
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "DTT4ALL version:"
+#~ msgstr "Versione diagnostica"
 
 #, python-format
 #~ msgid "Adding source file %s"

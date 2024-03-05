@@ -1,64 +1,71 @@
-﻿#define MyAppName       "DDT4All"
-#define MyAppVersion    GetDateTimeString('yy.mm.dd','','')
-#define MyAppDir        "ddt4all"
-#define MyAppAuthor     "Cedric PAILLE"
-#define MyAppCompany    "Cedric PAILLE"
-#define MyAppContact    "cedricpaille@gmail.com"  
+﻿#include "version.h"
+#define MyAppName       Str(__appname__)
+#define MyAppVersion    Str(__version__)
+#define MyAppStatus     Str(__status__) + "-x64"    
+#define MyAppDir        MyAppName
+#define MyAppAuthor     Str(__author__)
+#define MyAppCompany    Str(__author__)
+#define MyAppContact    Str(__email__)  
 #define MyAppSupportURL "https://github.com/cedricp/ddt4all" 
 #define MyAppReadmeMd   "https://github.com/cedricp/ddt4all/blob/master/README.md"
-#define C_StartingYear  "©2016"
-#define C_EndingYear    GetDateTimeString('yyyy','','')
-#define DateEUR         GetDateTimeString('dd.mm.yyyy','','')
+#define MyCopyright     Str(__copyright__) + " - " + MyAppAuthor
+#define APP_ID          "{3E70988F-0D77-4639-800D-2CD9DB2617B1}"
 
 [Setup]
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-AppVerName={#MyAppName} {#MyAppVersion}
-
+AppVerName={#MyAppName} {#MyAppVersion} {#MyAppStatus}
 AppPublisherURL={#MyAppSupportURL}
 AppSupportURL={#MyAppSupportURL}
 AppUpdatesURL={#MyAppSupportURL}
 AppReadmeFile={#MyAppReadmeMd}
 AppContact={#MyAppContact}
-
-;--------------------- Info for exe file properties
-VersionInfoDescription={#MyAppName} installer
+VersionInfoDescription={#MyAppName} Windows-Installer
 VersionInfoVersion={#MyAppVersion}
 VersionInfoProductName={#MyAppName}
-AppCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
-
-;--------------------- Info Windows program list
+AppCopyright={#MyCopyright} 
 UninstallDisplayIcon={uninstallexe}
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
-
-UsepreviousLanguage=No
-
-DefaultDirName={pf}\{#MyAppDir}
+ArchitecturesInstallIn64BitMode=x64 ia64
+ArchitecturesAllowed=x64 arm64 ia64
+Compression=lzma2/ultra64
+AllowUNCPath=true
+MinVersion=6.1sp1
+InternalCompressLevel=ultra
+DefaultDirName={commonpf}\{#MyAppDir}
 DefaultGroupName={#MyAppName}
 SetupIconFile=..\..\dtt4all_data\icons\obd.ico
-OutputBaseFilename={#MyAppDir}-win-installer-{#MyAppVersion}-python-3.12.1-64bits
+OutputBaseFilename={#MyAppName}-Windows-Installer-v{#MyAppVersion}_{#MyAppStatus}
 UsePreviousPrivileges=True
 VersionInfoCompany={#MyAppCompany}
 VersionInfoTextVersion={#MyAppVersion}
-VersionInfoCopyright={#MyAppCompany} {#C_StartingYear}-{#C_EndingYear} 
+VersionInfoCopyright={#MyCopyright} 
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoProductTextVersion={#MyAppVersion}
 VersionInfoOriginalFileName={#MyAppName}
 LicenseFile=..\..\license.txt
-WizardStyle=modern
-AppId={{3E70988F-0D77-4639-800D-2CD9DB2617B1}
+WizardSmallImageFile=installer_wizard_image.bmp
+WizardImageFile=WizardImage0.bmp
+DisableDirPage=yes
+DisableProgramGroupPage=yes
+;WizardStyle=modern
+DisableWelcomePage=no
+UsedUserAreasWarning=no
+AppId={{#APP_ID}
 
 [Files]
 ;Source: "..\..\ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "\DDT4ALL-Dist-Versions\Python312\*"; DestDir: "{app}\Python312-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
-Source: "..\..\ddtplugins\*"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
-Source: "..\..\dtt4all_data\*"; DestDir: "{app}\dtt4all_data"; Flags: ignoreversion recursesubdirs; Excludes: "inno-win-setup\*"
+Source: "..\..\dtt4all_data\icons\*"; DestDir: "{app}\dtt4all_data\icons"; Flags: ignoreversion recursesubdirs
+Source: "..\..\dtt4all_data\tools\*"; DestDir: "{app}\dtt4all_data\tools"; Flags: ignoreversion recursesubdirs
+Source: "..\..\dtt4all_data\locale\*"; DestDir: "{app}\dtt4all_data\locale"; Flags: ignoreversion recursesubdirs
 Source: "..\..\*.py"; DestDir: "{app}"; Excludes: "*.pyc"
-Source: "..\..\*.qss"; DestDir: "{app}"; AfterInstall: AfterMyProgInstall;
-;Source: "..\..\*.qss"; DestDir: "{app}"
+Source: "..\..\dtt4all_data\*.qss"; DestDir: "{app}\dtt4all_data";
+Source: "..\..\dtt4all_data\projects.json"; DestDir: "{app}\dtt4all_data"; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
 Type: filesandordirs; Name: "{group}";
@@ -67,6 +74,9 @@ Type: filesandordirs; Name: "{app}"
 [UninstallDelete]
 Type: filesandordirs; Name: "{group}";
 Type: filesandordirs; Name: "{app}"
+
+[Run]
+Filename: {app}\Python312-x64\python.exe; Parameters: """{app}\main.py"""; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [Code]
 procedure AfterMyProgInstall;
@@ -87,10 +97,23 @@ Name: "{app}\dtt4all_data"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Tasks: desktopicon
+Name: "{app}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#MyAppName} Diagnostic Tool"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
+en.OpenAfterInstall=Open {#MyAppName} after installation
+de.OpenAfterInstall={#MyAppName} nach Abschluss der Installation öffnen
+fr.OpenAfterInstall=Ouvrir {#MyAppName} après l'installation
+es.OpenAfterInstall=Abrir {#MyAppName} tras la instalación
+it.OpenAfterInstall=Apri {#MyAppName} dopo l'installazione
+nl.OpenAfterInstall={#MyAppName} starten na installatie
+pl.OpenAfterInstall=Otwórz program {#MyAppName} po zakończeniu instalacji
+ptbr.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
+pt.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
+ru.OpenAfterInstall=Открыть {#MyAppName} после окончания установки
+tr.OpenAfterInstall=Kurulumdan sonra {#MyAppName}'i aç
 en.AfterMyProgInstall=Do not forget to install database to %n%n
 de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in%n%n
 fr.AfterMyProgInstall=Pensez a installer une base de données dans%n%n
@@ -104,14 +127,14 @@ ru.AfterMyProgInstall=Рассмотрите возможность устано
 tr.AfterMyProgInstall=Veritabanını şuraya yüklemeyi unutmayın %n%n
 
 [Languages]
-Name: "en";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Default.isl"
-Name: "de";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\German.isl"
-Name: "fr";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\French.isl"
-Name: "es";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Spanish.isl"
-Name: "it";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Italian.isl"
-Name: "nl";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Dutch.isl"
-Name: "pl";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Polish.isl"
-Name: "ptbr"; MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\BrazilianPortuguese.isl"
-Name: "pt";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Portuguese.isl"
-Name: "ru";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Russian.isl"
-Name: "tr";   MessagesFile: "C:\Program Files (x86)\Inno Setup 6\Languages\Turkish.isl"
+Name: "en";   MessagesFile: "compiler:\Default.isl"
+Name: "de";   MessagesFile: "compiler:\Languages\German.isl"
+Name: "fr";   MessagesFile: "compiler:\Languages\French.isl"
+Name: "es";   MessagesFile: "compiler:\Languages\Spanish.isl"
+Name: "it";   MessagesFile: "compiler:\Languages\Italian.isl"
+Name: "nl";   MessagesFile: "compiler:\Languages\Dutch.isl"
+Name: "pl";   MessagesFile: "compiler:\Languages\Polish.isl"
+Name: "ptbr"; MessagesFile: "compiler:\Languages\BrazilianPortuguese.isl"
+Name: "pt";   MessagesFile: "compiler:\Languages\Portuguese.isl"
+Name: "ru";   MessagesFile: "compiler:\Languages\Russian.isl"
+Name: "tr";   MessagesFile: "compiler:\Languages\Turkish.isl"
