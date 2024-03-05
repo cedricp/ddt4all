@@ -81,10 +81,12 @@ QDockWidget::title {
 
 /* Specific styles for QComboBox */
 QComboBox {
-    color: #e1e1e1; /* Text color */
+    background-color: #ffffff; /* Background color */
+    color: #000000; /* Text color */
     border: 1px solid #8e8e1e; /* Border */
     border-radius: 5px; /* Rounded border */
     padding: 1px; /* Internal padding */
+    width: 370px; 
 }
 
 /* Styles for QComboBox drop-down arrow */
