@@ -339,6 +339,8 @@ QTabBar::tab:!selected {
 
 /* Styling for selected tab bar tab */
 QTabBar::tab:selected {
+    color: #ffffff;
+    background-color: #e94000ff;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     margin-bottom: 0px;
@@ -350,6 +352,7 @@ QTabBar::tab:!selected:hover {
     padding-bottom: 3px;*/
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    background-color: #ffaa00;
 }
 
 /* Styling for checked and unchecked radio button indicators */
