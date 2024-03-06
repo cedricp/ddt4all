@@ -51,6 +51,7 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
+Source: "win32_deps\VC_redist.x86.exe"; DestDir: "{app}\win32_deps"; Tasks: microsoft_runtimes
 ;Source: "..\..\ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
 Source: "\DDT4ALL-Dist-Versions\\Python38-32\*"; DestDir: "{app}\\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
@@ -60,7 +61,7 @@ Source: "..\..\dtt4all_data\icons\*"; DestDir: "{app}\dtt4all_data\icons"; Flags
 Source: "..\..\dtt4all_data\tools\*"; DestDir: "{app}\dtt4all_data\tools"; Flags: ignoreversion recursesubdirs
 Source: "..\..\dtt4all_data\locale\*"; DestDir: "{app}\dtt4all_data\locale"; Flags: ignoreversion recursesubdirs
 Source: "..\..\*.py"; DestDir: "{app}"; Excludes: "*.pyc"
-Source: "..\..\dtt4all_data\*.qss"; DestDir: "{app}\dtt4all_data";
+Source: "..\..\dtt4all_data\*.qss"; DestDir: "{app}\dtt4all_data"
 Source: "..\..\dtt4all_data\projects.json"; DestDir: "{app}\dtt4all_data"; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
@@ -72,6 +73,7 @@ Type: filesandordirs; Name: "{group}";
 Type: filesandordirs; Name: "{app}"
 
 [Run]
+Filename: "{app}\win32_deps\VC_redist.x86.exe"; Tasks: microsoft_runtimes
 Filename: {app}\Python386-32\python.exe; Parameters: """{app}\main.py"""; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [Code]
@@ -91,6 +93,7 @@ Name: "{app}\vehicles"; Permissions: users-full
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "microsoft_runtimes"; Description: "{cm:MSruntimes}"; GroupDescription: "Microsoft Visual C++ Redistributable"
 
 [Icons]
 Name: "{app}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
@@ -99,6 +102,18 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; Working
 Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\dtt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
+en.MSruntimes=Install Microsoft Visual C++ Redistributable runtimes files
+de.MSruntimes=Installieren Sie Microsoft Visual C++ Redistributable-Laufzeitdateien
+fr.MSruntimes=Installer les fichiers d'exécution redistribuables Microsoft Visual C++
+es.MSruntimes=Instalar archivos de tiempo de ejecución redistribuibles de Microsoft Visual C++
+it.MSruntimes=Installare i file runtime ridistribuibili di Microsoft Visual C++
+nl.MSruntimes=Installeer Microsoft Visual C++ Redistributable runtimes-bestanden
+pl.MSruntimes=Zainstaluj pliki środowiska wykonawczego redystrybucyjnego Microsoft Visual C++
+ptbr.MSruntimes=Instalar arquivos de tempo de execução redistribuíveis do Microsoft Visual C++
+pt.MSruntimes=Instalar arquivos de tempo de execução redistribuíveis do Microsoft Visual C++
+ru.MSruntimes=Установите распространяемые файлы среды выполнения Microsoft Visual C++.
+tr.MSruntimes=Microsoft Visual C++ Yeniden Dağıtılabilir çalışma zamanı dosyalarını yükleyin
+; -----------------------------------------------------------------------------
 en.OpenAfterInstall=Open {#MyAppName} after installation
 de.OpenAfterInstall={#MyAppName} nach Abschluss der Installation öffnen
 fr.OpenAfterInstall=Ouvrir {#MyAppName} après l'installation
@@ -110,6 +125,7 @@ ptbr.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
 pt.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
 ru.OpenAfterInstall=Открыть {#MyAppName} после окончания установки
 tr.OpenAfterInstall=Kurulumdan sonra {#MyAppName}'i aç
+; -----------------------------------------------------------------------------
 en.AfterMyProgInstall=Do not forget to install database to %n%n
 de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in%n%n
 fr.AfterMyProgInstall=Pensez a installer une base de données dans%n%n
