@@ -14,8 +14,10 @@ create-dmg \
   --window-pos 200 120 \
   --window-size 600 300 \
   --icon-size 100 \
+  --no-internet-enable \
   --icon "DDT4ALL.app" 175 120 \
   --hide-extension "DDT4ALL.app" \
+  --eula "../../license.txt" \
   --app-drop-link 425 120 \
   "dist/DDT4ALL.dmg" \
   "dist/dmg/"

@@ -8,13 +8,10 @@ a = Analysis(
     datas=[
         ('../../ddt4all_data/icons', 'ddt4all_data/icons'),
         ('../../ddt4all_data/locale', 'ddt4all_data/locale'),
-        ('../../ddt4all_data/*.json', 'ddt4all_data'),
+        ('../../ddt4all_data/projects.json', 'ddt4all_data'),
         ('../../ddt4all_data/*.qss', 'ddt4all_data'),
         ('../../ddtplugins/*.py', 'ddtplugins'),
-        ('../../dataeditor.py', '.'),
-        ('../../displaymod.py', '.'),
-        ('../../*.py', '.'),
-        ##('../../ecu.zip', '.')
+        ('../../*.py', '.')
     ],
     hiddenimports=[],
     hookspath=[],
