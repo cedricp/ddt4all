@@ -34,6 +34,8 @@ __pycache__/
 /setup.py
 /setup.cfg
 /pyproject.toml
-/dtt4all_data/inno-win-setup/Output/
-/dtt4all_data/config.json
-/dtt4all_data/inno-win-setup/version.h
+/ddt4all_data/inno-win-setup/Output/
+/ddt4all_data/config.json
+/ddt4all_data/inno-win-setup/version.h
+/ddt4all_data/mac-os/build/
+/ddt4all_data/mac-os/dist/

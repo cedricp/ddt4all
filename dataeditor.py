@@ -1079,7 +1079,7 @@ class dataEditor(widgets.QWidget):
             for rcvname, rcvdi in request.dataitems.items():
                 if rcvname == dataname:
                     msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                     msgbox.setWindowIcon(appIcon)
                     msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText(_("Data is used by request %s") % reqname)
@@ -1088,7 +1088,7 @@ class dataEditor(widgets.QWidget):
             for sndname, snddi in request.sendbyte_dataitems.items():
                 if sndname == dataname:
                     msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                     msgbox.setWindowIcon(appIcon)
                     msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText(_("Data is used by request %s") % reqname)

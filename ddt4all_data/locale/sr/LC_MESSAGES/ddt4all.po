@@ -1,0 +1,1236 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-10 03:17+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
+"Language-Team: \n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Goto data"
+msgstr "Idi na podatke"
+
+msgid "Remove"
+msgstr "Ukloni"
+
+msgid "Add to screen"
+msgstr "Dodaj na prikaz"
+
+msgid "Request name;Bytes;Manual"
+msgstr ""
+
+msgid "Add"
+msgstr "Dodaj"
+
+msgid "Send request bytes (HEX)"
+msgstr "Posalji zahtev u bajtima (HEX)"
+
+msgid "Receive bytes (HEX)"
+msgstr "Primljeni bajtovi (HEX)"
+
+msgid "Data length"
+msgstr "Duzina podataka"
+
+msgid "Shift byte count"
+msgstr "Pomeranje brojackog registra"
+
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr ""
+"Naziv podataka;Pocetni bajt;Bit pomeraja;Bit brojaca;Nacin smestanja bajtova"
+
+msgid "Little"
+msgstr "Mali"
+
+msgid "Big"
+msgstr "Veliki"
+
+msgid "Inherits globals"
+msgstr "Inherits globals"
+
+msgid "No SDS"
+msgstr ""
+
+msgid "Plant"
+msgstr ""
+
+msgid "After Sale"
+msgstr ""
+
+msgid "Engineering"
+msgstr ""
+
+msgid "Supplier"
+msgstr "Proizvodjac"
+
+msgid "Reload requests"
+msgstr "Zahtev za ponovno ucitavanje"
+
+msgid "Add request"
+msgstr "Dodaj zahtev"
+
+msgid "Send bytes"
+msgstr "Posalji bajtove"
+
+msgid "Receive bytes"
+msgstr "Primi bajtove"
+
+msgid "Number of bits"
+msgstr "Broj bitova"
+
+msgid "Signed"
+msgstr "Potpisano"
+
+msgid "Add item"
+msgstr "Dodaj stavku"
+
+msgid "Del item"
+msgstr "Obrisi stavku"
+
+msgid "New item"
+msgstr "Nova stavka"
+
+msgid "Value;Text"
+msgstr "Vrednost;Tekst"
+
+msgid "Number of bytes"
+msgstr "Broj bajtova"
+
+msgid "Unit"
+msgstr "Jedinica mere"
+
+msgid "Number of bit"
+msgstr "Broj bitova"
+
+msgid "Format"
+msgstr "Format"
+
+msgid "Value = (AX+B) / C"
+msgstr "Vrednost = (AX+B) / C"
+
+msgid "New"
+msgstr "Nov"
+
+msgid "Duplicate selected"
+msgstr ""
+
+msgid "Remove selected"
+msgstr ""
+
+msgid "Reload"
+msgstr "Ponovo ucitaj"
+
+msgid "Validate changes"
+msgstr "Potvrdi promene"
+
+msgid "Description"
+msgstr "Opis"
+
+msgid "Data type"
+msgstr "Vrsta podataka"
+
+msgid "Numeric"
+msgstr "Brojcani"
+
+msgid "Numeric items"
+msgstr "Brojcane stavke"
+
+msgid "Hex"
+msgstr "HEX"
+
+#, python-format
+msgid "Data is used by request %s"
+msgstr ""
+
+msgid "New data"
+msgstr "Novi podaci"
+
+msgid "Replace me with request description"
+msgstr "Zameni me sa opisom zahteva"
+
+msgid "Data name;Description"
+msgstr "Naziv podataka;Opis"
+
+msgid "Del"
+msgstr "Brisanje"
+
+msgid "Refresh"
+msgstr "Osvezi"
+
+msgid "Move up"
+msgstr "Pomeri gore"
+
+msgid "Check"
+msgstr "Proveri"
+
+#, python-format
+msgid "Request %s not found"
+msgstr "Zahtev %s nije pronadjen"
+
+#, python-format
+msgid ""
+"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
+"values</font>"
+msgstr ""
+"<font color=green>Zahtev <font color=blue>'%s'</font> nema nedostajuce "
+"ulazne vrednosti</font>"
+
+#, python-format
+msgid ""
+"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
+"font>"
+msgstr ""
+"<font color=red>Zahtev <font color=blue>'%s'</font> ima nedostajuce ulazne "
+"vrednosti :</font>"
+
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+msgid "Delay;Request"
+msgstr "Kasnjenje;Zahtev"
+
+msgid "Screen initialization"
+msgstr "Inicijalizacija prikaza"
+
+msgid "Requests to send before screen drawing"
+msgstr "Zahtevano slanje pre iscrtavanja prikaza"
+
+msgid "Button name;Unique name"
+msgstr "Ime dugmeta;Jedinstveno ime"
+
+msgid "ECU Function address"
+msgstr "Adresa funkcije ECU"
+
+msgid "ECU Protocol"
+msgstr "ECU protokol"
+
+msgid "Tool > Ecu ID (Hex)"
+msgstr "Alatka > Ecu ID (Hex)"
+
+msgid "Ecu > Tool ID (Hex)"
+msgstr "Ecu > Alatka ID (Hex)"
+
+msgid "Coding"
+msgstr "Kodiranje"
+
+msgid "Big Endian"
+msgstr "Big Endian"
+
+msgid "Little Endian"
+msgstr "Little Endian"
+
+msgid "ECU Auto identification"
+msgstr ""
+
+msgid "Diag version;Supplier;Soft;Version"
+msgstr "Verzija dijagnostike;Proizvodjac;Softver;Verzija"
+
+msgid "Add new"
+msgstr "Dodaj novo"
+
+msgid "Delete selected"
+msgstr "Obrisi izabrano"
+
+msgid "Diag version"
+msgstr "Verzija dijagnostike"
+
+msgid "Soft"
+msgstr "Softver"
+
+msgid "Version"
+msgstr "Verzija"
+
+msgid "No request named"
+msgstr ""
+
+msgid "Found similar"
+msgstr ""
+
+msgid "DataItem not found"
+msgstr ""
+
+msgid "Cannot find data "
+msgstr ""
+
+msgid " vs "
+msgstr ""
+
+msgid "Cannot draw input "
+msgstr "Nije moguce pozvati zahtev "
+
+msgid "No Value"
+msgstr ""
+
+msgid "Generated stream "
+msgstr ""
+
+#, fuzzy
+#| msgid "Send request bytes (HEX)"
+msgid "Send request stream "
+msgstr "Posalji zahtev u bajtima (HEX)"
+
+#, fuzzy
+#| msgid "Receive bytes"
+msgid "Received stream "
+msgstr "Primi bajtove"
+
+msgid "Request ECU Error"
+msgstr ""
+
+msgid "Decoded values"
+msgstr ""
+
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot find file "
+msgstr "Nije moguce pozvati zahtev "
+
+msgid "Cannot load ECU file"
+msgstr ""
+
+#, fuzzy
+#| msgid "XML file not found : "
+msgid "XML not found"
+msgstr "XML fajl nije pronadjen: "
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr ""
+
+msgid "Adding group "
+msgstr ""
+
+msgid "Unable to find eculist"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Warning, address"
+msgstr "Adresa funkcije ECU"
+
+msgid "is not mapped"
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Scanning address: "
+msgstr "Adresa funkcije ECU"
+
+msgid "Skipping CAN extended address (not supported yet)"
+msgstr ""
+
+msgid "Found: "
+msgstr ""
+
+msgid "Identified ECU"
+msgstr ""
+
+msgid "Found ECU"
+msgstr ""
+
+msgid "(not perfect match)"
+msgstr ""
+
+msgid "(no relevant ECU file found)"
+msgstr ""
+
+msgid "Writing vehicles database..."
+msgstr ""
+
+msgid "Starting zipping "
+msgstr ""
+
+#, fuzzy
+#| msgid "Error:"
+msgid "Error: "
+msgstr "Greska:"
+
+msgid "ELM not connected or wrong COM port"
+msgstr "ELM nije povezan ili je pogresan COM port"
+
+#, fuzzy
+#| msgid "Port speed"
+msgid "Port closed"
+msgstr "Brzina porta"
+
+msgid "Connection to ELM was lost"
+msgstr "Izgubljena veza sa ELM jedinicom"
+
+#, fuzzy
+#| msgid "Cannot call request "
+msgid "Cannot decode bytes "
+msgstr "Nije moguce pozvati zahtev "
+
+msgid "TIMEOUT"
+msgstr "Isteklo vreme"
+
+msgid "Checking port speed:"
+msgstr "Provera brzine porta:"
+
+msgid "Start COM speed :"
+msgstr "Pocetna brzina COM porta:"
+
+msgid "ELM not responding"
+msgstr "ELM se ne odaziva"
+
+msgid "Trying to open port "
+msgstr "Pokusavam da otvorim port "
+
+msgid "No ELM interface on port"
+msgstr "Nema ELM interfejsa na portu"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change OBDLink to "
+msgstr ""
+
+msgid "ELM Connection OK, attempting high speed UART switch"
+msgstr ""
+
+msgid "Failed to switch to change ELM to "
+msgstr ""
+
+msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgstr ""
+
+msgid "OBDLink full speed connection OK"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "OBDLink Version "
+msgstr "Verzija dijagnostike"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+
+msgid "ELM full speed connection OK "
+msgstr ""
+
+#, fuzzy
+#| msgid "Version"
+msgid "Version "
+msgstr "Verzija"
+
+#, fuzzy
+#| msgid "ERROR - wifi do not support changing baud rate"
+msgid "Your ELM does not support baudrate "
+msgstr "GRESKA - WiFi ne podrzava promenu brzine (baud rate)"
+
+msgid "ELM reset..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown address: "
+msgstr "Adresa funkcije ECU"
+
+msgid "FAIL"
+msgstr "Neuspesno"
+
+msgid "OK/TIMEOUT"
+msgstr "U redu/Isteklo vreme"
+
+msgid "OK"
+msgstr "U redu"
+
+msgid "Incompatible adapter on ARM core"
+msgstr "Neodgovarajuci adapter na ARM portu"
+
+msgid "Result: "
+msgstr "Rezultat: "
+
+msgid " succeeded from "
+msgstr " uspesno od "
+
+msgid "ELM Max version:"
+msgstr "ELM Max verzija:"
+
+msgid "ddt4all_data/projects.json not found or not ok."
+msgstr ""
+
+msgid "ECU name"
+msgstr "ECU naziv"
+
+msgid "ID"
+msgstr ""
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Diag"
+msgstr ""
+
+msgid "Projets"
+msgstr "Projekti"
+
+msgid "loaded ECUs in database."
+msgstr "ucitane ECU jedinice u bazu podataka."
+
+msgid "No database found"
+msgstr ""
+
+msgid "Check documentation"
+msgstr ""
+
+msgid "Refresh rate (ms):"
+msgstr "Vreme osvezavanja (ms):"
+
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr ""
+
+msgid "Documentation"
+msgstr ""
+
+msgid "Screen"
+msgstr "Prikaz"
+
+msgid "CAN Sniffer"
+msgstr ""
+
+msgid "Requests"
+msgstr "Zahtevi"
+
+msgid "Data"
+msgstr "Podaci"
+
+msgid "Buttons"
+msgstr "Dugmad"
+
+msgid "Ecu parameters"
+msgstr "ECU parametri"
+
+msgid "Screens"
+msgstr "Prikazi"
+
+msgid "File"
+msgstr "Fajl"
+
+msgid "Read DTC"
+msgstr "Citaj DTC"
+
+msgid "Full log"
+msgstr "Pun izvestaj"
+
+msgid "Expert mode (enable writing)"
+msgstr "Ekspertski mod (omoguceno upisivanje)"
+
+msgid "Auto refresh"
+msgstr "Automatsko osvezavanje"
+
+msgid "Refresh (one shot)"
+msgstr "Osvezavanje (jednom)"
+
+msgid "Manual command"
+msgstr "Rucna komanda"
+
+msgid "Manual request"
+msgstr ""
+
+msgid "Software flow control"
+msgstr ""
+
+msgid "Zoom In"
+msgstr ""
+
+msgid "Zoom Out"
+msgstr ""
+
+msgid "UI Edit"
+msgstr ""
+
+msgid "Open XML"
+msgstr ""
+
+msgid "Identify ECU"
+msgstr ""
+
+msgid "Create New ECU"
+msgstr "Kreiraj novi ECU"
+
+msgid "Save current ECU"
+msgstr "Sacuvaj trenutni ECU"
+
+msgid "Save last record"
+msgstr ""
+
+msgid "Save ECU list"
+msgstr "Sacuvaj listu ECU"
+
+msgid "Zip database"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "Action"
+msgstr "Radnja"
+
+msgid "New Category"
+msgstr "Nova kategorija"
+
+msgid "New Screen"
+msgstr "Novi prikaz"
+
+msgid "Rename"
+msgstr "Promeni naziv"
+
+msgid "Plugins"
+msgstr ""
+
+#, fuzzy
+#| msgid "Cannot draw input "
+msgid "Cannot load plugin "
+msgstr "Nije moguce pozvati zahtev "
+
+msgid "Help"
+msgstr ""
+
+msgid "Web Wiki"
+msgstr ""
+
+msgid "About Developers"
+msgstr ""
+
+msgid "Get Git update"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About DDT4ALL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid " version:"
+msgstr "Verzija dijagnostike"
+
+msgid "Created by:"
+msgstr ""
+
+msgid "Contributors:"
+msgstr ""
+
+msgid "Save database (keep '.zip' extension)"
+msgstr ""
+
+msgid "Zipping XML database... (this can take a few minutes)"
+msgstr ""
+
+msgid "Zip job finished"
+msgstr ""
+
+msgid "Enter new name"
+msgstr "Unesi novo ime"
+
+msgid "Enter category name"
+msgstr "Unesi ime kategorije"
+
+msgid "Please select a category before creating new screen"
+msgstr "Molim odaberite kategoriju pre nego sto napravite novi prikaz"
+
+msgid "Enter screen name"
+msgstr "Unesite ime prikaza"
+
+msgid "Scan options"
+msgstr "Opcije skeniranja"
+
+msgid "CANCEL"
+msgstr ""
+
+msgid "Scanning CAN"
+msgstr "Skeniranje CAN"
+
+msgid "Scanning KWP"
+msgstr "Skeniranje KWP"
+
+msgid "EDITION MODE"
+msgstr "MOD IZMENA"
+
+msgid "CONNECTED"
+msgstr "POVEZAN"
+
+msgid "DISCONNECTED"
+msgstr "PREKINUTA VEZA"
+
+msgid "Save vehicule (keep '.ecu' extension)"
+msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
+
+msgid "Save ECU (keep '.json' extension)"
+msgstr "Sacuvaj ECU (zadrzi '.json' ekstenziju)"
+
+msgid "Save record (keep '.txt' extension)"
+msgstr "Sacuvaj vozilo (zadrzi '.ecu' ekstenziju)"
+
+msgid "Recorded "
+msgstr ""
+
+msgid " entries"
+msgstr ""
+
+msgid ""
+"<center>This Software is free, but I need money to buy cables/ECUs and make "
+"this application more reliable</center>"
+msgstr ""
+"<center>Ovaj program je besplatan, ali je novac potreban da kupim kablove/"
+"ECU jedinice i načinim ovu aplikaciju pouzdanijom</center>"
+
+msgid "Yes I contribute"
+msgstr "Da, doprineću"
+
+msgid "No, I don't"
+msgstr "Ne, neću"
+
+msgid ""
+"<center>Thank you for you contribution, if nothing happens, please go to : "
+"https://github.com/cedricp/ddt4all</center>"
+msgstr ""
+"<center>Hvala na vašem doprinosu. Ako se ništa ne desi molaim Vas idite na : "
+"https://github.com/cedricp/ddt4all</center>"
+
+msgid "ELM port selection"
+msgstr "Izbor ELM porta"
+
+msgid "Interface language (need save and close)"
+msgstr ""
+
+msgid "Port speed"
+msgstr "Brzina porta"
+
+msgid "Connected mode"
+msgstr "Mod povezivanja"
+
+msgid "Edition mode"
+msgstr "Mod izmena"
+
+msgid "ELM benchmark"
+msgstr "ELM rezultati testa"
+
+msgid "Save and close"
+msgstr ""
+
+msgid "WiFi port : "
+msgstr "WiFi port: "
+
+msgid "I'm aware that I can harm my car if badly used"
+msgstr "Upozoren sam da mogu oštetiti moje vozilo ako pogrešno koristim"
+
+msgid "Dark style"
+msgstr ""
+
+msgid "Change UART speed"
+msgstr ""
+
+msgid "You must check the recommandations"
+msgstr "Morate proveriti preporuke"
+
+msgid "Please select a communication port"
+msgstr "Molim izaberite port za komunikaciju"
+
+msgid "Using custom DDT database"
+msgstr "Koristi prilagodjenu DDT bazu podataka"
+
+msgid "No COM port selected"
+msgstr "Nije izabran COM port"
+
+#, python-format
+msgid "Initilizing ELM with speed %i..."
+msgstr "Initilizing ELM sa brzinom %i..."
+
+msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr "Nema ELM327 ili OBDLINK-SX uredjaja na COM portu  "
+
+msgid "Err, cannot rename "
+msgstr ""
+
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "Da bi mogli da izmenite svoj prikaz, isti prvo izvezite u JSON formatu"
+
+msgid "Enter label name"
+msgstr "Unesite ime oznake"
+
+msgid "Add button"
+msgstr "Dodaj dugme"
+
+msgid "Add label"
+msgstr "Dodaj oznaku"
+
+msgid "Rename label"
+msgstr "Preimenuj oznaku"
+
+msgid "Change color"
+msgstr ""
+
+msgid "Remove element"
+msgstr "Ukloni element"
+
+msgid "Diagnotic session"
+msgstr "Dijagnosticka sesija"
+
+msgid "Input"
+msgstr "Ulazni"
+
+msgid "Output"
+msgstr "Izlazni"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported"
+msgstr "GRESKA - komanda nije podrzana"
+
+#, fuzzy
+#| msgid "ERROR - command not supported"
+msgid "Protocol not supported: "
+msgstr "GRESKA - komanda nije podrzana"
+
+msgid "XML file not found : "
+msgstr "XML fajl nije pronadjen: "
+
+msgid "Invalid DDT file"
+msgstr "Pogresan DDT fajl"
+
+msgid "Connection to ELM lost, trying to reconnect..."
+msgstr ""
+
+msgid "Cannot reconnect..."
+msgstr ""
+
+msgid "Switching to session mode"
+msgstr "Prebacivanje u mod sesije"
+
+msgid "Sending ELM request :"
+msgstr "Slanje ELM zahteva:"
+
+msgid "Blocked ELM request :"
+msgstr "Blokiran ELM zahtev:"
+
+msgid "Sending ELM request:"
+msgstr "Slanje ELM zahteva:"
+
+msgid "Sending simulated ELM request :"
+msgstr "Slanje simuliranog ELM zahteva:"
+
+msgid "Bad ELM response :"
+msgstr ""
+
+msgid "ELM response : "
+msgstr "ELM odgovor: "
+
+msgid "Button request not found : "
+msgstr "Zahtev dugmeta nije pronadjen: "
+
+msgid "Sending request :"
+msgstr "Slanje zahteva:"
+
+#, fuzzy
+#| msgid "ECU Function address"
+msgid "Unknown request "
+msgstr "Adresa funkcije ECU"
+
+msgid "Command aborted "
+msgstr ""
+
+msgid "Request aborted (look at red paramters entries): "
+msgstr "Zahtev odbacen (pogledati parametre obelezene crvenom bojom): "
+
+msgid "Delay"
+msgstr ""
+
+msgid "For your safety"
+msgstr ""
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
+
+msgid "Invalid"
+msgstr "Pogresno"
+
+msgid "ECU uses SDS "
+msgstr ""
+
+msgid "Cannot call request "
+msgstr "Nije moguce pozvati zahtev "
+
+msgid "Update time"
+msgstr ""
+
+msgid "Clearing DTC information"
+msgstr "Brisanje DTC informacija"
+
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "Nema zahteva za brisanje DTC za taj ECU, poslace uobicajen 14FF00"
+
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>Ovim brisete dijagnosticke kodove gresaka<\\center>"
+
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>Da li ste sigurni da to zelite?</center>"
+
+#, fuzzy
+#| msgid "Clearing DTC information"
+msgid "Clear DTC failed"
+msgstr "Brisanje DTC informacija"
+
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#, fuzzy
+#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgid "No ReadDTC request for that ECU"
+msgstr "Nema zahteva za brisanje DTC za taj ECU, poslace uobicajen 14FF00"
+
+msgid "Invalid response for ReadDTC command"
+msgstr "Pogresan odziv za CitanjeDTC komandu"
+
+msgid "Read DTC returned an error"
+msgstr ""
+
+msgid "No DTC"
+msgstr "Nema DTC"
+
+msgid "Clear ALL DTC"
+msgstr "Obrisi SVE DTC"
+
+msgid "ECU trouble codes"
+msgstr "ECU kodovi gresaka"
+
+msgid "Parsing screen "
+msgstr "Čitati ekran "
+
+#, fuzzy
+#| msgid "Button request not found : "
+msgid "found request in input "
+msgstr "Zahtev dugmeta nije pronadjen: "
+
+msgid "found in display "
+msgstr ""
+
+#, fuzzy
+#| msgid "Add button"
+msgid "found in button "
+msgstr "Dodaj dugme"
+
+msgid "found in presend "
+msgstr ""
+
+msgid "found data in input "
+msgstr ""
+
+msgid "found data in display "
+msgstr ""
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Starting conversion"
+msgstr "Verzija dijagnostike"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Writing database"
+msgstr ""
+
+msgid "Writing archive"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
+
+msgid "Values"
+msgstr ""
+
+msgid "Waiting..."
+msgstr ""
+
+msgid "Frame length error: "
+msgstr ""
+
+msgid "Frame hex error: "
+msgstr ""
+
+msgid "Found USB adapter:"
+msgstr ""
+
+msgid "AB90 AIRBAG Reset"
+msgstr ""
+
+msgid "Airbag Tools"
+msgstr ""
+
+msgid ""
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
+"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
+"font>"
+msgstr ""
+
+msgid "Check ACU Virgin"
+msgstr ""
+
+msgid "Waiting"
+msgstr ""
+
+msgid "Virginize ACU"
+msgstr ""
+
+msgid "Cannot connect to ECU"
+msgstr ""
+
+msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
+msgstr ""
+
+msgid "<font color='red'>CRASH DETECTED</font>"
+msgstr ""
+
+msgid "<font color='green'>NO CRASH DETECTED</font>"
+msgstr ""
+
+msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgstr ""
+
+msgid "<font color='red'>CLEAR FAILED</font>"
+msgstr ""
+
+msgid "Megane/Scenic II card programming"
+msgstr ""
+
+msgid "Keys"
+msgstr ""
+
+msgid "ENTER AFTER SALE MODE"
+msgstr ""
+
+msgid ""
+"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
+"YET</font>"
+msgstr ""
+
+msgid "LEARN"
+msgstr ""
+
+msgid "VALIDATE"
+msgstr ""
+
+msgid "Algo 2"
+msgstr ""
+
+msgid "ISK"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Num key learnt"
+msgstr ""
+
+msgid "CARD IDE"
+msgstr ""
+
+msgid "Cannot get ISK, check connections and UCH compatibility"
+msgstr ""
+
+msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
+msgstr ""
+
+msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
+msgstr ""
+
+msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
+msgstr ""
+
+msgid "Modus/Clio III EPS Reset"
+msgstr ""
+
+msgid "EPS Tools"
+msgstr ""
+
+msgid ""
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
+"EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "BLANK STATUS & VIN READ"
+msgstr ""
+
+msgid "Virginize EPS"
+msgstr ""
+
+msgid "VIN - READ"
+msgstr ""
+
+msgid "VIN - WRITE"
+msgstr ""
+
+msgid "Write VIN"
+msgstr ""
+
+msgid "<font color='red'>VIN - INVALID</font>"
+msgstr ""
+
+msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgstr ""
+
+msgid "<font color='orange'>VIN WRITE FAILED</font>"
+msgstr ""
+
+msgid "<font color='green'>VIN WRITE OK</font>"
+msgstr ""
+
+msgid "<font color='green'>EPS virgin</font>"
+msgstr ""
+
+msgid "<font color='red'>EPS coded</font>"
+msgstr ""
+
+msgid "Clio IV EPS Reset"
+msgstr ""
+
+msgid ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "Check EPS Virgin"
+msgstr ""
+
+msgid "<font color='green'>EPS not operational</font>"
+msgstr ""
+
+msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
+msgstr ""
+
+msgid "Laguna II UCH Reset"
+msgstr ""
+
+msgid "UCH Tools"
+msgstr "UCH alat"
+
+msgid ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "Check UCH Virgin"
+msgstr ""
+
+msgid "Virginize UCH"
+msgstr ""
+
+msgid "<font color='green'>UCH virgin</font>"
+msgstr ""
+
+msgid "<font color='red'>UCH coded</font>"
+msgstr ""
+
+msgid "Laguna III UCH Reset"
+msgstr ""
+
+msgid ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "Megane/Scenic II UCH Reset"
+msgstr ""
+
+msgid ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "Megane3 AIRBAG Reset"
+msgstr ""
+
+msgid ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
+"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
+msgstr ""
+
+msgid ""
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
+"PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
+"MEANS</font>"
+msgstr ""
+
+msgid "Megane/Scenic III UCH Reset"
+msgstr ""
+
+msgid ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "RSAT4 AIRBAG Reset"
+msgstr ""
+
+msgid ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "CRC calculator"
+msgstr ""
+
+msgid "VIN"
+msgstr ""
+
+msgid "CRC CALCULATOR"
+msgstr ""
+
+#~ msgid "DDT4All"
+#~ msgstr "DDT4All - daciaforum.in.rs Edition"
+
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "DDT4ALL version:"
+#~ msgstr "Verzija dijagnostike"
+
+#~ msgid "Changing baud rate to:"
+#~ msgstr "Promeni brzinu (baud rate) na:"
+
+#~ msgid "ERROR - rate not supported. Let's go back."
+#~ msgstr "GRESKA - brzina (rate) nije podrzan. Vratite se nazad."
+
+#~ msgid "ERROR - something went wrong. Let's get back."
+#~ msgstr "GRESKA - nesto nije u redu. Vratite se nazad."

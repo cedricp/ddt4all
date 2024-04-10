@@ -79,7 +79,7 @@ class ecuCommand(widgets.QDialog):
         text += "<center>Use it at your own risk</center>\n"
         text += "<center>and if you know exactely what you do</center>\n"
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(text)
@@ -101,7 +101,7 @@ class ecuCommand(widgets.QDialog):
             else:
                 if check:
                     msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                     msgbox.setWindowIcon(appIcon)
                     msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText("Missing data in table")
@@ -128,7 +128,7 @@ class ecuCommand(widgets.QDialog):
         reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
         if reveived_stream.startswith("WRONG"):
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText("ECU returned error (check logview)")
@@ -1099,7 +1099,7 @@ class paramWidget(widgets.QWidget):
             messages = self.button_messages[txt]
             for message in messages:
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(version.__appname__)
                 msgbox.setText(message)
@@ -1172,7 +1172,7 @@ class paramWidget(widgets.QWidget):
             elm_response = self.sendElm(' '.join(elm_data_stream))
             if elm_response == "BLOCKED":
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(_("For your safety"))
                 msgbox.setText(_("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock"))
@@ -1412,7 +1412,7 @@ class paramWidget(widgets.QWidget):
             request = "14FF00"
 
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(_("<center>You are about to clear diagnostic troubles codes</center>") +
@@ -1442,7 +1442,7 @@ class paramWidget(widgets.QWidget):
 
         if 'WRONG' in response:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText("There was an error clearing DTC")
@@ -1480,7 +1480,7 @@ class paramWidget(widgets.QWidget):
 
         if "RESPONSE" in can_response:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("Invalid response for ReadDTC command"))
@@ -1492,7 +1492,7 @@ class paramWidget(widgets.QWidget):
         # Handle error
         if can_response[0].upper() == "7F":
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("Read DTC returned an error"))
@@ -1503,7 +1503,7 @@ class paramWidget(widgets.QWidget):
         if len(can_response) == 2:
             # No errors
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No DTC"))
@@ -1964,7 +1964,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     for k, v in sd:
         new_dict["projects"][k] = v
     js = json.dumps(new_dict, ensure_ascii=False, indent=True)
-    f = open("dtt4all_data/projects.json", "w", encoding="UTF-8")
+    f = open("ddt4all_data/projects.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 

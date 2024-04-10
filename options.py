@@ -55,9 +55,9 @@ lang_list = {
 
 
 def save_config():
-    # print(f'Save dtt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
+    # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
     js = json.dumps(configuration, ensure_ascii=False, indent=True)
-    f = open("dtt4all_data/config.json", "w", encoding="UTF-8")
+    f = open("ddt4all_data/config.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -72,14 +72,14 @@ def create_new_config():
     configuration["lang"] = get_translator_lang()
     configuration["dark"] = False
     # print("\nEdit it only if it not ok for you country language.")
-    # print(f'Edit the `dtt4all_data/config.json`\nConfiguration however you want this to be translated.\nThe self-assigned code is: {lang}')
+    # print(f'Edit the `ddt4all_data/config.json`\nConfiguration however you want this to be translated.\nThe self-assigned code is: {lang}')
     # print(f'Close and edit the configuration for list: \n\t{codes.strip()} \nAnd reopen the application.')
     save_config()
 
 
 def load_configuration():
     try:
-        f = open("dtt4all_data/config.json", "r", encoding="UTF-8")
+        f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
         configuration = json.loads(f.read())
         os.environ['LANG'] = configuration["lang"]
         f.close()
@@ -112,5 +112,5 @@ def get_translator_lang():
 def translator(domain):
     load_configuration()
     # Set up message catalog access
-    t = gettext.translation(domain, 'dtt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
+    t = gettext.translation(domain, 'ddt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext

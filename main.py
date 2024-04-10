@@ -30,7 +30,7 @@ app = None
 
 def load_this():
     try:
-        f = open("dtt4all_data/projects.json", "r", encoding="UTF-8")
+        f = open("ddt4all_data/projects.json", "r", encoding="UTF-8")
         vehicles_loc = json.loads(f.read())
         f.close()
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
@@ -38,7 +38,7 @@ def load_this():
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
         return vehicles_loc
     except:
-        print(_("dtt4all_data/projects.json not found or not ok."))
+        print(_("ddt4all_data/projects.json not found or not ok."))
         exit(-1)
 
 
@@ -108,7 +108,7 @@ class Ecu_list(widgets.QWidget):
         layout = widgets.QVBoxLayout()
         layouth = widgets.QHBoxLayout()
         scanbutton = widgets.QPushButton()
-        scanbutton.setIcon(gui.QIcon("dtt4all_data/icons/scan.png"))
+        scanbutton.setIcon(gui.QIcon("ddt4all_data/icons/scan.png"))
         scanbutton.clicked.connect(self.scanselvehicle)
         layouth.addWidget(self.vehicle_combo)
         layouth.addWidget(scanbutton)
@@ -274,7 +274,7 @@ class Main_widget(widgets.QMainWindow):
         print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -384,40 +384,40 @@ class Main_widget(widgets.QMainWindow):
 
         self.toolbar = self.addToolBar(_("File"))
 
-        self.diagaction = widgets.QAction(gui.QIcon("dtt4all_data/icons/dtc.png"), _("Read DTC"), self)
+        self.diagaction = widgets.QAction(gui.QIcon("ddt4all_data/icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
-        self.log = widgets.QAction(gui.QIcon("dtt4all_data/icons/log.png"), _("Full log"), self)
+        self.log = widgets.QAction(gui.QIcon("ddt4all_data/icons/log.png"), _("Full log"), self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
         if options.dark_mode:
-            self.expert = widgets.QAction(gui.QIcon("dtt4all_data/icons/expert-b.png"), _("Expert mode (enable writing)"), self)
+            self.expert = widgets.QAction(gui.QIcon("ddt4all_data/icons/expert-b.png"), _("Expert mode (enable writing)"), self)
         else:
-            self.expert = widgets.QAction(gui.QIcon("dtt4all_data/icons/expert.png"), _("Expert mode (enable writing)"), self)
+            self.expert = widgets.QAction(gui.QIcon("ddt4all_data/icons/expert.png"), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = widgets.QAction(gui.QIcon("dtt4all_data/icons/autorefresh.png"), _("Auto refresh"), self)
+        self.autorefresh = widgets.QAction(gui.QIcon("ddt4all_data/icons/autorefresh.png"), _("Auto refresh"), self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = widgets.QAction(gui.QIcon("dtt4all_data/icons/refresh.png"), _("Refresh (one shot)"), self)
+        self.refresh = widgets.QAction(gui.QIcon("ddt4all_data/icons/refresh.png"), _("Refresh (one shot)"), self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = widgets.QAction(gui.QIcon("dtt4all_data/icons/hex.png"), _("Manual command"), self)
+        self.hexinput = widgets.QAction(gui.QIcon("ddt4all_data/icons/hex.png"), _("Manual command"), self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
-        self.cominput = widgets.QAction(gui.QIcon("dtt4all_data/icons/command.png"), _("Manual request"), self)
+        self.cominput = widgets.QAction(gui.QIcon("ddt4all_data/icons/command.png"), _("Manual request"), self)
         self.cominput.triggered.connect(self.command_editor)
         self.cominput.setEnabled(False)
 
-        self.fctrigger = widgets.QAction(gui.QIcon("dtt4all_data/icons/flowcontrol.png"), _("Software flow control"), self)
+        self.fctrigger = widgets.QAction(gui.QIcon("ddt4all_data/icons/flowcontrol.png"), _("Software flow control"), self)
         self.fctrigger.setCheckable(True)
         self.fctrigger.triggered.connect(self.flow_control)
 
@@ -567,10 +567,10 @@ class Main_widget(widgets.QMainWindow):
 
     def about_content_msg(self):
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setIcon(widgets.QMessageBox.Information)
-        msgbox.setWindowTitle(_("About DTT4ALL"))
+        msgbox.setWindowTitle(_("About DDT4ALL"))
         text_about = version.__appname__ + _(" version:") + " %s" % version.__version__
         msgbox.setText(text_about)
         contrib = _("Created by:") + " %s\n\n %s\n" % (version.__author__, _("Contributors:"))
@@ -597,7 +597,7 @@ class Main_widget(widgets.QMainWindow):
         gui.QDesktopServices().openUrl(url)
 
     def setIcon(self):
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
 
     def set_can_combo(self, bus):
@@ -674,7 +674,7 @@ class Main_widget(widgets.QMainWindow):
 
         if not isWritable(str(os.path.dirname(filename))):
             mbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             mbox.setWindowIcon(appIcon)
             mbox.setWindowTitle(version.__appname__)
             mbox.setText("Cannot write to directory " + os.path.dirname(filename))
@@ -691,7 +691,7 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.init('')
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -734,7 +734,7 @@ class Main_widget(widgets.QMainWindow):
         if necatname:
             if self.ecu_scan.getNumEcuDb() == 0:
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(version.__appname__)
                 msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -820,7 +820,7 @@ class Main_widget(widgets.QMainWindow):
 
     def scan(self):
         msgBox = widgets.QMessageBox()
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgBox.setWindowIcon(appIcon)
         msgBox.setWindowTitle(version.__appname__)
         msgBox.setText(_('Scan options'))
@@ -1134,14 +1134,14 @@ class Main_widget(widgets.QMainWindow):
 class donationWidget(widgets.QLabel):
     def __init__(self):
         super(donationWidget, self).__init__()
-        img = gui.QPixmap("dtt4all_data/icons/donate.png")
+        img = gui.QPixmap("ddt4all_data/icons/donate.png")
         self.setPixmap(img)
         self.setAlignment(core.Qt.AlignCenter)
         self.setFrameStyle((widgets.QFrame.Panel | widgets.QFrame.StyledPanel))
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(
@@ -1159,7 +1159,7 @@ class donationWidget(widgets.QLabel):
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
         msgbox.setWindowTitle(version.__appname__)
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
         msgbox.setText(
             _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
@@ -1168,12 +1168,12 @@ class donationWidget(widgets.QLabel):
 
 def set_dark_style(onoff):
     if (onoff):
-        stylefile = core.QFile("dtt4all_data/qstyle-d.qss")
+        stylefile = core.QFile("ddt4all_data/qstyle-d.qss")
         stylefile.open(core.QFile.ReadOnly)
         options.dark_mode = True
         StyleSheet = bytes(stylefile.readAll()).decode()
     else:
-        stylefile = core.QFile("dtt4all_data/qstyle.qss")
+        stylefile = core.QFile("ddt4all_data/qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
         options.dark_mode = False
         StyleSheet = bytes(stylefile.readAll()).decode()
@@ -1208,7 +1208,7 @@ class main_window_options(widgets.QDialog):
 
         medialayout = widgets.QHBoxLayout()
         self.usbbutton = widgets.QPushButton()
-        self.usbbutton.setIcon(gui.QIcon("dtt4all_data/icons/usb.png"))
+        self.usbbutton.setIcon(gui.QIcon("ddt4all_data/icons/usb.png"))
         self.usbbutton.setIconSize(core.QSize(60, 60))
         self.usbbutton.setFixedHeight(64)
         self.usbbutton.setFixedWidth(64)
@@ -1217,7 +1217,7 @@ class main_window_options(widgets.QDialog):
         medialayout.addWidget(self.usbbutton)
 
         self.wifibutton = widgets.QPushButton()
-        self.wifibutton.setIcon(gui.QIcon("dtt4all_data/icons/wifi.png"))
+        self.wifibutton.setIcon(gui.QIcon("ddt4all_data/icons/wifi.png"))
         self.wifibutton.setIconSize(core.QSize(60, 60))
         self.wifibutton.setFixedHeight(64)
         self.wifibutton.setFixedWidth(64)
@@ -1226,7 +1226,7 @@ class main_window_options(widgets.QDialog):
         medialayout.addWidget(self.wifibutton)
 
         self.btbutton = widgets.QPushButton()
-        self.btbutton.setIcon(gui.QIcon("dtt4all_data/icons/bt.png"))
+        self.btbutton.setIcon(gui.QIcon("ddt4all_data/icons/bt.png"))
         self.btbutton.setIconSize(core.QSize(60, 60))
         self.btbutton.setFixedHeight(64)
         self.btbutton.setFixedWidth(64)
@@ -1235,7 +1235,7 @@ class main_window_options(widgets.QDialog):
         medialayout.addWidget(self.btbutton)
 
         self.obdlinkbutton = widgets.QPushButton()
-        self.obdlinkbutton.setIcon(gui.QIcon("dtt4all_data/icons/obdlink.png"))
+        self.obdlinkbutton.setIcon(gui.QIcon("ddt4all_data/icons/obdlink.png"))
         self.obdlinkbutton.setIconSize(core.QSize(60, 60))
         self.obdlinkbutton.setFixedHeight(64)
         self.obdlinkbutton.setFixedWidth(64)
@@ -1244,7 +1244,7 @@ class main_window_options(widgets.QDialog):
         medialayout.addWidget(self.obdlinkbutton)
 
         self.elsbutton = widgets.QPushButton()
-        self.elsbutton.setIcon(gui.QIcon("dtt4all_data/icons/els27.png"))
+        self.elsbutton.setIcon(gui.QIcon("ddt4all_data/icons/els27.png"))
         self.elsbutton.setIconSize(core.QSize(60, 60))
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
@@ -1358,7 +1358,7 @@ class main_window_options(widgets.QDialog):
         self.setIcon()
 
     def setIcon(self):
-        appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
 
     def save_config(self):
@@ -1530,7 +1530,7 @@ class main_window_options(widgets.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not pc.securitycheck:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("You must check the recommandations"))
@@ -1552,7 +1552,7 @@ class main_window_options(widgets.QDialog):
                 self.done(True)
             else:
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(version.__appname__)
                 msgbox.setText(_("Please select a communication port"))
@@ -1580,7 +1580,7 @@ if __name__ == '__main__':
     app = widgets.QApplication(sys.argv)
 
     try:
-        f = open("dtt4all_data/config.json", "r", encoding="UTF-8")
+        f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
         configuration = json.loads(f.read())
         f.close()
         if configuration["dark"]:
@@ -1592,9 +1592,9 @@ if __name__ == '__main__':
         pass
 
     # For InnoSetup version.h auto generator
-    if os.path.isdir('dtt4all_data/inno-win-setup'):
+    if os.path.isdir('ddt4all_data/inno-win-setup'):
         try:
-            f = open("dtt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8")
+            f = open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8")
             f.write(f'#define __appname__ "{version.__appname__}"\n')
             f.write(f'#define __author__ "{version.__author__}"\n')
             f.write(f'#define __copyright__ "{version.__copyright__}"\n')
@@ -1650,7 +1650,7 @@ if __name__ == '__main__':
 
         if not options.port:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No COM port selected"))
@@ -1662,7 +1662,7 @@ if __name__ == '__main__':
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("dtt4all_data/icons/obd.png")
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
