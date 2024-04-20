@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 03:17+0200\n"
-"PO-Revision-Date: 2024-04-10 03:23+0200\n"
+"POT-Creation-Date: 2024-04-20 21:09+0200\n"
+"PO-Revision-Date: 2024-04-20 21:16+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -494,11 +494,23 @@ msgstr "Botões"
 msgid "Ecu parameters"
 msgstr "Parametros ECU"
 
+msgid "Ecran Window"
+msgstr "Janela Ecran"
+
 msgid "Screens"
 msgstr "Ecrãs"
 
-msgid "File"
-msgstr "Ficheiro"
+msgid "Logs Window"
+msgstr "Janela de registros"
+
+msgid "Ecu Window"
+msgstr "Janela Ecu"
+
+msgid "Ecu List Window"
+msgstr "Janela Lista Ecu"
+
+msgid "ToolBar"
+msgstr "Barra de ferramentas"
 
 msgid "Read DTC"
 msgstr "Ler DTC"
@@ -534,6 +546,9 @@ msgstr "Reduzir o zoom"
 
 msgid "UI Edit"
 msgstr "Editar interface do usuário"
+
+msgid "File"
+msgstr "Ficheiro"
 
 msgid "Open XML"
 msgstr "Abrir XML"

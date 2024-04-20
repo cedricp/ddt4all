@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 03:17+0200\n"
-"PO-Revision-Date: 2024-04-10 03:23+0200\n"
+"POT-Creation-Date: 2024-04-20 21:09+0200\n"
+"PO-Revision-Date: 2024-04-20 21:16+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -520,11 +520,23 @@ msgstr "Butoane"
 msgid "Ecu parameters"
 msgstr "Parametri ECU"
 
+msgid "Ecran Window"
+msgstr ""
+
 msgid "Screens"
 msgstr "Ecrane"
 
-msgid "File"
-msgstr "Fisier"
+msgid "Logs Window"
+msgstr ""
+
+msgid "Ecu Window"
+msgstr ""
+
+msgid "Ecu List Window"
+msgstr ""
+
+msgid "ToolBar"
+msgstr ""
 
 msgid "Read DTC"
 msgstr "Cititi DTC"
@@ -558,6 +570,9 @@ msgstr "Micsoreaza"
 
 msgid "UI Edit"
 msgstr "Editare UI"
+
+msgid "File"
+msgstr "Fisier"
 
 msgid "Open XML"
 msgstr "Deschideti XML"

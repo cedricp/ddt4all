@@ -352,6 +352,7 @@ class Main_widget(widgets.QMainWindow):
 
         screen_widget = widgets.QWidget()
         self.treedock_widget = widgets.QDockWidget(self)
+        self.treedock_widget.setWindowTitle(_("Ecran Window"))
         self.treedock_widget.setWidget(screen_widget)
         self.treeview_params = widgets.QTreeWidget()
         self.treeview_params.setSortingEnabled(True)
@@ -364,17 +365,20 @@ class Main_widget(widgets.QMainWindow):
         self.treeview_params.clicked.connect(self.changeScreen)
 
         self.treedock_logs = widgets.QDockWidget(self)
+        self.treedock_logs.setWindowTitle(_("Logs Window"))
         self.logview = widgets.QTextEdit()
         self.logview.setReadOnly(True)
         self.treedock_logs.setWidget(self.logview)
 
         self.treedock_ecu = widgets.QDockWidget(self)
+        self.treedock_ecu.setWindowTitle(_("Ecu Window"))
         self.treeview_ecu = widgets.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.clicked.connect(self.changeECU)
 
         self.eculistwidget = Ecu_list(self.ecu_scan, self.treeview_ecu)
         self.treeview_eculist = widgets.QDockWidget(self)
+        self.treeview_eculist.setWindowTitle(_("Ecu List Window"))
         self.treeview_eculist.setWidget(self.eculistwidget)
 
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treeview_eculist)
@@ -382,7 +386,7 @@ class Main_widget(widgets.QMainWindow):
         self.addDockWidget(core.Qt.LeftDockWidgetArea, self.treedock_widget)
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
 
-        self.toolbar = self.addToolBar(_("File"))
+        self.toolbar = self.addToolBar(_("ToolBar"))
 
         self.diagaction = widgets.QAction(gui.QIcon("ddt4all_data/icons/dtc.png"), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 03:17+0200\n"
-"PO-Revision-Date: 2024-04-10 03:21+0200\n"
+"POT-Creation-Date: 2024-04-20 21:09+0200\n"
+"PO-Revision-Date: 2024-04-20 21:12+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -494,11 +494,23 @@ msgstr "Boutons"
 msgid "Ecu parameters"
 msgstr "Paramètres ECU"
 
+msgid "Ecran Window"
+msgstr "Fenêtre d'écran"
+
 msgid "Screens"
 msgstr "Ecrans"
 
-msgid "File"
-msgstr "Fichier"
+msgid "Logs Window"
+msgstr "Fenêtre Journaux"
+
+msgid "Ecu Window"
+msgstr "Fenêtre de l'ECU"
+
+msgid "Ecu List Window"
+msgstr "Fenêtre de liste d'écus"
+
+msgid "ToolBar"
+msgstr "Barre d'outils"
 
 msgid "Read DTC"
 msgstr "Lire les DTC"
@@ -532,6 +544,9 @@ msgstr "Diminuer"
 
 msgid "UI Edit"
 msgstr "Edition interface"
+
+msgid "File"
+msgstr "Fichier"
 
 msgid "Open XML"
 msgstr "Ouvrir XML"

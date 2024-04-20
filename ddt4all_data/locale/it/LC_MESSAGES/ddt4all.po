@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 03:17+0200\n"
-"PO-Revision-Date: 2024-04-10 03:22+0200\n"
+"POT-Creation-Date: 2024-04-20 21:09+0200\n"
+"PO-Revision-Date: 2024-04-20 21:13+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -525,11 +525,23 @@ msgstr "Pulsanti"
 msgid "Ecu parameters"
 msgstr "Parametri ECU"
 
+msgid "Ecran Window"
+msgstr ""
+
 msgid "Screens"
 msgstr "Schermi"
 
-msgid "File"
-msgstr "File"
+msgid "Logs Window"
+msgstr ""
+
+msgid "Ecu Window"
+msgstr ""
+
+msgid "Ecu List Window"
+msgstr ""
+
+msgid "ToolBar"
+msgstr ""
 
 msgid "Read DTC"
 msgstr "Leggi DTC"
@@ -563,6 +575,9 @@ msgstr "Zoom -"
 
 msgid "UI Edit"
 msgstr "Modifica UI"
+
+msgid "File"
+msgstr "File"
 
 msgid "Open XML"
 msgstr "Apri XML"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 03:17+0200\n"
-"PO-Revision-Date: 2024-04-10 03:23+0200\n"
+"POT-Creation-Date: 2024-04-20 21:09+0200\n"
+"PO-Revision-Date: 2024-04-20 21:17+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -517,11 +517,23 @@ msgstr "Кнопки"
 msgid "Ecu parameters"
 msgstr "Параметры ЭБУ"
 
+msgid "Ecran Window"
+msgstr ""
+
 msgid "Screens"
 msgstr "Экраны"
 
-msgid "File"
-msgstr "Файл"
+msgid "Logs Window"
+msgstr ""
+
+msgid "Ecu Window"
+msgstr ""
+
+msgid "Ecu List Window"
+msgstr ""
+
+msgid "ToolBar"
+msgstr ""
 
 msgid "Read DTC"
 msgstr "Чтение ошибок DTC"
@@ -555,6 +567,9 @@ msgstr ""
 
 msgid "UI Edit"
 msgstr ""
+
+msgid "File"
+msgstr "Файл"
 
 msgid "Open XML"
 msgstr ""
