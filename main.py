@@ -530,8 +530,8 @@ class Main_widget(widgets.QMainWindow):
                 name = plug.plugin_name
                 need_hw = plug.need_hw
 
-                if options.simulation_mode and need_hw:
-                   continue
+                # if options.simulation_mode and need_hw:
+                #    continue
 
                 if not category in category_menus:
                     category_menus[category] = plugins_menu.addMenu(category)
