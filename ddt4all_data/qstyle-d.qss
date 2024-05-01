@@ -391,6 +391,8 @@ QTabBar::tab:!selected {
 
 /* Styling for selected tab bar tab */
 QTabBar::tab:selected {
+    color: #ffffff;
+    background-color: #ffaa00;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     margin-bottom: 0px;
