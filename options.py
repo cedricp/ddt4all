@@ -63,25 +63,19 @@ def save_config():
 
 
 def create_new_config():
-    # print("configuration not found or not ok. Create one new")
-    # print("Possible translations:")
-    # codes = ''
-    # for i in lang_list:
-    #     print(i + " code: " + lang_list[i])
-    #     codes += lang_list[i] + " "
     configuration["lang"] = get_translator_lang()
     configuration["dark"] = False
-    # print("\nEdit it only if it not ok for you country language.")
-    # print(f'Edit the `ddt4all_data/config.json`\nConfiguration however you want this to be translated.\nThe self-assigned code is: {lang}')
-    # print(f'Close and edit the configuration for list: \n\t{codes.strip()} \nAnd reopen the application.')
     save_config()
 
 
 def load_configuration():
     try:
         f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
-        configuration = json.loads(f.read())
-        os.environ['LANG'] = configuration["lang"]
+        config = json.loads(f.read())
+        # load config as multiplatform (mac fix macOs load conf)
+        configuration["lang"] = config["lang"]
+        configuration["dark"] = config["dark"]
+        os.environ['LANG'] = config["lang"]
         f.close()
     except:
         create_new_config()
