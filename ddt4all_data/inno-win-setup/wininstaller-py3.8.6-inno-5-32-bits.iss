@@ -52,7 +52,7 @@ AppId={{#APP_ID}
 
 [Files]
 Source: "win32_deps\VC_redist.x86.exe"; DestDir: "{app}\win32_deps"; Tasks: microsoft_runtimes
-;Source: "..\..\ecu.zip"; DestDir: "{app}"; Flags: onlyifdoesntexist skipifsourcedoesntexist
+Source: "..\..\ecu.zip"; DestDir: "{app}";
 Source: "\DDT4ALL-Dist-Versions\\Python38-32\*"; DestDir: "{app}\\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
 Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
@@ -62,7 +62,8 @@ Source: "..\..\ddt4all_data\tools\*"; DestDir: "{app}\ddt4all_data\tools"; Flags
 Source: "..\..\ddt4all_data\locale\*"; DestDir: "{app}\ddt4all_data\locale"; Flags: ignoreversion recursesubdirs
 Source: "..\..\*.py"; DestDir: "{app}"; Excludes: "*.pyc"
 Source: "..\..\ddt4all_data\*.qss"; DestDir: "{app}\ddt4all_data"
-Source: "..\..\ddt4all_data\projects.json"; DestDir: "{app}\ddt4all_data"; AfterInstall: AfterMyProgInstall
+Source: "..\..\ddt4all_data\projects.json"; DestDir: "{app}\ddt4all_data"
+; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
 Type: filesandordirs; Name: "{group}";

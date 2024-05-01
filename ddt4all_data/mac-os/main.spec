@@ -11,7 +11,8 @@ a = Analysis(
         ('../../ddt4all_data/projects.json', 'ddt4all_data'),
         ('../../ddt4all_data/*.qss', 'ddt4all_data'),
         ('../../ddtplugins/*.py', 'ddtplugins'),
-        ('../../*.py', '.')
+        ('../../*.py', '.'),
+        ('../../*.zip', '.')
     ],
     hiddenimports=[],
     hookspath=[],
