@@ -1333,7 +1333,7 @@
     "429": "18DA29F3"
    }
   },
-  "[ALMERA] Nissan Almera": {
+  "[ALMERA] -  Nissan Almera": {
    "code": "ALMERA",
    "addressing": {
     "00": [
@@ -2666,7 +2666,7 @@
     "429": "18DA29F3"
    }
   },
-  "[AS1] Alpine A110": {
+  "[AS1] -  Alpine A110": {
    "code": "AS1",
    "addressing": {
     "00": [
@@ -3999,7 +3999,7 @@
     "429": "18DA29F3"
    }
   },
-  "[DZ110] Alpine DZ110": {
+  "[DZ110] -  Alpine DZ110": {
    "code": "DZ110",
    "addressing": {
     "00": [
@@ -5332,7 +5332,7 @@
     "429": "18DA29F3"
    }
   },
-  "[EDISON] Daimler X07 Daimler": {
+  "[EDISON] -  Daimler X07 Daimler": {
    "code": "EDISON",
    "addressing": {
     "00": [
@@ -6665,7 +6665,7 @@
     "429": "18DA29F3"
    }
   },
-  "[H45] Rsm Koleos": {
+  "[H45] -  Rsm Koleos": {
    "code": "H45",
    "addressing": {
     "00": [
@@ -7998,7 +7998,7 @@
     "429": "18DA29F3"
    }
   },
-  "[HFEPH2] Renault Kadjar Ph2": {
+  "[HFEPH2] -  Renault Kadjar Ph2": {
    "code": "HFEPH2",
    "addressing": {
     "00": [
@@ -9331,7 +9331,7 @@
     "429": "18DA29F3"
    }
   },
-  "[HFE] Renault Kadjar": {
+  "[HFE] -  Renault Kadjar": {
    "code": "HFE",
    "addressing": {
     "00": [
@@ -10664,7 +10664,7 @@
     "429": "18DA29F3"
    }
   },
-  "[J32V] Nissan (J32V)": {
+  "[J32V] -  Nissan (J32V)": {
    "code": "J32V",
    "addressing": {
     "00": [
@@ -11997,7 +11997,7 @@
     "429": "18DA29F3"
    }
   },
-  "[KJA] Rsm KJA": {
+  "[KJA] -  Rsm KJA": {
    "code": "KJA",
    "addressing": {
     "00": [
@@ -13330,7 +13330,7 @@
     "429": "18DA29F3"
    }
   },
-  "[L21B] Nissan Note": {
+  "[L21B] -  Nissan Note": {
    "code": "L21B",
    "addressing": {
     "00": [
@@ -14663,7 +14663,7 @@
     "429": "18DA29F3"
    }
   },
-  "[LZ2A] Nissan New EV ((C1A HS EVO) SWEET 400 Nissan)": {
+  "[LZ2A] -  Nissan New EV ((C1A HS EVO) SWEET 400 Nissan)": {
    "code": "LZ2A",
    "addressing": {
     "00": [
@@ -15996,7 +15996,7 @@
     "429": "18DA29F3"
    }
   },
-  "[MARCH] Nissan March-Micra": {
+  "[MARCH] -  Nissan March-Micra": {
    "code": "MARCH",
    "addressing": {
     "00": [
@@ -17329,7 +17329,7 @@
     "429": "18DA29F3"
    }
   },
-  "[NOVA] Dacia Nova": {
+  "[NOVA] -  Dacia Nova": {
    "code": "NOVA",
    "addressing": {
     "00": [
@@ -18662,7 +18662,7 @@
     "429": "18DA29F3"
    }
   },
-  "[P13C] Nissan New Kaptur - Captur (Nissan)": {
+  "[P13C] -  Nissan New Kaptur - Captur (Nissan)": {
    "code": "P13C",
    "addressing": {
     "00": [
@@ -19995,7 +19995,7 @@
     "429": "18DA29F3"
    }
   },
-  "[P32] Nissan (P32)": {
+  "[P32] -  Nissan (P32)": {
    "code": "P32",
    "addressing": {
     "00": [
@@ -21328,7 +21328,7 @@
     "429": "18DA29F3"
    }
   },
-  "[P33A] Nissan (P33A)": {
+  "[P33A] -  Nissan (P33A)": {
    "code": "P33A",
    "addressing": {
     "00": [
@@ -22661,7 +22661,7 @@
     "429": "18DA29F3"
    }
   },
-  "[P33B] Nissan (P33B)": {
+  "[P33B] -  Nissan (P33B)": {
    "code": "P33B",
    "addressing": {
     "00": [
@@ -23994,7 +23994,7 @@
     "429": "18DA29F3"
    }
   },
-  "[P42Q] Nissan (P42Q)": {
+  "[P42Q] -  Nissan (P42Q)": {
    "code": "P42Q",
    "addressing": {
     "00": [
@@ -25327,7 +25327,7 @@
     "429": "18DA29F3"
    }
   },
-  "[P42R] Nissan (P42R)": {
+  "[P42R] -  Nissan (P42R)": {
    "code": "P42R",
    "addressing": {
     "00": [
@@ -26660,7 +26660,7 @@
     "429": "18DA29F3"
    }
   },
-  "[PRIMERA] Nissan Primera": {
+  "[PRIMERA] -  Nissan Primera": {
    "code": "PRIMERA",
    "addressing": {
     "00": [
@@ -27993,7 +27993,7 @@
     "429": "18DA29F3"
    }
   },
-  "[PY1B] Nissan (PY1B)": {
+  "[PY1B] -  Nissan (PY1B)": {
    "code": "PY1B",
    "addressing": {
     "00": [
@@ -29326,7 +29326,7 @@
     "429": "18DA29F3"
    }
   },
-  "[PZ1A] Nissan [Leaf]": {
+  "[PZ1A] -  Nissan [Leaf]": {
    "code": "PZ1A",
    "addressing": {
     "00": [
@@ -30659,7 +30659,7 @@
     "429": "18DA29F3"
    }
   },
-  "[PZ1C] Nissan [PZ1C]": {
+  "[PZ1C] -  Nissan [PZ1C]": {
    "code": "PZ1C",
    "addressing": {
     "00": [
@@ -31992,7 +31992,7 @@
     "429": "18DA29F3"
    }
   },
-  "[RF90] Lada Largus": {
+  "[RF90] -  Lada Largus": {
    "code": "RF90",
    "addressing": {
     "00": [
@@ -33325,7 +33325,7 @@
     "429": "18DA29F3"
    }
   },
-  "[U60] Renault Alaskan - (u55, xND)": {
+  "[U60] -  Renault Alaskan - (u55, xND)": {
    "code": "U60",
    "addressing": {
     "00": [
@@ -34658,7 +34658,7 @@
     "429": "18DA29F3"
    }
   },
-  "[VS10] Daimler Citan": {
+  "[VS10] -  Daimler Citan": {
    "code": "VS10",
    "addressing": {
     "00": [
@@ -35991,7 +35991,7 @@
     "429": "18DA29F3"
    }
   },
-  "[VS11] Daimler New Citan": {
+  "[VS11] -  Daimler New Citan": {
    "code": "VS11",
    "addressing": {
     "00": [
@@ -37324,7 +37324,7 @@
     "429": "18DA29F3"
    }
   },
-  "[W176] Daimler (w176)": {
+  "[W176] -  Daimler (w176)": {
    "code": "W176",
    "addressing": {
     "00": [
@@ -38657,7 +38657,7 @@
     "429": "18DA29F3"
    }
   },
-  "[W205] Daimler (w205)": {
+  "[W205] -  Daimler (w205)": {
    "code": "W205",
    "addressing": {
     "00": [
@@ -39990,7 +39990,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X02E] Nissan Micra": {
+  "[X02E] -  Nissan Micra": {
    "code": "X02E",
    "addressing": {
     "00": [
@@ -41323,7 +41323,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X06] Renault Twingo": {
+  "[X06] -  Renault Twingo": {
    "code": "X06",
    "addressing": {
     "00": [
@@ -42656,7 +42656,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X07PH2] Renault Twingo III Ph2": {
+  "[X07PH2] -  Renault Twingo III Ph2": {
    "code": "X07PH2",
    "addressing": {
     "00": [
@@ -43989,7 +43989,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X07] Renault Twingo III": {
+  "[X07] -  Renault Twingo III": {
    "code": "X07",
    "addressing": {
     "00": [
@@ -45322,7 +45322,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X09] Renault Twizy": {
+  "[X09] -  Renault Twizy": {
    "code": "X09",
    "addressing": {
     "00": [
@@ -46655,7 +46655,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X10PH2] Renault Zoe (C1A-Neo)": {
+  "[X10PH2] -  Renault Zoe (C1A-Neo)": {
    "code": "X10PH2",
    "addressing": {
     "00": [
@@ -47988,7 +47988,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X10] Renault Zoe": {
+  "[X10] -  Renault Zoe": {
    "code": "X10",
    "addressing": {
     "00": [
@@ -49321,7 +49321,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X1310] Dacia Duster II": {
+  "[X1310] -  Dacia Duster II": {
    "code": "X1310",
    "addressing": {
     "00": [
@@ -50654,7 +50654,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X1312] Dacia New Kaptur - Captur (BAR/IN/RU)": {
+  "[X1312] -  Dacia New Kaptur - Captur (BAR/IN/RU)": {
    "code": "X1312",
    "addressing": {
     "00": [
@@ -51987,7 +51987,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X1316A] Alpine Alpine ECHO": {
+  "[X1316A] -  Alpine Alpine ECHO": {
    "code": "X1316A",
    "addressing": {
     "00": [
@@ -53320,7 +53320,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X1316] Renault R5 Elec": {
+  "[X1316] -  Renault R5 Elec": {
    "code": "X1316",
    "addressing": {
     "00": [
@@ -54653,7 +54653,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X1317] Renault 4Ever (EV)": {
+  "[X1317] -  Renault 4Ever (EV)": {
    "code": "X1317",
    "addressing": {
     "00": [
@@ -55986,7 +55986,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X13A] Nissan [Juke]": {
+  "[X13A] -  Nissan [Juke]": {
    "code": "X13A",
    "addressing": {
     "00": [
@@ -57319,7 +57319,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X21B] Nissan Note": {
+  "[X21B] -  Nissan Note": {
    "code": "X21B",
    "addressing": {
     "00": [
@@ -58652,7 +58652,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X24] Renault Mascott": {
+  "[X24] -  Renault Mascott": {
    "code": "X24",
    "addressing": {
     "00": [
@@ -59985,7 +59985,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X33] Renault Wind": {
+  "[X33] -  Renault Wind": {
    "code": "X33",
    "addressing": {
     "00": [
@@ -61318,7 +61318,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X35] Renault Symbol / Thalia": {
+  "[X35] -  Renault Symbol / Thalia": {
    "code": "X35",
    "addressing": {
     "00": [
@@ -62651,7 +62651,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X38] Renault Fluence": {
+  "[X38] -  Renault Fluence": {
    "code": "X38",
    "addressing": {
     "00": [
@@ -63984,7 +63984,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X43] Renault Latitude": {
+  "[X43] -  Renault Latitude": {
    "code": "X43",
    "addressing": {
     "00": [
@@ -65317,7 +65317,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X44PH2] Renault Twingo II Phase2": {
+  "[X44PH2] -  Renault Twingo II Phase2": {
    "code": "X44PH2",
    "addressing": {
     "00": [
@@ -66650,7 +66650,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X44] Renault Twingo II": {
+  "[X44] -  Renault Twingo II": {
    "code": "X44",
    "addressing": {
     "00": [
@@ -67983,7 +67983,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X47] Renault Laguna III Tricorps": {
+  "[X47] -  Renault Laguna III Tricorps": {
    "code": "X47",
    "addressing": {
     "00": [
@@ -69316,7 +69316,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X52] Dacia Logan": {
+  "[X52] -  Dacia Logan": {
    "code": "X52",
    "addressing": {
     "00": [
@@ -70649,7 +70649,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X54] Renault Safrane": {
+  "[X54] -  Renault Safrane": {
    "code": "X54",
    "addressing": {
     "00": [
@@ -71982,7 +71982,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X56] Renault Laguna": {
+  "[X56] -  Renault Laguna": {
    "code": "X56",
    "addressing": {
     "00": [
@@ -73315,7 +73315,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X60A] Nissan Navarra (xND)": {
+  "[X60A] -  Nissan Navarra (xND)": {
    "code": "X60A",
    "addressing": {
     "00": [
@@ -74648,7 +74648,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X60B] Daimler Andrew (xMZ, xNE)": {
+  "[X60B] -  Daimler Andrew (xMZ, xNE)": {
    "code": "X60B",
    "addressing": {
     "00": [
@@ -75981,7 +75981,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X61PH2] Renault Kangoo II Phase 2": {
+  "[X61PH2] -  Renault Kangoo II Phase 2": {
    "code": "X61PH2",
    "addressing": {
     "00": [
@@ -77314,7 +77314,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X61] Renault Kangoo II": {
+  "[X61] -  Renault Kangoo II": {
    "code": "X61",
    "addressing": {
     "00": [
@@ -78647,7 +78647,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X62PH2] Renault Master III Phase 2": {
+  "[X62PH2] -  Renault Master III Phase 2": {
    "code": "X62PH2",
    "addressing": {
     "00": [
@@ -79980,7 +79980,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X62] Renault Master III": {
+  "[X62] -  Renault Master III": {
    "code": "X62",
    "addressing": {
     "00": [
@@ -81313,7 +81313,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X64] Renault Megane & Scenic": {
+  "[X64] -  Renault Megane & Scenic": {
    "code": "X64",
    "addressing": {
     "00": [
@@ -82646,7 +82646,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X65] Renault Clio II": {
+  "[X65] -  Renault Clio II": {
    "code": "X65",
    "addressing": {
     "00": [
@@ -83979,7 +83979,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X66] Renault Avantime": {
+  "[X66] -  Renault Avantime": {
    "code": "X66",
    "addressing": {
     "00": [
@@ -85312,7 +85312,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X67] Dacia Docker - Kangoo": {
+  "[X67] -  Dacia Docker - Kangoo": {
    "code": "X67",
    "addressing": {
     "00": [
@@ -86645,7 +86645,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X70PH3] Renault Master II Phase 3": {
+  "[X70PH3] -  Renault Master II Phase 3": {
    "code": "X70PH3",
    "addressing": {
     "00": [
@@ -87978,7 +87978,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X70] Renault Master II": {
+  "[X70] -  Renault Master II": {
    "code": "X70",
    "addressing": {
     "00": [
@@ -89311,7 +89311,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X73PH2] Renault VelSatis Phase 2": {
+  "[X73PH2] -  Renault VelSatis Phase 2": {
    "code": "X73PH2",
    "addressing": {
     "00": [
@@ -90644,7 +90644,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X73] Renault VelSatis": {
+  "[X73] -  Renault VelSatis": {
    "code": "X73",
    "addressing": {
     "00": [
@@ -91977,7 +91977,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X74PH2] Renault Laguna II Phase 2": {
+  "[X74PH2] -  Renault Laguna II Phase 2": {
    "code": "X74PH2",
    "addressing": {
     "00": [
@@ -93310,7 +93310,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X74] Renault Laguna II": {
+  "[X74] -  Renault Laguna II": {
    "code": "X74",
    "addressing": {
     "00": [
@@ -94643,7 +94643,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X76] Renault Kangoo": {
+  "[X76] -  Renault Kangoo": {
    "code": "X76",
    "addressing": {
     "00": [
@@ -95976,7 +95976,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X77PH2] Renault Modus Phase2": {
+  "[X77PH2] -  Renault Modus Phase2": {
    "code": "X77PH2",
    "addressing": {
     "00": [
@@ -97309,7 +97309,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X77] Renault Modus": {
+  "[X77] -  Renault Modus": {
    "code": "X77",
    "addressing": {
     "00": [
@@ -98642,7 +98642,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X79PH2] Dacia Duster Phase 2": {
+  "[X79PH2] -  Dacia Duster Phase 2": {
    "code": "X79PH2",
    "addressing": {
     "00": [
@@ -99975,7 +99975,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X79] Dacia Duster": {
+  "[X79] -  Dacia Duster": {
    "code": "X79",
    "addressing": {
     "00": [
@@ -101308,7 +101308,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X81PH2] Renault Espace IV Phase 2": {
+  "[X81PH2] -  Renault Espace IV Phase 2": {
    "code": "X81PH2",
    "addressing": {
     "00": [
@@ -102641,7 +102641,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X81PH3] Renault Espace IV Phase 3": {
+  "[X81PH3] -  Renault Espace IV Phase 3": {
    "code": "X81PH3",
    "addressing": {
     "00": [
@@ -103974,7 +103974,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X81PH4] Renault Espace IV Phase 4": {
+  "[X81PH4] -  Renault Espace IV Phase 4": {
    "code": "X81PH4",
    "addressing": {
     "00": [
@@ -105307,7 +105307,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X81] Renault Espace IV": {
+  "[X81] -  Renault Espace IV": {
    "code": "X81",
    "addressing": {
     "00": [
@@ -106640,7 +106640,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X82PH2] Renault Trafic III Phase2": {
+  "[X82PH2] -  Renault Trafic III Phase2": {
    "code": "X82PH2",
    "addressing": {
     "00": [
@@ -107973,7 +107973,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X82] Renault Trafic III": {
+  "[X82] -  Renault Trafic III": {
    "code": "X82",
    "addressing": {
     "00": [
@@ -109306,7 +109306,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X83PH2] Renault Trafic II Phase 2": {
+  "[X83PH2] -  Renault Trafic II Phase 2": {
    "code": "X83PH2",
    "addressing": {
     "00": [
@@ -110639,7 +110639,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X83PH3] Renault Trafic II Phase 3": {
+  "[X83PH3] -  Renault Trafic II Phase 3": {
    "code": "X83PH3",
    "addressing": {
     "00": [
@@ -111972,7 +111972,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X83] Renault Trafic II": {
+  "[X83] -  Renault Trafic II": {
    "code": "X83",
    "addressing": {
     "00": [
@@ -113305,7 +113305,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X84ABSONLY] Renault Megane II only ABS": {
+  "[X84ABSONLY] -  Renault Megane II only ABS": {
    "code": "X84ABSONLY",
    "addressing": {
     "00": [
@@ -114638,7 +114638,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X84BUGABS] Renault Megane II hors ABS": {
+  "[X84BUGABS] -  Renault Megane II hors ABS": {
    "code": "X84BUGABS",
    "addressing": {
     "00": [
@@ -115971,7 +115971,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X84PH2] Renault Megane II Phase 2": {
+  "[X84PH2] -  Renault Megane II Phase 2": {
    "code": "X84PH2",
    "addressing": {
     "00": [
@@ -117304,7 +117304,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X84] Renault Megane II": {
+  "[X84] -  Renault Megane II": {
    "code": "X84",
    "addressing": {
     "00": [
@@ -118637,7 +118637,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X85] Renault Clio III": {
+  "[X85] -  Renault Clio III": {
    "code": "X85",
    "addressing": {
     "00": [
@@ -119970,7 +119970,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X87PH2] Renault Captur Phase 2": {
+  "[X87PH2] -  Renault Captur Phase 2": {
    "code": "X87PH2",
    "addressing": {
     "00": [
@@ -121303,7 +121303,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X87] Renault Captur": {
+  "[X87] -  Renault Captur": {
    "code": "X87",
    "addressing": {
     "00": [
@@ -122636,7 +122636,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X89] Renault (X89)": {
+  "[X89] -  Renault (X89)": {
    "code": "X89",
    "addressing": {
     "00": [
@@ -123969,7 +123969,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X90] Dacia Logan / Sandero": {
+  "[X90] -  Dacia Logan / Sandero": {
    "code": "X90",
    "addressing": {
     "00": [
@@ -125302,7 +125302,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X91PH2] Renault Laguna III Phase 2": {
+  "[X91PH2] -  Renault Laguna III Phase 2": {
    "code": "X91PH2",
    "addressing": {
     "00": [
@@ -126635,7 +126635,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X91PH3] Renault Laguna III Phase 3": {
+  "[X91PH3] -  Renault Laguna III Phase 3": {
    "code": "X91PH3",
    "addressing": {
     "00": [
@@ -127968,7 +127968,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X91] Renault Laguna III": {
+  "[X91] -  Renault Laguna III": {
    "code": "X91",
    "addressing": {
     "00": [
@@ -129301,7 +129301,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X92] Dacia Lodgy": {
+  "[X92] -  Dacia Lodgy": {
    "code": "X92",
    "addressing": {
     "00": [
@@ -130634,7 +130634,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X94] Renault (x94)": {
+  "[X94] -  Renault (x94)": {
    "code": "X94",
    "addressing": {
     "00": [
@@ -131967,7 +131967,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X95PH2] Renault Megane III Phase 2": {
+  "[X95PH2] -  Renault Megane III Phase 2": {
    "code": "X95PH2",
    "addressing": {
     "00": [
@@ -133300,7 +133300,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X95] Renault Megane III": {
+  "[X95] -  Renault Megane III": {
    "code": "X95",
    "addressing": {
     "00": [
@@ -134633,7 +134633,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X96] Renault (X96)": {
+  "[X96] -  Renault (X96)": {
    "code": "X96",
    "addressing": {
     "00": [
@@ -135966,7 +135966,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X98PH2] Renault Clio IV Phase 2": {
+  "[X98PH2] -  Renault Clio IV Phase 2": {
    "code": "X98PH2",
    "addressing": {
     "00": [
@@ -137299,7 +137299,7 @@
     "429": "18DA29F3"
    }
   },
-  "[X98] Renault Clio IV": {
+  "[X98] -  Renault Clio IV": {
    "code": "X98",
    "addressing": {
     "00": [
@@ -138632,7 +138632,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XBA] Renault Kwid": {
+  "[XBA] -  Renault Kwid": {
    "code": "XBA",
    "addressing": {
     "00": [
@@ -139965,7 +139965,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XBB] Renault Kwid BR": {
+  "[XBB] -  Renault Kwid BR": {
    "code": "XBB",
    "addressing": {
     "00": [
@@ -141298,7 +141298,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XBC] Renault Triber-Kiger India": {
+  "[XBC] -  Renault Triber-Kiger India": {
    "code": "XBC",
    "addressing": {
     "00": [
@@ -142631,7 +142631,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XBGPH2] Renault Kwid EV Sweet400": {
+  "[XBGPH2] -  Renault Kwid EV Sweet400": {
    "code": "XBGPH2",
    "addressing": {
     "00": [
@@ -143964,7 +143964,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XBG] Renault Kwid EV": {
+  "[XBG] -  Renault Kwid EV": {
    "code": "XBG",
    "addressing": {
     "00": [
@@ -145297,7 +145297,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCBPH2] Renault Megane E-Tech Electrique Sweet400": {
+  "[XCBPH2] -  Renault Megane E-Tech Electrique Sweet400": {
    "code": "XCBPH2",
    "addressing": {
     "00": [
@@ -146630,7 +146630,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCB] Renault Megane E-Tech Electrique": {
+  "[XCB] -  Renault Megane E-Tech Electrique": {
    "code": "XCB",
    "addressing": {
     "00": [
@@ -147963,7 +147963,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCC] Renault New EV (C1A HS Evo Sweet400)": {
+  "[XCC] -  Renault New EV (C1A HS Evo Sweet400)": {
    "code": "XCC",
    "addressing": {
     "00": [
@@ -149296,7 +149296,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCD] Renault New EV China version (C1A HS Evo Sweet400)": {
+  "[XCD] -  Renault New EV China version (C1A HS Evo Sweet400)": {
    "code": "XCD",
    "addressing": {
     "00": [
@@ -150629,7 +150629,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCOP_BEFORE_C1A] Contrôle Cop Contrôle COP Before C1A": {
+  "[XCOP_BEFORE_C1A] -  Contrôle Cop Contrôle COP Before C1A": {
    "code": "XCOP_BEFORE_C1A",
    "addressing": {
     "00": [
@@ -151962,7 +151962,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCOP_C1AHS] Contrôle Cop Contrôle COP C1A HS": {
+  "[XCOP_C1AHS] -  Contrôle Cop Contrôle COP C1A HS": {
    "code": "XCOP_C1AHS",
    "addressing": {
     "00": [
@@ -153295,7 +153295,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XCOP_C1A] Contrôle Cop Contrôle COP C1A": {
+  "[XCOP_C1A] -  Contrôle Cop Contrôle COP C1A": {
    "code": "XCOP_C1A",
    "addressing": {
     "00": [
@@ -154628,7 +154628,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XDC] Renault Master Chine": {
+  "[XDC] -  Renault Master Chine": {
    "code": "XDC",
    "addressing": {
     "00": [
@@ -155961,7 +155961,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XDD] Renault Master IV": {
+  "[XDD] -  Renault Master IV": {
    "code": "XDD",
    "addressing": {
     "00": [
@@ -157294,7 +157294,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XDE] Renault Master IV Double Cabin": {
+  "[XDE] -  Renault Master IV Double Cabin": {
    "code": "XDE",
    "addressing": {
     "00": [
@@ -158627,7 +158627,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XEF] Renault Alpine A110": {
+  "[XEF] -  Renault Alpine A110": {
    "code": "XEF",
    "addressing": {
     "00": [
@@ -159960,7 +159960,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFAPH2] Renault Scenic IV phase2": {
+  "[XFAPH2] -  Renault Scenic IV phase2": {
    "code": "XFAPH2",
    "addressing": {
     "00": [
@@ -161293,7 +161293,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFA] Renault Scenic IV": {
+  "[XFA] -  Renault Scenic IV": {
    "code": "XFA",
    "addressing": {
     "00": [
@@ -162626,7 +162626,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFBPH2] Renault Megane IV Ph2": {
+  "[XFBPH2] -  Renault Megane IV Ph2": {
    "code": "XFBPH2",
    "addressing": {
     "00": [
@@ -163959,7 +163959,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFB] Renault Megane IV": {
+  "[XFB] -  Renault Megane IV": {
    "code": "XFB",
    "addressing": {
     "00": [
@@ -165292,7 +165292,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFCPH2] Renault Espace V Ph2": {
+  "[XFCPH2] -  Renault Espace V Ph2": {
    "code": "XFCPH2",
    "addressing": {
     "00": [
@@ -166625,7 +166625,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFC] Renault Espace V": {
+  "[XFC] -  Renault Espace V": {
    "code": "XFC",
    "addressing": {
     "00": [
@@ -167958,7 +167958,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFDPH2] Renault Talisman Phase II": {
+  "[XFDPH2] -  Renault Talisman Phase II": {
    "code": "XFDPH2",
    "addressing": {
     "00": [
@@ -169291,7 +169291,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFD] Renault Talisman": {
+  "[XFD] -  Renault Talisman": {
    "code": "XFD",
    "addressing": {
     "00": [
@@ -170624,7 +170624,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFFPH2] Renault Megane IV - Sedan Ph2": {
+  "[XFFPH2] -  Renault Megane IV - Sedan Ph2": {
    "code": "XFFPH2",
    "addressing": {
     "00": [
@@ -171957,7 +171957,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFF] Renault Megane IV - Sedan": {
+  "[XFF] -  Renault Megane IV - Sedan": {
    "code": "XFF",
    "addressing": {
     "00": [
@@ -173290,7 +173290,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFG] Renault (xFG)": {
+  "[XFG] -  Renault (xFG)": {
    "code": "XFG",
    "addressing": {
     "00": [
@@ -174623,7 +174623,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFI] Renault C-Hatch China (C1A)": {
+  "[XFI] -  Renault C-Hatch China (C1A)": {
    "code": "XFI",
    "addressing": {
     "00": [
@@ -175956,7 +175956,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFJ] Renault (x38_Chine)": {
+  "[XFJ] -  Renault (x38_Chine)": {
    "code": "XFJ",
    "addressing": {
     "00": [
@@ -177289,7 +177289,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XFK] Renault New Kangoo": {
+  "[XFK] -  Renault New Kangoo": {
    "code": "XFK",
    "addressing": {
     "00": [
@@ -178622,7 +178622,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XGA] Dacia BM Lada": {
+  "[XGA] -  Dacia BM Lada": {
    "code": "XGA",
    "addressing": {
     "00": [
@@ -179955,7 +179955,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XGF] Lada Vesta": {
+  "[XGF] -  Lada Vesta": {
    "code": "XGF",
    "addressing": {
     "00": [
@@ -181288,7 +181288,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XHAPH2] Dacia Kaptur - Captur (BAR/IN/RU) Ph2": {
+  "[XHAPH2] -  Dacia Kaptur - Captur (BAR/IN/RU) Ph2": {
    "code": "XHAPH2",
    "addressing": {
     "00": [
@@ -182621,7 +182621,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XHA] Dacia Kaptur - Captur (BAR/IN/RU)": {
+  "[XHA] -  Dacia Kaptur - Captur (BAR/IN/RU)": {
    "code": "XHA",
    "addressing": {
     "00": [
@@ -183954,7 +183954,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XHC] Renault [SUV]Chine": {
+  "[XHC] -  Renault [SUV]Chine": {
    "code": "XHC",
    "addressing": {
     "00": [
@@ -185287,7 +185287,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XHNPH2] Renault Austral Sweet400": {
+  "[XHNPH2] -  Renault Austral Sweet400": {
    "code": "XHNPH2",
    "addressing": {
     "00": [
@@ -186620,7 +186620,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XHN] Renault Austral ": {
+  "[XHN] -  Renault Austral ": {
    "code": "XHN",
    "addressing": {
     "00": [
@@ -187953,7 +187953,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJAPH2] Renault Clio (C1A) Phase2": {
+  "[XJAPH2] -  Renault Clio (C1A) Phase2": {
    "code": "XJAPH2",
    "addressing": {
     "00": [
@@ -189286,7 +189286,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJA] Renault Clio (C1A)": {
+  "[XJA] -  Renault Clio (C1A)": {
    "code": "XJA",
    "addressing": {
     "00": [
@@ -190619,7 +190619,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJBPH2] Renault New Captur (C1A)Ph2": {
+  "[XJBPH2] -  Renault New Captur (C1A)Ph2": {
    "code": "XJBPH2",
    "addressing": {
     "00": [
@@ -191952,7 +191952,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJB] Renault New Captur (C1A)": {
+  "[XJB] -  Renault New Captur (C1A)": {
    "code": "XJB",
    "addressing": {
     "00": [
@@ -193285,7 +193285,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJC] Dacia Arkana": {
+  "[XJC] -  Dacia Arkana": {
    "code": "XJC",
    "addressing": {
     "00": [
@@ -194618,7 +194618,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJD] Dacia Duster Phase 3": {
+  "[XJD] -  Dacia Duster Phase 3": {
    "code": "XJD",
    "addressing": {
     "00": [
@@ -195951,7 +195951,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJE] Renault New Captur Chine)": {
+  "[XJE] -  Renault New Captur Chine)": {
    "code": "XJE",
    "addressing": {
     "00": [
@@ -197284,7 +197284,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJF] Renault Logan III Badge Renault": {
+  "[XJF] -  Renault Logan III Badge Renault": {
    "code": "XJF",
    "addressing": {
     "00": [
@@ -198617,7 +198617,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJH] Renault xJH": {
+  "[XJH] -  Renault xJH": {
    "code": "XJH",
    "addressing": {
     "00": [
@@ -199950,7 +199950,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJI] Dacia Logan III": {
+  "[XJI] -  Dacia Logan III": {
    "code": "XJI",
    "addressing": {
     "00": [
@@ -201283,7 +201283,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJK] Renault Docker II": {
+  "[XJK] -  Renault Docker II": {
    "code": "XJK",
    "addressing": {
     "00": [
@@ -202616,7 +202616,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJLPH2] Renault Fluence - Korea Phase 2": {
+  "[XJLPH2] -  Renault Fluence - Korea Phase 2": {
    "code": "XJLPH2",
    "addressing": {
     "00": [
@@ -203949,7 +203949,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJL] Renault Fluence - Korea": {
+  "[XJL] -  Renault Fluence - Korea": {
    "code": "XJL",
    "addressing": {
     "00": [
@@ -205282,7 +205282,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJN] Lada (XJN)": {
+  "[XJN] -  Lada (XJN)": {
    "code": "XJN",
    "addressing": {
     "00": [
@@ -206615,7 +206615,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJO] Lada (XJO)": {
+  "[XJO] -  Lada (XJO)": {
    "code": "XJO",
    "addressing": {
     "00": [
@@ -207948,7 +207948,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XJP] Renault [Captur] ": {
+  "[XJP] -  Renault [Captur] ": {
    "code": "XJP",
    "addressing": {
     "00": [
@@ -209281,7 +209281,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XNN] Nissan (PB1D)": {
+  "[XNN] -  Nissan (PB1D)": {
    "code": "XNN",
    "addressing": {
     "00": [
@@ -210614,7 +210614,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XPIV_C1AHS] Ddt_Training DDT-Training C1A HS": {
+  "[XPIV_C1AHS] -  Ddt_Training DDT-Training C1A HS": {
    "code": "XPIV_C1AHS",
    "addressing": {
     "00": [
@@ -211947,7 +211947,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XPIV_C1A] Ddt_Training DDT-Training C1A": {
+  "[XPIV_C1A] -  Ddt_Training DDT-Training C1A": {
    "code": "XPIV_C1A",
    "addressing": {
     "00": [
@@ -213280,7 +213280,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XR210] Mobilize [Twizy] EZ1": {
+  "[XR210] -  Mobilize [Twizy] EZ1": {
    "code": "XR210",
    "addressing": {
     "00": [
@@ -214613,7 +214613,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZGPH2] Renault Koleos II Ph2": {
+  "[XZGPH2] -  Renault Koleos II Ph2": {
    "code": "XZGPH2",
    "addressing": {
     "00": [
@@ -215946,7 +215946,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZGPH3] Renault Koleos II Ph3": {
+  "[XZGPH3] -  Renault Koleos II Ph3": {
    "code": "XZGPH3",
    "addressing": {
     "00": [
@@ -217279,7 +217279,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZG] Renault Koleos II": {
+  "[XZG] -  Renault Koleos II": {
    "code": "XZG",
    "addressing": {
     "00": [
@@ -218612,7 +218612,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZHPH2] Renault Kadjar CN Ph2": {
+  "[XZHPH2] -  Renault Kadjar CN Ph2": {
    "code": "XZHPH2",
    "addressing": {
     "00": [
@@ -219945,7 +219945,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZH] Renault Kadjar CN": {
+  "[XZH] -  Renault Kadjar CN": {
    "code": "XZH",
    "addressing": {
     "00": [
@@ -221278,7 +221278,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZI] Renault Kadjar Rus": {
+  "[XZI] -  Renault Kadjar Rus": {
    "code": "XZI",
    "addressing": {
     "00": [
@@ -222611,7 +222611,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZJPH2] Renault Koleos II - Chine Ph2": {
+  "[XZJPH2] -  Renault Koleos II - Chine Ph2": {
    "code": "XZJPH2",
    "addressing": {
     "00": [
@@ -223944,7 +223944,7 @@
     "429": "18DA29F3"
    }
   },
-  "[XZJ] Renault Koleos II - Chine": {
+  "[XZJ] -  Renault Koleos II - Chine": {
    "code": "XZJ",
    "addressing": {
     "00": [
