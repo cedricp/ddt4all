@@ -1947,7 +1947,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             if not os.path.isfile(addressing):
                 addressing = os.path.join("vehicles", "GenericAddressing.xml")
 
-            project_name = "[%s] -  %s %s" % (str(code).upper(), name, p_name)
+            project_name = "[%s] - %s %s" % (str(code).upper(), name, p_name)
             # if project_name in  dict["projects"].keys():
             #     project_name = "%s %s (%s)" % (name, p_name, str(code).upper())
 
