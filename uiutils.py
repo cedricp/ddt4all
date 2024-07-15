@@ -4,8 +4,6 @@ import sys
 
 import PyQt5.QtGui as gui
 
-import version
-
 
 def getChildNodesByName(parent, name):
     nodes = []

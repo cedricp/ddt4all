@@ -13,7 +13,6 @@ from io import BytesIO
 import elm
 import json
 import options
-import version
 
 _ = options.translator('ddt4all')
 

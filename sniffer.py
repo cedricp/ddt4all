@@ -8,7 +8,6 @@ import PyQt5.QtWidgets as widgets
 
 import ecu
 import options
-import version
 
 _ = options.translator('ddt4all')
 

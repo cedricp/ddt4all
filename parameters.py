@@ -17,6 +17,7 @@ import ecu
 import elm
 import json
 import options
+import version
 from uiutils import *
 
 _ = options.translator('ddt4all')

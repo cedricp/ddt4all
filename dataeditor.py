@@ -5,16 +5,15 @@ import copy
 import math
 import string
 
+import PyQt5.QtCore as core
+import PyQt5.QtGui as gui
+import PyQt5.QtWidgets as widgets
+
 import ecu
 import options
 import version
 
 hex_decoder = codecs.getdecoder("hex_codec")
-
-import PyQt5.QtGui as gui
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as widgets
-
 _ = options.translator('ddt4all')
 
 

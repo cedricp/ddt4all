@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import gettext
+import json
 import locale
 import os
-
-import json
 
 simulation_mode = False
 port_speed = 38400
