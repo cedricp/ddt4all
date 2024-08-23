@@ -1549,7 +1549,7 @@ class Ecu_scanner:
             progress.setRange(0, len(project_can_addresses))
             progress.setValue(0)
 
-        try_new = []
+        # try_new = []
 
         # Only scan available ecu addresses
         for addr in list(set(project_can_addresses)):
@@ -1567,13 +1567,13 @@ class Ecu_scanner:
                 continue
 
             text = _("Scanning address: ")
-            text1 = _("Skipping CAN extended address (not supported yet)")
-
-            if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]:<65} [{text1}]")
-                continue
-            else:
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+            # text1 = _("Skipping CAN extended address (not supported yet)")
+            #
+            # if len(elm.dnat[addr]) > 3 and not options.simulation_mode:
+            #     print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]:<65} [{text1}]")
+            #     continue
+            # else:
+            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.elm.init_can()
@@ -1586,7 +1586,7 @@ class Ecu_scanner:
         if not options.simulation_mode:
             options.elm.close_protocol()
 
-        return try_new
+        # return try_new
 
     def scan_kwp(self, progress=None, label=None, vehiclefilter=None):
         if options.simulation_mode:
