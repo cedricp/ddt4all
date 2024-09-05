@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-20 21:09+0200\n"
-"PO-Revision-Date: 2024-04-20 21:17+0200\n"
-"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
+"PO-Revision-Date: 2024-08-29 23:46+0300\n"
+"Last-Translator: Abdullah YILMAZ (TA1AUB) <h.abdullahyilmaz@hotmail.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -264,7 +264,7 @@ msgid "Cannot find data "
 msgstr "Veri bulunamıyor "
 
 msgid " vs "
-msgstr ""
+msgstr "vs"
 
 msgid "Cannot draw input "
 msgstr "Giriş çizilemiyor "
@@ -273,116 +273,94 @@ msgid "No Value"
 msgstr "Değer Yok"
 
 msgid "Generated stream "
-msgstr ""
+msgstr "Oluşturulan akış"
 
-#, fuzzy
-#| msgid "Send request bytes (HEX)"
 msgid "Send request stream "
-msgstr "Alınan istek baytları (HEX)"
+msgstr "İstek akışını gönder"
 
-#, fuzzy
-#| msgid "Receive bytes"
 msgid "Received stream "
-msgstr "Alınan bayt"
+msgstr "Alınan akış"
 
 msgid "Request ECU Error"
-msgstr ""
+msgstr "ECU isteği Hatası"
 
 msgid "Decoded values"
-msgstr ""
+msgstr "Kodlanmış değerler"
 
 msgid "Warning, cannot get signed value for"
-msgstr ""
+msgstr "Uyarı, imzalı değer alınamıyor"
 
 msgid "Division by zero, please check data item: "
-msgstr ""
+msgstr "Sıfıra bölme, lütfen veri öğesini kontrol edin:"
 
 msgid "getHexValue >> abnormal remaining bytes "
-msgstr ""
+msgstr "getHexValue >> anormal kalan baytlar"
 
-#, fuzzy
-#| msgid "Cannot find data "
 msgid "Cannot find file "
-msgstr "Veri bulunamıyor "
+msgstr "Dosya bulunamadı"
 
 msgid "Cannot load ECU file"
-msgstr ""
+msgstr "ECU dosyası yüklenemiyor"
 
-#, fuzzy
-#| msgid "XML file not found : "
 msgid "XML not found"
-msgstr "XML dosyası bulunamadı: "
+msgstr "XML bulunamadı"
 
 msgid "Cannot retrieve functionnal address of ECU"
-msgstr ""
+msgstr "ECU'nun işlevsel adresi alınamıyor"
 
 msgid "Adding group "
-msgstr ""
+msgstr "Grup ekleme"
 
 msgid "Unable to find eculist"
-msgstr ""
+msgstr "Eculist bulunamadı"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Warning, address"
-msgstr "ECU İşlev adresi"
+msgstr "Uyarı, adres"
 
 msgid "is not mapped"
-msgstr ""
+msgstr "haritalanmamış"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Scanning address: "
-msgstr "ECU İşlev adresi"
+msgstr "Adres taranıyor:"
 
 msgid "Skipping CAN extended address (not supported yet)"
-msgstr ""
+msgstr "CAN genişletilmiş adresinin atlanması (henüz desteklenmiyor)"
 
-#, fuzzy
-#| msgid "Found similar"
 msgid "Found: "
-msgstr "Benzer bulundu"
+msgstr "Bulunan:"
 
-#, fuzzy
-#| msgid "Identify ECU"
 msgid "Identified ECU"
-msgstr "ECU tanımla"
+msgstr "Tanımlanmış ECU"
 
 msgid "Found ECU"
-msgstr ""
+msgstr "Bulunan ECU"
 
 msgid "(not perfect match)"
-msgstr ""
+msgstr "(mükemmel bir eşleşme değil)"
 
 msgid "(no relevant ECU file found)"
-msgstr ""
+msgstr "(ilgili ECU dosyası bulunamadı)(ilgili ECU dosyası bulunamadı)"
 
 msgid "Writing vehicles database..."
-msgstr ""
+msgstr "Araç veritabanı yazılıyor..."
 
 msgid "Starting zipping "
-msgstr ""
+msgstr "Sıkıştırma başlatılıyor"
 
-#, fuzzy
-#| msgid "Error:"
 msgid "Error: "
 msgstr "Hata:"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM bağlı değil veya yanlış COM port"
 
-#, fuzzy
-#| msgid "Port speed"
 msgid "Port closed"
-msgstr "Bağlantı noktası (port) hızı"
+msgstr "Bağlantı noktası kapalı"
 
 msgid "Connection to ELM was lost"
 msgstr "ELM ile bağlantı kesildi"
 
-#, fuzzy
-#| msgid "Cannot connect to ECU"
 msgid "Cannot decode bytes "
-msgstr "ECU'ya bağlanılamıyor"
+msgstr "Baytlar çözülemiyor"
 
 msgid "TIMEOUT"
 msgstr "ZAMAN AŞIMI"
@@ -403,49 +381,43 @@ msgid "No ELM interface on port"
 msgstr "Bağlantı noktasında ELM arayüzü yok"
 
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr ""
+msgstr "OBDLink Bağlantısı TAMAM, tam hız UART anahtarı deneniyor"
 
 msgid "Failed to switch to change OBDLink to "
-msgstr ""
+msgstr "OBDLink'i değiştirmek için geçiş yapılamadı"
 
 msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr ""
+msgstr "ELM Bağlantısı Tamam, yüksek hızlı UART anahtarı deneniyor"
 
 msgid "Failed to switch to change ELM to "
-msgstr ""
+msgstr "ELM'yi değiştirmek için geçiş yapılamadı"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
-msgstr ""
+msgstr "OBDLINK baurate'i değiştirme tamam, Şimdi UART hızı değişiyor..."
 
 msgid "OBDLink full speed connection OK"
-msgstr ""
+msgstr "OBDLink tam hız bağlantısı TAMAM"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "OBDLink Version "
-msgstr "Tanılama sürümü"
+msgstr "OBDLink Sürümü"
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
-msgstr ""
+msgstr "ELM baud hızı AÇIK, UART hızı şimdi değiştiriliyor..."
 
 msgid "ELM full speed connection OK "
-msgstr ""
+msgstr "ELM tam hız bağlantısı TAMAM"
 
-#, fuzzy
-#| msgid "Version"
 msgid "Version "
 msgstr "Sürüm"
 
 msgid "Your ELM does not support baudrate "
-msgstr ""
+msgstr "ELM'niz baud hızını desteklemiyor"
 
 msgid "ELM reset..."
-msgstr ""
+msgstr "ELM sıfırlandı..."
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Unknown address: "
-msgstr "ECU İşlev adresi"
+msgstr "Bilinmeyen adres:"
 
 msgid "FAIL"
 msgstr "BAŞARISIZ"
@@ -469,7 +441,7 @@ msgid "ELM Max version:"
 msgstr "ELM Max sürümü:"
 
 msgid "ddt4all_data/projects.json not found or not ok."
-msgstr ""
+msgstr "ddt4all_data/projects.json bulunamadı veya doğru değil."
 
 msgid "ECU name"
 msgstr "ECU Adı"
@@ -523,22 +495,22 @@ msgid "Ecu parameters"
 msgstr "ECU parametreleri"
 
 msgid "Ecran Window"
-msgstr ""
+msgstr "Ekran Penceresi"
 
 msgid "Screens"
 msgstr "Ekranlar"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Kayıt Penceresi"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "Ecu Penceresi"
 
 msgid "Ecu List Window"
-msgstr ""
+msgstr "Ecu Liste Penceresi"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Araç Çubuğu"
 
 msgid "Read DTC"
 msgstr "DTC oku"
@@ -615,16 +587,14 @@ msgstr "Yeniden Adlandır"
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#, fuzzy
-#| msgid "Cannot draw input "
 msgid "Cannot load plugin "
-msgstr "Giriş çizilemiyor "
+msgstr "Eklenti yüklenemiyor"
 
 msgid "Help"
 msgstr "Yardım"
 
 msgid "Web Wiki"
-msgstr ""
+msgstr "Web Wiki"
 
 msgid "About Developers"
 msgstr "Geliştiriciler Hakkında"
@@ -633,23 +603,19 @@ msgid "Get Git update"
 msgstr "Git güncellemesini alın"
 
 msgid "About"
-msgstr ""
+msgstr "Hakkında"
 
-#, fuzzy
-#| msgid "About Ddt4All"
 msgid "About DDT4ALL"
-msgstr "Ddt4All Hakkında"
+msgstr "DDT4ALL Hakkında"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid " version:"
-msgstr "Tanılama sürümü"
+msgstr "sürüm:"
 
 msgid "Created by:"
-msgstr ""
+msgstr "Oluşturan:"
 
 msgid "Contributors:"
-msgstr ""
+msgstr "Katkıda Bulunanlar:"
 
 msgid "Save database (keep '.zip' extension)"
 msgstr "Veritabanını kaydet ('.zip' uzantısını koru)"
@@ -703,10 +669,10 @@ msgid "Save record (keep '.txt' extension)"
 msgstr "Kaydı kaydet ('.txt' uzantısını koru)"
 
 msgid "Recorded "
-msgstr ""
+msgstr "Kaydedildi"
 
 msgid " entries"
-msgstr ""
+msgstr "girişler"
 
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
@@ -781,7 +747,7 @@ msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "COM portta ELM327 veya OBDLINK-SX algılanmadı "
 
 msgid "Err, cannot rename "
-msgstr ""
+msgstr "Hata, yeniden adlandıramıyorum"
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Ekranınızı düzenleyebilmek için önce JSON formatında dışa aktarın"
@@ -814,10 +780,10 @@ msgid "Output"
 msgstr "Çıkış"
 
 msgid "Protocol not supported"
-msgstr ""
+msgstr "Protokol desteklenmiyor"
 
 msgid "Protocol not supported: "
-msgstr ""
+msgstr "Protokol desteklenmiyor:"
 
 msgid "XML file not found : "
 msgstr "XML dosyası bulunamadı: "
@@ -858,27 +824,27 @@ msgstr "Buton isteği bulunamadı: "
 msgid "Sending request :"
 msgstr "Gönderilen istek :"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Unknown request "
-msgstr "ECU İşlev adresi"
+msgstr "Bilinmeyen istek"
 
 msgid "Command aborted "
-msgstr ""
+msgstr "Komut iptal edildi"
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "İstek iptal edildi (kırmızı parametre girişlerine bakın): "
 
 msgid "Delay"
-msgstr ""
+msgstr "Gecikme"
 
 msgid "For your safety"
-msgstr ""
+msgstr "Güvenliğiniz için"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
 "Activate expert mode to unlock"
 msgstr ""
+"<center>ENGELLENMİŞ KOMUT</center>\n"
+"Kilidi açmak için uzman modunu etkinleştirin"
 
 msgid "Invalid"
 msgstr "Geçersiz"
@@ -890,7 +856,7 @@ msgid "Cannot call request "
 msgstr "İstek aranamıyor "
 
 msgid "Update time"
-msgstr ""
+msgstr "Güncelleme zamanı"
 
 msgid "Clearing DTC information"
 msgstr "DTC bilgilerini temizleniyor"
@@ -904,18 +870,14 @@ msgstr "<center>Tanılama arıza kodlarını temizlemek üzeresiniz</center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>İstediğinizin bu olduğundan emin misiniz.</center>"
 
-#, fuzzy
-#| msgid "Clearing DTC information"
 msgid "Clear DTC failed"
-msgstr "DTC bilgilerini temizleniyor"
+msgstr "DTC temizleme başarısız oldu"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "DTC temizliği başarıyla tamamlandı"
 
-#, fuzzy
-#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgid "No ReadDTC request for that ECU"
-msgstr "Bu ECU için Net DTC talebi yok, varsayılan olarak 14FF00 gönderecek"
+msgstr "Bu ECU için ReadDTC isteği yok"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "DTC Oku komutu için geçersiz yanıt"
@@ -935,63 +897,53 @@ msgstr "ECU arıza kodları"
 msgid "Parsing screen "
 msgstr "Ayrıştırma ekranı "
 
-#, fuzzy
-#| msgid "Button request not found : "
 msgid "found request in input "
-msgstr "Buton isteği bulunamadı: "
+msgstr "girişte istek bulundu"
 
-#, fuzzy
-#| msgid "Found similar"
 msgid "found in display "
-msgstr "Benzer bulundu"
+msgstr "ekranda bulunan"
 
-#, fuzzy
-#| msgid "Add button"
 msgid "found in button "
-msgstr "Buton ekle"
+msgstr "düğmede bulunan"
 
 msgid "found in presend "
-msgstr ""
+msgstr "şu anda bulunan"
 
 msgid "found data in input "
-msgstr ""
+msgstr "girişte bulunan veriler"
 
 msgid "found data in display "
-msgstr ""
+msgstr "Ekranda bulunan veriler"
 
 msgid "Cannot zip database, no 'ecus' directory"
-msgstr ""
+msgstr "Veritabanı sıkıştırılamıyor, 'ecus' dizini yok"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "Starting conversion"
-msgstr "Tanılama sürümü"
+msgstr "Dönüşüm başlatılıyor"
 
 msgid "Starting processing "
-msgstr ""
+msgstr "İşleme başlanıyor"
 
 msgid " to "
-msgstr ""
+msgstr "ile"
 
 msgid "Skipping current file (cannot parse it)"
-msgstr ""
+msgstr "Geçerli dosya atlanıyor (ayrıştırılamıyor)"
 
-#, fuzzy
-#| msgid "Zip database"
 msgid "Writing database"
-msgstr "Veritabanını sıkıştır"
+msgstr "Veritabanı yazılıyor"
 
 msgid "Writing archive"
-msgstr ""
+msgstr "Arşiv Yazılıyor"
 
 msgid "Opening ECU Database..."
-msgstr ""
+msgstr "ECU Veritabanı Açılıyor..."
 
 msgid "parts as: "
-msgstr ""
+msgstr "parçalar şu şekilde:"
 
 msgid " please review dumpVehicles def."
-msgstr ""
+msgstr "Lütfen dumpVehicles tanımını inceleyin."
 
 msgid "Values"
 msgstr "Değerler"
@@ -999,18 +951,14 @@ msgstr "Değerler"
 msgid "Waiting..."
 msgstr "Bekle..."
 
-#, fuzzy
-#| msgid "Frame hex error : "
 msgid "Frame length error: "
-msgstr "Çerçeve hex hatası : "
+msgstr "Çerçeve uzunluğu hatası:"
 
-#, fuzzy
-#| msgid "Frame hex error : "
 msgid "Frame hex error: "
-msgstr "Çerçeve hex hatası : "
+msgstr "Çerçeve hex hatası:"
 
 msgid "Found USB adapter:"
-msgstr ""
+msgstr "USB adaptörü bulundu:"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "AB90 HAVA YASTIĞI Sıfırlama"
