@@ -643,6 +643,7 @@ class Ecu_data:
 
         requestasbin = "".join(requestasbin)
 
+        # TODO this need review, return empty is not maybe ok.
         bytes_list = {}
         try:
             valueasint = int("0b" + requestasbin, 2)
