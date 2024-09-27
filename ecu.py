@@ -642,7 +642,13 @@ class Ecu_data:
                 requestasbin[i + start_bit] = valueasbin[i]
 
         requestasbin = "".join(requestasbin)
-        valueasint = int("0b" + requestasbin, 2)
+
+        try:
+            valueasint = int("0b" + requestasbin, 2)
+        except:
+          raise (_("Value of this stuff need a bypass gateway maybe. Value:") + " %s" % requestasbin)
+          # return {}
+
         valueashex = hex(valueasint)[2:].replace("L", "").zfill(numreqbytes * 2).upper()
 
         for i in range(numreqbytes):
