@@ -646,8 +646,9 @@ class Ecu_data:
         try:
             valueasint = int("0b" + requestasbin, 2)
         except ValueError:
+            # this need a break maybe empty and or raise, try empty.
+            # raise (_("Value of this stuff need a bypass gateway maybe. Value:") + " %s" % requestasbin)
             print (_("Value error of this stuff need a bypass gateway maybe. Value:") + " %s" % requestasbin)
-            # this need a break maybe empty and or raise, try empty..
             return {}
 
         valueashex = hex(valueasint)[2:].replace("L", "").zfill(numreqbytes * 2).upper()
