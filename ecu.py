@@ -650,9 +650,8 @@ class Ecu_data:
         except ValueError:
             error = _("Value error of this stuff need a bypass gateway maybe. Value:") + " %s" % requestasbin
             options.main_window.logview.append("<font color='red'>" + error + "</font>")
-            # this need a break maybe empty and or raise, try empty.
+            # raise or return ?
             # raise (error)
-            # print (error)
             return bytes_list
 
         valueashex = hex(valueasint)[2:].replace("L", "").zfill(numreqbytes * 2).upper()
