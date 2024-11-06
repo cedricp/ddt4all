@@ -1153,9 +1153,14 @@ class paramWidget(widgets.QWidget):
                     newval = combo_value
                     items_ref = ecu_data.items
                     input_value = hex(int(items_ref[combo_value]))[2:]
-
-                elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem,
+                try:
+                    elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem,
                                                     ecu_request.ecu_file.endianness)
+                except:
+                    error = _("Value error of this stuff need a bypass gateway maybe. Value:") + " %s" % requestasbin
+                    options.main_window.logview.append("<font color='red'>" + error + "</font>")
+                    return
+                
                 logdict[dataitem.name] = newval
 
                 if not elm_data_stream:

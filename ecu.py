@@ -643,17 +643,8 @@ class Ecu_data:
 
         requestasbin = "".join(requestasbin)
 
-        # TODO this need review, return empty is not maybe ok.
-        bytes_list = {}
-        try:
-            valueasint = int("0b" + requestasbin, 2)
-        except ValueError:
-            error = _("Value error of this stuff need a bypass gateway maybe. Value:") + " %s" % requestasbin
-            options.main_window.logview.append("<font color='red'>" + error + "</font>")
-            # raise or return ?
-            # raise (error)
-            return bytes_list
-
+        requestasbin = "".join(requestasbin)
+        valueasint = int("0b" + requestasbin, 2)
         valueashex = hex(valueasint)[2:].replace("L", "").zfill(numreqbytes * 2).upper()
 
         for i in range(numreqbytes):
