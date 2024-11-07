@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 21:09+0200\n"
-"PO-Revision-Date: 2024-08-29 23:46+0300\n"
-"Last-Translator: Abdullah YILMAZ (TA1AUB) <h.abdullahyilmaz@hotmail.com>\n"
+"POT-Creation-Date: 2024-11-07 02:23+0100\n"
+"PO-Revision-Date: 2024-11-07 02:46+0100\n"
+"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -322,9 +322,6 @@ msgstr "haritalanmamış"
 
 msgid "Scanning address: "
 msgstr "Adres taranıyor:"
-
-msgid "Skipping CAN extended address (not supported yet)"
-msgstr "CAN genişletilmiş adresinin atlanması (henüz desteklenmiyor)"
 
 msgid "Found: "
 msgstr "Bulunan:"
@@ -830,6 +827,9 @@ msgstr "Bilinmeyen istek"
 msgid "Command aborted "
 msgstr "Komut iptal edildi"
 
+msgid "Value error of this stuff need a bypass gateway maybe."
+msgstr "Bu şeyin değer hatası belki bir bypass geçidine ihtiyaç duyar."
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "İstek iptal edildi (kırmızı parametre girişlerine bakın): "
 
@@ -845,6 +845,12 @@ msgid ""
 msgstr ""
 "<center>ENGELLENMİŞ KOMUT</center>\n"
 "Kilidi açmak için uzman modunu etkinleştirin"
+
+msgid "Writing parameter"
+msgstr "Parametre yazma"
+
+msgid "Blocked writing parameter"
+msgstr "Engellenen yazma parametresi"
 
 msgid "Invalid"
 msgstr "Geçersiz"
@@ -1227,6 +1233,9 @@ msgstr "VIN (Şasi Numarası)"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
+
+#~ msgid "Skipping CAN extended address (not supported yet)"
+#~ msgstr "CAN genişletilmiş adresinin atlanması (henüz desteklenmiyor)"
 
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"

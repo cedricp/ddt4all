@@ -1188,9 +1188,9 @@ class paramWidget(widgets.QWidget):
             if self.logfile is not None and len(logdict) > 0:
                 self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
                 if not blocked:
-                    self.logfile.write("\tWriting parameter : \n\t\t")
+                    self.logfile.write("\t%s: \n\t\t" % _("Writing parameter"))
                 else:
-                    self.logfile.write("\tBlocked writing parameter : \n\t\t")
+                    self.logfile.write("\t%s: \n\t\t" % _("Blocked writing parameter"))
                 self.logfile.write(json.dumps(logdict))
                 self.logfile.write("\n")
                 self.logfile.flush()

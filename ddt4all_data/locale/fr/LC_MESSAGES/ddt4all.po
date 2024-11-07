@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 21:09+0200\n"
-"PO-Revision-Date: 2024-04-20 21:12+0200\n"
+"POT-Creation-Date: 2024-11-07 02:23+0100\n"
+"PO-Revision-Date: 2024-11-07 02:37+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -321,9 +321,6 @@ msgstr "n'est pas cartographié"
 
 msgid "Scanning address: "
 msgstr "Adresse de numérisation: "
-
-msgid "Skipping CAN extended address (not supported yet)"
-msgstr "Sauter l'adresse étendue CAN (pas encore supporté)"
 
 msgid "Found: "
 msgstr "Trouvés: "
@@ -832,6 +829,11 @@ msgstr "Demande inconnue "
 msgid "Command aborted "
 msgstr "Commande abandonnée "
 
+msgid "Value error of this stuff need a bypass gateway maybe."
+msgstr ""
+"L'erreur de valeur de ce truc nécessite peut-être une passerelle de "
+"contournement."
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Requête abandonée (verifiez les paramètres en rouges): "
 
@@ -847,6 +849,12 @@ msgid ""
 msgstr ""
 "<center>COMMANDE BLOQUÉE</center>\n"
 "Activez le mode expert pour débloquer"
+
+msgid "Writing parameter"
+msgstr "Paramètre d'écriture"
+
+msgid "Blocked writing parameter"
+msgstr "Paramètre d'écriture bloqué"
 
 msgid "Invalid"
 msgstr "Invalide"
@@ -1222,6 +1230,9 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
+
+#~ msgid "Skipping CAN extended address (not supported yet)"
+#~ msgstr "Sauter l'adresse étendue CAN (pas encore supporté)"
 
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"

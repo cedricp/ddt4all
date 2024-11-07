@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 21:09+0200\n"
-"PO-Revision-Date: 2024-04-20 21:16+0200\n"
+"POT-Creation-Date: 2024-11-07 02:23+0100\n"
+"PO-Revision-Date: 2024-11-07 02:42+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -321,9 +321,6 @@ msgstr "não está mapeado"
 
 msgid "Scanning address: "
 msgstr "Endereço de digitalização: "
-
-msgid "Skipping CAN extended address (not supported yet)"
-msgstr "Saltar o endereço alargado CAN (ainda não suportado)"
 
 msgid "Found: "
 msgstr "Encontrados: "
@@ -832,6 +829,10 @@ msgstr "Solicitação desconhecida "
 msgid "Command aborted "
 msgstr "Comando abortado "
 
+msgid "Value error of this stuff need a bypass gateway maybe."
+msgstr ""
+"O erro de valor deste material talvez necessite de um gateway de desvio."
+
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Pedido abortado (ver entradas de parametros em vermelho): "
 
@@ -847,6 +848,12 @@ msgid ""
 msgstr ""
 "<center>COMANDO BLOQUEADO</center>\n"
 "Ative o modo especialista para desbloquear"
+
+msgid "Writing parameter"
+msgstr "Parâmetro de escrita"
+
+msgid "Blocked writing parameter"
+msgstr "Parâmetro de escrita bloqueada"
 
 msgid "Invalid"
 msgstr "Inválido"
@@ -1216,6 +1223,9 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC CALCULATOR"
+
+#~ msgid "Skipping CAN extended address (not supported yet)"
+#~ msgstr "Saltar o endereço alargado CAN (ainda não suportado)"
 
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"
