@@ -1654,10 +1654,16 @@ def dumpSNAT(file):
         address = func.getAttribute(u"Address")
         protolist = getChildNodesByName(func, u"ProtocolList")
         for rid in protolist:
+            # can =  rid.getAttribute(u"Name")
+            # if (can != "DiagOnCAN"):
+            #     continue
             proto = getChildNodesByName(rid, u"Protocol")
             for prtc in proto:
                 grid = getChildNodesByName(prtc, u"Address")
                 for ok in grid:
+                    present = ok.getAttribute(u"Present")
+                    if (present == "0"):
+                        continue
                     rid_add = ok.getAttribute(u"Rid")
                     strHex = "%0.2X" % int(address)
                     dict[strHex] = rid_add
@@ -1674,10 +1680,16 @@ def dumpDNAT(file):
         address = func.getAttribute(u"Address")
         protolist = getChildNodesByName(func, u"ProtocolList")
         for xid in protolist:
+            # can =  xid.getAttribute(u"Name")
+            # if (can != "DiagOnCAN"):
+            #     continue
             proto = getChildNodesByName(xid, u"Protocol")
             for prtc in proto:
                 gxid = getChildNodesByName(prtc, u"Address")
                 for ok in gxid:
+                    present = ok.getAttribute(u"Present")
+                    if (present == "0"):
+                        continue
                     xid_add = ok.getAttribute(u"Xid")
                     strHex = "%0.2X" % int(address)
                     dict[strHex] = xid_add
