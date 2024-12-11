@@ -25,7 +25,9 @@ dnat_entries = {"E7": "7E4", "E8": "644"}
 snat_entries = {"E7": "7EC", "E8": "5C4"}
 
 snat = snat_entries
+snat_ext = {}
 dnat = dnat_entries
+dnat_ext = {}
 
 # Code snippet from https://github.com/rbei-etas/busmaster
 negrsp = {"10": "NR: General Reject",
@@ -199,6 +201,12 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
+def addr_exist(addr):
+    result = True
+    if addr not in dnat:
+        if addr not in dnat_ext:
+            result = False
+    return result
 
 def get_can_addr(txa):
     for d in dnat.keys():
@@ -207,8 +215,29 @@ def get_can_addr(txa):
     return None
 
 
-def item_count(iter):
-    return sum(1 for _ in iter)
+def get_can_addr_ext(txa):
+    for d in dnat_ext.keys():
+        if dnat_ext[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def get_can_addr_snat(txa):
+    for d in snat.keys():
+        if snat[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def get_can_addr_snat_ext(txa):
+    for d in snat_ext.keys():
+        if snat_ext[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def item_count(items):
+    return sum(1 for _ in items)
 
 
 def get_available_ports():
@@ -270,7 +299,7 @@ class Port:
 
         portName = portName.strip()
 
-        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\:\d{1,5}$", portName):
+        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", portName):
             import socket
             self.ipaddr, self.tcpprt = portName.split(':')
             self.tcpprt = int(self.tcpprt)
@@ -695,7 +724,9 @@ class ELM:
 
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            if self.currentaddress in dnat:
+            if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
+                self.vf.write(tmstr + ";" + "0x" + dnat_ext[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
+            elif self.currentaddress in dnat:
                 self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
             else:
                 print(_("Unknown address: "), self.currentaddress, "0x" + req, "0x" + rsp)
@@ -872,8 +903,10 @@ class ELM:
                 errorstr = negrsp[result[4:6]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                self.vf.write(
-                    tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
+                    self.vf.write(tmstr + ";" + dnat_ext[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                elif self.currentaddress in dnat:
+                    self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache
@@ -1220,9 +1253,16 @@ class ELM:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
             self.currentaddress = get_can_addr(TXa)
+        elif get_can_addr(addr) is not None and get_can_addr_snat(addr) is not None:
+            TXa = get_can_addr(addr)
+            RXa = get_can_addr_snat(addr)
+            self.currentaddress = TXa
+        elif get_can_addr_ext(addr) is not None and get_can_addr_snat_ext(addr) is not None:
+            TXa = get_can_addr_ext(addr)
+            RXa = get_can_addr_snat_ext(addr)
+            self.currentaddress = TXa
         else:
-            TXa = dnat[addr]
-            RXa = snat[addr]
+            return
 
         extended_can = False
         if len(RXa) == 8:

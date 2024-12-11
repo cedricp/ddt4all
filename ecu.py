@@ -1007,7 +1007,10 @@ class Ecu_file:
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
-            short_addr = elm.get_can_addr(self.ecu_send_id)
+            if len(self.ecu_send_id) == 8:
+                short_addr = elm.get_can_addr_ext(self.ecu_send_id)
+            else:
+                short_addr = elm.get_can_addr(self.ecu_send_id)
             if short_addr is None:
                 print(_("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
                 return False
@@ -1378,7 +1381,7 @@ class Ecu_scanner:
         return self.ecu_database.numecu
 
     def getNumAddr(self):
-        return len(elm.dnat)
+        return len(elm.dnat) + len(elm.dnat_ext)
 
     def addTarget(self, target):
         self.ecus[target.name] = target
@@ -1562,7 +1565,7 @@ class Ecu_scanner:
             if addr == '00' or addr == 'FF':
                 continue
 
-            if addr not in elm.dnat:
+            if not elm.addr_exist(addr):
                 print(_("Warning, address") + " %s " + _("is not mapped") % addr)
                 continue
 

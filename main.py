@@ -35,7 +35,9 @@ def load_this():
         f.close()
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
+        elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
+        elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
         return vehicles_loc
     except:
         print(_("ddt4all_data/projects.json not found or not ok."))
@@ -99,9 +101,6 @@ class Ecu_list(widgets.QWidget):
 
         for k in vehicles["projects"].keys():
             self.vehicle_combo.addItem(k)
-            ecu.addressing = vehicles["projects"][k]["addressing"]
-            elm.snat = vehicles["projects"][k]["snat"]
-            elm.dnat = vehicles["projects"][k]["dnat"]
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
@@ -125,7 +124,9 @@ class Ecu_list(widgets.QWidget):
         project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
         ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
         elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
+        elm.snat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["snat_ext"]
         elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
+        elm.dnat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["dnat_ext"]
         self.parent().parent().scan_project(project)
 
     def init(self):
@@ -218,6 +219,12 @@ class Ecu_list(widgets.QWidget):
 
     def filterProject(self):
         project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
+        ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
+        elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
+        elm.snat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["snat_ext"]
+        elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
+        elm.dnat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["dnat_ext"]
+
         root = self.list.invisibleRootItem()
         root_items = [root.child(i) for i in range(root.childCount())]
 
@@ -578,12 +585,15 @@ class Main_widget(widgets.QMainWindow):
         msgbox.setWindowTitle(_("About DDT4ALL"))
         text_about = version.__appname__ + _(" version:") + " %s" % version.__version__
         msgbox.setText(text_about)
-        contrib = _("Created by:") + " %s\n\n %s\n" % (version.__author__, _("Contributors:"))
+        html = '<h2>' + _("Created by:") + " %s" % (version.__author__) + '</h2><table>'
         for c in version.__contributors__:
-            contrib += "%s\n" % c
-        msgbox.setInformativeText(contrib)
+            if c == "Furtif":
+                html += '<tr><td>Colaborator: </td><td>' + c + '</td></tr>'
+            else:
+                html += '<tr><td>Contribuitor: </td><td>' + c + '</td></tr>'
+        html += '</table>'
+        msgbox.setInformativeText(html)
         msgbox.exec_()
-
 
     def wiki_about(self):
         url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)

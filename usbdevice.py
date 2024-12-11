@@ -170,9 +170,16 @@ class OBDDevice:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
             self.currentaddress = elm.get_can_addr(TXa)
+        elif elm.get_can_addr(addr) is not None and elm.get_can_addr_snat(addr) is not None:
+            TXa = elm.get_can_addr(addr)
+            RXa = elm.get_can_addr_snat(addr)
+            self.currentaddress = TXa
+        elif elm.get_can_addr_ext(addr) is not None and elm.get_can_addr_snat_ext(addr) is not None:
+            TXa = elm.get_can_addr_ext(addr)
+            RXa = elm.get_can_addr_snat_ext(addr)
+            self.currentaddress = TXa
         else:
-            TXa = elm.dnat[addr]
-            RXa = elm.snat[addr]
+            return
 
         self.device.set_tx_addr(TXa)
         self.device.set_rx_addr(RXa)
