@@ -585,10 +585,14 @@ class Main_widget(widgets.QMainWindow):
         msgbox.setWindowTitle(_("About DDT4ALL"))
         text_about = version.__appname__ + _(" version:") + " %s" % version.__version__
         msgbox.setText(text_about)
-        contrib = _("Created by:") + " %s\n\n %s\n" % (version.__author__, _("Contributors:"))
+        html = '<h2>' + _("Created by:") + " %s" % (version.__author__) + '</h2><table>'
         for c in version.__contributors__:
-            contrib += "%s\n" % c
-        msgbox.setInformativeText(contrib)
+            if c == "Furtif":
+                html += '<tr><td>Colaborator: </td><td>' + c + '</td></tr>'
+            else:
+                html += '<tr><td>Contribuitor: </td><td>' + c + '</td></tr>'
+        html += '</table>'
+        msgbox.setInformativeText(html)
         msgbox.exec_()
 
     def wiki_about(self):
