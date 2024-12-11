@@ -101,11 +101,6 @@ class Ecu_list(widgets.QWidget):
 
         for k in vehicles["projects"].keys():
             self.vehicle_combo.addItem(k)
-            ecu.addressing = vehicles["projects"][k]["addressing"]
-            elm.snat = vehicles["projects"][k]["snat"]
-            elm.snat_ext = vehicles["projects"][k]["snat_ext"]
-            elm.dnat = vehicles["projects"][k]["dnat"]
-            elm.dnat_ext = vehicles["projects"][k]["dnat_ext"]
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
@@ -224,6 +219,12 @@ class Ecu_list(widgets.QWidget):
 
     def filterProject(self):
         project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
+        ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
+        elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
+        elm.snat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["snat_ext"]
+        elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
+        elm.dnat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["dnat_ext"]
+
         root = self.list.invisibleRootItem()
         root_items = [root.child(i) for i in range(root.childCount())]
 
@@ -589,7 +590,6 @@ class Main_widget(widgets.QMainWindow):
             contrib += "%s\n" % c
         msgbox.setInformativeText(contrib)
         msgbox.exec_()
-
 
     def wiki_about(self):
         url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
