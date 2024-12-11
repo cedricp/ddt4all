@@ -910,7 +910,7 @@ class ELM:
                     self.vf.write(
                         tmstr + ";" + dnat_ext[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 else:
-                    return
+                    print(_("Unknown address: "), self.currentaddress, "0x" + command)
                 self.vf.flush()
 
         # populate L1 cache
