@@ -22,7 +22,7 @@ __contributors__ = [
     "krzeminskim"
 ]
 __license__ = "GPL"
-__version__ = "3.0.2"
+__version__ = "3.0.3"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__status__ = "Stable"
+__status__ = "Pangolin ;)"
