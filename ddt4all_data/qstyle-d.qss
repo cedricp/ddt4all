@@ -13,6 +13,12 @@ QWidget {
     background-color: #323232;
 }
 
+/* Global label styling */
+QLabel {
+    color: blue;
+    background-color: #323232;
+}
+
 /* Hover effect for items */
 QWidget:item:hover {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #ca0619);
