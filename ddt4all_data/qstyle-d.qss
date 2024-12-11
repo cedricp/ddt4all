@@ -13,9 +13,14 @@ QWidget {
     background-color: #323232;
 }
 
+/* Styling for focused widget */
+QWidget:focus {
+    /* border: 2px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a); */
+}
+
 /* Global label styling */
 QLabel {
-    color: blue;
+    color: orange;
     background-color: #323232;
 }
 
@@ -71,11 +76,6 @@ QWidget:disabled {
 /* Styling for abstract item view */
 QAbstractItemView {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #4d4d4d, stop: 0.1 #646464, stop: 1 #5d5d5d);
-}
-
-/* Styling for focused widget */
-QWidget:focus {
-    /* border: 2px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a); */
 }
 
 /* Styling for line edit */
