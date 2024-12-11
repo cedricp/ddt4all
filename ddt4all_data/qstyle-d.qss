@@ -109,7 +109,7 @@ QComboBox {
     border-radius: 5px;
     padding: 1px 1px 1px 1px;
     width: 370px;
-	color: #ffaa00;
+	color: #ffffff;
 }
 
 /* Hover effect for combo box and push button */
@@ -124,7 +124,7 @@ QComboBox:on {
     padding-left: 4px;
     background-color: #ffaa00;
     selection-background-color: #ffaa00;
-	color: #ffffff;
+	color: #000000;
     border: 1px solid #ffffff;
 }
 

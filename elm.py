@@ -236,8 +236,8 @@ def get_can_addr_snat_ext(txa):
     return None
 
 
-def item_count(iter):
-    return sum(1 for _ in iter)
+def item_count(items):
+    return sum(1 for _ in items)
 
 
 def get_available_ports():
@@ -299,7 +299,7 @@ class Port:
 
         portName = portName.strip()
 
-        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\:\d{1,5}$", portName):
+        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", portName):
             import socket
             self.ipaddr, self.tcpprt = portName.split(':')
             self.tcpprt = int(self.tcpprt)
