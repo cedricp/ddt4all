@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
-msgstr "Goto data"
+msgstr "Йти до даних"
 
 msgid "Remove"
 msgstr "Видалити"
@@ -60,16 +60,16 @@ msgid "Inherits globals"
 msgstr "Inherits globals"
 
 msgid "No SDS"
-msgstr ""
+msgstr "Без SDS"
 
 msgid "Plant"
 msgstr ""
 
 msgid "After Sale"
-msgstr ""
+msgstr "Після продажу"
 
 msgid "Engineering"
-msgstr ""
+msgstr "Інженерія"
 
 msgid "Supplier"
 msgstr "Постачальник"
@@ -123,28 +123,28 @@ msgid "New"
 msgstr "Нове"
 
 msgid "Duplicate selected"
-msgstr ""
+msgstr "Дублікат обрано"
 
 msgid "Remove selected"
-msgstr ""
+msgstr "Видалити обране"
 
 msgid "Reload"
-msgstr "Reload"
+msgstr "Перезавантажити"
 
 msgid "Validate changes"
 msgstr "Validate changes"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Опис"
 
 msgid "Data type"
-msgstr "Data type"
+msgstr "Тип дати"
 
 msgid "Numeric"
-msgstr "Numeric"
+msgstr "Нумерація"
 
 msgid "Numeric items"
-msgstr "Numeric items"
+msgstr "Нумерація вкладень"
 
 msgid "Hex"
 msgstr "Hex"
@@ -163,16 +163,16 @@ msgid "Data name;Description"
 msgstr "Data name;Description"
 
 msgid "Del"
-msgstr "Del"
+msgstr "Видалити"
 
 msgid "Refresh"
 msgstr "Оновити"
 
 msgid "Move up"
-msgstr "Move up"
+msgstr "Підняти"
 
 msgid "Check"
-msgstr "Check"
+msgstr "Перевірити"
 
 #, python-format
 msgid "Request %s not found"
@@ -202,7 +202,7 @@ msgid "Delay;Request"
 msgstr "Delay;Request"
 
 msgid "Screen initialization"
-msgstr "Screen initialization"
+msgstr "Ініціалізація екрану"
 
 msgid "Requests to send before screen drawing"
 msgstr "Requests to send before screen drawing"
@@ -223,7 +223,7 @@ msgid "Ecu > Tool ID (Hex)"
 msgstr "Ecu > Tool ID (Hex)"
 
 msgid "Coding"
-msgstr "Coding"
+msgstr "Кодування"
 
 msgid "Big Endian"
 msgstr "Big Endian"
@@ -232,19 +232,19 @@ msgid "Little Endian"
 msgstr "Little Endian"
 
 msgid "ECU Auto identification"
-msgstr ""
+msgstr "ECU Авто визначення"
 
 msgid "Diag version;Supplier;Soft;Version"
 msgstr "Diag version;Supplier;Soft;Version"
 
 msgid "Add new"
-msgstr "Add new"
+msgstr "Додати нове"
 
 msgid "Delete selected"
-msgstr "Delete selected"
+msgstr "Видалити обране"
 
 msgid "Diag version"
-msgstr "Diag version"
+msgstr "Diag версія"
 
 msgid "Soft"
 msgstr "Soft"
@@ -253,19 +253,19 @@ msgid "Version"
 msgstr "Версія"
 
 msgid "No request named"
-msgstr ""
+msgstr "Запит не названо"
 
 msgid "Found similar"
-msgstr ""
+msgstr "Знайдено однакове"
 
 msgid "DataItem not found"
-msgstr ""
+msgstr "DataItem не знайдено"
 
 msgid "Cannot find data "
-msgstr ""
+msgstr "Невдалось знайти дані"
 
 msgid " vs "
-msgstr ""
+msgstr "з"
 
 msgid "Cannot draw input "
 msgstr "Не вдалось завантажити плагін "
@@ -274,7 +274,7 @@ msgid "No Value"
 msgstr "Значення"
 
 msgid "Generated stream "
-msgstr ""
+msgstr "Згенерований потік"
 
 #, fuzzy
 #| msgid "Send request bytes (HEX)"
@@ -287,13 +287,13 @@ msgid "Received stream "
 msgstr "Receive bytes"
 
 msgid "Request ECU Error"
-msgstr ""
+msgstr "Запит помилок"
 
 msgid "Decoded values"
-msgstr ""
+msgstr "Декодування значень"
 
 msgid "Warning, cannot get signed value for"
-msgstr ""
+msgstr "Увага, не вдалося отримати signed значення до"
 
 msgid "Division by zero, please check data item: "
 msgstr ""
@@ -304,10 +304,10 @@ msgstr ""
 #, fuzzy
 #| msgid "Cannot draw input "
 msgid "Cannot find file "
-msgstr "Не вдалось завантажити плагін "
+msgstr "Не вдалось завантажити файл "
 
 msgid "Cannot load ECU file"
-msgstr ""
+msgstr "Невдалося завантажити файли ECU"
 
 #, fuzzy
 #| msgid "XML file not found : "
@@ -318,7 +318,7 @@ msgid "Cannot retrieve functionnal address of ECU"
 msgstr ""
 
 msgid "Adding group "
-msgstr ""
+msgstr "Додати групу"
 
 msgid "Unable to find eculist"
 msgstr ""
@@ -329,7 +329,7 @@ msgid "Warning, address"
 msgstr "ECU Function address"
 
 msgid "is not mapped"
-msgstr ""
+msgstr "не визначено"
 
 #, fuzzy
 #| msgid "ECU Function address"
@@ -337,7 +337,7 @@ msgid "Scanning address: "
 msgstr "ECU Function address"
 
 msgid "Found: "
-msgstr ""
+msgstr "Знайдено: "
 
 #, fuzzy
 #| msgid "Identify ECU"
@@ -345,10 +345,10 @@ msgid "Identified ECU"
 msgstr "Ідентифікація ЕБУ"
 
 msgid "Found ECU"
-msgstr ""
+msgstr "Знайдено ECU"
 
 msgid "(not perfect match)"
-msgstr ""
+msgstr "(не ідеальна схожість)"
 
 msgid "(no relevant ECU file found)"
 msgstr ""
@@ -365,12 +365,12 @@ msgid "Error: "
 msgstr "Помилка:"
 
 msgid "ELM not connected or wrong COM port"
-msgstr ""
+msgstr "ELM не з'єднано або невірний COM порт "
 
 #, fuzzy
 #| msgid "Port speed"
 msgid "Port closed"
-msgstr "Швидкість порта"
+msgstr "Порт закрито"
 
 msgid "Connection to ELM was lost"
 msgstr "Звязок з ELM втрачено"
@@ -378,10 +378,10 @@ msgstr "Звязок з ELM втрачено"
 #, fuzzy
 #| msgid "Cannot reconnect..."
 msgid "Cannot decode bytes "
-msgstr "Не можу переконектитись..."
+msgstr "Не можу декодувати байти"
 
 msgid "TIMEOUT"
-msgstr "TIMEOUT"
+msgstr "Таймаут"
 
 msgid "Checking port speed:"
 msgstr "Перевірка швидкості порта:"
@@ -468,43 +468,43 @@ msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
 
 msgid "ECU name"
-msgstr "Назва ЕБУ"
+msgstr "Назва ECU"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Protocol"
 msgstr "Протокол"
 
 msgid "Diag"
-msgstr ""
+msgstr "Diag"
 
 msgid "Projets"
 msgstr "Проекти"
 
 msgid "loaded ECUs in database."
-msgstr "eCUS завантажено у базу."
+msgstr "ECUs завантажено у базу."
 
 msgid "No database found"
-msgstr ""
+msgstr "Не знайдено базу данних"
 
 msgid "Check documentation"
-msgstr ""
+msgstr "Перевірте документацію"
 
 msgid "Refresh rate (ms):"
 msgstr "Частота оновлення (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr ""
+msgstr "Can timeout (ms) [0:AUTO] :"
 
 msgid "Documentation"
-msgstr ""
+msgstr "Документація"
 
 msgid "Screen"
-msgstr "Енран"
+msgstr "Екран"
 
 msgid "CAN Sniffer"
-msgstr ""
+msgstr "CAN Sniffer"
 
 msgid "Requests"
 msgstr "Запити"
@@ -516,19 +516,19 @@ msgid "Buttons"
 msgstr "Кнопки"
 
 msgid "Ecu parameters"
-msgstr "Параметре ЕБУ"
+msgstr "Параметри ЕБУ"
 
 msgid "Ecran Window"
-msgstr ""
+msgstr "Екран Window"
 
 msgid "Screens"
 msgstr "Екрани"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Вікно логу"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "Вікно Ecu"
 
 msgid "Ecu List Window"
 msgstr ""
@@ -555,7 +555,7 @@ msgid "Manual command"
 msgstr "Ручний ввід команди"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Ручний запит"
 
 msgid "Software flow control"
 msgstr ""
@@ -591,10 +591,10 @@ msgid "Save ECU list"
 msgstr "Зберегти список ЕБУ"
 
 msgid "Zip database"
-msgstr ""
+msgstr "Zip база даних"
 
 msgid "Exit"
-msgstr ""
+msgstr "Вихід"
 
 msgid "Action"
 msgstr "Дії"
@@ -617,22 +617,22 @@ msgid "Cannot load plugin "
 msgstr "Не вдалось завантажити плагін "
 
 msgid "Help"
-msgstr ""
+msgstr "Допомога"
 
 msgid "Web Wiki"
-msgstr ""
+msgstr "Веб Вікі"
 
 msgid "About Developers"
-msgstr ""
+msgstr "Про розробника"
 
 msgid "Get Git update"
-msgstr ""
+msgstr "Отримати Git оновлення"
 
 msgid "About"
-msgstr ""
+msgstr "Про"
 
 msgid "About DDT4ALL"
-msgstr ""
+msgstr "Про DDT4ALL"
 
 #, fuzzy
 #| msgid "Diag version"
@@ -640,19 +640,19 @@ msgid " version:"
 msgstr "Diag version"
 
 msgid "Created by:"
-msgstr ""
+msgstr "Створено завдяки:"
 
 msgid "Contributors:"
-msgstr ""
+msgstr "Дописувачі"
 
 msgid "Save database (keep '.zip' extension)"
-msgstr ""
+msgstr "Зберегти базу даних"
 
 msgid "Zipping XML database... (this can take a few minutes)"
-msgstr ""
+msgstr "Zipping XML database... (це може тривати декілька хвилин)"
 
 msgid "Zip job finished"
-msgstr ""
+msgstr "Zip job finished"
 
 msgid "Enter new name"
 msgstr "Введіть нове імя"
@@ -664,13 +664,13 @@ msgid "Please select a category before creating new screen"
 msgstr "Виберіть категорію перед сторенням нового екрана"
 
 msgid "Enter screen name"
-msgstr ""
+msgstr "Введіть імя екрана"
 
 msgid "Scan options"
 msgstr "Опції сканування"
 
 msgid "CANCEL"
-msgstr ""
+msgstr "Відміна"
 
 msgid "Scanning CAN"
 msgstr "Сканування CAN"
@@ -697,10 +697,10 @@ msgid "Save record (keep '.txt' extension)"
 msgstr "Зберегти список моїх ЕБУ (.ecu)"
 
 msgid "Recorded "
-msgstr ""
+msgstr "Записано"
 
 msgid " entries"
-msgstr ""
+msgstr " входження"
 
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
@@ -726,7 +726,7 @@ msgid "ELM port selection"
 msgstr "Виберіть порт ELM"
 
 msgid "Interface language (need save and close)"
-msgstr ""
+msgstr "Мова інтерфейсу (портібно зберегти та закрити)"
 
 msgid "Port speed"
 msgstr "Швидкість порта"
@@ -741,7 +741,7 @@ msgid "ELM benchmark"
 msgstr "Перевірка ELM"
 
 msgid "Save and close"
-msgstr ""
+msgstr "Зберегти та закрити"
 
 msgid "WiFi port : "
 msgstr "WiFi порт : "
@@ -753,7 +753,7 @@ msgid "Dark style"
 msgstr "Темний стиль"
 
 msgid "Change UART speed"
-msgstr ""
+msgstr "Змінити швидкість UART"
 
 msgid "You must check the recommandations"
 msgstr "Ви мовинні погодитись з рекомендаціями"
@@ -775,13 +775,13 @@ msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 чи OBDLINK-SX не виявлено на COM порті "
 
 msgid "Err, cannot rename "
-msgstr ""
+msgstr "Помилка, невдалося перейменувати"
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Для редагування екрана спочатку збережіть його у форматі JSON"
 
 msgid "Enter label name"
-msgstr ""
+msgstr "Введіть ім'я мітки "
 
 msgid "Add button"
 msgstr "Додати кнопку"
@@ -799,7 +799,7 @@ msgid "Remove element"
 msgstr "Видалити елемент"
 
 msgid "Diagnotic session"
-msgstr "Diag version"
+msgstr "Діагностична сесія"
 
 msgid "Input"
 msgstr "Поле вводу"
@@ -824,13 +824,13 @@ msgid "Invalid DDT file"
 msgstr "Невірний DDT файл"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "Підключення до ELM втрачено, спроба підключитися знову..."
 
 msgid "Cannot reconnect..."
-msgstr "Не можу переконектитись..."
+msgstr "Не можу підключитися знову..."
 
 msgid "Switching to session mode"
-msgstr ""
+msgstr "Переключення до сесійного режиму"
 
 msgid "Sending ELM request :"
 msgstr "Відправка ELM запиту :"
@@ -845,7 +845,7 @@ msgid "Sending simulated ELM request :"
 msgstr "Отправляем симуляционный ELM запрос :"
 
 msgid "Bad ELM response :"
-msgstr ""
+msgstr "Погана відповідь ELM"
 
 msgid "ELM response : "
 msgstr "Відповідь ELM : "
@@ -862,44 +862,46 @@ msgid "Unknown request "
 msgstr "ECU Function address"
 
 msgid "Command aborted "
-msgstr ""
+msgstr "Команда перервано"
 
 msgid "Value error of this stuff need a bypass gateway maybe."
 msgstr ""
 
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Запит перервано (перевірта чевоні значення): "
+msgstr "Запит перервано (перевірта червоні значення): "
 
 msgid "Delay"
-msgstr ""
+msgstr "Затримка"
 
 msgid "For your safety"
-msgstr ""
+msgstr "Для вашої безпеки"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
 "Activate expert mode to unlock"
 msgstr ""
+"<center>КОМАНДА ЗАБЛОКОВАНА</center>\n"
+"активуйте експертний режим для розблокування"
 
 #, fuzzy
 #| msgid "Ecu parameters"
 msgid "Writing parameter"
-msgstr "Параметре ЕБУ"
+msgstr "Запис параметрів"
 
 msgid "Blocked writing parameter"
-msgstr ""
+msgstr "Заблокавано запис параметрів"
 
 msgid "Invalid"
-msgstr "Invalid"
+msgstr "Недійсний"
 
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "ECU використовує SDS"
 
 msgid "Cannot call request "
-msgstr ""
+msgstr "Неможливо викликати запит"
 
 msgid "Update time"
-msgstr ""
+msgstr "Оновити час"
 
 msgid "Clearing DTC information"
 msgstr "Скидання помилок DTC"
@@ -919,7 +921,7 @@ msgid "Clear DTC failed"
 msgstr "Скидання помилок DTC"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "Скидання помилок DTC вдале"
 
 #, fuzzy
 #| msgid "No ClearDTC request for that ECU, will send default 14FF00"
@@ -936,10 +938,10 @@ msgid "No DTC"
 msgstr "Немає DTC"
 
 msgid "Clear ALL DTC"
-msgstr "Витерти УСТ DTC"
+msgstr "Витерти усі DTC"
 
 msgid "ECU trouble codes"
-msgstr "DTC ЕБУ"
+msgstr "ECU коди помилок"
 
 msgid "Parsing screen "
 msgstr "Екран розшифровки "
@@ -950,7 +952,7 @@ msgid "found request in input "
 msgstr "Немає параметрів для кнопки : "
 
 msgid "found in display "
-msgstr ""
+msgstr "Знайдено в екрані"
 
 #, fuzzy
 #| msgid "Add button"
@@ -958,16 +960,16 @@ msgid "found in button "
 msgstr "Додати кнопку"
 
 msgid "found in presend "
-msgstr ""
+msgstr "знайдено в даному"
 
 msgid "found data in input "
-msgstr ""
+msgstr "знайдено дані в введені"
 
 msgid "found data in display "
-msgstr ""
+msgstr "знайдено дані в екрані"
 
 msgid "Cannot zip database, no 'ecus' directory"
-msgstr ""
+msgstr "Cannot zip database, no 'ecus' directory"
 
 #, fuzzy
 #| msgid "Diag version"
@@ -975,28 +977,28 @@ msgid "Starting conversion"
 msgstr "Diag version"
 
 msgid "Starting processing "
-msgstr ""
+msgstr "Початок процесу"
 
 msgid " to "
-msgstr ""
+msgstr " до"
 
 msgid "Skipping current file (cannot parse it)"
-msgstr ""
+msgstr "Пропускання даного файлу (невдалося розкласти його)"
 
 msgid "Writing database"
-msgstr ""
+msgstr "Запис бази даних"
 
 msgid "Writing archive"
-msgstr ""
+msgstr "Запис архіву"
 
 msgid "Opening ECU Database..."
-msgstr ""
+msgstr "Відкриваю ECU дата базу"
 
 msgid "parts as: "
-msgstr ""
+msgstr "частина як:"
 
 msgid " please review dumpVehicles def."
-msgstr ""
+msgstr " будь-ласка перевірте dumpVehicles def."
 
 msgid "Values"
 msgstr "Значення"
@@ -1005,87 +1007,91 @@ msgid "Waiting..."
 msgstr "Очікування..."
 
 msgid "Frame length error: "
-msgstr ""
+msgstr "Помилка довжини кадру"
 
 msgid "Frame hex error: "
-msgstr ""
+msgstr "Помилка hex кадру"
 
 msgid "Found USB adapter:"
-msgstr ""
+msgstr "Знайлено USB адаптер"
 
 msgid "AB90 AIRBAG Reset"
-msgstr ""
+msgstr "AB90 AIRBAG Reset"
 
 msgid "Airbag Tools"
-msgstr ""
+msgstr "Airbag інструмент"
 
 msgid ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
 msgstr ""
-
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
+"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
+"font>"
 msgid "Check ACU Virgin"
-msgstr ""
+msgstr "Перевірити чи ECU не був у використані"
 
 msgid "Waiting"
-msgstr ""
+msgstr "Зачекайте"
 
 msgid "Virginize ACU"
-msgstr ""
+msgstr "Очистити ECU"
 
 msgid "Cannot connect to ECU"
-msgstr ""
+msgstr "Не вдається підключитися до ECU"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "НЕСПОДІВАНА ВІДПОВІДЬ"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr ""
+msgstr "АВАРІЯ ЗНАЙДЕНА"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr ""
+msgstr "АВАРІЯ НЕ ВИЯВЛЕНО "
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr ""
+msgstr "ОЧИЩЕННЯ ВИКОНАНО"
 
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr ""
+msgstr "<font color='red'>Очистити невдалось</font>"
 
 msgid "Megane/Scenic II card programming"
-msgstr ""
+msgstr "Megane/Scenic II card programming"
 
 msgid "Keys"
-msgstr ""
+msgstr "Ключі"
 
 msgid "ENTER AFTER SALE MODE"
-msgstr ""
+msgstr "Зайти в AFTER SALE MODE"
 
 msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
+"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
+"YET</font>
 
 msgid "LEARN"
-msgstr ""
+msgstr "Навчити"
 
 msgid "VALIDATE"
-msgstr ""
+msgstr "ПІДТВЕРДИТИ"
 
 msgid "Algo 2"
-msgstr ""
+msgstr "Algo 2"
 
 msgid "ISK"
-msgstr ""
+msgstr "ISK"
 
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 msgid "Num key learnt"
-msgstr ""
+msgstr "Кількість ключів записано"
 
 msgid "CARD IDE"
-msgstr ""
+msgstr "CARD IDE"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
 msgstr ""
@@ -1100,10 +1106,10 @@ msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
 msgstr ""
 
 msgid "Modus/Clio III EPS Reset"
-msgstr ""
+msgstr "Modus/Clio III EPS Reset"
 
 msgid "EPS Tools"
-msgstr ""
+msgstr "EPS Tools"
 
 msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
@@ -1114,7 +1120,7 @@ msgid "BLANK STATUS & VIN READ"
 msgstr ""
 
 msgid "Virginize EPS"
-msgstr ""
+msgstr "Скинути до заводського стану EPS"
 
 msgid "VIN - READ"
 msgstr "VIN - ЧИТАННЯ"
@@ -1138,77 +1144,87 @@ msgid "<font color='green'>VIN WRITE OK</font>"
 msgstr ""
 
 msgid "<font color='green'>EPS virgin</font>"
-msgstr ""
+msgstr "EPS має заводський стан"
 
 msgid "<font color='red'>EPS coded</font>"
-msgstr ""
+msgstr "<font color='red'>EPS закодовано</font>"
 
 msgid "Clio IV EPS Reset"
-msgstr ""
+msgstr "Clio IV EPS Reset"
 
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "Check EPS Virgin"
-msgstr ""
+msgstr "Перевірити заводський стан EPS"
 
 msgid "<font color='green'>EPS not operational</font>"
-msgstr ""
+msgstr "<font color='green'>EPS not operational</font>"
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='red'>UNEXPECTED RESPONSE</font>"
 
 msgid "Laguna II UCH Reset"
-msgstr ""
+msgstr "Laguna II UCH Reset"
 
 msgid "UCH Tools"
-msgstr "UCH Tools"
+msgstr "UCH інструмент"
 
 msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "Check UCH Virgin"
-msgstr ""
+msgstr "Перевірити заводський стан UCH"
 
 msgid "Virginize UCH"
-msgstr ""
+msgstr "Скинути до заводського стану UCH"
 
 msgid "<font color='green'>UCH virgin</font>"
-msgstr ""
+msgstr <font color='green'>UCH virgin</font>"
 
 msgid "<font color='red'>UCH coded</font>"
-msgstr ""
+msgstr "<font color='red'>UCH coded</font>"
 
 msgid "Laguna III UCH Reset"
-msgstr ""
+msgstr "Laguna III UCH Reset"
 
 msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "Megane/Scenic II UCH Reset"
-msgstr ""
+msgstr "Megane/Scenic II UCH Reset"
 
 msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "Megane3 AIRBAG Reset"
-msgstr ""
+msgstr "Megane3 AIRBAG Reset"
 
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
+"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
-msgstr ""
+msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 
 msgid ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
@@ -1217,30 +1233,35 @@ msgid ""
 msgstr ""
 
 msgid "Megane/Scenic III UCH Reset"
-msgstr ""
+msgstr "Megane/Scenic III UCH Reset"
 
 msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "RSAT4 AIRBAG Reset"
-msgstr ""
+msgstr "RSAT4 AIRBAG Reset"
 
 msgid ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 
 msgid "CRC calculator"
-msgstr ""
+msgstr "CRC калькулятор"
 
 msgid "VIN"
-msgstr ""
+msgstr "VIN"
 
 msgid "CRC CALCULATOR"
-msgstr ""
+msgstr "CRC калькулятор"
 
 #, fuzzy
 #~| msgid "Diag version"
