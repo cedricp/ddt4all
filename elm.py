@@ -724,10 +724,10 @@ class ELM:
 
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            if self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
-            elif self.currentaddress in dnat_ext:
+            if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
                 self.vf.write(tmstr + ";" + "0x" + dnat_ext[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
+            elif self.currentaddress in dnat:
+                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
             else:
                 print(_("Unknown address: "), self.currentaddress, "0x" + req, "0x" + rsp)
             self.vf.flush()
@@ -903,14 +903,10 @@ class ELM:
                 errorstr = negrsp[result[4:6]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                if self.currentaddress in dnat:
-                    self.vf.write(
-                        tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
-                elif self.currentaddress in dnat_ext:
-                    self.vf.write(
-                        tmstr + ";" + dnat_ext[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
-                else:
-                    print(_("Unknown address: "), self.currentaddress, "0x" + command)
+                if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
+                    self.vf.write(tmstr + ";" + dnat_ext[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                elif self.currentaddress in dnat:
+                    self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache
