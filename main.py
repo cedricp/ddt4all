@@ -35,7 +35,9 @@ def load_this():
         f.close()
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
+        elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
+        elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
         return vehicles_loc
     except:
         print(_("ddt4all_data/projects.json not found or not ok."))
@@ -101,7 +103,9 @@ class Ecu_list(widgets.QWidget):
             self.vehicle_combo.addItem(k)
             ecu.addressing = vehicles["projects"][k]["addressing"]
             elm.snat = vehicles["projects"][k]["snat"]
+            elm.snat_ext = vehicles["projects"][k]["snat_ext"]
             elm.dnat = vehicles["projects"][k]["dnat"]
+            elm.dnat_ext = vehicles["projects"][k]["dnat_ext"]
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
@@ -125,7 +129,9 @@ class Ecu_list(widgets.QWidget):
         project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
         ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
         elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
+        elm.snat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["snat_ext"]
         elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
+        elm.dnat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["dnat_ext"]
         self.parent().parent().scan_project(project)
 
     def init(self):

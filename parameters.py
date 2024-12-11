@@ -1654,20 +1654,38 @@ def dumpSNAT(file):
         address = func.getAttribute(u"Address")
         protolist = getChildNodesByName(func, u"ProtocolList")
         for rid in protolist:
-            # can =  rid.getAttribute(u"Name")
-            # if (can != "DiagOnCAN"):
-            #     continue
             proto = getChildNodesByName(rid, u"Protocol")
             for prtc in proto:
                 grid = getChildNodesByName(prtc, u"Address")
                 for ok in grid:
-                    present = ok.getAttribute(u"Present")
-                    if (present == "0"):
-                        continue
-                    rid_add = ok.getAttribute(u"Rid")
-                    strHex = "%0.2X" % int(address)
-                    dict[strHex] = rid_add
-                    break
+                    ext = ok.getAttribute(u"Extended")
+                    if ext == "0":
+                        rid_add = ok.getAttribute(u"Rid")
+                        strHex = "%0.2X" % int(address)
+                        dict[strHex] = rid_add
+                        break
+    return dict
+
+
+def dumpSNAT_ext(file):
+    xdom = xml.dom.minidom.parse(file)
+    xdoc = xdom.documentElement
+    dict = {}
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        address = func.getAttribute(u"Address")
+        protolist = getChildNodesByName(func, u"ProtocolList")
+        for rid in protolist:
+            proto = getChildNodesByName(rid, u"Protocol")
+            for prtc in proto:
+                grid = getChildNodesByName(prtc, u"Address")
+                for ok in grid:
+                    ext = ok.getAttribute(u"Extended")
+                    if ext == "1":
+                        rid_add = ok.getAttribute(u"Rid")
+                        strHex = "%0.2X" % int(address)
+                        dict[strHex] = rid_add
+                        break
     return dict
 
 
@@ -1680,20 +1698,38 @@ def dumpDNAT(file):
         address = func.getAttribute(u"Address")
         protolist = getChildNodesByName(func, u"ProtocolList")
         for xid in protolist:
-            # can =  xid.getAttribute(u"Name")
-            # if (can != "DiagOnCAN"):
-            #     continue
             proto = getChildNodesByName(xid, u"Protocol")
             for prtc in proto:
                 gxid = getChildNodesByName(prtc, u"Address")
                 for ok in gxid:
-                    present = ok.getAttribute(u"Present")
-                    if (present == "0"):
-                        continue
-                    xid_add = ok.getAttribute(u"Xid")
-                    strHex = "%0.2X" % int(address)
-                    dict[strHex] = xid_add
-                    break
+                    ext = ok.getAttribute(u"Extended")
+                    if ext == "0":
+                        xid_add = ok.getAttribute(u"Xid")
+                        strHex = "%0.2X" % int(address)
+                        dict[strHex] = xid_add
+                        break
+    return dict
+
+
+def dumpDNAT_ext(file):
+    xdom = xml.dom.minidom.parse(file)
+    xdoc = xdom.documentElement
+    dict = {}
+    xml_funcs = getChildNodesByName(xdoc, u"Function")
+    for func in xml_funcs:
+        address = func.getAttribute(u"Address")
+        protolist = getChildNodesByName(func, u"ProtocolList")
+        for xid in protolist:
+            proto = getChildNodesByName(xid, u"Protocol")
+            for prtc in proto:
+                gxid = getChildNodesByName(prtc, u"Address")
+                for ok in gxid:
+                    ext = ok.getAttribute(u"Extended")
+                    if ext == "1":
+                        xid_add = ok.getAttribute(u"Xid")
+                        strHex = "%0.2X" % int(address)
+                        dict[strHex] = xid_add
+                        break
     return dict
 
 
@@ -1935,7 +1971,9 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     dict["projects"]["All"]["code"] = "ALL"
     dict["projects"]["All"]["addressing"] = dumpAddressing(os.path.join("vehicles", "GenericAddressing.xml"))
     dict["projects"]["All"]["snat"] = dumpSNAT(os.path.join("vehicles", "GenericAddressing.xml"))
+    dict["projects"]["All"]["snat_ext"] = dumpSNAT_ext(os.path.join("vehicles", "GenericAddressing.xml"))
     dict["projects"]["All"]["dnat"] = dumpDNAT(os.path.join("vehicles", "GenericAddressing.xml"))
+    dict["projects"]["All"]["dnat_ext"] = dumpDNAT_ext(os.path.join("vehicles", "GenericAddressing.xml"))
     manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
     for manufacturer in manufacturers:
         name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
@@ -1973,7 +2011,9 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             dict["projects"][project_name]["code"] = str(code).upper()
             dict["projects"][project_name]["addressing"] = dumpAddressing(addressing)
             dict["projects"][project_name]["snat"] = dumpSNAT(addressing)
+            dict["projects"][project_name]["snat_ext"] = dumpSNAT_ext(addressing)
             dict["projects"][project_name]["dnat"] = dumpDNAT(addressing)
+            dict["projects"][project_name]["dnat_ext"] = dumpDNAT_ext(addressing)
             print(f'{code:18} => {addressing:40} => OK')
 
     sd = sorted(dict["projects"].items())
