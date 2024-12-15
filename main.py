@@ -815,7 +815,9 @@ class Main_widget(widgets.QMainWindow):
             self.scan()
             return
         self.ecu_scan.clear()
+        self.logview.append(_("Scanning CAN") + " -> " + project)
         self.ecu_scan.scan(self.progressstatus, self.infostatus, project)
+        self.logview.append(_("Scanning KWP") + " -> " + project)
         self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus, project)
 
         for ecu in self.ecu_scan.ecus.keys():
