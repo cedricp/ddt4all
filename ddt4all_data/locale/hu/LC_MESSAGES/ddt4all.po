@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:38+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:51+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -640,9 +640,6 @@ msgstr "Diag verzió"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
@@ -664,17 +661,17 @@ msgstr "Új képernyő létrehozásához válassz ki egy kategóriát"
 msgid "Enter screen name"
 msgstr "Képernyő nevének megadása"
 
-msgid "Scan options"
-msgstr "Keresés beállításai"
-
-msgid "CANCEL"
-msgstr ""
-
 msgid "Scanning CAN"
 msgstr "CAN keresés"
 
 msgid "Scanning KWP"
 msgstr "KWP keresés"
+
+msgid "Scan options"
+msgstr "Keresés beállításai"
+
+msgid "CANCEL"
+msgstr ""
 
 msgid "EDITION MODE"
 msgstr "SZERKESZTÉS MÓD"

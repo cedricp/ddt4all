@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:40+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:53+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -637,9 +637,6 @@ msgstr "Wersja diagnostyczna"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
@@ -661,17 +658,17 @@ msgstr "Wybierz jedna kategorie przed tworzeniem nowego ekranu"
 msgid "Enter screen name"
 msgstr "Nazwa nowego ekranu"
 
-msgid "Scan options"
-msgstr "Opcje skanowania"
-
-msgid "CANCEL"
-msgstr ""
-
 msgid "Scanning CAN"
 msgstr "Skanuj CAN"
 
 msgid "Scanning KWP"
 msgstr "Skanuj KWP"
+
+msgid "Scan options"
+msgstr "Opcje skanowania"
+
+msgid "CANCEL"
+msgstr ""
 
 msgid "EDITION MODE"
 msgstr "DEMO"

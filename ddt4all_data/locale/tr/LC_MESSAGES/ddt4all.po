@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:46+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:55+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -611,9 +611,6 @@ msgstr "sürüm:"
 msgid "Created by:"
 msgstr "Oluşturan:"
 
-msgid "Contributors:"
-msgstr "Katkıda Bulunanlar:"
-
 msgid "Save database (keep '.zip' extension)"
 msgstr "Veritabanını kaydet ('.zip' uzantısını koru)"
 
@@ -635,17 +632,17 @@ msgstr "Lütfen yeni ekran oluşturmadan önce bir kategori seçin"
 msgid "Enter screen name"
 msgstr "Ekran adını girin"
 
-msgid "Scan options"
-msgstr "Tarama seçenekleri"
-
-msgid "CANCEL"
-msgstr "İPTAL"
-
 msgid "Scanning CAN"
 msgstr "CAN Taranıyor"
 
 msgid "Scanning KWP"
 msgstr "KWP Taranıyor"
+
+msgid "Scan options"
+msgstr "Tarama seçenekleri"
+
+msgid "CANCEL"
+msgstr "İPTAL"
 
 msgid "EDITION MODE"
 msgstr "DENEME MODU"
@@ -1233,6 +1230,9 @@ msgstr "VIN (Şasi Numarası)"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
+
+#~ msgid "Contributors:"
+#~ msgstr "Katkıda Bulunanlar:"
 
 #~ msgid "Skipping CAN extended address (not supported yet)"
 #~ msgstr "CAN genişletilmiş adresinin atlanması (henüz desteklenmiyor)"

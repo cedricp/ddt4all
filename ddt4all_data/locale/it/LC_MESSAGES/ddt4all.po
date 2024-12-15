@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:39+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:52+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -644,9 +644,6 @@ msgstr "Versione diagnostica"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr "Salva database (mantieni estensione '.json')"
 
@@ -669,17 +666,17 @@ msgstr "Seleziona una categoria prima di creare un nuovo schermo"
 msgid "Enter screen name"
 msgstr "Insersici nome schermo"
 
-msgid "Scan options"
-msgstr "Opzioni ricerca"
-
-msgid "CANCEL"
-msgstr "ANNULLA"
-
 msgid "Scanning CAN"
 msgstr "Ricerca CAN"
 
 msgid "Scanning KWP"
 msgstr "Ricerca KWP"
+
+msgid "Scan options"
+msgstr "Opzioni ricerca"
+
+msgid "CANCEL"
+msgstr "ANNULLA"
 
 msgid "EDITION MODE"
 msgstr "MODO DEMO"

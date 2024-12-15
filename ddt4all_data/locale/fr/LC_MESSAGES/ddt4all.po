@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:37+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:51+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -611,9 +611,6 @@ msgstr " version:"
 msgid "Created by:"
 msgstr "Créé par:"
 
-msgid "Contributors:"
-msgstr "Contributeurs/Contributrice:"
-
 msgid "Save database (keep '.zip' extension)"
 msgstr "Sauvegarder la base (Gardez l'extension '.zip'"
 
@@ -635,17 +632,17 @@ msgstr "Choisissez une catégorie avant de créer un nouvel écran"
 msgid "Enter screen name"
 msgstr "Nom du nouvel écran"
 
-msgid "Scan options"
-msgstr "Options de balayage"
-
-msgid "CANCEL"
-msgstr "Abandonner"
-
 msgid "Scanning CAN"
 msgstr "Balayage CAN"
 
 msgid "Scanning KWP"
 msgstr "Balayage KWP"
+
+msgid "Scan options"
+msgstr "Options de balayage"
+
+msgid "CANCEL"
+msgstr "Abandonner"
 
 msgid "EDITION MODE"
 msgstr "MODE EDITION"
@@ -1230,6 +1227,9 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
+
+#~ msgid "Contributors:"
+#~ msgstr "Contributeurs/Contributrice:"
 
 #~ msgid "Skipping CAN extended address (not supported yet)"
 #~ msgstr "Sauter l'adresse étendue CAN (pas encore supporté)"

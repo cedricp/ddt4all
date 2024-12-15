@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:42+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:53+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -641,9 +641,6 @@ msgstr "Versiune Diag"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr "Salvati baza de date (pastrati extensia \".zip\")"
 
@@ -667,17 +664,17 @@ msgstr "Va rugam sa selectati o categorie inainte de a crea un ecran nou"
 msgid "Enter screen name"
 msgstr "Introduceti numele ecranului"
 
-msgid "Scan options"
-msgstr "Optiuni de scanare"
-
-msgid "CANCEL"
-msgstr "ANULARE"
-
 msgid "Scanning CAN"
 msgstr "Scanare CAN"
 
 msgid "Scanning KWP"
 msgstr "Scanarea KWP"
+
+msgid "Scan options"
+msgstr "Optiuni de scanare"
+
+msgid "CANCEL"
+msgstr "ANULARE"
 
 msgid "EDITION MODE"
 msgstr "MOD DE EDITARE"

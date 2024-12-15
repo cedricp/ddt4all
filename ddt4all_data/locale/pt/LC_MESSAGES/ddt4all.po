@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:42+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:53+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -613,9 +613,6 @@ msgstr " versão:"
 msgid "Created by:"
 msgstr "Criado por:"
 
-msgid "Contributors:"
-msgstr "Contribuidores:"
-
 msgid "Save database (keep '.zip' extension)"
 msgstr "Salvar banco de dados (manter a extensão '.zip')"
 
@@ -637,17 +634,17 @@ msgstr "Por favor selecione uma categoria antes de criar novo ecrã"
 msgid "Enter screen name"
 msgstr "Introduza nome do ecrã"
 
-msgid "Scan options"
-msgstr "Opções de escaneo"
-
-msgid "CANCEL"
-msgstr "CANCELAR"
-
 msgid "Scanning CAN"
 msgstr "Escaneando CAN"
 
 msgid "Scanning KWP"
 msgstr "Escaneando KWP"
+
+msgid "Scan options"
+msgstr "Opções de escaneo"
+
+msgid "CANCEL"
+msgstr "CANCELAR"
 
 msgid "EDITION MODE"
 msgstr "MODO EDITOR"
@@ -1223,6 +1220,9 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC CALCULATOR"
+
+#~ msgid "Contributors:"
+#~ msgstr "Contribuidores:"
 
 #~ msgid "Skipping CAN extended address (not supported yet)"
 #~ msgstr "Saltar o endereço alargado CAN (ainda não suportado)"

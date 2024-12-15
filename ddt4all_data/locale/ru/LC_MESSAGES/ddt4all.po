@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:43+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 10:54+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -638,9 +638,6 @@ msgstr "Diag version"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
@@ -662,17 +659,17 @@ msgstr "Выберите категорию перед созданием нов
 msgid "Enter screen name"
 msgstr "Введите название экрана"
 
-msgid "Scan options"
-msgstr "Опции сканирования"
-
-msgid "CANCEL"
-msgstr ""
-
 msgid "Scanning CAN"
 msgstr "Сканирование CAN"
 
 msgid "Scanning KWP"
 msgstr "Сканирование KWP"
+
+msgid "Scan options"
+msgstr "Опции сканирования"
+
+msgid "CANCEL"
+msgstr ""
 
 msgid "EDITION MODE"
 msgstr "РЕДАКТОР"

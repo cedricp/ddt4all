@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:47+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"PO-Revision-Date: 2024-12-15 11:08+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -262,10 +262,10 @@ msgid "DataItem not found"
 msgstr "DataItem не знайдено"
 
 msgid "Cannot find data "
-msgstr "Невдалось знайти дані"
+msgstr "Невдалось знайти дані "
 
 msgid " vs "
-msgstr "з"
+msgstr " з "
 
 msgid "Cannot draw input "
 msgstr "Не вдалось завантажити плагін "
@@ -274,17 +274,13 @@ msgid "No Value"
 msgstr "Значення"
 
 msgid "Generated stream "
-msgstr "Згенерований потік"
+msgstr "Згенерований потік "
 
-#, fuzzy
-#| msgid "Send request bytes (HEX)"
 msgid "Send request stream "
-msgstr "Відправити запит байт (HEX)"
+msgstr "Відправити запит байт (HEX) "
 
-#, fuzzy
-#| msgid "Receive bytes"
 msgid "Received stream "
-msgstr "Receive bytes"
+msgstr "Receive bytes "
 
 msgid "Request ECU Error"
 msgstr "Запит помилок"
@@ -301,46 +297,36 @@ msgstr ""
 msgid "getHexValue >> abnormal remaining bytes "
 msgstr ""
 
-#, fuzzy
-#| msgid "Cannot draw input "
 msgid "Cannot find file "
 msgstr "Не вдалось завантажити файл "
 
 msgid "Cannot load ECU file"
 msgstr "Невдалося завантажити файли ECU"
 
-#, fuzzy
-#| msgid "XML file not found : "
 msgid "XML not found"
-msgstr "XML файл не знайдено : "
+msgstr "XML файл не знайдено"
 
 msgid "Cannot retrieve functionnal address of ECU"
 msgstr ""
 
 msgid "Adding group "
-msgstr "Додати групу"
+msgstr "Додати групу "
 
 msgid "Unable to find eculist"
 msgstr ""
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Warning, address"
 msgstr "ECU Function address"
 
 msgid "is not mapped"
 msgstr "не визначено"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Scanning address: "
-msgstr "ECU Function address"
+msgstr "ECU Function address "
 
 msgid "Found: "
 msgstr "Знайдено: "
 
-#, fuzzy
-#| msgid "Identify ECU"
 msgid "Identified ECU"
 msgstr "Ідентифікація ЕБУ"
 
@@ -359,26 +345,20 @@ msgstr ""
 msgid "Starting zipping "
 msgstr ""
 
-#, fuzzy
-#| msgid "Error:"
 msgid "Error: "
-msgstr "Помилка:"
+msgstr "Помилка: "
 
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM не з'єднано або невірний COM порт "
+msgstr "ELM не з'єднано або невірний COM порт"
 
-#, fuzzy
-#| msgid "Port speed"
 msgid "Port closed"
 msgstr "Порт закрито"
 
 msgid "Connection to ELM was lost"
 msgstr "Звязок з ELM втрачено"
 
-#, fuzzy
-#| msgid "Cannot reconnect..."
 msgid "Cannot decode bytes "
-msgstr "Не можу декодувати байти"
+msgstr "Не можу декодувати байти "
 
 msgid "TIMEOUT"
 msgstr "Таймаут"
@@ -416,10 +396,8 @@ msgstr ""
 msgid "OBDLink full speed connection OK"
 msgstr ""
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "OBDLink Version "
-msgstr "Diag version"
+msgstr "Diag version "
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr ""
@@ -427,10 +405,8 @@ msgstr ""
 msgid "ELM full speed connection OK "
 msgstr ""
 
-#, fuzzy
-#| msgid "Version"
 msgid "Version "
-msgstr "Версія"
+msgstr "Версія "
 
 msgid "Your ELM does not support baudrate "
 msgstr ""
@@ -438,10 +414,8 @@ msgstr ""
 msgid "ELM reset..."
 msgstr ""
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Unknown address: "
-msgstr "ECU Function address"
+msgstr "ECU Function address "
 
 msgid "FAIL"
 msgstr "Помилка"
@@ -611,8 +585,6 @@ msgstr "Перейменувати"
 msgid "Plugins"
 msgstr "Плагіни"
 
-#, fuzzy
-#| msgid "Cannot draw input "
 msgid "Cannot load plugin "
 msgstr "Не вдалось завантажити плагін "
 
@@ -634,16 +606,11 @@ msgstr "Про"
 msgid "About DDT4ALL"
 msgstr "Про DDT4ALL"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid " version:"
-msgstr "Diag version"
+msgstr " Diag version:"
 
 msgid "Created by:"
 msgstr "Створено завдяки:"
-
-msgid "Contributors:"
-msgstr "Дописувачі"
 
 msgid "Save database (keep '.zip' extension)"
 msgstr "Зберегти базу даних"
@@ -666,17 +633,17 @@ msgstr "Виберіть категорію перед сторенням нов
 msgid "Enter screen name"
 msgstr "Введіть імя екрана"
 
-msgid "Scan options"
-msgstr "Опції сканування"
-
-msgid "CANCEL"
-msgstr "Відміна"
-
 msgid "Scanning CAN"
 msgstr "Сканування CAN"
 
 msgid "Scanning KWP"
 msgstr "Сканування KWP"
+
+msgid "Scan options"
+msgstr "Опції сканування"
+
+msgid "CANCEL"
+msgstr "Відміна"
 
 msgid "EDITION MODE"
 msgstr "РЕЖИМ РЕДАГУВАННЯ"
@@ -697,7 +664,7 @@ msgid "Save record (keep '.txt' extension)"
 msgstr "Зберегти список моїх ЕБУ (.ecu)"
 
 msgid "Recorded "
-msgstr "Записано"
+msgstr "Записано "
 
 msgid " entries"
 msgstr " входження"
@@ -775,13 +742,13 @@ msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 чи OBDLINK-SX не виявлено на COM порті "
 
 msgid "Err, cannot rename "
-msgstr "Помилка, невдалося перейменувати"
+msgstr "Помилка, невдалося перейменувати "
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Для редагування екрана спочатку збережіть його у форматі JSON"
 
 msgid "Enter label name"
-msgstr "Введіть ім'я мітки "
+msgstr "Введіть ім'я мітки"
 
 msgid "Add button"
 msgstr "Додати кнопку"
@@ -807,15 +774,11 @@ msgstr "Поле вводу"
 msgid "Output"
 msgstr "Поле виводу"
 
-#, fuzzy
-#| msgid "ERROR - command not supported"
 msgid "Protocol not supported"
 msgstr "ПОМИЛКА - команда не підтримується"
 
-#, fuzzy
-#| msgid "ERROR - command not supported"
 msgid "Protocol not supported: "
-msgstr "ПОМИЛКА - команда не підтримується"
+msgstr "ПОМИЛКА - команда не підтримується "
 
 msgid "XML file not found : "
 msgstr "XML файл не знайдено : "
@@ -845,7 +808,7 @@ msgid "Sending simulated ELM request :"
 msgstr "Отправляем симуляционный ELM запрос :"
 
 msgid "Bad ELM response :"
-msgstr "Погана відповідь ELM"
+msgstr "Погана відповідь ELM:"
 
 msgid "ELM response : "
 msgstr "Відповідь ELM : "
@@ -856,13 +819,11 @@ msgstr "Немає параметрів для кнопки : "
 msgid "Sending request :"
 msgstr "Відпрака запиту :"
 
-#, fuzzy
-#| msgid "ECU Function address"
 msgid "Unknown request "
-msgstr "ECU Function address"
+msgstr "ECU Function address "
 
 msgid "Command aborted "
-msgstr "Команда перервано"
+msgstr "Команда перервано "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
 msgstr ""
@@ -883,8 +844,6 @@ msgstr ""
 "<center>КОМАНДА ЗАБЛОКОВАНА</center>\n"
 "активуйте експертний режим для розблокування"
 
-#, fuzzy
-#| msgid "Ecu parameters"
 msgid "Writing parameter"
 msgstr "Запис параметрів"
 
@@ -895,10 +854,10 @@ msgid "Invalid"
 msgstr "Недійсний"
 
 msgid "ECU uses SDS "
-msgstr "ECU використовує SDS"
+msgstr "ECU використовує SDS "
 
 msgid "Cannot call request "
-msgstr "Неможливо викликати запит"
+msgstr "Неможливо викликати запит "
 
 msgid "Update time"
 msgstr "Оновити час"
@@ -915,8 +874,6 @@ msgstr "<center>Зараз будуть витерті діагностичні 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Впевнені?</center>"
 
-#, fuzzy
-#| msgid "Clearing DTC information"
 msgid "Clear DTC failed"
 msgstr "Скидання помилок DTC"
 
@@ -924,7 +881,6 @@ msgid "Clear DTC successfully done"
 msgstr "Скидання помилок DTC вдале"
 
 #, fuzzy
-#| msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgid "No ReadDTC request for that ECU"
 msgstr "У ЕБУ немає запиту ClearDTC, посилаю стандартний 14FF00"
 
@@ -954,33 +910,29 @@ msgstr "Немає параметрів для кнопки : "
 msgid "found in display "
 msgstr "Знайдено в екрані"
 
-#, fuzzy
-#| msgid "Add button"
 msgid "found in button "
-msgstr "Додати кнопку"
+msgstr "Додати кнопку "
 
 msgid "found in presend "
-msgstr "знайдено в даному"
+msgstr "знайдено в даному "
 
 msgid "found data in input "
-msgstr "знайдено дані в введені"
+msgstr "знайдено дані в введені "
 
 msgid "found data in display "
-msgstr "знайдено дані в екрані"
+msgstr "знайдено дані в екрані "
 
 msgid "Cannot zip database, no 'ecus' directory"
 msgstr "Cannot zip database, no 'ecus' directory"
 
-#, fuzzy
-#| msgid "Diag version"
 msgid "Starting conversion"
-msgstr "Diag version"
+msgstr "Starting conversion"
 
 msgid "Starting processing "
-msgstr "Початок процесу"
+msgstr "Початок процесу "
 
 msgid " to "
-msgstr " до"
+msgstr " до "
 
 msgid "Skipping current file (cannot parse it)"
 msgstr "Пропускання даного файлу (невдалося розкласти його)"
@@ -992,10 +944,10 @@ msgid "Writing archive"
 msgstr "Запис архіву"
 
 msgid "Opening ECU Database..."
-msgstr "Відкриваю ECU дата базу"
+msgstr "Відкриваю ECU дата базу."
 
 msgid "parts as: "
-msgstr "частина як:"
+msgstr "частина як: "
 
 msgid " please review dumpVehicles def."
 msgstr " будь-ласка перевірте dumpVehicles def."
@@ -1007,13 +959,13 @@ msgid "Waiting..."
 msgstr "Очікування..."
 
 msgid "Frame length error: "
-msgstr "Помилка довжини кадру"
+msgstr "Помилка довжини кадру "
 
 msgid "Frame hex error: "
-msgstr "Помилка hex кадру"
+msgstr "Помилка hex кадру "
 
 msgid "Found USB adapter:"
-msgstr "Знайлено USB адаптер"
+msgstr "Знайлено USB адаптер:"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "AB90 AIRBAG Reset"
@@ -1029,6 +981,7 @@ msgstr ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
+
 msgid "Check ACU Virgin"
 msgstr "Перевірити чи ECU не був у використані"
 
@@ -1048,7 +1001,7 @@ msgid "<font color='red'>CRASH DETECTED</font>"
 msgstr "АВАРІЯ ЗНАЙДЕНА"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr "АВАРІЯ НЕ ВИЯВЛЕНО "
+msgstr "<font color='green'>АВАРІЯ НЕ ВИЯВЛЕНО</font>"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr "ОЧИЩЕННЯ ВИКОНАНО"
@@ -1069,8 +1022,8 @@ msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
-"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
-"YET</font>
+"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED </"
+"font>"
 
 msgid "LEARN"
 msgstr "Навчити"
@@ -1188,7 +1141,7 @@ msgid "Virginize UCH"
 msgstr "Скинути до заводського стану UCH"
 
 msgid "<font color='green'>UCH virgin</font>"
-msgstr <font color='green'>UCH virgin</font>"
+msgstr "<font color='green'>EPS має заводський стан</font>"
 
 msgid "<font color='red'>UCH coded</font>"
 msgstr "<font color='red'>UCH coded</font>"
@@ -1262,6 +1215,9 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC калькулятор"
+
+#~ msgid "Contributors:"
+#~ msgstr "Дописувачі"
 
 #, fuzzy
 #~| msgid "Diag version"

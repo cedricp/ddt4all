@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
+"POT-Creation-Date: 2024-12-15 10:46+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
@@ -641,9 +641,6 @@ msgstr "Verzija dijagnostike"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
@@ -665,17 +662,17 @@ msgstr "Molim odaberite kategoriju pre nego sto napravite novi prikaz"
 msgid "Enter screen name"
 msgstr "Unesite ime prikaza"
 
-msgid "Scan options"
-msgstr "Opcije skeniranja"
-
-msgid "CANCEL"
-msgstr ""
-
 msgid "Scanning CAN"
 msgstr "Skeniranje CAN"
 
 msgid "Scanning KWP"
 msgstr "Skeniranje KWP"
+
+msgid "Scan options"
+msgstr "Opcije skeniranja"
+
+msgid "CANCEL"
+msgstr ""
 
 msgid "EDITION MODE"
 msgstr "MOD IZMENA"
