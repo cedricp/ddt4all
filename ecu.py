@@ -1005,13 +1005,14 @@ class Ecu_file:
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
-            if len(self.ecu_send_id) == 8:
-                short_addr = elm.get_can_addr_ext(self.ecu_send_id)
-            else:
-                short_addr = elm.get_can_addr(self.ecu_send_id)
-            if short_addr is None:
-                print(_("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
-                return False
+            if not options.simulation_mode:
+                if len(self.ecu_send_id) == 8:
+                    short_addr = elm.get_can_addr_ext(self.ecu_send_id)
+                else:
+                    short_addr = elm.get_can_addr(self.ecu_send_id)
+                if short_addr is None:
+                    print(_("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
+                    return False
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
             if not options.simulation_mode:
