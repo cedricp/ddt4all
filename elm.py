@@ -19,14 +19,9 @@ from serial.tools import list_ports
 import options
 
 _ = options.translator('ddt4all')
-
-# //TODO missing entries this need look side ecu addressing missing entries or ignore {} 
-dnat_entries = {"E7": "7E4", "E8": "644"}
-snat_entries = {"E7": "7EC", "E8": "5C4"}
-
-snat = snat_entries
+snat = {}
 snat_ext = {}
-dnat = dnat_entries
+dnat = {}
 dnat_ext = {}
 
 # Code snippet from https://github.com/rbei-etas/busmaster
@@ -201,12 +196,14 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
+
 def addr_exist(addr):
     result = True
     if addr not in dnat:
         if addr not in dnat_ext:
             result = False
     return result
+
 
 def get_can_addr(txa):
     for d in dnat.keys():
@@ -572,7 +569,8 @@ class ELM:
             if len(options.log) > 0:
                 self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
                 self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
-                self.vf.write("Timestamp;ECU_CAN_Address_HEX;Raw_Command_HEX;Raw_Response_HEX_or_STR;Error_message_if_happens\n")
+                self.vf.write(
+                    "Timestamp;ECU_CAN_Address_HEX;Raw_Command_HEX;Raw_Response_HEX_or_STR;Error_message_if_happens\n")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
@@ -725,9 +723,13 @@ class ELM:
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
-                self.vf.write(tmstr + ";" + "0x" + dnat_ext[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
+                self.vf.write(tmstr + ";" + "0x" + dnat_ext[
+                    self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",
+                                                                                                ",0x") + ";" + "\n")
             elif self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + "0x" + dnat[self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ", ",0x") + ";" + "\n")
+                self.vf.write(tmstr + ";" + "0x" + dnat[
+                    self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",
+                                                                                                ",0x") + ";" + "\n")
             else:
                 print(_("Unknown address: "), self.currentaddress, "0x" + req, "0x" + rsp)
             self.vf.flush()
@@ -904,9 +906,11 @@ class ELM:
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
-                    self.vf.write(tmstr + ";" + dnat_ext[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                    self.vf.write(tmstr + ";" + dnat_ext[
+                        self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 elif self.currentaddress in dnat:
-                    self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                    self.vf.write(tmstr + ";" + dnat[
+                        self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache

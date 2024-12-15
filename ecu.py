@@ -17,8 +17,6 @@ import options
 _ = options.translator('ddt4all')
 
 addressing = {}
-# //TODO addressing missing entries
-addressing_entries = {"E7": u"SCRCM", "E8": u"SVS"}
 
 
 # Returns signed value from 16 bits (2 bytes)
@@ -1011,7 +1009,8 @@ class Ecu_file:
                 else:
                     short_addr = elm.get_can_addr(self.ecu_send_id)
                 if short_addr is None:
-                    print(_("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
+                    print(
+                        _("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
                     return False
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
@@ -1183,8 +1182,8 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
-        self.addr_group_mapping_long = addressing_entries
-        self.addr_group_mapping = addressing_entries
+        self.addr_group_mapping_long = {}
+        self.addr_group_mapping = {}
 
         for k, v in addressing.items():
             self.addr_group_mapping[k] = v[0]
@@ -1684,7 +1683,7 @@ class Ecu_scanner:
                 found_exact = True
                 href = target.href
                 line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
-                       "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
+                                                                      "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
                        % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
 
                 options.main_window.logview.append(line)
