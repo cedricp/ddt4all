@@ -833,6 +833,8 @@ class Main_widget(widgets.QMainWindow):
             item.setForeground(core.Qt.red)
             self.treeview_ecu.addItem(item)
 
+        self.progressstatus.setValue(0)
+
     def scan(self):
         msgBox = widgets.QMessageBox()
         appIcon = gui.QIcon("ddt4all_data/icons/obd.png")

@@ -1380,7 +1380,14 @@ class Ecu_scanner:
         return self.ecu_database.numecu
 
     def getNumAddr(self):
-        return len(elm.dnat) + len(elm.dnat_ext)
+        count = []
+        for k in elm.dnat:
+            if k not in count:
+                count.append(k)
+        for k in elm.dnat_ext:
+            if k not in count:
+                count.append(k)
+        return len(count)
 
     def addTarget(self, target):
         self.ecus[target.name] = target
@@ -1581,7 +1588,6 @@ class Ecu_scanner:
 
         if not options.simulation_mode:
             options.elm.close_protocol()
-
 
     def scan_kwp(self, progress=None, label=None, vehiclefilter=None):
         if options.simulation_mode:
