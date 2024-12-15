@@ -293,7 +293,7 @@ class Main_widget(widgets.QMainWindow):
         self.paramview = None
         self.docview = webkitwidgets.QWebEngineView()
         self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
+        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, False)
         self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
         self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
 
