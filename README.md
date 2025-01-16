@@ -68,8 +68,20 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Screen recorder (via autorefresh button) and export to CSV format
 
 ## How to launch the application ?
-* A terminal, type `python main.py` (`python3 main.py` in linux/mac)
-
+- Windows:
+  - Install new venv: `python -m venv ./venv`
+  - Activate venv: `.\venv\Scripts\activate.bat`
+  - Install requirements: `.\venv\Scripts\pip install -r requirements.txt`
+  - Run's app: `.\venv\Scripts\python .\main.py`
+- Linux/MacOs:
+  - Install new venv: `python3 -m venv ./venv`
+  - Set good attributes: `chmod +x ./venv/bin/activate`
+  - Activate venv: `source ./venv/bin/activate`
+  - Install requirements: `pip install -r ./requirements.txt`
+  - Run's app: `python .\main.py`
+- Note about Linux ubuntu fixes uncomment next lines:
+  - Fix qt platform plugin linux ubuntu "xcb" if error's:
+    - `sudo apt-get install --reinstall libxcb-xinerama0`
 
 ## Platforms
 
