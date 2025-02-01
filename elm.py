@@ -19,9 +19,13 @@ from serial.tools import list_ports
 import options
 
 _ = options.translator('ddt4all')
-snat = {}
+# //TODO missing entries this need look side ecu addressing missing entries or ignore {}
+dnat_entries = {"E7": "7E4", "E8": "644"}
+snat_entries = {"E7": "7EC", "E8": "5C4"}
+
+snat = dnat_entries
 snat_ext = {}
-dnat = {}
+dnat = snat_entries
 dnat_ext = {}
 
 # Code snippet from https://github.com/rbei-etas/busmaster
