@@ -1648,7 +1648,7 @@ def dumpAddressing(file):
 def dumpSNAT(file):
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
-    dict = elm.snat_entries
+    dict = elm.snat
     xml_funcs = getChildNodesByName(xdoc, u"Function")
     for func in xml_funcs:
         address = func.getAttribute(u"Address")
@@ -1670,7 +1670,7 @@ def dumpSNAT(file):
 def dumpSNAT_ext(file):
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
-    dict = {}
+    dict = elm.snat_ext
     xml_funcs = getChildNodesByName(xdoc, u"Function")
     for func in xml_funcs:
         address = func.getAttribute(u"Address")
@@ -1692,7 +1692,7 @@ def dumpSNAT_ext(file):
 def dumpDNAT(file):
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
-    dict = elm.dnat_entries
+    dict = elm.dnat
     xml_funcs = getChildNodesByName(xdoc, u"Function")
     for func in xml_funcs:
         address = func.getAttribute(u"Address")
@@ -1714,7 +1714,7 @@ def dumpDNAT(file):
 def dumpDNAT_ext(file):
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
-    dict = {}
+    dict = elm.dnat_ext
     xml_funcs = getChildNodesByName(xdoc, u"Function")
     for func in xml_funcs:
         address = func.getAttribute(u"Address")
