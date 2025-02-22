@@ -1193,7 +1193,7 @@ def set_dark_style(onoff):
             appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
-            msgbox.setText('You chose Dark mode, apparently there are some problems, see <a href="https://github.com/cedricp/ddt4all/issues/1352">Issue#1352</a>. You should use Normal mode until this aversion disappears.')
+            msgbox.setText('You chose Dark mode, apparently there are some problems, see <a href="https://github.com/cedricp/ddt4all/issues/1352">Issue#1352</a>. You should use Normal mode until this `Warn` disappears.')
             msgbox.exec_()
             stylefile = core.QFile("ddt4all_data/qstyle-d-l.qss")
             #
