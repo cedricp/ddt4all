@@ -78,7 +78,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
   - Set good attributes: `chmod +x ./venv/bin/activate`
   - Activate venv: `source ./venv/bin/activate`
   - Install requirements: `pip install -r ./requirements.txt`
-  - Run's app: `python .\main.py`
+  - Run's app: `python ./main.py`
 - Note about Linux ubuntu fixes uncomment next lines:
   - Fix qt platform plugin linux ubuntu "xcb" if error's:
     - `sudo apt-get install --reinstall libxcb-xinerama0`
