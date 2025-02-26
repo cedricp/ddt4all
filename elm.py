@@ -343,7 +343,12 @@ class Port:
         self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         try:
             self.hdr.connect((self.ipaddr, self.tcpprt))
-            self.hdr.setblocking(True)
+            if options.sockettimeout:
+                print("options.sockettimeout enabled")
+                self.hdr.settimeout(5)
+            else:
+                print("options.sockettimeout disabled")
+                self.hdr.setblocking(True)
             self.connectionStatus = True
         except:
             options.elm_failed = True

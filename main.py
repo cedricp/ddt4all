@@ -278,6 +278,7 @@ class Main_widget(widgets.QMainWindow):
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
+        options.sockettimeout = False
         options.ecu_scanner = self.ecu_scan
         print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
@@ -1212,6 +1213,14 @@ def set_dark_style(onoff):
     options.configuration["dark"] = options.dark_mode
     options.save_config()
 
+def set_sockettimeout(onoff):
+    if (onoff):
+        options.sockettimeout = True
+    else:
+        options.sockettimeout = False
+
+    options.configuration["sockettimeout"] = options.sockettimeout
+    options.save_config()
 
 class main_window_options(widgets.QDialog):
     def __init__(self):
@@ -1354,6 +1363,17 @@ class main_window_options(widgets.QDialog):
         darkstylelayout.addStretch()
         layout.addLayout(darkstylelayout)
 
+        sockettimeoutlayout = widgets.QHBoxLayout()
+        self.sockettimeoutcheck = widgets.QCheckBox()
+        self.sockettimeoutcheck.setChecked(options.sockettimeout)
+        self.sockettimeoutcheck.stateChanged.connect(set_sockettimeout)
+        sockettimeoutlabel = widgets.QLabel(_("Socket timeout"))
+        sockettimeoutlabel.setToolTip(_("Enable socket timeout"))
+        sockettimeoutlayout.addWidget(self.sockettimeoutcheck)
+        sockettimeoutlayout.addWidget(sockettimeoutlabel)
+        sockettimeoutlayout.addStretch()
+        layout.addLayout(sockettimeoutlayout)
+
         obdlinkspeedlayout = widgets.QHBoxLayout()
         self.obdlinkspeedcombo = widgets.QComboBox()
         obdlinkspeedlabel = widgets.QLabel(_("Change UART speed"))
@@ -1394,6 +1414,7 @@ class main_window_options(widgets.QDialog):
     def save_config(self):
         options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
         options.configuration["dark"] = options.dark_mode
+        options.configuration["sockettimeout"] = options.sockettimeout
         options.save_config()
         app.exit(0)
 
@@ -1607,6 +1628,7 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
+    options.sockettimeout = False
     app = widgets.QApplication(sys.argv)
 
     try:
@@ -1617,6 +1639,10 @@ if __name__ == '__main__':
             set_dark_style(2)
         else:
             set_dark_style(0)
+        if configuration["sockettimeout"]:
+            set_sockettimeout(1)
+        else:
+            set_sockettimeout(0)
     except:
         set_dark_style(0)
         pass
