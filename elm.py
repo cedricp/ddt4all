@@ -344,10 +344,8 @@ class Port:
         try:
             self.hdr.connect((self.ipaddr, self.tcpprt))
             if options.sockettimeout:
-                print("options.sockettimeout enabled")
                 self.hdr.settimeout(5)
             else:
-                print("options.sockettimeout disabled")
                 self.hdr.setblocking(True)
             self.connectionStatus = True
         except:
