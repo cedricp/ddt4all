@@ -1368,7 +1368,6 @@ class main_window_options(widgets.QDialog):
         self.sockettimeoutcheck.setChecked(options.sockettimeout)
         self.sockettimeoutcheck.stateChanged.connect(set_sockettimeout)
         sockettimeoutlabel = widgets.QLabel("Socket timeout")
-        sockettimeoutlabel.setToolTip("Enable socket timeout")
         sockettimeoutlayout.addWidget(self.sockettimeoutcheck)
         sockettimeoutlayout.addWidget(sockettimeoutlabel)
         sockettimeoutlayout.addStretch()
