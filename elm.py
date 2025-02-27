@@ -343,7 +343,7 @@ class Port:
         self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         try:
             self.hdr.connect((self.ipaddr, self.tcpprt))
-            if options.sockettimeout:
+            if getattr(options, "sockettimeout", True):
                 self.hdr.settimeout(5)
             else:
                 self.hdr.setblocking(True)
