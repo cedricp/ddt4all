@@ -64,6 +64,7 @@ def save_config():
 def create_new_config():
     configuration["lang"] = get_translator_lang()
     configuration["dark"] = False
+    configuration["sockettimeout"] = False
     save_config()
 
 
@@ -74,6 +75,7 @@ def load_configuration():
         # load config as multiplatform (mac fix macOs load conf)
         configuration["lang"] = config["lang"]
         configuration["dark"] = config["dark"]
+        configuration["sockettimeout"] = config["sockettimeout"]
         os.environ['LANG'] = config["lang"]
         f.close()
     except:
