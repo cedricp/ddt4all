@@ -109,19 +109,19 @@ QPushButton:pressed {
 /* Styling for combo box */
 QComboBox {
     selection-background-color: #ffaa00;
-    background-color: #565656;
+    background-color: #ffffff;
     border-style: solid;
     border: 1px solid #8e8e1e;
     border-radius: 5px;
     padding: 1px 1px 1px 1px;
     width: 370px;
-	color: #ffffff;
+	color: #000000;
 }
 
 /* Hover effect for combo box and push button */
 QComboBox:hover, QPushButton:hover {
     border: 2px solid qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
-	color: #ffffff;
+	color: #000000;
 }
 
 /* Styling for combo box when it's open */
