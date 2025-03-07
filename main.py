@@ -27,6 +27,10 @@ import version
 _ = options.translator('ddt4all')
 app = None
 
+# remove Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway 
+if sys.platform[:3] == "lin":
+    os.environ["XDG_SESSION_TYPE"] = "xcb"
+
 
 def load_this():
     try:
