@@ -2017,8 +2017,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             print(f'{code:18} => {addressing:40} => OK')
 
     sd = sorted(dict["projects"].items())
-    new_dict = {}
-    new_dict["projects"] = {}
+    new_dict = {"projects": {}}
     for k, v in sd:
         new_dict["projects"][k] = v
     # js = json.dumps(new_dict, ensure_ascii=False, indent=True)
