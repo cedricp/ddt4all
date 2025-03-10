@@ -19,7 +19,8 @@ __contributors__ = [
     "frederic34",
     "memleketim05",
     "landswellsong",
-    "krzeminskim"
+    "krzeminskim",
+    "Jodaille"
 ]
 __license__ = "GPL"
 __version__ = "3.0.4"
