@@ -56,7 +56,7 @@ AppId={{#APP_ID}
 
 [Files]
 ;Source: "..\..\ecu.zip"; DestDir: "{app}";
-Source: "\DDT4ALL-Dist-Versions\Python312\*"; DestDir: "{app}\Python312-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\Python313-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
 Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
@@ -76,7 +76,7 @@ Type: filesandordirs; Name: "{group}";
 Type: filesandordirs; Name: "{app}"
 
 [Run]
-Filename: {app}\Python312-x64\python.exe; Parameters: """{app}\main.py"""; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
+Filename: {app}\Python313-x64\python.exe; Parameters: """{app}\main.py"""; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [Code]
 procedure AfterMyProgInstall;
@@ -97,10 +97,10 @@ Name: "{app}\ddt4all_data"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-Name: "{app}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{app}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#MyAppName} Diagnostic Tool"
-Name: "{group}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python312-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
 en.OpenAfterInstall=Open {#MyAppName} after installation
