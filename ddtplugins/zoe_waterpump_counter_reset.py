@@ -23,7 +23,8 @@ class Virginizer(gui.QDialog):
         self.evc_ecu = ecu.Ecu_file(ecufile, True)
         self.setWindowTitle("Water pump counter")
         # x, y, width, high
-        self.setGeometry(100, 100, 480, 445)
+        self.setGeometry(100, 100, 480, 480)
+        self.setFixedSize(480, 480)
 
         layout = gui.QVBoxLayout()
 
@@ -80,17 +81,17 @@ class Virginizer(gui.QDialog):
         layout.addWidget(self.virginize_button)
 
         # Créer une liste d'instructions
-        instructions_html = """
-        <h1>TIPS</h1>
+
+        instructions_html = f"""
+        <h1>{_('TIPS')}</h1>
         <ul>
-            <li>Insert key CARD</li>
-            <li>Put D position</li>
-            <li>Press/Stay START until <b>"Remove card"</b> message</li>
-            <li>Put P position</li>
-            <li>Keep key card inserted</li>
+            <li>{_('Insert key CARD')}</li>
+            <li>{_('Put D position')}</li>
+            <li>{_('Press/Stay START until')} <b>"{_('Remove card')}"</b> {_('message')}</li>
+            <li>{_('Put P position')}</li>
+            <li>{_('Keep key card inserted')}</li>
         </ul>
         """
-
         label = QLabel(instructions_html)
         layout.addWidget(label)
 
