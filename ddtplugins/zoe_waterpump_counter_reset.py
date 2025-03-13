@@ -21,10 +21,10 @@ class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.evc_ecu = ecu.Ecu_file(ecufile, True)
-        self.setWindowTitle("Water pump counter")
+        self.setWindowTitle(_("Water pump counters"))
         # x, y, width, high
-        self.setGeometry(100, 100, 480, 480)
-        self.setFixedSize(480, 480)
+        self.setGeometry(100, 100, 510, 530)
+        self.setFixedSize(510, 530)
 
         layout = gui.QVBoxLayout()
 
@@ -32,15 +32,15 @@ class Virginizer(gui.QDialog):
         self.table = QTableWidget()
         self.table.setRowCount(4)  # Number of lines
         self.table.setColumnCount(3)
-        self.table.setHorizontalHeaderLabels(["Name", "Values", "Action"])  # columns headers
+        self.table.setHorizontalHeaderLabels([_("Name"), _("Values"), _("Action")])  # columns headers
         self.table.setColumnWidth(0, 200)
 
         # Add data to table
         data = [
-            ["Low Speed", "", ""],
-            ["Middle Speed", "", ""],
-            ["High Speed", "", ""],
-            ["V_Timer_DrivWEP_ON", "", ""], #V_Timer_DrivWEP_ON
+            [_("Low Speed"), "", ""],
+            [_("Middle Speed"), "", ""],
+            [_("High Speed"), "", ""],
+            [_("V_Timer_DrivWEP_ON"), "", ""], #V_Timer_DrivWEP_ON
         ]
 
         for row, (nom, valeur, action) in enumerate(data):
@@ -48,50 +48,42 @@ class Virginizer(gui.QDialog):
             self.table.setItem(row, 1, QTableWidgetItem(valeur))
             self.table.setItem(row, 2, QTableWidgetItem(action))
 
-        resetlowBtn = gui.QPushButton("Reset")
+        resetLabel = _("Reset")
+        resetlowBtn = gui.QPushButton(resetLabel)
         self.table.setCellWidget(0, 2, resetlowBtn)
         resetlowBtn.clicked.connect(self.reset_lowcounter)
 
-        resetmiddleBtn = gui.QPushButton("Reset")
+        resetmiddleBtn = gui.QPushButton(resetLabel)
         self.table.setCellWidget(1, 2, resetmiddleBtn)
         resetmiddleBtn.clicked.connect(self.reset_middlecounter)
 
-        resethighBtn = gui.QPushButton("Reset")
+        resethighBtn = gui.QPushButton(resetLabel)
         self.table.setCellWidget(2, 2, resethighBtn)
         resethighBtn.clicked.connect(self.reset_highcounter)
 
-        resetdrivewepBtn = gui.QPushButton("Reset")
+        resetdrivewepBtn = gui.QPushButton(resetLabel)
         self.table.setCellWidget(3, 2, resetdrivewepBtn)
         resetdrivewepBtn.clicked.connect(self.reset_DrivWEP)
 
-        # Ajout du tableau au layout
+        # Add table to layout
         layout.addWidget(self.table)
 
-        infos = gui.QLabel("Zoe water pump counters<br>"
-                             "<font color='red'>THIS PLUGIN WILL ERASE WATER PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>")
+        infos = gui.QLabel(_("Zoe water pump counters<br>"
+                             "<font color='red'>THIS PLUGIN WILL ERASE WATER PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
 
         infos.setAlignment(core.Qt.AlignHCenter)
-        check_button = gui.QPushButton("Check values")
-        self.status_check = gui.QLabel("Waiting action")
+        check_button = gui.QPushButton(_("Check values"))
+        self.status_check = gui.QLabel(_("Waiting action"))
         self.status_check.setAlignment(core.Qt.AlignHCenter)
-        self.virginize_button = gui.QPushButton("Reset counters")
+        self.virginize_button = gui.QPushButton(_("Reset all counters"))
         layout.addWidget(infos)
         layout.addWidget(check_button)
         layout.addWidget(self.status_check)
         layout.addWidget(self.virginize_button)
 
-        # Créer une liste d'instructions
+        # Tips list as HTML
+        instructions_html = _("<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/Stay START until <b>Remove card</b> message</li><li>Put P position</li><li>Keep key card inserted</li></ul>")
 
-        instructions_html = f"""
-        <h1>{_('TIPS')}</h1>
-        <ul>
-            <li>{_('Insert key CARD')}</li>
-            <li>{_('Put D position')}</li>
-            <li>{_('Press/Stay START until')} <b>"{_('Remove card')}"</b> {_('message')}</li>
-            <li>{_('Put P position')}</li>
-            <li>{_('Keep key card inserted')}</li>
-        </ul>
-        """
         label = QLabel(instructions_html)
         layout.addWidget(label)
 
@@ -123,7 +115,6 @@ class Virginizer(gui.QDialog):
 
         options.main_window.logview.append("reading V_Timer_DrivWEP_ON")
         pumptimer_check_values = pumptimer_check_request.send_request()
-        print(f"Réponse reçue: {pumptimer_check_values}")
         if pumptimer_check_values:
             value = pumptimer_check_values.get(key_name)
         else:
@@ -134,7 +125,7 @@ class Virginizer(gui.QDialog):
         key_name = "($3349) Time Counter for the driving WEP in Low Speed"
         lowspeed_check_request = self.evc_ecu.requests[
             u'DataRead.($3349) Time Counter for the driving WEP in Low Speed']
-        options.main_window.logview.append("reading Low speed")
+        options.main_window.logview.append(_("Reading Low speed"))
         lowspeed_check_values = lowspeed_check_request.send_request()
         print(lowspeed_check_values)
         value = lowspeed_check_values.get(key_name)
@@ -148,7 +139,7 @@ class Virginizer(gui.QDialog):
         middlespeed_check_request = self.evc_ecu.requests[
             u'DataRead.($334A) Time Counter for the driving WEP in Middle Speed']
 
-        options.main_window.logview.append("reading Middle speed")
+        options.main_window.logview.append(_("Reading Middle speed"))
 
         middlespeed_check_values = middlespeed_check_request.send_request()
         print(middlespeed_check_values)
@@ -163,7 +154,7 @@ class Virginizer(gui.QDialog):
         highspeed_check_request = self.evc_ecu.requests[
             u'DataRead.($334B) Time Counter for the driving WEP in High Speed']
 
-        options.main_window.logview.append("reading High speed")
+        options.main_window.logview.append(_("Reading High speed"))
 
         highspeed_check_values = highspeed_check_request.send_request()
         print(highspeed_check_values)
