@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 10:46+0100\n"
-"PO-Revision-Date: 2025-02-23 20:59+0100\n"
-"Last-Translator: Zaptyp <no-reply@github.com>\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"PO-Revision-Date: 2025-03-13 12:24+0100\n"
+"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,8 @@ msgid "Shift byte count"
 msgstr "Liczba przesuniętych bajtów"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nazwa danych;Bit startowy;Przesunięcie bitu;Liczba bitów;Kolejność bajtów"
+msgstr ""
+"Nazwa danych;Bit startowy;Przesunięcie bitu;Liczba bitów;Kolejność bajtów"
 
 msgid "Little"
 msgstr "Mały"
@@ -177,12 +178,20 @@ msgid "Request %s not found"
 msgstr "Polecenie %s nie znalezione"
 
 #, python-format
-msgid "<font color=green>Request <font color=blue>'%s'</font> has no missing input values</font>"
-msgstr "<font color=green>Request <font color=blue>'%s'</font> ma brakujące wartości wejściowe</font>"
+msgid ""
+"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
+"values</font>"
+msgstr ""
+"<font color=green>Request <font color=blue>'%s'</font> ma brakujące wartości "
+"wejściowe</font>"
 
 #, python-format
-msgid "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</font>"
-msgstr "<font color=red>Request <font color=blue>'%s'</font> ma brakujące wejścia :</font>"
+msgid ""
+"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
+"font>"
+msgstr ""
+"<font color=red>Request <font color=blue>'%s'</font> ma brakujące wejścia :</"
+"font>"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -660,11 +669,11 @@ msgid " entries"
 msgstr " wpisy"
 
 msgid ""
-"<center>This Software is free, but I need money to buy cables/ECUs and make this application more "
-"reliable</center>"
+"<center>This Software is free, but I need money to buy cables/ECUs and make "
+"this application more reliable</center>"
 msgstr ""
-"<center>Ta aplikacja jes darmowa, ale potrzebne jest wsparcie żeby kupywać kable/ECU i robić tą "
-"aplikację bardziej niezawodną</center>"
+"<center>Ta aplikacja jes darmowa, ale potrzebne jest wsparcie żeby kupywać "
+"kable/ECU i robić tą aplikację bardziej niezawodną</center>"
 
 msgid "Yes I contribute"
 msgstr "Tak chce wspomóc"
@@ -673,11 +682,11 @@ msgid "No, I don't"
 msgstr "Nie, nie chce"
 
 msgid ""
-"<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/"
-"ddt4all</center>"
+"<center>Thank you for you contribution, if nothing happens, please go to : "
+"https://github.com/cedricp/ddt4all</center>"
 msgstr ""
-"<center>Dziekujemy za twoją contybucję, jeżeli nic sie nie dzieje, proszę kliknąć tutaj: https://"
-"github.com/cedricp/ddt4all</center>"
+"<center>Dziekujemy za twoją contybucję, jeżeli nic sie nie dzieje, proszę "
+"kliknąć tutaj: https://github.com/cedricp/ddt4all</center>"
 
 msgid "ELM port selection"
 msgstr "Wybierz port ELMa"
@@ -704,7 +713,8 @@ msgid "WiFi port : "
 msgstr "Port WiFi : "
 
 msgid "I'm aware that I can harm my car if badly used"
-msgstr "Jestem świadomy, że mogę uszkodzić pojazd tym programem jeżeli źle go użyje"
+msgstr ""
+"Jestem świadomy, że mogę uszkodzić pojazd tym programem jeżeli źle go użyje"
 
 msgid "Dark style"
 msgstr "Tryb ciemny"
@@ -858,7 +868,9 @@ msgid "Clearing DTC information"
 msgstr "Czyszczenie informacji DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Brak wyraźnej komendy ClearDTC dla tego ECU, to spowoduje wyslanie domyślnego numeru 14FF00"
+msgstr ""
+"Brak wyraźnej komendy ClearDTC dla tego ECU, to spowoduje wyslanie "
+"domyślnego numeru 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Zaraz wyczyścić diagnostyczne kody błędów</center>"
@@ -963,11 +975,13 @@ msgid "Airbag Tools"
 msgstr "Narzędia dla Airbagów"
 
 msgid ""
-"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
-"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
+"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
+"font>"
 msgstr ""
-"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>TEN PLUGIN ODBLOKUJE DANE O WYPADKU "
-"AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>TEN PLUGIN "
+"ODBLOKUJE DANE O WYPADKU AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ "
+"SOBIĘ UŻYWANIE TEJ OPCJI</font>"
 
 msgid "Check ACU Virgin"
 msgstr "Sprawdź ACU Virgin"
@@ -1005,9 +1019,12 @@ msgstr "Klucze"
 msgid "ENTER AFTER SALE MODE"
 msgstr "WEJDŹ W TRYB PO SPRZEDAŻY"
 
-msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
+msgid ""
+"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
+"YET</font>"
 msgstr ""
-"<font color='red'>MEGANE II PROGRAMOWANIE KARTY<br>EXPERYMENTALNE : JESZCZE NIE PRZETESTOWANE</font>"
+"<font color='red'>MEGANE II PROGRAMOWANIE KARTY<br>EXPERYMENTALNE : JESZCZE "
+"NIE PRZETESTOWANE</font>"
 
 msgid "LEARN"
 msgstr "NAUCZ"
@@ -1049,11 +1066,12 @@ msgid "EPS Tools"
 msgstr "Narzędzia EPS"
 
 msgid ""
-"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF "
-"YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
+"EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Modus/Clio III EPS VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE EPS IMMO DATA<br>JEŚLI NIE "
-"WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE EPS "
+"IMMO DATA<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ "
+"OPCJI</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "PUSTY STATUS & ODCZYT VIN"
@@ -1092,11 +1110,12 @@ msgid "Clio IV EPS Reset"
 msgstr "Clio IV Reset EPS"
 
 msgid ""
-"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU "
-"HAVE NO IDEA OF WHAT IT MEANS</font>"
+"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Clio IV EPS VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE EPS IMMO DATA<br>JEŚLI NIE WIESZ CO "
-"TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"Clio IV EPS VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE EPS IMMO "
+"DATA<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
 
 msgid "Check EPS Virgin"
 msgstr "Sprawdź EPS Virgin"
@@ -1114,11 +1133,12 @@ msgid "UCH Tools"
 msgstr "Narzędzia UCH"
 
 msgid ""
-"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE "
-"NO IDEA OF WHAT IT MEANS</font>"
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA II UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE UCH<br>JEŚLI NIE WIESZ CO TO "
-"OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE "
+"UCH<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
 
 msgid "Check UCH Virgin"
 msgstr "Spraawdź UCH Virgin"
@@ -1136,63 +1156,70 @@ msgid "Laguna III UCH Reset"
 msgstr "Laguna III Reset UCH"
 
 msgid ""
-"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE "
-"NO IDEA OF WHAT IT MEANS</font>"
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA III UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE UCH<br>JEŚLI NIE WIESZ CO "
-"TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE "
+"UCH<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megan/Scenic II Reset UCH"
 
 msgid ""
-"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE "
-"NO IDEA OF WHAT IT MEANS</font>"
+"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"MEGANE II UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE UCH<br>JEŚLI NIE WIESZ CO TO "
-"OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"MEGANE II UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE "
+"UCH<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 Reset Airbag"
 
 msgid ""
-"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO "
-"AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
+"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TEN PLUGIN ODBLOKUJE DANE O WYPADKU "
-"AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TEN PLUGIN ODBLOKUJE "
+"DANE O WYPADKU AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ "
+"UŻYWANIE TEJ OPCJI</font>"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III Reset EPS"
 
 msgid ""
-"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
-"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
+"PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
+"MEANS</font>"
 msgstr ""
-"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE EPS IMMO "
-"DATA<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>TEN "
+"PLUGIN ZRESETUJE EPS IMMO DATA<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ "
+"SOBIĘ UŻYWANIE TEJ OPCJI</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III Reset UCH"
 
 msgid ""
-"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE "
-"NO IDEA OF WHAT IT MEANS</font>"
+"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"MEGANE III UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE UCH<br>JEŚLI NIE WIESZ CO "
-"TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"MEGANE III UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE "
+"UCH<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 Reset Airbag"
 
 msgid ""
-"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font "
-"color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
-"MEANS</font>"
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font "
-"color='red'>TEN PLUGIN ODBLOKUJE DANE O WYPADKU AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ "
-"SOBIĘ UŻYWANIE TEJ OPCJI</font>"
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>TEN PLUGIN ODBLOKUJE DANE O WYPADKU "
+"AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
 
 msgid "CRC calculator"
 msgstr "Kalkulator CRC"
@@ -1202,3 +1229,121 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr "KALKULATOR CRC"
+
+msgid "Zoe water pump Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid "EPS Tools"
+msgid "EVC Tools"
+msgstr "Narzędzia EPS"
+
+msgid "Water pump counters"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Port speed"
+msgid "Low Speed"
+msgstr "Prędkość portu"
+
+msgid "Middle Speed"
+msgstr ""
+
+msgid "High Speed"
+msgstr ""
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+#| "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>TEN PLUGIN ZRESETUJE TWOJE "
+"UCH<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
+"font>"
+
+#, fuzzy
+#| msgid "Decoded values"
+msgid "Check values"
+msgstr "Zdekodowane wartości"
+
+#, fuzzy
+#| msgid "Writing archive"
+msgid "Waiting action"
+msgstr "Zapisywanie archiwum"
+
+msgid "Reset all counters"
+msgstr ""
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color='green'>UCH virgin</font>"
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>UCH zdejmowany</font>"
+
+#, fuzzy
+#| msgid "Checking port speed:"
+msgid "Reading Low speed"
+msgstr "Sprawdzanie prędkości portu:"
+
+msgid "Reading Middle speed"
+msgstr ""
+
+msgid "Reading High speed"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"

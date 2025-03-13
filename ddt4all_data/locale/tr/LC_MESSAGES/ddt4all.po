@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 10:46+0100\n"
-"PO-Revision-Date: 2024-12-15 10:55+0100\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"PO-Revision-Date: 2025-03-13 12:39+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -1230,6 +1230,124 @@ msgstr "VIN (Şasi Numarası)"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
+
+msgid "Zoe water pump Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid "EPS Tools"
+msgid "EVC Tools"
+msgstr "EPS Araçları"
+
+msgid "Water pump counters"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Port speed"
+msgid "Low Speed"
+msgstr "Bağlantı noktası (port) hızı"
+
+msgid "Middle Speed"
+msgstr ""
+
+msgid "High Speed"
+msgstr ""
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+#| "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"LAGUNA II UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi "
+"Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
+"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+
+#, fuzzy
+#| msgid "Decoded values"
+msgid "Check values"
+msgstr "Kodlanmış değerler"
+
+#, fuzzy
+#| msgid "Writing archive"
+msgid "Waiting action"
+msgstr "Arşiv Yazılıyor"
+
+msgid "Reset all counters"
+msgstr ""
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color='green'>EPS virgin</font>"
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>EPS temiz</font>"
+
+#, fuzzy
+#| msgid "Checking port speed:"
+msgid "Reading Low speed"
+msgstr "Kontrol edilen port hızı:"
+
+msgid "Reading Middle speed"
+msgstr ""
+
+msgid "Reading High speed"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 
 #~ msgid "Contributors:"
 #~ msgstr "Katkıda Bulunanlar:"

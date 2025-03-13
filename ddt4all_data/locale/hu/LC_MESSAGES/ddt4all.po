@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 10:46+0100\n"
-"PO-Revision-Date: 2024-12-15 10:51+0100\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"PO-Revision-Date: 2025-03-13 12:23+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -1241,6 +1241,109 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
+
+msgid "Zoe water pump Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid "UCH Tools"
+msgid "EVC Tools"
+msgstr "UCH eszközök"
+
+msgid "Water pump counters"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Port speed"
+msgid "Low Speed"
+msgstr "Port sebessége"
+
+msgid "Middle Speed"
+msgstr ""
+
+msgid "High Speed"
+msgstr ""
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "Check values"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Waiting action"
+msgstr "Diag verzió"
+
+msgid "Reset all counters"
+msgstr ""
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "Checking port speed:"
+msgid "Reading Low speed"
+msgstr "Port sebességének ellenőrzése:"
+
+msgid "Reading Middle speed"
+msgstr ""
+
+msgid "Reading High speed"
+msgstr ""
+
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr ""
+
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color=orange> - '%s'</font>"
 
 #, fuzzy
 #~| msgid "Diag version"

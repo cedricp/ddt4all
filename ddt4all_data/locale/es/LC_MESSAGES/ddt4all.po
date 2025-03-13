@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 02:23+0100\n"
-"PO-Revision-Date: 2024-11-07 02:33+0100\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"PO-Revision-Date: 2025-03-13 12:22+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -640,9 +640,6 @@ msgstr "Version diagnostico"
 msgid "Created by:"
 msgstr ""
 
-msgid "Contributors:"
-msgstr ""
-
 msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
@@ -664,17 +661,17 @@ msgstr "Por favor selecciona una categoria antes de crear nueva pantalla"
 msgid "Enter screen name"
 msgstr "Introduce nuevo nombre"
 
-msgid "Scan options"
-msgstr "Opciones de escaneo"
-
-msgid "CANCEL"
-msgstr ""
-
 msgid "Scanning CAN"
 msgstr "Escaneando CAN"
 
 msgid "Scanning KWP"
 msgstr "Escaneando KWP"
+
+msgid "Scan options"
+msgstr "Opciones de escaneo"
+
+msgid "CANCEL"
+msgstr ""
 
 msgid "EDITION MODE"
 msgstr "MODO EDICION"
@@ -1241,6 +1238,109 @@ msgstr ""
 
 msgid "CRC CALCULATOR"
 msgstr ""
+
+msgid "Zoe water pump Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid "UCH Tools"
+msgid "EVC Tools"
+msgstr "Herramientas UCH"
+
+msgid "Water pump counters"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Port speed"
+msgid "Low Speed"
+msgstr "Velocidad del puerto"
+
+msgid "Middle Speed"
+msgstr ""
+
+msgid "High Speed"
+msgstr ""
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+msgid "Check values"
+msgstr ""
+
+#, fuzzy
+#| msgid "Diag version"
+msgid "Waiting action"
+msgstr "Version diagnostico"
+
+msgid "Reset all counters"
+msgstr ""
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "Checking port speed:"
+msgid "Reading Low speed"
+msgstr "Verificando velocidad del puerto:"
+
+msgid "Reading Middle speed"
+msgstr ""
+
+msgid "Reading High speed"
+msgstr ""
+
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr ""
+
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+#, fuzzy
+#| msgid "<font color=orange> - '%s'</font>"
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color=orange> - '%s'</font>"
 
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All - loganbreak.mforos.com edición"

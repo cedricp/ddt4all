@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 10:46+0100\n"
-"PO-Revision-Date: 2024-12-15 10:53+0100\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"PO-Revision-Date: 2025-03-13 12:38+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -1272,6 +1272,121 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCULATOR CRC"
+
+msgid "Zoe water pump Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid "EPS Tools"
+msgid "EVC Tools"
+msgstr "Instrumente pentru EPS"
+
+msgid "Water pump counters"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Port speed"
+msgid "Low Speed"
+msgstr "Viteza portului"
+
+msgid "Middle Speed"
+msgstr ""
+
+msgid "High Speed"
+msgstr ""
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+#| "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"LAGUNA II VIRGINIZATOR UCH<br><font color='red'>ACEST PLUGIN VA STERGE UCH-"
+"ul TAU<br>NU MERGE MAI DEPARTE, DACA NU AI IDEE CE INSEAMNA ASTA</font>"
+
+msgid "Check values"
+msgstr ""
+
+#, fuzzy
+#| msgid "Waiting"
+msgid "Waiting action"
+msgstr "Asteptare"
+
+msgid "Reset all counters"
+msgstr ""
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color='green'>EPS virgin</font>"
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>EPS virgin</font>"
+
+#, fuzzy
+#| msgid "Checking port speed:"
+msgid "Reading Low speed"
+msgstr "Verificarea vitezei portului:"
+
+msgid "Reading Middle speed"
+msgstr ""
+
+msgid "Reading High speed"
+msgstr ""
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>CURATARE EXECUTATA</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>CURATARE ESUATA</font>\""
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>CURATARE EXECUTATA</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>CURATARE ESUATA</font>\""
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>CURATARE EXECUTATA</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>CURATARE ESUATA</font>\""
+
+#, fuzzy
+#| msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>CURATARE EXECUTATA</font>"
+
+#, fuzzy
+#| msgid "<font color='red'>CLEAR FAILED</font>"
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>CURATARE ESUATA</font>\""
 
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"

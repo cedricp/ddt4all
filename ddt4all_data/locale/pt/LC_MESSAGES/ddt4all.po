@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 10:46+0100\n"
-"PO-Revision-Date: 2024-12-15 10:53+0100\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"PO-Revision-Date: 2025-03-13 12:37+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -1220,6 +1220,95 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC CALCULATOR"
+
+msgid "Zoe water pump Reset"
+msgstr "Zoe bomba a agua reset"
+
+msgid "EVC Tools"
+msgstr "Ferramentas EVC"
+
+msgid "Water pump counters"
+msgstr "Contadores de Bomba a agua "
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Low Speed"
+msgstr "Velocidade baixa"
+
+msgid "Middle Speed"
+msgstr "Velocidade média"
+
+msgid "High Speed"
+msgstr "Velocidade alta"
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr "V_Timer_DrivWEP_ON"
+
+msgid "Reset"
+msgstr "Resetar"
+
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"Zoe contadores de bomba a agua<br><font color='red'>ESTE PLUGIN APAGARÁ "
+"CONTADORES DE BOMBA A AGUA<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
+
+msgid "Check values"
+msgstr "Verificar valores"
+
+msgid "Waiting action"
+msgstr "Espera da acção"
+
+msgid "Reset all counters"
+msgstr "Resetar todos contadores"
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+"<h1>AJUDA</h1><ul><li>Insira a sua carta</li><li>Coloque em Posição D</"
+"li><li>Presione Stay START until <b>Retire a carta</b> Mensagem</"
+"li><li>Coloque em posição P</li><li>Deixe a carta inserida</li></ul>"
+
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>Valores lidos</font>"
+
+msgid "Reading Low speed"
+msgstr "Lendo velocidade baixa:"
+
+msgid "Reading Middle speed"
+msgstr "Leitura velocidade média"
+
+msgid "Reading High speed"
+msgstr "Leitura velocidade alta"
+
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR V_Timer_DrivWEP_ON EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>LIMPAR V_Timer_DrivWEP_ON FALHOU</font>"
+
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR BAIXO EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA BAIXO</font>"
+
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR MEDIO EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA MEDIO</font>"
+
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR ALTO EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA ALTA</font>"
 
 #~ msgid "Contributors:"
 #~ msgstr "Contribuidores:"
