@@ -640,7 +640,8 @@ class Ecu_data:
                 requestasbin[i + start_bit] = valueasbin[i]
 
         requestasbin = "".join(requestasbin)
-        valueasint = int("0b" + requestasbin, 2)
+        requestasbin = "0b" + requestasbin.lstrip("b")
+        valueasint = int(requestasbin, 2)
         valueashex = hex(valueasint)[2:].replace("L", "").zfill(numreqbytes * 2).upper()
 
         for i in range(numreqbytes):
