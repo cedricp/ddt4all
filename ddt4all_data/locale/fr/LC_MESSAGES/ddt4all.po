@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 10:46+0100\n"
+"POT-Creation-Date: 2025-03-13 10:26+0100\n"
 "PO-Revision-Date: 2024-12-15 10:51+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -1227,6 +1227,95 @@ msgstr "VIN"
 
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
+
+msgid "Zoe water pump Reset"
+msgstr "Reset compteurs pompe à eau Zoé"
+
+msgid "EVC Tools"
+msgstr "Outils EVC"
+
+msgid "Water pump counters"
+msgstr "Compteurs pompe à eau"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Low Speed"
+msgstr "Petite vitesse"
+
+msgid "Middle Speed"
+msgstr "Vitesse moyenne"
+
+msgid "High Speed"
+msgstr "Grande vitesse"
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr ""
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"Compteurs pompe à eau Zoé<br><font color='red'>CECI EFFACERA LES "
+"VALEURS DES COMPTEURS<br>PASSEZ VOTRE CHEMIN SI VOUS NE SAVEZ PAS CE QUE CELA IMPLIQUE</"
+"font>"
+
+msgid "Check values"
+msgstr "Interrogation des valeurs"
+
+msgid "Waiting action"
+msgstr "En attente d'action"
+
+msgid "Reset all counters"
+msgstr "Reset des 4 compteurs"
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+"<h1>NOTE</h1><ul><li>Insérez la clé (carte)</li><li>Passez la position D</li><li>Pressez/"
+"Maintenez START jusqu'au message <b>Retirez carte</b></li><li>Passez la position P</"
+"li><li>Laissez la clé insérée</li></ul>"
+
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>Valeurs reçues</font>"
+
+msgid "Reading Low speed"
+msgstr "Lecture petite vitesse"
+
+msgid "Reading Middle speed"
+msgstr "Lecture vitesse moyenne"
+
+msgid "Reading High speed"
+msgstr "Lecture grande vitesse"
+
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>EFFACEMENT V_Timer_DrivWEP_ON EFFECTUÉ</font>"
+
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>ÉCHEC EFFACEMENT V_Timer_DrivWEP_ON</font>"
+
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>PETITE VITESSE EFFACÉE</font>"
+
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>ÉCHEC EFFACEMENT PETITE VITESSE</font>"
+
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>MOYENNE VITESSE EFFACÉE</font>"
+
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>ÉCHEC EFFACEMENT MOYENNE VITESSE</font>"
+
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>GRANDE VITESSE EFFACÉE</font>"
+
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>ÉCHEC EFFACEMENT EFFACEMENT GRANE VITESSE</font>"
 
 #~ msgid "Contributors:"
 #~ msgstr "Contributeurs/Contributrice:"
