@@ -20,3 +20,4 @@
 ..\..\ddtplugins\megane3_uch_reset.py
 ..\..\ddtplugins\rsat4_reset.py
 ..\..\ddtplugins\vin_crc.py
+..\..\ddtplugins\zoe_waterpump_counter_reset.py
