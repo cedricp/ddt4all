@@ -234,33 +234,30 @@ class buttonRequest(widgets.QPushButton):
         rect = getRectangleXML(getChildNodesByName(xmldata, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(xmldata, self.uiscale)
         self.messages = getChildNodesByName(xmldata, "Message")
+        as_picture = False
 
         if text.upper().startswith("::BTN:"):
             gifName = text.replace("::BTN:|", "").replace("::btn:|", "").replace("::btn:DOWN|", "").replace("::btn:UP|", "").replace("::btn:LEFT|", "").replace("::btn:RIGHT|", "").replace("\\", "/")
             image_data = os.path.join(options.graphics_dir, gifName + '.gif')
             if not os.path.exists(image_data):
                 image_data = os.path.join(options.graphics_dir, gifName + '.GIF')
-            with open(image_data, 'rb') as git:
-                data = git.read()
-            if data:
-                pixmap = QPixmap()
-                byte_array = core.QByteArray(data)
-                buffer = core.QBuffer(byte_array)
-                buffer.open(core.QIODevice.ReadOnly)
-                pixmap.loadFromData(buffer.readAll())
-                self.setIcon(QIcon(pixmap))
-                self.setIconSize(self.size())
-            else:
-                self.setFont(qfnt)
-                self.setText(text)
-                self.setStyleSheet("background: yellow; color: black")
-        else:
+            if os.path.exists(image_data):
+                with open(image_data, 'rb') as git:
+                    data = git.read()
+                if data:
+                    pixmap = QPixmap()
+                    byte_array = core.QByteArray(data)
+                    buffer = core.QBuffer(byte_array)
+                    buffer.open(core.QIODevice.ReadOnly)
+                    pixmap.loadFromData(buffer.readAll())
+                    self.setIcon(QIcon(pixmap))
+                    self.setIconSize(self.size())
+                    as_picture = True
+        if not as_picture:
             self.setFont(qfnt)
             self.setText(text)
             self.setStyleSheet("background: yellow; color: black")
-
         self.resize(rect['width'], rect['height'])
-
         self.move(rect['left'], rect['top'])
         self.butname = text + "_" + str(self.count)
 
@@ -269,6 +266,7 @@ class buttonRequest(widgets.QPushButton):
         rect = jsdata['rect']
         qfnt = jsonFont(jsdata['font'], self.uiscale)
         self.messages = jsdata['messages']
+        as_picture = False
 
         if text.upper().startswith("::BTN:"):
             gifName = text.replace("::BTN:|", "").replace("::btn:|", "").replace("::btn:DOWN|", "").replace("::btn:UP|", "").replace("::btn:LEFT|", "").replace("::btn:RIGHT|", "").replace("\\", "/")
@@ -283,11 +281,8 @@ class buttonRequest(widgets.QPushButton):
                 pixmap.loadFromData(buffer.readAll())
                 self.setIcon(QIcon(pixmap))
                 self.setIconSize(self.size())
-            else:
-                self.setFont(qfnt)
-                self.setText(text)
-                self.setStyleSheet("background: yellow; color: black")
-        else:
+                as_picture = True
+        if not as_picture:
             self.setFont(qfnt)
             self.setText(text)
             self.setStyleSheet("background: yellow; color: black")
