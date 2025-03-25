@@ -214,7 +214,7 @@ class Ecu_list(widgets.QWidget):
             item = widgets.QTreeWidgetItem(self.list, [e])
             if e in longgroupnames:
                 item.setToolTip(0, longgroupnames[e])
-            if e in self.ecuscan.ecu_database.addr_group_mapping:
+            elif e in self.ecuscan.ecu_database.addr_group_mapping:
                 item.setToolTip(0, self.ecuscan.ecu_database.addr_group_mapping[e])
             for t in stored_ecus[e]:
                 widgets.QTreeWidgetItem(item, t)
@@ -1272,7 +1272,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.setFixedHeight(64)
         self.obdlinkbutton.setFixedWidth(64)
         self.obdlinkbutton.setCheckable(True)
-        self.obdlinkbutton.setToolTip('OBDLINK')
+        self.obdlinkbutton.setToolTip('OBDLINK SX/EX')
         medialayout.addWidget(self.obdlinkbutton)
 
         self.elsbutton = widgets.QPushButton()
@@ -1281,7 +1281,7 @@ class main_window_options(widgets.QDialog):
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
         self.elsbutton.setCheckable(True)
-        self.elsbutton.setToolTip('ELS27')
+        self.elsbutton.setToolTip('ELS27/VGate')
         medialayout.addWidget(self.elsbutton)
 
         layout.addLayout(medialayout)
