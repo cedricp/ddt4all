@@ -253,8 +253,8 @@ class buttonRequest(widgets.QPushButton):
             if not os.path.exists(image_data):
                 image_data = os.path.join(options.graphics_dir, gifName + '.GIF')
             if os.path.exists(image_data):
-                with open(image_data, 'rb') as git:
-                    data = git.read()
+                with open(image_data, 'rb') as gif:
+                    data = gif.read()
                 if data:
                     pixmap = QPixmap()
                     byte_array = core.QByteArray(data)
