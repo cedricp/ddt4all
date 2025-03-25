@@ -22,6 +22,7 @@ _ = options.translator('ddt4all')
 class labelWidget(widgets.QLabel):
     def __init__(self, parent, uiscale):
         super(labelWidget, self).__init__(parent)
+        self.buffer = None
         self.jsondata = None
         self.ismovable = True
         self.uiscale = uiscale
@@ -270,18 +271,19 @@ class buttonRequest(widgets.QPushButton):
 
         if text.upper().startswith("::BTN:"):
             gifName = text.replace("::BTN:|", "").replace("::btn:|", "").replace("::btn:DOWN|", "").replace("::btn:UP|", "").replace("::btn:LEFT|", "").replace("::btn:RIGHT|", "").replace("\\", "/")
-            image_data = self.extract_image_from_zip('ecu.zip', os.path.join(options.graphics_dir, gifName + '.gif'))
-            if image_data is None:
-                image_data = self.extract_image_from_zip('ecu.zip', os.path.join(options.graphics_dir, gifName + '.GIF'))
-            if image_data:
-                pixmap = QPixmap()
-                byte_array = core.QByteArray(image_data)
-                buffer = core.QBuffer(byte_array)
-                buffer.open(core.QIODevice.ReadOnly)
-                pixmap.loadFromData(buffer.readAll())
-                self.setIcon(QIcon(pixmap))
-                self.setIconSize(self.size())
-                as_picture = True
+            if os.path.exists("ecu.zip"):
+                image_data = self.extract_image_from_zip('ecu.zip', os.path.join(options.graphics_dir, gifName + '.gif'))
+                if image_data is None:
+                    image_data = self.extract_image_from_zip('ecu.zip', os.path.join(options.graphics_dir, gifName + '.GIF'))
+                if image_data:
+                    pixmap = QPixmap()
+                    byte_array = core.QByteArray(image_data)
+                    buffer = core.QBuffer(byte_array)
+                    buffer.open(core.QIODevice.ReadOnly)
+                    pixmap.loadFromData(buffer.readAll())
+                    self.setIcon(QIcon(pixmap))
+                    self.setIconSize(self.size())
+                    as_picture = True
         if not as_picture:
             self.setFont(qfnt)
             self.setText(text)
