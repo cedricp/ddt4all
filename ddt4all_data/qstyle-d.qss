@@ -1,6 +1,6 @@
 QToolTip {
   border: 1px solid #000;
-  background-color: #ffa02f;
+  background-color: #0ff;
   padding: 1px;
   border-radius: 3px;
   font-weight: bold;
