@@ -33,7 +33,8 @@ mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 configuration = {
     "lang": None,
-    "dark": False
+    "dark": False,
+    "sockettimeout": False
 }
 lang_list = {
     "English": "en_US",
