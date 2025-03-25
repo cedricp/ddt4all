@@ -294,7 +294,8 @@ class buttonRequest(widgets.QPushButton):
         self.uniquename = jsdata['uniquename']
         self.jsondata = jsdata
 
-    def extract_image_from_zip(self, zip_file, image_name):
+    @staticmethod
+    def extract_image_from_zip(zip_file, image_name):
         """Extrait une image du fichier ZIP et retourne les données en mémoire"""
         with zipfile.ZipFile(zip_file, 'r') as zip_ref:
             if image_name in zip_ref.namelist():
