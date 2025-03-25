@@ -66,9 +66,14 @@ class labelWidget(widgets.QLabel):
                 imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
                 if not os.path.exists(imgname):
                     imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
-                self.img = gui.QMovie(imgname)
-            self.setMovie(self.img)
-            self.img.start()
+                # Ensure the path is a string and the file exists
+                if isinstance(imgname, str) and os.path.exists(imgname):
+                    self.img = gui.QMovie(imgname)
+            if self.img.isValid():
+                self.setMovie(self.img)
+                self.img.start()
+            else:
+                self.setText(text)
         else:
             self.setText(text)
 
@@ -109,9 +114,14 @@ class labelWidget(widgets.QLabel):
                 imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
                 if not os.path.exists(imgname):
                     imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
-                self.img = gui.QMovie(imgname)
-            self.setMovie(self.img)
-            self.img.start()
+                # Ensure the path is a string and the file exists
+                if isinstance(imgname, str) and os.path.exists(imgname):
+                    self.img = gui.QMovie(imgname)
+            if self.img.isValid():
+                self.setMovie(self.img)
+                self.img.start()
+            else:
+                self.setText(text)
         else:
             self.setText(text)
 
