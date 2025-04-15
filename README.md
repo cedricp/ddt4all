@@ -71,6 +71,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## How to install the application ?
 - Windows:
+  - Cd into ddt4all folder: `cd ddt4all`
   - Install new venv: `python -m venv ./venv`
   - Activate venv: `.\venv\Scripts\activate.bat`
   - Install requirements: `.\venv\Scripts\pip install -r requirements.txt`
@@ -88,6 +89,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## How to launch the application ?
 - Windows:
+  - Cd into ddt4all folder: `cd ddt4all`
   - Activate venv: `.\venv\Scripts\activate.bat`
   - Run's app: `.\venv\Scripts\python .\main.py`
 - Linux/MacOs:
