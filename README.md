@@ -85,7 +85,7 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
   - Run's app: `python ./main.py`
 - Note about Linux ubuntu fixes uncomment next lines:
   - Fix qt platform plugin linux ubuntu "xcb" if error's:
-    - `sudo apt-get install --reinstall libxcb-xinerama0
+    - `sudo apt-get install --reinstall libxcb-xinerama0`
 
 ## How to launch the application ?
 - Windows:
