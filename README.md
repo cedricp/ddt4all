@@ -30,6 +30,8 @@ Using the application in non expert mode should not be harmful for your vehicle 
 * [crcmod](https://pypi.org/project/crcmod/)
 * [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
+Older Python 3.1x.x might be sufficient ( i.e run with Python 3.10.12 under Ubuntu 22.04 )
+.
 ### Supported diagnostic adapters (so far)
 
 * **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
@@ -67,13 +69,14 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * Can bus sniffing (Read/Decode non-ISOTP frames)
 * Screen recorder (via autorefresh button) and export to CSV format
 
-## How to launch the application ?
+## How to install the application ?
 - Windows:
   - Install new venv: `python -m venv ./venv`
   - Activate venv: `.\venv\Scripts\activate.bat`
   - Install requirements: `.\venv\Scripts\pip install -r requirements.txt`
   - Run's app: `.\venv\Scripts\python .\main.py`
 - Linux/MacOs:
+  - Cd into ddt4all folder: `cd ddt4all`
   - Install new venv: `python3 -m venv ./venv`
   - Set good attributes: `chmod +x ./venv/bin/activate`
   - Activate venv: `source ./venv/bin/activate`
@@ -81,7 +84,16 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
   - Run's app: `python ./main.py`
 - Note about Linux ubuntu fixes uncomment next lines:
   - Fix qt platform plugin linux ubuntu "xcb" if error's:
-    - `sudo apt-get install --reinstall libxcb-xinerama0`
+    - `sudo apt-get install --reinstall libxcb-xinerama0
+
+## How to launch the application ?
+- Windows:
+  - Activate venv: `.\venv\Scripts\activate.bat`
+  - Run's app: `.\venv\Scripts\python .\main.py`
+- Linux/MacOs:
+  - Cd into ddt4all folder: `cd ddt4all`
+  - Activate venv: `source ./venv/bin/activate`
+  - Run's app: `python ./main.py`
 
 ## Platforms
 
