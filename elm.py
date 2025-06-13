@@ -325,7 +325,7 @@ class Port:
         try:
             self.hdr.close()
             print(_("Port closed"))
-        except:
+        except (AttributeError, OSError):
             pass
 
     def init_wifi(self, reinit=False):
@@ -677,7 +677,7 @@ class ELM:
         try:
             print(_("ELM reset..."))
             self.port.write("ATZ\r".encode("utf-8"))
-        except:
+        except (AttributeError, OSError):
             pass
 
     def connectionStat(self):

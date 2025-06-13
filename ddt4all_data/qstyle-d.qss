@@ -1,14 +1,19 @@
+/* Dark Theme - DDT4All Application Styles */
+/* Optimized for performance and consistency */
+
 QToolTip {
-  border: 1px solid #000;
-  background-color: #0ff;
-  padding: 1px;
+  border: 1px solid #000000;
+  background-color: #00ffff;
+  padding: 2px 4px;
   border-radius: 3px;
   font-weight: bold;
-  color: #000;
+  color: #000000;
 }
 QWidget {
   color: #e1e1e1;
   background-color: #323232;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 9pt;
 }
 QLabel {
   color: #ffa500;
@@ -244,7 +249,7 @@ QMainWindow::separator {
   spacing: 3px;
 }
 QMainWindow::separator:hover {
-  background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1, stop : 0 #d7801a, stop : 0.5 #b56c17 stop : 1 #ffa02f);
+  background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1, stop : 0 #d7801a, stop : 0.5 #b56c17, stop : 1 #ffa02f);
   color: #fff;
   padding-left: 4px;
   border: 1px solid #6c6c6c;

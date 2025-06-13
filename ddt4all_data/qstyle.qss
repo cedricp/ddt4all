@@ -1,5 +1,10 @@
+/* Light Theme - DDT4All Application Styles */
+/* Optimized for performance and consistency */
+
 QWidget {
-  color: #000;
+  color: #000000;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 9pt;
 }
 QMenuBar::item:selected {
   border: 1px solid;
@@ -31,10 +36,9 @@ QPushButton {
   padding-right: 5px;
 }
 QComboBox {
-  border-style: solid;
   border: 1px solid;
   border-radius: 5px;
-  padding: 1px 1px 1px 1px;
+  padding: 1px;
   width: 370px;
 }
 QComboBox:hover,
@@ -44,8 +48,6 @@ QPushButton:hover {
 QComboBox:on {
   padding-top: 3px;
   padding-left: 4px;
-}
-QComboBox {
   border: 2px solid;
 }
 QComboBox::drop-down {

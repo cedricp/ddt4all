@@ -34,17 +34,16 @@ if sys.platform[:3] == "lin":
 
 def load_this():
     try:
-        f = open("ddt4all_data/projects.json", "r", encoding="UTF-8")
-        vehicles_loc = json.loads(f.read())
-        f.close()
+        with open("ddt4all_data/projects.json", "r", encoding="UTF-8") as f:
+            vehicles_loc = json.loads(f.read())
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
         elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
         elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
         return vehicles_loc
-    except:
-        print(_("ddt4all_data/projects.json not found or not ok."))
+    except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+        print(_("ddt4all_data/projects.json not found or not ok.") + f" Error: {e}")
         exit(-1)
 
 
@@ -61,13 +60,14 @@ def isWritable(path):
     try:
         testfile = tempfile.TemporaryFile(dir=path)
         testfile.close()
+        return True
     except OSError as e:
         if e.errno == errno.EACCES:  # 13
             return False
         e.filename = path
-    except:
         return False
-    return True
+    except Exception:
+        return False
 
 
 class Ecu_finder(widgets.QDialog):
@@ -207,8 +207,8 @@ class Ecu_list(widgets.QWidget):
 
         keys = list(stored_ecus.keys())
         try:
-            keys.sort(key=locale.strcoll)
-        except:
+            keys.sort(key=locale.strxfrm)
+        except (locale.Error, AttributeError):
             keys.sort()
         for e in keys:
             item = widgets.QTreeWidgetItem(self.list, [e])
@@ -1073,7 +1073,7 @@ class Main_widget(widgets.QMainWindow):
         super(Main_widget, self).closeEvent(event)
         try:
             del options.elm
-        except:
+        except AttributeError:
             pass
 
     def changeECU(self, index):
@@ -1615,18 +1615,17 @@ if __name__ == '__main__':
         exit(0)
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
-    except:
+    except (OSError, ValueError):
         sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
-    options.simultation_mode = True
+    options.simulation_mode = True
     options.sockettimeout = False
     app = widgets.QApplication(sys.argv)
 
     try:
-        f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
-        configuration = json.loads(f.read())
-        f.close()
+        with open("ddt4all_data/config.json", "r", encoding="UTF-8") as f:
+            configuration = json.loads(f.read())
         if configuration["dark"]:
             set_dark_style(2)
         else:
@@ -1635,23 +1634,21 @@ if __name__ == '__main__':
             set_sockettimeout(1)
         else:
             set_sockettimeout(0)
-    except:
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
         set_dark_style(0)
-        pass
 
     # For InnoSetup version.h auto generator
     if os.path.isdir('ddt4all_data/inno-win-setup'):
         try:
-            f = open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8")
-            f.write(f'#define __appname__ "{version.__appname__}"\n')
-            f.write(f'#define __author__ "{version.__author__}"\n')
-            f.write(f'#define __copyright__ "{version.__copyright__}"\n')
-            f.write(f'#define __version__ "{version.__version__}"\n')
-            f.write(f'#define __email__ "{version.__email__}"\n')
-            f.write(f'#define __status__ "{version.__status__}"')
-            f.close()
-        except:
-            pass
+            with open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
+                f.write(f'#define __appname__ "{version.__appname__}"\n')
+                f.write(f'#define __author__ "{version.__author__}"\n')
+                f.write(f'#define __copyright__ "{version.__copyright__}"\n')
+                f.write(f'#define __version__ "{version.__version__}"\n')
+                f.write(f'#define __email__ "{version.__email__}"\n')
+                f.write(f'#define __status__ "{version.__status__}"')
+        except (OSError, IOError) as e:
+            print(f"Warning: Could not write version.h: {e}")
 
     fsize = 9
     fname = "Segoe UI"
