@@ -1729,7 +1729,8 @@ class Ecu_scanner:
 
                 text = _("Found ECU")
                 text1 = _("(not perfect match)")
-                line = f"<font color='red'>{text} {ecu_type} {text1} :" \
+                # accessbbitity blue color for reason in window bad reader
+                line = f"<font color='blue'>{text} {ecu_type} {text1} :" \
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
                        % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
