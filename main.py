@@ -361,6 +361,8 @@ class Main_widget(widgets.QMainWindow):
 
         self.scrollview = widgets.QScrollArea()
         self.scrollview.setWidgetResizable(False)
+        self.scrollview.setHorizontalScrollBarPolicy(core.Qt.ScrollBarAsNeeded)
+        self.scrollview.setVerticalScrollBarPolicy(core.Qt.ScrollBarAsNeeded)
 
         self.snifferview = sniffer.sniffer()
 
@@ -1067,6 +1069,15 @@ class Main_widget(widgets.QMainWindow):
 
         self.paramview.pagename = screen
         inited = self.paramview.init(screen, self.screenlogfile)
+        
+        # Adjust screen width to use full viewport width while preserving vertical scrolling
+        if inited and hasattr(self.paramview, 'panel') and self.paramview.panel:
+            viewport_width = self.scrollview.viewport().width()
+            if viewport_width > self.paramview.panel.screen_width:
+                self.paramview.panel.screen_width = viewport_width
+                self.paramview.panel.resize(self.paramview.panel.screen_width, self.paramview.panel.screen_height)
+                self.paramview.resize(self.paramview.panel.screen_width + 50, self.paramview.panel.screen_height + 50)
+        
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
         self.cominput.setEnabled(inited)
@@ -1092,6 +1103,18 @@ class Main_widget(widgets.QMainWindow):
             del options.elm
         except AttributeError:
             pass
+    
+    def resizeEvent(self, event):
+        """Handle window resize to adjust screen widths while preserving vertical scrolling"""
+        super(Main_widget, self).resizeEvent(event)
+        
+        # Adjust screen width when window is resized
+        if hasattr(self, 'paramview') and self.paramview and hasattr(self.paramview, 'panel') and self.paramview.panel:
+            viewport_width = self.scrollview.viewport().width()
+            if viewport_width > self.paramview.panel.screen_width:
+                self.paramview.panel.screen_width = viewport_width
+                self.paramview.panel.resize(self.paramview.panel.screen_width, self.paramview.panel.screen_height)
+                self.paramview.resize(self.paramview.panel.screen_width + 50, self.paramview.panel.screen_height + 50)
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
@@ -1162,6 +1185,15 @@ class Main_widget(widgets.QMainWindow):
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)
+        
+        # Adjust screen width to use full viewport width while preserving vertical scrolling
+        if hasattr(self.paramview, 'panel') and self.paramview.panel:
+            viewport_width = self.scrollview.viewport().width()
+            if viewport_width > self.paramview.panel.screen_width:
+                self.paramview.panel.screen_width = viewport_width
+                self.paramview.panel.resize(self.paramview.panel.screen_width, self.paramview.panel.screen_height)
+                self.paramview.resize(self.paramview.panel.screen_width + 50, self.paramview.panel.screen_height + 50)
+        
         screens = self.paramview.categories.keys()
         self.screennames = []
         for screen in screens:
