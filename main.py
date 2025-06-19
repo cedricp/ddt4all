@@ -856,7 +856,7 @@ class Main_widget(widgets.QMainWindow):
         for ecu in self.ecu_scan.approximate_ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
             item = widgets.QListWidgetItem(ecu)
-            item.setForeground(core.Qt.red)
+            item.setForeground(core.Qt.blue)
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
@@ -921,7 +921,7 @@ class Main_widget(widgets.QMainWindow):
         for ecu in self.ecu_scan.approximate_ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
             item = widgets.QListWidgetItem(ecu)
-            item.setForeground(core.Qt.red)
+            item.setForeground(core.Qt.blue)
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
