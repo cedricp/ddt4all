@@ -389,18 +389,18 @@ QStatusBar QSpinBox {
   border: 1px solid #555555;
 }
 QStatusBar QProgressBar {
-  border: 1px solid #555555;
+  border: 1px solid #666666;
   border-radius: 3px;
   text-align: center;
   font-weight: bold;
   margin: 1px 2px;
   min-width: 180px;
   max-height: 18px;
-  background-color: #2a2a2a;
-  color: #e1e1e1;
+  background-color: #404040;
+  color: #ffffff;
 }
 QStatusBar QProgressBar::chunk {
-  background-color: #4CAF50;
+  background-color: #0078d4;
   border-radius: 2px;
 }
 QComboBox {
