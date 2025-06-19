@@ -313,24 +313,39 @@ class Main_widget(widgets.QMainWindow):
         self.progressstatus = widgets.QProgressBar()
         self.infostatus = widgets.QLabel()
 
-        self.connectedstatus.setFixedWidth(100)
-        self.protocolstatus.setFixedWidth(200)
-        self.progressstatus.setFixedWidth(150)
-        self.infostatus.setFixedWidth(250)
+        # Remove fixed widths to allow widgets to size properly
+        self.connectedstatus.setMinimumWidth(120)
+        self.connectedstatus.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
+        
+        self.protocolstatus.setMinimumWidth(180)
+        self.protocolstatus.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
+        
+        self.progressstatus.setMinimumWidth(200)
+        self.progressstatus.setMaximumHeight(20)
+        self.progressstatus.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
+        
+        self.infostatus.setMinimumWidth(200)
+        self.infostatus.setSizePolicy(widgets.QSizePolicy.Expanding, widgets.QSizePolicy.Fixed)
 
         self.refreshtimebox = widgets.QSpinBox()
         self.refreshtimebox.setRange(5, 2000)
         self.refreshtimebox.setValue(options.refreshrate)
         self.refreshtimebox.setSingleStep(100)
+        self.refreshtimebox.setMinimumWidth(60)
+        self.refreshtimebox.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
         refrestimelabel = widgets.QLabel(_("Refresh rate (ms):"))
+        refrestimelabel.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
         self.cantimeout = widgets.QSpinBox()
         self.cantimeout.setRange(0, 1000)
         self.cantimeout.setSingleStep(200)
         self.cantimeout.setValue(options.cantimeout)
+        self.cantimeout.setMinimumWidth(60)
+        self.cantimeout.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
         self.cantimeout.valueChanged.connect(self.changeCanTimeout)
         cantimeoutlabel = widgets.QLabel(_("Can timeout (ms) [0:AUTO] :"))
+        cantimeoutlabel.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -439,10 +454,12 @@ class Main_widget(widgets.QMainWindow):
         self.fctrigger.triggered.connect(self.flow_control)
 
         self.canlinecombo = widgets.QComboBox()
-        self.canlinecombo.setFixedWidth(150)
+        self.canlinecombo.setMinimumWidth(120)
+        self.canlinecombo.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
         self.sdscombo = widgets.QComboBox()
-        self.sdscombo.setFixedWidth(300)
+        self.sdscombo.setMinimumWidth(250)
+        self.sdscombo.setSizePolicy(widgets.QSizePolicy.Expanding, widgets.QSizePolicy.Fixed)
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 

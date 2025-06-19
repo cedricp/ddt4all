@@ -285,3 +285,29 @@ QToolBar {
   font-weight: bold;
   spacing: 2px;
 }
+QStatusBar QLabel {
+  padding: 2px 6px;
+  margin: 1px 2px;
+}
+QStatusBar QSpinBox {
+  padding: 1px 3px;
+  margin: 1px 2px;
+  min-width: 50px;
+}
+QStatusBar QProgressBar {
+  border: 1px solid #c0c0c0;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: bold;
+  margin: 1px 2px;
+  min-width: 180px;
+  max-height: 18px;
+}
+QStatusBar QProgressBar::chunk {
+  background-color: #4CAF50;
+  border-radius: 2px;
+}
+QComboBox {
+  padding: 2px 4px;
+  min-width: 80px;
+}

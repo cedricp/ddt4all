@@ -375,3 +375,38 @@ QToolBar {
   font-weight: bold;
   spacing: 2px;
 }
+QStatusBar QLabel {
+  padding: 2px 6px;
+  margin: 1px 2px;
+  color: #e1e1e1;
+}
+QStatusBar QSpinBox {
+  padding: 1px 3px;
+  margin: 1px 2px;
+  min-width: 50px;
+  background-color: #3a3a3a;
+  color: #e1e1e1;
+  border: 1px solid #555555;
+}
+QStatusBar QProgressBar {
+  border: 1px solid #555555;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: bold;
+  margin: 1px 2px;
+  min-width: 180px;
+  max-height: 18px;
+  background-color: #2a2a2a;
+  color: #e1e1e1;
+}
+QStatusBar QProgressBar::chunk {
+  background-color: #4CAF50;
+  border-radius: 2px;
+}
+QComboBox {
+  padding: 2px 4px;
+  min-width: 80px;
+  background-color: #3a3a3a;
+  color: #e1e1e1;
+  border: 1px solid #555555;
+}
