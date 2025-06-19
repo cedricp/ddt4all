@@ -1650,18 +1650,6 @@ if __name__ == '__main__':
         except (OSError, IOError) as e:
             print(f"Warning: Could not write version.h: {e}")
 
-    fsize = 9
-    fname = "Segoe UI"
-
-    if sys.platform[:3] == "dar":
-        fsize = 12
-        fname = "Arial"
-    if sys.platform[:3] == "lin":
-        fsize = 9
-        fname = "Sans"
-    font = gui.QFont(fname, fsize)
-    font.setBold(False)
-    app.setFont(font)
     app.setStyle("plastic")
 
     ecudirfound = False

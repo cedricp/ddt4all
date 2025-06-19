@@ -3,8 +3,16 @@
 
 QWidget {
   color: #000000;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 9pt;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 10pt;
+}
+QWidget:item:hover {
+  background-color: #e6f3ff;
+  color: #000000;
+}
+QWidget:item:selected {
+  background-color: #cce7ff;
+  color: #000000;
 }
 QMenuBar::item:selected {
   border: 1px solid;
@@ -19,6 +27,10 @@ QMenu {
 }
 QMenu::item {
   padding: 2px 20px 2px 20px;
+}
+QMenu::item:selected {
+  background-color: #0078d4;
+  color: #ffffff;
 }
 QLineEdit {
   padding: 1px;
