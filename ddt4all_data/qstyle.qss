@@ -51,7 +51,8 @@ QComboBox {
   border: 1px solid;
   border-radius: 5px;
   padding: 1px;
-  width: 370px;
+  min-width: 80px;
+  max-width: 370px;
 }
 QComboBox:hover,
 QPushButton:hover {
