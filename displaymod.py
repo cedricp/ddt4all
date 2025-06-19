@@ -182,6 +182,20 @@ class screenWidget(widgets.QFrame):
         self.screen_width = int(int(xmldata.getAttribute("Width")) / self.uiscale)
         self.screen_height = int(int(xmldata.getAttribute("Height")) / self.uiscale)
         self.setStyleSheet("background-color: %s" % self.screencolor)
+        
+        # Use full width of scroll area viewport if available, otherwise use XML width
+        parent = self.parent()
+        if parent:
+            # Check if parent is a QScrollArea or has a viewport
+            if hasattr(parent, 'viewport'):
+                viewport_width = parent.viewport().width()
+                if viewport_width > self.screen_width:
+                    self.screen_width = viewport_width
+            elif hasattr(parent, 'width'):
+                parent_width = parent.width()
+                if parent_width > self.screen_width:
+                    self.screen_width = parent_width
+        
         self.resize(self.screen_width, self.screen_height)
 
         for elem in getChildNodesByName(xmldata, u"Send"):
@@ -193,6 +207,20 @@ class screenWidget(widgets.QFrame):
         self.screen_width = int(int(jsdata['width']) / self.uiscale)
         self.screen_height = int(int(jsdata['height']) / self.uiscale)
         self.setStyleSheet("background-color: %s" % jsdata['color'])
+        
+        # Use full width of scroll area viewport if available, otherwise use JSON width
+        parent = self.parent()
+        if parent:
+            # Check if parent is a QScrollArea or has a viewport
+            if hasattr(parent, 'viewport'):
+                viewport_width = parent.viewport().width()
+                if viewport_width > self.screen_width:
+                    self.screen_width = viewport_width
+            elif hasattr(parent, 'width'):
+                parent_width = parent.width()
+                if parent_width > self.screen_width:
+                    self.screen_width = parent_width
+        
         self.resize(self.screen_width, self.screen_height)
         self.presend = jsdata['presend']
         self.jsondata = jsdata
@@ -200,6 +228,13 @@ class screenWidget(widgets.QFrame):
     def resize(self, x, y):
         super(screenWidget, self).resize(int(x), int(y))
         self.update_json()
+    
+    def resizeEvent(self, event):
+        """Handle resize events to maintain full width"""
+        super(screenWidget, self).resizeEvent(event)
+        # Update screen_width to match actual width
+        self.screen_width = self.width()
+        self.screen_height = self.height()
 
     def lock(self, lock):
         pass

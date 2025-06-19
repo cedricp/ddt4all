@@ -34,17 +34,16 @@ if sys.platform[:3] == "lin":
 
 def load_this():
     try:
-        f = open("ddt4all_data/projects.json", "r", encoding="UTF-8")
-        vehicles_loc = json.loads(f.read())
-        f.close()
+        with open("ddt4all_data/projects.json", "r", encoding="UTF-8") as f:
+            vehicles_loc = json.loads(f.read())
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
         elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
         elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
         return vehicles_loc
-    except:
-        print(_("ddt4all_data/projects.json not found or not ok."))
+    except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+        print(_("ddt4all_data/projects.json not found or not ok.") + f" Error: {e}")
         exit(-1)
 
 
@@ -61,13 +60,14 @@ def isWritable(path):
     try:
         testfile = tempfile.TemporaryFile(dir=path)
         testfile.close()
+        return True
     except OSError as e:
         if e.errno == errno.EACCES:  # 13
             return False
         e.filename = path
-    except:
         return False
-    return True
+    except Exception:
+        return False
 
 
 class Ecu_finder(widgets.QDialog):
@@ -207,8 +207,8 @@ class Ecu_list(widgets.QWidget):
 
         keys = list(stored_ecus.keys())
         try:
-            keys.sort(key=locale.strcoll)
-        except:
+            keys.sort(key=locale.strxfrm)
+        except (locale.Error, AttributeError):
             keys.sort()
         for e in keys:
             item = widgets.QTreeWidgetItem(self.list, [e])
@@ -313,24 +313,39 @@ class Main_widget(widgets.QMainWindow):
         self.progressstatus = widgets.QProgressBar()
         self.infostatus = widgets.QLabel()
 
-        self.connectedstatus.setFixedWidth(100)
-        self.protocolstatus.setFixedWidth(200)
-        self.progressstatus.setFixedWidth(150)
-        self.infostatus.setFixedWidth(250)
+        # Remove fixed widths to allow widgets to size properly
+        self.connectedstatus.setMinimumWidth(120)
+        self.connectedstatus.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
+        
+        self.protocolstatus.setMinimumWidth(180)
+        self.protocolstatus.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
+        
+        self.progressstatus.setMinimumWidth(200)
+        self.progressstatus.setMaximumHeight(20)
+        self.progressstatus.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
+        
+        self.infostatus.setMinimumWidth(200)
+        self.infostatus.setSizePolicy(widgets.QSizePolicy.Expanding, widgets.QSizePolicy.Fixed)
 
         self.refreshtimebox = widgets.QSpinBox()
         self.refreshtimebox.setRange(5, 2000)
         self.refreshtimebox.setValue(options.refreshrate)
         self.refreshtimebox.setSingleStep(100)
+        self.refreshtimebox.setMinimumWidth(60)
+        self.refreshtimebox.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
         self.refreshtimebox.valueChanged.connect(self.changeRefreshTime)
         refrestimelabel = widgets.QLabel(_("Refresh rate (ms):"))
+        refrestimelabel.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
         self.cantimeout = widgets.QSpinBox()
         self.cantimeout.setRange(0, 1000)
         self.cantimeout.setSingleStep(200)
         self.cantimeout.setValue(options.cantimeout)
+        self.cantimeout.setMinimumWidth(60)
+        self.cantimeout.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
         self.cantimeout.valueChanged.connect(self.changeCanTimeout)
         cantimeoutlabel = widgets.QLabel(_("Can timeout (ms) [0:AUTO] :"))
+        cantimeoutlabel.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
         self.statusBar.addWidget(self.connectedstatus)
         self.statusBar.addWidget(self.protocolstatus)
@@ -346,6 +361,8 @@ class Main_widget(widgets.QMainWindow):
 
         self.scrollview = widgets.QScrollArea()
         self.scrollview.setWidgetResizable(False)
+        self.scrollview.setHorizontalScrollBarPolicy(core.Qt.ScrollBarAsNeeded)
+        self.scrollview.setVerticalScrollBarPolicy(core.Qt.ScrollBarAsNeeded)
 
         self.snifferview = sniffer.sniffer()
 
@@ -439,10 +456,12 @@ class Main_widget(widgets.QMainWindow):
         self.fctrigger.triggered.connect(self.flow_control)
 
         self.canlinecombo = widgets.QComboBox()
-        self.canlinecombo.setFixedWidth(150)
+        self.canlinecombo.setMinimumWidth(120)
+        self.canlinecombo.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
         self.sdscombo = widgets.QComboBox()
-        self.sdscombo.setFixedWidth(300)
+        self.sdscombo.setMinimumWidth(250)
+        self.sdscombo.setSizePolicy(widgets.QSizePolicy.Expanding, widgets.QSizePolicy.Fixed)
         self.sdscombo.currentIndexChanged.connect(self.changeSds)
         self.sdscombo.setEnabled(False)
 
@@ -837,7 +856,7 @@ class Main_widget(widgets.QMainWindow):
         for ecu in self.ecu_scan.approximate_ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
             item = widgets.QListWidgetItem(ecu)
-            item.setForeground(core.Qt.red)
+            item.setForeground(core.Qt.blue)
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
@@ -902,7 +921,7 @@ class Main_widget(widgets.QMainWindow):
         for ecu in self.ecu_scan.approximate_ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.approximate_ecus[ecu].name
             item = widgets.QListWidgetItem(ecu)
-            item.setForeground(core.Qt.red)
+            item.setForeground(core.Qt.blue)
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
@@ -1050,6 +1069,15 @@ class Main_widget(widgets.QMainWindow):
 
         self.paramview.pagename = screen
         inited = self.paramview.init(screen, self.screenlogfile)
+        
+        # Adjust screen width to use full viewport width while preserving vertical scrolling
+        if inited and hasattr(self.paramview, 'panel') and self.paramview.panel:
+            viewport_width = self.scrollview.viewport().width()
+            if viewport_width > self.paramview.panel.screen_width:
+                self.paramview.panel.screen_width = viewport_width
+                self.paramview.panel.resize(self.paramview.panel.screen_width, self.paramview.panel.screen_height)
+                self.paramview.resize(self.paramview.panel.screen_width + 50, self.paramview.panel.screen_height + 50)
+        
         self.diagaction.setEnabled(inited)
         self.hexinput.setEnabled(inited)
         self.cominput.setEnabled(inited)
@@ -1073,8 +1101,20 @@ class Main_widget(widgets.QMainWindow):
         super(Main_widget, self).closeEvent(event)
         try:
             del options.elm
-        except:
+        except AttributeError:
             pass
+    
+    def resizeEvent(self, event):
+        """Handle window resize to adjust screen widths while preserving vertical scrolling"""
+        super(Main_widget, self).resizeEvent(event)
+        
+        # Adjust screen width when window is resized
+        if hasattr(self, 'paramview') and self.paramview and hasattr(self.paramview, 'panel') and self.paramview.panel:
+            viewport_width = self.scrollview.viewport().width()
+            if viewport_width > self.paramview.panel.screen_width:
+                self.paramview.panel.screen_width = viewport_width
+                self.paramview.panel.resize(self.paramview.panel.screen_width, self.paramview.panel.screen_height)
+                self.paramview.resize(self.paramview.panel.screen_width + 50, self.paramview.panel.screen_height + 50)
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
@@ -1145,6 +1185,15 @@ class Main_widget(widgets.QMainWindow):
         self.paramview.uiscale = uiscale_mem
 
         self.scrollview.setWidget(self.paramview)
+        
+        # Adjust screen width to use full viewport width while preserving vertical scrolling
+        if hasattr(self.paramview, 'panel') and self.paramview.panel:
+            viewport_width = self.scrollview.viewport().width()
+            if viewport_width > self.paramview.panel.screen_width:
+                self.paramview.panel.screen_width = viewport_width
+                self.paramview.panel.resize(self.paramview.panel.screen_width, self.paramview.panel.screen_height)
+                self.paramview.resize(self.paramview.panel.screen_width + 50, self.paramview.panel.screen_height + 50)
+        
         screens = self.paramview.categories.keys()
         self.screennames = []
         for screen in screens:
@@ -1615,18 +1664,17 @@ if __name__ == '__main__':
         exit(0)
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
-    except:
+    except (OSError, ValueError):
         sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
-    options.simultation_mode = True
+    options.simulation_mode = True
     options.sockettimeout = False
     app = widgets.QApplication(sys.argv)
 
     try:
-        f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
-        configuration = json.loads(f.read())
-        f.close()
+        with open("ddt4all_data/config.json", "r", encoding="UTF-8") as f:
+            configuration = json.loads(f.read())
         if configuration["dark"]:
             set_dark_style(2)
         else:
@@ -1635,36 +1683,22 @@ if __name__ == '__main__':
             set_sockettimeout(1)
         else:
             set_sockettimeout(0)
-    except:
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
         set_dark_style(0)
-        pass
 
     # For InnoSetup version.h auto generator
     if os.path.isdir('ddt4all_data/inno-win-setup'):
         try:
-            f = open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8")
-            f.write(f'#define __appname__ "{version.__appname__}"\n')
-            f.write(f'#define __author__ "{version.__author__}"\n')
-            f.write(f'#define __copyright__ "{version.__copyright__}"\n')
-            f.write(f'#define __version__ "{version.__version__}"\n')
-            f.write(f'#define __email__ "{version.__email__}"\n')
-            f.write(f'#define __status__ "{version.__status__}"')
-            f.close()
-        except:
-            pass
+            with open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
+                f.write(f'#define __appname__ "{version.__appname__}"\n')
+                f.write(f'#define __author__ "{version.__author__}"\n')
+                f.write(f'#define __copyright__ "{version.__copyright__}"\n')
+                f.write(f'#define __version__ "{version.__version__}"\n')
+                f.write(f'#define __email__ "{version.__email__}"\n')
+                f.write(f'#define __status__ "{version.__status__}"')
+        except (OSError, IOError) as e:
+            print(f"Warning: Could not write version.h: {e}")
 
-    fsize = 9
-    fname = "Segoe UI"
-
-    if sys.platform[:3] == "dar":
-        fsize = 12
-        fname = "Arial"
-    if sys.platform[:3] == "lin":
-        fsize = 9
-        fname = "Sans"
-    font = gui.QFont(fname, fsize)
-    font.setBold(False)
-    app.setFont(font)
     app.setStyle("plastic")
 
     ecudirfound = False

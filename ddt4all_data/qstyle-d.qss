@@ -1,14 +1,19 @@
+/* Dark Theme - DDT4All Application Styles */
+/* Optimized for performance and consistency */
+
 QToolTip {
-  border: 1px solid #000;
-  background-color: #0ff;
-  padding: 1px;
+  border: 1px solid #000000;
+  background-color: #00ffff;
+  padding: 2px 4px;
   border-radius: 3px;
   font-weight: bold;
-  color: #000;
+  color: #000000;
 }
 QWidget {
   color: #e1e1e1;
   background-color: #323232;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 10pt;
 }
 QLabel {
   color: #ffa500;
@@ -84,7 +89,8 @@ QComboBox {
   border: 1px solid #8e8e1e;
   border-radius: 5px;
   padding: 1px 1px 1px 1px;
-  width: 370px;
+  min-width: 80px;
+  max-width: 370px;
   color: #000;
 }
 QComboBox:hover {
@@ -244,7 +250,7 @@ QMainWindow::separator {
   spacing: 3px;
 }
 QMainWindow::separator:hover {
-  background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1, stop : 0 #d7801a, stop : 0.5 #b56c17 stop : 1 #ffa02f);
+  background-color: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1, stop : 0 #d7801a, stop : 0.5 #b56c17, stop : 1 #ffa02f);
   color: #fff;
   padding-left: 4px;
   border: 1px solid #6c6c6c;
@@ -369,4 +375,39 @@ QToolBar {
   padding: 2px;
   font-weight: bold;
   spacing: 2px;
+}
+QStatusBar QLabel {
+  padding: 2px 6px;
+  margin: 1px 2px;
+  color: #e1e1e1;
+}
+QStatusBar QSpinBox {
+  padding: 1px 3px;
+  margin: 1px 2px;
+  min-width: 50px;
+  background-color: #3a3a3a;
+  color: #e1e1e1;
+  border: 1px solid #555555;
+}
+QStatusBar QProgressBar {
+  border: 1px solid #666666;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: bold;
+  margin: 1px 2px;
+  min-width: 180px;
+  max-height: 18px;
+  background-color: #404040;
+  color: #ffffff;
+}
+QStatusBar QProgressBar::chunk {
+  background-color: #0078d4;
+  border-radius: 2px;
+}
+QComboBox {
+  padding: 2px 4px;
+  min-width: 80px;
+  background-color: #3a3a3a;
+  color: #e1e1e1;
+  border: 1px solid #555555;
 }
