@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:24+0100\n"
+"POT-Creation-Date: 2025-06-20 05:25+0200\n"
+"PO-Revision-Date: 2025-06-20 05:43+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -447,6 +447,30 @@ msgstr ""
 msgid "Unknown address: "
 msgstr "Indirizzo funzione ECU"
 
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
 msgid "FAIL"
 msgstr "FALLITO"
 
@@ -470,6 +494,11 @@ msgstr "Versione max ELM:"
 
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
+
+#, fuzzy
+#| msgid "ECU name"
+msgid "ECU Finder"
+msgstr "Nome ECU"
 
 msgid "ECU name"
 msgstr "Nome ECU"
@@ -723,6 +752,11 @@ msgstr ""
 "<center>Grazie per la tua contribuzione. Se non succede nulla vai qui : "
 "https://github.com/cedricp/ddt4all</center>"
 
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Opzioni ricerca"
+
 msgid "ELM port selection"
 msgstr "Selezione porta ELM"
 
@@ -758,6 +792,51 @@ msgstr "Stile scuro"
 msgid "Change UART speed"
 msgstr "Modifica la velocità UART"
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
 msgid "You must check the recommandations"
 msgstr "Devi accettare le raccomandazioni"
 
@@ -776,6 +855,9 @@ msgstr "Inizializzazione ELM con velocità %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nessun ELM o OBDLINK-SX rilevato sulla porta COM "
+
+msgid "ECU Command"
+msgstr ""
 
 msgid "Err, cannot rename "
 msgstr ""
@@ -939,6 +1021,9 @@ msgstr "La lettura DTC ha ritornato un errore"
 
 msgid "No DTC"
 msgstr "Nessun DTC"
+
+msgid "Diagnostic Trouble Codes"
+msgstr ""
 
 msgid "Clear ALL DTC"
 msgstr "Azzera TUTTI i DTC"
@@ -1279,6 +1364,11 @@ msgstr "Calcolatore CRC"
 msgid "VIN"
 msgstr "VIN"
 
+#, fuzzy
+#| msgid "CRC calculator"
+msgid "CRC Calculator"
+msgstr "Calcolatore CRC"
+
 msgid "CRC CALCULATOR"
 msgstr "CALCOLATORE CRC"
 
@@ -1397,6 +1487,96 @@ msgstr "<font color='green'>AZZERAMENTO COMPLETATO</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>AZZERAMENTO FALLITOCLEAR FAILED</font>"
 
+#~ msgid "Edit"
+#~ msgstr "Modifica"
+
+#~ msgid "View"
+#~ msgstr "Visualizza"
+
+#~ msgid "Tools"
+#~ msgstr "Strumenti"
+
+#~ msgid "Open"
+#~ msgstr "Apri"
+
+#~ msgid "Save"
+#~ msgstr "Salva"
+
+#~ msgid "Close"
+#~ msgstr "Chiudi"
+
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
+
+#~ msgid "Yes"
+#~ msgstr "Sì"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Error"
+#~ msgstr "Errore"
+
+#~ msgid "Warning"
+#~ msgstr "Avviso"
+
+#~ msgid "Information"
+#~ msgstr "Informazione"
+
+#~ msgid "Connect"
+#~ msgstr "Connetti"
+
+#~ msgid "Disconnect"
+#~ msgstr "Disconnetti"
+
+#~ msgid "Settings"
+#~ msgstr "Impostazioni"
+
+#~ msgid "Configuration"
+#~ msgstr "Configurazione"
+
+#~ msgid "Port"
+#~ msgstr "Porta"
+
+#~ msgid "Speed"
+#~ msgstr "Velocità"
+
+#~ msgid "Timeout"
+#~ msgstr "Timeout"
+
+#~ msgid "Device"
+#~ msgstr "Dispositivo"
+
+#~ msgid "Status"
+#~ msgstr "Stato"
+
+#~ msgid "Connected"
+#~ msgstr "Connesso"
+
+#~ msgid "Disconnected"
+#~ msgstr "Disconnesso"
+
+#~ msgid "Ready"
+#~ msgstr "Pronto"
+
+#~ msgid "Busy"
+#~ msgstr "Occupato"
+
+#~ msgid "Failed"
+#~ msgstr "Fallito"
+
+#~ msgid "Success"
+#~ msgstr "Successo"
+
+#~ msgid "Loading"
+#~ msgstr "Caricamento"
+
+#~ msgid "Please wait"
+#~ msgstr "Attendere prego"
+
+#~ msgid "Processing"
+#~ msgstr "Elaborazione"
+
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"
 
@@ -1424,162 +1604,3 @@ msgstr "<font color='red'>AZZERAMENTO FALLITOCLEAR FAILED</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "ERRORE - qualcosa non ha funzionato. Annullamento modifica."
-
-msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
-
-msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-
-msgid "Please select a serial port"
-msgstr "Please select a serial port"
-
-msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
-
-msgid "Attempting connection..."
-msgstr "Attempting connection..."
-
-msgid "Port: "
-msgstr "Port: "
-
-msgid "Speed: "
-msgstr "Speed: "
-
-msgid "Connection failed: "
-msgstr "Connection failed: "
-
-msgid "Connection test failed"
-msgstr "Connection test failed"
-
-msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
-
-msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
-
-msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
-
-msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
-
-msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
-
-msgid "Connection test successful!"
-msgstr "Connection test successful!"
-
-msgid "Error during connection test: "
-msgstr "Error during connection test: "
-
-msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
-
-msgid "Using baudrate: "
-msgstr "Using baudrate: "
-
-msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
-
-msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
-
-msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
-
-msgid "Device version: "
-msgstr "Device version: "
-
-msgid "Connection error: "
-msgstr "Connection error: "
-
-msgid "Edit"
-msgstr "Modifica"
-
-msgid "View"
-msgstr "Visualizza"
-
-msgid "Tools"
-msgstr "Strumenti"
-
-msgid "Open"
-msgstr "Apri"
-
-msgid "Save"
-msgstr "Salva"
-
-msgid "Close"
-msgstr "Chiudi"
-
-msgid "Cancel"
-msgstr "Annulla"
-
-msgid "Yes"
-msgstr "Sì"
-
-msgid "No"
-msgstr "No"
-
-msgid "Error"
-msgstr "Errore"
-
-msgid "Warning"
-msgstr "Avviso"
-
-msgid "Information"
-msgstr "Informazione"
-
-msgid "Connect"
-msgstr "Connetti"
-
-msgid "Disconnect"
-msgstr "Disconnetti"
-
-msgid "Settings"
-msgstr "Impostazioni"
-
-msgid "Configuration"
-msgstr "Configurazione"
-
-msgid "Port"
-msgstr "Porta"
-
-msgid "Speed"
-msgstr "Velocità"
-
-msgid "Timeout"
-msgstr "Timeout"
-
-msgid "Device"
-msgstr "Dispositivo"
-
-msgid "Status"
-msgstr "Stato"
-
-msgid "Connected"
-msgstr "Connesso"
-
-msgid "Disconnected"
-msgstr "Disconnesso"
-
-msgid "Ready"
-msgstr "Pronto"
-
-msgid "Busy"
-msgstr "Occupato"
-
-msgid "Failed"
-msgstr "Fallito"
-
-msgid "Success"
-msgstr "Successo"
-
-msgid "Loading"
-msgstr "Caricamento"
-
-msgid "Please wait"
-msgstr "Attendere prego"
-
-msgid "Processing"
-msgstr "Elaborazione"

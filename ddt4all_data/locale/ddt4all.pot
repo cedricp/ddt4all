@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
+"POT-Creation-Date: 2025-06-20 05:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -406,6 +406,30 @@ msgstr ""
 msgid "Unknown address: "
 msgstr ""
 
+msgid "Connecting to device at port: "
+msgstr ""
+
+msgid "Using baudrate: "
+msgstr ""
+
+msgid "Connection failed: "
+msgstr ""
+
+msgid "Testing basic connectivity..."
+msgstr ""
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr ""
+
+msgid "ELM327 device detected successfully"
+msgstr ""
+
+msgid "Device version: "
+msgstr ""
+
+msgid "Connection error: "
+msgstr ""
+
 msgid "FAIL"
 msgstr ""
 
@@ -428,6 +452,9 @@ msgid "ELM Max version:"
 msgstr ""
 
 msgid "ddt4all_data/projects.json not found or not ok."
+msgstr ""
+
+msgid "ECU Finder"
 msgstr ""
 
 msgid "ECU name"
@@ -670,6 +697,9 @@ msgstr ""
 msgid "<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"
 msgstr ""
 
+msgid "Options"
+msgstr ""
+
 msgid "ELM port selection"
 msgstr ""
 
@@ -703,6 +733,51 @@ msgstr ""
 msgid "Change UART speed"
 msgstr ""
 
+msgid "Please enter WiFi adapter IP address"
+msgstr ""
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr ""
+
+msgid "Please select a serial port"
+msgstr ""
+
+msgid "Selected port is no longer available"
+msgstr ""
+
+msgid "Attempting connection..."
+msgstr ""
+
+msgid "Port: "
+msgstr ""
+
+msgid "Speed: "
+msgstr ""
+
+msgid "Connection test failed"
+msgstr ""
+
+msgid "Troubleshooting suggestions:"
+msgstr ""
+
+msgid "1. Check device is properly connected"
+msgstr ""
+
+msgid "2. Try different baud rates"
+msgstr ""
+
+msgid "3. Ensure device drivers are installed"
+msgstr ""
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr ""
+
+msgid "Connection test successful!"
+msgstr ""
+
+msgid "Error during connection test: "
+msgstr ""
+
 msgid "You must check the recommandations"
 msgstr ""
 
@@ -720,6 +795,9 @@ msgid "Initilizing ELM with speed %i..."
 msgstr ""
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr ""
+
+msgid "ECU Command"
 msgstr ""
 
 msgid "Err, cannot rename "
@@ -789,76 +867,6 @@ msgid "Sending simulated ELM request :"
 msgstr ""
 
 msgid "Bad ELM response :"
-msgstr ""
-
-# New strings added for enhanced device support
-msgid "Please enter WiFi adapter IP address"
-msgstr ""
-
-msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr ""
-
-msgid "Please select a serial port"
-msgstr ""
-
-msgid "Selected port is no longer available"
-msgstr ""
-
-msgid "Attempting connection..."
-msgstr ""
-
-msgid "Port: "
-msgstr ""
-
-msgid "Speed: "
-msgstr ""
-
-msgid "Connection failed: "
-msgstr ""
-
-msgid "Connection test failed"
-msgstr ""
-
-msgid "Troubleshooting suggestions:"
-msgstr ""
-
-msgid "1. Check device is properly connected"
-msgstr ""
-
-msgid "2. Try different baud rates"
-msgstr ""
-
-msgid "3. Ensure device drivers are installed"
-msgstr ""
-
-msgid "4. Check port permissions (Linux/macOS)"
-msgstr ""
-
-msgid "Connection test successful!"
-msgstr ""
-
-msgid "Error during connection test: "
-msgstr ""
-
-msgid "Connecting to device at port: "
-msgstr ""
-
-msgid "Using baudrate: "
-msgstr ""
-
-msgid "Testing basic connectivity..."
-msgstr ""
-
-msgid "Warning: Device may not be ELM327 compatible"
-msgstr ""
-
-msgid "ELM327 device detected successfully"
-msgstr ""
-
-msgid "Device version: "
-msgstr ""
-
-msgid "Connection error: "
 msgstr ""
 
 msgid "ELM response : "
@@ -939,6 +947,9 @@ msgid "Read DTC returned an error"
 msgstr ""
 
 msgid "No DTC"
+msgstr ""
+
+msgid "Diagnostic Trouble Codes"
 msgstr ""
 
 msgid "Clear ALL DTC"
@@ -1212,6 +1223,9 @@ msgid "CRC calculator"
 msgstr ""
 
 msgid "VIN"
+msgstr ""
+
+msgid "CRC Calculator"
 msgstr ""
 
 msgid "CRC CALCULATOR"

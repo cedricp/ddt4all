@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:24+0100\n"
+"POT-Creation-Date: 2025-06-20 05:25+0200\n"
+"PO-Revision-Date: 2025-06-20 05:43+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -416,6 +416,30 @@ msgstr "Resetowanie ELMa..."
 msgid "Unknown address: "
 msgstr "Nieznany adres: "
 
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
 msgid "FAIL"
 msgstr "Niepowodzenie"
 
@@ -439,6 +463,11 @@ msgstr "Maksymalna wersja ELMa:"
 
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr "ddt4all_data/projects.json nie znaleziony lub niepoprawny."
+
+#, fuzzy
+#| msgid "ECU name"
+msgid "ECU Finder"
+msgstr "Nazwa Ecu"
 
 msgid "ECU name"
 msgstr "Nazwa Ecu"
@@ -688,6 +717,11 @@ msgstr ""
 "<center>Dziekujemy za twoją contybucję, jeżeli nic sie nie dzieje, proszę "
 "kliknąć tutaj: https://github.com/cedricp/ddt4all</center>"
 
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Opcje skanowania"
+
 msgid "ELM port selection"
 msgstr "Wybierz port ELMa"
 
@@ -722,6 +756,51 @@ msgstr "Tryb ciemny"
 msgid "Change UART speed"
 msgstr "Zmień prędkość UART"
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
 msgid "You must check the recommandations"
 msgstr "Musisz zaznaczyc zalecenie"
 
@@ -740,6 +819,9 @@ msgstr "Inicjowanie ELM-a z prędkością %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 lub OBDLink-SX nie wykryty na porcie COM "
+
+msgid "ECU Command"
+msgstr ""
 
 msgid "Err, cannot rename "
 msgstr "Błąd, nie można zmienić nazwy "
@@ -895,6 +977,9 @@ msgstr "Czytanie DTC zwróciło błąd"
 
 msgid "No DTC"
 msgstr "Brak DTC"
+
+msgid "Diagnostic Trouble Codes"
+msgstr ""
 
 msgid "Clear ALL DTC"
 msgstr "Wyczysc wszystkie DTC"
@@ -1227,6 +1312,11 @@ msgstr "Kalkulator CRC"
 msgid "VIN"
 msgstr ""
 
+#, fuzzy
+#| msgid "CRC calculator"
+msgid "CRC Calculator"
+msgstr "Kalkulator CRC"
+
 msgid "CRC CALCULATOR"
 msgstr "KALKULATOR CRC"
 
@@ -1348,161 +1438,92 @@ msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
 
-msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
+#~ msgid "Edit"
+#~ msgstr "Edytuj"
 
-msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+#~ msgid "View"
+#~ msgstr "Widok"
 
-msgid "Please select a serial port"
-msgstr "Please select a serial port"
+#~ msgid "Tools"
+#~ msgstr "Narzędzia"
 
-msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
+#~ msgid "Open"
+#~ msgstr "Otwórz"
 
-msgid "Attempting connection..."
-msgstr "Attempting connection..."
+#~ msgid "Save"
+#~ msgstr "Zapisz"
 
-msgid "Port: "
-msgstr "Port: "
+#~ msgid "Close"
+#~ msgstr "Zamknij"
 
-msgid "Speed: "
-msgstr "Speed: "
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
 
-msgid "Connection failed: "
-msgstr "Connection failed: "
+#~ msgid "Yes"
+#~ msgstr "Tak"
 
-msgid "Connection test failed"
-msgstr "Connection test failed"
+#~ msgid "No"
+#~ msgstr "Nie"
 
-msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
+#~ msgid "Error"
+#~ msgstr "Błąd"
 
-msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
+#~ msgid "Warning"
+#~ msgstr "Ostrzeżenie"
 
-msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
+#~ msgid "Information"
+#~ msgstr "Informacja"
 
-msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
+#~ msgid "Connect"
+#~ msgstr "Połącz"
 
-msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
+#~ msgid "Disconnect"
+#~ msgstr "Rozłącz"
 
-msgid "Connection test successful!"
-msgstr "Connection test successful!"
+#~ msgid "Settings"
+#~ msgstr "Ustawienia"
 
-msgid "Error during connection test: "
-msgstr "Error during connection test: "
+#~ msgid "Configuration"
+#~ msgstr "Konfiguracja"
 
-msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
+#~ msgid "Port"
+#~ msgstr "Port"
 
-msgid "Using baudrate: "
-msgstr "Using baudrate: "
+#~ msgid "Speed"
+#~ msgstr "Prędkość"
 
-msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
+#~ msgid "Timeout"
+#~ msgstr "Limit czasu"
 
-msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
+#~ msgid "Device"
+#~ msgstr "Urządzenie"
 
-msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
+#~ msgid "Status"
+#~ msgstr "Status"
 
-msgid "Device version: "
-msgstr "Device version: "
+#~ msgid "Connected"
+#~ msgstr "Połączony"
 
-msgid "Connection error: "
-msgstr "Connection error: "
+#~ msgid "Disconnected"
+#~ msgstr "Rozłączony"
 
-msgid "Edit"
-msgstr "Edytuj"
+#~ msgid "Ready"
+#~ msgstr "Gotowy"
 
-msgid "View"
-msgstr "Widok"
+#~ msgid "Busy"
+#~ msgstr "Zajęty"
 
-msgid "Tools"
-msgstr "Narzędzia"
+#~ msgid "Failed"
+#~ msgstr "Nieudane"
 
-msgid "Open"
-msgstr "Otwórz"
+#~ msgid "Success"
+#~ msgstr "Sukces"
 
-msgid "Save"
-msgstr "Zapisz"
+#~ msgid "Loading"
+#~ msgstr "Ładowanie"
 
-msgid "Close"
-msgstr "Zamknij"
+#~ msgid "Please wait"
+#~ msgstr "Proszę czekać"
 
-msgid "Cancel"
-msgstr "Anuluj"
-
-msgid "Yes"
-msgstr "Tak"
-
-msgid "No"
-msgstr "Nie"
-
-msgid "Error"
-msgstr "Błąd"
-
-msgid "Warning"
-msgstr "Ostrzeżenie"
-
-msgid "Information"
-msgstr "Informacja"
-
-msgid "Connect"
-msgstr "Połącz"
-
-msgid "Disconnect"
-msgstr "Rozłącz"
-
-msgid "Settings"
-msgstr "Ustawienia"
-
-msgid "Configuration"
-msgstr "Konfiguracja"
-
-msgid "Port"
-msgstr "Port"
-
-msgid "Speed"
-msgstr "Prędkość"
-
-msgid "Timeout"
-msgstr "Limit czasu"
-
-msgid "Device"
-msgstr "Urządzenie"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Connected"
-msgstr "Połączony"
-
-msgid "Disconnected"
-msgstr "Rozłączony"
-
-msgid "Ready"
-msgstr "Gotowy"
-
-msgid "Busy"
-msgstr "Zajęty"
-
-msgid "Failed"
-msgstr "Nieudane"
-
-msgid "Success"
-msgstr "Sukces"
-
-msgid "Loading"
-msgstr "Ładowanie"
-
-msgid "Please wait"
-msgstr "Proszę czekać"
-
-msgid "Processing"
-msgstr "Przetwarzanie"
+#~ msgid "Processing"
+#~ msgstr "Przetwarzanie"

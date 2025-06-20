@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:38+0100\n"
+"POT-Creation-Date: 2025-06-20 05:25+0200\n"
+"PO-Revision-Date: 2025-06-20 05:44+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "Goto data"
 msgstr "Accesati datele"
@@ -442,6 +442,30 @@ msgstr ""
 msgid "Unknown address: "
 msgstr "ECU Adresa functiei"
 
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
 msgid "FAIL"
 msgstr "ESEC"
 
@@ -465,6 +489,11 @@ msgstr "ELM Versiune max:"
 
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
+
+#, fuzzy
+#| msgid "ECU name"
+msgid "ECU Finder"
+msgstr "ECU nume"
 
 msgid "ECU name"
 msgstr "ECU nume"
@@ -716,6 +745,11 @@ msgid ""
 "https://github.com/cedricp/ddt4all</center>"
 msgstr ""
 
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Optiuni de scanare"
+
 msgid "ELM port selection"
 msgstr "Selectie port ELM"
 
@@ -749,6 +783,51 @@ msgstr "Stil intunecat"
 msgid "Change UART speed"
 msgstr ""
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
 msgid "You must check the recommandations"
 msgstr "Trebuie sa verificati recomandarile"
 
@@ -767,6 +846,9 @@ msgstr "Initializeaza ELM cu viteza %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Niciun ELM327 sau OBDLINK-SX nu a fost detectat in portul COM "
+
+msgid "ECU Command"
+msgstr ""
 
 msgid "Err, cannot rename "
 msgstr ""
@@ -932,6 +1014,9 @@ msgstr "Citeste DTC a returnat o eroare"
 
 msgid "No DTC"
 msgstr "Fara DTC"
+
+msgid "Diagnostic Trouble Codes"
+msgstr ""
 
 msgid "Clear ALL DTC"
 msgstr "Stergeti TOT DTC"
@@ -1270,6 +1355,11 @@ msgstr "Calculator CRC"
 msgid "VIN"
 msgstr "VIN"
 
+#, fuzzy
+#| msgid "CRC calculator"
+msgid "CRC Calculator"
+msgstr "Calculator CRC"
+
 msgid "CRC CALCULATOR"
 msgstr "CALCULATOR CRC"
 
@@ -1388,6 +1478,96 @@ msgstr "<font color='green'>CURATARE EXECUTATA</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>CURATARE ESUATA</font>\""
 
+#~ msgid "Edit"
+#~ msgstr "Editare"
+
+#~ msgid "View"
+#~ msgstr "Vizualizare"
+
+#~ msgid "Tools"
+#~ msgstr "Instrumente"
+
+#~ msgid "Open"
+#~ msgstr "Deschidere"
+
+#~ msgid "Save"
+#~ msgstr "Salvare"
+
+#~ msgid "Close"
+#~ msgstr "Închidere"
+
+#~ msgid "Cancel"
+#~ msgstr "Anulare"
+
+#~ msgid "Yes"
+#~ msgstr "Da"
+
+#~ msgid "No"
+#~ msgstr "Nu"
+
+#~ msgid "Error"
+#~ msgstr "Eroare"
+
+#~ msgid "Warning"
+#~ msgstr "Avertisment"
+
+#~ msgid "Information"
+#~ msgstr "Informație"
+
+#~ msgid "Connect"
+#~ msgstr "Conectare"
+
+#~ msgid "Disconnect"
+#~ msgstr "Deconectare"
+
+#~ msgid "Settings"
+#~ msgstr "Setări"
+
+#~ msgid "Configuration"
+#~ msgstr "Configurație"
+
+#~ msgid "Port"
+#~ msgstr "Port"
+
+#~ msgid "Speed"
+#~ msgstr "Viteză"
+
+#~ msgid "Timeout"
+#~ msgstr "Timeout"
+
+#~ msgid "Device"
+#~ msgstr "Dispozitiv"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Connected"
+#~ msgstr "Conectat"
+
+#~ msgid "Disconnected"
+#~ msgstr "Deconectat"
+
+#~ msgid "Ready"
+#~ msgstr "Gata"
+
+#~ msgid "Busy"
+#~ msgstr "Ocupat"
+
+#~ msgid "Failed"
+#~ msgstr "Eșuat"
+
+#~ msgid "Success"
+#~ msgstr "Succes"
+
+#~ msgid "Loading"
+#~ msgstr "Încărcare"
+
+#~ msgid "Please wait"
+#~ msgstr "Vă rugăm să așteptați"
+
+#~ msgid "Processing"
+#~ msgstr "Procesare"
+
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"
 
@@ -1412,162 +1592,3 @@ msgstr "<font color='red'>CURATARE ESUATA</font>\""
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "EROARE - ceva nu a mers bine. Hai sa ne intoarcem."
-
-msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
-
-msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-
-msgid "Please select a serial port"
-msgstr "Please select a serial port"
-
-msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
-
-msgid "Attempting connection..."
-msgstr "Attempting connection..."
-
-msgid "Port: "
-msgstr "Port: "
-
-msgid "Speed: "
-msgstr "Speed: "
-
-msgid "Connection failed: "
-msgstr "Connection failed: "
-
-msgid "Connection test failed"
-msgstr "Connection test failed"
-
-msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
-
-msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
-
-msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
-
-msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
-
-msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
-
-msgid "Connection test successful!"
-msgstr "Connection test successful!"
-
-msgid "Error during connection test: "
-msgstr "Error during connection test: "
-
-msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
-
-msgid "Using baudrate: "
-msgstr "Using baudrate: "
-
-msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
-
-msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
-
-msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
-
-msgid "Device version: "
-msgstr "Device version: "
-
-msgid "Connection error: "
-msgstr "Connection error: "
-
-msgid "Edit"
-msgstr "Editare"
-
-msgid "View"
-msgstr "Vizualizare"
-
-msgid "Tools"
-msgstr "Instrumente"
-
-msgid "Open"
-msgstr "Deschidere"
-
-msgid "Save"
-msgstr "Salvare"
-
-msgid "Close"
-msgstr "Închidere"
-
-msgid "Cancel"
-msgstr "Anulare"
-
-msgid "Yes"
-msgstr "Da"
-
-msgid "No"
-msgstr "Nu"
-
-msgid "Error"
-msgstr "Eroare"
-
-msgid "Warning"
-msgstr "Avertisment"
-
-msgid "Information"
-msgstr "Informație"
-
-msgid "Connect"
-msgstr "Conectare"
-
-msgid "Disconnect"
-msgstr "Deconectare"
-
-msgid "Settings"
-msgstr "Setări"
-
-msgid "Configuration"
-msgstr "Configurație"
-
-msgid "Port"
-msgstr "Port"
-
-msgid "Speed"
-msgstr "Viteză"
-
-msgid "Timeout"
-msgstr "Timeout"
-
-msgid "Device"
-msgstr "Dispozitiv"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Connected"
-msgstr "Conectat"
-
-msgid "Disconnected"
-msgstr "Deconectat"
-
-msgid "Ready"
-msgstr "Gata"
-
-msgid "Busy"
-msgstr "Ocupat"
-
-msgid "Failed"
-msgstr "Eșuat"
-
-msgid "Success"
-msgstr "Succes"
-
-msgid "Loading"
-msgstr "Încărcare"
-
-msgid "Please wait"
-msgstr "Vă rugăm să așteptați"
-
-msgid "Processing"
-msgstr "Procesare"

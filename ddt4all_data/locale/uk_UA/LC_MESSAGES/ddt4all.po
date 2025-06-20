@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:39+0100\n"
+"POT-Creation-Date: 2025-06-20 05:25+0200\n"
+"PO-Revision-Date: 2025-06-20 05:46+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -417,6 +417,30 @@ msgstr ""
 msgid "Unknown address: "
 msgstr "ECU Function address "
 
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
 msgid "FAIL"
 msgstr "Помилка"
 
@@ -440,6 +464,11 @@ msgstr "Максимальна версія ELM:"
 
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
+
+#, fuzzy
+#| msgid "ECU name"
+msgid "ECU Finder"
+msgstr "Назва ECU"
 
 msgid "ECU name"
 msgstr "Назва ECU"
@@ -689,6 +718,11 @@ msgstr ""
 "<center>Дякую за допомогу, якщо нічого не відбулось, зайдіть на : https://"
 "github.com/cedricp/ddt4all</center>"
 
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Опції сканування"
+
 msgid "ELM port selection"
 msgstr "Виберіть порт ELM"
 
@@ -722,6 +756,51 @@ msgstr "Темний стиль"
 msgid "Change UART speed"
 msgstr "Змінити швидкість UART"
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
 msgid "You must check the recommandations"
 msgstr "Ви мовинні погодитись з рекомендаціями"
 
@@ -740,6 +819,9 @@ msgstr "Ініціаалізація ELM на швидкості %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 чи OBDLINK-SX не виявлено на COM порті "
+
+msgid "ECU Command"
+msgstr ""
 
 msgid "Err, cannot rename "
 msgstr "Помилка, невдалося перейменувати "
@@ -892,6 +974,9 @@ msgstr "Читання DTC завершилось помилкою"
 
 msgid "No DTC"
 msgstr "Немає DTC"
+
+msgid "Diagnostic Trouble Codes"
+msgstr ""
 
 msgid "Clear ALL DTC"
 msgstr "Витерти усі DTC"
@@ -1213,6 +1298,11 @@ msgstr "CRC калькулятор"
 msgid "VIN"
 msgstr "VIN"
 
+#, fuzzy
+#| msgid "CRC calculator"
+msgid "CRC Calculator"
+msgstr "CRC калькулятор"
+
 msgid "CRC CALCULATOR"
 msgstr "CRC калькулятор"
 
@@ -1333,6 +1423,96 @@ msgstr "ОЧИЩЕННЯ ВИКОНАНО"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>Очистити невдалось</font>"
 
+#~ msgid "Edit"
+#~ msgstr "Редагувати"
+
+#~ msgid "View"
+#~ msgstr "Вигляд"
+
+#~ msgid "Tools"
+#~ msgstr "Інструменти"
+
+#~ msgid "Open"
+#~ msgstr "Відкрити"
+
+#~ msgid "Save"
+#~ msgstr "Зберегти"
+
+#~ msgid "Close"
+#~ msgstr "Закрити"
+
+#~ msgid "Cancel"
+#~ msgstr "Скасувати"
+
+#~ msgid "Yes"
+#~ msgstr "Так"
+
+#~ msgid "No"
+#~ msgstr "Ні"
+
+#~ msgid "Error"
+#~ msgstr "Помилка"
+
+#~ msgid "Warning"
+#~ msgstr "Попередження"
+
+#~ msgid "Information"
+#~ msgstr "Інформація"
+
+#~ msgid "Connect"
+#~ msgstr "Підключити"
+
+#~ msgid "Disconnect"
+#~ msgstr "Відключити"
+
+#~ msgid "Settings"
+#~ msgstr "Налаштування"
+
+#~ msgid "Configuration"
+#~ msgstr "Конфігурація"
+
+#~ msgid "Port"
+#~ msgstr "Порт"
+
+#~ msgid "Speed"
+#~ msgstr "Швидкість"
+
+#~ msgid "Timeout"
+#~ msgstr "Таймаут"
+
+#~ msgid "Device"
+#~ msgstr "Пристрій"
+
+#~ msgid "Status"
+#~ msgstr "Статус"
+
+#~ msgid "Connected"
+#~ msgstr "Підключено"
+
+#~ msgid "Disconnected"
+#~ msgstr "Відключено"
+
+#~ msgid "Ready"
+#~ msgstr "Готовий"
+
+#~ msgid "Busy"
+#~ msgstr "Зайнятий"
+
+#~ msgid "Failed"
+#~ msgstr "Невдача"
+
+#~ msgid "Success"
+#~ msgstr "Успіх"
+
+#~ msgid "Loading"
+#~ msgstr "Завантаження"
+
+#~ msgid "Please wait"
+#~ msgstr "Будь ласка, зачекайте"
+
+#~ msgid "Processing"
+#~ msgstr "Обробка"
+
 #~ msgid "Contributors:"
 #~ msgstr "Дописувачі"
 
@@ -1349,162 +1529,3 @@ msgstr "<font color='red'>Очистити невдалось</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "ПОМИЛКА - щось пішло не так. Повертаємось."
-
-msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
-
-msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-
-msgid "Please select a serial port"
-msgstr "Please select a serial port"
-
-msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
-
-msgid "Attempting connection..."
-msgstr "Attempting connection..."
-
-msgid "Port: "
-msgstr "Port: "
-
-msgid "Speed: "
-msgstr "Speed: "
-
-msgid "Connection failed: "
-msgstr "Connection failed: "
-
-msgid "Connection test failed"
-msgstr "Connection test failed"
-
-msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
-
-msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
-
-msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
-
-msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
-
-msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
-
-msgid "Connection test successful!"
-msgstr "Connection test successful!"
-
-msgid "Error during connection test: "
-msgstr "Error during connection test: "
-
-msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
-
-msgid "Using baudrate: "
-msgstr "Using baudrate: "
-
-msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
-
-msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
-
-msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
-
-msgid "Device version: "
-msgstr "Device version: "
-
-msgid "Connection error: "
-msgstr "Connection error: "
-
-msgid "Edit"
-msgstr "Редагувати"
-
-msgid "View"
-msgstr "Вигляд"
-
-msgid "Tools"
-msgstr "Інструменти"
-
-msgid "Open"
-msgstr "Відкрити"
-
-msgid "Save"
-msgstr "Зберегти"
-
-msgid "Close"
-msgstr "Закрити"
-
-msgid "Cancel"
-msgstr "Скасувати"
-
-msgid "Yes"
-msgstr "Так"
-
-msgid "No"
-msgstr "Ні"
-
-msgid "Error"
-msgstr "Помилка"
-
-msgid "Warning"
-msgstr "Попередження"
-
-msgid "Information"
-msgstr "Інформація"
-
-msgid "Connect"
-msgstr "Підключити"
-
-msgid "Disconnect"
-msgstr "Відключити"
-
-msgid "Settings"
-msgstr "Налаштування"
-
-msgid "Configuration"
-msgstr "Конфігурація"
-
-msgid "Port"
-msgstr "Порт"
-
-msgid "Speed"
-msgstr "Швидкість"
-
-msgid "Timeout"
-msgstr "Таймаут"
-
-msgid "Device"
-msgstr "Пристрій"
-
-msgid "Status"
-msgstr "Статус"
-
-msgid "Connected"
-msgstr "Підключено"
-
-msgid "Disconnected"
-msgstr "Відключено"
-
-msgid "Ready"
-msgstr "Готовий"
-
-msgid "Busy"
-msgstr "Зайнятий"
-
-msgid "Failed"
-msgstr "Невдача"
-
-msgid "Success"
-msgstr "Успіх"
-
-msgid "Loading"
-msgstr "Завантаження"
-
-msgid "Please wait"
-msgstr "Будь ласка, зачекайте"
-
-msgid "Processing"
-msgstr "Обробка"

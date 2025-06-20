@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:39+0100\n"
+"POT-Creation-Date: 2025-06-20 05:25+0200\n"
+"PO-Revision-Date: 2025-06-20 05:46+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -416,6 +416,30 @@ msgstr "ELM sıfırlandı..."
 msgid "Unknown address: "
 msgstr "Bilinmeyen adres:"
 
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
 msgid "FAIL"
 msgstr "BAŞARISIZ"
 
@@ -439,6 +463,11 @@ msgstr "ELM Max sürümü:"
 
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr "ddt4all_data/projects.json bulunamadı veya doğru değil."
+
+#, fuzzy
+#| msgid "ECU name"
+msgid "ECU Finder"
+msgstr "ECU Adı"
 
 msgid "ECU name"
 msgstr "ECU Adı"
@@ -688,6 +717,11 @@ msgstr ""
 "<center>Katkılarınız için teşekkür ederiz, herhangi bir şey olmazsa lütfen "
 "şu adrese gidin: https://github.com/cedricp/ddt4all</center>"
 
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Tarama seçenekleri"
+
 msgid "ELM port selection"
 msgstr "ELM bağlantı noktası (port) seçimi"
 
@@ -721,6 +755,51 @@ msgstr "Karanlık mod"
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
 msgid "You must check the recommandations"
 msgstr "Önerileri kontrol etmelisiniz"
 
@@ -739,6 +818,9 @@ msgstr "ELM %i hızıyla başlatılıyor..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "COM portta ELM327 veya OBDLINK-SX algılanmadı "
+
+msgid "ECU Command"
+msgstr ""
 
 msgid "Err, cannot rename "
 msgstr "Hata, yeniden adlandıramıyorum"
@@ -890,6 +972,9 @@ msgstr "DTC'yi oku bir hata ile karşılaştı"
 
 msgid "No DTC"
 msgstr "DTC yok"
+
+msgid "Diagnostic Trouble Codes"
+msgstr ""
 
 msgid "Clear ALL DTC"
 msgstr "TÜM DTC'leri Temizle"
@@ -1228,6 +1313,11 @@ msgstr "CRC hesaplayıcı"
 msgid "VIN"
 msgstr "VIN (Şasi Numarası)"
 
+#, fuzzy
+#| msgid "CRC calculator"
+msgid "CRC Calculator"
+msgstr "CRC hesaplayıcı"
+
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
 
@@ -1349,6 +1439,96 @@ msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 
+#~ msgid "Edit"
+#~ msgstr "Düzenle"
+
+#~ msgid "View"
+#~ msgstr "Görünüm"
+
+#~ msgid "Tools"
+#~ msgstr "Araçlar"
+
+#~ msgid "Open"
+#~ msgstr "Aç"
+
+#~ msgid "Save"
+#~ msgstr "Kaydet"
+
+#~ msgid "Close"
+#~ msgstr "Kapat"
+
+#~ msgid "Cancel"
+#~ msgstr "İptal"
+
+#~ msgid "Yes"
+#~ msgstr "Evet"
+
+#~ msgid "No"
+#~ msgstr "Hayır"
+
+#~ msgid "Error"
+#~ msgstr "Hata"
+
+#~ msgid "Warning"
+#~ msgstr "Uyarı"
+
+#~ msgid "Information"
+#~ msgstr "Bilgi"
+
+#~ msgid "Connect"
+#~ msgstr "Bağlan"
+
+#~ msgid "Disconnect"
+#~ msgstr "Bağlantıyı Kes"
+
+#~ msgid "Settings"
+#~ msgstr "Ayarlar"
+
+#~ msgid "Configuration"
+#~ msgstr "Yapılandırma"
+
+#~ msgid "Port"
+#~ msgstr "Port"
+
+#~ msgid "Speed"
+#~ msgstr "Hız"
+
+#~ msgid "Timeout"
+#~ msgstr "Zaman Aşımı"
+
+#~ msgid "Device"
+#~ msgstr "Cihaz"
+
+#~ msgid "Status"
+#~ msgstr "Durum"
+
+#~ msgid "Connected"
+#~ msgstr "Bağlı"
+
+#~ msgid "Disconnected"
+#~ msgstr "Bağlantı Kesildi"
+
+#~ msgid "Ready"
+#~ msgstr "Hazır"
+
+#~ msgid "Busy"
+#~ msgstr "Meşgul"
+
+#~ msgid "Failed"
+#~ msgstr "Başarısız"
+
+#~ msgid "Success"
+#~ msgstr "Başarılı"
+
+#~ msgid "Loading"
+#~ msgstr "Yükleniyor"
+
+#~ msgid "Please wait"
+#~ msgstr "Lütfen bekleyin"
+
+#~ msgid "Processing"
+#~ msgstr "İşleniyor"
+
 #~ msgid "Contributors:"
 #~ msgstr "Katkıda Bulunanlar:"
 
@@ -1373,162 +1553,3 @@ msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 #, python-format
 #~ msgid "Adding plugin file %s"
 #~ msgstr "%s eklenti dosyası ekleniyor"
-
-msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
-
-msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-
-msgid "Please select a serial port"
-msgstr "Please select a serial port"
-
-msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
-
-msgid "Attempting connection..."
-msgstr "Attempting connection..."
-
-msgid "Port: "
-msgstr "Port: "
-
-msgid "Speed: "
-msgstr "Speed: "
-
-msgid "Connection failed: "
-msgstr "Connection failed: "
-
-msgid "Connection test failed"
-msgstr "Connection test failed"
-
-msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
-
-msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
-
-msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
-
-msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
-
-msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
-
-msgid "Connection test successful!"
-msgstr "Connection test successful!"
-
-msgid "Error during connection test: "
-msgstr "Error during connection test: "
-
-msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
-
-msgid "Using baudrate: "
-msgstr "Using baudrate: "
-
-msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
-
-msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
-
-msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
-
-msgid "Device version: "
-msgstr "Device version: "
-
-msgid "Connection error: "
-msgstr "Connection error: "
-
-msgid "Edit"
-msgstr "Düzenle"
-
-msgid "View"
-msgstr "Görünüm"
-
-msgid "Tools"
-msgstr "Araçlar"
-
-msgid "Open"
-msgstr "Aç"
-
-msgid "Save"
-msgstr "Kaydet"
-
-msgid "Close"
-msgstr "Kapat"
-
-msgid "Cancel"
-msgstr "İptal"
-
-msgid "Yes"
-msgstr "Evet"
-
-msgid "No"
-msgstr "Hayır"
-
-msgid "Error"
-msgstr "Hata"
-
-msgid "Warning"
-msgstr "Uyarı"
-
-msgid "Information"
-msgstr "Bilgi"
-
-msgid "Connect"
-msgstr "Bağlan"
-
-msgid "Disconnect"
-msgstr "Bağlantıyı Kes"
-
-msgid "Settings"
-msgstr "Ayarlar"
-
-msgid "Configuration"
-msgstr "Yapılandırma"
-
-msgid "Port"
-msgstr "Port"
-
-msgid "Speed"
-msgstr "Hız"
-
-msgid "Timeout"
-msgstr "Zaman Aşımı"
-
-msgid "Device"
-msgstr "Cihaz"
-
-msgid "Status"
-msgstr "Durum"
-
-msgid "Connected"
-msgstr "Bağlı"
-
-msgid "Disconnected"
-msgstr "Bağlantı Kesildi"
-
-msgid "Ready"
-msgstr "Hazır"
-
-msgid "Busy"
-msgstr "Meşgul"
-
-msgid "Failed"
-msgstr "Başarısız"
-
-msgid "Success"
-msgstr "Başarılı"
-
-msgid "Loading"
-msgstr "Yükleniyor"
-
-msgid "Please wait"
-msgstr "Lütfen bekleyin"
-
-msgid "Processing"
-msgstr "İşleniyor"
