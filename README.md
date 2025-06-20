@@ -353,13 +353,13 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 |----------|------|--------|----------------|--------------|
 | English | en_US | ✅ Complete | Native | Core Team |
 | Français | fr | ✅ Complete | Native | Core Team |
+| Português | pt | ✅ Complete | Native | Core Team |
 | Deutsch | de | 🔄 Enhanced | +30 new strings | Community |
 | Español | es | 🔄 Enhanced | +30 new strings | Community |
 | Italiano | it | 🔄 Enhanced | +30 new strings | Community |
 | Русский | ru | 🔄 Enhanced | +30 new strings | Community |
 | Polski | pl | 🔄 Enhanced | +30 new strings | Community |
 | Nederlands | nl | 🔄 Enhanced | +30 new strings | Community |
-| Português | pt | 🔄 Enhanced | +30 new strings | Community |
 | Magyar | hu | 🔄 Enhanced | +30 new strings | Community |
 | Română | ro | 🔄 Enhanced | +30 new strings | Community |
 | Српски | sr | 🔄 Enhanced | +30 new strings | Community |
