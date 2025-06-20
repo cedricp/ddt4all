@@ -791,6 +791,76 @@ msgstr ""
 msgid "Bad ELM response :"
 msgstr ""
 
+# New strings added for enhanced device support
+msgid "Please enter WiFi adapter IP address"
+msgstr ""
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr ""
+
+msgid "Please select a serial port"
+msgstr ""
+
+msgid "Selected port is no longer available"
+msgstr ""
+
+msgid "Attempting connection..."
+msgstr ""
+
+msgid "Port: "
+msgstr ""
+
+msgid "Speed: "
+msgstr ""
+
+msgid "Connection failed: "
+msgstr ""
+
+msgid "Connection test failed"
+msgstr ""
+
+msgid "Troubleshooting suggestions:"
+msgstr ""
+
+msgid "1. Check device is properly connected"
+msgstr ""
+
+msgid "2. Try different baud rates"
+msgstr ""
+
+msgid "3. Ensure device drivers are installed"
+msgstr ""
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr ""
+
+msgid "Connection test successful!"
+msgstr ""
+
+msgid "Error during connection test: "
+msgstr ""
+
+msgid "Connecting to device at port: "
+msgstr ""
+
+msgid "Using baudrate: "
+msgstr ""
+
+msgid "Testing basic connectivity..."
+msgstr ""
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr ""
+
+msgid "ELM327 device detected successfully"
+msgstr ""
+
+msgid "Device version: "
+msgstr ""
+
+msgid "Connection error: "
+msgstr ""
+
 msgid "ELM response : "
 msgstr ""
 

@@ -617,7 +617,7 @@ msgid "Cannot load plugin "
 msgstr "Plug-In laden fehlgeschlagen "
 
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 msgid "Web Wiki"
 msgstr ""
@@ -1375,3 +1375,162 @@ msgstr "<font color='orange'>VIN SCHREIBEN FEHLGESCHLAGEN</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "Fehler, es ist etwas schief gelaufen. Geh zurueck."
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Bitte geben Sie die IP-Adresse des WiFi-Adapters ein"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Ungültiges WiFi-Format. Verwenden Sie IP:PORT (z.B. 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Bitte wählen Sie einen seriellen Port"
+
+msgid "Selected port is no longer available"
+msgstr "Der ausgewählte Port ist nicht mehr verfügbar"
+
+msgid "Attempting connection..."
+msgstr "Verbindungsversuch..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Geschwindigkeit: "
+
+msgid "Connection failed: "
+msgstr "Verbindung fehlgeschlagen: "
+
+msgid "Connection test failed"
+msgstr "Verbindungstest fehlgeschlagen"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Fehlerbehebungsvorschläge:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Überprüfen Sie, ob das Gerät ordnungsgemäß angeschlossen ist"
+
+msgid "2. Try different baud rates"
+msgstr "2. Versuchen Sie verschiedene Baudraten"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Stellen Sie sicher, dass die Gerätetreiber installiert sind"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Überprüfen Sie die Port-Berechtigungen (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Verbindungstest erfolgreich!"
+
+msgid "Error during connection test: "
+msgstr "Fehler beim Verbindungstest: "
+
+msgid "Connecting to device at port: "
+msgstr "Verbindung zum Gerät an Port: "
+
+msgid "Using baudrate: "
+msgstr "Verwendung der Baudrate: "
+
+msgid "Testing basic connectivity..."
+msgstr "Teste grundlegende Konnektivität..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warnung: Gerät ist möglicherweise nicht ELM327-kompatibel"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327-Gerät erfolgreich erkannt"
+
+msgid "Device version: "
+msgstr "Geräteversion: "
+
+msgid "Connection error: "
+msgstr "Verbindungsfehler: "
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "View"
+msgstr "Ansicht"
+
+msgid "Tools"
+msgstr "Werkzeuge"
+
+msgid "Open"
+msgstr "Öffnen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Warning"
+msgstr "Warnung"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Connect"
+msgstr "Verbinden"
+
+msgid "Disconnect"
+msgstr "Trennen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Speed"
+msgstr "Geschwindigkeit"
+
+msgid "Timeout"
+msgstr "Zeitüberschreitung"
+
+msgid "Device"
+msgstr "Gerät"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Connected"
+msgstr "Verbunden"
+
+msgid "Disconnected"
+msgstr "Getrennt"
+
+msgid "Ready"
+msgstr "Bereit"
+
+msgid "Busy"
+msgstr "Beschäftigt"
+
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+msgid "Success"
+msgstr "Erfolgreich"
+
+msgid "Loading"
+msgstr "Laden"
+
+msgid "Please wait"
+msgstr "Bitte warten"
+
+msgid "Processing"
+msgstr "Verarbeitung"

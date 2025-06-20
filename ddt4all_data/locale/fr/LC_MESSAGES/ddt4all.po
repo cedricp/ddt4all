@@ -811,6 +811,76 @@ msgstr "Envoie requête ELM simulée:"
 msgid "Bad ELM response :"
 msgstr "Mauvaise réponse ELM :"
 
+# New strings added for enhanced device support
+msgid "Please enter WiFi adapter IP address"
+msgstr "Veuillez saisir l'adresse IP de l'adaptateur WiFi"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Format WiFi invalide. Utilisez IP:PORT (ex: 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Veuillez sélectionner un port série"
+
+msgid "Selected port is no longer available"
+msgstr "Le port sélectionné n'est plus disponible"
+
+msgid "Attempting connection..."
+msgstr "Tentative de connexion..."
+
+msgid "Port: "
+msgstr "Port : "
+
+msgid "Speed: "
+msgstr "Vitesse : "
+
+msgid "Connection failed: "
+msgstr "Échec de la connexion : "
+
+msgid "Connection test failed"
+msgstr "Test de connexion échoué"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Suggestions de dépannage :"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Vérifiez que l'appareil est correctement connecté"
+
+msgid "2. Try different baud rates"
+msgstr "2. Essayez différents débits"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Assurez-vous que les pilotes sont installés"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Vérifiez les permissions du port (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Test de connexion réussi !"
+
+msgid "Error during connection test: "
+msgstr "Erreur lors du test de connexion : "
+
+msgid "Connecting to device at port: "
+msgstr "Connexion à l'appareil sur le port : "
+
+msgid "Using baudrate: "
+msgstr "Utilisation du débit : "
+
+msgid "Testing basic connectivity..."
+msgstr "Test de connectivité de base..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Attention : L'appareil pourrait ne pas être compatible ELM327"
+
+msgid "ELM327 device detected successfully"
+msgstr "Appareil ELM327 détecté avec succès"
+
+msgid "Device version: "
+msgstr "Version de l'appareil : "
+
+msgid "Connection error: "
+msgstr "Erreur de connexion : "
+
 msgid "ELM response : "
 msgstr "Réponse ELM : "
 
@@ -1356,3 +1426,93 @@ msgstr "<font color='red'>ÉCHEC EFFACEMENT EFFACEMENT GRANE VITESSE</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "ERREUR - Quelque chose s'est mal passé, retour en arrière."
+
+msgid "Edit"
+msgstr "Éditer"
+
+msgid "View"
+msgstr "Affichage"
+
+msgid "Tools"
+msgstr "Outils"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Warning"
+msgstr "Attention"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Connect"
+msgstr "Connecter"
+
+msgid "Disconnect"
+msgstr "Déconnecter"
+
+msgid "Settings"
+msgstr "Paramètres"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Speed"
+msgstr "Vitesse"
+
+msgid "Timeout"
+msgstr "Délai d'attente"
+
+msgid "Device"
+msgstr "Appareil"
+
+msgid "Status"
+msgstr "État"
+
+msgid "Connected"
+msgstr "Connecté"
+
+msgid "Disconnected"
+msgstr "Déconnecté"
+
+msgid "Ready"
+msgstr "Prêt"
+
+msgid "Busy"
+msgstr "Occupé"
+
+msgid "Failed"
+msgstr "Échec"
+
+msgid "Success"
+msgstr "Succès"
+
+msgid "Loading"
+msgstr "Chargement"
+
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+msgid "Processing"
+msgstr "Traitement en cours"

@@ -1349,3 +1349,162 @@ msgstr "<font color='red'>Очистити невдалось</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "ПОМИЛКА - щось пішло не так. Повертаємось."
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "View"
+msgstr "Вигляд"
+
+msgid "Tools"
+msgstr "Інструменти"
+
+msgid "Open"
+msgstr "Відкрити"
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Yes"
+msgstr "Так"
+
+msgid "No"
+msgstr "Ні"
+
+msgid "Error"
+msgstr "Помилка"
+
+msgid "Warning"
+msgstr "Попередження"
+
+msgid "Information"
+msgstr "Інформація"
+
+msgid "Connect"
+msgstr "Підключити"
+
+msgid "Disconnect"
+msgstr "Відключити"
+
+msgid "Settings"
+msgstr "Налаштування"
+
+msgid "Configuration"
+msgstr "Конфігурація"
+
+msgid "Port"
+msgstr "Порт"
+
+msgid "Speed"
+msgstr "Швидкість"
+
+msgid "Timeout"
+msgstr "Таймаут"
+
+msgid "Device"
+msgstr "Пристрій"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Connected"
+msgstr "Підключено"
+
+msgid "Disconnected"
+msgstr "Відключено"
+
+msgid "Ready"
+msgstr "Готовий"
+
+msgid "Busy"
+msgstr "Зайнятий"
+
+msgid "Failed"
+msgstr "Невдача"
+
+msgid "Success"
+msgstr "Успіх"
+
+msgid "Loading"
+msgstr "Завантаження"
+
+msgid "Please wait"
+msgstr "Будь ласка, зачекайте"
+
+msgid "Processing"
+msgstr "Обробка"

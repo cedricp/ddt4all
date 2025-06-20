@@ -615,7 +615,7 @@ msgid "Cannot load plugin "
 msgstr "Sikertelen parancshívás "
 
 msgid "Help"
-msgstr ""
+msgstr "Súgó"
 
 msgid "Web Wiki"
 msgstr ""
@@ -1358,3 +1358,162 @@ msgstr "<font color=orange> - '%s'</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "HIBA - egyéb hiba. Visszalépés."
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
+msgid "Edit"
+msgstr "Szerkesztés"
+
+msgid "View"
+msgstr "Nézet"
+
+msgid "Tools"
+msgstr "Eszközök"
+
+msgid "Open"
+msgstr "Megnyitás"
+
+msgid "Save"
+msgstr "Mentés"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "Yes"
+msgstr "Igen"
+
+msgid "No"
+msgstr "Nem"
+
+msgid "Error"
+msgstr "Hiba"
+
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+msgid "Information"
+msgstr "Információ"
+
+msgid "Connect"
+msgstr "Csatlakozás"
+
+msgid "Disconnect"
+msgstr "Szétkapcsolás"
+
+msgid "Settings"
+msgstr "Beállítások"
+
+msgid "Configuration"
+msgstr "Konfiguráció"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Speed"
+msgstr "Sebesség"
+
+msgid "Timeout"
+msgstr "Időtúllépés"
+
+msgid "Device"
+msgstr "Eszköz"
+
+msgid "Status"
+msgstr "Állapot"
+
+msgid "Connected"
+msgstr "Csatlakoztatva"
+
+msgid "Disconnected"
+msgstr "Szétkapcsolva"
+
+msgid "Ready"
+msgstr "Kész"
+
+msgid "Busy"
+msgstr "Foglalt"
+
+msgid "Failed"
+msgstr "Sikertelen"
+
+msgid "Success"
+msgstr "Sikeres"
+
+msgid "Loading"
+msgstr "Betöltés"
+
+msgid "Please wait"
+msgstr "Kérjük, várjon"
+
+msgid "Processing"
+msgstr "Feldolgozás"

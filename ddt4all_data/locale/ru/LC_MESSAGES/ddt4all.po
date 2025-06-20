@@ -613,7 +613,7 @@ msgid "Cannot load plugin "
 msgstr "Не могу сформировать запрос "
 
 msgid "Help"
-msgstr ""
+msgstr "Справка"
 
 msgid "Web Wiki"
 msgstr ""
@@ -1352,3 +1352,162 @@ msgstr "<font color=orange> - '%s'</font>"
 
 #~ msgid "ERROR - something went wrong. Let's get back."
 #~ msgstr "ОШИБКА - что-то пошло не так. Возвращаем прежнюю скорость."
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "View"
+msgstr "Вид"
+
+msgid "Tools"
+msgstr "Инструменты"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Warning"
+msgstr "Предупреждение"
+
+msgid "Information"
+msgstr "Информация"
+
+msgid "Connect"
+msgstr "Подключить"
+
+msgid "Disconnect"
+msgstr "Отключить"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Configuration"
+msgstr "Конфигурация"
+
+msgid "Port"
+msgstr "Порт"
+
+msgid "Speed"
+msgstr "Скорость"
+
+msgid "Timeout"
+msgstr "Таймаут"
+
+msgid "Device"
+msgstr "Устройство"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Connected"
+msgstr "Подключено"
+
+msgid "Disconnected"
+msgstr "Отключено"
+
+msgid "Ready"
+msgstr "Готов"
+
+msgid "Busy"
+msgstr "Занят"
+
+msgid "Failed"
+msgstr "Неудача"
+
+msgid "Success"
+msgstr "Успех"
+
+msgid "Loading"
+msgstr "Загрузка"
+
+msgid "Please wait"
+msgstr "Пожалуйста, подождите"
+
+msgid "Processing"
+msgstr "Обработка"

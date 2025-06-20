@@ -423,7 +423,7 @@ msgid "OK/TIMEOUT"
 msgstr ""
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "Incompatible adapter on ARM core"
 msgstr "Niekompatybilny adapter na rdzeniu ARM"
@@ -1347,3 +1347,162 @@ msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
 #| msgid "<font color='red'>CLEAR FAILED</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "View"
+msgstr "Widok"
+
+msgid "Tools"
+msgstr "Narzędzia"
+
+msgid "Open"
+msgstr "Otwórz"
+
+msgid "Save"
+msgstr "Zapisz"
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Yes"
+msgstr "Tak"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Error"
+msgstr "Błąd"
+
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+msgid "Information"
+msgstr "Informacja"
+
+msgid "Connect"
+msgstr "Połącz"
+
+msgid "Disconnect"
+msgstr "Rozłącz"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "Configuration"
+msgstr "Konfiguracja"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Speed"
+msgstr "Prędkość"
+
+msgid "Timeout"
+msgstr "Limit czasu"
+
+msgid "Device"
+msgstr "Urządzenie"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Connected"
+msgstr "Połączony"
+
+msgid "Disconnected"
+msgstr "Rozłączony"
+
+msgid "Ready"
+msgstr "Gotowy"
+
+msgid "Busy"
+msgstr "Zajęty"
+
+msgid "Failed"
+msgstr "Nieudane"
+
+msgid "Success"
+msgstr "Sukces"
+
+msgid "Loading"
+msgstr "Ładowanie"
+
+msgid "Please wait"
+msgstr "Proszę czekać"
+
+msgid "Processing"
+msgstr "Przetwarzanie"

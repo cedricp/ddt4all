@@ -12,8 +12,16 @@ from importlib.machinery import SourceFileLoader
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
-import PyQt5.QtWebEngineWidgets as webkitwidgets
 import PyQt5.QtWidgets as widgets
+
+# Optional WebEngine import for enhanced features
+try:
+    import PyQt5.QtWebEngineWidgets as webkitwidgets
+    HAS_WEBENGINE = True
+except ImportError:
+    print("Warning: PyQtWebEngine not available. Some features may be limited.")
+    webkitwidgets = None
+    HAS_WEBENGINE = False
 
 import dataeditor
 import ecu
@@ -73,6 +81,10 @@ def isWritable(path):
 class Ecu_finder(widgets.QDialog):
     def __init__(self, ecuscanner):
         super(Ecu_finder, self).__init__()
+        # Set window icon and title
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("ECU Finder"))
         self.ecuscanner = ecuscanner
         layoutv = widgets.QVBoxLayout()
         layouth = widgets.QHBoxLayout()
@@ -296,11 +308,31 @@ class Main_widget(widgets.QMainWindow):
             msgbox.exec_()
 
         self.paramview = None
-        self.docview = webkitwidgets.QWebEngineView()
-        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, False)
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
+        
+        # Initialize documentation view based on WebEngine availability
+        if HAS_WEBENGINE:
+            self.docview = webkitwidgets.QWebEngineView()
+            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            
+            # Configure WebEngine settings for optimal GitHub wiki experience
+            settings = self.docview.settings()
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, False)  # Disabled to prevent compatibility errors
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)     # Better visual experience
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, False)    # Security: disable plugins
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.LocalStorageEnabled, False)  # Security: no local storage
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)  # Security
+        else:
+            # Fallback to basic text widget for documentation
+            self.docview = widgets.QTextEdit()
+            self.docview.setReadOnly(True)
+            self.docview.setHtml(f"""
+            <h2>{_("DDT4All Documentation")}</h2>
+            <p><strong>{_("WebEngine not available.")}</strong> {_("For full documentation with web browsing capability, install PyQtWebEngine:")}</p>
+            <pre>pip install PyQtWebEngine</pre>
+            <p>{_("Visit the online documentation at:")} <br>
+            <a href="https://github.com/cedricp/ddt4all/wiki">https://github.com/cedricp/ddt4all/wiki</a></p>
+            <p>{_("This basic view will still show ECU documentation when available.")}</p>
+            """)
 
         self.screennames = []
 
@@ -1275,6 +1307,10 @@ class main_window_options(widgets.QDialog):
         self.adapter = "STD"
         self.raise_port_speed = "No"
         super(main_window_options, self).__init__(None)
+        # Set window icon and title
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("Options"))
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
         label.setText(_("ELM port selection"))
@@ -1460,42 +1496,128 @@ class main_window_options(widgets.QDialog):
         app.exit(0)
 
     def check_elm(self):
+        """Enhanced ELM connection checker with better error handling"""
         currentitem = self.listview.currentItem()
         self.logview.show()
-        if self.wifibutton.isChecked():
-            port = str(self.wifiinput.text())
-        else:
-            if not currentitem:
-                self.logview.hide()
-                return
-            portinfo = currentitem.text()
-            port = self.ports[portinfo][0]
-        speed = int(self.speedcombo.currentText())
-        res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
-        if not res:
-            self.logview.append(options.get_last_error())
+        self.logview.clear()
+        
+        try:
+            if self.wifibutton.isChecked():
+                port = str(self.wifiinput.text()).strip()
+                if not port:
+                    self.logview.append(_("Please enter WiFi adapter IP address"))
+                    return
+                # Validate IP:port format
+                import re
+                if not re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", port):
+                    self.logview.append(_("Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"))
+                    return
+            else:
+                if not currentitem:
+                    self.logview.append(_("Please select a serial port"))
+                    self.logview.hide()
+                    return
+                portinfo = currentitem.text()
+                if portinfo not in self.ports:
+                    self.logview.append(_("Selected port is no longer available"))
+                    return
+                port = self.ports[portinfo][0]
+                
+            speed = int(self.speedcombo.currentText())
+            
+            # Show connection attempt
+            self.logview.append(_("Attempting connection..."))
+            self.logview.append(_("Port: ") + str(port))
+            self.logview.append(_("Speed: ") + str(speed))
+            
+            # Process events to update UI
+            core.QCoreApplication.processEvents()
+            
+            res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
+            if not res:
+                error_msg = options.get_last_error()
+                if error_msg:
+                    self.logview.append(_("Connection failed: ") + error_msg)
+                else:
+                    self.logview.append(_("Connection test failed"))
+                    
+                # Suggest troubleshooting steps
+                self.logview.append("")
+                self.logview.append(_("Troubleshooting suggestions:"))
+                self.logview.append(_("1. Check device is properly connected"))
+                self.logview.append(_("2. Try different baud rates"))
+                self.logview.append(_("3. Ensure device drivers are installed"))
+                if not self.wifibutton.isChecked():
+                    self.logview.append(_("4. Check port permissions (Linux/macOS)"))
+            else:
+                self.logview.append("")
+                self.logview.append(_("Connection test successful!"))
+                
+        except Exception as e:
+            self.logview.append(_("Error during connection test: ") + str(e))
 
     def rescan_ports(self):
-        ports = elm.get_available_ports()
-        if ports == None:
+        """Enhanced port rescanning with device identification"""
+        try:
+            ports = elm.get_available_ports()
+            if ports is None:
+                self.listview.clear()
+                self.ports = {}
+                self.portcount = 0
+                return
+
+            if len(ports) == self.portcount:
+                return
+
             self.listview.clear()
             self.ports = {}
-            self.portcount = 0
-            return
+            self.portcount = len(ports)
+            
+            for p in ports:
+                if len(p) >= 3:
+                    port, desc, hwid = p
+                else:
+                    port, desc = p
+                    hwid = ""
+                
+                # Identify device type
+                device_type = elm.DeviceManager.identify_device(port, desc, hwid)
+                
+                # Create enhanced description
+                if device_type != 'unknown':
+                    enhanced_desc = f"{desc} [{device_type.upper()}]"
+                else:
+                    enhanced_desc = desc
+                    
+                item = widgets.QListWidgetItem(self.listview)
+                itemname = f"{port}[{enhanced_desc}]"
+                item.setText(itemname)
+                self.ports[itemname] = (port, desc, device_type)
+                
+                # Highlight known OBD devices
+                if device_type in ['elm327', 'vlinker', 'obdlink', 'els27']:
+                    font = item.font()
+                    font.setBold(True)
+                    item.setFont(font)
+                    item.setBackground(gui.QColor(200, 255, 200))  # Light green background
+                    
+            # Auto-select first OBD device if available
+            if self.listview.count() > 0 and not self.listview.currentItem():
+                # Prioritize known OBD devices
+                for i in range(self.listview.count()):
+                    item = self.listview.item(i)
+                    if any(device in item.text().upper() for device in ['ELM', 'OBD', 'VLINKER', 'OBDLINK']):
+                        self.listview.setCurrentItem(item)
+                        break
+                else:
+                    # If no known OBD device, select first item
+                    self.listview.setCurrentItem(self.listview.item(0))
 
-        if len(ports) == self.portcount:
-            return
-
-        self.listview.clear()
-        self.ports = {}
-        self.portcount = len(ports)
-        for p in ports:
-            item = widgets.QListWidgetItem(self.listview)
-            itemname = p[0] + "[" + p[1] + "]"
-            item.setText(itemname)
-            self.ports[itemname] = (p[0], p[1])
-
-        self.timer.start(500)
+            self.timer.start(500)
+            
+        except Exception as e:
+            print(f"Error rescanning ports: {e}")
+            self.timer.start(500)
 
     def bt(self):
         self.adapter = "STD_BT"

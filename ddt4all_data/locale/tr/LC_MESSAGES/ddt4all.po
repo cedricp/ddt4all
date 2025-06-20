@@ -1373,3 +1373,162 @@ msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 #, python-format
 #~ msgid "Adding plugin file %s"
 #~ msgstr "%s eklenti dosyası ekleniyor"
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
+msgid "Edit"
+msgstr "Düzenle"
+
+msgid "View"
+msgstr "Görünüm"
+
+msgid "Tools"
+msgstr "Araçlar"
+
+msgid "Open"
+msgstr "Aç"
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "Yes"
+msgstr "Evet"
+
+msgid "No"
+msgstr "Hayır"
+
+msgid "Error"
+msgstr "Hata"
+
+msgid "Warning"
+msgstr "Uyarı"
+
+msgid "Information"
+msgstr "Bilgi"
+
+msgid "Connect"
+msgstr "Bağlan"
+
+msgid "Disconnect"
+msgstr "Bağlantıyı Kes"
+
+msgid "Settings"
+msgstr "Ayarlar"
+
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Speed"
+msgstr "Hız"
+
+msgid "Timeout"
+msgstr "Zaman Aşımı"
+
+msgid "Device"
+msgstr "Cihaz"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Connected"
+msgstr "Bağlı"
+
+msgid "Disconnected"
+msgstr "Bağlantı Kesildi"
+
+msgid "Ready"
+msgstr "Hazır"
+
+msgid "Busy"
+msgstr "Meşgul"
+
+msgid "Failed"
+msgstr "Başarısız"
+
+msgid "Success"
+msgstr "Başarılı"
+
+msgid "Loading"
+msgstr "Yükleniyor"
+
+msgid "Please wait"
+msgstr "Lütfen bekleyin"
+
+msgid "Processing"
+msgstr "İşleniyor"

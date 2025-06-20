@@ -34,7 +34,14 @@ safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 configuration = {
     "lang": None,
     "dark": False,
-    "sockettimeout": False
+    "sockettimeout": False,
+    "device_settings": {},
+    "auto_detect_devices": True,
+    "connection_timeout": 10,
+    "read_timeout": 5,
+    "max_reconnect_attempts": 3,
+    "preferred_device_order": ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"],
+    "enable_device_validation": True
 }
 lang_list = {
     "English": "en_US",
@@ -66,6 +73,13 @@ def create_new_config():
     configuration["lang"] = get_translator_lang()
     configuration["dark"] = False
     configuration["sockettimeout"] = False
+    configuration["device_settings"] = {}
+    configuration["auto_detect_devices"] = True
+    configuration["connection_timeout"] = 10
+    configuration["read_timeout"] = 5
+    configuration["max_reconnect_attempts"] = 3
+    configuration["preferred_device_order"] = ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"]
+    configuration["enable_device_validation"] = True
     save_config()
 
 
@@ -74,12 +88,24 @@ def load_configuration():
         f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
         config = json.loads(f.read())
         # load config as multiplatform (mac fix macOs load conf)
-        configuration["lang"] = config["lang"]
-        configuration["dark"] = config["dark"]
-        configuration["sockettimeout"] = config["sockettimeout"]
-        os.environ['LANG'] = config["lang"]
+        configuration["lang"] = config.get("lang", get_translator_lang())
+        configuration["dark"] = config.get("dark", False)
+        configuration["sockettimeout"] = config.get("sockettimeout", False)
+        
+        # Load enhanced device settings with defaults
+        configuration["device_settings"] = config.get("device_settings", {})
+        configuration["auto_detect_devices"] = config.get("auto_detect_devices", True)
+        configuration["connection_timeout"] = config.get("connection_timeout", 10)
+        configuration["read_timeout"] = config.get("read_timeout", 5)
+        configuration["max_reconnect_attempts"] = config.get("max_reconnect_attempts", 3)
+        configuration["preferred_device_order"] = config.get("preferred_device_order", 
+                                                           ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"])
+        configuration["enable_device_validation"] = config.get("enable_device_validation", True)
+        
+        os.environ['LANG'] = configuration["lang"]
         f.close()
-    except:
+    except Exception as e:
+        print(f"Error loading configuration: {e}")
         create_new_config()
 
 
@@ -103,6 +129,68 @@ def get_translator_lang():
         except:
             pass
     return loc_lang
+
+
+def get_device_settings(device_type, port=None):
+    """Get device-specific settings with fallback to defaults"""
+    device_key = f"{device_type}_{port}" if port else device_type
+    
+    # Default settings by device type
+    defaults = {
+        'vlinker': {'baudrate': 38400, 'timeout': 3, 'rtscts': False, 'dsrdtr': False},
+        'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False},
+        'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
+        'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
+        'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False},
+        'generic': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False},
+        'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
+    }
+    
+    # Get saved settings or use defaults
+    saved_settings = configuration.get("device_settings", {}).get(device_key, {})
+    default_settings = defaults.get(device_type, defaults['unknown'])
+    
+    # Merge saved settings with defaults
+    settings = default_settings.copy()
+    settings.update(saved_settings)
+    
+    return settings
+
+
+def save_device_settings(device_type, settings, port=None):
+    """Save device-specific settings"""
+    device_key = f"{device_type}_{port}" if port else device_type
+    
+    if "device_settings" not in configuration:
+        configuration["device_settings"] = {}
+    
+    configuration["device_settings"][device_key] = settings
+    save_config()
+
+
+def get_connection_timeout():
+    """Get connection timeout from configuration"""
+    return configuration.get("connection_timeout", 10)
+
+
+def get_read_timeout():
+    """Get read timeout from configuration"""
+    return configuration.get("read_timeout", 5)
+
+
+def get_max_reconnect_attempts():
+    """Get maximum reconnection attempts"""
+    return configuration.get("max_reconnect_attempts", 3)
+
+
+def is_device_validation_enabled():
+    """Check if device validation is enabled"""
+    return configuration.get("enable_device_validation", True)
+
+
+def get_preferred_device_order():
+    """Get preferred device detection order"""
+    return configuration.get("preferred_device_order", ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"])
 
 
 def translator(domain):
