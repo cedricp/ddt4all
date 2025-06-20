@@ -568,7 +568,7 @@ class Port:
             self.hdr.connect((self.ipaddr, self.tcpprt))
             
             # Configure socket timeout based on settings
-            if getattr(options, "sockettimeout", True):
+            if getattr(options, "socket_timeout", True):
                 self.hdr.settimeout(5)
             else:
                 self.hdr.setblocking(True)

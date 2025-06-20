@@ -294,7 +294,7 @@ class Main_widget(widgets.QMainWindow):
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
-        options.sockettimeout = False
+        options.socket_timeout = False
         options.ecu_scanner = self.ecu_scan
         print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
@@ -1287,13 +1287,13 @@ def set_dark_style(onoff):
     options.configuration["dark"] = options.dark_mode
     options.save_config()
 
-def set_sockettimeout(onoff):
+def set_socket_timeout(onoff):
     if (onoff):
-        options.sockettimeout = True
+        options.socket_timeout = True
     else:
-        options.sockettimeout = False
+        options.socket_timeout = False
 
-    options.configuration["sockettimeout"] = options.sockettimeout
+    options.configuration["socket_timeout"] = options.socket_timeout
     options.save_config()
 
 class main_window_options(widgets.QDialog):
@@ -1441,15 +1441,15 @@ class main_window_options(widgets.QDialog):
         darkstylelayout.addStretch()
         layout.addLayout(darkstylelayout)
 
-        sockettimeoutlayout = widgets.QHBoxLayout()
-        self.sockettimeoutcheck = widgets.QCheckBox()
-        self.sockettimeoutcheck.setChecked(options.sockettimeout)
-        self.sockettimeoutcheck.stateChanged.connect(set_sockettimeout)
-        sockettimeoutlabel = widgets.QLabel("WiFi Socket-TimeOut")
-        sockettimeoutlayout.addWidget(self.sockettimeoutcheck)
-        sockettimeoutlayout.addWidget(sockettimeoutlabel)
-        sockettimeoutlayout.addStretch()
-        layout.addLayout(sockettimeoutlayout)
+        socket_timeoutlayout = widgets.QHBoxLayout()
+        self.socket_timeoutcheck = widgets.QCheckBox()
+        self.socket_timeoutcheck.setChecked(options.socket_timeout)
+        self.socket_timeoutcheck.stateChanged.connect(set_socket_timeout)
+        socket_timeoutlabel = widgets.QLabel("WiFi Socket-TimeOut")
+        socket_timeoutlayout.addWidget(self.socket_timeoutcheck)
+        socket_timeoutlayout.addWidget(socket_timeoutlabel)
+        socket_timeoutlayout.addStretch()
+        layout.addLayout(socket_timeoutlayout)
 
         obdlinkspeedlayout = widgets.QHBoxLayout()
         self.obdlinkspeedcombo = widgets.QComboBox()
@@ -1491,7 +1491,7 @@ class main_window_options(widgets.QDialog):
     def save_config(self):
         options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
         options.configuration["dark"] = options.dark_mode
-        options.configuration["sockettimeout"] = options.sockettimeout
+        options.configuration["socket_timeout"] = options.socket_timeout
         options.save_config()
         app.exit(0)
 
@@ -1791,7 +1791,7 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simulation_mode = True
-    options.sockettimeout = False
+    options.socket_timeout = False
     app = widgets.QApplication(sys.argv)
 
     try:
@@ -1801,10 +1801,10 @@ if __name__ == '__main__':
             set_dark_style(2)
         else:
             set_dark_style(0)
-        if configuration["sockettimeout"]:
-            set_sockettimeout(1)
+        if configuration["socket_timeout"]:
+            set_socket_timeout(1)
         else:
-            set_sockettimeout(0)
+            set_socket_timeout(0)
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
         set_dark_style(0)
 

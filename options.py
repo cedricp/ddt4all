@@ -34,7 +34,7 @@ safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
 configuration = {
     "lang": None,
     "dark": False,
-    "sockettimeout": False,
+    "socket_timeout": False,
     "device_settings": {},
     "auto_detect_devices": True,
     "connection_timeout": 10,
@@ -72,7 +72,7 @@ def save_config():
 def create_new_config():
     configuration["lang"] = get_translator_lang()
     configuration["dark"] = False
-    configuration["sockettimeout"] = False
+    configuration["socket_timeout"] = False
     configuration["device_settings"] = {}
     configuration["auto_detect_devices"] = True
     configuration["connection_timeout"] = 10
@@ -90,7 +90,7 @@ def load_configuration():
         # load config as multiplatform (mac fix macOs load conf)
         configuration["lang"] = config.get("lang", get_translator_lang())
         configuration["dark"] = config.get("dark", False)
-        configuration["sockettimeout"] = config.get("sockettimeout", False)
+        configuration["socket_timeout"] = config.get("socket_timeout", False)
         
         # Load enhanced device settings with defaults
         configuration["device_settings"] = config.get("device_settings", {})
