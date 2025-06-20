@@ -98,7 +98,7 @@ pip install -r requirements.txt
 | **ELM327 Original** | 38400 | 5s | None | General use | Verify PIC18F25K80 chip |
 | **ELM327 Clone** | 9600-38400 | 7s | None | Budget option | Test different baud rates |
 | **ObdLink SX** | 115200 | 2s | RTS/CTS | Professional | High-speed, premium adapter |
-| **ObdLink EX** | 115200 | 2s | RTS/CTS | **User Tested** | Confirmed working, professional grade |
+| **ObdLink EX** | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
 | **ELS27** | 38400 | 4s | None | Alternative | Good ELM327 alternative |
 
 #### **⚙️ Connection Optimization Tips:**
