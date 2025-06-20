@@ -26,12 +26,7 @@ class Virginizer(gui.QDialog):
         # Set window icon
         appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
-        # x, y, width, high
-        self.setGeometry(100, 100, 510, 530)
-        self.setFixedSize(510, 530)
-
         layout = gui.QVBoxLayout()
-
         # Création du tableau
         self.table = QTableWidget()
         self.table.setRowCount(4)  # Number of lines
