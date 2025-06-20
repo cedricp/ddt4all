@@ -52,7 +52,7 @@ pywin32>=227; sys_platform == "win32"
 # BLUETOOTH SUPPORT (Optional)
 # ============================================================================
 # Uncomment for Bluetooth adapter support:
-# pybluez>=0.23; sys_platform != "darwin"  # Not available on macOS via pip
+# pybluez-updated>=0.31; sys_platform != "darwin"  # Not available on macOS via pip
 
 # ============================================================================
 # DEVELOPMENT AND TESTING (Optional)
