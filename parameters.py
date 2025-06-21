@@ -29,6 +29,10 @@ _ = options.translator('ddt4all')
 class ecuCommand(widgets.QDialog):
     def __init__(self, paramview, ecurequestparser, sds):
         super(ecuCommand, self).__init__(None)
+        # Set window icon and title
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("ECU Command"))
         self.ecu = ecurequestparser
         self.ecu.requests.keys()
         self.sds = sds
@@ -1531,6 +1535,10 @@ class paramWidget(widgets.QWidget):
 
         numberofdtc = int('0x' + can_response[1], 16)
         self.dtcdialog = widgets.QDialog(None)
+        # Set window icon and title
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        self.dtcdialog.setWindowIcon(appIcon)
+        self.dtcdialog.setWindowTitle(_("Diagnostic Trouble Codes"))
         dtc_view = widgets.QTextEdit(None)
         dtc_view.setReadOnly(True)
         layout = widgets.QVBoxLayout()

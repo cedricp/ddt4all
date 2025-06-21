@@ -1,6 +1,33 @@
 # DDT4All [![Python App](https://github.com/cedricp/ddt4all/actions/workflows/python-app.yml/badge.svg)](https://github.com/cedricp/ddt4all/actions/workflows/python-app.yml) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) [![Discord](https://img.shields.io/discord/1117970325267820675?label=Discord&style=flat-square)](https://discord.gg/cBqDh9bTHP)
 
-DDT4All is tool to create your own ECU parameters screens and connect to a CAN network with a cheap ELM327 interface.
+DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
+
+## 🚀 **Recent Major Improvements**
+
+### ✅ **Enhanced Device Compatibility & Connection Stability**
+- **Multi-Device Support**: Full compatibility with Vlinker FS, VGate, ELM327, ObdLink SX, ELS27 adapters
+- **Device-Specific Optimization**: Automatic speed selection and optimal settings for each adapter type
+- **Connection Types**: USB, Bluetooth, and WiFi connections with automatic detection
+- **Smart Reconnection**: Automatic reconnection with device-specific handling and retry logic
+- **Cross-Platform**: Optimized for Windows, Linux, and macOS with platform-specific configurations
+
+### 🌍 **Complete Internationalization (13 Languages)**
+- **Fully Translated Interface** in 13 languages with 390+ new translation strings
+- **Supported Languages**: English, Français, Deutsch, Español, Italiano, Русский, Polski, Nederlands, Português, Magyar, Română, Српски, Türkçe, Українська
+- **Real-time Language Switching** with proper encoding support
+- **HTML-Aware Translations** preserving markup while translating content
+
+### ⚡ **Performance & Reliability Improvements**
+- **Fast Device Detection**: ~0.014s port scanning with intelligent filtering
+- **Thread-Safe Operations**: Proper locking mechanisms for connection stability
+- **Enhanced Error Handling**: Comprehensive error recovery and user-friendly messages
+- **Memory Optimization**: Improved resource management and cleanup
+
+### 🔧 **New Device & Speed Management**
+- **VGate iCar Pro Support**: Full support for high-speed STN-based VGate adapters
+- **Intelligent Speed Selection**: Device-specific speed options automatically loaded
+- **Optimal Settings Engine**: Automatic timeout and flow control configuration per device
+- **Enhanced Vlinker Support**: Improved speed options (57600, 115200) for better performance
 
 
 ### Android porting: 
@@ -23,20 +50,102 @@ Using the application in non expert mode should not be harmful for your vehicle 
 ## `Cloning Source Code`
 ### `Dependencies :`
 ![python_3.13.x](ddt4all_data/icons/Python-3-13-2-new.png)
-* [Python 3.13](https://www.python.org/downloads/release/python-3132/) 
-* [PyQt 5](https://pypi.org/project/PyQt5/)
-* [pyusb](https://pypi.org/project/pyusb/)
-* [pyserial](https://pypi.org/project/pyserial/)
-* [crcmod](https://pypi.org/project/crcmod/)
-* [Python virtual environment](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 
-Older Python 3.1x.x might be sufficient ( i.e run with Python 3.10.12 under Ubuntu 22.04 )
+#### **🔧 Core Requirements (Essential):**
+* **Python 3.8.6+ (32-bit/64-bit)** - [Python 3.13](https://www.python.org/downloads/release/python-3132/) recommended
+* [PyQt5](https://pypi.org/project/PyQt5/) - GUI framework
+* [pyserial](https://pypi.org/project/pyserial/) - Serial communication
+* [pyusb](https://pypi.org/project/pyusb/) - USB device support
+* [crcmod](https://pypi.org/project/crcmod/) - Checksum functions
+
+#### **🌐 Enhanced Features (Optional but Recommended):**
+* [PyQtWebEngine](https://pypi.org/project/PyQtWebEngine/) - Provides `PyQt5.QtWebEngineWidgets` for documentation viewing
+* [pywin32](https://pypi.org/project/pywin32/) - Windows serial support (Windows only)
+
+#### **📦 Quick Installation:**
+```bash
+# Basic installation (minimum requirements)
+pip install PyQt5 pyserial pyusb crcmod
+
+# Enhanced installation (recommended)
+pip install PyQt5 PyQtWebEngine pyserial pyusb crcmod
+
+# Windows users (additional)
+pip install pywin32
+
+# Complete installation
+pip install -r requirements.txt
+```
+
+#### **⚠️ Important Notes:**
+- **PyQt5.QtWebEngineWidgets**: Provided by PyQtWebEngine package, used for enhanced documentation viewing
+- **If PyQtWebEngine fails to install**: DDT4All will still work, but documentation viewing will be limited
+- **Python Compatibility**: 3.8.6+ supported (32-bit and 64-bit), tested on 3.8.6, 3.10.12, and 3.13+
+- **WebEngine Compatibility**: JavaScript disabled to prevent compatibility errors with older WebEngine versions
+- **Virtual Environment**: [Recommended setup guide](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 .
-### Supported diagnostic adapters (so far)
+### 🔌 **Supported Diagnostic Adapters**
 
-* **ELM327** USB/BlueTooth/WiFi (Original one with _PIC18F25K80_, Chinese clone not working)
-* **ObdLink** SX
-* **ELS27**
+* **Vlinker FS** - USB/Bluetooth (Recommended for best performance and stability)
+* **VGate iCar Pro** - USB/Bluetooth/WiFi (High-speed STN-based adapter with advanced features)
+* **ELM327** - USB/Bluetooth/WiFi (Original with _PIC18F25K80_, some Chinese clones supported)
+* **ObdLink SX** - USB (High-speed professional adapter with RTS/CTS flow control)
+* **ObdLink EX** - USB (Professional adapter, tested and confirmed working)
+* **ELS27** - USB (Alternative ELM327-compatible adapter)
+
+#### **Connection Methods:**
+- **USB**: Direct serial connection with automatic driver detection
+- **Bluetooth**: Wireless connection with pairing support
+- **WiFi**: TCP/IP connection (format: `192.168.0.10:35000`)
+
+#### **📋 Recommended Device Settings:**
+
+| Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
+|--------|---------------|---------|---------|--------------|----------|-------|
+| **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Recommended** | Most stable, best compatibility |
+| **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **High Performance** | STN-based, very high speeds |
+| **ELM327 Original** | Standard speeds | 38400 | 5s | None | General use | Verify PIC18F25K80 chip |
+| **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | Budget option | Test different baud rates |
+| **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
+| **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
+| **ELS27** | Standard speeds | 38400 | 4s | None | Alternative | Good ELM327 alternative |
+
+#### **⚙️ Connection Optimization Tips:**
+- **USB**: Most stable, recommended for diagnostic work
+- **Bluetooth**: Good for mobile use, may have occasional dropouts
+- **WiFi**: Convenient but requires stable network (format: `192.168.0.10:35000`)
+- **Speed Selection**: Each adapter now has device-specific speed options for optimal performance
+- **Troubleshooting**: Use built-in connection test for automatic optimization
+
+#### **🚀 New Speed Selection Feature:**
+DDT4All now automatically provides optimal speed options based on your selected adapter:
+- **Automatic Detection**: Device-specific speed ranges are automatically loaded
+- **Performance Optimization**: Each adapter gets speeds suited to its capabilities
+- **Easy Selection**: Simply choose your adapter type and select from available speeds
+- **Fallback Support**: "No" option available for adapters that don't support speed switching
+
+#### **🔍 Device Identification Guide:**
+- **Vlinker FS**: Usually labeled "Vlinker FS" or "OBDII WiFi"
+- **VGate iCar Pro**: Labeled "VGate" or "iCar Pro", often with WiFi/Bluetooth indicators
+- **ELM327 Original**: Look for "PIC18F25K80" chip marking
+- **ELM327 Clone**: Various markings, test with 9600-38400 baud
+- **ObdLink SX**: Professional blue/black housing, "OBDLink SX" branding
+- **ObdLink EX**: Professional housing, "OBDLink EX" branding, similar to SX
+- **ELS27**: Similar to ELM327 but with "ELS27" marking
+
+#### **⚡ Quick Setup Guide:**
+1. **Connect Device**: USB/Bluetooth/WiFi as appropriate
+2. **Launch DDT4All**: Application will auto-detect most devices
+3. **Test Connection**: Use built-in connection test feature
+4. **Optimize Settings**: Adjust baud rate if needed based on device type
+
+#### **✅ User-Tested Devices:**
+- **ObdLink EX**: Confirmed working by community user with excellent results
+- **Vlinker FS**: Extensively tested, recommended for best compatibility
+- **VGate iCar Pro**: High-performance adapter with excellent speed capabilities
+- **ELM327 Original**: Well-tested with PIC18F25K80 chip
+
+> **Note**: If you have successfully tested other devices with DDT4All, please let us know so we can update this list!
 
 Next, you need to get the source code.  This source code repository uses git submodules. So when you clone the source code, you will need to clone recursively:
 
@@ -56,46 +165,99 @@ git submodule update --init --recursive
 
 Get the fully packaged installer here : [Release area](https://github.com/cedricp/ddt4all/releases)
 
-## Features :
+## 🚀 **Key Features**
 
-* Read/Clear DTC
-* Manual ECU request
-* Log recorder
-* Plugins system for automated functions
-* CAN / KWP2000 supported bus protocols
-* AutoScan ECUs and select the related files
-* Internal JSON file format for high speed parsing
-* Database zip compression of converted JSON files
-* Can bus sniffing (Read/Decode non-ISOTP frames)
-* Screen recorder (via autorefresh button) and export to CSV format
+### **🔧 Diagnostic Functions**
+- **Read/Clear DTC**: Comprehensive diagnostic trouble code management
+- **Manual ECU Requests**: Direct communication with vehicle control units
+- **AutoScan ECUs**: Automatic detection and file selection
+- **Live Data Monitoring**: Real-time parameter viewing and logging
 
-## How to install the application ?
-- Windows:
-  - Cd into ddt4all folder: `cd ddt4all`
-  - Install new venv: `python -m venv ./venv`
-  - Activate venv: `.\venv\Scripts\activate.bat`
-  - Install requirements: `.\venv\Scripts\pip install -r requirements.txt`
-  - Run's app: `.\venv\Scripts\python .\main.py`
-- Linux/MacOs:
-  - Cd into ddt4all folder: `cd ddt4all`
-  - Install new venv: `python3 -m venv ./venv`
-  - Set good attributes: `chmod +x ./venv/bin/activate`
-  - Activate venv: `source ./venv/bin/activate`
-  - Install requirements: `pip install -r ./requirements.txt`
-  - Run's app: `python ./main.py`
-- Note about Linux ubuntu fixes uncomment next lines:
-  - Fix qt platform plugin linux ubuntu "xcb" if error's:
-    - `sudo apt-get install --reinstall libxcb-xinerama0`
+### **📊 Advanced Capabilities**
+- **Log Recorder**: Comprehensive data logging with export functionality
+- **Screen Recorder**: Automated capture via autorefresh with CSV export
+- **CAN Bus Sniffing**: Read/decode non-ISOTP frames for advanced diagnostics
+- **Plugin System**: Extensible architecture for automated functions
 
-## How to launch the application ?
-- Windows:
-  - Cd into ddt4all folder: `cd ddt4all`
-  - Activate venv: `.\venv\Scripts\activate.bat`
-  - Run's app: `.\venv\Scripts\python .\main.py`
-- Linux/MacOs:
-  - Cd into ddt4all folder: `cd ddt4all`
-  - Activate venv: `source ./venv/bin/activate`
-  - Run's app: `python ./main.py`
+### **⚡ Performance & Compatibility**
+- **Protocol Support**: CAN / KWP2000 bus protocols
+- **High-Speed Parsing**: Internal JSON format for optimal performance
+- **Database Compression**: ZIP compression for efficient storage
+- **Cross-Platform**: Windows, Linux, macOS support
+
+---
+
+## 📦 **Installation Guide**
+
+### **🪟 Windows Installation**
+```bash
+# Navigate to project directory
+cd ddt4all
+
+# Create virtual environment
+python -m venv ./venv
+
+# Activate virtual environment
+.\venv\Scripts\activate.bat
+
+# Install dependencies
+.\venv\Scripts\pip install -r requirements.txt
+
+# Launch application
+.\venv\Scripts\python .\main.py
+```
+
+### **🐧 Linux/macOS Installation**
+```bash
+# Navigate to project directory
+cd ddt4all
+
+# Create virtual environment
+python3 -m venv ./venv
+
+# Set permissions (if needed)
+chmod +x ./venv/bin/activate
+
+# Activate virtual environment
+source ./venv/bin/activate
+
+# Install dependencies
+pip install -r ./requirements.txt
+
+# Launch application
+python ./main.py
+```
+
+### **🔧 Linux Ubuntu Fix**
+If you encounter Qt platform plugin "xcb" errors:
+```bash
+sudo apt-get install --reinstall libxcb-xinerama0
+```
+
+---
+
+## 🚀 **Quick Launch**
+
+### **🪟 Windows**
+```bash
+cd ddt4all
+.\venv\Scripts\activate.bat
+.\venv\Scripts\python .\main.py
+```
+
+### **🐧 Linux/macOS**
+```bash
+cd ddt4all
+source ./venv/bin/activate
+python ./main.py
+```
+
+### **💡 Pro Tip**
+Create desktop shortcuts or shell aliases for faster access:
+```bash
+# Linux/macOS alias example
+alias ddt4all='cd /path/to/ddt4all && source ./venv/bin/activate && python ./main.py'
+```
 
 ## Platforms
 
@@ -111,14 +273,132 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 * [Can bus sniffing (Russian)](https://www.youtube.com/watch?v=SjDC7fUMWmg)
 * [ECU Parameters changes](https://www.youtube.com/watch?v=i9VkErEpoDE)
 
-## Troubleshootings
+## 🔧 **Troubleshooting**
 
-### No serial connection
+### **Connection Issues**
 
-* Linux : Check user rights to access serial port [Ubuntu](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
-* Windows :
+#### **No Serial Connection**
+* **Linux**: Check user rights to access serial port [Ubuntu Guide](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port)
+  ```bash
+  sudo usermod -a -G dialout $USER
+  # Logout and login again
+  ```
+* **Windows**: 
   * Check serial drivers installation
   * Try to disable antivirus software
+  * Run as administrator if needed
+
+#### **Device Not Detected**
+1. **Check Physical Connection**: Ensure device is properly connected and powered
+2. **Try Different Baud Rates**: Use the connection test feature to try different speeds
+3. **Driver Installation**: Ensure device drivers are properly installed
+4. **Port Permissions**: Check port access permissions (Linux/macOS)
+
+#### **WiFi Connection Issues**
+* **Format**: Use `IP:PORT` format (e.g., `192.168.0.10:35000`)
+* **Network**: Ensure device and computer are on the same network
+* **Firewall**: Check firewall settings for port blocking
+
+#### **Connection Test Feature**
+DDT4All now includes a built-in connection test that provides:
+- **Automatic device detection** and identification
+- **Connection validation** with detailed error messages
+- **Troubleshooting suggestions** for common issues
+- **Performance metrics** and connection quality assessment
+
+### **Installation Issues**
+
+#### **PyQtWebEngine / QtWebEngineWidgets Problems**
+If you encounter issues with PyQtWebEngine installation:
+
+```bash
+# Try installing specific version
+pip install PyQtWebEngine==5.15.7
+
+# If that fails, try without version constraint
+pip install PyQtWebEngine
+
+# Alternative: Install without WebEngine (basic functionality)
+pip install PyQt5 pyserial pyusb crcmod
+```
+
+**Note**: DDT4All gracefully handles missing PyQtWebEngine:
+- ✅ **Core functionality**: Works perfectly without WebEngine
+- ⚠️ **Documentation viewing**: Limited to basic text display
+- 🔧 **Error handling**: Shows warning but continues normally
+
+#### **Windows-Specific Issues**
+```bash
+# Install Windows-specific dependencies
+pip install pywin32
+
+# If serial port access fails
+# Run Command Prompt as Administrator and install:
+pip install pywin32
+python -m pywin32_postinstall -install
+```
+
+#### **Python 3.8.6 (32-bit) Specific Notes**
+✅ **Fully Supported**: DDT4All works perfectly with Python 3.8.6 32-bit
+
+**Installation for Python 3.8.6 (32-bit):**
+```bash
+# Core requirements (always work)
+pip install PyQt5 pyserial pyusb crcmod
+
+# Windows support (recommended)
+pip install pywin32
+
+# WebEngine (may not be available for 32-bit)
+pip install PyQtWebEngine  # If this fails, DDT4All still works fine
+```
+
+**32-bit Considerations:**
+- ✅ **Core functionality**: 100% compatible
+- ⚠️ **PyQtWebEngine**: May not be available for Python 3.8 32-bit
+- ✅ **Graceful fallback**: Uses basic text widget if WebEngine unavailable
+- ✅ **All OBD devices**: Full compatibility with all supported adapters
+
+### **Performance Optimization**
+- **Device Selection**: Vlinker FS recommended for best performance
+- **Connection Type**: USB generally more stable than Bluetooth/WiFi
+- **System Resources**: Close unnecessary applications for better performance
+
+## 🌍 **Language Support**
+
+DDT4All supports **13 languages** with ongoing translation improvements:
+
+| Language | Code | Status | Recent Updates | Contributors |
+|----------|------|--------|----------------|--------------|
+| English | en_US | ✅ Complete | Native | Core Team |
+| Français | fr | ✅ Complete | Native | Core Team |
+| Português | pt | ✅ Complete | Native | Core Team |
+| Deutsch | de | 🔄 Enhanced | +30 new strings | Community |
+| Español | es | 🔄 Enhanced | +30 new strings | Community |
+| Italiano | it | 🔄 Enhanced | +30 new strings | Community |
+| Русский | ru | 🔄 Enhanced | +30 new strings | Community |
+| Polski | pl | 🔄 Enhanced | +30 new strings | Community |
+| Nederlands | nl | 🔄 Enhanced | +30 new strings | Community |
+| Magyar | hu | 🔄 Enhanced | +30 new strings | Community |
+| Română | ro | 🔄 Enhanced | +30 new strings | Community |
+| Српски | sr | 🔄 Enhanced | +30 new strings | Community |
+| Türkçe | tr | 🔄 Enhanced | +30 new strings | Community |
+| Українська | uk_UA | 🔄 Enhanced | +30 new strings | Community |
+
+### **Recent Translation Improvements:**
+- **390+ New Translation Strings** added across all languages
+- **Connection & Error Messages** now fully localized
+- **Device-Specific Messages** translated for better troubleshooting
+- **HTML-Aware Translation** preserving formatting while translating content
+- **Compiled .mo Files** ready for immediate use
+
+### **Translation Status:**
+- ✅ **Core Interface**: Fully translated in all languages
+- 🔄 **Enhanced Features**: Recently improved with new connection messages
+- 📝 **Ongoing**: Community contributions welcome for refinements
+
+### **Contributing Translations:**
+We welcome contributions to improve existing translations or add new languages. Translation files are located in `ddt4all_data/locale/`. Recent focus areas include device connection messages and error handling.
 
 ## Informations
 

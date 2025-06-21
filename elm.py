@@ -11,6 +11,8 @@ import re
 import string
 import sys
 import time
+import threading
+import platform
 from datetime import datetime
 
 import serial
@@ -200,7 +202,6 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
-
 def addr_exist(addr):
     result = True
     if addr not in dnat:
@@ -242,28 +243,113 @@ def item_count(items):
 
 
 def get_available_ports():
+    """Get available serial ports"""
     ports = []
-    portlist = list_ports.comports()
+    try:
+        portlist = list_ports.comports()
+        
+        if item_count(portlist) == 0:
+            return []
 
-    if item_count(portlist) == 0:
-        return
-
-    iterator = sorted(list(portlist))
-    for port, desc, hwid in iterator:
-        ports.append((port, desc))
+        iterator = sorted(list(portlist))
+        for port, desc, hwid in iterator:
+            # Add all serial ports - let the user/application decide which ones to use
+            ports.append((port, desc, hwid))
+                
+    except Exception as e:
+        print(f"Error detecting serial ports: {e}")
+        # Fallback: try common port patterns
+        common_ports = []
+        if platform.system().lower() == 'windows':
+            common_ports = [f'COM{i}' for i in range(1, 21)]
+        elif platform.system().lower() == 'linux':
+            common_ports = [f'/dev/ttyUSB{i}' for i in range(0, 5)] + \
+                          [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
+                          [f'/dev/rfcomm{i}' for i in range(0, 5)]
+        elif platform.system().lower() == 'darwin':
+            import glob
+            common_ports = glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
+        
+        for port in common_ports:
+            try:
+                # Test if port exists and is accessible
+                test_serial = serial.Serial(port, timeout=0.1)
+                test_serial.close()
+                ports.append((port, "Unknown Device", ""))
+            except:
+                continue
 
     return ports
 
 
+class DeviceManager:
+    """Device manager for OBD-II adapters with optimal settings"""
+    
+    @staticmethod
+    def get_optimal_settings(device_type):
+        """Get optimal connection settings for specific device types"""
+        settings = {
+            'vlinker': {'baudrate': 38400, 'timeout': 3, 'rtscts': False},
+            'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False},
+            'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True},
+            'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False},
+            'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False},  # VGate high-speed capable
+            'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False}
+        }
+        return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
+    
+    @staticmethod
+    def normalize_adapter_type(adapter_type):
+        """Normalize UI adapter types to internal device types"""
+        adapter_mapping = {
+            'STD_BT': 'elm327',      # Bluetooth ELM327
+            'STD_WIFI': 'elm327',    # WiFi ELM327  
+            'STD_USB': 'elm327',     # USB ELM327
+            'STD': 'elm327',         # Standard ELM327
+            'OBDLINK': 'obdlink',    # OBDLink devices
+            'ELS27': 'els27',        # ELS27 devices
+            'VLINKER': 'vlinker',    # Vlinker devices
+            'VGATE': 'vgate'         # VGate vLinker devices
+        }
+        return adapter_mapping.get(adapter_type, 'elm327')
+    
 def reconnect_elm():
+    """Enhanced reconnection with device-specific handling"""
     ports = get_available_ports()
     current_adapter = "STD"
     if options.elm:
         current_adapter = options.elm.adapter_type
-    for port, desc in ports:
-        if desc == options.port_name:
-            options.elm = ELM(port, options.port_speed, current_adapter)
-            return True
+    
+    # Try to reconnect to the same port first
+    if options.port_name:
+        for port_info in ports:
+            port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
+            if port == options.port_name or desc == options.port_name:
+                print(f"Attempting reconnection to {port}")
+                try:
+                    options.elm = ELM(port, options.port_speed, current_adapter)
+                    if options.elm.connectionStatus:
+                        return True
+                except Exception as e:
+                    print(f"Reconnection failed: {e}")
+                    continue
+    
+    # Try other available ports
+    for port_info in ports:
+        port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
+        optimal_settings = DeviceManager.get_optimal_settings(current_adapter)
+        
+        print(f"Trying {current_adapter} device at {port}")
+        try:
+            options.elm = ELM(port, optimal_settings['baudrate'], current_adapter)
+            if options.elm.connectionStatus:
+                options.port_name = port
+                options.port_speed = optimal_settings['baudrate']
+                return True
+        except Exception as e:
+            print(f"Connection to {port} failed: {e}")
+            continue
+    
     return False
 
 
@@ -275,158 +361,296 @@ def errorval(val):
 
 
 class Port:
-    '''This is a serial port or a TCP-connection
-       if portName looks like a 192.168.0.10:35000
-       then it is wifi and we should open tcp connection
-       else try to open serial port
+    '''Enhanced serial port and TCP connection handler
+       Supports USB, Bluetooth, WiFi OBD-II devices with cross-platform compatibility
+       - Serial ports: USB ELM327, Vlinker FS, ObdLink SX, ELS27
+       - TCP/WiFi: WiFi ELM327 adapters (192.168.0.10:35000 format)
+       - Bluetooth: Bluetooth ELM327 adapters
     '''
     connectionStatus = False
-    portType = 0  # 0-serial 1-tcp
+    portType = 0  # 0-serial 1-tcp 2-bluetooth
     ipaddr = '192.168.0.10'
     tcpprt = 35000
     portName = ""
-    portTimeout = 5  # don't change it here. Change in ELM class
-
     droid = None
     btcid = None
 
     hdr = None
-
+    _lock = None  # Thread lock for connection safety
     tcp_needs_reconnect = False
+    reconnect_attempts = 0
+    max_reconnect_attempts = 3
 
-    def __init__(self, portName, speed, portTimeout):
+    def __init__(self, portName, speed, adapter_type):
         options.elm_failed = False
-        self.portTimeout = portTimeout
+        self.adapter_type = adapter_type
+        self._lock = threading.Lock()
+        self.reconnect_attempts = 0
 
         portName = portName.strip()
 
+        # WiFi/TCP connection (e.g., 192.168.0.10:35000)
         if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", portName):
             import socket
             self.ipaddr, self.tcpprt = portName.split(':')
             self.tcpprt = int(self.tcpprt)
             self.portType = 1
+            self.portName = portName
             self.init_wifi()
+        # Bluetooth connection detection (common Bluetooth patterns)
+        elif any(bt_pattern in portName.lower() for bt_pattern in ['rfcomm', 'bluetooth', 'bt']):
+            self.portName = portName
+            self.portType = 2
+            self.init_bluetooth()
+        # Serial/USB connection
         else:
             self.portName = portName
             self.portType = 0
-            try:
-                self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout,
-                                         parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
-                print(self.hdr)
-                self.connectionStatus = True
-                return
-            except Exception as e:
-                print(_("Error: ") + str(e))
-                print(_("ELM not connected or wrong COM port"), portName)
-                options.last_error = _("Error: ") + str(e)
-                options.elm_failed = True
+            self.init_serial(speed)
+
+    def init_serial(self, speed):
+        """Initialize serial/USB connection with enhanced error handling"""
+        try:
+            # Get device-specific optimal settings
+            optimal_settings = DeviceManager.get_optimal_settings(self.adapter_type)
+            print(f"Using optimal settings for {self.adapter_type}: {optimal_settings}")
+            
+            # Platform-specific serial port configuration
+            current_platform = platform.system().lower()
+            
+            # Enhanced serial parameters using device-specific settings
+            serial_params = {
+                'port': self.portName,
+                'baudrate': speed,
+                'timeout': optimal_settings.get('timeout', 5),
+                'parity': serial.PARITY_NONE,
+                'stopbits': serial.STOPBITS_ONE,
+                'bytesize': serial.EIGHTBITS,
+                'xonxoff': False,
+                'rtscts': optimal_settings.get('rtscts', False),
+                'dsrdtr': False
+            }
+            
+            # Platform-specific adjustments
+            if current_platform == 'linux':
+                # Linux: Set exclusive access to prevent conflicts
+                serial_params['exclusive'] = True
+            elif current_platform == 'darwin':
+                # macOS: Specific settings for USB-serial adapters
+                serial_params['rtscts'] = False
+                serial_params['dsrdtr'] = False
+            
+            self.hdr = serial.Serial(**serial_params)
+            
+            # Flush buffers to ensure clean start
+            self.hdr.reset_input_buffer()
+            self.hdr.reset_output_buffer()
+            
+            print(f"Serial port opened: {self.hdr}")
+            self.connectionStatus = True
+            
+        except serial.SerialException as e:
+            error_msg = f"Serial connection error: {e}"
+            print(_("Error: ") + error_msg)
+            print(_("ELM not connected or wrong COM port"), self.portName)
+            options.last_error = error_msg
+            options.elm_failed = True
+            self.connectionStatus = False
+        except Exception as e:
+            error_msg = f"Unexpected error: {e}"
+            print(_("Error: ") + error_msg)
+            options.last_error = error_msg
+            options.elm_failed = True
+            self.connectionStatus = False
+
+    def init_bluetooth(self):
+        """Initialize Bluetooth connection"""
+        try:
+            # For now, treat Bluetooth as serial with special handling
+            # Future enhancement: implement proper Bluetooth socket handling
+            self.init_serial(38400, self.portTimeout)
+            print(f"Bluetooth connection attempted: {self.portName}")
+        except Exception as e:
+            print(f"Bluetooth connection failed: {e}")
+            options.elm_failed = True
+            self.connectionStatus = False
 
     def close(self):
-        try:
-            self.hdr.close()
-            print(_("Port closed"))
-        except (AttributeError, OSError):
-            pass
+        """Enhanced close method with proper cleanup"""
+        with self._lock:
+            try:
+                if self.hdr:
+                    if self.portType == 0:  # Serial
+                        if hasattr(self.hdr, 'reset_input_buffer'):
+                            self.hdr.reset_input_buffer()
+                        if hasattr(self.hdr, 'reset_output_buffer'):
+                            self.hdr.reset_output_buffer()
+                    self.hdr.close()
+                    print(_("Port closed"))
+                self.connectionStatus = False
+            except (AttributeError, OSError, Exception) as e:
+                print(f"Error closing port: {e}")
+            finally:
+                self.hdr = None
 
     def init_wifi(self, reinit=False):
         '''
-        Needed for wifi adapters with short connection timeout
+        Enhanced WiFi/TCP connection with better error handling and reconnection
         '''
         if self.portType != 1:
             return
 
         import socket
 
-        if reinit:
-            self.hdr.close()
-        self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         try:
+            if reinit and self.hdr:
+                self.hdr.close()
+                
+            self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+            self.hdr.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            
+            # Set connection timeout
+            self.hdr.settimeout(10)  # 10 seconds for connection
+            
+            print(f"Connecting to WiFi adapter at {self.ipaddr}:{self.tcpprt}")
             self.hdr.connect((self.ipaddr, self.tcpprt))
-            if getattr(options, "sockettimeout", True):
+            
+            # Configure socket timeout based on settings
+            if getattr(options, "socket_timeout", True):
                 self.hdr.settimeout(5)
             else:
                 self.hdr.setblocking(True)
+                
             self.connectionStatus = True
-        except:
+            self.tcp_needs_reconnect = False
+            self.reconnect_attempts = 0
+            print(f"WiFi connection established: {self.ipaddr}:{self.tcpprt}")
+            
+        except socket.timeout:
+            error_msg = f"WiFi connection timeout to {self.ipaddr}:{self.tcpprt}"
+            print(_("Error: ") + error_msg)
+            options.last_error = error_msg
             options.elm_failed = True
+            self.connectionStatus = False
+        except socket.error as e:
+            error_msg = f"WiFi connection error: {e}"
+            print(_("Error: ") + error_msg)
+            options.last_error = error_msg
+            options.elm_failed = True
+            self.connectionStatus = False
+        except Exception as e:
+            error_msg = f"Unexpected WiFi error: {e}"
+            print(_("Error: ") + error_msg)
+            options.last_error = error_msg
+            options.elm_failed = True
+            self.connectionStatus = False
 
     def read_byte(self):
-        try:
-            byte = b""
-            if self.portType == 1:
-                import socket
-                try:
-                    byte = self.hdr.recv(1)
-                    print(str(byte))
-                except socket.timeout:
-                    self.tcp_needs_reconnect = True
-                except Exception as e:
-                    print(e)
-            elif self.portType == 2:
-                if self.droid.bluetoothReadReady():
-                    byte = self.droid.bluetoothRead(1).result
-            else:
-                if self.hdr.inWaiting():
-                    byte = self.hdr.read()
-        except:
-            print('*' * 40)
-            print('*       ' + _('Connection to ELM was lost'))
-            self.connectionStatus = False
-            self.close()
-            return None
-
-        return byte
+        """Enhanced read_byte with better error handling and reconnection"""
+        with self._lock:
+            try:
+                byte = b""
+                if self.portType == 1:  # TCP/WiFi
+                    import socket
+                    try:
+                        byte = self.hdr.recv(1)
+                        if options.debug:
+                            print(f"WiFi recv: {byte}")
+                    except socket.timeout:
+                        self.tcp_needs_reconnect = True
+                        return None
+                    except (socket.error, ConnectionResetError) as e:
+                        print(f"WiFi connection error: {e}")
+                        self.tcp_needs_reconnect = True
+                        return None
+                elif self.portType == 2:  # Bluetooth
+                    if self.droid and self.droid.bluetoothReadReady():
+                        byte = self.droid.bluetoothRead(1).result
+                    else:
+                        # Fallback to serial read for Bluetooth-serial adapters
+                        if self.hdr and hasattr(self.hdr, 'in_waiting') and self.hdr.in_waiting:
+                            byte = self.hdr.read(1)
+                else:  # Serial/USB
+                    if self.hdr and hasattr(self.hdr, 'in_waiting') and self.hdr.in_waiting:
+                        byte = self.hdr.read(1)
+                    elif self.hdr and hasattr(self.hdr, 'inWaiting') and self.hdr.inWaiting():
+                        byte = self.hdr.read(1)
+                        
+                return byte
+                
+            except serial.SerialException as e:
+                print(f"Serial error in read_byte: {e}")
+                self.connectionStatus = False
+                return None
+            except Exception as e:
+                print('*' * 40)
+                print('*       ' + _('Connection to ELM was lost'))
+                print(f'*       Error: {e}')
+                self.connectionStatus = False
+                self.close()
+                return None
 
     def read(self):
+        """Enhanced read method with better error handling"""
         try:
-            byte = b""
-            if self.portType == 1:
-                import socket
-                try:
-                    byte = self.hdr.recv(1)
-                    print(str(byte))
-                except socket.timeout:
-                    self.tcp_needs_reconnect = True
-                except Exception as e:
-                    print(e)
-            elif self.portType == 2:
-                if self.droid.bluetoothReadReady():
-                    byte = self.droid.bluetoothRead(1).result
-            else:
-                if self.hdr.inWaiting():
-                    byte = self.hdr.read()
-        except:
-            print('*' * 40)
-            print('*       ' + _('Connection to ELM was lost'))
-            self.connectionStatus = False
-            self.close()
+            byte = self.read_byte()
+            if byte is None:
+                return None
+                
+            try:
+                return byte.decode("utf-8")
+            except UnicodeDecodeError:
+                # Try different encodings
+                for encoding in ['latin1', 'ascii', 'cp1252']:
+                    try:
+                        return byte.decode(encoding)
+                    except:
+                        continue
+                print(_("Cannot decode bytes ") + str(byte))
+                return ""
+        except Exception as e:
+            print(f"Error in read(): {e}")
             return None
-        try:
-            return byte.decode("utf-8")
-        except:
-            print(_("Cannot decode bytes ") + str(byte))
-            return ""
 
     def change_rate(self, rate):
         self.hdr.baudrate = rate
 
     def write(self, data):
-        try:
-            if self.portType == 1:
-                if self.tcp_needs_reconnect:
-                    self.tcp_needs_reconnect = False
-                    self.init_wifi(True)
-                return self.hdr.sendall(data)
-            elif self.portType == 2:
-                return self.droid.bluetoothWrite(data)
-            else:
-                return self.hdr.write(data)
-        except:
-            print('*' * 40)
-            print('*       ' + _('Connection to ELM was lost'))
-            self.connectionStatus = False
-            self.close()
+        """Enhanced write method with automatic reconnection and better error handling"""
+        with self._lock:
+            try:
+                if not isinstance(data, bytes):
+                    data = data.encode('utf-8')
+                    
+                if self.portType == 1:  # TCP/WiFi
+                    if self.tcp_needs_reconnect:
+                        print("Attempting WiFi reconnection...")
+                        self.tcp_needs_reconnect = False
+                        self.init_wifi(True)
+                        if not self.connectionStatus:
+                            return None
+                    return self.hdr.sendall(data)
+                elif self.portType == 2:  # Bluetooth
+                    if self.droid:
+                        return self.droid.bluetoothWrite(data)
+                    else:
+                        # Fallback to serial write for Bluetooth-serial adapters
+                        return self.hdr.write(data)
+                else:  # Serial/USB
+                    return self.hdr.write(data)
+                    
+            except serial.SerialException as e:
+                print(f"Serial write error: {e}")
+                self.connectionStatus = False
+                return None
+            except Exception as e:
+                print('*' * 40)
+                print('*       ' + _('Connection to ELM was lost'))
+                print(f'*       Write error: {e}')
+                self.connectionStatus = False
+                self.close()
+                return None
 
     def expect_carriage_return(self, time_out=1):
         tb = time.time()  # start time
@@ -541,6 +765,7 @@ class ELM:
     currentaddress = ""
     startSession = ""
     lastinitrsp = ""
+    adapter_type = "STD"  # ELM adapter type: STD, OBDLINK, etc.
 
     rsp_cache = {}
     l1_cache = {}
@@ -555,20 +780,21 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, rate, adapter_type="STD", maxspeed="No"):
+    def __init__(self, portName, rate, adapter_type, maxspeed="No"):
+        self.adapter_type = adapter_type
+        options.port_speed = rate
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
-            self.sim_mode = options.simulation_mode
-            self.portName = portName
-            self.adapter_type = adapter_type
 
             if not options.simulation_mode:
-                self.port = Port(portName, speed, self.portTimeout)
+                self.port = Port(portName, speed, self.adapter_type)
 
             if options.elm_failed:
                 self.connectionStatus = False
                 # Try one other speed ...
                 continue
+
+            options.port_speed = speed
 
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
@@ -599,25 +825,68 @@ class ELM:
             maxspeed = int(maxspeed)
         except:
             maxspeed = 0
-
+          
+        device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
+        text_switck_error = _("Failed to switch to change OBDLink to ") + str(maxspeed)
+        text_optional = _("OBDLINK Connection OK, using optimal settings")
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(_("OBDLink Connection OK, attempting full speed UART switch"))
+            print(device_text_switch.replace("OBDLink", "OBDLink"))
             try:
-                self.raise_odb_speed(maxspeed)
+                self.raise_odb_speed(maxspeed, "OBDLink")
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(_("Failed to switch to change OBDLink to ") + str(maxspeed))
+                print(text_switck_error.replace("OBDLink", "OBDLink"))
+        elif adapter_type == "OBDLINK":
+            print(text_optional.replace("OBDLink", "OBDLink"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(_("ELM Connection OK, attempting high speed UART switch"))
+            print(device_text_switch.replace("OBDLink", "ELM"))
             try:
                 self.raise_elm_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(_("Failed to switch to change ELM to ") + str(maxspeed))
+                print(text_switck_error.replace("OBDLink", "ELM"))
+        elif adapter_type == "STD_USB":
+            print(text_optional.replace("OBDLink", "ELM")   )
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "VLINKER" and maxspeed > 0 and rate != maxspeed:
+            print(device_text_switch.replace("OBDLink", "Vlinker"))
+            try:
+                self.raise_elm_speed(maxspeed)
+            except:
+                options.elm_failed = True
+                self.connectionStatus = False
+                print(text_switck_error.replace("OBDLink", "Vlinker"))
+        elif adapter_type == "VLINKER":
+            print(text_optional.replace("OBDLink", "Vlinker"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "VGATE" and maxspeed > 0 and rate != maxspeed:
+            print(device_text_switch.replace("OBDLink", "Vgate"))
+            try:
+                self.raise_odb_speed(maxspeed, "VGate")
+            except:
+                options.elm_failed = True
+                self.connectionStatus = False
+                print(text_switck_error.replace("OBDLink", "VGate"))
+        elif adapter_type == "VGATE":
+            print(text_optional.replace("OBDLink", "VGate"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "ELS27":
+            print(text_optional.replace("OBDLink", "ELS27"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type in ["STD_BT", "STD_WIFI"]:
+            print(text_optional.replace("OBDLink", adapter_type))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
 
-    def raise_odb_speed(self, baudrate):
+    def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
         # Software speed switch
         res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
 
@@ -626,13 +895,16 @@ class ELM:
         # Command result
         res = self.port.expect_carriage_return()
         if "OK" in res:
-            print(_("OBDLINK switched baurate OK, changing UART speed now..."))
+            text = _("OBDLINK switched baurate OK, changing UART speed now...").replace("OBDLINK", device_name)
+            print(text)
             self.port.change_rate(baudrate)
             time.sleep(0.5)
             res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
             if "STN" in res:
-                print(_("OBDLink full speed connection OK"))
-                print(_("OBDLink Version ") + res)
+                text1 = _("OBDLINK full speed connection OK").replace("OBDLINK", device_name)
+                print(text1)
+                text2 = _("OBDLink Version ").replace("OBDLINK", device_name) + res
+                print(text2)
             else:
                 raise
         else:
@@ -675,7 +947,10 @@ class ELM:
 
     def __del__(self):
         try:
-            print(_("ELM reset..."))
+            if _ is not None:
+                print(_("ELM reset..."))
+            else:
+                print("ELM reset...")
             self.port.write("ATZ\r".encode("utf-8"))
         except (AttributeError, OSError):
             pass
@@ -1419,17 +1694,46 @@ class ELM:
         self.cmd("AT AT 1")  # enable adaptive timing
         return True
 
-
-def elm_checker(port, speed, logview, app):
+def elm_checker(port, speed, adapter, logview, app):
+    """Enhanced ELM327 checker with better error handling and device detection"""
     good = 0
     total = 0
     pycom = 0
     vers = ''
+    
+    try:
+        # Use optimal settings for the adapter type
+        optimal_settings = DeviceManager.get_optimal_settings(adapter)
+        speed = optimal_settings.get('baudrate', speed)
 
-    elm = ELM(port, speed)
-    if options.elm_failed:
+        logview.append(_("Connecting to device at port: ") + str(port))
+        logview.append(_("Using baudrate: ") + str(speed))
+        
+        options.elm = ELM(port, speed, adapter)
+
+        if options.elm_failed:
+            logview.append(_("Connection failed: ") + str(options.last_error))
+            return False
+            
+        options.elm.portTimeout = 5
+        
+        # Test basic connectivity
+        logview.append(_("Testing basic connectivity..."))
+        test_response = options.elm.send_raw("ATZ")  # Reset command
+        if not test_response or "ELM" not in test_response:
+            logview.append(_("Warning: Device may not be ELM327 compatible"))
+        else:
+            logview.append(_("ELM327 device detected successfully"))
+            
+        # Get version information
+        version_response = options.elm.send_raw("ATI")
+        if version_response:
+            vers = version_response.strip()
+            logview.append(_("Device version: ") + vers)
+            
+    except Exception as e:
+        logview.append(_("Connection error: ") + str(e)) 
         return False
-    elm.portTimeout = 5
 
     for st in cmdb.split('#'):
         cm = st.split(';')
@@ -1440,7 +1744,7 @@ def elm_checker(port, speed, logview, app):
 
             if len(cm[2].strip()):
 
-                res = elm.send_raw(cm[2])
+                res = options.elm.send_raw(cm[2])
 
                 if 'H' in cm[1].upper():
                     continue

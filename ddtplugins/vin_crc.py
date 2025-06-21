@@ -7,6 +7,7 @@ from binascii import hexlify
 from binascii import unhexlify
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 import crcmod.predefined
 
@@ -36,6 +37,10 @@ def calc_crc(vin=None):
 class CrcWidget(gui.QDialog):
     def __init__(self):
         super(CrcWidget, self).__init__(None)
+        # Set window icon
+        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("CRC Calculator"))
         layout = gui.QVBoxLayout()
         self.input = gui.QLineEdit()
         self.output = gui.QLineEdit()
