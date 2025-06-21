@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-20 05:25+0200\n"
-"PO-Revision-Date: 2025-06-20 05:49+0200\n"
+"POT-Creation-Date: 2025-06-21 16:50+0200\n"
+"PO-Revision-Date: 2025-06-21 17:01+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -382,18 +382,18 @@ msgstr "Connexion OBDLink OK, tentative de commutation UART à pleine vitesse"
 msgid "Failed to switch to change OBDLink to "
 msgstr "Échec du basculement pour remplacer OBDLink par "
 
-msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr "Connexion ELM OK, tentative de commutation UART haute vitesse"
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr "OBDLINK Connexion réussi, utilisation des paramètres optimisées"
 
-msgid "Failed to switch to change ELM to "
-msgstr "Échec du changement pour changer ELM en "
+msgid "Connection established successfully"
+msgstr "Connexion établie avec succès"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 "OBDLINK a commuté le baurate OK, changeant la vitesse UART maintenant..."
 
-msgid "OBDLink full speed connection OK"
-msgstr "Connexion pleine vitesse OBDLink OK"
+msgid "OBDLINK full speed connection OK"
+msgstr "Connexion pleine vitesse OBDLINK OK"
 
 msgid "OBDLink Version "
 msgstr "Version OBDLink "
@@ -490,6 +490,26 @@ msgstr "Data base introuvable"
 
 msgid "Check documentation"
 msgstr "Veuillez voir la documentation"
+
+msgid "DDT4All Documentation"
+msgstr "DDT4All Documentation"
+
+msgid "WebEngine not available."
+msgstr "Dependence WebEngine non disponible."
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+"Pour une documentation complète avec possibilité de navigation sur le web, "
+"installez PyQtWebEngine :"
+
+msgid "Visit the online documentation at:"
+msgstr "Visitez la documentation en ligne dans le lien:"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr ""
+"Cette vue de base permet toujours d'afficher la documentation de l'ECU "
+"lorsqu'elle est disponible."
 
 msgid "Refresh rate (ms):"
 msgstr "Vitesse rafraichissement (ms):"
@@ -1401,6 +1421,12 @@ msgstr "<font color='green'>GRANDE VITESSE EFFACÉE</font>"
 
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>ÉCHEC EFFACEMENT EFFACEMENT GRANE VITESSE</font>"
+
+#~ msgid "ELM Connection OK, attempting high speed UART switch"
+#~ msgstr "Connexion ELM OK, tentative de commutation UART haute vitesse"
+
+#~ msgid "Failed to switch to change ELM to "
+#~ msgstr "Échec du changement pour changer ELM en "
 
 #~ msgid "Edit"
 #~ msgstr "Éditer"

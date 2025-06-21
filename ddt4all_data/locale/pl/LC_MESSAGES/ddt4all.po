@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-20 05:25+0200\n"
-"PO-Revision-Date: 2025-06-20 05:43+0200\n"
+"POT-Creation-Date: 2025-06-21 16:50+0200\n"
+"PO-Revision-Date: 2025-06-21 17:02+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -383,16 +383,20 @@ msgstr "OBDLink Połączenie OK, próba zmiany na pełną prędkość UART"
 msgid "Failed to switch to change OBDLink to "
 msgstr "Nieudane przełączenie OBDLink na "
 
-msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr "ELM Połączenie OK, próba zmiany na wyższą prędkość UART"
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr ""
 
-msgid "Failed to switch to change ELM to "
-msgstr "Nieudane przełączenie ELM na "
+#, fuzzy
+#| msgid "Connection test successful!"
+msgid "Connection established successfully"
+msgstr "Connection test successful!"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr "OBDLINK zmieniona prędkość OK, zmiana prędkości UART..."
 
-msgid "OBDLink full speed connection OK"
+#, fuzzy
+#| msgid "OBDLink full speed connection OK"
+msgid "OBDLINK full speed connection OK"
 msgstr "OBDLink pełna prędkość połączenia OK"
 
 msgid "OBDLink Version "
@@ -492,6 +496,26 @@ msgstr "Nie znaleziono bazy danych"
 
 msgid "Check documentation"
 msgstr "Sprawdź dokumentację"
+
+#, fuzzy
+#| msgid "Documentation"
+msgid "DDT4All Documentation"
+msgstr "Dokumentacja"
+
+msgid "WebEngine not available."
+msgstr ""
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+
+#, fuzzy
+#| msgid "Check documentation"
+msgid "Visit the online documentation at:"
+msgstr "Sprawdź dokumentację"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr ""
 
 msgid "Refresh rate (ms):"
 msgstr "Prędkość odświeżania (ms):"
@@ -1437,6 +1461,12 @@ msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
 #| msgid "<font color='red'>CLEAR FAILED</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
+
+#~ msgid "ELM Connection OK, attempting high speed UART switch"
+#~ msgstr "ELM Połączenie OK, próba zmiany na wyższą prędkość UART"
+
+#~ msgid "Failed to switch to change ELM to "
+#~ msgstr "Nieudane przełączenie ELM na "
 
 #~ msgid "Edit"
 #~ msgstr "Edytuj"

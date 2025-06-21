@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-20 05:25+0200\n"
-"PO-Revision-Date: 2025-06-20 05:45+0200\n"
+"POT-Creation-Date: 2025-06-21 16:50+0200\n"
+"PO-Revision-Date: 2025-06-21 17:08+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -398,16 +398,18 @@ msgstr ""
 msgid "Failed to switch to change OBDLink to "
 msgstr ""
 
-msgid "ELM Connection OK, attempting high speed UART switch"
+msgid "OBDLINK Connection OK, using optimal settings"
 msgstr ""
 
-msgid "Failed to switch to change ELM to "
-msgstr ""
+#, fuzzy
+#| msgid "Connection test successful!"
+msgid "Connection established successfully"
+msgstr "Connection test successful!"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 
-msgid "OBDLink full speed connection OK"
+msgid "OBDLINK full speed connection OK"
 msgstr ""
 
 #, fuzzy
@@ -514,6 +516,22 @@ msgid "No database found"
 msgstr ""
 
 msgid "Check documentation"
+msgstr ""
+
+msgid "DDT4All Documentation"
+msgstr ""
+
+msgid "WebEngine not available."
+msgstr ""
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+
+msgid "Visit the online documentation at:"
+msgstr ""
+
+msgid "This basic view will still show ECU documentation when available."
 msgstr ""
 
 msgid "Refresh rate (ms):"

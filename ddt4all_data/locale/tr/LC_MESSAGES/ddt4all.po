@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-20 05:25+0200\n"
-"PO-Revision-Date: 2025-06-20 05:46+0200\n"
+"POT-Creation-Date: 2025-06-21 16:50+0200\n"
+"PO-Revision-Date: 2025-06-21 17:09+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
@@ -383,16 +383,20 @@ msgstr "OBDLink Bağlantısı TAMAM, tam hız UART anahtarı deneniyor"
 msgid "Failed to switch to change OBDLink to "
 msgstr "OBDLink'i değiştirmek için geçiş yapılamadı"
 
-msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr "ELM Bağlantısı Tamam, yüksek hızlı UART anahtarı deneniyor"
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr ""
 
-msgid "Failed to switch to change ELM to "
-msgstr "ELM'yi değiştirmek için geçiş yapılamadı"
+#, fuzzy
+#| msgid "Connection test successful!"
+msgid "Connection established successfully"
+msgstr "Connection test successful!"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr "OBDLINK baurate'i değiştirme tamam, Şimdi UART hızı değişiyor..."
 
-msgid "OBDLink full speed connection OK"
+#, fuzzy
+#| msgid "OBDLink full speed connection OK"
+msgid "OBDLINK full speed connection OK"
 msgstr "OBDLink tam hız bağlantısı TAMAM"
 
 msgid "OBDLink Version "
@@ -492,6 +496,26 @@ msgstr "Veritabanı bulunamadı"
 
 msgid "Check documentation"
 msgstr "Belgeleri kontrol edin"
+
+#, fuzzy
+#| msgid "Documentation"
+msgid "DDT4All Documentation"
+msgstr "Belgeler"
+
+msgid "WebEngine not available."
+msgstr ""
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+
+#, fuzzy
+#| msgid "Check documentation"
+msgid "Visit the online documentation at:"
+msgstr "Belgeleri kontrol edin"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr ""
 
 msgid "Refresh rate (ms):"
 msgstr "Yenileme hızı (ms):"
@@ -1438,6 +1462,12 @@ msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
 #| msgid "<font color='red'>CLEAR FAILED</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+
+#~ msgid "ELM Connection OK, attempting high speed UART switch"
+#~ msgstr "ELM Bağlantısı Tamam, yüksek hızlı UART anahtarı deneniyor"
+
+#~ msgid "Failed to switch to change ELM to "
+#~ msgstr "ELM'yi değiştirmek için geçiş yapılamadı"
 
 #~ msgid "Edit"
 #~ msgstr "Düzenle"

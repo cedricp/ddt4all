@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-20 05:25+0200\n"
-"PO-Revision-Date: 2025-06-20 05:50+0200\n"
+"POT-Creation-Date: 2025-06-21 16:50+0200\n"
+"PO-Revision-Date: 2025-06-21 17:08+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -382,17 +382,17 @@ msgstr "Conexão OBDLink OK, tentando switch UART de velocidade total"
 msgid "Failed to switch to change OBDLink to "
 msgstr "Falha ao mudar para alterar OBDLink para "
 
-msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr "Conexão ELM OK, tentando comutação UART de alta velocidade"
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr "Conexão OBDLINK de velocidade total OK"
 
-msgid "Failed to switch to change ELM to "
-msgstr "Falha ao mudar para alterar o ELM para "
+msgid "Connection established successfully"
+msgstr "Conexão estabelecida com êxito"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr "OBDLINK mudou baurate OK, mudando a velocidade do UART agora..."
 
-msgid "OBDLink full speed connection OK"
-msgstr "Conexão OBDLink de velocidade total OK"
+msgid "OBDLINK full speed connection OK"
+msgstr "Conexão OBDLINK de velocidade total OK"
 
 msgid "OBDLink Version "
 msgstr "Versão OBDLink "
@@ -490,6 +490,22 @@ msgstr "Database não encontrada"
 
 msgid "Check documentation"
 msgstr "Verifique a documentação"
+
+msgid "DDT4All Documentation"
+msgstr "DDT4All Documentação"
+
+msgid "WebEngine not available."
+msgstr "WebEngine não esta disponivel."
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr "Para a documentação completa sobre PyQtWebEngine visite:"
+
+msgid "Visit the online documentation at:"
+msgstr "Visite a documentação online:"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr "A documentação sobre o ECU não esta disponivel."
 
 msgid "Refresh rate (ms):"
 msgstr "Racio de refresco (ms):"
@@ -1393,6 +1409,12 @@ msgstr "<font color='green'>LIMPAR ALTO EXECUTADO</font>"
 
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>LIMPAR FALHA ALTA</font>"
+
+#~ msgid "ELM Connection OK, attempting high speed UART switch"
+#~ msgstr "Conexão ELM OK, tentando comutação UART de alta velocidade"
+
+#~ msgid "Failed to switch to change ELM to "
+#~ msgstr "Falha ao mudar para alterar o ELM para "
 
 #~ msgid "Edit"
 #~ msgstr "Editar"
