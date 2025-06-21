@@ -202,7 +202,6 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
-
 def addr_exist(addr):
     result = True
     if addr not in dnat:
@@ -244,10 +243,7 @@ def item_count(items):
 
 
 def get_available_ports():
-    """
-    Get available serial ports with cross-platform compatibility
-    Supports Windows, Linux, macOS, and various OBD-II devices
-    """
+    """Get available serial ports"""
     ports = []
     try:
         portlist = list_ports.comports()
@@ -257,34 +253,8 @@ def get_available_ports():
 
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
-            # Enhanced device detection for OBD-II adapters
-            desc_lower = desc.lower()
-            hwid_lower = hwid.lower()
-            
-            # Check for known OBD-II devices
-            is_obd_device = any(device in desc_lower or device in hwid_lower for device in [
-                'elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27', 'ch340', 'cp210', 'ftdi',
-                'prolific', 'silicon labs', 'usb-serial', 'bluetooth', 'wifi'
-            ])
-            
-            # Platform-specific port filtering
-            current_platform = platform.system().lower()
-            if current_platform == 'linux':
-                # Linux: Include ttyUSB*, ttyACM*, rfcomm* (Bluetooth)
-                if any(pattern in port.lower() for pattern in ['ttyusb', 'ttyacm', 'rfcomm']):
-                    is_obd_device = True
-            elif current_platform == 'darwin':  # macOS
-                # macOS: Include cu.* and tty.* devices
-                if any(pattern in port.lower() for pattern in ['cu.', 'tty.']):
-                    is_obd_device = True
-            elif current_platform == 'windows':
-                # Windows: Include COM ports
-                if port.upper().startswith('COM'):
-                    is_obd_device = True
-            
-            # Add all potential OBD devices and standard serial ports
-            if is_obd_device or port.upper().startswith('COM') or '/dev/' in port:
-                ports.append((port, desc, hwid))
+            # Add all serial ports - let the user/application decide which ones to use
+            ports.append((port, desc, hwid))
                 
     except Exception as e:
         print(f"Error detecting serial ports: {e}")
@@ -313,43 +283,7 @@ def get_available_ports():
 
 
 class DeviceManager:
-    """Enhanced device manager for OBD-II adapters with cross-platform support"""
-    
-    KNOWN_DEVICES = {
-        # Order matters - more specific devices first
-        'obdlink': ['obdlink', 'scantool'],
-        'vlinker': ['vlinker', 'vlink'],
-        'els27': ['els27'],
-        'elm327': ['elm327', 'elm', 'obd'],  # Keep ELM327 after more specific devices
-        'generic': ['ch340', 'cp210', 'ftdi', 'prolific', 'silicon labs']
-    }
-    
-    @staticmethod
-    def identify_device(port, desc, hwid):
-        """Identify OBD-II device type from port information with priority matching"""
-        desc_lower = desc.lower()
-        hwid_lower = hwid.lower()
-        port_lower = port.lower()
-        
-        # Combine all text for searching
-        search_text = f"{desc_lower} {hwid_lower} {port_lower}"
-        
-        # Check for specific device patterns first (most specific to least specific)
-        device_patterns = [
-            ('obdlink', ['obdlink']),  # ObdLink devices
-            ('vlinker', ['vlinker', 'vlink']),  # Vlinker devices
-            ('els27', ['els27']),  # ELS27 devices
-            ('elm327', ['elm327']),  # Specific ELM327 mentions
-            ('generic', ['ch340', 'cp210', 'ftdi', 'prolific', 'silicon labs']),  # Generic USB-serial
-            ('elm327', ['elm', 'obd']),  # Generic ELM/OBD (least specific)
-        ]
-        
-        for device_type, identifiers in device_patterns:
-            for identifier in identifiers:
-                if identifier in search_text:
-                    return device_type
-                    
-        return 'unknown'
+    """Device manager for OBD-II adapters with optimal settings"""
     
     @staticmethod
     def get_optimal_settings(device_type):
@@ -359,12 +293,26 @@ class DeviceManager:
             'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False},
             'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True},
             'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False},
-            'generic': {'baudrate': 38400, 'timeout': 5, 'rtscts': False},
+            'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False},  # VGate high-speed capable
             'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False}
         }
-        return settings.get(device_type, settings['unknown'])
-
-
+        return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
+    
+    @staticmethod
+    def normalize_adapter_type(adapter_type):
+        """Normalize UI adapter types to internal device types"""
+        adapter_mapping = {
+            'STD_BT': 'elm327',      # Bluetooth ELM327
+            'STD_WIFI': 'elm327',    # WiFi ELM327  
+            'STD_USB': 'elm327',     # USB ELM327
+            'STD': 'elm327',         # Standard ELM327
+            'OBDLINK': 'obdlink',    # OBDLink devices
+            'ELS27': 'els27',        # ELS27 devices
+            'VLINKER': 'vlinker',    # Vlinker devices
+            'VGATE': 'vgate'         # VGate vLinker devices
+        }
+        return adapter_mapping.get(adapter_type, 'elm327')
+    
 def reconnect_elm():
     """Enhanced reconnection with device-specific handling"""
     ports = get_available_ports()
@@ -389,10 +337,9 @@ def reconnect_elm():
     # Try other available ports
     for port_info in ports:
         port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
-        device_type = DeviceManager.identify_device(port, desc, hwid)
-        optimal_settings = DeviceManager.get_optimal_settings(device_type)
+        optimal_settings = DeviceManager.get_optimal_settings(current_adapter)
         
-        print(f"Trying {device_type} device at {port}")
+        print(f"Trying {current_adapter} device at {port}")
         try:
             options.elm = ELM(port, optimal_settings['baudrate'], current_adapter)
             if options.elm.connectionStatus:
@@ -425,8 +372,6 @@ class Port:
     ipaddr = '192.168.0.10'
     tcpprt = 35000
     portName = ""
-    portTimeout = 5  # don't change it here. Change in ELM class
-
     droid = None
     btcid = None
 
@@ -436,9 +381,9 @@ class Port:
     reconnect_attempts = 0
     max_reconnect_attempts = 3
 
-    def __init__(self, portName, speed, portTimeout):
+    def __init__(self, portName, speed, adapter_type):
         options.elm_failed = False
-        self.portTimeout = portTimeout
+        self.adapter_type = adapter_type
         self._lock = threading.Lock()
         self.reconnect_attempts = 0
 
@@ -461,24 +406,28 @@ class Port:
         else:
             self.portName = portName
             self.portType = 0
-            self.init_serial(speed, portTimeout)
+            self.init_serial(speed)
 
-    def init_serial(self, speed, portTimeout):
+    def init_serial(self, speed):
         """Initialize serial/USB connection with enhanced error handling"""
         try:
+            # Get device-specific optimal settings
+            optimal_settings = DeviceManager.get_optimal_settings(self.adapter_type)
+            print(f"Using optimal settings for {self.adapter_type}: {optimal_settings}")
+            
             # Platform-specific serial port configuration
             current_platform = platform.system().lower()
             
-            # Enhanced serial parameters for better compatibility
+            # Enhanced serial parameters using device-specific settings
             serial_params = {
                 'port': self.portName,
                 'baudrate': speed,
-                'timeout': portTimeout,
+                'timeout': optimal_settings.get('timeout', 5),
                 'parity': serial.PARITY_NONE,
                 'stopbits': serial.STOPBITS_ONE,
                 'bytesize': serial.EIGHTBITS,
                 'xonxoff': False,
-                'rtscts': False,
+                'rtscts': optimal_settings.get('rtscts', False),
                 'dsrdtr': False
             }
             
@@ -816,6 +765,7 @@ class ELM:
     currentaddress = ""
     startSession = ""
     lastinitrsp = ""
+    adapter_type = "STD"  # ELM adapter type: STD, OBDLINK, etc.
 
     rsp_cache = {}
     l1_cache = {}
@@ -830,20 +780,21 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, rate, adapter_type="STD", maxspeed="No"):
+    def __init__(self, portName, rate, adapter_type, maxspeed="No"):
+        self.adapter_type = adapter_type
+        options.port_speed = rate
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
-            self.sim_mode = options.simulation_mode
-            self.portName = portName
-            self.adapter_type = adapter_type
 
             if not options.simulation_mode:
-                self.port = Port(portName, speed, self.portTimeout)
+                self.port = Port(portName, speed, self.adapter_type)
 
             if options.elm_failed:
                 self.connectionStatus = False
                 # Try one other speed ...
                 continue
+
+            options.port_speed = speed
 
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
@@ -878,11 +829,15 @@ class ELM:
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
             print(_("OBDLink Connection OK, attempting full speed UART switch"))
             try:
-                self.raise_odb_speed(maxspeed)
+                self.raise_odb_speed(maxspeed, "OBDLINK")
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
                 print(_("Failed to switch to change OBDLink to ") + str(maxspeed))
+        elif adapter_type == "OBDLINK":
+            print(_("OBDLINK Connection OK, using optimal settings"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
             print(_("ELM Connection OK, attempting high speed UART switch"))
             try:
@@ -891,8 +846,44 @@ class ELM:
                 options.elm_failed = True
                 self.connectionStatus = False
                 print(_("Failed to switch to change ELM to ") + str(maxspeed))
+        elif adapter_type == "STD_USB":
+            print(_("ELM Connection OK, using optimal settings"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "VLINKER" and maxspeed > 0 and rate != maxspeed:
+            print(_("Vlinker Connection OK, attempting high speed UART switch"))
+            try:
+                self.raise_elm_speed(maxspeed)
+            except:
+                options.elm_failed = True
+                self.connectionStatus = False
+                print(_("Failed to switch to change Vlinker to ") + str(maxspeed))
+        elif adapter_type == "VLINKER":
+            print(_("Vlinker Connection OK, using optimal settings"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "VGATE" and maxspeed > 0 and rate != maxspeed:
+            print(_("VGate Connection OK, attempting high speed UART switch"))
+            try:
+                self.raise_odb_speed(maxspeed, "VGate")
+            except:
+                options.elm_failed = True
+                self.connectionStatus = False
+                print(_("Failed to switch to change VGate to ") + str(maxspeed))
+        elif adapter_type == "VGATE":
+            print(_("VGate Connection OK, using optimal settings"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "ELS27":
+            print(_("ELS27 Connection OK, using optimal settings"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type in ["STD_BT", "STD_WIFI"]:
+            print(_("Using standard settings for ") + adapter_type + _(" adapter"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
 
-    def raise_odb_speed(self, baudrate):
+    def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
         # Software speed switch
         res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
 
@@ -901,13 +892,16 @@ class ELM:
         # Command result
         res = self.port.expect_carriage_return()
         if "OK" in res:
-            print(_("OBDLINK switched baurate OK, changing UART speed now..."))
+            text = _("OBDLINK switched baurate OK, changing UART speed now...").replace("OBDLINK", device_name)
+            print(text)
             self.port.change_rate(baudrate)
             time.sleep(0.5)
             res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
             if "STN" in res:
-                print(_("OBDLink full speed connection OK"))
-                print(_("OBDLink Version ") + res)
+                text1 = _("OBDLINK full speed connection OK").replace("OBDLINK", device_name)
+                print(text1)
+                text2 = _("OBDLink Version ").replace("OBDLINK", device_name) + res
+                print(text2)
             else:
                 raise
         else:
@@ -950,7 +944,10 @@ class ELM:
 
     def __del__(self):
         try:
-            print(_("ELM reset..."))
+            if _ is not None:
+                print(_("ELM reset..."))
+            else:
+                print("ELM reset...")
             self.port.write("ATZ\r".encode("utf-8"))
         except (AttributeError, OSError):
             pass
@@ -1694,8 +1691,7 @@ class ELM:
         self.cmd("AT AT 1")  # enable adaptive timing
         return True
 
-
-def elm_checker(port, speed, logview, app):
+def elm_checker(port, speed, adapter, logview, app):
     """Enhanced ELM327 checker with better error handling and device detection"""
     good = 0
     total = 0
@@ -1703,44 +1699,37 @@ def elm_checker(port, speed, logview, app):
     vers = ''
     
     try:
-        # Identify device type for optimal settings
-        device_type = 'unknown'
-        if hasattr(elm, 'DeviceManager'):
-            # Try to identify device from port name/description
-            device_type = DeviceManager.identify_device(port, port, "")
-            optimal_settings = DeviceManager.get_optimal_settings(device_type)
-            speed = optimal_settings.get('baudrate', speed)
-        
-        # Import translation function
-        from options import translator
-        _ = translator('ddt4all')
-        
+        # Use optimal settings for the adapter type
+        optimal_settings = DeviceManager.get_optimal_settings(adapter)
+        speed = optimal_settings.get('baudrate', speed)
+
         logview.append(_("Connecting to device at port: ") + str(port))
         logview.append(_("Using baudrate: ") + str(speed))
         
-        elm_instance = ELM(port, speed)
+        options.elm = ELM(port, speed, adapter)
+
         if options.elm_failed:
             logview.append(_("Connection failed: ") + str(options.last_error))
             return False
             
-        elm_instance.portTimeout = 5
+        options.elm.portTimeout = 5
         
         # Test basic connectivity
         logview.append(_("Testing basic connectivity..."))
-        test_response = elm_instance.send_raw("ATZ")  # Reset command
+        test_response = options.elm.send_raw("ATZ")  # Reset command
         if not test_response or "ELM" not in test_response:
             logview.append(_("Warning: Device may not be ELM327 compatible"))
         else:
             logview.append(_("ELM327 device detected successfully"))
             
         # Get version information
-        version_response = elm_instance.send_raw("ATI")
+        version_response = options.elm.send_raw("ATI")
         if version_response:
             vers = version_response.strip()
             logview.append(_("Device version: ") + vers)
             
     except Exception as e:
-        logview.append(_("Connection error: ") + str(e))
+        logview.append(_("Connection error: ") + str(e)) 
         return False
 
     for st in cmdb.split('#'):
@@ -1752,7 +1741,7 @@ def elm_checker(port, speed, logview, app):
 
             if len(cm[2].strip()):
 
-                res = elm.send_raw(cm[2])
+                res = options.elm.send_raw(cm[2])
 
                 if 'H' in cm[1].upper():
                     continue

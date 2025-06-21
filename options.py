@@ -40,7 +40,7 @@ configuration = {
     "connection_timeout": 10,
     "read_timeout": 5,
     "max_reconnect_attempts": 3,
-    "preferred_device_order": ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"],
+    "preferred_device_order": ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"],
     "enable_device_validation": True
 }
 lang_list = {
@@ -78,7 +78,7 @@ def create_new_config():
     configuration["connection_timeout"] = 10
     configuration["read_timeout"] = 5
     configuration["max_reconnect_attempts"] = 3
-    configuration["preferred_device_order"] = ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"]
+    configuration["preferred_device_order"] = ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"]
     configuration["enable_device_validation"] = True
     save_config()
 
@@ -99,7 +99,7 @@ def load_configuration():
         configuration["read_timeout"] = config.get("read_timeout", 5)
         configuration["max_reconnect_attempts"] = config.get("max_reconnect_attempts", 3)
         configuration["preferred_device_order"] = config.get("preferred_device_order", 
-                                                           ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"])
+                                                           ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"])
         configuration["enable_device_validation"] = config.get("enable_device_validation", True)
         
         os.environ['LANG'] = configuration["lang"]
@@ -142,7 +142,7 @@ def get_device_settings(device_type, port=None):
         'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
         'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
         'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False},
-        'generic': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False},
+        'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},  # VGate high-speed capable
         'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
     }
     
@@ -190,7 +190,7 @@ def is_device_validation_enabled():
 
 def get_preferred_device_order():
     """Get preferred device detection order"""
-    return configuration.get("preferred_device_order", ["vlinker", "elm327", "obdlink", "obdlink_ex", "els27"])
+    return configuration.get("preferred_device_order", ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"])
 
 
 def translator(domain):

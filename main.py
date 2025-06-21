@@ -1366,8 +1366,26 @@ class main_window_options(widgets.QDialog):
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
         self.elsbutton.setCheckable(True)
-        self.elsbutton.setToolTip('ELS27/VGate')
+        self.elsbutton.setToolTip('ELS27')
         medialayout.addWidget(self.elsbutton)
+
+        self.vlinkerbutton = widgets.QPushButton()
+        self.vlinkerbutton.setIcon(gui.QIcon("ddt4all_data/icons/vlinker.png"))
+        self.vlinkerbutton.setIconSize(core.QSize(60, 60))
+        self.vlinkerbutton.setFixedHeight(64)
+        self.vlinkerbutton.setFixedWidth(64)
+        self.vlinkerbutton.setCheckable(True)
+        self.vlinkerbutton.setToolTip('Vlinker FS/MC')
+        medialayout.addWidget(self.vlinkerbutton)
+
+        self.vgatebutton = widgets.QPushButton()
+        self.vgatebutton.setIcon(gui.QIcon("ddt4all_data/icons/vgate.png"))
+        self.vgatebutton.setIconSize(core.QSize(60, 60))
+        self.vgatebutton.setFixedHeight(64)
+        self.vgatebutton.setFixedWidth(64)
+        self.vgatebutton.setCheckable(True)
+        self.vgatebutton.setToolTip('VGate (High-Speed)')
+        medialayout.addWidget(self.vgatebutton)
 
         layout.addLayout(medialayout)
 
@@ -1376,6 +1394,8 @@ class main_window_options(widgets.QDialog):
         self.usbbutton.toggled.connect(self.usb)
         self.obdlinkbutton.toggled.connect(self.obdlink)
         self.elsbutton.toggled.connect(self.els)
+        self.vlinkerbutton.toggled.connect(self.vlinker)
+        self.vgatebutton.toggled.connect(self.vgate)
 
         # languages setting
         if "LANG" not in os.environ.keys():
@@ -1482,11 +1502,6 @@ class main_window_options(widgets.QDialog):
         self.portcount = -1
         self.usb()
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
-        self.setIcon()
-
-    def setIcon(self):
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-        self.setWindowIcon(appIcon)
 
     def save_config(self):
         options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
@@ -1500,6 +1515,7 @@ class main_window_options(widgets.QDialog):
         currentitem = self.listview.currentItem()
         self.logview.show()
         self.logview.clear()
+        options.simulation_mode = False
         
         try:
             if self.wifibutton.isChecked():
@@ -1522,7 +1538,7 @@ class main_window_options(widgets.QDialog):
                     self.logview.append(_("Selected port is no longer available"))
                     return
                 port = self.ports[portinfo][0]
-                
+
             speed = int(self.speedcombo.currentText())
             
             # Show connection attempt
@@ -1533,7 +1549,7 @@ class main_window_options(widgets.QDialog):
             # Process events to update UI
             core.QCoreApplication.processEvents()
             
-            res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
+            res = elm.elm_checker(port, speed, self.adapter, self.logview, core.QCoreApplication) 
             if not res:
                 error_msg = options.get_last_error()
                 if error_msg:
@@ -1552,6 +1568,7 @@ class main_window_options(widgets.QDialog):
             else:
                 self.logview.append("")
                 self.logview.append(_("Connection test successful!"))
+                self.logview.append(_("Checking port speed:") + " " + str(options.port_speed))
                 
         except Exception as e:
             self.logview.append(_("Error during connection test: ") + str(e))
@@ -1580,22 +1597,15 @@ class main_window_options(widgets.QDialog):
                     port, desc = p
                     hwid = ""
                 
-                # Identify device type
-                device_type = elm.DeviceManager.identify_device(port, desc, hwid)
-                
-                # Create enhanced description
-                if device_type != 'unknown':
-                    enhanced_desc = f"{desc} [{device_type.upper()}]"
-                else:
-                    enhanced_desc = desc
-                    
+                # Use port description as-is
                 item = widgets.QListWidgetItem(self.listview)
-                itemname = f"{port}[{enhanced_desc}]"
+                itemname = f"{port}[{desc}]"
                 item.setText(itemname)
-                self.ports[itemname] = (port, desc, device_type)
+                self.ports[itemname] = (port, desc, hwid)
                 
-                # Highlight known OBD devices
-                if device_type in ['elm327', 'vlinker', 'obdlink', 'els27']:
+                # Highlight potential OBD devices based on description
+                desc_lower = desc.lower()
+                if any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27']):
                     font = item.font()
                     font.setBold(True)
                     item.setFont(font)
@@ -1626,19 +1636,25 @@ class main_window_options(widgets.QDialog):
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
         self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
 
         self.speedcombo.setCurrentIndex(2)
         self.btbutton.setChecked(True)
         self.wifibutton.setChecked(False)
         self.usbbutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
-        self.obdlinkbutton.setChecked(False)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
         self.elmchk.setEnabled(True)
 
     def wifi(self):
@@ -1648,18 +1664,24 @@ class main_window_options(widgets.QDialog):
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
         self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
 
         self.wifibutton.setChecked(True)
         self.btbutton.setChecked(False)
         self.usbbutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
         self.wifiinput.setEnabled(True)
         self.speedcombo.setEnabled(False)
-        self.obdlinkbutton.setChecked(False)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
         self.elmchk.setEnabled(True)
 
     def usb(self):
@@ -1675,19 +1697,25 @@ class main_window_options(widgets.QDialog):
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
         self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
 
         self.usbbutton.setChecked(True)
         self.speedcombo.setCurrentIndex(0)
         self.btbutton.setChecked(False)
         self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
-        self.obdlinkbutton.setChecked(False)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
         self.elmchk.setEnabled(True)
 
     def obdlink(self):
@@ -1701,11 +1729,15 @@ class main_window_options(widgets.QDialog):
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
         self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
 
         self.usbbutton.setChecked(False)
-        self.speedcombo.setCurrentIndex(2)
+        self.speedcombo.setCurrentIndex(2)  # 115200 baud for OBDLINK
         self.btbutton.setChecked(False)
         self.wifibutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
         self.obdlinkbutton.setChecked(True)
@@ -1714,28 +1746,100 @@ class main_window_options(widgets.QDialog):
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
         self.elmchk.setEnabled(False)
 
     def els(self):
-        self.adapter = "ELS"
+        self.adapter = "ELS27"
         self.obdlinkspeedcombo.clear()
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
         self.obdlinkbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
 
         self.usbbutton.setChecked(False)
-        self.speedcombo.setCurrentIndex(2)
+        self.speedcombo.setCurrentIndex(0)  # 38400 baud for ELS27
         self.btbutton.setChecked(False)
         self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
-        self.obdlinkbutton.setChecked(True)
+        self.elsbutton.setChecked(True)
 
         self.wifibutton.blockSignals(False)
         self.btbutton.blockSignals(False)
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
+        self.elmchk.setEnabled(False)
+
+    def vlinker(self):
+        self.adapter = "VLINKER"
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem("No")
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")  # Vlinker can handle moderate speeds
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vgatebutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(0)  # 38400 baud for Vlinker
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vgatebutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.vlinkerbutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vgatebutton.blockSignals(False)
+        self.elmchk.setEnabled(False)
+
+    def vgate(self):
+        self.adapter = "VGATE"
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem("No")
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")  # VGate can handle very high speeds
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(2)  # 115200 baud for VGate (high speed)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.vgatebutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
         self.elmchk.setEnabled(False)
 
     def connectedMode(self):
@@ -1750,6 +1854,8 @@ class main_window_options(widgets.QDialog):
             msgbox.setText(_("You must check the recommandations"))
             msgbox.exec_()
             return
+
+        options.simulation_mode = False
 
         if self.wifibutton.isChecked():
             self.port = str(self.wifiinput.text())
@@ -1778,6 +1884,7 @@ class main_window_options(widgets.QDialog):
         self.port = 'DUMMY'
         self.mode = 2
         options.report_data = False
+        options.simulation_mode = True
         self.done(True)
 
 

@@ -1,11 +1,12 @@
 # DDT4All [![Python App](https://github.com/cedricp/ddt4all/actions/workflows/python-app.yml/badge.svg)](https://github.com/cedricp/ddt4all/actions/workflows/python-app.yml) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) [![Discord](https://img.shields.io/discord/1117970325267820675?label=Discord&style=flat-square)](https://discord.gg/cBqDh9bTHP)
 
-DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, ObdLink SX, and ELS27 adapters.
+DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
 ## 🚀 **Recent Major Improvements**
 
 ### ✅ **Enhanced Device Compatibility & Connection Stability**
-- **Multi-Device Support**: Full compatibility with Vlinker FS, ELM327, ObdLink SX, ELS27 adapters
+- **Multi-Device Support**: Full compatibility with Vlinker FS, VGate, ELM327, ObdLink SX, ELS27 adapters
+- **Device-Specific Optimization**: Automatic speed selection and optimal settings for each adapter type
 - **Connection Types**: USB, Bluetooth, and WiFi connections with automatic detection
 - **Smart Reconnection**: Automatic reconnection with device-specific handling and retry logic
 - **Cross-Platform**: Optimized for Windows, Linux, and macOS with platform-specific configurations
@@ -21,6 +22,12 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Thread-Safe Operations**: Proper locking mechanisms for connection stability
 - **Enhanced Error Handling**: Comprehensive error recovery and user-friendly messages
 - **Memory Optimization**: Improved resource management and cleanup
+
+### 🔧 **New Device & Speed Management**
+- **VGate iCar Pro Support**: Full support for high-speed STN-based VGate adapters
+- **Intelligent Speed Selection**: Device-specific speed options automatically loaded
+- **Optimal Settings Engine**: Automatic timeout and flow control configuration per device
+- **Enhanced Vlinker Support**: Improved speed options (57600, 115200) for better performance
 
 
 ### Android porting: 
@@ -79,9 +86,10 @@ pip install -r requirements.txt
 .
 ### 🔌 **Supported Diagnostic Adapters**
 
-* **Vlinker FS** - USB/Bluetooth (Recommended for best performance)
+* **Vlinker FS** - USB/Bluetooth (Recommended for best performance and stability)
+* **VGate iCar Pro** - USB/Bluetooth/WiFi (High-speed STN-based adapter with advanced features)
 * **ELM327** - USB/Bluetooth/WiFi (Original with _PIC18F25K80_, some Chinese clones supported)
-* **ObdLink SX** - USB (High-speed professional adapter)
+* **ObdLink SX** - USB (High-speed professional adapter with RTS/CTS flow control)
 * **ObdLink EX** - USB (Professional adapter, tested and confirmed working)
 * **ELS27** - USB (Alternative ELM327-compatible adapter)
 
@@ -92,23 +100,33 @@ pip install -r requirements.txt
 
 #### **📋 Recommended Device Settings:**
 
-| Device | Baud Rate | Timeout | Flow Control | Best For | Notes |
-|--------|-----------|---------|--------------|----------|-------|
-| **Vlinker FS** | 38400 | 3s | None | **Recommended** | Most stable, best compatibility |
-| **ELM327 Original** | 38400 | 5s | None | General use | Verify PIC18F25K80 chip |
-| **ELM327 Clone** | 9600-38400 | 7s | None | Budget option | Test different baud rates |
-| **ObdLink SX** | 115200 | 2s | RTS/CTS | Professional | High-speed, premium adapter |
-| **ObdLink EX** | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
-| **ELS27** | 38400 | 4s | None | Alternative | Good ELM327 alternative |
+| Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
+|--------|---------------|---------|---------|--------------|----------|-------|
+| **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Recommended** | Most stable, best compatibility |
+| **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **High Performance** | STN-based, very high speeds |
+| **ELM327 Original** | Standard speeds | 38400 | 5s | None | General use | Verify PIC18F25K80 chip |
+| **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | Budget option | Test different baud rates |
+| **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
+| **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
+| **ELS27** | Standard speeds | 38400 | 4s | None | Alternative | Good ELM327 alternative |
 
 #### **⚙️ Connection Optimization Tips:**
 - **USB**: Most stable, recommended for diagnostic work
 - **Bluetooth**: Good for mobile use, may have occasional dropouts
 - **WiFi**: Convenient but requires stable network (format: `192.168.0.10:35000`)
+- **Speed Selection**: Each adapter now has device-specific speed options for optimal performance
 - **Troubleshooting**: Use built-in connection test for automatic optimization
+
+#### **🚀 New Speed Selection Feature:**
+DDT4All now automatically provides optimal speed options based on your selected adapter:
+- **Automatic Detection**: Device-specific speed ranges are automatically loaded
+- **Performance Optimization**: Each adapter gets speeds suited to its capabilities
+- **Easy Selection**: Simply choose your adapter type and select from available speeds
+- **Fallback Support**: "No" option available for adapters that don't support speed switching
 
 #### **🔍 Device Identification Guide:**
 - **Vlinker FS**: Usually labeled "Vlinker FS" or "OBDII WiFi"
+- **VGate iCar Pro**: Labeled "VGate" or "iCar Pro", often with WiFi/Bluetooth indicators
 - **ELM327 Original**: Look for "PIC18F25K80" chip marking
 - **ELM327 Clone**: Various markings, test with 9600-38400 baud
 - **ObdLink SX**: Professional blue/black housing, "OBDLink SX" branding
@@ -124,6 +142,7 @@ pip install -r requirements.txt
 #### **✅ User-Tested Devices:**
 - **ObdLink EX**: Confirmed working by community user with excellent results
 - **Vlinker FS**: Extensively tested, recommended for best compatibility
+- **VGate iCar Pro**: High-performance adapter with excellent speed capabilities
 - **ELM327 Original**: Well-tested with PIC18F25K80 chip
 
 > **Note**: If you have successfully tested other devices with DDT4All, please let us know so we can update this list!
