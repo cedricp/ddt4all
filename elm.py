@@ -825,61 +825,64 @@ class ELM:
             maxspeed = int(maxspeed)
         except:
             maxspeed = 0
-
+          
+        device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
+        text_switck_error = _("Failed to switch to change OBDLink to ") + str(maxspeed)
+        text_optional = _("OBDLINK Connection OK, using optimal settings")
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(_("OBDLink Connection OK, attempting full speed UART switch"))
+            print(device_text_switch.replace("OBDLink", "OBDLink"))
             try:
-                self.raise_odb_speed(maxspeed, "OBDLINK")
+                self.raise_odb_speed(maxspeed, "OBDLink")
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(_("Failed to switch to change OBDLink to ") + str(maxspeed))
+                print(text_switck_error.replace("OBDLink", "OBDLink"))
         elif adapter_type == "OBDLINK":
-            print(_("OBDLINK Connection OK, using optimal settings"))
+            print(text_optional.replace("OBDLink", "OBDLink"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(_("ELM Connection OK, attempting high speed UART switch"))
+            print(device_text_switch.replace("OBDLink", "ELM"))
             try:
                 self.raise_elm_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(_("Failed to switch to change ELM to ") + str(maxspeed))
+                print(text_switck_error.replace("OBDLink", "ELM"))
         elif adapter_type == "STD_USB":
-            print(_("ELM Connection OK, using optimal settings"))
+            print(text_optional.replace("OBDLink", "ELM")   )
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VLINKER" and maxspeed > 0 and rate != maxspeed:
-            print(_("Vlinker Connection OK, attempting high speed UART switch"))
+            print(device_text_switch.replace("OBDLink", "Vlinker"))
             try:
                 self.raise_elm_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(_("Failed to switch to change Vlinker to ") + str(maxspeed))
+                print(text_switck_error.replace("OBDLink", "Vlinker"))
         elif adapter_type == "VLINKER":
-            print(_("Vlinker Connection OK, using optimal settings"))
+            print(text_optional.replace("OBDLink", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VGATE" and maxspeed > 0 and rate != maxspeed:
-            print(_("VGate Connection OK, attempting high speed UART switch"))
+            print(device_text_switch.replace("OBDLink", "Vgate"))
             try:
                 self.raise_odb_speed(maxspeed, "VGate")
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(_("Failed to switch to change VGate to ") + str(maxspeed))
+                print(text_switck_error.replace("OBDLink", "VGate"))
         elif adapter_type == "VGATE":
-            print(_("VGate Connection OK, using optimal settings"))
+            print(text_optional.replace("OBDLink", "VGate"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
-            print(_("ELS27 Connection OK, using optimal settings"))
+            print(text_optional.replace("OBDLink", "ELS27"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
-            print(_("Using standard settings for ") + adapter_type + _(" adapter"))
+            print(text_optional.replace("OBDLink", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
 
