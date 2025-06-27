@@ -78,7 +78,7 @@ def create_new_config():
     configuration["connection_timeout"] = 10
     configuration["read_timeout"] = 5
     configuration["max_reconnect_attempts"] = 3
-    configuration["preferred_device_order"] = ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327", "usbcan"]
+    configuration["preferred_device_order"] = ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"]
     configuration["enable_device_validation"] = True
     save_config()
 
@@ -99,7 +99,7 @@ def load_configuration():
         configuration["read_timeout"] = config.get("read_timeout", 5)
         configuration["max_reconnect_attempts"] = config.get("max_reconnect_attempts", 3)
         configuration["preferred_device_order"] = config.get("preferred_device_order", 
-                                                           ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327", "usbcan"])
+                                                           ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
         configuration["enable_device_validation"] = config.get("enable_device_validation", True)
         
         os.environ['LANG'] = configuration["lang"]
@@ -143,7 +143,7 @@ def get_device_settings(device_type, port=None):
         'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
         'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13'},  # ELS27 V5 with CAN on pins 12-13
         'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},
-        'usbcan': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False},  # USB CAN adapter
+
         'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
     }
     
@@ -191,7 +191,7 @@ def is_device_validation_enabled():
 
 def get_preferred_device_order():
     """Get preferred device detection order"""
-    return configuration.get("preferred_device_order", ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327", "usbcan"])
+    return configuration.get("preferred_device_order", ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
 
 
 def translator(domain):

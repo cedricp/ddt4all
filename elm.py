@@ -320,7 +320,7 @@ class DeviceManager:
             'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
             'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13'},
             'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},
-            'usbcan': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False},
+    
             'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
         }
         return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
@@ -338,7 +338,7 @@ class DeviceManager:
             'ELS27': 'els27',        # ELS27 devices
             'VLINKER': 'vlinker',    # Vlinker devices
             'VGATE': 'vgate',        # VGate devices
-            'USBCAN': 'usbcan'       # USB CAN adapters
+            'USBCAN': 'unknown'      # USB CAN adapters - use unknown defaults
         }
         return adapter_mapping.get(adapter_type.upper(), 'elm327')
     
