@@ -5,11 +5,12 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 ## 🚀 **Recent Major Improvements**
 
 ### ✅ **Enhanced Device Compatibility & Connection Stability**
-- **Multi-Device Support**: Full compatibility with Vlinker FS, VGate, ELM327, ObdLink SX, ELS27 adapters
+- **Multi-Device Support**: Full compatibility with Vlinker FS, VGate, ELM327, ObdLink SX/EX, ELS27 adapters
 - **Device-Specific Optimization**: Automatic speed selection and optimal settings for each adapter type
 - **Connection Types**: USB, Bluetooth, and WiFi connections with automatic detection
 - **Smart Reconnection**: Automatic reconnection with device-specific handling and retry logic
 - **Cross-Platform**: Optimized for Windows, Linux, and macOS with platform-specific configurations
+- **USB CAN Support**: Added support for specialized USB CAN adapters with fallback handling
 
 ### 🌍 **Complete Internationalization (13 Languages)**
 - **Fully Translated Interface** in 13 languages with 390+ new translation strings
@@ -93,14 +94,21 @@ pip install -r requirements.txt
 * **ObdLink EX** - USB (Professional adapter, tested and confirmed working)
 * **ELS27** - USB (Alternative ELM327-compatible adapter)
 * **ELS27 V5** - USB (Enhanced ELS27 with CAN on pins 12-13, improved compatibility)
+* **USB CAN Adapters** - USB (Specialized CAN adapters with automatic fallback handling)
 
 #### **Connection Methods:**
-- **USB**: Serial-over-USB connection with automatic driver detection (most adapters)
+- **USB Serial**: Serial-over-USB connection with automatic driver detection (most adapters)
 - **USB Direct**: Native USB communication for specialized CAN adapters
 - **Bluetooth**: Wireless connection with pairing support
 - **WiFi**: TCP/IP connection (format: `192.168.0.10:35000`)
 
-> **Note**: Most adapters (ELM327, Vlinker, VGate, ObdLink, ELS27) use serial-over-USB communication through standard COM ports. Some specialized USB CAN adapters support direct USB communication for enhanced performance, but these are less common.
+#### **Latest Improvements:**
+- **Enhanced USB Support**: Added dedicated handling for USB ELM327 adapters (`STD_USB`)
+- **USB CAN Adapters**: New support for specialized USB CAN interfaces with intelligent fallback
+- **Device Normalization**: Improved adapter type mapping for better device recognition
+- **Connection Reliability**: Enhanced error handling and timeout management per device type
+
+> **Note**: Most adapters (ELM327, Vlinker, VGate, ObdLink, ELS27) use serial-over-USB communication through standard COM ports. USB CAN adapters now have dedicated support with automatic fallback to ensure compatibility.
 
 #### **📋 Recommended Device Settings:**
 
@@ -110,10 +118,12 @@ pip install -r requirements.txt
 | **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **High Performance** | STN-based, very high speeds |
 | **ELM327 Original** | Standard speeds | 38400 | 5s | None | General use | Verify PIC18F25K80 chip |
 | **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | Budget option | Test different baud rates |
+| **ELM327 USB** | Standard speeds | 38400 | 5s | None | **USB Direct** | Dedicated USB ELM327 support |
 | **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
 | **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
 | **ELS27** | Standard speeds | 38400 | 4s | None | Alternative | Good ELM327 alternative |
 | **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, better PyRen/Renolink compatibility |
+| **USB CAN** | Varies | 38400 | 5s | None | **Specialized** | Intelligent fallback, auto-detection |
 
 #### **⚙️ Connection Optimization Tips:**
 - **USB**: Most stable, recommended for diagnostic work
@@ -134,10 +144,12 @@ DDT4All now automatically provides optimal speed options based on your selected 
 - **VGate iCar Pro**: Labeled "VGate" or "iCar Pro", often with WiFi/Bluetooth indicators
 - **ELM327 Original**: Look for "PIC18F25K80" chip marking
 - **ELM327 Clone**: Various markings, test with 9600-38400 baud
+- **ELM327 USB**: Dedicated USB connector, may show as "STD_USB" in interface
 - **ObdLink SX**: Professional blue/black housing, "OBDLink SX" branding
 - **ObdLink EX**: Professional housing, "OBDLink EX" branding, similar to SX
 - **ELS27**: Similar to ELM327 but with "ELS27" marking
 - **ELS27 V5**: Enhanced ELS27 with "V5" marking, CAN pins 12-13, better driver compatibility
+- **USB CAN**: Specialized CAN adapters, various manufacturers, auto-detected as "USBCAN"
 
 #### **⚡ Quick Setup Guide:**
 1. **Connect Device**: USB/Bluetooth/WiFi as appropriate
