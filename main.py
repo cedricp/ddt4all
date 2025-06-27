@@ -1366,7 +1366,7 @@ class main_window_options(widgets.QDialog):
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
         self.elsbutton.setCheckable(True)
-        self.elsbutton.setToolTip('ELS27')
+        self.elsbutton.setToolTip('ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device')
         medialayout.addWidget(self.elsbutton)
 
         self.vlinkerbutton = widgets.QPushButton()

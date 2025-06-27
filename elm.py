@@ -253,8 +253,33 @@ def get_available_ports():
 
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
-            # Add all serial ports - let the user/application decide which ones to use
-            ports.append((port, desc, hwid))
+            # Enhanced device identification for ELS27 and other adapters
+            device_desc = desc
+            desc_upper = desc.upper()
+            
+            # Direct device name detection
+            if any(keyword in desc_upper for keyword in ['ELS27', 'ELM327']):
+                if 'ELS27' in desc_upper:
+                    device_desc = f"{desc} (ELS27 V5 Compatible)"
+                else:
+                    device_desc = f"{desc} (ELM327 Compatible)"
+            elif any(keyword in desc_upper for keyword in ['VLINKER', 'OBDII']):
+                device_desc = f"{desc} (Vlinker Compatible)"
+            elif any(keyword in desc_upper for keyword in ['VGATE', 'ICAR']):
+                device_desc = f"{desc} (VGate Compatible)"
+            elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
+                device_desc = f"{desc} (OBDLink Compatible)"
+            # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
+            elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
+                device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['CH340', 'CH341']):
+                device_desc = f"{desc} (CH340 - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['CP210', 'CP2102', 'CP2104']):
+                device_desc = f"{desc} (CP210x - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['PL2303']):
+                device_desc = f"{desc} (PL2303 - Possible ELS27/ELM327)"
+            
+            ports.append((port, device_desc, hwid))
                 
     except Exception as e:
         print(f"Error detecting serial ports: {e}")
@@ -289,12 +314,14 @@ class DeviceManager:
     def get_optimal_settings(device_type):
         """Get optimal connection settings for specific device types"""
         settings = {
-            'vlinker': {'baudrate': 38400, 'timeout': 3, 'rtscts': False},
-            'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False},
-            'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True},
-            'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False},
-            'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False},  # VGate high-speed capable
-            'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False}
+            'vlinker': {'baudrate': 38400, 'timeout': 3, 'rtscts': False, 'dsrdtr': False},
+            'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False},
+            'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
+            'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
+            'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13'},
+            'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},
+    
+            'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
         }
         return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
     
@@ -307,12 +334,42 @@ class DeviceManager:
             'STD_USB': 'elm327',     # USB ELM327
             'STD': 'elm327',         # Standard ELM327
             'OBDLINK': 'obdlink',    # OBDLink devices
+            'OBDLINK_EX': 'obdlink_ex',  # OBDLink EX devices
             'ELS27': 'els27',        # ELS27 devices
             'VLINKER': 'vlinker',    # Vlinker devices
-            'VGATE': 'vgate'         # VGate vLinker devices
+            'VGATE': 'vgate',        # VGate devices
+            'USBCAN': 'unknown'      # USB CAN adapters - use unknown defaults
         }
-        return adapter_mapping.get(adapter_type, 'elm327')
+        return adapter_mapping.get(adapter_type.upper(), 'elm327')
     
+def is_els27_device(port, timeout=2):
+    """Test if a serial port has an ELS27 device with multiple baud rates"""
+    import serial
+    test_bauds = [38400, 9600, 115200]  # Common ELS27 baud rates
+    
+    for baud in test_bauds:
+        try:
+            ser = serial.Serial(port, baud, timeout=timeout)
+            
+            # Clear buffers
+            ser.reset_input_buffer()
+            ser.reset_output_buffer()
+            
+            # Send ATZ (reset) command
+            ser.write(b'ATZ\r')
+            response = ser.read(100).decode('ascii', errors='ignore')
+            ser.close()
+            
+            # Check for ELS27 or ELM327 response
+            response_upper = response.upper()
+            if any(keyword in response_upper for keyword in ['ELS27', 'ELM327', 'OBD']):
+                return True, f"{response.strip()} (at {baud} baud)"
+                
+        except Exception:
+            continue
+    
+    return False, "No ELS27 response at any baud rate"
+
 def reconnect_elm():
     """Enhanced reconnection with device-specific handling"""
     ports = get_available_ports()
@@ -327,7 +384,12 @@ def reconnect_elm():
             if port == options.port_name or desc == options.port_name:
                 print(f"Attempting reconnection to {port}")
                 try:
-                    options.elm = ELM(port, options.port_speed, current_adapter)
+                    # Use saved settings for reconnection
+                    device_key = DeviceManager.normalize_adapter_type(current_adapter)
+                    saved_settings = options.get_device_settings(device_key, port)
+                    speed = saved_settings.get('baudrate', options.port_speed) if saved_settings else options.port_speed
+                    
+                    options.elm = ELM(port, speed, current_adapter)
                     if options.elm.connectionStatus:
                         return True
                 except Exception as e:
@@ -337,14 +399,21 @@ def reconnect_elm():
     # Try other available ports
     for port_info in ports:
         port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
-        optimal_settings = DeviceManager.get_optimal_settings(current_adapter)
+        device_key = DeviceManager.normalize_adapter_type(current_adapter)
+        saved_settings = options.get_device_settings(device_key, port)
         
-        print(f"Trying {current_adapter} device at {port}")
+        if saved_settings and 'baudrate' in saved_settings:
+            settings = saved_settings
+            print(f"Trying {current_adapter} device at {port} with saved settings")
+        else:
+            settings = DeviceManager.get_optimal_settings(current_adapter)
+            print(f"Trying {current_adapter} device at {port} with optimal settings")
+        
         try:
-            options.elm = ELM(port, optimal_settings['baudrate'], current_adapter)
+            options.elm = ELM(port, settings['baudrate'], current_adapter)
             if options.elm.connectionStatus:
                 options.port_name = port
-                options.port_speed = optimal_settings['baudrate']
+                options.port_speed = settings['baudrate']
                 return True
         except Exception as e:
             print(f"Connection to {port} failed: {e}")
@@ -411,9 +480,20 @@ class Port:
     def init_serial(self, speed):
         """Initialize serial/USB connection with enhanced error handling"""
         try:
-            # Get device-specific optimal settings
-            optimal_settings = DeviceManager.get_optimal_settings(self.adapter_type)
-            print(f"Using optimal settings for {self.adapter_type}: {optimal_settings}")
+            # Check for saved device settings first, use optimal settings as fallback
+            device_key = DeviceManager.normalize_adapter_type(self.adapter_type)
+            saved_settings = options.get_device_settings(device_key, self.portName)
+            
+            if saved_settings and 'baudrate' in saved_settings:
+                settings = saved_settings
+                print(f"Using saved settings for {self.adapter_type}: {settings}")
+            else:
+                settings = DeviceManager.get_optimal_settings(self.adapter_type)
+                print(f"Using optimal settings for {self.adapter_type}: {settings}")
+            
+            # Use provided speed if specified, otherwise use setting
+            if speed > 0:
+                settings['baudrate'] = speed
             
             # Platform-specific serial port configuration
             current_platform = platform.system().lower()
@@ -421,14 +501,14 @@ class Port:
             # Enhanced serial parameters using device-specific settings
             serial_params = {
                 'port': self.portName,
-                'baudrate': speed,
-                'timeout': optimal_settings.get('timeout', 5),
+                'baudrate': settings.get('baudrate', speed),
+                'timeout': settings.get('timeout', 5),
                 'parity': serial.PARITY_NONE,
                 'stopbits': serial.STOPBITS_ONE,
                 'bytesize': serial.EIGHTBITS,
                 'xonxoff': False,
-                'rtscts': optimal_settings.get('rtscts', False),
-                'dsrdtr': False
+                'rtscts': settings.get('rtscts', False),
+                'dsrdtr': settings.get('dsrdtr', False)
             }
             
             # Platform-specific adjustments
@@ -448,6 +528,16 @@ class Port:
             
             print(f"Serial port opened: {self.hdr}")
             self.connectionStatus = True
+            
+            # Save successful connection settings
+            if self.connectionStatus:
+                connection_settings = {
+                    'baudrate': serial_params['baudrate'],
+                    'timeout': serial_params['timeout'],
+                    'rtscts': serial_params['rtscts'],
+                    'dsrdtr': serial_params['dsrdtr']
+                }
+                options.save_device_settings(device_key, connection_settings, self.portName)
             
         except serial.SerialException as e:
             error_msg = f"Serial connection error: {e}"
@@ -880,6 +970,15 @@ class ELM:
         elif adapter_type == "ELS27":
             print(text_optional.replace("OBDLink", "ELS27"))
             if not options.elm_failed:
+                # ELS27 V5 specific initialization - set CAN pins 12-13
+                try:
+                    print(_("Configuring ELS27 V5 CAN pins (12-13)"))
+                    # Send ELS27 specific commands for CAN pin configuration
+                    self.send_raw("ATSP6")  # Set protocol to CAN
+                    self.send_raw("ATSH81")  # Set header for CAN
+                    print(_("ELS27 V5 CAN configuration complete"))
+                except Exception as e:
+                    print(f"ELS27 V5 configuration warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
             print(text_optional.replace("OBDLink", adapter_type))
@@ -1702,12 +1801,42 @@ def elm_checker(port, speed, adapter, logview, app):
     vers = ''
     
     try:
-        # Use optimal settings for the adapter type
-        optimal_settings = DeviceManager.get_optimal_settings(adapter)
-        speed = optimal_settings.get('baudrate', speed)
+        # Check for saved settings first, use optimal settings as fallback
+        device_key = DeviceManager.normalize_adapter_type(adapter)
+        saved_settings = options.get_device_settings(device_key, port)
+        
+        if saved_settings and 'baudrate' in saved_settings:
+            settings = saved_settings
+            speed = settings.get('baudrate', speed)
+            logview.append(_("Using saved device settings"))
+        else:
+            settings = DeviceManager.get_optimal_settings(adapter)
+            speed = settings.get('baudrate', speed)
+            logview.append(_("Using optimal device settings"))
 
         logview.append(_("Connecting to device at port: ") + str(port))
         logview.append(_("Using baudrate: ") + str(speed))
+        
+        # For ELS27 adapters, do a quick pre-test to verify device presence
+        if adapter == "ELS27":
+            logview.append(_("Testing for ELS27 device..."))
+            app.processEvents()  # Update UI
+            is_els27, response = is_els27_device(port, timeout=3)
+            if is_els27:
+                logview.append(_("ELS27 device detected: ") + response)
+                # Extract baud rate from response if found
+                if "at " in response and "baud" in response:
+                    try:
+                        baud_str = response.split("at ")[1].split(" baud")[0]
+                        detected_baud = int(baud_str)
+                        if detected_baud != speed:
+                            logview.append(_("Using detected baud rate: ") + str(detected_baud))
+                            speed = detected_baud
+                    except:
+                        pass
+            else:
+                logview.append(_("Warning: No ELS27 response detected"))
+                logview.append(_("Will attempt connection anyway..."))
         
         options.elm = ELM(port, speed, adapter)
 
