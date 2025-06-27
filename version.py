@@ -23,7 +23,7 @@ __contributors__ = [
     "Jodaille"
 ]
 __license__ = "GPL"
-__version__ = "3.0.4"
+__version__ = "3.0.5"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__status__ = "Axolotl"
+__status__ = "Beta"
