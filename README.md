@@ -92,11 +92,15 @@ pip install -r requirements.txt
 * **ObdLink SX** - USB (High-speed professional adapter with RTS/CTS flow control)
 * **ObdLink EX** - USB (Professional adapter, tested and confirmed working)
 * **ELS27** - USB (Alternative ELM327-compatible adapter)
+* **ELS27 V5** - USB (Enhanced ELS27 with CAN on pins 12-13, improved compatibility)
 
 #### **Connection Methods:**
-- **USB**: Direct serial connection with automatic driver detection
+- **USB**: Serial-over-USB connection with automatic driver detection (most adapters)
+- **USB Direct**: Native USB communication for specialized CAN adapters
 - **Bluetooth**: Wireless connection with pairing support
 - **WiFi**: TCP/IP connection (format: `192.168.0.10:35000`)
+
+> **Note**: Most adapters (ELM327, Vlinker, VGate, ObdLink, ELS27) use serial-over-USB communication through standard COM ports. Some specialized USB CAN adapters support direct USB communication for enhanced performance, but these are less common.
 
 #### **📋 Recommended Device Settings:**
 
@@ -109,6 +113,7 @@ pip install -r requirements.txt
 | **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
 | **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
 | **ELS27** | Standard speeds | 38400 | 4s | None | Alternative | Good ELM327 alternative |
+| **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, better PyRen/Renolink compatibility |
 
 #### **⚙️ Connection Optimization Tips:**
 - **USB**: Most stable, recommended for diagnostic work
@@ -132,6 +137,7 @@ DDT4All now automatically provides optimal speed options based on your selected 
 - **ObdLink SX**: Professional blue/black housing, "OBDLink SX" branding
 - **ObdLink EX**: Professional housing, "OBDLink EX" branding, similar to SX
 - **ELS27**: Similar to ELM327 but with "ELS27" marking
+- **ELS27 V5**: Enhanced ELS27 with "V5" marking, CAN pins 12-13, better driver compatibility
 
 #### **⚡ Quick Setup Guide:**
 1. **Connect Device**: USB/Bluetooth/WiFi as appropriate
@@ -144,6 +150,7 @@ DDT4All now automatically provides optimal speed options based on your selected 
 - **Vlinker FS**: Extensively tested, recommended for best compatibility
 - **VGate iCar Pro**: High-performance adapter with excellent speed capabilities
 - **ELM327 Original**: Well-tested with PIC18F25K80 chip
+- **ELS27 V5**: Enhanced compatibility, works with PyRen and Renolink drivers
 
 > **Note**: If you have successfully tested other devices with DDT4All, please let us know so we can update this list!
 
@@ -293,6 +300,16 @@ alias ddt4all='cd /path/to/ddt4all && source ./venv/bin/activate && python ./mai
 2. **Try Different Baud Rates**: Use the connection test feature to try different speeds
 3. **Driver Installation**: Ensure device drivers are properly installed
 4. **Port Permissions**: Check port access permissions (Linux/macOS)
+
+#### **ELS27 V5 Specific Issues**
+If your ELS27 V5 is not detected:
+1. **Verify Driver Installation**: Ensure PyRen/Renolink drivers are properly installed
+2. **Check Device Manager**: Device should appear as COM port or USB Serial device
+3. **Try Different USB Ports**: Some ELS27 V5 units are sensitive to USB port selection
+4. **Manual Port Selection**: ELS27 V5 may appear as "FTDI", "CH340", or "CP210x" device
+5. **Test All Available Ports**: Use connection test on each COM port to find your device
+6. **CAN Pin Configuration**: ELS27 V5 uses CAN on pins 12-13 (configured automatically)
+7. **Baud Rate Testing**: Try 38400, 9600, and 115200 baud rates if auto-detection fails
 
 #### **WiFi Connection Issues**
 * **Format**: Use `IP:PORT` format (e.g., `192.168.0.10:35000`)
