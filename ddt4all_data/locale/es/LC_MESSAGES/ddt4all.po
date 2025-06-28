@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-21 16:50+0200\n"
-"PO-Revision-Date: 2025-06-21 16:55+0200\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
+"PO-Revision-Date: 2025-06-28 05:09+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -408,6 +408,12 @@ msgstr ""
 msgid "Connection established successfully"
 msgstr "¡Prueba de conexión exitosa!"
 
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr ""
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr ""
+
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 
@@ -443,11 +449,38 @@ msgstr ""
 msgid "Unknown address: "
 msgstr "Dirección de función ECU"
 
+msgid "Using saved device settings"
+msgstr ""
+
+msgid "Using optimal device settings"
+msgstr ""
+
 msgid "Connecting to device at port: "
 msgstr "Conectando al dispositivo en puerto: "
 
 msgid "Using baudrate: "
 msgstr "Usando velocidad de baudios: "
+
+msgid "Testing for ELS27 device..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ELM327 device detected successfully"
+msgid "ELS27 device detected: "
+msgstr "Dispositivo ELM327 detectado exitosamente"
+
+#, fuzzy
+#| msgid "Using baudrate: "
+msgid "Using detected baud rate: "
+msgstr "Usando velocidad de baudios: "
+
+msgid "Warning: No ELS27 response detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Attempting connection..."
+msgid "Will attempt connection anyway..."
+msgstr "Intentando conexión..."
 
 msgid "Connection failed: "
 msgstr "Conexión fallida: "
@@ -1111,6 +1144,9 @@ msgid "Frame hex error: "
 msgstr ""
 
 msgid "Found USB adapter:"
+msgstr ""
+
+msgid "ELS27 V5 CAN pin configuration complete"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"

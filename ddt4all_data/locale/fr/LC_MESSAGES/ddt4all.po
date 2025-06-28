@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-21 16:50+0200\n"
-"PO-Revision-Date: 2025-06-21 17:01+0200\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
+"PO-Revision-Date: 2025-06-28 05:20+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -388,6 +388,12 @@ msgstr "OBDLINK Connexion réussi, utilisation des paramètres optimisées"
 msgid "Connection established successfully"
 msgstr "Connexion établie avec succès"
 
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr "Configuration ELS27 V5 CAN pins (12-13)"
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr "ELS27 V5 CAN configuration completé"
+
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 "OBDLINK a commuté le baurate OK, changeant la vitesse UART maintenant..."
@@ -416,11 +422,32 @@ msgstr "Réinitialisation de l'ELM..."
 msgid "Unknown address: "
 msgstr "Adresse inconnue: "
 
+msgid "Using saved device settings"
+msgstr "Utilisation des données sauvegardées"
+
+msgid "Using optimal device settings"
+msgstr "Utilisation optimale des paramètres du device "
+
 msgid "Connecting to device at port: "
 msgstr "Connexion à l'appareil sur le port : "
 
 msgid "Using baudrate: "
 msgstr "Utilisation du débit : "
+
+msgid "Testing for ELS27 device..."
+msgstr "Test périphérique ELS27.."
+
+msgid "ELS27 device detected: "
+msgstr "Appareil ELS27 détecté:"
+
+msgid "Using detected baud rate: "
+msgstr "Utilisation du débit détecté : "
+
+msgid "Warning: No ELS27 response detected"
+msgstr "Attention: Pas de réponse détecté sur ELS27"
+
+msgid "Will attempt connection anyway..."
+msgstr "Attente de tentative de connexion..."
 
 msgid "Connection failed: "
 msgstr "Échec de la connexion : "
@@ -1068,6 +1095,9 @@ msgstr "Erreur hexadécimale du cadre: "
 
 msgid "Found USB adapter:"
 msgstr "Adaptateur USB trouvé :"
+
+msgid "ELS27 V5 CAN pin configuration complete"
+msgstr "ELS27 V5 CAN pin configuration completé"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "AB90 Airbag RAZ"

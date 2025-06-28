@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-21 16:50+0200\n"
-"PO-Revision-Date: 2025-06-21 17:08+0200\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
+"PO-Revision-Date: 2025-06-28 05:28+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -388,6 +388,12 @@ msgstr "Conexão OBDLINK de velocidade total OK"
 msgid "Connection established successfully"
 msgstr "Conexão estabelecida com êxito"
 
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr "Configuração ELS27 V5 CAN pins (12-13)"
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr "ELS27 V5 CAN configuração completa"
+
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr "OBDLINK mudou baurate OK, mudando a velocidade do UART agora..."
 
@@ -416,11 +422,32 @@ msgstr "Reinicialização do ELM..."
 msgid "Unknown address: "
 msgstr "Endereço desconhecido: "
 
+msgid "Using saved device settings"
+msgstr "Uso dos parametros salvos"
+
+msgid "Using optimal device settings"
+msgstr "Uso dos parametros optimal"
+
 msgid "Connecting to device at port: "
 msgstr "Connecting to device at port: "
 
 msgid "Using baudrate: "
 msgstr "Using baudrate: "
+
+msgid "Testing for ELS27 device..."
+msgstr "Test em device ELS27..."
+
+msgid "ELS27 device detected: "
+msgstr "ELM327 device detectado: "
+
+msgid "Using detected baud rate: "
+msgstr "Uso do baud rate detectado; "
+
+msgid "Warning: No ELS27 response detected"
+msgstr "Atenção: Resposta não detectada em ELS27"
+
+msgid "Will attempt connection anyway..."
+msgstr "Espera de conexions ..."
 
 msgid "Connection failed: "
 msgstr "Connection failed: "
@@ -1062,6 +1089,9 @@ msgstr "Erro hexadecimal de quadro: "
 
 msgid "Found USB adapter:"
 msgstr "Adaptador USB encontrado:"
+
+msgid "ELS27 V5 CAN pin configuration complete"
+msgstr "ELS27 V5 CAN pin configuração completa"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Reinicialização do AIRBAG AB90"
