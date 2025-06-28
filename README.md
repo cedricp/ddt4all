@@ -400,8 +400,8 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 | Language | Code | Status | Recent Updates | Contributors |
 |----------|------|--------|----------------|--------------|
 | English | en_US | ✅ Complete | Native | Core Team |
-| Français | fr | ✅ Complete | Core Team | Core Team |
-| Português | pt | ✅ Complete | Core Team | Core Team |
+| Français | fr | 📝 Complete | Core Team | Core Team |
+| Português | pt | 📝 Complete | Core Team | Core Team |
 | Deutsch | de | 🔄 Enhanced | +30 new strings | Community |
 | Español | es | 🔄 Enhanced | +30 new strings | Community |
 | Italiano | it | 🔄 Enhanced | +30 new strings | Community |
