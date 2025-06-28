@@ -27,10 +27,10 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Memory Optimization**: Improved resource management and cleanup
 
 ### 🔧 **New Device & Speed Management**
-- **VGate iCar Pro Support**: Full support for high-speed STN-based VGate adapters
+- **VGate iCar Pro Support**: Full support for enhanced STN-based VGate adapters
 - **Intelligent Speed Selection**: Device-specific speed options automatically loaded
 - **Optimal Settings Engine**: Automatic timeout and flow control configuration per device
-- **Enhanced Vlinker Support**: Improved speed options (57600, 115200) for better performance
+- **Enhanced Vlinker Support**: Improved speed options (No, 57600, 115200) for better performance
 
 
 ### Android porting: 
@@ -93,7 +93,7 @@ pip install PyQt5==5.15.11 PyQtWebEngine==5.15.7 pyserial==3.5 pyusb==1.2.1 crcm
 ### 🔌 **Supported Diagnostic Adapters**
 
 * **Vlinker FS** - USB/Bluetooth (Recommended for best performance and stability)
-* **VGate iCar Pro** - USB/Bluetooth/WiFi (High-speed STN-based adapter with advanced features)
+* **VGate iCar Pro** - USB/Bluetooth/WiFi (Enhanced STN-based adapter with advanced features)
 * **ELM327** - USB/Bluetooth/WiFi (Original with _PIC18F25K80_, some Chinese clones supported)
 * **ObdLink SX** - USB (High-speed professional adapter with RTS/CTS flow control)
 * **ObdLink EX** - USB (Professional adapter, tested and confirmed working)
@@ -120,12 +120,12 @@ pip install PyQt5==5.15.11 PyQtWebEngine==5.15.7 pyserial==3.5 pyusb==1.2.1 crcm
 | Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
 |--------|---------------|---------|---------|--------------|----------|-------|
 | **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Enhanced** | Most stable, best compatibility |
-| **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **Enhanced** | STN-based, very high speeds |
+| **VGate iCar Pro** | No, 115200, 230400, 500000, 1000000 | 115200 | 2s | None | **Enhanced** | STN-based, very high speeds |
 | **ELM327 Original** | Standard speeds | 38400 | 5s | None | **General use** | Verify PIC18F25K80 chip |
-| **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | **Budget option** | Test different baud rates |
+| **ELM327 Clone** | Standard speeds | 9600-38400 | 5s | None | **Budget option** | Test different baud rates |
 | **ELM327 USB** | Standard speeds | 38400 | 5s | None | **USB Direct** | Dedicated USB ELM327 support |
-| **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
-| **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Confirmed working, professional grade |
+| **ObdLink SX** | No, 500000, 1000000, 2000000 | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
+| **ObdLink EX** | No, 500000, 1000000, 2000000 | 115200 | 2s | RTS/CTS | **Professional** | Confirmed working, professional grade |
 | **ELS27** | Standard speeds | 38400 | 4s | None | **Alternative** | Good ELM327 alternative |
 | **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, PyRen/Renolink compatible |
 | **USB CAN** | Varies | 38400 | 5s | None | **Specialized** | Intelligent fallback, auto-detection |
@@ -142,7 +142,23 @@ DDT4All now automatically provides optimal speed options based on your selected 
 - **Automatic Detection**: Device-specific speed ranges are automatically loaded
 - **Performance Optimization**: Each adapter gets speeds suited to its capabilities
 - **Easy Selection**: Simply choose your adapter type and select from available speeds
-- **Fallback Support**: "No" option available for adapters that don't support speed switching
+
+#### **⚡ Technical Speed Implementation:**
+**VGate iCar Pro** (STN-based, high-speed capable):
+- Available: No, 115200, 230400, 500000, 1000000 bps
+- Default: 115200 bps (speedcombo index 2)
+
+**Vlinker FS** (Moderate speeds, stable):
+- Available: No, 57600, 115200 bps  
+- Default: 38400 bps
+
+**ObdLink SX/EX** (Professional, highest speeds):
+- Available: No, 500000, 1000000, 2000000 bps
+- Default: 115200 bps with RTS/CTS flow control
+
+**ELM327 variants** (Standard compatibility):
+- Speed fallback: 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000 bps
+- Default: 38400 bps
 
 #### **🔍 Device Identification Guide:**
 - **Vlinker FS**: Usually labeled "Vlinker FS" or "OBDII WiFi"
@@ -165,7 +181,7 @@ DDT4All now automatically provides optimal speed options based on your selected 
 #### **✅ User-Tested Devices:**
 - **ObdLink EX**: Confirmed working by community user with excellent results
 - **Vlinker FS**: Extensively tested, recommended for best compatibility
-- **VGate iCar Pro**: High-performance adapter with excellent speed capabilities
+- **VGate iCar Pro**: Enhanced adapter with excellent speed capabilities
 - **ELM327 Original**: Well-tested with PIC18F25K80 chip
 - **ELS27 V5**: Enhanced compatibility, works with PyRen and Renolink drivers
 
