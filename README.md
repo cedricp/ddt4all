@@ -86,6 +86,13 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 - Note about Linux ubuntu fixes uncomment next lines:
   - Fix qt platform plugin linux ubuntu "xcb" if error's:
     - `sudo apt-get install --reinstall libxcb-xinerama0`
+- NixOS:
+  - `nix run github:cedricp/ddt4all`
+    NixOS users can also enter a development environment with all dependencies using:
+    ```bash
+    nix develop
+    python ./main.py
+    ```
 
 ## How to launch the application ?
 - Windows:
@@ -96,6 +103,8 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
   - Cd into ddt4all folder: `cd ddt4all`
   - Activate venv: `source ./venv/bin/activate`
   - Run's app: `python ./main.py`
+- NixOS:
+  - `nix run github:cedricp/ddt4all`
 
 ## Platforms
 
