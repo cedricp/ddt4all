@@ -15,14 +15,14 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **USB CAN Support**: Added support for specialized USB CAN adapters with fallback handling
 
 ### 🌍 **Complete Internationalization (13 Languages)**
-- **Fully Translated Interface** in 13 languages with 390+ new translation strings
-- **Supported Languages**: English, Français, Deutsch, Español, Italiano, Русский, Polski, Nederlands, Português, Magyar, Română, Српски, Türkçe, Українська
+- **Fully Translated Interface** in 13 languages with comprehensive translation coverage
+- **Supported Languages**: English, Français (fr), Deutsch (de), Español (es), Italiano (it), Русский (ru), Polski (pl), Nederlands (nl), Português (pt), Magyar (hu), Română (ro), Српски (sr), Türkçe (tr), Українська (uk_UA)
 - **Real-time Language Switching** with proper encoding support
 - **HTML-Aware Translations** preserving markup while translating content
 
 ### ⚡ **Performance & Reliability Improvements**
-- **Fast Device Detection**: ~0.014s port scanning with intelligent filtering
-- **Thread-Safe Operations**: Proper locking mechanisms for connection stability
+- **Enhanced Device Detection**: Optimized port scanning with intelligent device identification
+- **Thread-Safe Operations**: QThread-based operations with proper synchronization for connection stability
 - **Enhanced Error Handling**: Comprehensive error recovery and user-friendly messages
 - **Memory Optimization**: Improved resource management and cleanup
 
@@ -79,15 +79,15 @@ pip install pywin32
 # Complete installation (all features)
 pip install -r requirements.txt
 
-# Alternative with specific versions (most stable)
-pip install PyQt5==5.15.11 PyQtWebEngine==5.15.7 pyserial==3.5 pyusb==1.2.1 crcmod==1.7
+# Alternative with specific versions (matches requirements.txt)
+pip install "PyQt5>=5.15.0,<5.16.0" "PyQtWebEngine>=5.15.0,<5.16.0" pyserial==3.5 pyusb==1.2.1 crcmod==1.7
 ```
 
 #### **⚠️ Important Notes:**
 - **PyQt5.QtWebEngineWidgets**: Provided by PyQtWebEngine package, used for enhanced documentation viewing
 - **If PyQtWebEngine fails to install**: DDT4All will still work, but documentation viewing will be limited
 - **Python Compatibility**: 3.8.6+ supported (32-bit and 64-bit), tested on 3.8.6, 3.10.12, and 3.13+
-- **WebEngine Compatibility**: JavaScript disabled to prevent compatibility errors with older WebEngine versions
+- **WebEngine Compatibility**: Optional PyQtWebEngine support with graceful fallback for documentation viewing
 - **Virtual Environment**: [Recommended setup guide](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 .
 ### 🔌 **Supported Diagnostic Adapters**
@@ -242,11 +242,39 @@ The plugin architecture allows developers to create custom automation scripts fo
 
 ### **⚡ Performance & Compatibility**
 - **Protocol Support**: CAN / KWP2000 bus protocols
-- **High-Speed Parsing**: Internal JSON format for optimal performance
-- **Database Compression**: ZIP compression for efficient storage
-- **Cross-Platform**: Windows, Linux, macOS support
+- **Database Format**: Supports both XML and compressed ZIP formats for optimal storage
+- **Database Compression**: ZIP compression with automatic ecu.zip handling for efficient storage
+- **Cross-Platform**: Windows, Linux, macOS support with platform-specific optimizations
 
 ---
+
+## 🏗️ **Application Architecture**
+
+### **Core Modules**
+- **`main.py`** - Main application entry point with GUI setup and connection management
+- **`elm.py`** - ELM327/adapter communication protocol with device-specific implementations
+- **`ecu.py`** - ECU database management and vehicle communication
+- **`parameters.py`** - Parameter parsing, JSON/XML conversion, and ZIP database handling
+- **`options.py`** - Configuration management and device settings persistence
+- **`sniffer.py`** - CAN bus monitoring with QThread-based real-time data capture
+- **`usbdevice.py`** - USB device handling and specialized CAN adapter support
+- **`dataeditor.py`** - ECU data editing and modification interface
+- **`displaymod.py`** - GUI display modules and graphical elements
+- **`uiutils.py`** - UI utilities and helper functions
+- **`version.py`** - Application version and contributor information
+
+### **Threading Implementation**
+- **QThread-based Architecture**: Uses Qt's threading system for non-blocking operations  
+- **snifferThread**: Real-time CAN bus monitoring without UI freezing (`sniffer.py`)
+- **Connection Management**: Thread-safe serial communication with `threading.Lock()` in ELM class
+- **Device Detection**: Enhanced port scanning with intelligent device identification
+- **Timer-based Operations**: QTimer for periodic updates and connection monitoring
+
+### **Database Format Support**
+- **XML Format**: Original ECU database format for development and compatibility
+- **ZIP Compression**: Automatic `ecu.zip` detection and extraction for distribution
+- **JSON Conversion**: Internal conversion between XML and JSON for performance
+- **Graphics Support**: ZIP-embedded graphics extraction for ECU interface elements
 
 ## 📦 **Installation Guide**
 
@@ -492,11 +520,18 @@ ddt4all/
 ├── version.py             # Version information
 ├── requirements.txt       # Python dependencies
 ├── ecu.zip               # ECU DATABASE (download separately)
+├── vehicles/             # Vehicle-specific ECU databases and scripts
+│   ├── projects.xsl      # ECU project transformation
+│   ├── x*/               # Vehicle model directories (x06, x07, x10, etc.)
+│   ├── scriptsLibrary/   # Shared script resources
+│   └── DiagnosticAddressing.xsl  # Diagnostic addressing configuration
 ├── ddtplugins/           # Plugin system directory
 │   ├── README.md         # Plugin documentation
-│   └── *.py              # Individual plugin modules
+│   └── *.py              # Individual plugin modules (13 plugins)
+├── json/                 # JSON database directory (for ecu.zip extraction)
 └── ddt4all_data/         # Application data and resources
     ├── config.json       # User configuration
+    ├── projects.json     # Vehicle project definitions
     ├── locale/           # Translation files (13 languages)
     ├── icons/            # Application icons
     ├── tools/            # Development and build tools
