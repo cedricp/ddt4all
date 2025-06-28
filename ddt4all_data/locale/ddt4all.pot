@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-21 16:50+0200\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -379,6 +379,12 @@ msgstr ""
 msgid "Connection established successfully"
 msgstr ""
 
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr ""
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr ""
+
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 
@@ -406,10 +412,31 @@ msgstr ""
 msgid "Unknown address: "
 msgstr ""
 
+msgid "Using saved device settings"
+msgstr ""
+
+msgid "Using optimal device settings"
+msgstr ""
+
 msgid "Connecting to device at port: "
 msgstr ""
 
 msgid "Using baudrate: "
+msgstr ""
+
+msgid "Testing for ELS27 device..."
+msgstr ""
+
+msgid "ELS27 device detected: "
+msgstr ""
+
+msgid "Using detected baud rate: "
+msgstr ""
+
+msgid "Warning: No ELS27 response detected"
+msgstr ""
+
+msgid "Will attempt connection anyway..."
 msgstr ""
 
 msgid "Connection failed: "
@@ -1037,6 +1064,9 @@ msgid "Frame hex error: "
 msgstr ""
 
 msgid "Found USB adapter:"
+msgstr ""
+
+msgid "ELS27 V5 CAN pin configuration complete"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"
