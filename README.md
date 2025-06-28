@@ -120,13 +120,13 @@ pip install PyQt5==5.15.11 PyQtWebEngine==5.15.7 pyserial==3.5 pyusb==1.2.1 crcm
 | Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
 |--------|---------------|---------|---------|--------------|----------|-------|
 | **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Enhanced** | Most stable, best compatibility |
-| **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **High Performance** | STN-based, very high speeds |
+| **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **Enhanced** | STN-based, very high speeds |
 | **ELM327 Original** | Standard speeds | 38400 | 5s | None | **General use** | Verify PIC18F25K80 chip |
-| **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | Budget option | Test different baud rates |
+| **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | **Budget option** | Test different baud rates |
 | **ELM327 USB** | Standard speeds | 38400 | 5s | None | **USB Direct** | Dedicated USB ELM327 support |
 | **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
-| **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
-| **ELS27** | Standard speeds | 38400 | 4s | None | Alternative | Good ELM327 alternative |
+| **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Confirmed working, professional grade |
+| **ELS27** | Standard speeds | 38400 | 4s | None | **Alternative** | Good ELM327 alternative |
 | **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, PyRen/Renolink compatible |
 | **USB CAN** | Varies | 38400 | 5s | None | **Specialized** | Intelligent fallback, auto-detection |
 
