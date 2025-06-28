@@ -2,6 +2,8 @@
 
 DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
+**Current Version**: v3.0.5 (RC1 - "Okapi-RC1") - Latest stable release with enhanced device support and performance improvements.
+
 ## 🚀 **Recent Major Improvements**
 
 ### ✅ **Enhanced Device Compatibility & Connection Stability**
@@ -71,11 +73,14 @@ pip install PyQt5 pyserial pyusb crcmod
 # Enhanced installation (recommended)
 pip install PyQt5 PyQtWebEngine pyserial pyusb crcmod
 
-# Windows users (additional)
+# Windows users (additional - recommended)
 pip install pywin32
 
-# Complete installation
+# Complete installation (all features)
 pip install -r requirements.txt
+
+# Alternative with specific versions (most stable)
+pip install PyQt5==5.15.11 PyQtWebEngine==5.15.7 pyserial==3.5 pyusb==1.2.1 crcmod==1.7
 ```
 
 #### **⚠️ Important Notes:**
@@ -110,7 +115,7 @@ pip install -r requirements.txt
 
 > **Note**: Most adapters (ELM327, Vlinker, VGate, ObdLink, ELS27) use serial-over-USB communication through standard COM ports. USB CAN adapters now have dedicated support with automatic fallback to ensure compatibility.
 
-#### **📋 Recommended Device Settings:**
+#### **📋 Supported Device Configuration:**
 
 | Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
 |--------|---------------|---------|---------|--------------|----------|-------|
@@ -122,7 +127,7 @@ pip install -r requirements.txt
 | **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
 | **ObdLink EX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Core Team** | Confirmed working, professional grade |
 | **ELS27** | Standard speeds | 38400 | 4s | None | Alternative | Good ELM327 alternative |
-| **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, better PyRen/Renolink compatibility |
+| **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, PyRen/Renolink compatible |
 | **USB CAN** | Varies | 38400 | 5s | None | **Specialized** | Intelligent fallback, auto-detection |
 
 #### **⚙️ Connection Optimization Tips:**
@@ -196,7 +201,28 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 - **Log Recorder**: Comprehensive data logging with export functionality
 - **Screen Recorder**: Automated capture via autorefresh with CSV export
 - **CAN Bus Sniffing**: Read/decode non-ISOTP frames for advanced diagnostics
-- **Plugin System**: Extensible architecture for automated functions
+- **Plugin System**: Extensible Python-based plugin architecture for automated functions
+- **Real-time Monitoring**: Live data visualization and parameter monitoring
+- **Custom Scripts**: Support for vehicle-specific automation scripts
+
+### **🔌 Plugin System**
+DDT4All includes a comprehensive plugin system located in `ddtplugins/` with ready-to-use modules:
+
+- **`ab90_reset.py`** - AB90 module reset functionality
+- **`card_programming.py`** - ECU card programming utilities
+- **`clio3_eps_reset.py`** - Clio 3 EPS (Electric Power Steering) reset
+- **`clio4_eps_reset.py`** - Clio 4 EPS reset procedures
+- **`laguna2_uch_reset.py`** - Laguna 2 UCH (Under Hood Control) reset
+- **`laguna3_uch_reset.py`** - Laguna 3 UCH reset procedures
+- **`megane2_uch_reset.py`** - Megane 2 UCH reset
+- **`megane3_ab_reset.py`** - Megane 3 AB (AirBag) reset
+- **`megane3_eps_reset.py`** - Megane 3 EPS reset
+- **`megane3_uch_reset.py`** - Megane 3 UCH reset
+- **`rsat4_reset.py`** - RSAT4 system reset
+- **`vin_crc.py`** - VIN checksum calculation utilities
+- **`zoe_waterpump_counter_reset.py`** - Zoe water pump counter reset
+
+The plugin architecture allows developers to create custom automation scripts for specific vehicle procedures and ECU operations.
 
 ### **⚡ Performance & Compatibility**
 - **Protocol Support**: CAN / KWP2000 bus protocols
@@ -429,22 +455,81 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 ### **Contributing Translations:**
 We welcome contributions to improve existing translations or add new languages. Translation files are located in `ddt4all_data/locale/`. Recent focus areas include device connection messages and error handling.
 
-## Informations
+### **🛠️ Development Tools:**
+- **Translation Tools**: Located in `ddt4all_data/tools/` for managing .po/.mo files
+- **Automated Testing**: GitHub Actions workflow ensures code quality
+- **Cross-Platform Building**: Support for Linux, Windows, and macOS builds
+- **Build Scripts**: Automated installer generation for Windows (InnoSetup)
 
-**_DataBase not included, do not forget to install database as ecu.zip or full mode in to root clone repo._**
+### **📁 Project Structure:**
+```
+ddt4all/
+├── main.py                 # Main application entry point
+├── elm.py                  # ELM327 and OBD-II adapter communication
+├── ecu.py                  # ECU communication and protocols
+├── options.py              # Configuration and settings management
+├── parameters.py           # Parameter definitions and handling
+├── dataeditor.py          # Data editing and validation
+├── displaymod.py          # Display modules and widgets
+├── sniffer.py             # CAN bus sniffing functionality
+├── uiutils.py             # UI utilities and helpers
+├── version.py             # Version information
+├── requirements.txt       # Python dependencies
+├── ecu.zip               # ECU DATABASE (download separately)
+├── ddtplugins/           # Plugin system directory
+│   ├── README.md         # Plugin documentation
+│   └── *.py              # Individual plugin modules
+└── ddt4all_data/         # Application data and resources
+    ├── config.json       # User configuration
+    ├── locale/           # Translation files (13 languages)
+    ├── icons/            # Application icons
+    ├── tools/            # Development and build tools
+    ├── inno-win-setup/   # Windows installer configuration
+    └── mac-os/           # macOS build configuration
+```
 
-### Report bugs
+## 📋 **Important Information**
+
+### **📦 Database Requirements**
+**⚠️ Critical**: The ECU database is **NOT included** in this repository due to size constraints.
+
+**You must install the database separately:**
+1. **ecu.zip method**: Download and place `ecu.zip` in the root directory
+2. **Full mode**: Clone the complete repository with database files
+3. **Database location**: Place database files in the same directory as `main.py`
+
+**Without the database, DDT4All will not function properly.**
+
+### **🐛 Report Bugs**
 Report bugs you found in [issues](https://github.com/cedricp/ddt4all/issues).
-In order to help us fix the problem, please take a screenshot of the error you get and also attach your log file (under the Logs folder) as well. Add [Bug] to the title to help us quickly identify the category of the issue.
+To help us fix the problem quickly, please:
+- **Take a screenshot** of the error you encounter
+- **Attach your log file** (located in the `Logs/` folder)
+- **Add [Bug]** to the title for quick identification
+- **Include system information** (OS, Python version, adapter type)
 
-### Suggestions/ideas
+### **💡 Suggestions/Ideas**
 Tell us what you think we can do better in [discussions](https://github.com/cedricp/ddt4all/discussions).
-Give detailed discription to help us understand what you are looking for. Add [Suggestion] to the title to help us quickly identify the category of the issue. Your suggestion might not be accept, but hey, maybe we will accept your suggestion next time! :)
+Give detailed description to help us understand what you are looking for. Add [Suggestion] to the title to help us quickly identify the category of the issue. Your suggestion might not be accepted, but we value all community input! :)
 
-### Legal Disclaimer
+### **⚖️ Legal Disclaimer**
 This Website and Project is in no way affiliated with, authorized, maintained, sponsored or endorsed by ANYONE. This is an independent and unofficial project for educational use ONLY. Do not use for any other purpose than education, testing and research.
 
+---
 
-Happy CAN-Hacking :)
+## **🎯 Final Notes**
 
-To make this application more reliable, I need to buy hardware, cables and devices, so please consider contributing by making a donation (hardware or money). Of course you can contribute by filling bug reports and sending patches.
+**Happy CAN-Hacking!** 🚗💻
+
+### **🤝 Support the Project**
+To make this application more reliable and add support for new devices, hardware donations are needed. Please consider contributing:
+- **💰 Financial donations** via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+- **🔧 Hardware donations** (OBD-II adapters, cables, ECU devices)
+- **🐛 Bug reports** and patches
+- **📖 Documentation** improvements
+- **🌍 Translation** contributions
+
+### **📞 Community & Support**
+- **Discord**: [Join our community](https://discord.gg/cBqDh9bTHP) for real-time support
+- **GitHub Issues**: Technical problems and bug reports
+- **GitHub Discussions**: Feature requests and general discussions
