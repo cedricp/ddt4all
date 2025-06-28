@@ -114,9 +114,9 @@ pip install -r requirements.txt
 
 | Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
 |--------|---------------|---------|---------|--------------|----------|-------|
-| **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Recommended** | Most stable, best compatibility |
+| **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Enhanced** | Most stable, best compatibility |
 | **VGate iCar Pro** | No, 115K, 230K, 500K, 1M | 115200 | 2s | None | **High Performance** | STN-based, very high speeds |
-| **ELM327 Original** | Standard speeds | 38400 | 5s | None | General use | Verify PIC18F25K80 chip |
+| **ELM327 Original** | Standard speeds | 38400 | 5s | None | **General use** | Verify PIC18F25K80 chip |
 | **ELM327 Clone** | Standard speeds | 9600-38400 | 7s | None | Budget option | Test different baud rates |
 | **ELM327 USB** | Standard speeds | 38400 | 5s | None | **USB Direct** | Dedicated USB ELM327 support |
 | **ObdLink SX** | No, 500K, 1M, 2M | 115200 | 2s | RTS/CTS | **Professional** | Highest speeds, premium adapter |
