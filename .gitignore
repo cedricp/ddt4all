@@ -30,6 +30,7 @@ __pycache__/
 /.venv/
 /OdxSpecFiles/
 /TradConf.conf
+/.direnv/
 
 /build/
 /setup.py
