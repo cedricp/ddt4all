@@ -1889,6 +1889,19 @@ class main_window_options(widgets.QDialog):
 
 
 if __name__ == '__main__':
+    # For InnoSetup version.h auto generator
+    if os.path.isdir('ddt4all_data/inno-win-setup'):
+        try:
+            with open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
+                f.write(f'#define __appname__ "{version.__appname__}"\n')
+                f.write(f'#define __author__ "{version.__author__}"\n')
+                f.write(f'#define __copyright__ "{version.__copyright__}"\n')
+                f.write(f'#define __version__ "{version.__version__}"\n')
+                f.write(f'#define __email__ "{version.__email__}"\n')
+                f.write(f'#define __status__ "{version.__status__}"')
+        except (OSError, IOError) as e:
+            print(f"Warning: Could not write version.h: {e}")
+            
     if not_qt5_show:
         exit(0)
     try:
@@ -1914,19 +1927,6 @@ if __name__ == '__main__':
             set_socket_timeout(0)
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
         set_dark_style(0)
-
-    # For InnoSetup version.h auto generator
-    if os.path.isdir('ddt4all_data/inno-win-setup'):
-        try:
-            with open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
-                f.write(f'#define __appname__ "{version.__appname__}"\n')
-                f.write(f'#define __author__ "{version.__author__}"\n')
-                f.write(f'#define __copyright__ "{version.__copyright__}"\n')
-                f.write(f'#define __version__ "{version.__version__}"\n')
-                f.write(f'#define __email__ "{version.__email__}"\n')
-                f.write(f'#define __status__ "{version.__status__}"')
-        except (OSError, IOError) as e:
-            print(f"Warning: Could not write version.h: {e}")
 
     app.setStyle("plastic")
 

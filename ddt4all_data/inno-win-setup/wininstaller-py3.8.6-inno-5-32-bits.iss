@@ -52,8 +52,8 @@ AppId={{#APP_ID}
 
 [Files]
 Source: "win32_deps\VC_redist.x86.exe"; DestDir: "{app}\win32_deps"; Tasks: microsoft_runtimes
-;Source: "..\..\ecu.zip"; DestDir: "{app}";
-Source: "\DDT4ALL-Dist-Versions\\Python38-32\*"; DestDir: "{app}\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
+Source: "..\..\ecu.zip"; DestDir: "{app}";
+Source: "\DDT4ALL-Dist-Versions\Python38-32\*"; DestDir: "{app}\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
 Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
@@ -74,12 +74,12 @@ Type: filesandordirs; Name: "{app}"
 
 [Run]
 Filename: "{app}\win32_deps\VC_redist.x86.exe"; Tasks: microsoft_runtimes
-Filename: {app}\Python386-32\python.exe; Parameters: """{app}\main.py"""; WorkingDir: {app}; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
+Filename: "{app}\Python386-32\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [Code]
 procedure AfterMyProgInstall;
 begin
-    MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
+    // MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
     // remove developement config.json file
     DeleteFile(ExpandConstant('{app}\ddt4all_data\config.json'));
 end;

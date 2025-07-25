@@ -2,7 +2,7 @@
 
 DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
-**Current Version**: v3.0.5 (RC1 - "Okapi-RC1") - Latest stable release with enhanced device support and performance improvements.
+**Current Version**: v3.0.5 - "Okapi-RC1" - Latest stable release with enhanced device support and performance improvements.
 
 ## 🚀 **Recent Major Improvements**
 
@@ -541,7 +541,7 @@ ddt4all/
 
 ## 📋 **Important Information**
 
-### **📦 Database Requirements**
+<!-- ### **📦 Database Requirements**
 **⚠️ Critical**: The ECU database is **NOT included** in this repository due to size constraints.
 
 **You must install the database separately:**
@@ -549,7 +549,7 @@ ddt4all/
 2. **Full mode**: Clone the complete repository with database files
 3. **Database location**: Place database files in the same directory as `main.py`
 
-**Without the database, DDT4All will not function properly.**
+**Without the database, DDT4All will not function properly.** -->
 
 ### **🐛 Report Bugs**
 Report bugs you found in [issues](https://github.com/cedricp/ddt4all/issues).
