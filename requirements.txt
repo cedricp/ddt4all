@@ -1,6 +1,86 @@
-PyQt5==5.15.11
-PyQt5-stubs==5.15.6.0
-PyQtWebEngine==5.15.7
-pyusb==1.2.1
-crcmod==1.7
+# DDT4ALL Requirements
+# Complete dependency list for all features
+# Compatible with Python 3.8.6+ (32-bit and 64-bit)
+
+# ============================================================================
+# CORE GUI FRAMEWORK (Required)
+# ============================================================================
+PyQt5>=5.15.0,<5.16.0  # Compatible with Python 3.8+
+PyQt5-stubs>=5.15.0
+
+# Web Engine Support (for enhanced documentation viewing)
+# Provides PyQt5.QtWebEngineWidgets automatically
+# Note: May not be available on all Python 3.8 32-bit installations
+PyQtWebEngine>=5.15.0,<5.16.0
+
+# ============================================================================
+# COMMUNICATION LIBRARIES (Required)
+# ============================================================================
+# Serial Communication (Enhanced)
 pyserial==3.5
+
+# USB Device Support
+pyusb==1.2.1
+
+# Cryptographic and Checksum Functions
+crcmod==1.7
+
+# ============================================================================
+# PLATFORM-SPECIFIC DEPENDENCIES
+# ============================================================================
+# Windows-specific serial support (recommended for Windows)
+pywin32>=227; sys_platform == "win32"
+
+# macOS USB support (optional, uncomment if needed)
+# pyobjc-framework-IOKit>=8.0; sys_platform == "darwin"
+
+# ============================================================================
+# ENHANCED OBD-II COMMUNICATION (Optional but recommended)
+# ============================================================================
+# Uncomment these for advanced features:
+# python-can>=4.0.0  # For advanced CAN bus support
+# obd>=0.7.1         # For standardized OBD-II communication
+
+# ============================================================================
+# NETWORKING SUPPORT (Optional)
+# ============================================================================
+# Uncomment for enhanced networking features:
+# requests>=2.28.0   # For HTTP-based OBD adapters
+# websockets>=10.0   # For WebSocket-based adapters
+
+# ============================================================================
+# BLUETOOTH SUPPORT (Optional)
+# ============================================================================
+# Uncomment for Bluetooth adapter support:
+# pybluez-updated>=0.31; sys_platform != "darwin"  # Not available on macOS via pip
+
+# ============================================================================
+# DEVELOPMENT AND TESTING (Optional)
+# ============================================================================
+# Uncomment for development:
+# pytest>=7.0.0
+# pytest-cov>=4.0.0
+# mock>=4.0.0
+
+# ============================================================================
+# INSTALLATION NOTES
+# ============================================================================
+# 
+# BASIC INSTALLATION (minimum requirements):
+#   pip install PyQt5==5.15.11 PyQtWebEngine==5.15.7 pyserial==3.5 pyusb==1.2.1 crcmod==1.7
+#
+# WINDOWS USERS: Also install pywin32 for better serial support:
+#   pip install pywin32>=227
+#
+# WEBENGINE TROUBLESHOOTING:
+#   If PyQtWebEngine installation fails, DDT4All will still work but with limited documentation viewing.
+#   The application gracefully handles missing WebEngine components.
+#
+# DEVICE-SPECIFIC NOTES:
+#   - Vlinker FS: Works with basic requirements
+#   - ELM327: Works with basic requirements  
+#   - ObdLink SX/EX: Works with basic requirements
+#   - ELS27: Works with basic requirements
+#   - Bluetooth adapters: Requires pybluez (optional)
+#   - WiFi adapters: No additional requirements
+#

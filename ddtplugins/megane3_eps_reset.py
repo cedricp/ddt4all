@@ -3,6 +3,7 @@
 # (c) 2017
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
 import ecu
@@ -19,6 +20,10 @@ class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.megane_eps = ecu.Ecu_file("DAE_X95_X38_X10_v1.88_20120228T113904", True)
+        # Set window icon and title
+        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("ZOE/FLENCE/Megane III/Scenic III EPS Reset"))
         layout = gui.QVBoxLayout()
         infos = gui.QLabel(
             _("ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))

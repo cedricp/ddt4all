@@ -3,6 +3,7 @@
 # (c) 2017
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
 import ecu
@@ -20,6 +21,10 @@ class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.airbag_ecu = ecu.Ecu_file(ecufile, True)
+        # Set window icon and title
+        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("AB90 AIRBAG Reset"))
         layout = gui.QVBoxLayout()
         infos = gui.QLabel(_("AB90 (Clio III)/2<br>"
                              "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"

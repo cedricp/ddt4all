@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:48+0100\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
+"PO-Revision-Date: 2025-06-28 05:28+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -382,17 +382,23 @@ msgstr "Conexão OBDLink OK, tentando switch UART de velocidade total"
 msgid "Failed to switch to change OBDLink to "
 msgstr "Falha ao mudar para alterar OBDLink para "
 
-msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr "Conexão ELM OK, tentando comutação UART de alta velocidade"
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr "Conexão OBDLINK de velocidade total OK"
 
-msgid "Failed to switch to change ELM to "
-msgstr "Falha ao mudar para alterar o ELM para "
+msgid "Connection established successfully"
+msgstr "Conexão estabelecida com êxito"
+
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr "Configuração ELS27 V5 CAN pins (12-13)"
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr "ELS27 V5 CAN configuração completa"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr "OBDLINK mudou baurate OK, mudando a velocidade do UART agora..."
 
-msgid "OBDLink full speed connection OK"
-msgstr "Conexão OBDLink de velocidade total OK"
+msgid "OBDLINK full speed connection OK"
+msgstr "Conexão OBDLINK de velocidade total OK"
 
 msgid "OBDLink Version "
 msgstr "Versão OBDLink "
@@ -415,6 +421,51 @@ msgstr "Reinicialização do ELM..."
 
 msgid "Unknown address: "
 msgstr "Endereço desconhecido: "
+
+msgid "Using saved device settings"
+msgstr "Uso dos parametros salvos"
+
+msgid "Using optimal device settings"
+msgstr "Uso dos parametros optimal"
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing for ELS27 device..."
+msgstr "Test em device ELS27..."
+
+msgid "ELS27 device detected: "
+msgstr "ELM327 device detectado: "
+
+msgid "Using detected baud rate: "
+msgstr "Uso do baud rate detectado; "
+
+msgid "Warning: No ELS27 response detected"
+msgstr "Atenção: Resposta não detectada em ELS27"
+
+msgid "Will attempt connection anyway..."
+msgstr "Espera de conexions ..."
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
 
 msgid "FAIL"
 msgstr "FALHA"
@@ -440,6 +491,9 @@ msgstr "Versão ELM máxima:"
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr "ddt4all_data/projects.json não encontrado ou não está ok."
 
+msgid "ECU Finder"
+msgstr "Procura de ECU"
+
 msgid "ECU name"
 msgstr "ECU"
 
@@ -463,6 +517,22 @@ msgstr "Database não encontrada"
 
 msgid "Check documentation"
 msgstr "Verifique a documentação"
+
+msgid "DDT4All Documentation"
+msgstr "DDT4All Documentação"
+
+msgid "WebEngine not available."
+msgstr "WebEngine não esta disponivel."
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr "Para a documentação completa sobre PyQtWebEngine visite:"
+
+msgid "Visit the online documentation at:"
+msgstr "Visite a documentação online:"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr "A documentação sobre o ECU não esta disponivel."
 
 msgid "Refresh rate (ms):"
 msgstr "Racio de refresco (ms):"
@@ -690,6 +760,9 @@ msgstr ""
 "<center>Obrigado pela sua contribuição, se não ocorre nada, por favor va a: "
 "https://github.com/cedricp/ddt4all</center>"
 
+msgid "Options"
+msgstr "Opções"
+
 msgid "ELM port selection"
 msgstr "Seleção da porta ELM"
 
@@ -723,6 +796,51 @@ msgstr "Estilo escuro"
 msgid "Change UART speed"
 msgstr "Alterar a velocidade UART"
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
 msgid "You must check the recommandations"
 msgstr "Deve aceitar as recomendações"
 
@@ -741,6 +859,9 @@ msgstr "Iniciando ELM à velocidade de %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Erro, Interface OBDLink-SX ou ELM não detetado "
+
+msgid "ECU Command"
+msgstr "ECU comando"
 
 msgid "Err, cannot rename "
 msgstr "Erro, não é possível renomear "
@@ -894,6 +1015,9 @@ msgstr "Ler DTC retornou um erro"
 msgid "No DTC"
 msgstr "Sem DTC"
 
+msgid "Diagnostic Trouble Codes"
+msgstr "Codigos de erro"
+
 msgid "Clear ALL DTC"
 msgstr "Apagar todos os DTC"
 
@@ -965,6 +1089,9 @@ msgstr "Erro hexadecimal de quadro: "
 
 msgid "Found USB adapter:"
 msgstr "Adaptador USB encontrado:"
+
+msgid "ELS27 V5 CAN pin configuration complete"
+msgstr "ELS27 V5 CAN pin configuração completa"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Reinicialização do AIRBAG AB90"
@@ -1218,6 +1345,9 @@ msgstr "CRC calculator"
 msgid "VIN"
 msgstr "VIN"
 
+msgid "CRC Calculator"
+msgstr "CRC calculador"
+
 msgid "CRC CALCULATOR"
 msgstr "CRC CALCULATOR"
 
@@ -1309,6 +1439,102 @@ msgstr "<font color='green'>LIMPAR ALTO EXECUTADO</font>"
 
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>LIMPAR FALHA ALTA</font>"
+
+#~ msgid "ELM Connection OK, attempting high speed UART switch"
+#~ msgstr "Conexão ELM OK, tentando comutação UART de alta velocidade"
+
+#~ msgid "Failed to switch to change ELM to "
+#~ msgstr "Falha ao mudar para alterar o ELM para "
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "View"
+#~ msgstr "Visualizar"
+
+#~ msgid "Tools"
+#~ msgstr "Ferramentas"
+
+#~ msgid "Open"
+#~ msgstr "Abrir"
+
+#~ msgid "Save"
+#~ msgstr "Salvar"
+
+#~ msgid "Close"
+#~ msgstr "Fechar"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Yes"
+#~ msgstr "Sim"
+
+#~ msgid "No"
+#~ msgstr "Não"
+
+#~ msgid "Error"
+#~ msgstr "Erro"
+
+#~ msgid "Warning"
+#~ msgstr "Aviso"
+
+#~ msgid "Information"
+#~ msgstr "Informação"
+
+#~ msgid "Connect"
+#~ msgstr "Conectar"
+
+#~ msgid "Disconnect"
+#~ msgstr "Desconectar"
+
+#~ msgid "Settings"
+#~ msgstr "Configurações"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuração"
+
+#~ msgid "Port"
+#~ msgstr "Porta"
+
+#~ msgid "Speed"
+#~ msgstr "Velocidade"
+
+#~ msgid "Timeout"
+#~ msgstr "Tempo limite"
+
+#~ msgid "Device"
+#~ msgstr "Dispositivo"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Connected"
+#~ msgstr "Conectado"
+
+#~ msgid "Disconnected"
+#~ msgstr "Desconectado"
+
+#~ msgid "Ready"
+#~ msgstr "Pronto"
+
+#~ msgid "Busy"
+#~ msgstr "Ocupado"
+
+#~ msgid "Failed"
+#~ msgstr "Falhou"
+
+#~ msgid "Success"
+#~ msgstr "Sucesso"
+
+#~ msgid "Loading"
+#~ msgstr "Carregando"
+
+#~ msgid "Please wait"
+#~ msgstr "Por favor, aguarde"
+
+#~ msgid "Processing"
+#~ msgstr "Processando"
 
 #~ msgid "Contributors:"
 #~ msgstr "Contribuidores:"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:21+0100\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
+"PO-Revision-Date: 2025-06-28 05:09+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -402,16 +402,24 @@ msgstr ""
 msgid "Failed to switch to change OBDLink to "
 msgstr ""
 
-msgid "ELM Connection OK, attempting high speed UART switch"
+msgid "OBDLINK Connection OK, using optimal settings"
 msgstr ""
 
-msgid "Failed to switch to change ELM to "
+#, fuzzy
+#| msgid "Connection test successful!"
+msgid "Connection established successfully"
+msgstr "Verbindungstest erfolgreich!"
+
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr ""
+
+msgid "ELS27 V5 CAN configuration complete"
 msgstr ""
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 
-msgid "OBDLink full speed connection OK"
+msgid "OBDLINK full speed connection OK"
 msgstr ""
 
 #, fuzzy
@@ -443,6 +451,57 @@ msgstr ""
 msgid "Unknown address: "
 msgstr "ECU Funktionsadresse"
 
+msgid "Using saved device settings"
+msgstr ""
+
+msgid "Using optimal device settings"
+msgstr ""
+
+msgid "Connecting to device at port: "
+msgstr "Verbindung zum Gerät an Port: "
+
+msgid "Using baudrate: "
+msgstr "Verwendung der Baudrate: "
+
+msgid "Testing for ELS27 device..."
+msgstr ""
+
+#, fuzzy
+#| msgid "ELM327 device detected successfully"
+msgid "ELS27 device detected: "
+msgstr "ELM327-Gerät erfolgreich erkannt"
+
+#, fuzzy
+#| msgid "Using baudrate: "
+msgid "Using detected baud rate: "
+msgstr "Verwendung der Baudrate: "
+
+msgid "Warning: No ELS27 response detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Attempting connection..."
+msgid "Will attempt connection anyway..."
+msgstr "Verbindungsversuch..."
+
+msgid "Connection failed: "
+msgstr "Verbindung fehlgeschlagen: "
+
+msgid "Testing basic connectivity..."
+msgstr "Teste grundlegende Konnektivität..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warnung: Gerät ist möglicherweise nicht ELM327-kompatibel"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327-Gerät erfolgreich erkannt"
+
+msgid "Device version: "
+msgstr "Geräteversion: "
+
+msgid "Connection error: "
+msgstr "Verbindungsfehler: "
+
 msgid "FAIL"
 msgstr "Keine Antwort"
 
@@ -467,6 +526,11 @@ msgstr "Maximale ELM Version:"
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
 
+#, fuzzy
+#| msgid "ECU name"
+msgid "ECU Finder"
+msgstr "ECU Namen"
+
 msgid "ECU name"
 msgstr "ECU Namen"
 
@@ -490,6 +554,26 @@ msgstr ""
 
 msgid "Check documentation"
 msgstr "Dokumentation"
+
+#, fuzzy
+#| msgid "Documentation"
+msgid "DDT4All Documentation"
+msgstr "Dokumentation"
+
+msgid "WebEngine not available."
+msgstr ""
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+
+#, fuzzy
+#| msgid "Check documentation"
+msgid "Visit the online documentation at:"
+msgstr "Dokumentation"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr ""
 
 msgid "Refresh rate (ms):"
 msgstr "Aktualisierung nach (ms):"
@@ -617,7 +701,7 @@ msgid "Cannot load plugin "
 msgstr "Plug-In laden fehlgeschlagen "
 
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 msgid "Web Wiki"
 msgstr ""
@@ -721,6 +805,11 @@ msgstr ""
 "<center>Vielen Dank fuer Ihren Beitrag, wenn nichts passiert, bitte gehen "
 "Sie zu : https://github.com/cedricp/ddt4all</center>"
 
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Scannen Auswahl"
+
 msgid "ELM port selection"
 msgstr "ELM-Port auswaehlen"
 
@@ -754,6 +843,52 @@ msgstr "Dunkler Modus"
 msgid "Change UART speed"
 msgstr ""
 
+msgid "Please enter WiFi adapter IP address"
+msgstr "Bitte geben Sie die IP-Adresse des WiFi-Adapters ein"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr ""
+"Ungültiges WiFi-Format. Verwenden Sie IP:PORT (z.B. 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Bitte wählen Sie einen seriellen Port"
+
+msgid "Selected port is no longer available"
+msgstr "Der ausgewählte Port ist nicht mehr verfügbar"
+
+msgid "Attempting connection..."
+msgstr "Verbindungsversuch..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Geschwindigkeit: "
+
+msgid "Connection test failed"
+msgstr "Verbindungstest fehlgeschlagen"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Fehlerbehebungsvorschläge:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Überprüfen Sie, ob das Gerät ordnungsgemäß angeschlossen ist"
+
+msgid "2. Try different baud rates"
+msgstr "2. Versuchen Sie verschiedene Baudraten"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Stellen Sie sicher, dass die Gerätetreiber installiert sind"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Überprüfen Sie die Port-Berechtigungen (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Verbindungstest erfolgreich!"
+
+msgid "Error during connection test: "
+msgstr "Fehler beim Verbindungstest: "
+
 msgid "You must check the recommandations"
 msgstr ";-) Du musst das Lesen der Warnung bestaetigen"
 
@@ -773,6 +908,9 @@ msgstr "Starten des ELM mit einer Baudrate von %i..."
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr ""
 ":-(   Kein ELM327 oder OBDLINK-SX am ausgewaehlten Anschluss erkannt:  "
+
+msgid "ECU Command"
+msgstr ""
 
 msgid "Err, cannot rename "
 msgstr ""
@@ -941,6 +1079,9 @@ msgstr ""
 msgid "No DTC"
 msgstr "Kein DTC"
 
+msgid "Diagnostic Trouble Codes"
+msgstr ""
+
 msgid "Clear ALL DTC"
 msgstr "Alle Fehler loeschen"
 
@@ -1017,6 +1158,9 @@ msgid "Frame hex error: "
 msgstr ""
 
 msgid "Found USB adapter:"
+msgstr ""
+
+msgid "ELS27 V5 CAN pin configuration complete"
 msgstr ""
 
 msgid "AB90 AIRBAG Reset"
@@ -1247,6 +1391,9 @@ msgstr ""
 msgid "VIN"
 msgstr ""
 
+msgid "CRC Calculator"
+msgstr ""
+
 msgid "CRC CALCULATOR"
 msgstr ""
 
@@ -1358,6 +1505,96 @@ msgstr "<font color='green'>KEIN CRASH ERKANNT</font>"
 #| msgid "<font color='orange'>VIN WRITE FAILED</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='orange'>VIN SCHREIBEN FEHLGESCHLAGEN</font>"
+
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
+
+#~ msgid "View"
+#~ msgstr "Ansicht"
+
+#~ msgid "Tools"
+#~ msgstr "Werkzeuge"
+
+#~ msgid "Open"
+#~ msgstr "Öffnen"
+
+#~ msgid "Save"
+#~ msgstr "Speichern"
+
+#~ msgid "Close"
+#~ msgstr "Schließen"
+
+#~ msgid "Cancel"
+#~ msgstr "Abbrechen"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nein"
+
+#~ msgid "Error"
+#~ msgstr "Fehler"
+
+#~ msgid "Warning"
+#~ msgstr "Warnung"
+
+#~ msgid "Information"
+#~ msgstr "Information"
+
+#~ msgid "Connect"
+#~ msgstr "Verbinden"
+
+#~ msgid "Disconnect"
+#~ msgstr "Trennen"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid "Configuration"
+#~ msgstr "Konfiguration"
+
+#~ msgid "Port"
+#~ msgstr "Port"
+
+#~ msgid "Speed"
+#~ msgstr "Geschwindigkeit"
+
+#~ msgid "Timeout"
+#~ msgstr "Zeitüberschreitung"
+
+#~ msgid "Device"
+#~ msgstr "Gerät"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Connected"
+#~ msgstr "Verbunden"
+
+#~ msgid "Disconnected"
+#~ msgstr "Getrennt"
+
+#~ msgid "Ready"
+#~ msgstr "Bereit"
+
+#~ msgid "Busy"
+#~ msgstr "Beschäftigt"
+
+#~ msgid "Failed"
+#~ msgstr "Fehlgeschlagen"
+
+#~ msgid "Success"
+#~ msgstr "Erfolgreich"
+
+#~ msgid "Loading"
+#~ msgstr "Laden"
+
+#~ msgid "Please wait"
+#~ msgstr "Bitte warten"
+
+#~ msgid "Processing"
+#~ msgstr "Verarbeitung"
 
 #~ msgid "DDT4All"
 #~ msgstr "DDT4All"

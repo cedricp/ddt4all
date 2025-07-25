@@ -6,6 +6,7 @@
 
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
 import ecu
@@ -101,6 +102,10 @@ def get_isk(ecu_response):
 class CardProg(gui.QDialog):
     def __init__(self):
         super(CardProg, self).__init__()
+        # Set window icon and title
+        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("Megane/Scenic II card programming"))
         options.debug = True
         self.apvok = False
         self.megane_ecu = ecu.Ecu_file(ecufile, True)

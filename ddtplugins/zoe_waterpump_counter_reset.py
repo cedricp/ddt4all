@@ -5,6 +5,7 @@
 # cf error code: SYST ELEC A CONTROLLER
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QLabel
 import ecu
@@ -22,12 +23,10 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.evc_ecu = ecu.Ecu_file(ecufile, True)
         self.setWindowTitle(_("Water pump counters"))
-        # x, y, width, high
-        self.setGeometry(100, 100, 510, 530)
-        self.setFixedSize(510, 530)
-
+        # Set window icon
+        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
         layout = gui.QVBoxLayout()
-
         # Création du tableau
         self.table = QTableWidget()
         self.table.setRowCount(4)  # Number of lines

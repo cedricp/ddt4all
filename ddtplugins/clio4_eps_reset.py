@@ -3,6 +3,7 @@
 # (c) 2017
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
 import ecu
@@ -20,6 +21,10 @@ class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.clio_eps = ecu.Ecu_file(ecufile, True)
+        # Set window icon and title
+        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+        self.setWindowTitle(_("Clio IV EPS Reset"))
         layout = gui.QVBoxLayout()
         infos = gui.QLabel(
             _("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))

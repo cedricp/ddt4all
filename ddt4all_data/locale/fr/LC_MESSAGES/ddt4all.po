@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:26+0100\n"
-"PO-Revision-Date: 2025-03-13 12:23+0100\n"
+"POT-Creation-Date: 2025-06-28 05:02+0200\n"
+"PO-Revision-Date: 2025-06-28 05:20+0200\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
@@ -382,18 +382,24 @@ msgstr "Connexion OBDLink OK, tentative de commutation UART à pleine vitesse"
 msgid "Failed to switch to change OBDLink to "
 msgstr "Échec du basculement pour remplacer OBDLink par "
 
-msgid "ELM Connection OK, attempting high speed UART switch"
-msgstr "Connexion ELM OK, tentative de commutation UART haute vitesse"
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr "OBDLINK Connexion réussi, utilisation des paramètres optimisées"
 
-msgid "Failed to switch to change ELM to "
-msgstr "Échec du changement pour changer ELM en "
+msgid "Connection established successfully"
+msgstr "Connexion établie avec succès"
+
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr "Configuration ELS27 V5 CAN pins (12-13)"
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr "ELS27 V5 CAN configuration completé"
 
 msgid "OBDLINK switched baurate OK, changing UART speed now..."
 msgstr ""
 "OBDLINK a commuté le baurate OK, changeant la vitesse UART maintenant..."
 
-msgid "OBDLink full speed connection OK"
-msgstr "Connexion pleine vitesse OBDLink OK"
+msgid "OBDLINK full speed connection OK"
+msgstr "Connexion pleine vitesse OBDLINK OK"
 
 msgid "OBDLink Version "
 msgstr "Version OBDLink "
@@ -415,6 +421,51 @@ msgstr "Réinitialisation de l'ELM..."
 
 msgid "Unknown address: "
 msgstr "Adresse inconnue: "
+
+msgid "Using saved device settings"
+msgstr "Utilisation des données sauvegardées"
+
+msgid "Using optimal device settings"
+msgstr "Utilisation optimale des paramètres du device "
+
+msgid "Connecting to device at port: "
+msgstr "Connexion à l'appareil sur le port : "
+
+msgid "Using baudrate: "
+msgstr "Utilisation du débit : "
+
+msgid "Testing for ELS27 device..."
+msgstr "Test périphérique ELS27.."
+
+msgid "ELS27 device detected: "
+msgstr "Appareil ELS27 détecté:"
+
+msgid "Using detected baud rate: "
+msgstr "Utilisation du débit détecté : "
+
+msgid "Warning: No ELS27 response detected"
+msgstr "Attention: Pas de réponse détecté sur ELS27"
+
+msgid "Will attempt connection anyway..."
+msgstr "Attente de tentative de connexion..."
+
+msgid "Connection failed: "
+msgstr "Échec de la connexion : "
+
+msgid "Testing basic connectivity..."
+msgstr "Test de connectivité de base..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Attention : L'appareil pourrait ne pas être compatible ELM327"
+
+msgid "ELM327 device detected successfully"
+msgstr "Appareil ELM327 détecté avec succès"
+
+msgid "Device version: "
+msgstr "Version de l'appareil : "
+
+msgid "Connection error: "
+msgstr "Erreur de connexion : "
 
 msgid "FAIL"
 msgstr "ECHEC"
@@ -440,6 +491,9 @@ msgstr "Version ELM maximum:"
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr "ddt4all_data/projects.json introuvable ou pas ok."
 
+msgid "ECU Finder"
+msgstr "Recherche Ecu"
+
 msgid "ECU name"
 msgstr "Nom ECU"
 
@@ -463,6 +517,26 @@ msgstr "Data base introuvable"
 
 msgid "Check documentation"
 msgstr "Veuillez voir la documentation"
+
+msgid "DDT4All Documentation"
+msgstr "DDT4All Documentation"
+
+msgid "WebEngine not available."
+msgstr "Dependence WebEngine non disponible."
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+"Pour une documentation complète avec possibilité de navigation sur le web, "
+"installez PyQtWebEngine :"
+
+msgid "Visit the online documentation at:"
+msgstr "Visitez la documentation en ligne dans le lien:"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr ""
+"Cette vue de base permet toujours d'afficher la documentation de l'ECU "
+"lorsqu'elle est disponible."
 
 msgid "Refresh rate (ms):"
 msgstr "Vitesse rafraichissement (ms):"
@@ -688,6 +762,9 @@ msgstr ""
 "<center>Merci de votre particapation, si rien ne se passe, allez ici : "
 "https://github.com/cedricp/ddt4all</center>"
 
+msgid "Options"
+msgstr "Options"
+
 msgid "ELM port selection"
 msgstr "Sélection du port ELM"
 
@@ -723,6 +800,52 @@ msgstr "Thème sombre"
 msgid "Change UART speed"
 msgstr "Changer la vitesse de l'UART"
 
+# New strings added for enhanced device support
+msgid "Please enter WiFi adapter IP address"
+msgstr "Veuillez saisir l'adresse IP de l'adaptateur WiFi"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Format WiFi invalide. Utilisez IP:PORT (ex: 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Veuillez sélectionner un port série"
+
+msgid "Selected port is no longer available"
+msgstr "Le port sélectionné n'est plus disponible"
+
+msgid "Attempting connection..."
+msgstr "Tentative de connexion..."
+
+msgid "Port: "
+msgstr "Port : "
+
+msgid "Speed: "
+msgstr "Vitesse : "
+
+msgid "Connection test failed"
+msgstr "Test de connexion échoué"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Suggestions de dépannage :"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Vérifiez que l'appareil est correctement connecté"
+
+msgid "2. Try different baud rates"
+msgstr "2. Essayez différents débits"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Assurez-vous que les pilotes sont installés"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Vérifiez les permissions du port (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Test de connexion réussi !"
+
+msgid "Error during connection test: "
+msgstr "Erreur lors du test de connexion : "
+
 msgid "You must check the recommandations"
 msgstr "Vous devez cocher les recommandations"
 
@@ -741,6 +864,9 @@ msgstr "Initialisation ELM a la vitesse %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Pas de materiel ELM ou OBDLink-SX détecté "
+
+msgid "ECU Command"
+msgstr "Commande ECU"
 
 msgid "Err, cannot rename "
 msgstr "Erreur, impossible de renommer "
@@ -895,6 +1021,9 @@ msgstr "La lecture DTC a retourné une erreur"
 msgid "No DTC"
 msgstr "Pas de DTC"
 
+msgid "Diagnostic Trouble Codes"
+msgstr "Codes d'erreur du Diagnostic"
+
 msgid "Clear ALL DTC"
 msgstr "EFFACER TOUT LES DTC"
 
@@ -966,6 +1095,9 @@ msgstr "Erreur hexadécimale du cadre: "
 
 msgid "Found USB adapter:"
 msgstr "Adaptateur USB trouvé :"
+
+msgid "ELS27 V5 CAN pin configuration complete"
+msgstr "ELS27 V5 CAN pin configuration completé"
 
 msgid "AB90 AIRBAG Reset"
 msgstr "AB90 Airbag RAZ"
@@ -1225,6 +1357,9 @@ msgstr "Calculateur CRC"
 msgid "VIN"
 msgstr "VIN"
 
+msgid "CRC Calculator"
+msgstr " CRC Calculateur"
+
 msgid "CRC CALCULATOR"
 msgstr "CALCULATEUR CRC"
 
@@ -1316,6 +1451,102 @@ msgstr "<font color='green'>GRANDE VITESSE EFFACÉE</font>"
 
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>ÉCHEC EFFACEMENT EFFACEMENT GRANE VITESSE</font>"
+
+#~ msgid "ELM Connection OK, attempting high speed UART switch"
+#~ msgstr "Connexion ELM OK, tentative de commutation UART haute vitesse"
+
+#~ msgid "Failed to switch to change ELM to "
+#~ msgstr "Échec du changement pour changer ELM en "
+
+#~ msgid "Edit"
+#~ msgstr "Éditer"
+
+#~ msgid "View"
+#~ msgstr "Affichage"
+
+#~ msgid "Tools"
+#~ msgstr "Outils"
+
+#~ msgid "Open"
+#~ msgstr "Ouvrir"
+
+#~ msgid "Save"
+#~ msgstr "Enregistrer"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Yes"
+#~ msgstr "Oui"
+
+#~ msgid "No"
+#~ msgstr "Non"
+
+#~ msgid "Error"
+#~ msgstr "Erreur"
+
+#~ msgid "Warning"
+#~ msgstr "Attention"
+
+#~ msgid "Information"
+#~ msgstr "Information"
+
+#~ msgid "Connect"
+#~ msgstr "Connecter"
+
+#~ msgid "Disconnect"
+#~ msgstr "Déconnecter"
+
+#~ msgid "Settings"
+#~ msgstr "Paramètres"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuration"
+
+#~ msgid "Port"
+#~ msgstr "Port"
+
+#~ msgid "Speed"
+#~ msgstr "Vitesse"
+
+#~ msgid "Timeout"
+#~ msgstr "Délai d'attente"
+
+#~ msgid "Device"
+#~ msgstr "Appareil"
+
+#~ msgid "Status"
+#~ msgstr "État"
+
+#~ msgid "Connected"
+#~ msgstr "Connecté"
+
+#~ msgid "Disconnected"
+#~ msgstr "Déconnecté"
+
+#~ msgid "Ready"
+#~ msgstr "Prêt"
+
+#~ msgid "Busy"
+#~ msgstr "Occupé"
+
+#~ msgid "Failed"
+#~ msgstr "Échec"
+
+#~ msgid "Success"
+#~ msgstr "Succès"
+
+#~ msgid "Loading"
+#~ msgstr "Chargement"
+
+#~ msgid "Please wait"
+#~ msgstr "Veuillez patienter"
+
+#~ msgid "Processing"
+#~ msgstr "Traitement en cours"
 
 #~ msgid "Contributors:"
 #~ msgstr "Contributeurs/Contributrice:"
