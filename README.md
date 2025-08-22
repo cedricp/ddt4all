@@ -520,11 +520,6 @@ ddt4all/
 ├── version.py             # Version information
 ├── requirements.txt       # Python dependencies
 ├── ecu.zip               # ECU DATABASE (download separately)
-├── vehicles/             # Vehicle-specific ECU databases and scripts
-│   ├── projects.xsl      # ECU project transformation
-│   ├── x*/               # Vehicle model directories (x06, x07, x10, etc.)
-│   ├── scriptsLibrary/   # Shared script resources
-│   └── DiagnosticAddressing.xsl  # Diagnostic addressing configuration
 ├── ddtplugins/           # Plugin system directory
 │   ├── README.md         # Plugin documentation
 │   └── *.py              # Individual plugin modules (13 plugins)
