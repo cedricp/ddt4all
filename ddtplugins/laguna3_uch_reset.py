@@ -2,11 +2,11 @@
 
 # (c) 2017
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as gui
-
+import PyQt4.QtGui as gui
+import PyQt4.QtCore as core
 import ecu
 import options
+import elm
 
 _ = options.translator('ddt4all')
 
@@ -15,14 +15,12 @@ category = _("UCH Tools")
 need_hw = True
 ecufile = "BCM_X91_L43_S_S_SWC_v1.30_20140613T140906"
 
-
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.megane_uch = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel(
-            _("LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
+        infos = gui.QLabel(_("LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
         check_button = gui.QPushButton(_("Check UCH Virgin"))
         self.status_check = gui.QLabel(_("Waiting"))
@@ -47,9 +45,9 @@ class Virginizer(gui.QDialog):
     def check_virgin_status(self):
         self.start_diag_session_aftersales()
 
-        virigin_check_request = self.megane_uch.requests[
-            u'Read_A_AC_General_Identifiers_Learning_Status_(bits)_BCM_Input/Output']
+        virigin_check_request = self.megane_uch.requests[u'Read_A_AC_General_Identifiers_Learning_Status_(bits)_BCM_Input/Output']
         virgin_check_values = virigin_check_request.send_request()
+
 
         if virgin_check_values is not None:
             virgin = virgin_check_values[u"BCM_IS_BLANK_S"]
@@ -69,7 +67,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.megane_uch.requests[u"Start Diagnostic Session"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSS stream", sds_stream)
+            print "SdSS stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
 

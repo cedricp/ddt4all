@@ -3,11 +3,11 @@
 # (c) 2017
 # This is an example plugin
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as gui
-
+import PyQt4.QtGui as gui
+import PyQt4.QtCore as core
 import ecu
 import options
+import elm
 
 _ = options.translator('ddt4all')
 
@@ -21,8 +21,7 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.megane_uch = ecu.Ecu_file("UCH_84_J84_03_60", True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel(
-            _("MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
+        infos = gui.QLabel(_("MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
         check_button = gui.QPushButton(_("Check UCH Virgin"))
         self.status_check = gui.QLabel(_("Waiting"))
@@ -68,7 +67,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.megane_uch.requests[u"StartDiagSession Etude"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSA stream", sds_stream)
+            print "SdSA stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
 
@@ -76,7 +75,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.megane_uch.requests[u"Start Diagnostic Session"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSS stream", sds_stream)
+            print "SdSS stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
 

@@ -2,11 +2,11 @@
 
 # (c) 2017
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as gui
-
+import PyQt4.QtGui as gui
+import PyQt4.QtCore as core
 import ecu
 import options
+import elm
 
 _ = options.translator('ddt4all')
 
@@ -21,8 +21,7 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.clio_eps = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel(
-            _("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
+        infos = gui.QLabel(_("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
         check_button = gui.QPushButton(_("Check EPS Virgin"))
         self.status_check = gui.QLabel(_("Waiting"))
@@ -75,7 +74,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.clio_eps.requests[u"StartDiagnosticSession.supplierSession"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSFA stream", sds_stream)
+            print "SdSFA stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
 
@@ -83,7 +82,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.clio_eps.requests[u"StartDiagnosticSession.extendedSession"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSC0 stream", sds_stream)
+            print "SdSC0 stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
 
