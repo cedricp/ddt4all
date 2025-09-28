@@ -5,10 +5,10 @@
 # This is an example plugin
 
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as gui
-
+import PyQt4.QtGui as gui
+import PyQt4.QtCore as core
 import ecu
+import elm
 import options
 
 _ = options.translator('ddt4all')
@@ -61,7 +61,6 @@ def a8(isk_c):
         apv += hex(int(base[i * 8:i * 8 + 8], 2))[2:].zfill(2).upper() + ' '
 
     return apv
-
 
 def a8_2(isk_c):
     '''MC9S12DG256 (algo2)(Megane 2, Scenic 2)'''
@@ -175,7 +174,7 @@ class CardProg(gui.QDialog):
         self.tester_timer.start()
 
     def calculate_pin(self):
-        ISK = ''.join(str(ord(c)) for c in str(self.iskoutput.text()))
+        ISK = str(self.iskoutput.text().toAscii())
         if len(ISK) == 12:
             if self.algocheck.checkState():
                 PIN = a8_2(ISK)
@@ -225,7 +224,7 @@ class CardProg(gui.QDialog):
         self.check_num_key_learnt()
 
     def set_apv_from_input(self):
-        apv = ''.join(str(ord(c)) for c in str(self.pininput.text()))
+        apv = str(self.pininput.text().toAscii())
         if len(apv) != 12:
             return
         self.after_sale_request.send_request({u'Code APV': apv})
@@ -280,10 +279,9 @@ class CardProg(gui.QDialog):
         sds_request = self.megane_ecu.requests[u"Start Diagnostic Session"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdS stream", sds_stream)
+            print "SdS stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
-
 
 def plugin_entry():
     cp = CardProg()

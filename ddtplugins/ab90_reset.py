@@ -2,11 +2,11 @@
 
 # (c) 2017
 
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as gui
-
+import PyQt4.QtGui as gui
+import PyQt4.QtCore as core
 import ecu
 import options
+import elm
 
 _ = options.translator('ddt4all')
 
@@ -15,15 +15,14 @@ category = _("Airbag Tools")
 need_hw = True
 ecufile = "AB90_J77_X85"
 
-
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.airbag_ecu = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
         infos = gui.QLabel(_("AB90 (Clio III)/2<br>"
-                             "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"
-                             "GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
+                           "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"
+                           "GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
         check_button = gui.QPushButton(_("Check ACU Virgin"))
         self.status_check = gui.QLabel(_("Waiting"))
@@ -56,6 +55,9 @@ class Virginizer(gui.QDialog):
 
         crash = values_dict[u'crash détecté']
 
+        if options.debug:
+            print ">> ", crash
+
         if crash == u'crash détecté':
             self.status_check.setText(_("<font color='red'>CRASH DETECTED</font>"))
         else:
@@ -66,7 +68,7 @@ class Virginizer(gui.QDialog):
 
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdS stream", sds_stream)
+            print "SdS stream", sds_stream
             return
         options.elm.start_session_can(sds_stream)
 
