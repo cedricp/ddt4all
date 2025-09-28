@@ -2,15 +2,16 @@
 
 # (c) 2017
 
-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import ecu
 import options
 import elm
 
-plugin_name = "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
-category = "EPS Tools"
+_ = options.translator('ddt4all')
+
+plugin_name = _("ZOE/FLENCE/Megane III/Scenic III EPS Reset")
+category = _("EPS Tools")
 need_hw = True
 
 
@@ -19,12 +20,12 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.megane_eps = ecu.Ecu_file("DAE_X95_X38_X10_v1.88_20120228T113904", True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel("ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
+        infos = gui.QLabel(_("ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
-        check_button = gui.QPushButton("Check EPS Virgin")
-        self.status_check = gui.QLabel("Waiting")
+        check_button = gui.QPushButton(_("Check EPS Virgin"))
+        self.status_check = gui.QLabel(_("Waiting"))
         self.status_check.setAlignment(core.Qt.AlignHCenter)
-        self.virginize_button = gui.QPushButton("Virginize EPS")
+        self.virginize_button = gui.QPushButton(_("Virginize EPS"))
         layout.addWidget(infos)
         layout.addWidget(check_button)
         layout.addWidget(self.status_check)
@@ -38,7 +39,7 @@ class Virginizer(gui.QDialog):
     def ecu_connect(self):
         connection = self.megane_eps.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to ECU")
+            options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
 
     def check_virgin_status(self):
@@ -52,20 +53,20 @@ class Virginizer(gui.QDialog):
                 donglestate = request_response[u'DID - Dongle state']
                 if donglestate == u'Not operational':
                     self.virginize_button.setEnabled(False)
-                    self.status_check.setText("<font color='green'>EPS not operational</font>")
+                    self.status_check.setText(_("<font color='green'>EPS not operational</font>"))
                     return
 
                 if donglestate == u'Operational blank':
                     self.virginize_button.setEnabled(False)
-                    self.status_check.setText("<font color='green'>EPS virgin</font>")
+                    self.status_check.setText(_("<font color='green'>EPS virgin</font>"))
                     return
 
                 if donglestate == u'Operational learnt':
                     self.virginize_button.setEnabled(True)
-                    self.status_check.setText("<font color='red'>EPS coded</font>")
+                    self.status_check.setText(_("<font color='red'>EPS coded</font>"))
                     return
 
-        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
+        self.status_check.setText(_("<font color='orange'>UNEXPECTED RESPONSE</font>"))
 
     def start_diag_session_fa(self):
         sds_request = self.megane_eps.requests[u"SDS - Start Diagnostic Session $FA"]
@@ -90,9 +91,9 @@ class Virginizer(gui.QDialog):
         request_response = reset_request.send_request()
 
         if request_response is not None:
-            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+            self.status_check.setText(_("<font color='green'>CLEAR EXECUTED</font>"))
         else:
-            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
+            self.status_check.setText(_("<font color='red'>CLEAR FAILED</font>"))
 
 def plugin_entry():
     v = Virginizer()

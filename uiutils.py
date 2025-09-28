@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+
 import PyQt4.QtGui as gui
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2017"
+__copyright__ = "Copyright 2016-2018"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -69,9 +70,9 @@ def getXMLFont(xml, scale = 1):
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
 
-    font_size = font_size / float(scale) * 12.
+    font_size = font_size / float(scale) * 14.
     qfnt = gui.QFont(font_name, font_size, fnt_flags)
-
+    qfnt.setPixelSize(font_size)
     return qfnt
 
 
@@ -129,7 +130,7 @@ def jsonFont(fnt, scale):
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
 
-    font_size = font_size / float(scale) * 12.
+    font_size = font_size / float(scale) * 14.
 
     qfnt = gui.QFont(font_name, font_size, fnt_flags);
 

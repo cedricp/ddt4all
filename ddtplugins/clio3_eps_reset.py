@@ -2,7 +2,6 @@
 
 # (c) 2017
 
-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import ecu
@@ -10,8 +9,10 @@ import options
 import crcmod
 from binascii import unhexlify
 
-plugin_name = "Modus/Clio III EPS Reset"
-category = "EPS Tools"
+_ = options.translator('ddt4all')
+
+plugin_name = _("Modus/Clio III EPS Reset")
+category = _("EPS Tools")
 need_hw = True
 ecufile = "DAE_J77_X85_Gen2___v3.7"
 
@@ -31,27 +32,27 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.clio_eps = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel("Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
+        infos = gui.QLabel(_("Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
-        check_button = gui.QPushButton("BLANK STATUS & VIN READ")
-        self.status_check = gui.QLabel("Waiting")
+        check_button = gui.QPushButton(_("BLANK STATUS & VIN READ"))
+        self.status_check = gui.QLabel(_("Waiting"))
         self.status_check.setAlignment(core.Qt.AlignHCenter)
-        self.virginize_button = gui.QPushButton("Virginize EPS")
+        self.virginize_button = gui.QPushButton(_("Virginize EPS"))
 
         self.setLayout(layout)
         self.virginize_button.setEnabled(False)
         self.virginize_button.clicked.connect(self.reset_ecu)
         check_button.clicked.connect(self.check_virgin_status)
-        status_vin = gui.QLabel("VIN - READ")
+        status_vin = gui.QLabel(_("VIN - READ"))
         status_vin.setAlignment(core.Qt.AlignHCenter)
         self.vin_input = gui.QLineEdit()
         self.vin_input.setReadOnly(True)
 
-        status_vinout = gui.QLabel("VIN - WRITE")
+        status_vinout = gui.QLabel(_("VIN - WRITE"))
         status_vinout.setAlignment(core.Qt.AlignHCenter)
         self.vin_output = gui.QLineEdit()
 
-        write_vin_button = gui.QPushButton("Write VIN")
+        write_vin_button = gui.QPushButton(_("Write VIN"))
         write_vin_button.clicked.connect(self.write_vin)
 
         layout.addWidget(infos)
@@ -78,11 +79,11 @@ class Virginizer(gui.QDialog):
             vin = str(self.vin_output.text().toAscii()).upper()
             self.vin_output.setText(vin)
         except:
-            self.status_check.setText("<font color='red'>VIN - INVALID</font>")
+            self.status_check.setText(_("<font color='red'>VIN - INVALID</font>"))
             return
 
         if len(vin) != 17:
-            self.status_check.setText("<font color='res'>VIN - BAD LENGTH</font>")
+            self.status_check.setText(_("<font color='res'>VIN - BAD LENGTH</font>"))
             return
 
         crc = calc_crc(vin).decode('hex')
@@ -90,15 +91,15 @@ class Virginizer(gui.QDialog):
         vin_wrtie_request = self.clio_eps.requests[u'WDBLI - VIN']
         write_response = vin_wrtie_request.send_request({u'VIN': vin, u'CRC VIN': crc})
         if write_response is None:
-            self.status_check.setText("<font color='orange'>VIN WRITE FAILED</font>")
+            self.status_check.setText(_("<font color='orange'>VIN WRITE FAILED</font>"))
             return
 
-        self.status_check.setText("<font color='green'>VIN WRITE OK</font>")
+        self.status_check.setText(_("<font color='green'>VIN WRITE OK</font>"))
 
     def ecu_connect(self):
         connection = self.clio_eps.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to ECU")
+            options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
 
     def check_virgin_status(self):
@@ -116,14 +117,14 @@ class Virginizer(gui.QDialog):
 
             if virgin_status == u'Système VIERGE - Aucun code mémorisé':
                 self.virginize_button.setEnabled(False)
-                self.status_check.setText("<font color='green'>EPS virgin</font>")
+                self.status_check.setText(_("<font color='green'>EPS virgin</font>"))
                 return
             else:
                 self.virginize_button.setEnabled(True)
-                self.status_check.setText("<font color='red'>EPS coded</font>")
+                self.status_check.setText(_("<font color='red'>EPS coded</font>"))
                 return
 
-        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
+        self.status_check.setText(_("<font color='orange'>UNEXPECTED RESPONSE</font>"))
 
     def start_diag_session_fb(self):
         sds_request = self.clio_eps.requests[u"SDS - Start Diagnostic $FB"]
@@ -151,9 +152,9 @@ class Virginizer(gui.QDialog):
         request_response = reset_request.send_request()
 
         if request_response is not None:
-            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+            self.status_check.setText(_("<font color='green'>CLEAR EXECUTED</font>"))
         else:
-            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
+            self.status_check.setText(_("<font color='red'>CLEAR FAILED</font>"))
 
 
 def plugin_entry():

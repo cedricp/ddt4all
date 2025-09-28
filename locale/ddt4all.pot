@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"POT-Creation-Date: 2025-09-28 06:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,154 +17,240 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: parameters.py:64
-msgid "Returning to defaut session..."
-msgstr ""
-
-#: parameters.py:83
+#: parameters.py:244
 msgid "Save ECU (keep '.json' extension)"
 msgstr ""
 
-#: parameters.py:159 parameters.py:187 parameters.py:206
+#: parameters.py:291 parameters.py:298
+msgid "Err, cannot rename "
+msgstr ""
+
+#: parameters.py:325 parameters.py:353 parameters.py:376
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr ""
 
-#: parameters.py:229
+#: parameters.py:415
 msgid "Enter label name"
 msgstr ""
 
-#: parameters.py:295
+#: parameters.py:481
 msgid "Add button"
 msgstr ""
 
-#: parameters.py:296
+#: parameters.py:482
 msgid "Add label"
 msgstr ""
 
-#: parameters.py:304
+#: parameters.py:490
 msgid "Rename label"
 msgstr ""
 
-#: parameters.py:308
+#: parameters.py:491
+msgid "Change color"
+msgstr ""
+
+#: parameters.py:497
 msgid "Remove element"
 msgstr ""
 
-#: parameters.py:401
+#: parameters.py:613
 msgid "Diagnotic session"
 msgstr ""
 
-#: parameters.py:402
+#: parameters.py:614
 msgid "Input"
 msgstr ""
 
-#: parameters.py:403
+#: parameters.py:615
 msgid "Output"
 msgstr ""
 
-#: parameters.py:444
-msgid "Initializing CAN mode"
-msgstr ""
-
-#: parameters.py:451
-msgid "Initializing KWP2000 mode"
-msgstr ""
-
-#: parameters.py:457
-msgid "Initializing ISO8 mode"
-msgstr ""
-
-#: parameters.py:462
-msgid "Protocol "
-msgstr ""
-
-#: parameters.py:462
-msgid " not supported"
-msgstr ""
-
-#: parameters.py:523
+#: parameters.py:767
 msgid "XML file not found : "
 msgstr ""
 
-#: parameters.py:530
+#: parameters.py:774
 msgid "Invalid DDT file"
 msgstr ""
 
-#: parameters.py:559
+#: parameters.py:845
+msgid "Connection to ELM lost, trying to reconnect..."
+msgstr ""
+
+#: parameters.py:848
+msgid "Cannot reconnect..."
+msgstr ""
+
+#: parameters.py:856
 msgid "Switching to session mode"
 msgstr ""
 
-#: parameters.py:576
+#: parameters.py:865
 msgid "Sending ELM request :"
 msgstr ""
 
-#: parameters.py:578
+#: parameters.py:867
 msgid "Blocked ELM request :"
 msgstr ""
 
-#: parameters.py:582
+#: parameters.py:872
 msgid "Sending ELM request:"
 msgstr ""
 
-#: parameters.py:591
+#: parameters.py:900
 msgid "Sending simulated ELM request :"
 msgstr ""
 
-#: parameters.py:601
+#: parameters.py:911
+msgid "Bad ELM response :"
+msgstr ""
+
+#: parameters.py:914
 msgid "ELM response : "
 msgstr ""
 
-#: parameters.py:744
+#: parameters.py:1066
 msgid "Button request not found : "
 msgstr ""
 
-#: parameters.py:758
+#: parameters.py:1080
 msgid "Sending request :"
 msgstr ""
 
-#: parameters.py:800
+#: parameters.py:1129
 msgid "Request aborted (look at red paramters entries): "
 msgstr ""
 
-#: parameters.py:820
+#: parameters.py:1136
+msgid "Delay"
+msgstr ""
+
+#: parameters.py:1142
+msgid "For your safety"
+msgstr ""
+
+#: parameters.py:1143
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
+
+#: parameters.py:1171
 msgid "Invalid"
 msgstr ""
 
-#: parameters.py:898
+#: parameters.py:1192
+msgid "ECU uses SDS "
+msgstr ""
+
+#: parameters.py:1287
 msgid "Cannot call request "
 msgstr ""
 
-#: parameters.py:917
+#: parameters.py:1304
 msgid "Clearing DTC information"
 msgstr ""
 
-#: parameters.py:926
+#: parameters.py:1316
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr ""
 
-#: parameters.py:930
+#: parameters.py:1320
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr ""
 
-#: parameters.py:931
+#: parameters.py:1321
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr ""
 
-#: parameters.py:970
+#: parameters.py:1349
+msgid "Clear DTC failed"
+msgstr ""
+
+#: parameters.py:1351
+msgid "Clear DTC successfully done"
+msgstr ""
+
+#: parameters.py:1365
+msgid "No ReadDTC request for that ECU"
+msgstr ""
+
+#: parameters.py:1382
 msgid "Invalid response for ReadDTC command"
 msgstr ""
 
-#: parameters.py:979
+#: parameters.py:1391
+msgid "Read DTC returned an error"
+msgstr ""
+
+#: parameters.py:1399
 msgid "No DTC"
 msgstr ""
 
-#: parameters.py:988
+#: parameters.py:1422
 msgid "Clear ALL DTC"
 msgstr ""
 
-#: parameters.py:994
+#: parameters.py:1428
 msgid "ECU trouble codes"
 msgstr ""
 
-#: parameters.py:1027
+#: parameters.py:1458 parameters.py:1486
 msgid "Parsing screen "
+msgstr ""
+
+#: parameters.py:1461
+msgid "found request in input "
+msgstr ""
+
+#: parameters.py:1466
+msgid "found in display "
+msgstr ""
+
+#: parameters.py:1473
+msgid "found in button "
+msgstr ""
+
+#: parameters.py:1479
+msgid "found in presend "
+msgstr ""
+
+#: parameters.py:1489
+msgid "found data in input "
+msgstr ""
+
+#: parameters.py:1494
+msgid "found data in display "
+msgstr ""
+
+#: parameters.py:1657
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#: parameters.py:1667 parameters.py:1716
+msgid "Starting conversion"
+msgstr ""
+
+#: parameters.py:1679 parameters.py:1721
+msgid "Starting processing "
+msgstr ""
+
+#: parameters.py:1679 parameters.py:1721
+msgid " to "
+msgstr ""
+
+#: parameters.py:1684 parameters.py:1726
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+#: parameters.py:1699
+msgid "Writing database"
+msgstr ""
+
+#: parameters.py:1702
+msgid "Writing archive"
+msgstr ""
+
+#: parameters.py:1714
+msgid "Opening ECU Database..."
 msgstr ""

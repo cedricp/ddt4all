@@ -13,13 +13,14 @@ import argparse
 from StringIO import StringIO
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2017"
+__copyright__ = "Copyright 2016-2018"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
+
 
 # Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
@@ -30,10 +31,12 @@ def hex16_tosigned(value):
 def hex8_tosigned(value):
     return -(value & 0x80) | (value & 0x7f)
 
+
 def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
+
 
 def getChildNodesByName(parent, name):
     nodes = []
@@ -41,6 +44,7 @@ def getChildNodesByName(parent, name):
         if node.nodeType == node.ELEMENT_NODE and node.localName == name:
             nodes.append(node)
     return nodes
+
 
 class Data_item:
     def __init__(self, item, req_endian, name = ''):
@@ -52,10 +56,14 @@ class Data_item:
 
         if isinstance(item, dict):
             self.name = name
-            if item.has_key('firstbyte'): self.firstbyte = item['firstbyte']
-            if item.has_key('bitoffset'): self.bitoffset = item['bitoffset']
-            if item.has_key('ref'): self.ref = item['ref']
-            if item.has_key('endian'): self.endian = item['endian']
+            if 'firstbyte' in item:
+                self.firstbyte = item['firstbyte']
+            if 'bitoffset' in item:
+                self.bitoffset = item['bitoffset']
+            if 'ref' in item:
+                self.ref = item['ref']
+            if 'endian' in item:
+                self.endian = item['endian']
         else:
             self.name = item.getAttribute("Name")
 
@@ -237,12 +245,12 @@ class Ecu_request:
         request_stream = " ".join(request_stream)
 
         if options.debug:
-            print "Generated stream ", request_stream
+            print(_("Generated stream "), request_stream)
 
         if options.simulation_mode:
             if test_data is not None:
                 elmstream = test_data
-                print "Send request stream", request_stream
+                print(_("Send request stream "), request_stream)
             else:
                 # return default reply bytes...
                 elmstream = self.replybytes
@@ -250,20 +258,20 @@ class Ecu_request:
             elmstream = options.elm.request(request_stream)
 
         if options.debug:
-            print "Received stream ", elmstream
+            print(_("Received stream "), elmstream)
 
         if elmstream.startswith('WRONG RESPONSE'):
             return None
 
         if elmstream.startswith('7F'):
             nrsp = options.elm.errorval(elmstream[6:8])
-            print "Request ECU Error", nrsp
+            print(_("Request ECU Error"), nrsp)
             return None
 
         values = self.get_values_from_stream(elmstream)
 
         if options.debug:
-            print "Decoded values", values
+            print(_("Decoded values"), values)
 
         return values
 
@@ -299,21 +307,7 @@ class Ecu_request:
                 values[k] = data.getDisplayValue(stream, v, self.ecu_file.endianness)
             else:
                 raise KeyError('Ecurequest::get_values_from_stream : Data %s does not exist' % k)
-
         return values
-
-    def get_sds(self):
-        if self.sds['nosds']:
-            return ""
-        elif self.sds['aftersales']:
-            return "10C0"
-        elif self.sds['plant']:
-            return "1089"
-        elif self.sds['engineering']:
-            return "1086"
-        elif self.sds['supplier']:
-            return "10FA"
-        return "ERROR"
 
     def get_formatted_sentbytes(self):
         bytes_to_send_ascii = self.sentbytes.encode('ascii', 'ignore')
@@ -391,19 +385,32 @@ class Ecu_data:
     def init(self, data):
 
         if isinstance(data, dict):
-            if data.has_key('bitscount'): self.bitscount = data['bitscount']
-            if data.has_key('bytesascii'): self.bytesascii = data['bytesascii']
-            if data.has_key('scaled'): self.scaled = data['scaled']
-            if data.has_key('signed'): self.signed = data['signed']
-            if data.has_key('byte'): self.byte = data['byte']
-            if data.has_key('binary'): self.binary = data['binary']
-            if data.has_key('step'): self.step = data['step']
-            if data.has_key('offset'): self.offset = data['offset']
-            if data.has_key('divideby'): self.divideby = data['divideby']
-            if data.has_key('format'): self.format = data['format']
-            if data.has_key('bytescount'): self.bytescount = data['bytescount']
-            if data.has_key('unit'): self.unit = data['unit']
-            if data.has_key('comment'): self.comment = data['comment']
+            if 'bitscount' in data:
+                self.bitscount = data['bitscount']
+            if 'bytesascii' in data:
+                self.bytesascii = data['bytesascii']
+            if 'scaled' in data:
+                self.scaled = data['scaled']
+            if 'signed' in data:
+                self.signed = data['signed']
+            if 'byte' in data:
+                self.byte = data['byte']
+            if 'binary' in data:
+                self.binary = data['binary']
+            if 'step' in data:
+                self.step = data['step']
+            if 'offset' in data:
+                self.offset = data['offset']
+            if 'divideby' in data:
+                self.divideby = data['divideby']
+            if 'format' in data:
+                self.format = data['format']
+            if 'bytescount' in data:
+                self.bytescount = data['bytescount']
+            if 'unit' in data:
+                self.unit = data['unit']
+            if 'comment' in data:
+                self.comment = data['comment']
 
             if data.has_key('lists'):
                 for k, v in data['lists'].iteritems():
@@ -652,7 +659,7 @@ class Ecu_data:
                 elif self.bytescount == 2:
                     val = hex16_tosigned(val)
                 else:
-                    print "Warning, cannot get signed value for %s" % dataitem.name
+                    print(_("Warning, cannot get signed value for") + " %s" % dataitem.name)
 
             # Manage mapped values if exists
             if val in self.lists:
@@ -671,7 +678,7 @@ class Ecu_data:
                 value = hex16_tosigned(value)
 
         if self.divideby == 0:
-            print "Division by zero, please check data item : ", dataitem.name
+            print(_("Division by zero, please check data item: "), dataitem.name)
             return None
 
         res = (float(value) * float(self.step) + float(self.offset)) / float(self.divideby)
@@ -691,7 +698,7 @@ class Ecu_data:
         if val is None:
             return None
 
-        return int("0x"+val, 16)
+        return int("0x" + val, 16)
 
     def getHexValue(self, resp, dataitem, ecu_endian):
         little_endian = False
@@ -710,7 +717,7 @@ class Ecu_data:
         if not all(c in string.hexdigits for c in resp): resp = ''
         resp.replace(' ', '')
 
-        res_bytes = [resp[i:i + 2] for i in range(0,len(resp), 2)]
+        res_bytes = [resp[i:i + 2] for i in range(0, len(resp), 2)]
 
         # Data count
         startByte = dataitem.firstbyte
@@ -758,7 +765,7 @@ class Ecu_data:
                 totalremainingbits -= offset1 - offset2
 
             if totalremainingbits != 0:
-                print "getHexValue >> abnormal remaining bytes ", bits, totalremainingbits
+                print(_("getHexValue >> abnormal remaining bytes "), bits, totalremainingbits)
             hexval = hex(int("0b" + tmp_bin, 2))[2:].replace("L", "")
         else:
             valtmp = "0b" + hextobin[startBit:startBit + bits]
@@ -804,6 +811,7 @@ class Ecu_file:
 
         if isfile and '.json' in data:
             data2 = "./json/" + os.path.basename(data)
+            jsdata = None
             if os.path.exists(data):
                 jsfile = open(data, "r")
                 jsdata = jsfile.read()
@@ -821,8 +829,11 @@ class Ecu_file:
                     elif os.path.basename(data) in zf.namelist():
                         jsdata = zf.read(os.path.basename(data))
                     else:
-                        print "Cannot found file ", data
+                        print(_("Cannot find file "), data)
                         return
+
+            if jsdata is None:
+                return
 
             ecudict = json.loads(jsdata)
 
@@ -864,7 +875,7 @@ class Ecu_file:
         else:
             if isfile:
                 if not os.path.exists(data):
-                    print "Cannot load ECU file", data
+                    print(_("Cannot load ECU file"), data)
                     return
                 xdom = xml.dom.minidom.parse(data)
                 self.xmldoc = xdom.documentElement
@@ -872,7 +883,7 @@ class Ecu_file:
                 self.xmldoc = data
 
             if not self.xmldoc:
-                print("XML not found")
+                print(_("XML not found"))
                 return
 
             target = getChildNodesByName(self.xmldoc, u"Target")
@@ -989,18 +1000,29 @@ class Ecu_file:
                         ecu_data = Ecu_data(f)
                         self.data[ecu_data.name] = ecu_data
 
-    def connect_to_hardware(self):
+    def get_request(self, name):
+        if name in self.requests:
+            return self.requests[name]
+        for k, v in self.requests.iteritems():
+            if k.lower() == name.lower():
+                return v
+        return None
+
+    def connect_to_hardware(self, canline=0):
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         if self.ecu_protocol == 'CAN':
             short_addr = elm.get_can_addr(self.ecu_send_id)
+            if short_addr is None:
+                print "Cannot retrieve functionnal address of ECU %s @ %s" % (self.ecuname, self.ecu_send_id)
+                return False
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
 
             if not options.simulation_mode:
-                if self.baudrate == 250000:
+                if self.baudrate == 250000 or self.baudrate == 10400:
                     ecu_conf['brp'] = 1
                 options.elm.init_can()
-                options.elm.set_can_addr(short_addr, ecu_conf)
+                options.elm.set_can_addr(short_addr, ecu_conf, canline)
 
         # KWP 2000 Handling
         elif self.ecu_protocol == 'KWP2000':
@@ -1112,23 +1134,25 @@ class Ecu_ident:
     def checkWith(self, diagversion, supplier, soft, version, addr):
         if self.diagversion == "":
             return
+        supplier_strip = self.supplier.strip()
+        soft_strip = self.soft.strip()
+        version_strip = self.version.strip()
         if int("0x" + self.diagversion, 16) != int("0x" + diagversion, 16):
             return False
-        if self.supplier.strip() != supplier.strip():
+        if supplier_strip != supplier.strip()[:len(supplier_strip)]:
             return False
-        if self.soft.strip() != soft.strip():
+        if soft_strip != soft.strip()[:len(soft_strip)]:
             return False
-        if self.version.strip() != version.strip():
+        if version_strip != version.strip()[:len(version_strip)]:
             return False
 
         self.addr = addr
         return True
 
+    # Minimal checking
     def checkApproximate(self, diagversion, supplier, soft, addr):
         if self.diagversion == "":
             return
-        if int("0x" + self.diagversion, 16) != int("0x" + diagversion, 16):
-            return False
         if self.supplier.strip() != supplier.strip():
             return False
         if self.soft.strip() != soft.strip():
@@ -1153,13 +1177,24 @@ class Ecu_database:
     jsonfile = "json/ecus.zip"
 
     def __init__(self, forceXML=False):
+        global ecu_ident, protocol
         self.targets = []
+        self.vehiclemap = {}
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
+        self.addr_group_mapping_long = {}
+        self.addr_group_mapping = {"01": u"ABS/ESC"}
+        f = open("./json/addressing.json", "r")
+        js = json.loads(f.read())
+        f.close()
+
+        for k, v in js.iteritems():
+            self.addr_group_mapping[k] = v[0]
+
         xmlfile = options.ecus_dir + "/eculist.xml"
 
-        jsonecu_files = glob.glob("json/*.json.targets")
+        jsonecu_files = glob.glob("./json/*.json.targets")
         for jsonecu_file in jsonecu_files:
             self.numecu += 1
             json_file = open(jsonecu_file, "r")
@@ -1185,10 +1220,21 @@ class Ecu_database:
                     if addr not in self.available_addr_can:
                         self.available_addr_can.append(str(addr))
 
+                if str(addr) not in self.addr_group_mapping:
+                    print(_("Adding group "), addr, ecu_dict['group'])
+                    self.addr_group_mapping[str(addr)] = ecu_dict['group']
+
                 ecu_ident = Ecu_ident(diagversion, ecu_dict['supplier_code'],
                                       ecu_dict['soft_version'], ecu_dict['version'],
                                       name, ecu_dict['group'], href, ecu_dict['protocol'],
                                       ecu_dict['projects'], addr)
+
+                for proj in ecu_dict['projects']:
+                    projname = proj[0:3].upper()
+                    if not projname in self.vehiclemap:
+                        self.vehiclemap[projname] = []
+                    self.vehiclemap[projname].append((ecu_dict['protocol'], addr))
+
                 self.targets.append(ecu_ident)
 
         if os.path.exists("ecu.zip") and not forceXML:
@@ -1210,6 +1256,9 @@ class Ecu_database:
                     if not ecuaddress in self.available_addr_can:
                         self.available_addr_can.append(str(ecuaddress))
 
+                if str(ecuaddress) not in self.addr_group_mapping:
+                    self.addr_group_mapping[ecuaddress] = targetv['group']
+
                 if len(targetv['autoidents']) == 0:
                     ecu_ident = Ecu_ident("", "", "", "", ecuname, ecugroup, href, ecuprotocol,
                                           ecuprojects, ecuaddress, True)
@@ -1223,28 +1272,38 @@ class Ecu_database:
 
                         self.targets.append(ecu_ident)
 
+                for proj in ecuprojects:
+                    projname = proj[0:3].upper()
+                    if not projname in self.vehiclemap:
+                        self.vehiclemap[projname] = []
+                    self.vehiclemap[projname].append((ecuprotocol, ecuaddress))
+
+                self.targets.append(ecu_ident)
+
         if os.path.exists(xmlfile):
             xdom = xml.dom.minidom.parse(xmlfile)
             self.xmldoc = xdom.documentElement
 
             if not self.xmldoc:
-                print "Unable to find eculist"
+                print(_("Unable to find eculist"))
                 return
 
             functions = self.xmldoc.getElementsByTagName("Function")
             for function in functions:
                 targets = function.getElementsByTagName("Target")
                 address = function.getAttribute("Address")
-                group = function.getAttribute("Name")
                 address = hex(int(address))[2:].zfill(2).upper()
 
                 for target in targets:
+                    group = target.getAttribute("group")
                     href = target.getAttribute("href")
                     name = target.getAttribute("Name")
                     protnode = target.getElementsByTagName("Protocol")
-
                     if protnode:
                         protocol = protnode[0].firstChild.nodeValue
+
+                    if len(group) and (str(address) not in self.addr_group_mapping):
+                        self.addr_group_mapping[str(address)] = group
 
                     if 'CAN' in protocol.upper():
                         if address not in self.available_addr_can:
@@ -1270,8 +1329,16 @@ class Ecu_database:
                             supplier = ai.getAttribute("Supplier")
                             soft = ai.getAttribute("Soft")
                             version = ai.getAttribute("Version")
-                            ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol, projects, address)
+                            ecu_ident = Ecu_ident(diagversion, supplier, soft, version, name, group, href, protocol,
+                                                  projects, address)
                             self.targets.append(ecu_ident)
+
+                    if projectselems:
+                        for project in projectselems[0].childNodes:
+                            projname = project.nodeName[0:3].upper()
+                            if not projname in self.vehiclemap:
+                                self.vehiclemap[projname] = []
+                            self.vehiclemap[projname].append((ecu_ident.protocol, address))
 
     def getTarget(self, name):
         for t in self.targets:
@@ -1326,173 +1393,232 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
 
-    # Scan
-    def scan_new(self, progress=None, label=None):
+    def identify_old(self, addr, label, force = False):
+        if not options.simulation_mode:
+            if not options.elm.start_session_can('10C0'):
+                return
+
+        if options.simulation_mode and force == False:
+            # Give scanner something to eat...
+            if addr == "04":
+                can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+            if addr == "51":
+                can_response = "61 80 82 00 45 15 05 08 32 31 33 21 11 31 39 09 00 09 06 02 05 01 0D 8D 39 00"
+            elif addr == "7A":
+                # Test approximate case
+                can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
+            else:
+                can_response = "7F 80"
+        else:
+            can_response = options.elm.request(req='2180', positive='61', cache=False)
+
+        self.check_ecu(can_response, label, addr, "CAN")
+
+    def identify_from_frame(self, addr, can_response):
+        self.check_ecu(can_response, None, addr, "CAN")
+
+    def identify_new(self, addr, label):
+        printable_chars = set(string.printable)
+        diagversion = ""
+        supplier = ""
+        soft_version = ''
+        soft = ""
+        can_response = ""
+
+        # Check diagversion
+        if not options.simulation_mode:
+            if not options.elm.start_session_can('1003'):
+                # Bad response of SDS, no need check old method (10C0)
+                return False
+
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 A0 08"
+            elif addr == '13':
+                can_response = "62 F1 A0 0D"
+            elif addr == '26':
+                can_response = "62 F1 A0 08"
+            elif addr == '62':
+                can_response = "62 F1 A0 04"
+            elif addr == '01':
+                can_response = "62 F1 A0 04"
+            elif addr == '04':
+                can_response = "62 F1 A0 04"
+        else:
+            can_response = options.elm.request(req='22F1A0', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+        diagversion = can_response.replace(' ', '')[6:8]
+
+        # Check supplier ident
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 "\
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 "\
+                               "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 8A 43 41 50"
+            elif addr == '26':
+                can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20"\
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"\
+                               "20 20 20 20 20 20 20 20 20 FF FF"
+            elif addr == '62':
+                can_response = "62 F1 8A 41 46 4B"
+            elif addr == '01':
+                can_response = "62 F1 8A 43 41 53"
+            elif addr == '04':
+                can_response = "62 F1 8A 56 69 73 74 65 6F 6E 5F 4E 61 6D 65 73 74 6F 76 6F 5F 30 39 36 20 20 20 20"\
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"\
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20"
+        else:
+            can_response = options.elm.request(req='22F18A', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+        supplier = can_response.replace(' ', '')[6:134].decode('hex')
+        supplier = filter(lambda x: x in printable_chars, supplier)
+
+        # Check soft number
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 94 32 32"
+            elif addr == '26':
+                can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+            elif addr == '62':
+                can_response = "62 F1 94 31 30 30 30 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 FF FF FF FF FF FF"
+            elif addr == '01':
+                can_response = "62 F1 94 4E 33 32 52 41 46 30 30 30 31 31 00 00 00 00 00 00"
+            elif addr == '04':
+                can_response = "62 F1 94 56 30 36 30 32 F1 94 56 30 36"
+        else:
+            can_response = options.elm.request(req='22F194', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+        soft = can_response.replace(' ', '')[6:70].decode('hex')
+        soft = filter(lambda x: x in printable_chars, soft)
+
+        # Check soft version
+        if options.simulation_mode:
+            # Give scanner something to eat...
+            if addr == '26':
+                can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
+                               "20 20 20 20 20 20 20 20 20"
+            elif addr == '13':
+                can_response = "62 F1 95 31 38 35 39 30 FF FF FF FF FF"
+            elif addr == '26':
+                can_response = "62 F1 95 46 30 37 2F 34 6F 00 00 00 03"
+            elif addr == '62':
+                can_response = "62 F1 95 30 35 30 31 30 30 30 32 31 37 30 30 FF FF FF FF FF"
+            elif addr == '01':
+                can_response = "62 F1 95 46 30 37 2F 34 6F 00 00 00 03"
+            elif addr == '04':
+                can_response = "62 F1 95 56 30 36 30 32 F1 95 56 30 36"
+        else:
+            can_response = options.elm.request(req='22F195', positive='', cache=False)
+            if 'WRONG' in can_response:
+                return False
+
+        # Remove unwanted non-ascii FF from string
+        soft_version = can_response.replace(' ', '')[6:70].decode('hex')
+        soft_version = filter(lambda x: x in printable_chars, soft_version)
+        if diagversion == "":
+            return False
+
+        self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
+        # New method succeded, return the good news
+        return True
+
+    def scan(self, progress=None, label=None, vehiclefilter=None, canline=0):
         i = 0
         if not options.simulation_mode:
             options.elm.init_can()
 
+        project_can_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == u"CAN" and not addr in project_can_addresses:
+                        project_can_addresses.append(addr)
+        else:
+            project_can_addresses = self.ecu_database.available_addr_can
+
+        if len(project_can_addresses) == 0:
+            return
+
         if progress:
-            progress.setRange(0, len(self.ecu_database.available_addr_can))
+            progress.setRange(0, len(project_can_addresses))
+            progress.setValue(0)
+
+        try_new = []
 
         # Only scan available ecu addresses
-        for addr in self.ecu_database.available_addr_can:
-            # Don't want to scan NON ISO-TP
-            if addr == '00' or addr == 'FF':
-                continue
-
-            if progress:
-                progress.setValue(i)
-            self.qapp.processEvents()
+        for addr in list(set(project_can_addresses)):
             i += 1
-
-            if addr not in elm.dnat:
-                print "Warning, address %s is not mapped" % addr
-                continue
-
-            if len(elm.dnat[addr]) > 3:
-                print "Skipping CAN extended address (not supported yet) ", addr
-                continue
-
-            diagversion = ""
-            supplier = ""
-            soft_version = ''
-            soft = ""
-            can_response = ""
-
-            # Check diagversion
-            if not options.simulation_mode:
-                txa, rxa = options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                if not options.elm.start_session_can('1003'):
-                    # Bad response of SDS, no need to go further
-                    continue
-
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 A0 08"
-            else:
-                can_response = options.elm.request(req='22F1A0', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-            diagversion = can_response.replace(' ', '')[6:8]
-
-            # Check supplier ident
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20"
-            else:
-                can_response = options.elm.request(req='22F18A', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-            supplier = can_response.replace(' ', '')[6:132].decode('hex')
-
-            # Check soft number
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 94 31 34 32 36 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20"
-            else:
-                can_response = options.elm.request(req='22F194', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-            soft = can_response.replace(' ', '')[6:38].decode('hex')
-
-            # Check soft version
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == '26':
-                    can_response = "62 F1 95 31 30 30 30 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 " \
-                                   "20 20 20 20 20 20 20 20 20"
-            else:
-                can_response = options.elm.request(req='22F195', positive='', cache=False)
-                if 'WRONG' in can_response:
-                    continue
-
-            soft_version = can_response.replace(' ', '')[6:38].decode('hex')
-            if diagversion == "":
-                continue
-
-            self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
-
-        if not options.simulation_mode:
-            options.elm.close_protocol()
-
-    def scan(self, progress=None, label=None):
-        i = 0
-        if not options.simulation_mode:
-            options.elm.init_can()
-
-        if progress:
-            progress.setRange(0, len(self.ecu_database.available_addr_can))
-
-        # Only scan available ecu addresses
-        for addr in self.ecu_database.available_addr_can:
-            # Don't want to scan NON ISO-TP
-            if addr == '00' or addr == 'FF':
-                continue
-
             if progress:
                 progress.setValue(i)
                 self.qapp.processEvents()
-            i += 1
+
+            # Don't want to scan NON ISO-TP
+            if addr == '00' or addr == '37' or addr == '38' or addr == '70' or addr == '71' or addr == '72' or addr == '5A' or addr == 'FF':
+                continue
 
             if addr not in elm.dnat:
-                print "Warning, address %s is not mapped" % addr
+                print(_("Warning, address") + " %s " + _("is not mapped") % addr)
                 continue
 
-            if len(elm.dnat[addr]) > 3:
-                print "Skipping CAN extended address (not supported yet) ", addr
-                continue
-
+            print("Scanning ECU %s" % self.ecu_database.addr_group_mapping[addr].encode('ascii', 'ignore'))
             if not options.simulation_mode:
                 options.elm.init_can()
-                options.elm.set_can_addr(addr, {'ecuname': 'SCAN'})
-                if not options.elm.start_session_can('10C0'):
-                    continue
+                options.elm.set_can_addr(addr, {'ecuname': 'SCAN'}, canline)
 
-            if options.simulation_mode:
-                # Give scanner something to eat...
-                if addr == "04":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                elif addr == "7A":
-                    # Test approximate case
-                    can_response = "61 80 82 00 44 66 27 44 32 31 33 82 00 38 71 38 00 A7 75 00 56 05 02 01 00 00"
-                else:
-                    can_response = "7F 80"
-            else:
-                can_response = options.elm.request(req='2180', positive='61', cache=False)
-
-            self.check_ecu(can_response, label, addr, "CAN")
+            # Avoid to waste time, try new method : not working -> try old
+            if not self.identify_new(addr, label):
+                self.identify_old(addr, label)
 
         if not options.simulation_mode:
             options.elm.close_protocol()
 
-    def scan_kwp(self, progress=None, label=None):
+        return try_new
+
+    def scan_kwp(self, progress=None, label=None, vehiclefilter=None):
         if options.simulation_mode:
             # Test data..
             # diagversion, supplier, soft, version, name, group, href, protocol, projects, address):
             self.ecus["S2000_Atmo__SoftA3"] = Ecu_ident("004", "213", "00A5", "8300", "UCH", "GRP", "S2000_Atmo___SoftA3.json",
                                                         "KWP2000 FastInit MonoPoint", [], "7A")
 
-        i = 0
         if not options.simulation_mode:
             options.elm.init_iso()
 
-        if progress:
-            progress.setRange(0, len(self.ecu_database.available_addr_kwp))
+        project_kwp_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == u"KWP2000" and not addr in project_kwp_addresses:
+                        project_kwp_addresses.append(addr)
+        else:
+            project_kwp_addresses = self.ecu_database.available_addr_kwp
 
-        for addr in self.ecu_database.available_addr_kwp:
+        if len(project_kwp_addresses) == 0:
+            return
+
+        i = 0
+        if progress:
+            progress.setRange(0, len(project_kwp_addresses))
+            progress.setValue(0)
+
+        for addr in project_kwp_addresses:
+            i += 1
             if progress:
                 progress.setValue(i)
                 self.qapp.processEvents()
-            i += 1
 
             if not options.simulation_mode:
                 options.opt_si = True
@@ -1530,7 +1656,12 @@ class Ecu_scanner:
         approximate_ecu = []
         found_exact = False
         found_approximate = False
+        if addr in self.ecu_database.addr_group_mapping:
+            ecu_type = self.ecu_database.addr_group_mapping[addr]
+        else:
+            ecu_type = "UNKNOWN"
 
+        targetNum = 0
         for target in self.ecu_database.targets:
             if target.protocol == "CAN" and protocol != "CAN":
                 continue
@@ -1542,17 +1673,21 @@ class Ecu_scanner:
 
                 self.ecus[ecuname] = target
                 self.num_ecu_found += 1
-                label.setText("Found %i ecu" % self.num_ecu_found)
+                if label is not None:
+                    label.setText("Found %i ecu" % self.num_ecu_found)
                 found_exact = True
                 href = target.href
-                line = "<font color='green'>Identified ECU : %s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>"\
-                       % (href, diagversion, supplier, soft, version)
+                line = "<font color='green'>Identified ECU [%s]@%s : %s DIAGVERSION [%s]"\
+                       "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>"\
+                       % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
 
                 options.main_window.logview.append(line)
+                break
             elif target.checkApproximate(diagversion, supplier, soft, addr):
                 approximate_ecu.append(target)
                 found_approximate = True
 
+            targetNum += 1
 
         # Try to find the closest possible version of an ECU
         if not found_exact and found_approximate:
@@ -1567,7 +1702,15 @@ class Ecu_scanner:
                     ecu_protocol = "KWP"
                 if ecu_protocol != protocol:
                     continue
-                delta = abs(int('0x' + tgt.version, 16) - int('0x' + version, 16))
+
+                # If version contains ASCII characters, I can do nothing for you...
+                try:
+                    int_version = int('0x' + version, 16)
+                    int_tgt_version = int('0x' + tgt.version, 16)
+                except ValueError:
+                    continue
+
+                delta = abs(int_tgt_version - int_version)
                 if delta < min_delta_version:
                     min_delta_version = delta
                     kept_ecu = tgt
@@ -1575,23 +1718,21 @@ class Ecu_scanner:
             if kept_ecu:
                 self.approximate_ecus[kept_ecu.name] = kept_ecu
                 self.num_ecu_found += 1
-                label.setText("Found %i ecu" % self.num_ecu_found)
+                if label is not None:
+                    label.setText("Found %i ecu" % self.num_ecu_found)
 
-                line = "<font color='red'>Found ECU (not perfect match) :"\
+                line = "<font color='green'>Found ECU [%s] (not perfect match) :"\
                        "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>"\
-                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
+                       % (ecu_type, kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
 
                 options.main_window.logview.append(line)
 
         if not found_exact and not found_approximate:
-            line = "<font color='red'>Found ECU (no relevant ECU file found) :" \
+            line = "<font color='red'>Found ECU [%s] (no relevant ECU file found) :" \
                    "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                   % (diagversion, supplier, soft, version)
+                   % (ecu_type, diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
-
-        #if can_response.startswith('61'):
-        #    self.report_data.append((diagversion, supplier, soft, addr, can_response, version, href, protocol))
 
 
 def make_zipfs():
@@ -1602,13 +1743,13 @@ def make_zipfs():
     ecus.remove("ecus/eculist.xml")
 
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
-        print("Writing vehicles database...")
+        print(_("Writing vehicles database..."))
         db = Ecu_database(True)
         zf.writestr("db.json", str(db.dump()))
 
         for target in ecus:
             name = target
-            print "Starting zipping " + target + " " + str(i) + "/" + str(len(ecus))
+            print(_("Starting zipping ") + target + " " + str(i) + "/" + str(len(ecus)))
             fileout = name.replace('.xml', '.json')
             ecur = Ecu_file(name, True)
 
@@ -1619,6 +1760,7 @@ def make_zipfs():
 
     with open("json/ecus.zip", "w") as f:
         f.write(zipoutput.getvalue())
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

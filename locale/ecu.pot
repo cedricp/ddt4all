@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-28 06:05+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ecu.py:248
+msgid "Generated stream "
+msgstr ""
+
+#: ecu.py:253
+msgid "Send request stream "
+msgstr ""
+
+#: ecu.py:261
+msgid "Received stream "
+msgstr ""
+
+#: ecu.py:268
+msgid "Request ECU Error"
+msgstr ""
+
+#: ecu.py:274
+msgid "Decoded values"
+msgstr ""
+
+#: ecu.py:662
+msgid "Warning, cannot get signed value for"
+msgstr ""
+
+#: ecu.py:681
+msgid "Division by zero, please check data item: "
+msgstr ""
+
+#: ecu.py:768
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr ""
+
+#: ecu.py:832
+msgid "Cannot find file "
+msgstr ""
+
+#: ecu.py:878
+msgid "Cannot load ECU file"
+msgstr ""
+
+#: ecu.py:886
+msgid "XML not found"
+msgstr ""
+
+#: ecu.py:1224
+msgid "Adding group "
+msgstr ""
+
+#: ecu.py:1288
+msgid "Unable to find eculist"
+msgstr ""
+
+#: ecu.py:1573
+msgid "Warning, address"
+msgstr ""
+
+#: ecu.py:1573
+msgid "is not mapped"
+msgstr ""
+
+#: ecu.py:1746
+msgid "Writing vehicles database..."
+msgstr ""
+
+#: ecu.py:1752
+msgid "Starting zipping "
+msgstr ""

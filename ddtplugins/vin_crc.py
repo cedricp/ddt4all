@@ -6,12 +6,14 @@
 import crcmod
 from binascii import unhexlify
 
-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
+import options
 
-plugin_name = "CRC calculator"
-category = "VIN"
+_ = options.translator('ddt4all')
+
+plugin_name = _("CRC calculator")
+category = _("VIN")
 # We need an ELM to work
 need_hw = False
 
@@ -34,7 +36,7 @@ class CrcWidget(gui.QDialog):
         self.input = gui.QLineEdit()
         self.output = gui.QLineEdit()
         self.output.setStyleSheet("QLineEdit { color: rgb(255, 0, 0); }")
-        info = gui.QLabel("CRC CALCULATOR")
+        info = gui.QLabel(_("CRC CALCULATOR"))
         info.setAlignment(core.Qt.AlignHCenter)
         self.output.setAlignment(core.Qt.AlignHCenter)
         layout.addWidget(info)

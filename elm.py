@@ -6,47 +6,427 @@
 '''
 
 import options
-
+import ecu
 import serial
 from serial.tools import list_ports
 
 import sys
 import os
+import json
 import re
 import time
 import string
 from datetime import datetime
 
-_ = options.translator('elm')
+_ = options.translator('ddt4all')
 
-snat = {"01": "760", "02": "724", "04": "762", "07": "771", "08": "778", "0D": "775", "0E": "76E", "0F": "770",
-        "13": "732", "1B": "7AC", "1C": "76B", "1E": "768", "23": "773", "24": "77D", "26": "765", "27": "76D",
-        "29": "764", "2A": "76F", "2C": "772", "2E": "7BC", "32": "776", "3A": "7D2", "40": "727", "4D": "7BD",
-        "50": "738", "51": "763", "57": "767", "59": "734", "62": "7DD", "66": "739", "67": "793", "68": "77E",
-        "6B": "7B5", "6E": "7E9", "77": "7DA", "79": "7EA", "7A": "7E8", "7C": "77C", "86": "7A2", "87": "7A0",
-        "93": "7BB", "95": "7EC", "A5": "725", "A6": "726", "A7": "733", "A8": "7B6", "C0": "7B9", "D1": "7EE",
-        "F7": "736", "F8": "737", "FA": "77B", "FD": "76F", "FE": "76C", "FF": "7D0", "11": "7C3",
-        "A1": "76C", "58": "767", "2B": "735", "11": "7C9", "28": "7D7",
-        "E8": "5C4", "2F": "76C", "64": "7D5", "D3": "7EE", "DF": "5C1", "61": "7BA", "46": "7CF",
-        "EA": "4B3", "ED": "704", "EC": "5B7", "E9": "762", "25": "700", "E2": "5BB",
-        "97": "7C8", "DE": "69C", "63": "73E", "E6": "484", "EB": "5B8", "78": "7BD", "5B": "7A5",
-        "81": "761", "06": "791", "E1": "5BA", "1A": "731", "E3": "4A7", "91": "7ED", "09": "7EB", "E7": "7EC",
-        "E4": "757", "E0": "58B", "82": "7AD",
-        "D2": "18DAF1D2", "60": "18DAF160", "D0": "18DAF1D0", "DA": "18DAF1DA", "2D": "18DAF12D", "41": "18DAF1D2"}
+snat = {
+"400":"69C",
+"401":"5C1",
+"402":"771",
+"403":"58B",
+"404":"5BA",
+"405":"5BB",
+"406":"4A7",
+"407":"757",
+"408":"5C4",
+"409":"484",
+"40A":"7EC",
+"40B":"79D",
+"40C":"7A7",
+"40D":"4B3",
+"40E":"5B8",
+"40F":"5B7",
+"410":"704",
+"411":"7ED",
+"412":"7EB",
+"413":"701",
+"414":"585",
+"415":"5D0",
+"416":"5D6",
+"417":"726",
+"418":"5AF",
+"419":"5C6",
+"420":"18DAF320",
+"421":"18DAF321",
+"422":"18DAF322",
+"423":"18DAF323",
+"424":"18DAF324",
+"425":"18DAF325",
+"426":"18DAF326",
+"427":"18DAF1D1",
+"428":"18DAF328",
+"429":"18DAF329",
+"01":"760",
+"02":"724",
+"03":"58B",
+"04":"762",
+"06":"791",
+"07":"771",
+"08":"778",
+"09":"7EB",
+"0A":"7EC",
+"0B":"18DAF10B",
+"0D":"775",
+"0E":"76E",
+"0F":"770",
+"11":"7C9",
+"12":"18DAF112",
+"13":"732",
+"14":"18DAF114",
+"15":"18DAF115",
+"16":"18DAF271",
+"17":"18DAF117",
+"18":"18DAF118",
+"1A":"731",
+"1B":"7AC",
+"1C":"76B",
+"1D":"18DAF11D",
+"1E":"768",
+"20":"18DAF131",
+"21":"761",
+"22":"18DAF132",
+"23":"773",
+"24":"77D",
+"25":"700",
+"26":"765",
+"27":"76D",
+"28":"7D7",
+"29":"764",
+"2A":"76F",
+"2B":"735",
+"2C":"772",
+"2D":"18DAF12D",
+"2E":"7BC",
+"2F":"76C",
+"30":"18DAF230",
+"32":"776",
+"33":"18DAF200",
+"35":"776",
+"39":"73A",
+"3A":"7D2",
+"3B":"7C4",
+"3C":"7DB",
+"3D":"79A",
+"3E":"18DAF23E",
+"40":"727",
+"41":"18DAF1D0",
+"42":"18DAF242",
+"43":"779",
+"45":"729",
+"46":"7CF",
+"47":"7A8",
+"48":"7D1",
+"49":"18DAF249",
+"4A":"18DAF24A",
+"4C":"18DAF24C",
+"4D":"7BD",
+"4F":"18DAF14F",
+"50":"738",
+"51":"763",
+"54":"18DAF254",
+"55":"18DAF155",
+"56":"18DAF156",
+"57":"18DAF257",
+"58":"767",
+"59":"734",
+"5B":"7A5",
+"5C":"774",
+"5D":"18DAF25D",
+"5E":"18DAF25E",
+"60":"18DAF160",
+"61":"7BA",
+"62":"7DD",
+"63":"73E",
+"64":"7D5",
+"65":"72A",
+"66":"739",
+"67":"793",
+"68":"77E",
+"69":"18DAF269",
+"6B":"7B5",
+"6C":"18DAF26C",
+"6D":"18DAF26D",
+"6E":"7E9",
+"6F":"18DAF26F",
+"73":"18DAF273",
+"74":"18DAF270",
+"75":"18DAF175",
+"76":"7D3",
+"77":"7DA",
+"78":"7BD",
+"79":"7EA",
+"7A":"7E8",
+"7B":"18DAF272",
+"7C":"77C",
+"80":"74A",
+"81":"761",
+"82":"7AD",
+"86":"7A2",
+"87":"7A0",
+"91":"7ED",
+"92":"18DAF192",
+"93":"7BB",
+"95":"7EC",
+"97":"7C8",
+"98":"18DAF198",
+"A1":"76C",
+"A2":"18DAF2A2",
+"A3":"729",
+"A4":"774",
+"A5":"725",
+"A6":"726",
+"A7":"733",
+"A8":"7B6",
+"A9":"791",
+"AA":"7A6",
+"AB":"18DAF2AB",
+"AC":"18DAF2AC",
+"C0":"7B9",
+"CE":"18DAF223",
+"CF":"18DAF224",
+"D0":"18DAF1D0",
+"D1":"7EE",
+"D2":"18DAF1D2",
+"D3":"7EE",
+"D4":"18DAF1D4",
+"D5":"18DAF1D5",
+"D6":"18DAF2D6",
+"D7":"18DAF2D7",
+"D8":"18DAF1D8",
+"D9":"18DAF2D9",
+"DA":"18DAF1DA",
+"DB":"18DAF1DB",
+"DC":"18DAF1DC",
+"DD":"18DAF1DD",
+"DE":"18DAF1DE",
+"DF":"18DAF1DF",
+"E0":"18DAF1E0",
+"E1":"18DAF1E1",
+"E2":"18DAF1E2",
+"E3":"18DAF1E3",
+"E4":"757",
+"E5":"18DAF1E5",
+"E6":"484",
+"E7":"7EC",
+"E8":"5C4",
+"E9":"762",
+"EA":"4B3",
+"EB":"5B8",
+"EC":"5B7",
+"ED":"704",
+"EE":"18DAF2EE",
+"EF":"18DAF1EF",
+"F7":"736",
+"F8":"737",
+"FA":"77B",
+"FD":"76F",
+"FE":"76C"
+}
 
-dnat = {"01": "740", "02": "704", "04": "742", "07": "751", "08": "758", "0D": "755", "0E": "74E", "0F": "750",
-        "13": "712", "1B": "7A4", "1C": "74B", "1E": "748", "23": "753", "24": "75D", "26": "745", "27": "74D",
-        "29": "744", "2A": "74F", "2C": "752", "2E": "79C", "32": "756", "3A": "7D6", "40": "707", "4D": "79D",
-        "50": "718", "51": "743", "57": "747", "59": "714", "62": "7DC", "66": "719", "67": "792", "68": "75A",
-        "6B": "795", "6E": "7E1", "77": "7CA", "79": "7E2", "7A": "7E0", "7C": "75C", "86": "782", "87": "780",
-        "93": "79B", "95": "7E4", "A5": "705", "A6": "706", "A7": "713", "A8": "796", "C0": "799", "D1": "7E6",
-        "F7": "716", "F8": "717", "FA": "75B", "FD": "74F", "FE": "74C", "FF": "7D0", "11": "7C9",
-        "A1": "74C", "58": "747", "2B": "723", "11": "7C3", "28": "78A", "E8": "644", "EC": "637",
-        "2F": "74C", "64": "7D4", "D3": "7E6", "DF": "641", "61": "7B7", "46": "7CD", "EA": "79A", "ED": "714",
-        "E9": "742", "25": "70C", "E2": "63B", "97": "7D8", "DE": "6BC", "63": "73D", "E3": "73A",
-        "E6": "622", "EB": "638", "78": "79D", "5B": "785", "81": "73F", "06": "790", "E1": "63A", "1A": "711",
-        "91": "7E5", "09": "7E3", "E7": "7E4", "E4": "74F", "E0": "60B", "82": "7AA",
-        "D2": "18DAD2F1", "60": "18DA60F1", "D0": "18DAD0F1", "2D": "18DA2DF1", "DA": "18DADAF1", "41": "18DAD2F1"}
+dnat = {
+"400":"6BC",
+"401":"641",
+"402":"742",
+"403":"60B",
+"404":"63A",
+"405":"63B",
+"406":"73A",
+"407":"74F",
+"408":"644",
+"409":"622",
+"40A":"7E4",
+"40B":"79C",
+"40C":"79F",
+"40D":"79A",
+"40E":"638",
+"40F":"637",
+"410":"714",
+"411":"7E5",
+"412":"7E3",
+"413":"711",
+"414":"605",
+"415":"650",
+"416":"656",
+"417":"746",
+"418":"62F",
+"419":"646",
+"420":"18DA20F3",
+"421":"18DA21F3",
+"422":"18DA22F3",
+"423":"18DA23F3",
+"424":"18DA24F3",
+"425":"18DA25F3",
+"426":"18DA26F3",
+"427":"18DAD1F1",
+"428":"18DA28F3",
+"429":"18DA29F3",
+"01":"740",
+"02":"704",
+"03":"60B",
+"04":"742",
+"06":"790",
+"07":"751",
+"08":"758",
+"09":"7E3",
+"0A":"7E4",
+"0B":"18DA0BF1",
+"0D":"755",
+"0E":"74E",
+"0F":"750",
+"11":"7C3",
+"12":"18DA12F1",
+"13":"712",
+"14":"18DA14F1",
+"15":"18DA15F1",
+"16":"18DA71F2",
+"17":"18DA17F1",
+"18":"18DA18F1",
+"1A":"711",
+"1B":"7A4",
+"1C":"74B",
+"1D":"18DA1DF1",
+"1E":"748",
+"20":"18DA31F1",
+"21":"73F",
+"22":"18DA32F1",
+"23":"753",
+"24":"75D",
+"25":"70C",
+"26":"745",
+"27":"74D",
+"28":"78A",
+"29":"744",
+"2A":"74F",
+"2B":"723",
+"2C":"752",
+"2D":"18DA2DF1",
+"2E":"79C",
+"2F":"74C",
+"30":"18DA30F2",
+"32":"756",
+"33":"18DA00F2",
+"35":"756",
+"39":"71A",
+"3A":"7D6",
+"3B":"7C5",
+"3C":"7D9",
+"3D":"7A1",
+"3E":"18DA3EF2",
+"40":"707",
+"41":"18DAD0F1",
+"42":"18DA42F2",
+"43":"759",
+"45":"709",
+"46":"7CD",
+"47":"788",
+"48":"7C6",
+"49":"18DA49F2",
+"4A":"18DA4AF2",
+"4C":"18DA4CF2",
+"4F":"18DA4FF1",
+"4D":"79D",
+"50":"718",
+"51":"743",
+"54":"18DA54F2",
+"55":"18DA55F1",
+"56":"18DA56F1",
+"57":"18DA57F2",
+"58":"747",
+"59":"714",
+"5B":"785",
+"5C":"754",
+"5D":"18DA5DF2",
+"5E":"18DA5EF2",
+"60":"18DA60F1",
+"61":"7B7",
+"62":"7DC",
+"63":"73D",
+"64":"7D4",
+"65":"70A",
+"66":"719",
+"67":"792",
+"68":"75A",
+"69":"18DA69F2",
+"6B":"795",
+"6C":"18DA6CF2",
+"6D":"18DA6DF2",
+"6E":"7E1",
+"6F":"18DA6FF2",
+"73":"18DA73F2",
+"74":"18DA70F2",
+"75":"18DA75F1",
+"76":"7C7",
+"77":"7CA",
+"78":"746",
+"79":"7E2",
+"7A":"7E0",
+"7B":"18DA72F2",
+"7C":"75C",
+"80":"749",
+"81":"73F",
+"82":"7AA",
+"86":"782",
+"87":"780",
+"91":"7E5",
+"92":"18DA92F1",
+"93":"79B",
+"95":"7E4",
+"97":"7D8",
+"98":"18DA98F1",
+"A1":"74C",
+"A2":"18DAA2F2",
+"A3":"709",
+"A4":"759",
+"A5":"705",
+"A6":"706",
+"A7":"713",
+"A8":"796",
+"A9":"790",
+"AA":"786",
+"AB":"18DAABF2",
+"AC":"18DAACF2",
+"C0":"799",
+"CE":"18DA23F2",
+"CF":"18DA24F2",
+"D0":"18DAD0F1",
+"D1":"7E6",
+"D2":"18DAD2F1",
+"D3":"7E6",
+"D4":"18DAD4F1",
+"D5":"18DAD5F1",
+"D6":"18DAD6F2",
+"D7":"18DAD7F2",
+"D8":"18DAD8F1",
+"D9":"18DAD9F2",
+"DA":"18DADAF1",
+"DB":"18DADBF1",
+"DC":"18DADCF1",
+"DD":"18DADDF1",
+"DE":"18DADEF1",
+"DF":"18DADFF1",
+"E0":"18DAE0F1",
+"E1":"18DAE1F1",
+"E2":"18DAE2F1",
+"E3":"18DAE3F1",
+"E4":"74F",
+"E5":"18DAE5F1",
+"E6":"622",
+"E7":"7E4",
+"E8":"644",
+"E9":"742",
+"EA":"79A",
+"EB":"638",
+"EC":"637",
+"ED":"714",
+"EE":"18DAEEF2",
+"EF":"18DAEFF1",
+"F7":"716",
+"F8":"717",
+"FA":"75B",
+"FD":"74F",
+"FE":"74C"
+}
 
 # Code snippet from https://github.com/rbei-etas/busmaster
 negrsp = {"10": "NR: General Reject",
@@ -100,142 +480,84 @@ negrsp = {"10": "NR: General Reject",
           "90": "NR: Shifter Lever Not In Park ",
           "91": "NR: Torque Converter Clutch Locked",
           "92": "NR: Voltage Too High",
-          "93": "NR: Voltage Too Low"}
+          "93": "NR: Voltage Too Low"
+          }
 
 
 cmdb = '''
-#v1.0 ;AC P; ATZ                   ; Z                  ; reset all
-#v1.0 ;AC P; ATE1                  ; E0, E1             ; Echo off, or on*
-#v1.0 ;AC P; ATL0                  ; L0, L1             ; Linefeeds off, or on
+#v1.0 ;AC P; ATWS                  ; WS                 ; Warm Start (quick software reset)
+#v1.0 ;AC P; ATE1                  ; E1                 ; Echo on
+#v1.0 ;AC P; ATL1                  ; L1                 ; Linefeeds on
+#v1.0 ;AC P; ATL0                  ; L0                 ; Linefeeds off
 #v1.0 ;AC  ; ATI                   ; I                  ; print the version ID
 #v1.0 ;AC  ; AT@1                  ; @1                 ; display the device description
-#v1.0 ;AC P; ATAL                  ; AL                 ; Allow Long (>7 byte) messages
-#v1.0 ;AC  ; ATBD                  ; BD                 ; perform a Buffer Dump
-#V1.0 ;ACH ; ATSP4                 ; SP h               ; Set Protocol to h and save it
-#v1.0 ;AC  ; ATBI                  ; BI                 ; Bypass the Initialization sequence
-#v1.0 ;AC P; ATCAF0                ; CAF0, CAF1         ; Automatic Formatting off, or on*
-#v1.0 ;AC  ; ATCFC1                ; CFC0, CFC1         ; Flow Controls off, or on*
-#v1.0 ;AC  ; ATCP 01               ; CP hh              ; set CAN Priority to hh (29 bit)
-#v1.0 ;AC  ; ATCS                  ; CS                 ; show the CAN Status counts
-#v1.0 ;AC  ; ATCV 1250             ; CV dddd            ; Calibrate the Voltage to dd.dd volts
-#v1.0 ;AC  ; ATD                   ; D                  ; set all to Defaults
-#v1.0 ;AC  ; ATDP                  ; DP                 ; Describe the current Protocol
-#v1.0 ;AC  ; ATDPN                 ; DPN                ; Describe the Protocol by Number
-#v1.0 ;AC P; ATH0                  ; H0, H1             ; Headers off*, or on
-#v1.0 ;AC  ; ATI                   ; I                  ; print the version ID
-#v1.0 ;AC P; ATIB 10               ; IB 10              ; set the ISO Baud rate to 10400*
-#v1.0 ;AC  ; ATIB 96               ; IB 96              ; set the ISO Baud rate to 9600
-#v1.0 ;AC  ; ATL1                  ; L0, L1             ; Linefeeds off, or on
-#v1.0 ;AC  ; ATM0                  ; M0, M1             ; Memory off, or on
-#v1.0 ; C  ; ATMA                  ; MA                 ; Monitor All
-#v1.0 ; C  ; ATMR 01               ; MR hh              ; Monitor for Receiver = hh
-#v1.0 ; C  ; ATMT 01               ; MT hh              ; Monitor for Transmitter = hh
-#v1.0 ;AC  ; ATNL                  ; NL                 ; Normal Length messages*
-#v1.0 ;AC  ; ATPC                  ; PC                 ; Protocol Close
-#v1.0 ;AC  ; ATR1                  ; R0, R1             ; Responses off, or on*
 #v1.0 ;AC  ; ATRV                  ; RV                 ; Read the input Voltage
-#v1.0 ;ACH ; ATSP7                 ; SP h               ; Set Protocol to h and save it
-#v1.0 ;ACH ; ATSH 00000000         ; SH wwxxyyzz        ; Set Header to wwxxyyzz
-#v1.0 ;AC  ; ATSH 001122           ; SH xxyyzz          ; Set Header to xxyyzz
+#v1.1 ;AC P; ATPPS                 ; PPS                ; print a PP Summary
+#v1.3 ;AC P; ATS1                  ; S1                 ; printing of aces on
+#v1.3 ;AC P; ATS0                  ; S0                 ; printing of aces off
+#v1.0 ;AC P; ATCAF0                ; CAF0               ; Automatic Formatting off
+#v1.0 ;AC P; ATCFC0                ; CFC0               ; Flow Controls off
+#v1.0 ;AC P; ATH0                  ; H0                 ; Headers off
+#v1.0 ;AC P; ATR1                  ; R1                 ; Responses on
+#v1.2 ;AC P; ATKW0                 ; KW0                ; Key Word checking off
+#v1.3 ;AC P; ATD1                  ; D1                 ; display of the DLC on
+#v1.3 ;AC P; ATD0                  ; D0                 ; display of the DLC off
+#v1.0 ;AC P; ATAL                  ; AL                 ; Allow Long (>7 byte) messages
+#V1.0 ;AC P; ATSP 3                ; SP h               ; Set Protocol to h and save it
+#Reset all ;ACH ; ATWS              ; WS                 ; reset all
+#V1.0 ;AC P; ATSP 4                ; SP h               ; Set Protocol to h and save it
+#v1.2 ;AC P; ATIIA 01              ; IIA hh             ; set ISO (slow) Init Address to hh
+#v1.4 ;AC P; ATSI                  ; SI                 ; perform a Slow (5 baud) Initiation
+#Reset all ;ACH ; ATWS              ; WS                  ; reset all
+#V1.0 ;AC P; ATSP 5                ; SP h               ; Set Protocol to h and save it
+#v1.4 ;AC P; ATFI                  ; FI                 ; perform a Fast Initiation
+#Reset all ;ACH ; ATWS             ; WS                  ; reset all
+#V1.0 ;AC P; ATSP 6                ; SP h               ; Set Protocol to h and save it
+#V1.0 ;AC P; ATSP 7                ; SP h               ; Set Protocol to h and save it
+#V1.0 ;AC P; ATSP 8                ; SP h               ; Set Protocol to h and save it
+#v1.0 ;AC P; ATPC                  ; PC                 ; Protocol Close
 #v1.0 ;AC P; ATSH 012              ; SH xyz             ; Set Header to xyz
-#v1.0 ;AC  ; ATSP A6               ; SP Ah              ; Set Protocol to Auto, h and save it
-#v1.0 ;AC  ; ATSP 6                ; SP h               ; Set Protocol to h and save it
+#v1.0 ;AC P; ATSW 96               ; SW 00              ; Stop sending Wakeup messages
+#v1.0 ;AC P; ATSW 34               ; SW hh              ; Set Wakeup interval to hh x 20 msec
+#v1.0 ;AC P; ATWM 817AF13E         ; WM [1 - 6 bytes]   ; set the Wakeup Message
+#v1.0 ;AC P; ATIB 10               ; IB 10              ; set the ISO Baud rate to 10400
+#v1.0 ;AC P; ATST FF               ; ST hh              ; Set Timeout to hh x 4 msec
+#v1.3 ;AC P; ATCRA 012             ; CRA hhh            ; set CAN Receive Address to hhh
+#v1.3 ;AC P; ATCRA 01234567        ; CRA hhhhhhhh       ; set the Rx Address to hhhhhhhh
+#v1.1 ;AC P; ATFC SH 012           ; FC SH hhh          ; FC, Set the Header to hhh
+#v1.1 ;AC P; ATFC SH 00112233      ; FC SH hhhhhhhh     ; Set the Header to hhhhhhhh
+#v1.1 ;AC P; ATFC SD 300000        ; FC SD [1 - 5 bytes]; FC, Set Data to [...]
+#v1.1 ;AC P; ATFC SM 1             ; FC SM h            ; Flow Control, Set the Mode to h
+#v1.2 ;AC P;ATAT0                  ; AT0                ;enable adaptive timing
+#v1.2 ;AC P;ATAT1                  ; AT1                ;enable adaptive timing
 #v1.0 ;AC  ; ATCM 123              ; CM hhh             ; set the ID Mask to hhh
 #v1.0 ;AC  ; ATCM 12345678         ; CM hhhhhhhh        ; set the ID Mask to hhhhhhhh
 #v1.0 ;AC  ; ATCF 123              ; CF hhh             ; set the ID Filter to hhh
 #v1.0 ;AC  ; ATCF 12345678         ; CF hhhhhhhh        ; set the ID Filter to hhhhhhhh
-#v1.0 ;AC P; ATST FF               ; ST hh              ; Set Timeout to hh x 4 msec
-#v1.0 ;AC P; ATSW 96               ; SW 00              ; Stop sending Wakeup messages
-#v1.0 ;AC P; ATSW 34               ; SW hh              ; Set Wakeup interval to hh x 20 msec
-#v1.0 ;AC  ; ATTP A6               ; TP Ah              ; Try Protocol h with Auto search
-#v1.0 ;AC  ; ATTP 6                ; TP h               ; Try Protocol h
-#v1.0 ;AC P; ATWM 817AF13E         ; WM [1 - 6 bytes]   ; set the Wakeup Message
-#v1.0 ;AC P; ATWS                  ; WS                 ; Warm Start (quick software reset)
-#v1.1 ;AC P; ATFC SD 300000        ; FC SD [1 - 5 bytes]; FC, Set Data to [...]
-#v1.1 ;AC P; ATFC SH 012           ; FC SH hhh          ; FC, Set the Header to hhh
-#v1.1 ;AC P; ATFC SH 00112233      ; FC SH hhhhhhhh     ; Set the Header to hhhhhhhh
-#v1.1 ;AC P; ATFC SM 1             ; FC SM h            ; Flow Control, Set the Mode to h
-#v1.1 ;AC  ; ATPP FF OFF           ; PP FF OFF          ; all Prog Parameters disabled
-#v1.1 ;AC  ; ATPP FF ON            ; PP FF ON           ; all Prog Parameters enabled
-#v1.1 ;    ;                       ; PP xx OFF          ; disable Prog Parameter xx
-#v1.1 ;    ;                       ; PP xx ON           ; enable Prog Parameter xx
-#v1.1 ;    ;                       ; PP xx SV yy        ; for PP xx, Set the Value to yy
-#v1.1 ;AC  ; ATPPS                 ; PPS                ; print a PP Summary
-#v1.2 ;AC  ; ATAR                  ; AR                 ; Automatically Receive
-#v1.2 ;AC 0; ATAT1                 ; AT0, 1, 2          ; Adaptive Timing off, auto1*, auto2
-#v1.2 ;    ;                       ; BRD hh             ; try Baud Rate Divisor hh
-#v1.2 ;    ;                       ; BRT hh             ; set Baud Rate Timeout
-#v1.2 ;ACH ; ATSPA                 ; SP h               ; Set Protocol to h and save it
-#v1.2 ; C  ; ATDM1                 ; DM1                ; monitor for DM1 messages
-#v1.2 ; C  ; ATIFR H               ; IFR H, S           ; IFR value from Header* or Source
-#v1.2 ; C  ; ATIFR0                ; IFR0, 1, 2         ; IFRs off, auto*, or on
-#v1.2 ;AC  ; ATIIA 01              ; IIA hh             ; set ISO (slow) Init Address to hh
-#v1.2 ;AC  ; ATKW0                 ; KW0, KW1           ; Key Word checking off, or on*
-#v1.2 ; C  ; ATMP 0123             ; MP hhhh            ; Monitor for PGN 0hhhh
-#v1.2 ; C  ; ATMP 0123 4           ; MP hhhh n          ; and get n messages
-#v1.2 ; C  ; ATMP 012345           ; MP hhhhhh          ; Monitor for PGN hhhhhh
-#v1.2 ; C  ; ATMP 012345 6         ; MP hhhhhh n        ; and get n messages
-#v1.2 ;AC  ; ATSR 01               ; SR hh              ; Set the Receive address to hh
-#v1.3 ;    ; AT@2                  ; @2                 ; display the device identifier
-#v1.3 ;AC P; ATCRA 012             ; CRA hhh            ; set CAN Receive Address to hhh
-#v1.3 ;AC  ; ATCRA 01234567        ; CRA hhhhhhhh       ; set the Rx Address to hhhhhhhh
-#v1.3 ;AC  ; ATD0                  ; D0, D1             ; display of the DLC off*, or on
-#v1.3 ;AC  ; ATFE                  ; FE                 ; Forget Events
-#v1.3 ;AC  ; ATJE                  ; JE                 ; use J1939 Elm data format*
-#v1.3 ;AC  ; ATJS                  ; JS                 ; use J1939 SAE data format
-#v1.3 ;AC  ; ATKW                  ; KW                 ; display the Key Words
-#v1.3 ;AC  ; ATRA 01               ; RA hh              ; set the Receive Address to hh
-#v1.3 ;ACH ; ATSP6                 ; SP h               ; Set Protocol to h and save it
-#v1.3 ;ACH ; ATRTR                 ; RTR                ; send an RTR message
-#v1.3 ;AC  ; ATS1                  ; S0, S1             ; printing of aces off, or on*
-#v1.3 ;AC  ; ATSP 00               ; SP 00              ; Erase stored protocol
-#v1.3 ;AC  ; ATV0                  ; V0, V1             ; use of Variable DLC off*, or on
-#v1.4 ;AC  ; ATCEA                 ; CEA                ; turn off CAN Extended Addressing
-#v1.4 ;AC  ; ATCEA 01              ; CEA hh             ; use CAN Extended Address hh
-#v1.4 ;AC  ; ATCV 0000             ; CV 0000            ; restore CV value to factory setting
-#v1.4 ;AC  ; ATIB 48               ; IB 48              ; set the ISO Baud rate to 4800
-#v1.4 ;AC  ; ATIGN                 ; IGN                ; read the IgnMon input level
-#v1.4 ;    ;                       ; LP                 ; go to Low Power mode
-#v1.4 ;AC  ; ATPB 01 23            ; PB xx yy           ; Protocol B options and baud rate
-#v1.4 ;AC  ; ATRD                  ; RD                 ; Read the stored Data
-#v1.4 ;AC  ; ATSD 01               ; SD hh              ; Save Data byte hh
-#v1.4 ;ACH ; ATSP4                 ; SP h               ; Set Protocol to h and save it
-#v1.4 ;AC P; ATSI                  ; SI                 ; perform a Slow (5 baud) Initiation
-#v1.4 ;ACH ; ATZ                   ; Z                  ; reset all
-#v1.4 ;ACH ; ATSP5                 ; SP h               ; Set Protocol to h and save it
-#v1.4 ;AC P; ATFI                  ; FI                 ; perform a Fast Initiation
-#v1.4 ;ACH ; ATZ                   ; Z                  ; reset all
-#v1.4 ;AC  ; ATSS                  ; SS                 ; use Standard Search order (J1978)
-#v1.4 ;AC  ; ATTA 12               ; TA hh              ; set Tester Address to hh
-#v1.4 ;ACH ; ATSPA                 ; SP h               ; Set Protocol to h and save it
-#v1.4 ;AC  ; ATCSM1                ; CSM0, CSM1         ; Silent Monitoring off, or on*
-#v1.4 ;AC  ; ATJHF1                ; JHF0, JHF1         ; Header Formatting off, or on*
-#v1.4 ;AC  ; ATJTM1                ; JTM1               ; set Timer Multiplier to 1*
-#v1.4 ;AC  ; ATJTM5                ; JTM5               ; set Timer Multiplier to 5
-#v1.4b;AC  ; ATCRA                 ; CRA                ; reset the Receive Address filters
-#v2.0 ;AC  ; ATAMC                 ; AMC                ; display Activity Monitor Count
-#v2.0 ;AC  ; ATAMT 20              ; AMT hh             ; set the Activity Mon Timeout to hh
-#v2.1 ;AC  ; ATCTM1                ; CTM1               ; set Timer Multiplier to 1*
-#v2.1 ;AC  ; ATCTM5                ; CTM5               ; set Timer Multiplier to 5
-#v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
+#Reset all ;ACH ; ATWS              ; WS                  ; reset all
+#v1.4 ;AC  ; ATMA                  ; MA                 ; Monitor All
+#v1.4 ;ACH ; ATWS                   ; WS                  ; reset all
+#STN TEST 1;AC  ; STI              ; I                  ; firmware ID
+#STN TEST 2;AC  ; STDI             ; DI                 ; hardware ID
+#Reset all ;ACH ; ATWS              ; WS                  ; reset all
 '''
 
 def get_can_addr(txa):
     for d in dnat.keys():
-        if dnat[d] == txa:
+        if dnat[d].upper() == txa.upper():
             return d
     return None
 
 
 def getcandnat(addr):
-    a = str(addr)
+    a = str(addr).upper()
     if a in dnat:
         return dnat[a]
     return "??"
 
 
 def getcansnat(addr):
-    a = str(addr)
+    a = str(addr).upper()
     if a in snat:
         return snat[a]
     return "??"
@@ -270,7 +592,7 @@ def reconnect_elm():
 
 def errorval(val):
     if val not in negrsp:
-        return "not registered error"
+        return "Unregistered error"
     if val in negrsp.keys():
         return negrsp[val]
 
@@ -293,7 +615,9 @@ class Port:
 
     hdr = None
 
-    def __init__(self, portName, speed, portTimeout):
+    tcp_needs_reconnect = False
+
+    def __init__(self, portName, speed, portTimeout, isels=False):
         options.elm_failed = False
         self.portTimeout = portTimeout
 
@@ -304,19 +628,15 @@ class Port:
             self.ipaddr, self.tcpprt = portName.split(':')
             self.tcpprt = int(self.tcpprt)
             self.portType = 1
-            self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-            try:
-                self.hdr.connect((self.ipaddr, self.tcpprt))
-                self.hdr.setblocking(True)
-            except:
-                options.elm_failed = True
-
+            self.init_wifi()
         else:
             self.portName = portName
             self.portType = 0
             try:
                 self.hdr = serial.Serial(self.portName, baudrate=speed, timeout=portTimeout)
+                if isels:
+                    print "Checking Dual Can Interface"
+                self.check_elm()
                 self.connectionStatus = True
                 return
             except Exception as e:
@@ -328,18 +648,40 @@ class Port:
     def close(self):
         try:
             self.hdr.close()
-            print "Port closed"
+            print(_("Port closed"))
         except:
             pass
+
+    def init_wifi(self, reinit=False):
+        '''
+        Needed for wifi adapters with short connection timeout
+        '''
+        if self.portType != 1:
+            return
+
+        import socket
+
+        if reinit:
+            self.hdr.close()
+        self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        try:
+            self.hdr.connect((self.ipaddr, self.tcpprt))
+            self.hdr.settimeout(5)
+            self.connectionStatus = True
+        except:
+            options.elm_failed = True
 
     def read(self):
         try:
             byte = ""
             if self.portType == 1:
+                import socket
                 try:
                     byte = self.hdr.recv(1)
-                except:
-                    # print "Unexpected error:", sys.exc_info()
+                except socket.timeout:
+                    self.tcp_needs_reconnect = True
+                except Exception:
                     pass
             elif self.portType == 2:
                 if self.droid.bluetoothReadReady():
@@ -359,6 +701,9 @@ class Port:
     def write(self, data):
         try:
             if self.portType == 1:
+                if self.tcp_needs_reconnect:
+                    self.tcp_needs_reconnect = False
+                    self.init_wifi(True)
                 return self.hdr.sendall(data)
             elif self.portType == 2:
                 return self.droid.bluetoothWrite(data)
@@ -401,7 +746,7 @@ class Port:
 
         self.hdr.timeout = 2
 
-        for s in [38400, 115200, 230400, 57600, 9600, 500000]:
+        for s in [38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print "\r\t\t\t\t\r" + _("Checking port speed:"), s,
             sys.stdout.flush()
 
@@ -450,6 +795,10 @@ class Port:
             self.write("at brd 11\r")
         elif baudrate == 500000:
             self.write("at brd 8\r")
+        elif baudrate == 1000000:
+            self.write("at brd 4\r")
+        elif baudrate == 2000000:
+            self.write("at brd 2\r")
 
         # search OK
         tb = time.time()  # start time
@@ -481,6 +830,10 @@ class Port:
             self.hdr.baudrate = 230400
         elif baudrate == 500000:
             self.hdr.baudrate = 500000
+        elif baudrate == 1000000:
+            self.hdr.baudrate = 1000000
+        elif baudrate == 2000000:
+            self.hdr.baudrate = 2000000
 
         # search ELM
         tb = time.time()  # start time
@@ -552,6 +905,7 @@ class ELM:
     error_timeout = 0
     error_rx = 0
     error_can = 0
+    canline = 0
 
     response_time = 0
 
@@ -575,14 +929,15 @@ class ELM:
 
     connectionStatus = False
 
-    def __init__(self, portName, speed, startSession='10C0'):
-        for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000]:
+    def __init__(self, portName, speed, isels = False):
+        for s in [int(speed), 38400, 115200, 230400, 57600, 9600, 500000, 100000, 2000000]:
             print _("Trying to open port") + "%s @ %i" % (portName, s)
             self.sim_mode = options.simulation_mode
             self.portName = portName
+            self.isels = isels
 
             if not options.simulation_mode:
-                self.port = Port(portName, s, self.portTimeout)
+                self.port = Port(portName, s, self.portTimeout, isels)
 
             if options.elm_failed:
                 self.connectionStatus = False
@@ -592,13 +947,13 @@ class ELM:
                 os.mkdir("./logs")
 
             if len(options.log) > 0:
-                self.lf = open("./logs/elm_" + options.log, "at")
-                self.vf = open("./logs/ecu_" + options.log, "at")
+                self.lf = open("./logs/elm_" + options.log + ".txt", "at")
+                self.vf = open("./logs/ecu_" + options.log + ".txt", "at")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
 
-            res = self.send_raw("ATZ")
+            res = self.send_raw("ATWS")
             if not 'ELM' in res:
                 options.elm_failed = True
                 options.last_error = _("No ELM interface on port") + " %s" % portName
@@ -611,6 +966,7 @@ class ELM:
     def __del__(self):
         try:
             if not self.sim_mode:
+                print(_("ELM reset..."))
                 self.port.write("ATZ\r")
         except:
             pass
@@ -665,7 +1021,10 @@ class ELM:
 
         if self.vf != 0:
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+            if self.currentaddress in dnat:
+                self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req + ";" + rsp + "\n")
+            else:
+                print "Unknown address ", self.currentaddress, req, rsp
             self.vf.flush()
 
         return rsp
@@ -681,10 +1040,15 @@ class ELM:
 
         # Ensure time gap between commands
         dl = self.busLoad + self.srvsDelay - tb + self.lastCMDtime
-        if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) and "AT" not in command.upper():
+        if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) \
+                and ("AT" not in command.upper() or "ST" not in command.upper()):
             time.sleep(self.busLoad + self.srvsDelay - tb + self.lastCMDtime)
 
         tb = time.time()  # renew start time
+
+        # If we use wifi and there was more than keepAlive seconds of silence then reinit tcp
+        if (tb - self.lastCMDtime) > self.keepAlive:
+          self.port.init_wifi(True)
 
         # If we are on CAN and there was more than keepAlive seconds of silence and
         # start_session_can was executed then send startSession command again
@@ -728,16 +1092,17 @@ class ELM:
         self.cmd("AT ST %s" % val)
 
     def send_cmd(self, command):
-        if "AT" in command.upper() or self.currentprotocol != "can":
+        if "AT" in command.upper() or "ST" in command.upper() or self.currentprotocol != "can":
             return self.send_raw(command)
         if self.ATCFC0:
             return self.send_can_cfc0(command)
         else:
             rsp = self.send_can(command)
-            if self.error_frame > 0:  #then fallback to cfc0
-                self.ATCFC0 = True
-                self.cmd("at cfc0")
-                rsp = self.send_can_cfc0(command)
+            # Disabled this because it's now possible to control it via UI
+            # if self.error_frame > 0 and not self.isels:  #then fallback to cfc0
+            #     self.ATCFC0 = True
+            #     self.cmd("at cfc0")
+            #     rsp = self.send_can_cfc0(command)
             return rsp
 
     def send_can(self, command):
@@ -834,8 +1199,8 @@ class ELM:
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F':
             noerrors = False
-            if result[6:8] in negrsp.keys():
-                errorstr = negrsp[result[6:8]]
+            if result[4:6] in negrsp.keys():
+                errorstr = negrsp[result[4:6]]
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.vf.write(
@@ -847,11 +1212,13 @@ class ELM:
             self.l1_cache[command] = str(nframes)
 
         if len(result) / 2 >= nbytes and noerrors:
+            # Remove unnecessay bytes
+            result = result[0:nbytes*2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE : " + errorstr
+            return "WRONG RESPONSE : " + errorstr + "(" + result + ")"
 
     def send_can_cfc0(self, command):
 
@@ -884,6 +1251,9 @@ class ELM:
         Fc = 0  # Current frame
         Fn = len(raw_command)  # Number of frames
 
+        if Fn > 1 or len(raw_command[0])>15: # set elm timeout to 300ms for first response
+          self.send_raw('ATST4B')
+
         while Fc < Fn:
 
             # enable responses
@@ -893,10 +1263,15 @@ class ELM:
 
             tb = time.time()  # time of sending (ff)
 
-            if len(raw_command[Fc]) == 16:
-                frsp = self.send_raw(raw_command[Fc])  # we'll get only 1 frame: fc, ff or sf
+            if Fn > 1 and Fc == (Fn-1):  # set elm timeout to maximum for last response on long command
+                self.send_raw('ATSTFF')
+                self.send_raw('ATAT1')
+
+            if (Fc == 0 or Fc == (Fn-1)) and len(raw_command[Fc])<16:  #first or last frame in command and len<16 (bug in ELM)
+                frsp = self.send_raw (raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
             else:
-                frsp = self.send_raw(raw_command[Fc] + '1')  # we'll get only 1 frame: fc, ff or sf
+                frsp = self.send_raw (raw_command[Fc])
+
             Fc = Fc + 1
 
             # analyse response
@@ -1056,6 +1431,7 @@ class ELM:
             self.error_question += 1
         if "BUFFER FULL" in self.buff:
             self.error_bufferfull += 1
+            self.ATCFC0 = True
         if "NO DATA" in self.buff:
             self.error_nodata += 1
         if "RX ERROR" in self.buff:
@@ -1128,7 +1504,7 @@ class ELM:
 
     def init_can(self):
         self.currentprotocol = "can"
-        self.currentaddress = "7A"
+        self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.l1_cache = {}
@@ -1155,12 +1531,21 @@ class ELM:
                 return d
         return None
 
-    def set_can_addr(self, addr, ecu):
-        if self.currentprotocol == "can" and self.currentaddress == addr:
+    def set_can_addr(self, addr, ecu, canline=0):
+        if self.currentprotocol == "can" and self.currentaddress == addr and self.canline == canline:
             return
 
+        self.addr_group_mapping_long = {}
+        self.addr_group_mapping = {"01": u"ABS/ESC"}
+        f = open("./json/addressing.json", "r")
+        js = json.loads(f.read())
+        f.close()
+
+        for k, v in js.iteritems():
+            self.addr_group_mapping[k] = v[0]
+
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# connect to: " + ecu['ecuname'] + " Addr: " + addr + "\n#"  + " Ecu group: " + self.addr_group_mapping[addr].encode('ascii', errors='ignore') + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "can"
@@ -1168,6 +1553,7 @@ class ELM:
         self.startSession = ""
         self.lastCMDtime = 0
         self.l1_cache = {}
+        self.canline = canline
 
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
@@ -1177,15 +1563,42 @@ class ELM:
             TXa = dnat[addr]
             RXa = snat[addr]
 
-        self.cmd("AT SH " + TXa)
-        self.cmd("AT CRA " + RXa)
+
+        CANEXT = False
+        if len(TXa)==8: # 29bit CANId
+            self.cmd("AT CP " + TXa[:2])
+            self.cmd("AT SH " + TXa[2:])
+            CANEXT = True
+        else:
+            self.cmd ("AT SH " + TXa)
+
         self.cmd("AT FC SH " + TXa)
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
-        if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-            self.cmd("AT SP 8")
+        self.cmd("AT ST FF")
+        self.cmd("AT AT 0")
+        if canline == 0:
+            if 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
+                if CANEXT:
+                    self.cmd("AT SP 9")
+                else:
+                    self.cmd("AT SP 8")
+            else:
+                if CANEXT:
+                    self.cmd("AT SP 7")
+                else:
+                    self.cmd("AT SP 6")
         else:
-            self.cmd("AT SP 6")
+            self.cmd("STP 53")
+            if canline == 1:
+                self.cmd("STPBR 500000")
+            elif canline == 2:
+                self.cmd("STPBR 250000")
+            elif canline == 3:
+                self.cmd("STPBR 125000")
+
+        self.cmd("AT AT 1")
+        self.cmd("AT CRA " + RXa)
 
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)
@@ -1226,7 +1639,7 @@ class ELM:
             return
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
+            self.lf.write('#' * 60 + "\n# connect to: " + ecu['ecuname'] + " Addr: " + addr + " Protocol: " + ecu[
                 'protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
@@ -1252,7 +1665,7 @@ class ELM:
             return
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
+            self.lf.write('#' * 60 + "\n# connect to: " + ecu['ecuname'] + " Addr: " + addr + " Protocol: " + ecu[
                 'protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
@@ -1331,5 +1744,6 @@ def elm_checker(port, speed, logview, app):
 
     if pycom > 0:
         logview.append('<font color=red>' + _('Incompatible adapter on ARM core') + '</font> \n')
-    logview.append(_('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n' + _('ELM Max version:') + vers + '\n')
+    logview.append(_('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n')
+    logview.append('For Media CAN (CAN Line 2) on STN1170,vLinker FS, ELS27: Connect OBD pin 3 with 13 and 11 with 12.')
     return True

@@ -9,8 +9,10 @@ import ecu
 import options
 import elm
 
-plugin_name = "Megane/Scenic III UCH Reset"
-category = "UCH Tools"
+_ = options.translator('ddt4all')
+
+plugin_name = _("Megane/Scenic III UCH Reset")
+category = _("UCH Tools")
 need_hw = True
 ecufile = "BCM_X95_SW_2_V_1_2"
 
@@ -19,12 +21,12 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.megane_uch = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel("MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
+        infos = gui.QLabel(_("MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
-        check_button = gui.QPushButton("Check UCH Virgin")
-        self.status_check = gui.QLabel("Waiting")
+        check_button = gui.QPushButton(_("Check UCH Virgin"))
+        self.status_check = gui.QLabel(_("Waiting"))
         self.status_check.setAlignment(core.Qt.AlignHCenter)
-        self.virginize_button = gui.QPushButton("Virginize UCH")
+        self.virginize_button = gui.QPushButton(_("Virginize UCH"))
         layout.addWidget(infos)
         layout.addWidget(check_button)
         layout.addWidget(self.status_check)
@@ -38,7 +40,7 @@ class Virginizer(gui.QDialog):
     def ecu_connect(self):
         connection = self.megane_uch.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to ECU")
+            options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
 
     def check_virgin_status(self):
@@ -52,15 +54,15 @@ class Virginizer(gui.QDialog):
 
             if virgin_value == u'Actif':
                 self.virginize_button.setEnabled(False)
-                self.status_check.setText("<font color='green'>UCH virgin</font>")
+                self.status_check.setText(_("<font color='green'>UCH virgin</font>"))
                 return
 
             if virgin_value == u'inactif':
                 self.virginize_button.setEnabled(True)
-                self.status_check.setText("<font color='red'>UCH coded</font>")
+                self.status_check.setText(_("<font color='red'>UCH coded</font>"))
                 return
 
-        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
+        self.status_check.setText(_("<font color='orange'>UNEXPECTED RESPONSE</font>"))
 
     def start_diag_session_aftersales(self):
         sds_request = self.megane_uch.requests[u"Start Diagnostic Session"]
@@ -77,9 +79,9 @@ class Virginizer(gui.QDialog):
         request_response = reset_request.send_request()
 
         if request_response is not None:
-            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+            self.status_check.setText(_("<font color='green'>CLEAR EXECUTED</font>"))
         else:
-            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
+            self.status_check.setText(_("<font color='red'>CLEAR FAILED</font>"))
 
 
 def plugin_entry():

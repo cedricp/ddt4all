@@ -2,29 +2,31 @@
 
 # (c) 2017
 
-
 import PyQt4.QtGui as gui
 import PyQt4.QtCore as core
 import ecu
 import options
 import elm
 
-plugin_name = "Clio IV EPS Reset"
-category = "EPS Tools"
+_ = options.translator('ddt4all')
+
+plugin_name = _("Clio IV EPS Reset")
+category = _("EPS Tools")
 need_hw = True
 ecufile = "X98ph2_X87ph2_EPS_HFP_v1.00_20150622T140219_20160726T172209"
+
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.clio_eps = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
+        infos = gui.QLabel(_("Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
-        check_button = gui.QPushButton("Check EPS Virgin")
-        self.status_check = gui.QLabel("Waiting")
+        check_button = gui.QPushButton(_("Check EPS Virgin"))
+        self.status_check = gui.QLabel(_("Waiting"))
         self.status_check.setAlignment(core.Qt.AlignHCenter)
-        self.virginize_button = gui.QPushButton("Virginize EPS")
+        self.virginize_button = gui.QPushButton(_("Virginize EPS"))
         layout.addWidget(infos)
         layout.addWidget(check_button)
         layout.addWidget(self.status_check)
@@ -38,7 +40,7 @@ class Virginizer(gui.QDialog):
     def ecu_connect(self):
         connection = self.clio_eps.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to ECU")
+            options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
 
     def check_virgin_status(self):
@@ -53,20 +55,20 @@ class Virginizer(gui.QDialog):
 
                 if donglestate == u'NotOperational':
                     self.virginize_button.setEnabled(False)
-                    self.status_check.setText("<font color='green'>EPS not operational</font>")
+                    self.status_check.setText(_("<font color='green'>EPS not operational</font>"))
                     return
 
                 if donglestate == u'OperationalBlanked':
                     self.virginize_button.setEnabled(False)
-                    self.status_check.setText("<font color='green'>EPS virgin</font>")
+                    self.status_check.setText(_("<font color='green'>EPS virgin</font>"))
                     return
 
                 if donglestate == u'OperationalLearnt':
                     self.virginize_button.setEnabled(True)
-                    self.status_check.setText("<font color='red'>EPS coded</font>")
+                    self.status_check.setText(_("<font color='red'>EPS coded</font>"))
                     return
 
-        self.status_check.setText("<font color='red'>UNEXPECTED RESPONSE</font>")
+        self.status_check.setText(_("<font color='red'>UNEXPECTED RESPONSE</font>"))
 
     def start_diag_session_fa(self):
         sds_request = self.clio_eps.requests[u"StartDiagnosticSession.supplierSession"]
@@ -91,9 +93,9 @@ class Virginizer(gui.QDialog):
         request_response = reset_request.send_request({u'Dongle.Code': '1976'})
 
         if request_response is not None:
-            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+            self.status_check.setText(_("<font color='green'>CLEAR EXECUTED</font>"))
         else:
-            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
+            self.status_check.setText(_("<font color='red'>CLEAR FAILED</font>"))
 
 
 def plugin_entry():

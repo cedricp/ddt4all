@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import PyQt4.QtGui as gui
+import PyQt4.QtGui as widgets
 import PyQt4.QtCore as core
-import options
+
+import options, os, zipfile
 from uiutils import *
 
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2017"
+__copyright__ = "Copyright 2016-2018"
 __credits__ = []
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -13,8 +15,9 @@ __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
 __status__ = "Beta"
 
+_ = options.translator('ddt4all')
 
-class labelWidget(gui.QLabel):
+class labelWidget(widgets.QLabel):
     def __init__(self, parent, uiscale):
         super(labelWidget, self).__init__(parent)
         self.jsondata = None
@@ -22,26 +25,55 @@ class labelWidget(gui.QLabel):
         self.uiscale = uiscale
         self.toggle_selected(False)
         self.setWordWrap(True)
+        self.img = None
+        self.area = 0
 
     def toggle_selected(self, sel):
         if sel:
-            self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.setFrameStyle(gui.QFrame.NoFrame)
+            self.setFrameStyle(widgets.QFrame.NoFrame)
 
     def change_ratio(self, x):
         return
+
+    def get_zip_graphic(self, name):
+        if os.path.exists("ecu.zip"):
+            zf = zipfile.ZipFile("ecu.zip", "r")
+            zname = "graphics/" + name + ".gif"
+            if not zname in zf.namelist():
+                zname = "graphics/" + name + ".GIF"
+            if zname in zf.namelist():
+                ba = core.QByteArray(zf.read(zname))
+                self.buffer = core.QBuffer()
+                self.buffer.setData(ba)
+                self.buffer.open(core.QIODevice.ReadOnly)
+                self.img = gui.QMovie(self.buffer, 'GIF')
 
     def initXML(self, xmldata):
         text = xmldata.getAttribute("Text")
         color = xmldata.getAttribute("Color")
         alignment = xmldata.getAttribute("Alignment")
 
+        if text.startswith("::pic:"):
+            self.setScaledContents(True)
+            img_name = text.replace("::pic:", "").replace("\\", "/")
+            self.get_zip_graphic(img_name)
+            if self.img is None:
+                imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
+                if not os.path.exists(imgname):
+                    imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
+                self.img = gui.QMovie(imgname)
+            self.setMovie(self.img)
+            self.img.start()
+        else:
+            self.setText(text)
+
         rect = getRectangleXML(getChildNodesByName(xmldata, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(xmldata, self.uiscale)
 
+        self.area = rect['width'] * rect['height']
         self.setFont(qfnt)
-        self.setText(text)
         self.resize(rect['width'], rect['height'])
         self.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(xmldata)))
 
@@ -60,11 +92,26 @@ class labelWidget(gui.QLabel):
         fontcolor = jsdata['fontcolor']
 
         rect = jsdata['bbox']
+        self.area = rect['width'] * rect['height']
         qfnt = jsonFont(jsdata['font'], self.uiscale)
 
         self.ismovable = True
         self.setFont(qfnt)
-        self.setText(text)
+
+        if text.startswith("::pic:"):
+            self.setScaledContents(True)
+            img_name = text.replace("::pic:", "").replace("\\", "/")
+            self.get_zip_graphic(img_name)
+            if self.img is None:
+                imgname = os.path.join(options.graphics_dir, img_name) + ".gif"
+                if not os.path.exists(imgname):
+                    imgname = os.path.join(options.graphics_dir, img_name) + ".GIF"
+                self.img = gui.QMovie(imgname)
+            self.setMovie(self.img)
+            self.img.start()
+        else:
+            self.setText(text)
+
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
         self.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
 
@@ -95,7 +142,7 @@ class labelWidget(gui.QLabel):
             self.jsondata['bbox']['top'] = self.pos().y() * self.uiscale
 
 
-class screenWidget(gui.QFrame):
+class screenWidget(widgets.QFrame):
     def __init__(self, parent, uiscale):
         super(screenWidget, self).__init__(parent)
         self.jsondata = None
@@ -109,9 +156,9 @@ class screenWidget(gui.QFrame):
 
     def toggle_selected(self, sel):
         if sel:
-            self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.setFrameStyle(gui.QFrame.NoFrame)
+            self.setFrameStyle(widgets.QFrame.NoFrame)
 
     def change_ratio(self, x):
         return
@@ -153,7 +200,8 @@ class screenWidget(gui.QFrame):
             self.jsondata['width'] = self.width() * self.uiscale
             self.jsondata['height'] = self.height() * self.uiscale
 
-class buttonRequest(gui.QPushButton):
+
+class buttonRequest(widgets.QPushButton):
     def __init__(self, parent, uiscale, ecureq, count):
         super(buttonRequest, self).__init__(parent)
         self.jsdata = None
@@ -169,10 +217,10 @@ class buttonRequest(gui.QPushButton):
 
     def toggle_selected(self, sel):
         if sel:
-            #self.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            # self.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
             pass
         else:
-            #self.setFrameStyle(0)
+            # self.setFrameStyle(0)
             pass
 
     def change_ratio(self, x):
@@ -186,7 +234,7 @@ class buttonRequest(gui.QPushButton):
         self.setFont(qfnt)
         self.setText(text)
         self.resize(rect['width'], rect['height'])
-        self.setStyleSheet("background: yellow; color: black")
+        self.setStyleSheet
         self.move(rect['left'], rect['top'])
         self.butname = text + "_" + str(self.count)
 
@@ -199,9 +247,9 @@ class buttonRequest(gui.QPushButton):
         self.setFont(qfnt)
         self.setText(text)
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
-        self.setStyleSheet("background: yellow; color: black")
+        self.setStyleSheet
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
-        self.butname = jsdata['text']
+        self.butname = jsdata['text'] + "_" + str(self.count)
         self.uniquename = jsdata['uniquename']
         self.jsondata = jsdata
 
@@ -227,7 +275,20 @@ class buttonRequest(gui.QPushButton):
             self.jsondata['rect']['width'] = self.width() * self.uiscale
 
 
-class displayWidget(gui.QWidget):
+class styleLabel(widgets.QLabel):
+    def __init__(self, parent):
+        super(styleLabel, self).__init__(parent)
+        self.defaultStyle = ""
+
+    def setDefaultStyle(self, style):
+        self.defaultStyle = style
+        self.setStyleSheet(self.defaultStyle)
+
+    def resetDefaultStyle(self):
+        self.setStyleSheet(self.defaultStyle)
+
+
+class displayWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(displayWidget, self).__init__(parent)
         self.uiscale = uiscale
@@ -239,16 +300,16 @@ class displayWidget(gui.QWidget):
 
     def toggle_selected(self, sel):
         if sel:
-            self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
-            self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
+            self.qlabelval.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.qlabel.setFrameStyle(gui.QFrame.NoFrame)
-            self.qlabelval.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+            self.qlabel.setFrameStyle(widgets.QFrame.NoFrame)
+            self.qlabelval.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.Sunken)
 
     def lock(self, lock):
         pass
 
-    def resize(self, x ,y):
+    def resize(self, x, y):
         oldwidth = self.width()
         super(displayWidget, self).resize(x, y)
         newwidth = self.width()
@@ -296,7 +357,7 @@ class displayWidget(gui.QWidget):
         rect = getRectangleXML(getChildNodesByName(display, "Rectangle")[0], self.uiscale)
         qfnt = getXMLFont(display, self.uiscale)
         if req_name not in self.ecurequestsparser.requests:
-            print "No request named ", req_name
+            print(_("No request named"), req_name)
             return
         req = self.ecurequestsparser.requests[req_name]
         dataitem = None
@@ -307,38 +368,38 @@ class displayWidget(gui.QWidget):
             for k in keys:
                 if k.upper() == text.upper():
                     dataitem = req.dataitems[k]
-                    print "Found similar", k, " vs ", text
+                    print(_("Found similar"), k, " vs ", text)
                     break
 
         if not dataitem:
-            print "DataItem not found", text
+            print(_("DataItem not found"), text)
             return
 
         try:
             data = self.ecurequestsparser.data[text]
         except:
-            print "Cannot find data ", text
+            print(_("Cannot find data "), text)
             return
 
         if not color:
-            color = 0xAAAAAA
+            color = 0x55555
 
         self.move(rect['left'], rect['top'])
         self.resize(rect['width'], rect['height'])
 
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'])
-        self.qlabel.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
+        self.qlabel.setStyleSheet("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = gui.QLabel(self)
+        self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] - width, rect['height'])
-        self.qlabelval.setStyleSheet("background: %s; color: %s" % (colorConvert(color), getFontColor(display)))
+        self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (colorConvert(color), getFontColor(display)))
         self.qlabelval.move(width, 0)
 
         endianess = req.ecu_file.endianness
@@ -382,11 +443,11 @@ class displayWidget(gui.QWidget):
             for k in keys:
                 if k.upper() == text.upper():
                     dataitem = req.dataitems[k]
-                    print "Found similar", k, " vs ", text
+                    print(_("Found similar"), k, _(" vs "), text)
                     break
 
         if not dataitem:
-            print "DataItem not found", text
+            print(_("DataItem not found"), text)
             return
 
         data = self.ecurequestsparser.data[text]
@@ -394,19 +455,19 @@ class displayWidget(gui.QWidget):
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
 
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
-        self.qlabel.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
+        self.qlabel.setStyleSheet("background-color: %s; color: %s" % (color, fontcolor))
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = gui.QLabel(self)
+        self.qlabelval = styleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] / self.uiscale - width, rect['height'] / self.uiscale)
-        self.qlabelval.setStyleSheet("background: %s; color: %s" % (color, fontcolor))
+        self.qlabelval.setDefaultStyle("background-color: %s; color: %s" % (color, fontcolor))
         self.qlabelval.move(width, 0)
 
         infos = req_name + u'\n'
@@ -433,7 +494,8 @@ class displayWidget(gui.QWidget):
         self.jsondata = display
         self.toggle_selected(False)
 
-class inputWidget(gui.QWidget):
+
+class inputWidget(widgets.QWidget):
     def __init__(self, parent, uiscale, ecureq):
         super(inputWidget, self).__init__(parent)
         self.uiscale = uiscale
@@ -446,11 +508,9 @@ class inputWidget(gui.QWidget):
 
     def toggle_selected(self, sel):
         if sel:
-            self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
-            #self.editwidget.setFrameStyle(gui.QFrame.Panel | gui.QFrame.StyledPanel)
+            self.qlabel.setFrameStyle(widgets.QFrame.Panel | widgets.QFrame.StyledPanel)
         else:
-            self.qlabel.setFrameStyle(gui.QFrame.NoFrame)
-            #self.editwidget.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
+            self.qlabel.setFrameStyle(widgets.QFrame.NoFrame)
 
     def lock(self, lock):
         self.locked = lock
@@ -508,23 +568,22 @@ class inputWidget(gui.QWidget):
             color = 0xAAAAAA
 
         self.resize(rect['width'], rect['height'])
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setWordWrap(True)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
-        #self.qlabel.setFrameStyle(gui.QFrame.Panel | gui.QFrame.Sunken)
         self.qlabel.resize(width, rect['height'])
         self.move(rect['left'], rect['top'])
 
         try:
             data = self.ecurequestsparser.data[text]
         except:
-            print "Cannot draw input ", text
+            print(_("Cannot draw input "), text)
             return
 
         if len(self.ecurequestsparser.data[text].items) > 0:
-            self.editwidget = gui.QComboBox(self)
+            self.editwidget = widgets.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
             for key in sorted(items_ref.keys()):
@@ -541,11 +600,11 @@ class inputWidget(gui.QWidget):
             self.editwidget.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
             ddata = displayData(data, self.editwidget, True)
         else:
-            self.editwidget = gui.QLineEdit(self)
+            self.editwidget = widgets.QLineEdit(self)
             if options.simulation_mode and options.mode_edit:
                 self.editwidget.setEnabled(False)
             self.editwidget.setFont(qfnt)
-            self.editwidget.setText("No Value")
+            self.editwidget.setText(_("No Value"))
             self.editwidget.resize(rect['width'] - width, rect['height'])
             self.editwidget.setStyleSheet("background:%s; color:%s" % (colorConvert(color), getFontColor(input)))
             self.editwidget.move(width, 0)
@@ -576,22 +635,24 @@ class inputWidget(gui.QWidget):
         self.move(rect['left'] / self.uiscale, rect['top'] / self.uiscale)
         self.resize(rect['width'] / self.uiscale, rect['height'] / self.uiscale)
 
-        self.qlabel = gui.QLabel(self)
+        self.qlabel = widgets.QLabel(self)
         self.qlabel.setFont(qfnt)
         self.qlabel.setText(text)
         self.qlabel.setStyleSheet("background:%s; color:%s" % (color, jsoninput))
         self.qlabel.setWordWrap(True)
         self.qlabel.resize(width, rect['height'] / self.uiscale)
 
+        if not text in self.ecurequestsparser.data:
+            print(_("Cannot find data "), text)
+            return
         data = self.ecurequestsparser.data[text]
 
         if len(self.ecurequestsparser.data[text].items) > 0:
-            self.editwidget = gui.QComboBox(self)
+            self.editwidget = widgets.QComboBox(self)
             items_ref = self.ecurequestsparser.data[text].items
 
             for key in sorted(items_ref.keys()):
                 self.editwidget.addItem(key)
-
 
             self.editwidget.move(width, 0)
             if data.comment:
@@ -606,7 +667,7 @@ class inputWidget(gui.QWidget):
 
             ddata = displayData(data, self.editwidget, True)
         else:
-            self.editwidget = gui.QLineEdit(self)
+            self.editwidget = widgets.QLineEdit(self)
 
             self.editwidget.setFont(qfnt)
             self.editwidget.setText("No Value")
