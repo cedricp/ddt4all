@@ -1,26 +1,28 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-import argparse
-import codecs
-import errno
-import glob
-import os
+
 import sys
-import tempfile
-from importlib.machinery import SourceFileLoader
-
-import PyQt5.QtCore as core
-import PyQt5.QtGui as gui
-import PyQt5.QtWebEngineWidgets as webkitwidgets
-import PyQt5.QtWidgets as widgets
-
-import ecu
-import elm
+import os
+import glob
 import json
-import locale
-import options
-import parameters
+import platform
+
+import PyQt4.QtGui as gui
+import PyQt4.QtGui as widgets
+import PyQt4.QtCore as core
+import PyQt4.QtWebKit as webkit
+import PyQt4.QtWebKit as webkitwidgets
+def utf8(string):
+    return unicode(string.toUtf8(), encoding="UTF-8")
+
+import parameters, ecu
+import elm, options, locale
+import dataeditor
 import sniffer
+import imp
+import traceback
+import tempfile, errno
+import codecs
 
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright 2016-2018"
@@ -33,21 +35,11 @@ __status__ = "Beta"
 
 _ = options.translator('ddt4all')
 app = None
-
-# args
-parser = argparse.ArgumentParser()
-parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
-args = parser.parse_args()
-not_qt5_show = args.git_workfallowmode
-
-
-def utf8(string):
-    return string
-
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def isWritable(path):
     try:
-        testfile = tempfile.TemporaryFile(dir=path)
+        testfile = tempfile.TemporaryFile(dir = path)
         testfile.close()
     except OSError as e:
         if e.errno == errno.EACCES:  # 13
@@ -56,7 +48,6 @@ def isWritable(path):
     except:
         return False
     return True
-
 
 class Ecu_finder(widgets.QDialog):
     def __init__(self, ecuscanner):
@@ -77,10 +68,9 @@ class Ecu_finder(widgets.QDialog):
         button.clicked.connect(self.check)
 
     def check(self):
-        addr = self.ecuaddr.text()
-        frame = self.ecuident.text()
+        addr = utf8(self.ecuaddr.text())
+        frame = utf8(self.ecuident.text())
         self.ecuscanner.identify_from_frame(addr, frame)
-
 
 class Ecu_list(widgets.QWidget):
     def __init__(self, ecuscan, treeview_ecu):
@@ -91,7 +81,7 @@ class Ecu_list(widgets.QWidget):
 
         self.ecu_map = {}
         vehicles = [
-"ALL    - MODEL SELECTION",
+"ALL",
 "X90    - LOGAN/SANDERO LARGUS",
 "X52    - LOGAN/SANDERO II",
 "XJI    - LOGAN/SANDERO III JOGGER TALIANT",
@@ -219,6 +209,7 @@ class Ecu_list(widgets.QWidget):
 "XJH    - PROJECT XJH"
         ]
 
+
         for v in vehicles:
             self.vehicle_combo.addItem(v)
 
@@ -307,17 +298,14 @@ class Ecu_list(widgets.QWidget):
             if not found:
                 stored_ecus[grp].append(row)
 
-        keys = list(stored_ecus.keys())
-        try:
-            keys.sort(key=locale.strcoll)
-        except:
-            keys.sort()
+        keys = stored_ecus.keys()
+        keys.sort(cmp=locale.strcoll)
         for e in keys:
             item = widgets.QTreeWidgetItem(self.list, [e])
             if e in longgroupnames:
                 item.setToolTip(0, longgroupnames[e])
             if e in self.ecuscan.ecu_database.addr_group_mapping:
-                item.setToolTip(0, self.ecuscan.ecu_database.addr_group_mapping[e])
+                item.setToolTip(self.ecuscan.ecu_database.addr_group_mapping[e])
             for t in stored_ecus[e]:
                 widgets.QTreeWidgetItem(item, t)
 
@@ -345,7 +333,7 @@ class Ecu_list(widgets.QWidget):
             return
         item = self.list.model().itemData(self.list.model().index(index.row(), 0, index.parent()))
 
-        selected = item[0]
+        selected = utf8(item[0].toString())
         target = self.ecuscan.ecu_database.getTarget(selected)
         name = selected
         if target:
@@ -354,6 +342,7 @@ class Ecu_list(widgets.QWidget):
                 group = self.ecuscan.ecu_database.addr_group_mapping[target.addr]
             else:
                 group = "Unknown"
+            print name, group
             name = "[ " + group + " ] " + name
         if selected:
             if name not in options.main_window.ecunamemap:
@@ -362,13 +351,13 @@ class Ecu_list(widgets.QWidget):
 
 
 class Main_widget(widgets.QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, parent = None):
         super(Main_widget, self).__init__(parent)
 
         if not options.simulation_mode:
             if not os.path.exists("./logs"):
                 os.mkdir("./logs")
-            self.screenlogfile = open("./logs/screens.txt", "at", encoding="utf-8")
+            self.screenlogfile = open("./logs/screens.txt", "at")
         else:
             self.screenlogfile = None
 
@@ -379,7 +368,7 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
-        print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
+        print ("%i " + _("loaded ECUs in database.")) % self.ecu_scan.getNumEcuDb()
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -388,11 +377,18 @@ class Main_widget(widgets.QMainWindow):
             msgbox.exec_()
 
         self.paramview = None
-        self.docview = webkitwidgets.QWebEngineView()
-        self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
-        self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
+        if platform.system() == 'Darwin':
+            self.docview = webkitwidgets.QWebEngineView()
+            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, True)
+            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, True)
+            self.docview.settings().setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
+        else:
+            self.docview = webkitwidgets.QWebView()
+            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            self.docview.settings().setAttribute(webkit.QWebSettings.JavascriptEnabled, True)
+            self.docview.settings().setAttribute(webkit.QWebSettings.PluginsEnabled, True)
+            self.docview.settings().setAttribute(webkit.QWebSettings.AutoLoadImages, True)
 
         self.screennames = []
 
@@ -445,6 +441,15 @@ class Main_widget(widgets.QMainWindow):
         self.tabbedview.addTab(self.snifferview, _("CAN Sniffer"))
 #        self.tabbedview.addTab(self.docview, _("Documentation"))
 
+        if options.simulation_mode:
+            self.buttonEditor = dataeditor.buttonEditor()
+            self.requesteditor = dataeditor.requestEditor()
+            self.dataitemeditor = dataeditor.dataEditor()
+            self.ecuparameditor = dataeditor.ecuParamEditor()
+            #self.tabbedview.addTab(self.requesteditor, _("Requests"))
+            #self.tabbedview.addTab(self.dataitemeditor, _("Data"))
+            #self.tabbedview.addTab(self.buttonEditor, _("Buttons"))
+            #self.tabbedview.addTab(self.ecuparameditor, _("Ecu parameters"))
 
         screen_widget = widgets.QWidget()
         self.treedock_widget = widgets.QDockWidget(self)
@@ -452,12 +457,24 @@ class Main_widget(widgets.QMainWindow):
         self.treeview_params = widgets.QTreeWidget()
         self.treeview_params.setSortingEnabled(True)
         self.treeview_params.sortByColumn(0, core.Qt.AscendingOrder)
-
+        self.screenmenu = widgets.QMenuBar()
         treedock_layout = widgets.QVBoxLayout()
+        treedock_layout.addWidget(self.screenmenu)
         treedock_layout.addWidget(self.treeview_params)
         screen_widget.setLayout(treedock_layout)
         self.treeview_params.setHeaderLabels([_("Screens")])
         self.treeview_params.clicked.connect(self.changeScreen)
+
+        actionmenu = self.screenmenu.addMenu(_("Action"))
+        cat_action = widgets.QAction(_("New Category"), actionmenu)
+        screen_action = widgets.QAction(_("New Screen"), actionmenu)
+        rename_action = widgets.QAction(_("Rename"), actionmenu)
+        actionmenu.addAction(cat_action)
+        actionmenu.addAction(screen_action)
+        actionmenu.addAction(rename_action)
+        cat_action.triggered.connect(self.newCategory)
+        screen_action.triggered.connect(self.newScreen)
+        rename_action.triggered.connect(self.screenRename)
 
         self.treedock_logs = widgets.QDockWidget(self)
         self.logview = widgets.QTextEdit()
@@ -516,7 +533,14 @@ class Main_widget(widgets.QMainWindow):
         self.fctrigger.triggered.connect(self.flow_control)
 
         self.canlinecombo = widgets.QComboBox()
-        self.canlinecombo.setFixedWidth(150)
+        self.canlinecombo.setFixedWidth(180)
+        self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
+        self.canlinecombo.addItem("CAN Line 1")
+        self.canlinecombo.addItem("CAN Line 2 with 500K")
+        self.canlinecombo.addItem("CAN Line 2 with 250K")
+        self.canlinecombo.addItem("CAN Line 2 with 125K")
+        if options.elm is not None and not options.elm.isels:
+            self.canlinecombo.setEnabled(False)
 
         self.sdscombo = widgets.QComboBox()
         self.sdscombo.setFixedWidth(300)
@@ -572,21 +596,15 @@ class Main_widget(widgets.QMainWindow):
         newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
-        saverecordaction = diagmenu.addAction(_("Save last record"))
-        diagmenu.addSeparator()
         savevehicleaction = diagmenu.addAction(_("Save ECU list"))
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
-        saverecordaction.triggered.connect(self.saveRecord)
         newecuction.triggered.connect(self.newEcu)
         xmlopenaction.triggered.connect(self.openxml)
         identecu.triggered.connect(self.identEcu)
         diagmenu.addSeparator()
         zipdbaction = diagmenu.addAction(_("Zip database"))
         zipdbaction.triggered.connect(self.zipdb)
-        diagmenu.addSeparator()
-        closeAllThis = diagmenu.addAction(_("Exit"))
-        closeAllThis.triggered.connect(self.exit_all)
         diagmenu.addSeparator()
 
         for ecuf in ecu_files:
@@ -599,13 +617,13 @@ class Main_widget(widgets.QMainWindow):
         for plugin in plugins:
             try:
                 modulename = os.path.basename(plugin).replace(".py", "")
-                plug = SourceFileLoader(modulename, plugin).load_module()
+                plug = imp.load_source(modulename, plugin)
 
                 category = plug.category
                 name = plug.plugin_name
                 need_hw = plug.need_hw
 
-                # if options.simulation_mode and need_hw:
+                #if options.simulation_mode and need_hw:
                 #    continue
 
                 if not category in category_menus:
@@ -616,33 +634,11 @@ class Main_widget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print(_("Cannot load plugin ") + plugin)
-                print(e)
+                print _("Cannot load plugin ") + plugin + traceback.format_exc()
 
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(0)
         self.showMaximized()
-
-    def set_can_combo(self, bus):
-        self.canlinecombo.clear()
-        try:
-            self.canlinecombo.clicked.disconnect()
-        except Exception:
-            pass
-        if bus == "CAN":
-            self.canlinecombo.addItem("CAN Line 1 Auto")
-            self.canlinecombo.addItem("CAN Line 1@500K")
-            self.canlinecombo.addItem("CAN Line 1@250K")
-            if options.elm is not None and options.elm.adapter_type == "ELS":
-                self.canlinecombo.addItem("CAN Line 2@500K")
-                self.canlinecombo.addItem("CAN Line 2@250K")
-                self.canlinecombo.addItem("CAN Line 2@125K")
-            self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
-        else:
-            if bus == "KWP2000":
-                self.canlinecombo.addItem("KWP2000")
-            if bus == "ISO8":
-                self.canlinecombo.addItem("ISO8")
 
     def flow_control(self):
         enabled = self.fctrigger.isChecked()
@@ -667,7 +663,8 @@ class Main_widget(widgets.QMainWindow):
         if self.paramview:
             self.paramview.zoomout_page()
 
-
+    def toggle_edit(self):
+        options.mode_edit = self.ui_edit_button.isChecked()
 
         if self.paramview:
             self.paramview.reinitScreen()
@@ -681,15 +678,11 @@ class Main_widget(widgets.QMainWindow):
             if len(currenttext):
                 self.paramview.changeSDS(currenttext)
 
-    def exit_all(self):
-        self.close()
-        exit(0)
-
     def zipdb(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
-                                                             "./ecu.zip", "*.zip")
+                                                   "./ecu.zip", "*.zip")
 
-        filename = str(filename_tuple[0])
+        filename = str(filename_tuple)
 
         if not filename.endswith(".zip"):
             filename += ".zip"
@@ -700,7 +693,7 @@ class Main_widget(widgets.QMainWindow):
             mbox.exec_()
             return
 
-        self.logview.append(_("Zipping XML database... (this can take a few minutes)"))
+        self.logview.append(_("Zipping XML database... (this can take a few minutes"))
         core.QCoreApplication.processEvents()
         parameters.zipConvertXML(filename)
         self.logview.append(_("Zip job finished"))
@@ -717,13 +710,13 @@ class Main_widget(widgets.QMainWindow):
         if not item:
             return
 
-        itemname = item.text(0)
+        itemname = utf8(item.text(0))
         nin = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter new name'))
 
         if not nin[1]:
             return
 
-        newitemname = nin[0]
+        newitemname = utf8(nin[0])
 
         if newitemname == itemname:
             return
@@ -739,7 +732,7 @@ class Main_widget(widgets.QMainWindow):
 
     def newCategory(self):
         ncn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter category name'))
-        necatname = ncn[0]
+        necatname = utf8(ncn[0])
         if necatname:
             self.paramview.createCategory(necatname)
             self.treeview_params.addTopLevelItem(widgets.QTreeWidgetItem([necatname]))
@@ -748,20 +741,19 @@ class Main_widget(widgets.QMainWindow):
         item = self.treeview_params.currentItem()
 
         if not item:
-            self.logview.append(
-                "<font color=red>" + _("Please select a category before creating new screen") + "</font>")
+            self.logview.append("<font color=red>" + _("Please select a category before creating new screen") + "</font>")
             return
 
         if item.parent() is not None:
             item = item.parent()
 
-        category = item.text(0)
+        category = utf8(item.text(0))
         nsn = widgets.QInputDialog.getText(self, 'DDT4All', _('Enter screen name'))
 
         if not nsn[1]:
             return
 
-        newscreenname = nsn[0]
+        newscreenname = utf8(nsn[0])
         if newscreenname:
             self.paramview.createScreen(newscreenname, category)
 
@@ -893,9 +885,9 @@ class Main_widget(widgets.QMainWindow):
 
     def saveEcus(self):
         filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save vehicule (keep '.ecu' extension)"),
-                                                             "./vehicles/mycar.ecu", "*.ecu")
+                                                    "./vehicles/mycar.ecu", "*.ecu")
 
-        filename = str(filename_tuple[0])
+        filename = str(filename_tuple)
 
         if filename == "":
             return
@@ -904,7 +896,7 @@ class Main_widget(widgets.QMainWindow):
         numecus = self.treeview_ecu.count()
         for i in range(numecus):
             item = self.treeview_ecu.item(i)
-            itemname = item.text()
+            itemname = utf8(item.text())
             if itemname in self.ecunamemap:
                 eculist.append((itemname, self.ecunamemap[itemname]))
             else:
@@ -915,16 +907,15 @@ class Main_widget(widgets.QMainWindow):
         jsonfile.close()
 
     def newEcu(self):
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"),
-                                                             "./json/myecu.json",
-                                                             "*.json")
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save ECU (keep '.json' extension)"), "./json/myecu.json",
+                                                   "*.json")
 
-        filename = str(filename_tuple[0])
+        filename = str(filename_tuple)
 
         if filename == '':
             return
 
-        basename = os.path.basename(filename)
+        basename = os.path.basename(utf8(filename))
         filename = os.path.join("./json", basename)
         ecufile = ecu.Ecu_file(None)
         layout = open(filename + ".layout", "w")
@@ -948,20 +939,10 @@ class Main_widget(widgets.QMainWindow):
         self.eculistwidget.init()
         self.eculistwidget.filterProject()
 
-    def saveRecord(self):
-        if not self.paramview:
-            return
-
-        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save record (keep '.txt' extension)"),
-                                                             "./record.txt", "*.txt")
-        filename = str(filename_tuple[0])
-
-        self.paramview.export_record(filename)
-
     def openxml(self):
         filename_tuple = widgets.QFileDialog.getOpenFileName(self, "Open File", "./", "XML files (*.xml *.XML)")
 
-        filename = str(filename_tuple[0])
+        filename = utf8(filename_tuple)
 
         if filename == '':
             return
@@ -994,11 +975,7 @@ class Main_widget(widgets.QMainWindow):
 
         if options.auto_refresh:
             if self.paramview:
-                self.paramview.prepare_recording()
                 self.paramview.updateDisplays(True)
-        else:
-            if self.paramview:
-                self.logview.append(_("Recorded ") + str(self.paramview.get_record_size()) + _(" entries"))
 
     def refreshParams(self):
         if self.paramview:
@@ -1018,7 +995,7 @@ class Main_widget(widgets.QMainWindow):
     def changeScreen(self, index):
         item = self.treeview_params.model().itemData(index)
 
-        screen = item[0]
+        screen = utf8(item[0].toString())
 
         self.paramview.pagename = screen
         inited = self.paramview.init(screen, self.screenlogfile)
@@ -1031,24 +1008,20 @@ class Main_widget(widgets.QMainWindow):
         options.auto_refresh = False
         self.refresh.setEnabled(True)
 
+        if options.simulation_mode and self.paramview.layoutdict:
+            if screen in self.paramview.layoutdict['screens']:
+                self.buttonEditor.set_layout(self.paramview.layoutdict['screens'][screen])
 
         self.paramview.setRefreshTime(self.refreshtimebox.value())
-        self.set_can_combo(self.paramview.ecurequestsparser.ecu_protocol)
 
     def closeEvent(self, event):
-        if self.paramview:
-            self.paramview.tester_timer.stop()
         self.snifferview.stopthread()
         super(Main_widget, self).closeEvent(event)
-        try:
-            del options.elm
-        except:
-            pass
 
     def changeECU(self, index):
         item = self.treeview_ecu.model().itemData(index)
 
-        ecu_name = item[0]
+        ecu_name = utf8(item[0].toString())
 
         isxml = True
 
@@ -1096,9 +1069,18 @@ class Main_widget(widgets.QMainWindow):
             self.paramview.close()
             self.paramview.destroy()
 
-        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview,
-                                                self.protocolstatus, self.canlinecombo.currentIndex())
-        self.paramview.infobox = self.infostatus
+        self.paramview = parameters.paramWidget(self.scrollview, ecu_file, ecu_addr, ecu_name, self.logview, self.protocolstatus, self.canlinecombo.currentIndex())
+        if options.simulation_mode:
+            self.requesteditor.set_ecu(self.paramview.ecurequestsparser)
+            self.dataitemeditor.set_ecu(self.paramview.ecurequestsparser)
+            self.buttonEditor.set_ecu(self.paramview.ecurequestsparser)
+            self.ecuparameditor.set_ecu(self.paramview.ecurequestsparser)
+            self.ecuparameditor.set_targets(self.paramview.targetsdata)
+            if isxml:
+                self.requesteditor.enable_view(False)
+                self.dataitemeditor.enable_view(False)
+                self.buttonEditor.enable_view(False)
+                self.ecuparameditor.enable_view(False)
 
         self.paramview.uiscale = uiscale_mem
 
@@ -1123,8 +1105,7 @@ class donationWidget(widgets.QLabel):
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
-        msgbox.setText(
-            _("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
+        msgbox.setText(_("<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"))
         okbutton = widgets.QPushButton(_('Yes I contribute'))
         msgbox.addButton(okbutton, widgets.QMessageBox.YesRole)
         msgbox.addButton(widgets.QPushButton(_("No, I don't")), widgets.QMessageBox.NoRole)
@@ -1132,38 +1113,33 @@ class donationWidget(widgets.QLabel):
         msgbox.exec_()
 
     def donate(self):
-        url = core.QUrl(
-            "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted",
-            core.QUrl.TolerantMode)
+        url = core.QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille@gmail.com&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG.if:NonHosted", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
-        msgbox.setText(
-            _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
+        msgbox.setText(_("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
         msgbox.exec_()
-
 
 def set_dark_style(onoff):
     if (onoff):
         stylefile = core.QFile("qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
 
-        StyleSheet = bytes(stylefile.readAll()).decode()
+	StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
     else:
         StyleSheet = ""
 
     app.setStyleSheet(StyleSheet)
 
-class main_window_options(widgets.QDialog):
+class portChooser(widgets.QDialog):
     def __init__(self):
-        portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
+        portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000, 2000000]
         self.port = None
         self.ports = {}
         self.mode = 0
         self.securitycheck = False
         self.selectedportspeed = 38400
-        self.adapter = "STD"
-        self.raise_port_speed = "No"
-        super(main_window_options, self).__init__(None)
+        self.isels = False
+        super(portChooser, self).__init__(None)
         layout = widgets.QVBoxLayout()
         label = widgets.QLabel(self)
         label.setText(_("ELM port selection"))
@@ -1247,7 +1223,6 @@ class main_window_options(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton("Demo mode")
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
-
         self.elmchk = button_elm_chk
 
         wifilayout = widgets.QHBoxLayout()
@@ -1277,13 +1252,6 @@ class main_window_options(widgets.QDialog):
         darkstylelayout.addStretch()
         layout.addLayout(darkstylelayout)
 
-        obdlinkspeedlayout = widgets.QHBoxLayout()
-        self.obdlinkspeedcombo = widgets.QComboBox()
-        obdlinkspeedlabel = widgets.QLabel(_("Change UART speed"))
-        obdlinkspeedlayout.addWidget(obdlinkspeedlabel)
-        obdlinkspeedlayout.addWidget(self.obdlinkspeedcombo)
-        obdlinkspeedlayout.addStretch()
-        layout.addLayout(obdlinkspeedlayout)
 
         layout.addWidget(donationwidget)
 
@@ -1308,7 +1276,6 @@ class main_window_options(widgets.QDialog):
 
         self.setWindowTitle("Start ddt4all")
 
-
     def check_elm(self):
         currentitem = self.listview.currentItem()
         self.logview.show()
@@ -1318,7 +1285,7 @@ class main_window_options(widgets.QDialog):
             if not currentitem:
                 self.logview.hide()
                 return
-            portinfo = currentitem.text()
+            portinfo = utf8(currentitem.text())
             port = self.ports[portinfo][0]
         speed = int(self.speedcombo.currentText())
         res = elm.elm_checker(port, speed, self.logview, core.QCoreApplication)
@@ -1345,11 +1312,10 @@ class main_window_options(widgets.QDialog):
             item.setText(itemname)
             self.ports[itemname] = (p[0], p[1])
 
-        self.timer.start(500)
+        self.timer.start(1000)
 
     def bt(self):
-        self.adapter = "STD_BT"
-        self.obdlinkspeedcombo.clear()
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1370,8 +1336,7 @@ class main_window_options(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def wifi(self):
-        self.adapter = "STD_WIFI"
-        self.obdlinkspeedcombo.clear()
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1391,14 +1356,7 @@ class main_window_options(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def usb(self):
-        self.adapter = "STD_USB"
-        self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("57600")
-        self.obdlinkspeedcombo.addItem("115200")
-        self.obdlinkspeedcombo.addItem("230400")
-        # This mode seems to not be supported by all adapters
-        self.obdlinkspeedcombo.addItem("500000")
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1419,12 +1377,7 @@ class main_window_options(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def obdlink(self):
-        self.adapter = "OBDLINK"
-        self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("500000")
-        self.obdlinkspeedcombo.addItem("1000000")
-        self.obdlinkspeedcombo.addItem("2000000")
+        self.isels = False
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1445,12 +1398,7 @@ class main_window_options(widgets.QDialog):
         self.elmchk.setEnabled(True)
 
     def els(self):
-        self.adapter = "ELS"
-        self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("500000")
-        self.obdlinkspeedcombo.addItem("1000000")
-        self.obdlinkspeedcombo.addItem("2000000")
+        self.isels = True
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1505,32 +1453,17 @@ class main_window_options(widgets.QDialog):
         options.report_data = False
         self.done(True)
 
-
 if __name__ == '__main__':
-    if not_qt5_show:
-        exit(0)
-    try:
-        sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
-    except:
-        sys.stdout = codecs.getwriter('utf8')(sys.stdout)
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)
 
-    fsize = 9
-    fname = "Tahoma"
-
-    if sys.platform[:3] == "dar":
-        fsize = 12
-        fname = "Arial"
-    if sys.platform[:3] == "lin":
-        fsize = 9
-        fname = "Sans"
-    font = gui.QFont(fname, fsize)
-    font.setBold(False)
-    app.setFont(font)
-    app.setStyle("plastic")
+    if sys.platform[:3] != "win":
+        font = gui.QFont("Sans", 9)
+        font.setBold(False)
+        app.setFont(font)
+        app.setStyle("plastic")
 
     ecudirfound = False
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
@@ -1543,7 +1476,7 @@ if __name__ == '__main__':
     if not os.path.exists("./logs"):
         os.mkdir("./logs")
 
-    pc = main_window_options()
+    pc = portChooser()
     nok = True
     while nok:
         pcres = pc.exec_()
@@ -1566,8 +1499,9 @@ if __name__ == '__main__':
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print(_("Initilizing ELM with speed %i...") % port_speed)
-        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
+        print _("Initilizing ELM with speed %i...") % port_speed
+        options.elm = elm.ELM(options.port, port_speed, pc.isels)
+
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())

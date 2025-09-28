@@ -33,12 +33,12 @@ Get the fully packaged installer here : [Release area](https://github.com/cedric
 
 ## How to install database ?
 
-Copy the 'ecus' directory from your database to the root of the sources tree and launch ddt4all.py, you are now ready to use it
+Copy the 'ecus' directory from your database to the root of the sources tree and launch main.py, you are now ready to use it
 
 ## How to launch the application ?
 
 * Windows : double click DDT4ALL.BAT file
-* Linux : from a terminal, type `python ddt4all.py`
+* Linux : from a terminal, type `python main.py`
 
 ## How to compress XML files ?
 
