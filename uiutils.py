@@ -1,9 +1,15 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import sys
 
-import PyQt5.QtGui as gui
+import PyQt4.QtGui as gui
 
+__author__ = "Cedric PAILLE"
+__copyright__ = "Copyright 2016-2018"
+__credits__ = []
+__license__ = "GPL"
+__version__ = "1.0.0"
+__maintainer__ = "Cedric PAILLE"
+__email__ = "cedricpaille@gmail.com"
+__status__ = "Beta"
 
 
 def getChildNodesByName(parent, name):
@@ -49,13 +55,10 @@ def getFontXML(xml):
     return f
 
 
-def getXMLFont(xml, scale=1):
+def getXMLFont(xml, scale = 1):
     font = getChildNodesByName(xml, "Font")[0]
     font_name = font.getAttribute("Name")
     font_size = float(font.getAttribute("Size").replace(',', '.'))
-    if sys.platform[:3] == "dar":
-        font_name = "Arial"
-        font_size = 11
     font_bold = font.getAttribute("Bold")
     font_italic = font.getAttribute("Italic")
 
@@ -67,16 +70,24 @@ def getXMLFont(xml, scale=1):
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
 
-    font_size: float = font_size / float(scale) * 14.
-    qfnt = gui.QFont(font_name, int(font_size), fnt_flags)
-    qfnt.setPixelSize(int(font_size))
+    font_size = font_size / float(scale) * 14.
+    qfnt = gui.QFont(font_name, font_size, fnt_flags)
+    qfnt.setPixelSize(font_size)
     return qfnt
+
+
+def getFontColor(xml):
+    font = getChildNodesByName(xml, "Font")[0]
+    if font.getAttribute("Color"):
+        return colorConvert(font.getAttribute("Color"))
+    else:
+        return colorConvert(0xFFFFFF)
 
 
 class displayData:
     def __init__(self, data, widget, is_combo=False):
-        self.data = data
-        self.widget = widget
+        self.data    = data
+        self.widget  = widget
         self.is_combo = is_combo
 
 
@@ -84,7 +95,7 @@ class displayDict:
     def __init__(self, request_name, request):
         self.request = request
         self.request_name = request_name
-        self.data = []
+        self.data    = []
         self.datadict = {}
 
     def addData(self, displaydata):
@@ -102,9 +113,6 @@ class displayDict:
 def jsonFont(fnt, scale):
     font_name = fnt['name']
     font_size = fnt['size']
-    if sys.platform[:3] == "dar":
-        font_name = "Arial"
-        font_size = 11
     if 'bold' in fnt:
         font_bold = fnt['bold']
     else:
@@ -122,8 +130,8 @@ def jsonFont(fnt, scale):
     if font_italic == '1':
         fnt_flags |= gui.QFont.StyleItalic
 
-    font_size = int(font_size / float(scale) * 14.)
+    font_size = font_size / float(scale) * 14.
 
-    qfnt = gui.QFont(font_name, font_size, fnt_flags)
-    qfnt.setPixelSize(font_size)
+    qfnt = gui.QFont(font_name, font_size, fnt_flags);
+
     return qfnt

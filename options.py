@@ -1,11 +1,8 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+import locale
+import sys
 import gettext
 import os
-import sys
-
-import locale
-import json
 
 simulation_mode = False
 port_speed = 38400
@@ -42,14 +39,14 @@ def get_last_error():
 
 
 def translator(filename):
-    try:
-        lang, enc = locale.getlocale()
-        os.environ['LANG'] = lang
-    except:
-        # defaul tranlation if err en_US
-        os.environ["LANG"] = 'fr_FR'
-        pass
+    if sys.platform.startswith('win'):
+        if os.getenv('LANG') is None:
+            lang, enc = locale.getdefaultlocale()
+            os.environ['LANG'] = lang
+    else:
+        if "LANGUAGE" not in os.environ is None:
+            os.environ["LANGUAGE"] = os.environ["LANG"]
 
     # Set up message catalog access
-    t = gettext.translation(filename, 'locale', fallback=True) # not ok in python 3.11.x, codeset="utf-8")
-    return t.gettext
+    t = gettext.translation(filename, 'locale', fallback=True, codeset="utf-8")
+    return t.ugettext
