@@ -1,25 +1,30 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import string
+
 import time
-
-import PyQt5.QtCore as core
-import PyQt5.QtWidgets as widgets
-
 import ecu
-import options
+from uiutils import *
+import PyQt4.QtGui as gui
+import PyQt4.QtGui as widgets
+import PyQt4.QtCore as core
+def utf8(string):
+    return unicode(string.toUtf8(), encoding="UTF8")
+
+import options, string
+
+__author__ = "Cedric PAILLE"
+__copyright__ = "Copyright 2016-2018"
+__credits__ = []
+__license__ = "GPL"
+__version__ = "1.0.0"
+__maintainer__ = "Cedric PAILLE"
+__email__ = "cedricpaille@gmail.com"
+__status__ = "Beta"
 
 _ = options.translator('ddt4all')
 
-
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
-    try:
-        # TODO:// basestring not defined use bytes.
-        # dataready = core.pyqtSignal(basestring)
-        dataready = core.pyqtSignal(bytes)
-    except:
-        dataready = core.pyqtSignal(str)
+    dataready = core.pyqtSignal(basestring)
 
     def __init__(self, address, br):
         super(snifferThread, self).__init__()
@@ -54,7 +59,6 @@ class snifferThread(core.QThread):
             options.elm.monitor_can_bus(self.senddata)
 
         self.running = False
-
 
 class sniffer(widgets.QWidget):
     def __init__(self, parent=None):
@@ -105,7 +109,7 @@ class sniffer(widgets.QWidget):
         self.stopthread()
         self.startbutton.setChecked(False)
         self.names = []
-        framename = self.framecombo.currentText()
+        framename = utf8(self.framecombo.currentText())
         self.currentrequest = self.ecurequests.requests[framename]
         self.ecu_filter = self.currentrequest.sentbytes
         self.addressinfo.setText(self.ecu_filter)
@@ -128,7 +132,7 @@ class sniffer(widgets.QWidget):
 
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
-        self.table.horizontalHeader().setSectionResizeMode(0, widgets.QHeaderView.Stretch)
+	self.table.horizontalHeader().setResizeMode(0, widgets.QHeaderView.Stretch)
 
     def stopthread(self):
         if self.snifferthread:
