@@ -5,14 +5,16 @@
 # This is an example plugin
 
 
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as gui
+
 import ecu
-import elm
 import options
 
-plugin_name = "Megane/Scenic II card programming"
-category = "Keys"
+_ = options.translator('ddt4all')
+
+plugin_name = _("Megane/Scenic II card programming")
+category = _("Keys")
 need_hw = True
 ecufile = "UCH_84_J84_03_60"
 
@@ -60,6 +62,7 @@ def a8(isk_c):
 
     return apv
 
+
 def a8_2(isk_c):
     '''MC9S12DG256 (algo2)(Megane 2, Scenic 2)'''
     apv = ''
@@ -99,6 +102,7 @@ class CardProg(gui.QDialog):
     def __init__(self):
         super(CardProg, self).__init__()
         options.debug = True
+        self.apvok = False
         self.megane_ecu = ecu.Ecu_file(ecufile, True)
         self.start_session_request = self.megane_ecu.requests[u'Start Diagnostic Session']
         self.after_sale_request = self.megane_ecu.requests[u'ACCEDER AU MODE APRES-VENTE']
@@ -112,7 +116,7 @@ class CardProg(gui.QDialog):
         self.ecu_connect()
         self.start_diag_session()
 
-        self.apv_access_button = gui.QPushButton("ENTER AFTER SALE MODE")
+        self.apv_access_button = gui.QPushButton(_("ENTER AFTER SALE MODE"))
         self.apv_access_button.clicked.connect(self.set_apv_from_input)
         self.pininput = gui.QLineEdit()
         self.pininput.setText("0" * 12)
@@ -124,14 +128,13 @@ class CardProg(gui.QDialog):
         self.currentcardide.setReadOnly(True)
         self.apv_status = gui.QLabel("")
         self.apv_status.setAlignment(core.Qt.AlignHCenter)
-        label = gui.QLabel("<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>")
+        label = gui.QLabel(_("<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"))
         label.setAlignment(core.Qt.AlignHCenter)
-        self.learnbutton = gui.QPushButton("LEARN")
-        self.validatebutton = gui.QPushButton("VALIDATE")
-        self.validatebutton = gui.QPushButton("VALIDATE")
-        self.cancelbutton = gui.QPushButton("CANCEL")
+        self.learnbutton = gui.QPushButton(_("LEARN"))
+        self.validatebutton = gui.QPushButton(_("VALIDATE"))
+        self.cancelbutton = gui.QPushButton(_("CANCEL"))
 
-        self.algocheck = gui.QCheckBox("Algo 2")
+        self.algocheck = gui.QCheckBox(_("Algo 2"))
         self.algocheck.setChecked(False)
 
         self.learnbutton.clicked.connect(self.learn_action)
@@ -142,16 +145,16 @@ class CardProg(gui.QDialog):
 
         layout = gui.QGridLayout()
         layout.addWidget(label, 0, 0, 1, 0)
-        layout.addWidget(gui.QLabel("ISK"), 1, 0)
+        layout.addWidget(gui.QLabel(_("ISK")), 1, 0)
         layout.addWidget(self.iskoutput, 1, 1)
-        layout.addWidget(gui.QLabel("PIN"), 2, 0)
+        layout.addWidget(gui.QLabel(_("PIN")), 2, 0)
         layout.addWidget(self.pininput, 2, 1)
         layout.addWidget(self.algocheck, 3, 1)
         layout.addWidget(self.apv_access_button, 4, 0, 1, 0)
         layout.addWidget(self.apv_status, 5, 0, 1, 0)
-        layout.addWidget(gui.QLabel("Num key learnt"), 6, 0)
+        layout.addWidget(gui.QLabel(_("Num key learnt")), 6, 0)
         layout.addWidget(self.numkeys_label, 6, 1)
-        layout.addWidget(gui.QLabel("CARD IDE"), 7, 0)
+        layout.addWidget(gui.QLabel(_("CARD IDE")), 7, 0)
         layout.addWidget(self.currentcardide, 7, 1)
         layout.addWidget(self.learnbutton, 8, 0, 1, 0)
         layout.addWidget(self.validatebutton, 9, 0)
@@ -172,7 +175,7 @@ class CardProg(gui.QDialog):
         self.tester_timer.start()
 
     def calculate_pin(self):
-        ISK = str(self.iskoutput.text().toAscii())
+        ISK = ''.join(str(ord(c)) for c in str(self.iskoutput.text()))
         if len(ISK) == 12:
             if self.algocheck.checkState():
                 PIN = a8_2(ISK)
@@ -204,8 +207,8 @@ class CardProg(gui.QDialog):
         else:
             reply = options.elm.request(self.reserved_frame_request.sentbytes)
 
-        if reply.startswith('7F') or reply == 'WRONG RESPONSE':
-            options.main_window.logview.append("Cannot get ISK, check connections and UCH compatibility")
+        if reply.startswith('7F') or reply.startswith('WRONG'):
+            options.main_window.logview.append(_("Cannot get ISK, check connections and UCH compatibility"))
             return
 
         isk = reply.replace(' ', '').strip()
@@ -214,7 +217,7 @@ class CardProg(gui.QDialog):
     def ecu_connect(self):
         connection = self.megane_ecu.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to ECU")
+            options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
 
     def check_all(self):
@@ -222,7 +225,7 @@ class CardProg(gui.QDialog):
         self.check_num_key_learnt()
 
     def set_apv_from_input(self):
-        apv = str(self.pininput.text().toAscii())
+        apv = ''.join(str(ord(c)) for c in str(self.pininput.text()))
         if len(apv) != 12:
             return
         self.after_sale_request.send_request({u'Code APV': apv})
@@ -240,24 +243,27 @@ class CardProg(gui.QDialog):
         value_apv_uch_reaff = key_bits_status_values[u'VSC ModeAPV_AppUCH_Armé']
 
         if value_apv_ok == '0':
-            self.apv_status.setText("<font color='red'>PIN CODE NOT RECOGNIZED</font>")
+            self.apv_status.setText(_("<font color='red'>PIN CODE NOT RECOGNIZED</font>"))
+            self.apvok = False
+            self.enable_buttons(False)
+            return
 
         if value_apv_reaff == '1':
-            self.apv_status.setText("<font color='green'>PIN CODE OK / KEY LEARNING</font>")
+            self.apv_status.setText(_("<font color='green'>PIN CODE OK / KEY LEARNING</font>"))
             self.enable_buttons(True)
-            return
-        elif value_apv_uch_reaff == '1':
-            self.apv_status.setText("<font color='green'>PIN CODE OK / UCH LEARNING</font>")
-            self.enable_buttons(True)
-            return
-        else:
-            self.apv_status.setText("<font color='green'>PIN CODE OK</font>")
-            self.enable_buttons(True)
+            self.apvok = True
             return
 
+        elif value_apv_uch_reaff == '1':
+            self.apv_status.setText(_("<font color='green'>PIN CODE OK / UCH LEARNING</font>"))
+            self.enable_buttons(True)
+            self.apvok = True
+            return
+
+        self.apvok = False
         self.enable_buttons(False)
 
-        self.apv_status.setText("<font color='red'>WEIRD UCH STATE</font>")
+        self.apv_status.setText("<font color='red'>UCH NOT READY</font>")
 
     def check_num_key_learnt(self):
         key_bytes_status_value = self.key_bytes_status.send_request({}, "61 08 00 00 00 00 00 00 0A 00 00 00 00 00 00 "
@@ -274,9 +280,10 @@ class CardProg(gui.QDialog):
         sds_request = self.megane_ecu.requests[u"Start Diagnostic Session"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print "SdS stream", sds_stream
+            print("SdS stream", sds_stream)
             return
         options.elm.start_session_can(sds_stream)
+
 
 def plugin_entry():
     cp = CardProg()

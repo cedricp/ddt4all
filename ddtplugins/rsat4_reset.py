@@ -3,30 +3,33 @@
 # (c) 2017
 
 
-import PyQt4.QtGui as gui
-import PyQt4.QtCore as core
+import PyQt5.QtCore as core
+import PyQt5.QtWidgets as gui
+
 import ecu
 import options
-import elm
 
-plugin_name = "RSAT4 AIRBAG Reset"
-category = "Airbag Tools"
+_ = options.translator('ddt4all')
+
+plugin_name = _("RSAT4 AIRBAG Reset")
+category = _("Airbag Tools")
 need_hw = True
 ecufile = "RSAT4_ACU_eng_v15_20150511T131328"
+
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.airbag_ecu = ecu.Ecu_file(ecufile, True)
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel("TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>"
-                           "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"
-                           "GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font")
+        infos = gui.QLabel(_("TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>"
+                             "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"
+                             "GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
-        check_button = gui.QPushButton("Check ACU Virgin")
-        self.status_check = gui.QLabel("Waiting")
+        check_button = gui.QPushButton(_("Check ACU Virgin"))
+        self.status_check = gui.QLabel(_("Waiting"))
         self.status_check.setAlignment(core.Qt.AlignHCenter)
-        self.virginize_button = gui.QPushButton("Virginize ACU")
+        self.virginize_button = gui.QPushButton(_("Virginize ACU"))
         layout.addWidget(infos)
         layout.addWidget(check_button)
         layout.addWidget(self.status_check)
@@ -40,7 +43,7 @@ class Virginizer(gui.QDialog):
     def ecu_connect(self):
         connection = self.airbag_ecu.connect_to_hardware()
         if not connection:
-            options.main_window.logview.append("Cannot connect to ECU")
+            options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
 
     def check_virgin_status(self):
@@ -54,20 +57,20 @@ class Virginizer(gui.QDialog):
                 crash = crash_response[u"crash detected"]
 
                 if crash == u'crash detected':
-                    self.status_check.setText("<font color='red'>CRASH DETECTED</font>")
+                    self.status_check.setText(_("<font color='red'>CRASH DETECTED</font>"))
                     return
                 if crash == u'no crash detected':
-                    self.status_check.setText("<font color='green'>NO CRASH DETECTED</font>")
+                    self.status_check.setText(_("<font color='green'>NO CRASH DETECTED</font>"))
                     return
 
-        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
+        self.status_check.setText(_("<font color='orange'>UNEXPECTED RESPONSE</font>"))
 
     def start_diag_session(self):
         sds_request = self.airbag_ecu.requests[u"Start Diagnostic Session"]
 
         sds_stream = " ".join(sds_request.build_data_stream({u'Session Name': u'extendedDiagnosticSession'}))
         if options.simulation_mode:
-            print "SdSEX stream", sds_stream
+            print("SdSEX stream", sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 
@@ -78,9 +81,9 @@ class Virginizer(gui.QDialog):
         request_response = reset_request.send_request({u'CLEDEV For reset crash': '13041976'})
 
         if request_response is not None:
-            self.status_check.setText("<font color='green'>CLEAR EXECUTED</font>")
+            self.status_check.setText(_("<font color='green'>CLEAR EXECUTED</font>"))
         else:
-            self.status_check.setText("<font color='red'>CLEAR FAILED</font>")
+            self.status_check.setText(_("<font color='red'>CLEAR FAILED</font>"))
 
 
 def plugin_entry():
