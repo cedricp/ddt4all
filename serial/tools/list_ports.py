@@ -16,8 +16,6 @@ Additionally a grep function is supplied that can be used to search for ports
 based on their descriptions or hardware ID.
 """
 
-from __future__ import absolute_import
-
 import sys
 import os
 import re
@@ -36,14 +34,14 @@ else:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-def grep(regexp, include_links=False):
+def grep(regexp):
     """\
     Search for ports using a regular expression. Port name, description and
     hardware ID are searched. The function returns an iterable that returns the
     same tuples as comport() would do.
     """
     r = re.compile(regexp, re.I)
-    for info in comports(include_links):
+    for info in comports():
         port, desc, hwid = info
         if r.search(port) or r.search(desc) or r.search(hwid):
             yield info
@@ -75,11 +73,6 @@ def main():
         type=int,
         help='only output the N-th entry')
 
-    parser.add_argument(
-        '-s', '--include-links',
-        action='store_true',
-        help='include entries that are symlinks to real devices')
-
     args = parser.parse_args()
 
     hits = 0
@@ -87,9 +80,9 @@ def main():
     if args.regexp:
         if not args.quiet:
             sys.stderr.write("Filtered list with regexp: {!r}\n".format(args.regexp))
-        iterator = sorted(grep(args.regexp, include_links=args.include_links))
+        iterator = sorted(grep(args.regexp))
     else:
-        iterator = sorted(comports(include_links=args.include_links))
+        iterator = sorted(comports())
     # list them
     for n, (port, desc, hwid) in enumerate(iterator, 1):
         if args.n is None or args.n == n:
