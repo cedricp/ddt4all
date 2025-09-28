@@ -20,10 +20,13 @@
 #   redirect output to an other terminal window on Posix (Linux):
 #   python -m serial.tools.miniterm spy:///dev/ttyUSB0?dev=/dev/pts/14\&color
 
+from __future__ import absolute_import
+
 import sys
 import time
 
 import serial
+from serial.serialutil import  to_bytes
 
 try:
     import urlparse
@@ -198,6 +201,7 @@ class Serial(serial.Serial):
         return ''.join([parts.netloc, parts.path])
 
     def write(self, tx):
+        tx = to_bytes(tx)
         self.formatter.tx(tx)
         return super(Serial, self).write(tx)
 
