@@ -18,8 +18,6 @@ Therefore decoding is binary to text and thus converting binary data to hex dump
 
 """
 
-from __future__ import absolute_import
-
 import codecs
 import serial
 
