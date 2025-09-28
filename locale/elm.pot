@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"POT-Creation-Date: 2025-09-28 06:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,90 +17,90 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: elm.py:291 elm.py:301
+#: elm.py:643 elm.py:645
 msgid "Error:"
 msgstr ""
 
-#: elm.py:292
+#: elm.py:644
 msgid "ELM not connected or wrong COM port"
 msgstr ""
 
-#: elm.py:295
-msgid "Available COM ports:"
+#: elm.py:651
+msgid "Port closed"
 msgstr ""
 
-#: elm.py:322 elm.py:338
+#: elm.py:694 elm.py:714
 msgid "Connection to ELM was lost"
 msgstr ""
 
-#: elm.py:358
+#: elm.py:737
 msgid "TIMEOUT"
 msgstr ""
 
-#: elm.py:371
+#: elm.py:750
 msgid "Checking port speed:"
 msgstr ""
 
-#: elm.py:390
+#: elm.py:769
 msgid "Start COM speed :"
 msgstr ""
 
-#: elm.py:395
+#: elm.py:774
 msgid "ELM not responding"
 msgstr ""
 
-#: elm.py:404
+#: elm.py:783
 msgid "ERROR - wifi do not support changing baud rate"
 msgstr ""
 
-#: elm.py:407
+#: elm.py:786
 msgid "Changing baud rate to:"
 msgstr ""
 
-#: elm.py:436
+#: elm.py:819
 msgid "ERROR - command not supported"
 msgstr ""
 
-#: elm.py:467
+#: elm.py:854
 msgid "ERROR - rate not supported. Let's go back."
 msgstr ""
 
-#: elm.py:490
+#: elm.py:877
 msgid "ERROR - something went wrong. Let's get back."
 msgstr ""
 
-#: elm.py:543
+#: elm.py:934
 msgid "Trying to open port"
 msgstr ""
 
-#: elm.py:563
+#: elm.py:959
 msgid "No ELM interface on port"
 msgstr ""
 
-#: elm.py:1176
+#: elm.py:969
+msgid "ELM reset..."
+msgstr ""
+
+#: elm.py:1729
 msgid "FAIL"
 msgstr ""
 
-#: elm.py:1181
+#: elm.py:1734
 msgid "OK/TIMEOUT"
 msgstr ""
 
-#: elm.py:1185
+#: elm.py:1738
 msgid "OK"
 msgstr ""
 
-#: elm.py:1193
+#: elm.py:1746
 msgid "Incompatible adapter on ARM core"
 msgstr ""
 
-#: elm.py:1194
+#: elm.py:1747
 msgid "Result: "
 msgstr ""
 
-#: elm.py:1194
+#: elm.py:1747
 msgid " succeeded from "
-msgstr ""
-
-#: elm.py:1194
-msgid "ELM Max version:"
 msgstr ""

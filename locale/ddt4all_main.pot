@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"POT-Creation-Date: 2025-09-28 06:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,298 +17,259 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ddt4all.py:186
+#: main.py:241
 msgid "ECU name"
 msgstr ""
 
-#: ddt4all.py:187
-msgid "Projets"
+#: main.py:367
+msgid "ddt4all 1.03"
 msgstr ""
 
-#: ddt4all.py:188
-msgid "Protocol"
-msgstr ""
-
-#: ddt4all.py:278
-msgid "Scanning ECUs..."
-msgstr ""
-
-#: ddt4all.py:282
+#: main.py:371
 msgid "loaded ECUs in database."
 msgstr ""
 
-#: ddt4all.py:306
+#: main.py:375
+msgid "No database found"
+msgstr ""
+
+#: main.py:376
+msgid "Check documentation"
+msgstr ""
+
+#: main.py:414
 msgid "Refresh rate (ms):"
 msgstr ""
 
-#: ddt4all.py:321
+#: main.py:421
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr ""
+
+#: main.py:440
 msgid "Screen"
 msgstr ""
 
-#: ddt4all.py:328
-msgid "Requests"
+#: main.py:441
+msgid "CAN Sniffer"
 msgstr ""
 
-#: ddt4all.py:329
-msgid "Data"
-msgstr ""
-
-#: ddt4all.py:330
-msgid "Buttons"
-msgstr ""
-
-#: ddt4all.py:331
-msgid "Ecu parameters"
-msgstr ""
-
-#: ddt4all.py:342
+#: main.py:465
 msgid "Screens"
 msgstr ""
 
-#: ddt4all.py:345
+#: main.py:468
 msgid "Action"
 msgstr ""
 
-#: ddt4all.py:346
+#: main.py:469
 msgid "New Category"
 msgstr ""
 
-#: ddt4all.py:347
+#: main.py:470
 msgid "New Screen"
 msgstr ""
 
-#: ddt4all.py:348
+#: main.py:471
 msgid "Rename"
 msgstr ""
 
-#: ddt4all.py:375 ddt4all.py:431
+#: main.py:498 main.py:593
 msgid "File"
 msgstr ""
 
-#: ddt4all.py:377
-msgid "Scan ECUs"
-msgstr ""
-
-#: ddt4all.py:380
+#: main.py:500
 msgid "Read DTC"
 msgstr ""
 
-#: ddt4all.py:384
+#: main.py:504
 msgid "Full log"
 msgstr ""
 
-#: ddt4all.py:389
+#: main.py:509
 msgid "Expert mode (enable writing)"
 msgstr ""
 
-#: ddt4all.py:394
+#: main.py:514
 msgid "Auto refresh"
 msgstr ""
 
-#: ddt4all.py:399
+#: main.py:519
 msgid "Refresh (one shot)"
 msgstr ""
 
-#: ddt4all.py:403
+#: main.py:523
 msgid "Manual command"
 msgstr ""
 
-#: ddt4all.py:432
+#: main.py:527
+msgid "Manual request"
+msgstr ""
+
+#: main.py:531
+msgid "Software flow control"
+msgstr ""
+
+#: main.py:594
+msgid "Open XML"
+msgstr ""
+
+#: main.py:595
+msgid "Identify ECU"
+msgstr ""
+
+#: main.py:596
 msgid "Create New ECU"
 msgstr ""
 
-#: ddt4all.py:433
+#: main.py:597
 msgid "Save current ECU"
 msgstr ""
 
-#: ddt4all.py:435
+#: main.py:599
 msgid "Save ECU list"
 msgstr ""
 
-#: ddt4all.py:445
-msgid "ISK Tools"
+#: main.py:606
+msgid "Zip database"
 msgstr ""
 
-#: ddt4all.py:449
-msgid "UCH Tools"
+#: main.py:614
+msgid "Plugins"
 msgstr ""
 
-#: ddt4all.py:450
-msgid "Megane2/Scenic2/Clio3 Virgin"
+#: main.py:637
+msgid "Cannot load plugin "
 msgstr ""
 
-#: ddt4all.py:453
-msgid "EPS(DAE) Tools"
+#: main.py:682
+msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
-#: ddt4all.py:454
-msgid "Megane3 Virgin"
+#: main.py:696
+msgid "Zipping XML database... (this can take a few minutes"
 msgstr ""
 
-#: ddt4all.py:455
-msgid "Clio4 Virgin"
+#: main.py:699
+msgid "Zip job finished"
 msgstr ""
 
-#: ddt4all.py:456
-msgid "Clio3 Virgin"
-msgstr ""
-
-#: ddt4all.py:469
+#: main.py:714
 msgid "Enter new name"
 msgstr ""
 
-#: ddt4all.py:489
+#: main.py:734
 msgid "Enter category name"
 msgstr ""
 
-#: ddt4all.py:499
+#: main.py:744
 msgid "Please select a category before creating new screen"
 msgstr ""
 
-#: ddt4all.py:506
+#: main.py:751
 msgid "Enter screen name"
 msgstr ""
 
-#: ddt4all.py:536
-msgid "Enable expert mode to access this menu"
-msgstr ""
-
-#: ddt4all.py:541
-msgid ""
-"<center>I'm aware that this operation will clear the selected control unit.</"
-"center><center>If you have no idea of what it means, please get out of here."
-"</center><center>/!\\This part is highly experimental/!\\</center>"
-msgstr ""
-
-#: ddt4all.py:583
-msgid "Cannot read ISK in demo mode"
-msgstr ""
-
-#: ddt4all.py:599
-msgid "Cannot read ISK : Bad reply"
-msgstr ""
-
-#: ddt4all.py:605
-msgid "Your ISK code"
-msgstr ""
-
-#: ddt4all.py:611
+#: main.py:814
 msgid "Scan options"
 msgstr ""
 
-#: ddt4all.py:621
+#: main.py:821
+msgid "CANCEL"
+msgstr ""
+
+#: main.py:832
 msgid "Scanning CAN"
 msgstr ""
 
-#: ddt4all.py:625
+#: main.py:836
 msgid "Scanning KWP"
 msgstr ""
 
-#: ddt4all.py:629
-msgid "Scanning CAN&KWP"
-msgstr ""
-
-#: ddt4all.py:662
-msgid "Sending ECU informations to database, thank you for your paticipation"
-msgstr ""
-
-#: ddt4all.py:668
-msgid "EDITION MODE"
-msgstr ""
-
-#: ddt4all.py:672
+#: main.py:881
 msgid "CONNECTED"
 msgstr ""
 
-#: ddt4all.py:675
+#: main.py:884
 msgid "DISCONNECTED"
 msgstr ""
 
-#: ddt4all.py:678
+#: main.py:887
 msgid "Save vehicule (keep '.ecu' extension)"
 msgstr ""
 
-#: ddt4all.py:695
+#: main.py:910
 msgid "Save ECU (keep '.json' extension)"
 msgstr ""
 
-#: ddt4all.py:857
+#: main.py:1108
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
 
-#: ddt4all.py:858
+#: main.py:1109
 msgid "Yes I contribute"
 msgstr ""
 
-#: ddt4all.py:860
+#: main.py:1111
 msgid "No, I don't"
 msgstr ""
 
-#: ddt4all.py:868
+#: main.py:1119
 msgid ""
 "<center>Thank you for you contribution, if nothing happens, please go to : "
 "https://github.com/cedricp/ddt4all</center>"
 msgstr ""
 
-#: ddt4all.py:882
+#: main.py:1145
 msgid "ELM port selection"
 msgstr ""
 
-#: ddt4all.py:926
+#: main.py:1211
 msgid "Port speed"
 msgstr ""
 
-#: ddt4all.py:938
+#: main.py:1223
 msgid "Connected mode"
 msgstr ""
 
-#: ddt4all.py:939
-msgid "Edition mode"
-msgstr ""
-
-#: ddt4all.py:940
+#: main.py:1225
 msgid "ELM benchmark"
 msgstr ""
 
-#: ddt4all.py:943
+#: main.py:1229
 msgid "WiFi port : "
 msgstr ""
 
-#: ddt4all.py:953
+#: main.py:1239
 msgid "I'm aware that I can harm my car if badly used"
 msgstr ""
 
-#: ddt4all.py:961
-msgid "I accept to share ECU informations"
+#: main.py:1249
+msgid "Dark style"
 msgstr ""
 
-#: ddt4all.py:1060
+#: main.py:1427
 msgid "You must check the recommandations"
 msgstr ""
 
-#: ddt4all.py:1081
+#: main.py:1445
 msgid "Please select a communication port"
 msgstr ""
 
-#: ddt4all.py:1107
+#: main.py:1470
 msgid "Using custom DDT database"
 msgstr ""
 
-#: ddt4all.py:1111
-msgid "Using DDT2000 default installation"
-msgstr ""
-
-#: ddt4all.py:1135
+#: main.py:1499
 msgid "No COM port selected"
 msgstr ""
 
-#: ddt4all.py:1138
+#: main.py:1502
 #, python-format
 msgid "Initilizing ELM with speed %i..."
 msgstr ""
 
-#: ddt4all.py:1145
+#: main.py:1509
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 21:49+0200\n"
+"POT-Creation-Date: 2025-09-28 06:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,270 +17,303 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: dataeditor.py:165
+#: dataeditor.py:189
 msgid "Goto data"
 msgstr ""
 
-#: dataeditor.py:166
+#: dataeditor.py:190
 msgid "Remove"
 msgstr ""
 
-#: dataeditor.py:171
+#: dataeditor.py:195
 msgid "Add to screen"
 msgstr ""
 
-#: dataeditor.py:261
-msgid "Request name;Manual"
+#: dataeditor.py:306
+msgid "Request name;Bytes;Manual"
 msgstr ""
 
-#: dataeditor.py:291 dataeditor.py:1151
+#: dataeditor.py:340 dataeditor.py:1317
 msgid "Add"
 msgstr ""
 
-#: dataeditor.py:292 dataeditor.py:1153
-msgid "Refresh"
-msgstr ""
-
-#: dataeditor.py:300
+#: dataeditor.py:347
 msgid "Send request bytes (HEX)"
 msgstr ""
 
-#: dataeditor.py:302
+#: dataeditor.py:349
 msgid "Receive bytes (HEX)"
 msgstr ""
 
-#: dataeditor.py:314
+#: dataeditor.py:360
 msgid "Data length"
 msgstr ""
 
-#: dataeditor.py:316
+#: dataeditor.py:362
 msgid "Shift byte count"
 msgstr ""
 
-#: dataeditor.py:450
+#: dataeditor.py:501
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr ""
 
-#: dataeditor.py:468 dataeditor.py:528
+#: dataeditor.py:519 dataeditor.py:579
 msgid "Little"
 msgstr ""
 
-#: dataeditor.py:469 dataeditor.py:530
+#: dataeditor.py:520 dataeditor.py:581
 msgid "Big"
 msgstr ""
 
-#: dataeditor.py:470 dataeditor.py:526
+#: dataeditor.py:521 dataeditor.py:577
 msgid "Inherits globals"
 msgstr ""
 
-#: dataeditor.py:581
+#: dataeditor.py:635
+msgid "No SDS"
+msgstr ""
+
+#: dataeditor.py:636
+msgid "Plant"
+msgstr ""
+
+#: dataeditor.py:637
+msgid "After Sale"
+msgstr ""
+
+#: dataeditor.py:638
+msgid "Engineering"
+msgstr ""
+
+#: dataeditor.py:639 dataeditor.py:1710
+msgid "Supplier"
+msgstr ""
+
+#: dataeditor.py:654
 msgid "Reload requests"
 msgstr ""
 
-#: dataeditor.py:582
+#: dataeditor.py:655
 msgid "Add request"
 msgstr ""
 
-#: dataeditor.py:600
+#: dataeditor.py:673
 msgid "Send bytes"
 msgstr ""
 
-#: dataeditor.py:601
+#: dataeditor.py:674
 msgid "Receive bytes"
 msgstr ""
 
-#: dataeditor.py:657
+#: dataeditor.py:752
 msgid "Number of bits"
 msgstr ""
 
-#: dataeditor.py:658 dataeditor.py:820
+#: dataeditor.py:753 dataeditor.py:919
 msgid "Signed"
 msgstr ""
 
-#: dataeditor.py:659
+#: dataeditor.py:754
 msgid "Add item"
 msgstr ""
 
-#: dataeditor.py:660
+#: dataeditor.py:755
 msgid "Del item"
 msgstr ""
 
-#: dataeditor.py:699
+#: dataeditor.py:794
 msgid "New item"
 msgstr ""
 
-#: dataeditor.py:751
+#: dataeditor.py:849
 msgid "Value;Text"
 msgstr ""
 
-#: dataeditor.py:767
+#: dataeditor.py:865
 msgid "Number of bytes"
 msgstr ""
 
-#: dataeditor.py:768 dataeditor.py:819
+#: dataeditor.py:866 dataeditor.py:918
 msgid "Unit"
 msgstr ""
 
-#: dataeditor.py:818
+#: dataeditor.py:917
 msgid "Number of bit"
 msgstr ""
 
-#: dataeditor.py:821
+#: dataeditor.py:920
 msgid "Format"
 msgstr ""
 
-#: dataeditor.py:822
+#: dataeditor.py:921
 msgid "Value = (AX+B) / C"
 msgstr ""
 
-#: dataeditor.py:895
+#: dataeditor.py:994
 msgid "New"
 msgstr ""
 
-#: dataeditor.py:896
+#: dataeditor.py:995
+msgid "Duplicate selected"
+msgstr ""
+
+#: dataeditor.py:996
+msgid "Remove selected"
+msgstr ""
+
+#: dataeditor.py:997
 msgid "Reload"
 msgstr ""
 
-#: dataeditor.py:897
+#: dataeditor.py:998
 msgid "Validate changes"
 msgstr ""
 
-#: dataeditor.py:930
+#: dataeditor.py:1035
 msgid "Description"
 msgstr ""
 
-#: dataeditor.py:936
+#: dataeditor.py:1041
 msgid "Data type"
 msgstr ""
 
-#: dataeditor.py:938
+#: dataeditor.py:1043
 msgid "Numeric"
 msgstr ""
 
-#: dataeditor.py:939
+#: dataeditor.py:1044
 msgid "Numeric items"
 msgstr ""
 
-#: dataeditor.py:940
+#: dataeditor.py:1045
 msgid "Hex"
 msgstr ""
 
-#: dataeditor.py:974
+#: dataeditor.py:1075 dataeditor.py:1081
+#, python-format
+msgid "Data is used by request %s"
+msgstr ""
+
+#: dataeditor.py:1128
 msgid "New data"
 msgstr ""
 
-#: dataeditor.py:980
+#: dataeditor.py:1134
 msgid "Replace me with request description"
 msgstr ""
 
-#: dataeditor.py:1115
+#: dataeditor.py:1281
 msgid "Data name;Description"
 msgstr ""
 
-#: dataeditor.py:1152
+#: dataeditor.py:1318
 msgid "Del"
 msgstr ""
 
-#: dataeditor.py:1154
+#: dataeditor.py:1319
+msgid "Refresh"
+msgstr ""
+
+#: dataeditor.py:1320
 msgid "Move up"
 msgstr ""
 
-#: dataeditor.py:1155
+#: dataeditor.py:1321
 msgid "Check"
 msgstr ""
 
-#: dataeditor.py:1199
+#: dataeditor.py:1365
 #, python-format
 msgid "Request %s not found"
 msgstr ""
 
-#: dataeditor.py:1218
+#: dataeditor.py:1384
 #, python-format
 msgid ""
 "<font color=green>Request <font color=blue>'%s'</font> has no missing input "
 "values</font>"
 msgstr ""
 
-#: dataeditor.py:1221
+#: dataeditor.py:1387
 #, python-format
 msgid ""
 "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
 "font>"
 msgstr ""
 
-#: dataeditor.py:1224
+#: dataeditor.py:1390
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
 msgstr ""
 
-#: dataeditor.py:1320
+#: dataeditor.py:1488
 msgid "Delay;Request"
 msgstr ""
 
-#: dataeditor.py:1412
+#: dataeditor.py:1580
 msgid "Screen initialization"
 msgstr ""
 
-#: dataeditor.py:1413
+#: dataeditor.py:1581
 msgid "Requests to send before screen drawing"
 msgstr ""
 
-#: dataeditor.py:1427
+#: dataeditor.py:1595
 msgid "Button name;Unique name"
 msgstr ""
 
-#: dataeditor.py:1496
+#: dataeditor.py:1664
 msgid "ECU Function address"
 msgstr ""
 
-#: dataeditor.py:1499
+#: dataeditor.py:1667
 msgid "ECU Protocol"
 msgstr ""
 
-#: dataeditor.py:1501 dataeditor.py:1619
+#: dataeditor.py:1669 dataeditor.py:1791
 msgid "Tool > Ecu ID (Hex)"
 msgstr ""
 
-#: dataeditor.py:1503 dataeditor.py:1620
+#: dataeditor.py:1671 dataeditor.py:1792
 msgid "Ecu > Tool ID (Hex)"
 msgstr ""
 
-#: dataeditor.py:1505
+#: dataeditor.py:1673
 msgid "Coding"
 msgstr ""
 
-#: dataeditor.py:1509
+#: dataeditor.py:1677
 msgid "Big Endian"
 msgstr ""
 
-#: dataeditor.py:1510
+#: dataeditor.py:1678
 msgid "Little Endian"
 msgstr ""
 
-#: dataeditor.py:1525
+#: dataeditor.py:1685
+msgid "ECU Auto identification"
+msgstr ""
+
+#: dataeditor.py:1697
 msgid "Diag version;Supplier;Soft;Version"
 msgstr ""
 
-#: dataeditor.py:1533
+#: dataeditor.py:1705
 msgid "Add new"
 msgstr ""
 
-#: dataeditor.py:1534
+#: dataeditor.py:1706
 msgid "Delete selected"
 msgstr ""
 
-#: dataeditor.py:1535
+#: dataeditor.py:1707
 msgid "Diag version"
 msgstr ""
 
-#: dataeditor.py:1538
-msgid "Supplier"
-msgstr ""
-
-#: dataeditor.py:1541
+#: dataeditor.py:1713
 msgid "Soft"
 msgstr ""
 
-#: dataeditor.py:1544
+#: dataeditor.py:1716
 msgid "Version"
 msgstr ""
