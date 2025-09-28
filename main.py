@@ -375,7 +375,7 @@ class Main_widget(widgets.QMainWindow):
         self.sdsready = False
         self.ecunamemap = {}
         self.plugins = {}
-        self.setWindowTitle(_("ddt4all 5.6.0"))
+        self.setWindowTitle(_("ddt4all 1.03"))
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
         options.ecu_scanner = self.ecu_scan
