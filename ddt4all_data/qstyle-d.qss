@@ -12,8 +12,8 @@ QToolTip {
 QWidget {
   color: #e1e1e1;
   background-color: #323232;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 10pt;
+  font-family: ".AppleSystemUIFont", "Segoe UI", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 14pt;
 }
 QLabel {
   color: #ffa500;
