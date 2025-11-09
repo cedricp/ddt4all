@@ -1283,6 +1283,18 @@ def set_dark_style(onoff):
         options.dark_mode = False
         StyleSheet = bytes(stylefile.readAll()).decode()
 
+    # Apply platform-specific font size and font family adjustments
+    if sys.platform == "darwin":
+        # macOS: keep 12pt for better readability with .AppleSystemUIFont
+        # Remove Windows-specific "Segoe UI" font to avoid 276ms lookup delay
+        StyleSheet = StyleSheet.replace(
+            '".AppleSystemUIFont", "Segoe UI", "Helvetica Neue",',
+            '".AppleSystemUIFont", "Helvetica Neue",'
+        )
+    else:
+        # Windows/Linux: revert to 10pt for proper sizing
+        StyleSheet = StyleSheet.replace("font-size: 12pt;", "font-size: 10pt;")
+
     app.setStyleSheet(StyleSheet)
     options.configuration["dark"] = options.dark_mode
     options.save_config()
