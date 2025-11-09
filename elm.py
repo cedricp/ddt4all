@@ -14,13 +14,11 @@ import sys
 import threading
 import time
 from datetime import datetime
-from functools import lru_cache
 
 import serial
 from serial.tools import list_ports
 
 import options
-from uiutils import get_device_description, ExponentialBackoff
 
 _ = options.translator('ddt4all')
 # //TODO missing entries this need look side ecu addressing missing entries or ignore {}
@@ -245,26 +243,58 @@ def item_count(items):
     return sum(1 for _ in items)
 
 
-@lru_cache(maxsize=1)
 def get_available_ports():
-    """Get available serial ports (cached)"""
+    """Get available serial ports"""
     ports = []
     try:
         portlist = list_ports.comports()
 
         if item_count(portlist) == 0:
-            return tuple()  # Return tuple for caching
+            return []
 
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
-            # Use centralized device description function
-            device_desc = get_device_description(desc)
+            # Enhanced device identification for ELS27 and other adapters
+            device_desc = desc
+            desc_upper = desc.upper()
+
+            # Direct device name detection
+            if any(keyword in desc_upper for keyword in ['ELS27', 'ELM327']):
+                if 'ELS27' in desc_upper:
+                    device_desc = f"{desc} (ELS27 V5 Compatible)"
+                else:
+                    device_desc = f"{desc} (ELM327 Compatible)"
+            elif any(keyword in desc_upper for keyword in ['VLINKER', 'OBDII']):
+                device_desc = f"{desc} (Vlinker Compatible)"
+            elif any(keyword in desc_upper for keyword in ['VGATE', 'ICAR']):
+                device_desc = f"{desc} (VGate Compatible)"
+            elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
+                device_desc = f"{desc} (OBDLink Compatible)"
+            # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
+            elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
+                device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['CH340', 'CH341']):
+                device_desc = f"{desc} (CH340 - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['CP210', 'CP2102', 'CP2104']):
+                device_desc = f"{desc} (CP210x - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['PL2303']):
+                device_desc = f"{desc} (PL2303 - Possible ELS27/ELM327)"
+
             ports.append((port, device_desc, hwid))
 
     except Exception as e:
         print(f"Error detecting serial ports: {e}")
         # Fallback: try common port patterns
-        common_ports = _get_common_ports_by_platform()
+        common_ports = []
+        if platform.system().lower() == 'windows':
+            common_ports = [f'COM{i}' for i in range(1, 21)]
+        elif platform.system().lower() == 'linux':
+            common_ports = [f'/dev/ttyUSB{i}' for i in range(0, 5)] + \
+                           [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
+                           [f'/dev/rfcomm{i}' for i in range(0, 5)]
+        elif platform.system().lower() == 'darwin':
+            import glob
+            common_ports = glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
 
         for port in common_ports:
             try:
@@ -275,24 +305,7 @@ def get_available_ports():
             except:
                 continue
 
-    return tuple(ports)  # Return tuple for caching
-
-
-def _get_common_ports_by_platform():
-    """Get common port patterns by platform"""
-    system = platform.system().lower()
-    
-    if system == 'windows':
-        return [f'COM{i}' for i in range(1, 21)]
-    elif system == 'linux':
-        return ([f'/dev/ttyUSB{i}' for i in range(0, 5)] +
-                [f'/dev/ttyACM{i}' for i in range(0, 5)] +
-                [f'/dev/rfcomm{i}' for i in range(0, 5)])
-    elif system == 'darwin':
-        import glob
-        return glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
-    
-    return []
+    return ports
 
 
 class DeviceManager:
@@ -361,66 +374,54 @@ def is_els27_device(port, timeout=2):
 
 
 def reconnect_elm():
-    """Enhanced reconnection with device-specific handling and exponential backoff"""
-    # Clear port cache to get fresh port list
-    get_available_ports.cache_clear()
+    """Enhanced reconnection with device-specific handling"""
     ports = get_available_ports()
-    
     current_adapter = "STD"
     if options.elm:
         current_adapter = options.elm.adapter_type
 
-    backoff = ExponentialBackoff(base_delay=0.5, max_delay=5.0, max_retries=3)
-
     # Try to reconnect to the same port first
-    if options.port_name and _try_reconnect_port(options.port_name, ports, current_adapter, backoff):
-        return True
+    if options.port_name:
+        for port_info in ports:
+            port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
+            if port == options.port_name or desc == options.port_name:
+                print(f"Attempting reconnection to {port}")
+                try:
+                    # Use saved settings for reconnection
+                    device_key = DeviceManager.normalize_adapter_type(current_adapter)
+                    saved_settings = options.get_device_settings(device_key, port)
+                    speed = saved_settings.get('baudrate', options.port_speed) if saved_settings else options.port_speed
 
-    # Try other available ports with backoff
-    for port_info in ports:
-        port = port_info[0] if len(port_info) >= 1 else None
-        if not port or port == options.port_name:
-            continue
-            
-        if _try_reconnect_port(port, ports, current_adapter, backoff):
-            return True
+                    options.elm = ELM(port, speed, current_adapter)
+                    if options.elm.connectionStatus:
+                        return True
+                except Exception as e:
+                    print(f"Reconnection failed: {e}")
+                    continue
 
-    return False
-
-
-def _try_reconnect_port(target_port, ports, adapter_type, backoff):
-    """Try to reconnect to a specific port with backoff"""
+    # Try other available ports
     for port_info in ports:
         port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
-        
-        if port != target_port and desc != target_port:
-            continue
-            
-        print(f"Attempting reconnection to {port}")
-        
-        while backoff.can_retry:
-            try:
-                device_key = DeviceManager.normalize_adapter_type(adapter_type)
-                saved_settings = options.get_device_settings(device_key, port)
-                speed = saved_settings.get('baudrate', options.port_speed) if saved_settings else options.port_speed
+        device_key = DeviceManager.normalize_adapter_type(current_adapter)
+        saved_settings = options.get_device_settings(device_key, port)
 
-                options.elm = ELM(port, speed, adapter_type)
-                if options.elm.connectionStatus:
-                    options.port_name = port
-                    options.port_speed = speed
-                    backoff.reset()
-                    return True
-            except Exception as e:
-                delay = backoff.get_delay()
-                if delay:
-                    print(f"Reconnection failed: {e}. Retrying in {delay}s...")
-                    time.sleep(delay)
-                else:
-                    print(f"Reconnection failed: {e}. Max retries reached.")
-                    break
-        
-        backoff.reset()
-    
+        if saved_settings and 'baudrate' in saved_settings:
+            settings = saved_settings
+            print(f"Trying {current_adapter} device at {port} with saved settings")
+        else:
+            settings = DeviceManager.get_optimal_settings(current_adapter)
+            print(f"Trying {current_adapter} device at {port} with optimal settings")
+
+        try:
+            options.elm = ELM(port, settings['baudrate'], current_adapter)
+            if options.elm.connectionStatus:
+                options.port_name = port
+                options.port_speed = settings['baudrate']
+                return True
+        except Exception as e:
+            print(f"Connection to {port} failed: {e}")
+            continue
+
     return False
 
 
@@ -560,7 +561,7 @@ class Port:
         try:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
-            self.init_serial(38400)
+            self.init_serial(38400, self.portTimeout)
             print(f"Bluetooth connection attempted: {self.portName}")
         except Exception as e:
             print(f"Bluetooth connection failed: {e}")
@@ -755,21 +756,14 @@ class Port:
                 byte = '>'
 
             if byte:
-                # Ensure bytes
-                if isinstance(byte, str):
-                    byte = byte.encode('utf-8', errors='ignore')
                 self.buff += byte
             tc = time.time()
 
             if b'\r' in self.buff:
-                return self.buff.decode('utf8', errors='ignore')
+                return self.buff.decode('utf8')
 
             if (tc - tb) > time_out:
-                # Always return a decoded string on timeout
-                try:
-                    return (self.buff + b"TIMEOUT").decode('utf8', errors='ignore')
-                except Exception:
-                    return "TIMEOUT"
+                return self.buff + b"TIMEOUT"
 
         # self.close()
         # self.connectionStatus = False
@@ -1133,11 +1127,8 @@ class ELM:
         # Ensure time gap between commands
         dl = self.busLoad + self.srvsDelay - tb + self.lastCMDtime
         if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) \
-                and ("AT" not in command.upper() and "ST" not in command.upper()):
-            # Use more efficient sleep calculation
-            sleep_time = max(0, self.busLoad + self.srvsDelay - (tb - self.lastCMDtime))
-            if sleep_time > 0:
-                time.sleep(sleep_time)
+                and ("AT" not in command.upper() or "ST" not in command.upper()):
+            time.sleep(self.busLoad + self.srvsDelay - tb + self.lastCMDtime)
 
         tb = time.time()  # renew start time
 
@@ -1416,11 +1407,8 @@ class ELM:
 
                 # Ensure time gap between frames according to FlowControl
                 tc = time.time()  # current time
-                elapsed_ms = (tc - tb) * 1000.0
-                if elapsed_ms < ST:
-                    sleep_time = (ST - elapsed_ms) / 1000.0
-                    if sleep_time > 0:
-                        time.sleep(sleep_time)
+                if (tc - tb) * 1000. < ST:
+                    time.sleep(ST / 1000. - (tc - tb))
                 tb = tc
 
                 self.send_raw(raw_command[Fc])

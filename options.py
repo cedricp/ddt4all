@@ -5,8 +5,6 @@ import json
 import locale
 import os
 
-# Legacy global variables for backward compatibility
-# TODO: Gradually migrate to AppContext pattern
 simulation_mode = False
 port_speed = 38400
 port_name = ""
@@ -33,7 +31,6 @@ cantimeout = 0
 refreshrate = 5
 mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
-socket_timeout = False
 configuration = {
     "lang": None,
     "dark": False,

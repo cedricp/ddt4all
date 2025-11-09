@@ -30,7 +30,8 @@ class ecuCommand(widgets.QDialog):
     def __init__(self, paramview, ecurequestparser, sds):
         super(ecuCommand, self).__init__(None)
         # Set window icon and title
-        self.setWindowIcon(get_app_icon())
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
         self.setWindowTitle(_("ECU Command"))
         self.ecu = ecurequestparser
         self.ecu.requests.keys()
@@ -82,7 +83,12 @@ class ecuCommand(widgets.QDialog):
         text = "<center>This feature is experimental</center>\n"
         text += "<center>Use it at your own risk</center>\n"
         text += "<center>and if you know exactely what you do</center>\n"
-        show_message_box(version.__appname__, text, widgets.QMessageBox.Warning)
+        msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle(version.__appname__)
+        msgbox.setText(text)
+        msgbox.exec_()
 
     def recompute(self):
         frame = self.compute_frame(False)
@@ -126,9 +132,12 @@ class ecuCommand(widgets.QDialog):
         stream_to_send = self.compute_frame()
         reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
         if reveived_stream.startswith("WRONG"):
-            show_message_box(version.__appname__, 
-                           "ECU returned error (check logview)",
-                           widgets.QMessageBox.Warning)
+            msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle(version.__appname__)
+            msgbox.setText("ECU returned error (check logview)")
+            msgbox.exec_()
             return
         received_data = self.current_request.get_values_from_stream(reveived_stream)
 
@@ -1165,66 +1174,55 @@ class paramWidget(widgets.QWidget):
 
                 widget.setStyleSheet("background-color: white;color: black")
 
-            # Manage delay using QTimer for non-blocking operation
+            # Manage delay
+            blocked = False
             self.logview.append(_("Delay") + " %d ms" % request_delay)
-            if request_delay > 0:
-                # Use QTimer.singleShot for non-blocking delay
-                core.QTimer.singleShot(request_delay, 
-                    lambda stream=elm_data_stream, log=logdict, rcv=rcvbytes_data_items, req=request_name: 
-                        self._continue_button_action(stream, log, rcv, req))
-                return
-            
-            self._continue_button_action(elm_data_stream, logdict, rcvbytes_data_items, request_name)
-    
-    def _continue_button_action(self, elm_data_stream, logdict, rcvbytes_data_items, request_name):
-        """Continue button action after delay"""
-        # Then show received values
-        elm_response = self.sendElm(' '.join(elm_data_stream))
-        blocked = False
-        
-        if elm_response == "BLOCKED":
-            show_message_box(_("For your safety"),
-                           _("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock"),
-                           widgets.QMessageBox.Warning)
-            blocked = True
+            time.sleep(request_delay / 1000.0)
+            # Then show received values
+            elm_response = self.sendElm(' '.join(elm_data_stream))
+            if elm_response == "BLOCKED":
+                msgbox = widgets.QMessageBox()
+                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                msgbox.setWindowIcon(appIcon)
+                msgbox.setWindowTitle(_("For your safety"))
+                msgbox.setText(_("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock"))
+                msgbox.exec_()
+                blocked = True
 
-        if self.logfile is not None:
-            self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
-            if not blocked:
-                self.logfile.write("\t%s: \n\t\t" % _("Writing parameter"))
-            else:
-                self.logfile.write("\t%s: \n\t\t" % _("Blocked writing parameter"))
-            self.logfile.write(json.dumps(logdict))
-            self.logfile.write("\n")
-            self.logfile.flush()
-
-        if blocked:
-            return
-
-        for key in rcvbytes_data_items.keys():
-            if request_name in self.displaydict:
-                data_item = rcvbytes_data_items[key]
-                dd_ecu_data = self.ecurequestsparser.data[key]
-                value = dd_ecu_data.getDisplayValue(elm_response, data_item, self.ecurequestsparser.endianness)
-                dd_request_data = self.displaydict[request_name]
-                data = dd_request_data.getDataByName(key)
-
-                if value == None:
-                    if data:
-                        data.widget.setStyleSheet("background-color: red;color: black")
-                    value = _("Invalid")
+            if self.logfile is not None and len(logdict) > 0:
+                self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
+                if not blocked:
+                    self.logfile.write("\t%s: \n\t\t" % _("Writing parameter"))
                 else:
+                    self.logfile.write("\t%s: \n\t\t" % _("Blocked writing parameter"))
+                self.logfile.write(json.dumps(logdict))
+                self.logfile.write("\n")
+                self.logfile.flush()
+
+            if blocked:
+                return
+
+            for key in rcvbytes_data_items.keys():
+                if request_name in self.displaydict:
+                    data_item = rcvbytes_data_items[key]
+                    dd_ecu_data = self.ecurequestsparser.data[key]
+                    value = dd_ecu_data.getDisplayValue(elm_response, data_item, self.ecurequestsparser.endianness)
+                    dd_request_data = self.displaydict[request_name]
+                    data = dd_request_data.getDataByName(key)
+
+                    if value == None:
+                        if data:
+                            data.widget.setStyleSheet("background-color: red;color: black")
+                        value = _("Invalid")
+                    else:
+                        if data:
+                            data.widget.setStyleSheet("background-color: white;color: black")
+
                     if data:
-                        data.widget.setStyleSheet("background-color: white;color: black")
+                        data.widget.setText(value + ' ' + dd_ecu_data.unit)
 
-                if data:
-                    data.widget.setText(value + ' ' + dd_ecu_data.unit)
-
-        # Give some time to ECU to refresh parameters using QTimer
-        core.QTimer.singleShot(100, self._refresh_after_write)
-    
-    def _refresh_after_write(self):
-        """Refresh displays after write operation"""
+        # Give some time to ECU to refresh parameters
+        time.sleep(0.1)
         # Want to show result in log
         self.updatelog = True
         self.updateDisplays()
@@ -1306,9 +1304,7 @@ class paramWidget(widgets.QWidget):
                 delay = float(sendcom['Delay'])
                 req_name = sendcom['RequestName']
 
-                # Use more efficient delay
-                if delay > 0:
-                    time.sleep(delay / 1000.0)
+                time.sleep(delay / 1000.)
                 request = self.getRequest(self.ecurequestsparser.requests, req_name)
                 if not request:
                     self.logview.append(_("Cannot call request ") + req_name)
