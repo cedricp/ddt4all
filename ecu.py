@@ -8,6 +8,7 @@ import re
 import string
 import xml.dom.minidom
 import zipfile
+from functools import lru_cache
 
 import elm
 import json
@@ -43,6 +44,9 @@ def getChildNodesByName(parent, name):
 
 
 class Data_item:
+    """Data item with optimized memory usage"""
+    __slots__ = ('name', 'firstbyte', 'bitoffset', 'ref', 'endian', 'req_endian')
+    
     def __init__(self, item, req_endian, name=''):
         self.firstbyte = 0
         self.bitoffset = 0
@@ -93,6 +97,9 @@ class Data_item:
 
 
 class Ecu_device:
+    """ECU device with optimized memory usage"""
+    __slots__ = ('name', 'dtc', 'dtctype', 'devicedata')
+    
     def __init__(self, dev):
         self.dtc = 0
         self.dtctype = 0
@@ -1373,9 +1380,15 @@ class Ecu_scanner:
         self.num_ecu_found = 0
         self.report_data = []
         self.qapp = None
+        self._target_cache = {}  # Cache for getTarget lookups
 
     def getNumEcuDb(self):
         return self.ecu_database.numecu
+    
+    @lru_cache(maxsize=128)
+    def _get_target_cached(self, name):
+        """Cached target lookup"""
+        return self.ecu_database.getTarget(name)
 
     def getNumAddr(self):
         count = []

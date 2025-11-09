@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import string
+import threading
 import time
 
 import PyQt5.QtCore as core
@@ -25,6 +26,7 @@ class snifferThread(core.QThread):
         super(snifferThread, self).__init__()
         self.filter = address
         self.running = True
+        self._stop_event = threading.Event()
         if not options.simulation_mode:
             options.elm.monitorstop = False
             options.elm.init_can_sniffer(self.filter, br)
@@ -35,25 +37,31 @@ class snifferThread(core.QThread):
         else:
             return
 
-        while self.running:
-            time.sleep(.1)
+        # Use event-based waiting instead of busy loop
+        self._stop_event.wait(timeout=2.0)
 
     def senddata(self, data):
         self.dataready.emit(data)
 
     def run(self):
         if options.simulation_mode:
-            if options.simulation_mode:
-                while 1:
-                    time.sleep(.1)
-                    # Test data
-                    self.dataready.emit("0300000000400000")
+            # Simulation mode with QTimer-based emission
+            timer = core.QTimer()
+            timer.timeout.connect(lambda: self.dataready.emit("0300000000400000"))
+            timer.start(100)  # 100ms interval
+            
+            # Wait for stop event
+            while not self._stop_event.is_set():
+                self._stop_event.wait(timeout=0.1)
+            
+            timer.stop()
             return
 
         while not options.elm.monitorstop:
             options.elm.monitor_can_bus(self.senddata)
 
         self.running = False
+        self._stop_event.set()
 
 
 class sniffer(widgets.QWidget):
