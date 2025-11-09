@@ -4,7 +4,7 @@
 QWidget {
   color: #000000;
   font-family: ".AppleSystemUIFont", "Segoe UI", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 12pt;
+  font-size: 14pt;
 }
 QWidget:item:hover {
   background-color: #e6f3ff;
