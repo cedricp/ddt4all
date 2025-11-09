@@ -15,12 +15,8 @@ _ = options.translator('ddt4all')
 
 class snifferThread(core.QThread):
     # Use a thread to avoid ELM buffer flooding
-    try:
-        # TODO:// basestring not defined use bytes.
-        # dataready = core.pyqtSignal(basestring)
-        dataready = core.pyqtSignal(bytes)
-    except:
-        dataready = core.pyqtSignal(str)
+    # Use a generic object signal to avoid type mismatches across PyQt builds
+    dataready = core.pyqtSignal(object)
 
     def __init__(self, address, br):
         super(snifferThread, self).__init__()
@@ -161,7 +157,16 @@ class sniffer(widgets.QWidget):
         return self.init()
 
     def callback(self, stream):
-        data = str(stream).replace(" ", "").strip()
+        # Normalize incoming data to a clean hex string without spaces
+        if isinstance(stream, (bytes, bytearray)):
+            try:
+                data = stream.decode('ascii', errors='ignore')
+            except Exception:
+                data = ''
+        else:
+            data = str(stream)
+
+        data = data.replace(" ", "").strip()
 
         if '0:' in data:
             return

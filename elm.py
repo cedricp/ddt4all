@@ -560,7 +560,7 @@ class Port:
         try:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
-            self.init_serial(38400, self.portTimeout)
+            self.init_serial(38400)
             print(f"Bluetooth connection attempted: {self.portName}")
         except Exception as e:
             print(f"Bluetooth connection failed: {e}")
@@ -755,14 +755,21 @@ class Port:
                 byte = '>'
 
             if byte:
+                # Ensure bytes
+                if isinstance(byte, str):
+                    byte = byte.encode('utf-8', errors='ignore')
                 self.buff += byte
             tc = time.time()
 
             if b'\r' in self.buff:
-                return self.buff.decode('utf8')
+                return self.buff.decode('utf8', errors='ignore')
 
             if (tc - tb) > time_out:
-                return self.buff + b"TIMEOUT"
+                # Always return a decoded string on timeout
+                try:
+                    return (self.buff + b"TIMEOUT").decode('utf8', errors='ignore')
+                except Exception:
+                    return "TIMEOUT"
 
         # self.close()
         # self.connectionStatus = False

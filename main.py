@@ -1868,7 +1868,7 @@ class main_window_options(widgets.QDialog):
         self.timer.stop()
         self.securitycheck = self.safetycheck.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
-        if not pc.securitycheck:
+        if not self.securitycheck:
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
