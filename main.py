@@ -31,6 +31,7 @@ import options
 import parameters
 import sniffer
 import version
+from uiutils import show_message_box, get_app_icon
 
 _ = options.translator('ddt4all')
 app = None
@@ -82,8 +83,7 @@ class Ecu_finder(widgets.QDialog):
     def __init__(self, ecuscanner):
         super(Ecu_finder, self).__init__()
         # Set window icon and title
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-        self.setWindowIcon(appIcon)
+        self.setWindowIcon(get_app_icon())
         self.setWindowTitle(_("ECU Finder"))
         self.ecuscanner = ecuscanner
         layoutv = widgets.QVBoxLayout()
@@ -298,41 +298,14 @@ class Main_widget(widgets.QMainWindow):
         options.ecu_scanner = self.ecu_scan
         print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
         if self.ecu_scan.getNumEcuDb() == 0:
-            msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-            msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle(version.__appname__)
-            msgbox.setIcon(widgets.QMessageBox.Warning)
-            msgbox.setText(_("No database found"))
-            msgbox.setInformativeText(_("Check documentation"))
-            msgbox.exec_()
+            show_message_box(version.__appname__,
+                           _("No database found"),
+                           widgets.QMessageBox.Warning,
+                           _("Check documentation"))
 
         self.paramview = None
-        
-        # Initialize documentation view based on WebEngine availability
-        if HAS_WEBENGINE:
-            self.docview = webkitwidgets.QWebEngineView()
-            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
-            
-            # Configure WebEngine settings for optimal GitHub wiki experience
-            settings = self.docview.settings()
-            settings.setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, False)  # Disabled to prevent compatibility errors
-            settings.setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)     # Better visual experience
-            settings.setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, False)    # Security: disable plugins
-            settings.setAttribute(webkitwidgets.QWebEngineSettings.LocalStorageEnabled, False)  # Security: no local storage
-            settings.setAttribute(webkitwidgets.QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)  # Security
-        else:
-            # Fallback to basic text widget for documentation
-            self.docview = widgets.QTextEdit()
-            self.docview.setReadOnly(True)
-            self.docview.setHtml(f"""
-            <h2>{_("DDT4All Documentation")}</h2>
-            <p><strong>{_("WebEngine not available.")}</strong> {_("For full documentation with web browsing capability, install PyQtWebEngine:")}</p>
-            <pre>pip install PyQtWebEngine</pre>
-            <p>{_("Visit the online documentation at:")} <br>
-            <a href="https://github.com/cedricp/ddt4all/wiki">https://github.com/cedricp/ddt4all/wiki</a></p>
-            <p>{_("This basic view will still show ECU documentation when available.")}</p>
-            """)
+        self.docview = None  # Lazy load documentation view
+        self._docview_loaded = False
 
         self.screennames = []
 
@@ -398,9 +371,14 @@ class Main_widget(widgets.QMainWindow):
 
         self.snifferview = sniffer.sniffer()
 
-        self.tabbedview.addTab(self.docview, _("Documentation"))
+        # Lazy load tabs - create placeholder for documentation
+        self._doc_placeholder = widgets.QWidget()
+        self.tabbedview.addTab(self._doc_placeholder, _("Documentation"))
         self.tabbedview.addTab(self.scrollview, _("Screen"))
         self.tabbedview.addTab(self.snifferview, _("CAN Sniffer"))
+        
+        # Connect tab change to lazy loading
+        self.tabbedview.currentChanged.connect(self._on_tab_changed)
 
         if options.simulation_mode:
             self.buttonEditor = dataeditor.buttonEditor()
@@ -632,15 +610,49 @@ class Main_widget(widgets.QMainWindow):
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
         self.showMaximized()
+    
+    def _on_tab_changed(self, index):
+        """Lazy load tab content when selected"""
+        # Load documentation view on first access
+        if index == 0 and not self._docview_loaded:
+            self._load_documentation_view()
+    
+    def _load_documentation_view(self):
+        """Lazy load documentation view"""
+        if self._docview_loaded:
+            return
+        
+        if HAS_WEBENGINE:
+            self.docview = webkitwidgets.QWebEngineView()
+            self.docview.load(core.QUrl("https://github.com/cedricp/ddt4all/wiki"))
+            
+            # Configure WebEngine settings for optimal GitHub wiki experience
+            settings = self.docview.settings()
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.JavascriptEnabled, False)
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.AutoLoadImages, True)
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.PluginsEnabled, False)
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.LocalStorageEnabled, False)
+            settings.setAttribute(webkitwidgets.QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
+        else:
+            # Fallback to basic text widget for documentation
+            self.docview = widgets.QTextEdit()
+            self.docview.setReadOnly(True)
+            self.docview.setHtml(f"""
+            <h2>{_("DDT4All Documentation")}</h2>
+            <p><strong>{_("WebEngine not available.")}</strong> {_("For full documentation with web browsing capability, install PyQtWebEngine:")}</p>
+            <pre>pip install PyQtWebEngine</pre>
+            <p>{_("Visit the online documentation at:")} <br>
+            <a href="https://github.com/cedricp/ddt4all/wiki">https://github.com/cedricp/ddt4all/wiki</a></p>
+            <p>{_("This basic view will still show ECU documentation when available.")}</p>
+            """)
+        
+        # Replace placeholder with actual view
+        self.tabbedview.removeTab(0)
+        self.tabbedview.insertTab(0, self.docview, _("Documentation"))
+        self._docview_loaded = True
 
     def about_content_msg(self):
-        msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-        msgbox.setWindowIcon(appIcon)
-        msgbox.setIcon(widgets.QMessageBox.Information)
-        msgbox.setWindowTitle(_("About DDT4ALL"))
         text_about = version.__appname__ + _(" version:") + " %s" % version.__version__
-        msgbox.setText(text_about)
         html = '<h2>' + _("Created by:") + " %s" % (version.__author__) + '</h2><table>'
         for c in version.__contributors__:
             if c == "Furtif":
@@ -648,6 +660,12 @@ class Main_widget(widgets.QMainWindow):
             else:
                 html += '<tr><td>Contribuitor: </td><td>' + c + '</td></tr>'
         html += '</table>'
+        
+        msgbox = widgets.QMessageBox()
+        msgbox.setWindowIcon(get_app_icon())
+        msgbox.setIcon(widgets.QMessageBox.Information)
+        msgbox.setWindowTitle(_("About DDT4ALL"))
+        msgbox.setText(text_about)
         msgbox.setInformativeText(html)
         msgbox.exec_()
 
@@ -668,8 +686,7 @@ class Main_widget(widgets.QMainWindow):
         gui.QDesktopServices().openUrl(url)
 
     def setIcon(self):
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-        self.setWindowIcon(appIcon)
+        self.setWindowIcon(get_app_icon())
 
     def set_can_combo(self, bus):
         self.canlinecombo.clear()
@@ -744,12 +761,9 @@ class Main_widget(widgets.QMainWindow):
             filename += ".zip"
 
         if not isWritable(str(os.path.dirname(filename))):
-            mbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-            mbox.setWindowIcon(appIcon)
-            mbox.setWindowTitle(version.__appname__)
-            mbox.setText("Cannot write to directory " + os.path.dirname(filename))
-            mbox.exec_()
+            show_message_box(version.__appname__,
+                           "Cannot write to directory " + os.path.dirname(filename),
+                           widgets.QMessageBox.Warning)
             return
 
         self.logview.append(_("Zipping XML database... (this can take a few minutes)"))
@@ -761,14 +775,10 @@ class Main_widget(widgets.QMainWindow):
         if self.paramview:
             self.paramview.init('')
         if self.ecu_scan.getNumEcuDb() == 0:
-            msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-            msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle(version.__appname__)
-            msgbox.setIcon(widgets.QMessageBox.Warning)
-            msgbox.setText(_("No database found"))
-            msgbox.setInformativeText(_("Check documentation"))
-            msgbox.exec_()
+            show_message_box(version.__appname__,
+                           _("No database found"),
+                           widgets.QMessageBox.Warning,
+                           _("Check documentation"))
             return
         pim()
         if self.paramview:
@@ -1858,7 +1868,7 @@ class main_window_options(widgets.QDialog):
         self.timer.stop()
         self.securitycheck = self.safetycheck.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
-        if not pc.securitycheck:
+        if not self.securitycheck:
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
             msgbox.setWindowIcon(appIcon)
