@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-28 05:02+0200\n"
-"PO-Revision-Date: 2025-06-28 05:29+0200\n"
+"POT-Creation-Date: 2025-11-11 06:02+0100\n"
+"PO-Revision-Date: 2025-11-11 06:11+0100\n"
 "Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 msgid "Goto data"
 msgstr "Accesati datele"
@@ -350,11 +350,16 @@ msgstr ""
 msgid "(no relevant ECU file found)"
 msgstr ""
 
-msgid "Writing vehicles database..."
+msgid "Using saved settings for"
 msgstr ""
 
-msgid "Starting zipping "
+msgid "Using optimal settings for"
 msgstr ""
+
+#, fuzzy
+#| msgid "Checking port speed:"
+msgid "Serial port opened"
+msgstr "Verificarea vitezei portului:"
 
 #, fuzzy
 #| msgid "Error:"
@@ -795,9 +800,7 @@ msgstr "Da, contribui"
 msgid "No, I don't"
 msgstr "Nu, nu vreu"
 
-msgid ""
-"<center>Thank you for you contribution, if nothing happens, please go to : "
-"https://github.com/cedricp/ddt4all</center>"
+msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
 
 #, fuzzy
