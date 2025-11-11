@@ -1002,6 +1002,7 @@ class Ecu_file:
     def connect_to_hardware(self, canline=0):
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
+        short_addr = None
         if self.ecu_protocol == 'CAN':
             if not options.simulation_mode:
                 if len(self.ecu_send_id) == 8:

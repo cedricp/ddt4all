@@ -203,6 +203,18 @@ cmdb = '''
 '''
 
 
+def clean_bytestring(value):
+    # If is bytes -> decode
+    # print(repr(value), type(value))
+    if isinstance(value, bytes):
+        return value.decode('utf-8', errors='ignore')
+    # If is string type "b'xxxx'" -> remove prefix b''
+    value = str(value)
+    if value.startswith("b'") and value.endswith("'"):
+        return value[2:-1]
+    return value
+
+
 def addr_exist(addr):
     result = True
     if addr not in dnat:
@@ -561,7 +573,7 @@ class Port:
         try:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
-            self.init_serial(38400, self.portTimeout)
+            self.init_serial(38400)
             print(f"Bluetooth connection attempted: {self.portName}")
         except Exception as e:
             print(f"Bluetooth connection failed: {e}")
@@ -647,7 +659,8 @@ class Port:
                 if self.portType == 1:  # TCP/WiFi
                     import socket
                     try:
-                        byte = self.hdr.recv(1)
+                        # byte = self.hdr.recv(1)
+                        byte = self.hdr.read(1)
                         if options.debug:
                             print(f"WiFi recv: {byte}")
                     except socket.timeout:
@@ -723,7 +736,8 @@ class Port:
                         self.init_wifi(True)
                         if not self.connectionStatus:
                             return None
-                    return self.hdr.sendall(data)
+                    # return self.hdr.sendall(data)
+                    return self.hdr.write(data)
                 elif self.portType == 2:  # Bluetooth
                     if self.droid:
                         return self.droid.bluetoothWrite(data)
@@ -795,14 +809,15 @@ class Port:
 
     def check_elm(self):
 
-        self.hdr.timeout = 2
+        timeout = 2
 
         for s in [38400, 115200, 230400, 57600, 9600, 500000]:
             print("\r\t\t\t\t\r" + _("Checking port speed:"), s, )
             sys.stdout.flush()
 
             self.hdr.baudrate = s
-            self.hdr.flushInput()
+            # self.hdr.flushInput()
+            self.hdr.reset_input_buffer()
             self.write("\r")
 
             # search > string
@@ -818,7 +833,7 @@ class Port:
                 if '>' in self.buff:
                     options.port_speed = s
                     print("\n" + _("Start COM speed :"), s)
-                    self.hdr.timeout = self.portTimeout
+                    self.hdr.timeout = timeout
                     return True
                 if (tc - tb) > 1:
                     break
@@ -895,8 +910,7 @@ class ELM:
             if len(options.log) > 0:
                 self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
                 self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
-                self.vf.write(
-                    "Timestamp;ECU_CAN_Address_HEX;Raw_Command_HEX;Raw_Response_HEX_or_STR;Error_message_if_happens\n")
+                self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
@@ -946,7 +960,7 @@ class ELM:
             print(text_optional.replace("OBDLink", "ELM"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
-        elif adapter_type == "VLINKER" and maxspeed > 0 and rate != maxspeed:
+        elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
             print(device_text_switch.replace("OBDLink", "Vlinker"))
             try:
                 self.raise_elm_speed(maxspeed)
@@ -958,7 +972,7 @@ class ELM:
             print(text_optional.replace("OBDLink", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
-        elif adapter_type == "VGATE" and maxspeed > 0 and rate != maxspeed:
+        elif adapter_type == "VGATE" and 0 < maxspeed != rate:
             print(device_text_switch.replace("OBDLink", "Vgate"))
             try:
                 self.raise_odb_speed(maxspeed, "VGate")
@@ -1015,19 +1029,17 @@ class ELM:
     def raise_elm_speed(self, baudrate):
         # Software speed switch to 115Kbps
         if baudrate == 57600:
-            res = self.port.write("ATBRD 45\r".encode("utf-8"))
+            self.port.write("ATBRD 45\r".encode("utf-8"))
         elif baudrate == 115200:
-            res = self.port.write("ATBRD 23\r".encode("utf-8"))
+            self.port.write("ATBRD 23\r".encode("utf-8"))
         elif baudrate == 230400:
-            res = self.port.write("ATBRD 11\r".encode("utf-8"))
+            self.port.write("ATBRD 11\r".encode("utf-8"))
         elif baudrate == 500000:
-            res = self.port.write("ATBRD 8\r".encode("utf-8"))
+            self.port.write("ATBRD 8\r".encode("utf-8"))
         else:
             return
 
-        # Command echo
-        res = self.port.expect_carriage_return()
-        # Command result
+        # Command echo result
         res = self.port.expect_carriage_return()
         if "OK" in res:
             print(_("ELM baudrate switched OK, changing UART speed now..."))
@@ -1080,20 +1092,20 @@ class ELM:
         rsp = self.cmd(req, serviceDelay)
         if 'WRONG' in rsp:
             return rsp
-        res = ""
 
+        # parse responce
+        res = ""
         if self.currentprotocol != "can":
             # Trivially reject first line (echo)
             rsp_split = rsp.split('\n')[1:]
             for s in rsp_split:
-                if '>' not in s:
+                if '>' not in s and len(s.strip()):
                     res += s.strip() + ' '
         else:
-            # parse response
             for s in rsp.split('\n'):
                 if ':' in s:
                     res += s[2:].strip() + ' '
-                else:  # response consists only of one frame
+                else:  # responce consists only from one frame
                     if s.replace(' ', '').startswith(positive.replace(' ', '')):
                         res += s.strip() + ' '
 
@@ -1146,7 +1158,7 @@ class ELM:
             # log KeepAlive event
             if self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                self.lf.write("#[" + tmstr + "]" + "KeepAlive\n")
+                self.lf.write("# [" + tmstr + "] KeepAlive\n")
                 self.lf.flush()
 
                 # send keepalive
@@ -1166,7 +1178,7 @@ class ELM:
             if l.startswith("7F") and len(l) == 8 and l[6:8] in negrsp.keys():
                 print(l, negrsp[l[6:8]])
                 if self.lf != 0:
-                    self.lf.write("#[" + str(tc - tb) + "] rsp:" + l + ":" + negrsp[l[6:8]] + "\n")
+                    self.lf.write("# [" + str(tc - tb) + "] rsp: " + l + ": " + negrsp[l[6:8]] + "\n")
                     self.lf.flush()
         return cmdrsp
 
@@ -1488,7 +1500,7 @@ class ELM:
         if self.lf != 0:
             # tm = str(time.time())
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            self.lf.write(">[" + tmstr + "]" + command + "\n")
+            self.lf.write("> [" + tmstr + "] Request: " + command + "\n")
             self.lf.flush()
 
         # send command
@@ -1513,7 +1525,7 @@ class ELM:
                 break
             elif self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                self.lf.write("<[" + tmstr + "]" + self.buff + "<shifted>" + command + "\n")
+                self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
                 self.lf.flush()
 
         # count errors
@@ -1532,7 +1544,7 @@ class ELM:
 
         # save response to log
         if self.lf != 0:
-            self.lf.write("<[" + str(round(tc - tb, 3)) + "]" + self.buff + "\n")
+            self.lf.write("< [" + str(round(tc - tb, 3)) + "] Response: " + self.buff + "\n")
             self.lf.flush()
 
         return self.buff
@@ -1600,7 +1612,7 @@ class ELM:
 
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
-            self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
         self.cmd("AT E1")
@@ -1622,7 +1634,8 @@ class ELM:
             canline = 0
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# Connect to: [" + clean_bytestring(
+                ecu['ecuname']) + "] Addr: " + addr + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "can"
@@ -1717,7 +1730,7 @@ class ELM:
 
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
-            self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
         self.cmd("AT E1")
@@ -1732,8 +1745,9 @@ class ELM:
             return
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
-                'protocol'] + "\n" + '#' * 60 + "\n")
+            self.lf.write(
+                '#' * 60 + "\n# Connect to: [" + clean_bytestring(ecu['ecuname']) + "] Addr: " + addr + " Protocol: " +
+                ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "iso"
@@ -1758,8 +1772,9 @@ class ELM:
             return
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
-                'protocol'] + "\n" + '#' * 60 + "\n")
+            self.lf.write(
+                '#' * 60 + "\n# Connect to: [" + clean_bytestring(ecu['ecuname']) + "] Addr: " + addr + " Protocol: " +
+                ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "iso"

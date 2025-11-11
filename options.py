@@ -102,7 +102,7 @@ def load_configuration():
                                                            ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
         configuration["enable_device_validation"] = config.get("enable_device_validation", True)
         
-        os.environ['LANG'] = configuration["lang"]
+        os.environ['LANG'] = str(configuration["lang"])
         f.close()
     except Exception as e:
         print(f"Error loading configuration: {e}")
