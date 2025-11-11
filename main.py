@@ -1266,12 +1266,12 @@ class donationWidget(widgets.QLabel):
         msgbox.setWindowTitle(version.__appname__)
         appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         msgbox.setWindowIcon(appIcon)
-        msgbox.setText(
-            _("<center>Thank you for you contribution, if nothing happens, please go to : https://github.com/cedricp/ddt4all</center>"))
+        translate_arg = _("Thank you for you contribution, if nothing happens, please go to")
+        msgbox.setText("<center>" + translate_arg + ": https://github.com/cedricp/ddt4all</center>")
         msgbox.exec_()
 
 
-def set_dark_style(onoff):
+def set_theme_style(onoff):
     if (onoff):
         stylefile = core.QFile("ddt4all_data/qstyle-d.qss")
         options.dark_mode = True
@@ -1466,7 +1466,7 @@ class main_window_options(widgets.QDialog):
         darkstylelayout = widgets.QHBoxLayout()
         self.darklayoutcheck = widgets.QCheckBox()
         self.darklayoutcheck.setChecked(options.dark_mode)
-        self.darklayoutcheck.stateChanged.connect(set_dark_style)
+        self.darklayoutcheck.stateChanged.connect(set_theme_style)
         darkstylelabel = widgets.QLabel(_("Dark style"))
         darkstylelayout.addWidget(self.darklayoutcheck)
         darkstylelayout.addWidget(darkstylelabel)
@@ -1930,15 +1930,15 @@ if __name__ == '__main__':
         with open("ddt4all_data/config.json", "r", encoding="UTF-8") as f:
             configuration = json.loads(f.read())
         if configuration["dark"]:
-            set_dark_style(2)
+            set_theme_style(2)
         else:
-            set_dark_style(0)
+            set_theme_style(0)
         if configuration["socket_timeout"]:
             set_socket_timeout(1)
         else:
             set_socket_timeout(0)
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
-        set_dark_style(0)
+        set_theme_style(0)
 
     app.setStyle("plastic")
 
