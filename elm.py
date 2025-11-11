@@ -501,10 +501,12 @@ class Port:
 
             if saved_settings and 'baudrate' in saved_settings:
                 settings = saved_settings
-                print(f"Using saved settings for {self.adapter_type}: {settings}")
+                translate_arg = _("Using saved settings for")
+                print (f"{translate_arg} {self.adapter_type}: {settings}")
             else:
                 settings = DeviceManager.get_optimal_settings(self.adapter_type)
-                print(f"Using optimal settings for {self.adapter_type}: {settings}")
+                translate_arg = _("Using optimal settings for")
+                print(f"{translate_arg} {self.adapter_type}: {settings}")
 
             # Use provided speed if specified, otherwise use setting
             if speed > 0:
@@ -541,7 +543,8 @@ class Port:
             self.hdr.reset_input_buffer()
             self.hdr.reset_output_buffer()
 
-            print(f"Serial port opened: {self.hdr}")
+            translate_arg = _("Serial port opened")
+            print(f"{translate_arg}: {self.hdr}")
             self.connectionStatus = True
 
             # Save successful connection settings
