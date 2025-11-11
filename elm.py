@@ -7,12 +7,12 @@
 '''
 
 import os
+import platform
 import re
 import string
 import sys
-import time
 import threading
-import platform
+import time
 from datetime import datetime
 
 import serial
@@ -202,6 +202,19 @@ cmdb = '''
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
 
+
+def clean_bytestring(value):
+    # If is bytes -> decode
+    # print(repr(value), type(value))
+    if isinstance(value, bytes):
+        return value.decode('utf-8', errors='ignore')
+    # If is string type "b'xxxx'" -> remove prefix b''
+    value = str(value)
+    if value.startswith("b'") and value.endswith("'"):
+        return value[2:-1]
+    return value
+
+
 def addr_exist(addr):
     result = True
     if addr not in dnat:
@@ -247,7 +260,7 @@ def get_available_ports():
     ports = []
     try:
         portlist = list_ports.comports()
-        
+
         if item_count(portlist) == 0:
             return []
 
@@ -256,7 +269,7 @@ def get_available_ports():
             # Enhanced device identification for ELS27 and other adapters
             device_desc = desc
             desc_upper = desc.upper()
-            
+
             # Direct device name detection
             if any(keyword in desc_upper for keyword in ['ELS27', 'ELM327']):
                 if 'ELS27' in desc_upper:
@@ -278,9 +291,9 @@ def get_available_ports():
                 device_desc = f"{desc} (CP210x - Possible ELS27/ELM327)"
             elif any(chip in desc_upper for chip in ['PL2303']):
                 device_desc = f"{desc} (PL2303 - Possible ELS27/ELM327)"
-            
+
             ports.append((port, device_desc, hwid))
-                
+
     except Exception as e:
         print(f"Error detecting serial ports: {e}")
         # Fallback: try common port patterns
@@ -289,12 +302,12 @@ def get_available_ports():
             common_ports = [f'COM{i}' for i in range(1, 21)]
         elif platform.system().lower() == 'linux':
             common_ports = [f'/dev/ttyUSB{i}' for i in range(0, 5)] + \
-                          [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
-                          [f'/dev/rfcomm{i}' for i in range(0, 5)]
+                           [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
+                           [f'/dev/rfcomm{i}' for i in range(0, 5)]
         elif platform.system().lower() == 'darwin':
             import glob
             common_ports = glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
-        
+
         for port in common_ports:
             try:
                 # Test if port exists and is accessible
@@ -309,7 +322,7 @@ def get_available_ports():
 
 class DeviceManager:
     """Device manager for OBD-II adapters with optimal settings"""
-    
+
     @staticmethod
     def get_optimal_settings(device_type):
         """Get optimal connection settings for specific device types"""
@@ -320,55 +333,57 @@ class DeviceManager:
             'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
             'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13'},
             'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},
-    
+
             'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
         }
         return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
-    
+
     @staticmethod
     def normalize_adapter_type(adapter_type):
         """Normalize UI adapter types to internal device types"""
         adapter_mapping = {
-            'STD_BT': 'elm327',      # Bluetooth ELM327
-            'STD_WIFI': 'elm327',    # WiFi ELM327  
-            'STD_USB': 'elm327',     # USB ELM327
-            'STD': 'elm327',         # Standard ELM327
-            'OBDLINK': 'obdlink',    # OBDLink devices
+            'STD_BT': 'elm327',  # Bluetooth ELM327
+            'STD_WIFI': 'elm327',  # WiFi ELM327
+            'STD_USB': 'elm327',  # USB ELM327
+            'STD': 'elm327',  # Standard ELM327
+            'OBDLINK': 'obdlink',  # OBDLink devices
             'OBDLINK_EX': 'obdlink_ex',  # OBDLink EX devices
-            'ELS27': 'els27',        # ELS27 devices
-            'VLINKER': 'vlinker',    # Vlinker devices
-            'VGATE': 'vgate',        # VGate devices
-            'USBCAN': 'unknown'      # USB CAN adapters - use unknown defaults
+            'ELS27': 'els27',  # ELS27 devices
+            'VLINKER': 'vlinker',  # Vlinker devices
+            'VGATE': 'vgate',  # VGate devices
+            'USBCAN': 'unknown'  # USB CAN adapters - use unknown defaults
         }
         return adapter_mapping.get(adapter_type.upper(), 'elm327')
-    
+
+
 def is_els27_device(port, timeout=2):
     """Test if a serial port has an ELS27 device with multiple baud rates"""
     import serial
     test_bauds = [38400, 9600, 115200]  # Common ELS27 baud rates
-    
+
     for baud in test_bauds:
         try:
             ser = serial.Serial(port, baud, timeout=timeout)
-            
+
             # Clear buffers
             ser.reset_input_buffer()
             ser.reset_output_buffer()
-            
+
             # Send ATZ (reset) command
             ser.write(b'ATZ\r')
             response = ser.read(100).decode('ascii', errors='ignore')
             ser.close()
-            
+
             # Check for ELS27 or ELM327 response
             response_upper = response.upper()
             if any(keyword in response_upper for keyword in ['ELS27', 'ELM327', 'OBD']):
                 return True, f"{response.strip()} (at {baud} baud)"
-                
+
         except Exception:
             continue
-    
+
     return False, "No ELS27 response at any baud rate"
+
 
 def reconnect_elm():
     """Enhanced reconnection with device-specific handling"""
@@ -376,7 +391,7 @@ def reconnect_elm():
     current_adapter = "STD"
     if options.elm:
         current_adapter = options.elm.adapter_type
-    
+
     # Try to reconnect to the same port first
     if options.port_name:
         for port_info in ports:
@@ -388,27 +403,27 @@ def reconnect_elm():
                     device_key = DeviceManager.normalize_adapter_type(current_adapter)
                     saved_settings = options.get_device_settings(device_key, port)
                     speed = saved_settings.get('baudrate', options.port_speed) if saved_settings else options.port_speed
-                    
+
                     options.elm = ELM(port, speed, current_adapter)
                     if options.elm.connectionStatus:
                         return True
                 except Exception as e:
                     print(f"Reconnection failed: {e}")
                     continue
-    
+
     # Try other available ports
     for port_info in ports:
         port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
         device_key = DeviceManager.normalize_adapter_type(current_adapter)
         saved_settings = options.get_device_settings(device_key, port)
-        
+
         if saved_settings and 'baudrate' in saved_settings:
             settings = saved_settings
             print(f"Trying {current_adapter} device at {port} with saved settings")
         else:
             settings = DeviceManager.get_optimal_settings(current_adapter)
             print(f"Trying {current_adapter} device at {port} with optimal settings")
-        
+
         try:
             options.elm = ELM(port, settings['baudrate'], current_adapter)
             if options.elm.connectionStatus:
@@ -418,15 +433,15 @@ def reconnect_elm():
         except Exception as e:
             print(f"Connection to {port} failed: {e}")
             continue
-    
+
     return False
 
 
 def errorval(val):
-    if val not in negrsp:
-        return "Unregistered error"
-    if val in negrsp.keys():
+    if val in list(negrsp.keys()):
         return negrsp[val]
+
+    return "Unregistered error"
 
 
 class Port:
@@ -483,21 +498,21 @@ class Port:
             # Check for saved device settings first, use optimal settings as fallback
             device_key = DeviceManager.normalize_adapter_type(self.adapter_type)
             saved_settings = options.get_device_settings(device_key, self.portName)
-            
+
             if saved_settings and 'baudrate' in saved_settings:
                 settings = saved_settings
                 print(f"Using saved settings for {self.adapter_type}: {settings}")
             else:
                 settings = DeviceManager.get_optimal_settings(self.adapter_type)
                 print(f"Using optimal settings for {self.adapter_type}: {settings}")
-            
+
             # Use provided speed if specified, otherwise use setting
             if speed > 0:
                 settings['baudrate'] = speed
-            
+
             # Platform-specific serial port configuration
             current_platform = platform.system().lower()
-            
+
             # Enhanced serial parameters using device-specific settings
             serial_params = {
                 'port': self.portName,
@@ -510,7 +525,7 @@ class Port:
                 'rtscts': settings.get('rtscts', False),
                 'dsrdtr': settings.get('dsrdtr', False)
             }
-            
+
             # Platform-specific adjustments
             if current_platform == 'linux':
                 # Linux: Set exclusive access to prevent conflicts
@@ -519,16 +534,16 @@ class Port:
                 # macOS: Specific settings for USB-serial adapters
                 serial_params['rtscts'] = False
                 serial_params['dsrdtr'] = False
-            
+
             self.hdr = serial.Serial(**serial_params)
-            
+
             # Flush buffers to ensure clean start
             self.hdr.reset_input_buffer()
             self.hdr.reset_output_buffer()
-            
+
             print(f"Serial port opened: {self.hdr}")
             self.connectionStatus = True
-            
+
             # Save successful connection settings
             if self.connectionStatus:
                 connection_settings = {
@@ -538,7 +553,7 @@ class Port:
                     'dsrdtr': serial_params['dsrdtr']
                 }
                 options.save_device_settings(device_key, connection_settings, self.portName)
-            
+
         except serial.SerialException as e:
             error_msg = f"Serial connection error: {e}"
             print(_("Error: ") + error_msg)
@@ -558,7 +573,7 @@ class Port:
         try:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
-            self.init_serial(38400, self.portTimeout)
+            self.init_serial(38400)
             print(f"Bluetooth connection attempted: {self.portName}")
         except Exception as e:
             print(f"Bluetooth connection failed: {e}")
@@ -595,28 +610,28 @@ class Port:
         try:
             if reinit and self.hdr:
                 self.hdr.close()
-                
+
             self.hdr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.hdr.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             self.hdr.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            
+
             # Set connection timeout
             self.hdr.settimeout(10)  # 10 seconds for connection
-            
+
             print(f"Connecting to WiFi adapter at {self.ipaddr}:{self.tcpprt}")
             self.hdr.connect((self.ipaddr, self.tcpprt))
-            
+
             # Configure socket timeout based on settings
             if getattr(options, "socket_timeout", True):
                 self.hdr.settimeout(5)
             else:
                 self.hdr.setblocking(True)
-                
+
             self.connectionStatus = True
             self.tcp_needs_reconnect = False
             self.reconnect_attempts = 0
             print(f"WiFi connection established: {self.ipaddr}:{self.tcpprt}")
-            
+
         except socket.timeout:
             error_msg = f"WiFi connection timeout to {self.ipaddr}:{self.tcpprt}"
             print(_("Error: ") + error_msg)
@@ -644,7 +659,8 @@ class Port:
                 if self.portType == 1:  # TCP/WiFi
                     import socket
                     try:
-                        byte = self.hdr.recv(1)
+                        # byte = self.hdr.recv(1)
+                        byte = self.hdr.read(1)
                         if options.debug:
                             print(f"WiFi recv: {byte}")
                     except socket.timeout:
@@ -666,9 +682,9 @@ class Port:
                         byte = self.hdr.read(1)
                     elif self.hdr and hasattr(self.hdr, 'inWaiting') and self.hdr.inWaiting():
                         byte = self.hdr.read(1)
-                        
+
                 return byte
-                
+
             except serial.SerialException as e:
                 print(f"Serial error in read_byte: {e}")
                 self.connectionStatus = False
@@ -687,7 +703,7 @@ class Port:
             byte = self.read_byte()
             if byte is None:
                 return None
-                
+
             try:
                 return byte.decode("utf-8")
             except UnicodeDecodeError:
@@ -712,7 +728,7 @@ class Port:
             try:
                 if not isinstance(data, bytes):
                     data = data.encode('utf-8')
-                    
+
                 if self.portType == 1:  # TCP/WiFi
                     if self.tcp_needs_reconnect:
                         print("Attempting WiFi reconnection...")
@@ -720,7 +736,8 @@ class Port:
                         self.init_wifi(True)
                         if not self.connectionStatus:
                             return None
-                    return self.hdr.sendall(data)
+                    # return self.hdr.sendall(data)
+                    return self.hdr.write(data)
                 elif self.portType == 2:  # Bluetooth
                     if self.droid:
                         return self.droid.bluetoothWrite(data)
@@ -729,7 +746,7 @@ class Port:
                         return self.hdr.write(data)
                 else:  # Serial/USB
                     return self.hdr.write(data)
-                    
+
             except serial.SerialException as e:
                 print(f"Serial write error: {e}")
                 self.connectionStatus = False
@@ -792,14 +809,15 @@ class Port:
 
     def check_elm(self):
 
-        self.hdr.timeout = 2
+        timeout = 2
 
         for s in [38400, 115200, 230400, 57600, 9600, 500000]:
             print("\r\t\t\t\t\r" + _("Checking port speed:"), s, )
             sys.stdout.flush()
 
             self.hdr.baudrate = s
-            self.hdr.flushInput()
+            # self.hdr.flushInput()
+            self.hdr.reset_input_buffer()
             self.write("\r")
 
             # search > string
@@ -815,7 +833,7 @@ class Port:
                 if '>' in self.buff:
                     options.port_speed = s
                     print("\n" + _("Start COM speed :"), s)
-                    self.hdr.timeout = self.portTimeout
+                    self.hdr.timeout = timeout
                     return True
                 if (tc - tb) > 1:
                     break
@@ -892,8 +910,7 @@ class ELM:
             if len(options.log) > 0:
                 self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
                 self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
-                self.vf.write(
-                    "Timestamp;ECU_CAN_Address_HEX;Raw_Command_HEX;Raw_Response_HEX_or_STR;Error_message_if_happens\n")
+                self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
 
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
@@ -915,7 +932,7 @@ class ELM:
             maxspeed = int(maxspeed)
         except:
             maxspeed = 0
-          
+
         device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
         text_switck_error = _("Failed to switch to change OBDLink to ") + str(maxspeed)
         text_optional = _("OBDLINK Connection OK, using optimal settings")
@@ -940,10 +957,10 @@ class ELM:
                 self.connectionStatus = False
                 print(text_switck_error.replace("OBDLink", "ELM"))
         elif adapter_type == "STD_USB":
-            print(text_optional.replace("OBDLink", "ELM")   )
+            print(text_optional.replace("OBDLink", "ELM"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
-        elif adapter_type == "VLINKER" and maxspeed > 0 and rate != maxspeed:
+        elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
             print(device_text_switch.replace("OBDLink", "Vlinker"))
             try:
                 self.raise_elm_speed(maxspeed)
@@ -955,7 +972,7 @@ class ELM:
             print(text_optional.replace("OBDLink", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
-        elif adapter_type == "VGATE" and maxspeed > 0 and rate != maxspeed:
+        elif adapter_type == "VGATE" and 0 < maxspeed != rate:
             print(device_text_switch.replace("OBDLink", "Vgate"))
             try:
                 self.raise_odb_speed(maxspeed, "VGate")
@@ -1012,19 +1029,17 @@ class ELM:
     def raise_elm_speed(self, baudrate):
         # Software speed switch to 115Kbps
         if baudrate == 57600:
-            res = self.port.write("ATBRD 45\r".encode("utf-8"))
+            self.port.write("ATBRD 45\r".encode("utf-8"))
         elif baudrate == 115200:
-            res = self.port.write("ATBRD 23\r".encode("utf-8"))
+            self.port.write("ATBRD 23\r".encode("utf-8"))
         elif baudrate == 230400:
-            res = self.port.write("ATBRD 11\r".encode("utf-8"))
+            self.port.write("ATBRD 11\r".encode("utf-8"))
         elif baudrate == 500000:
-            res = self.port.write("ATBRD 8\r".encode("utf-8"))
+            self.port.write("ATBRD 8\r".encode("utf-8"))
         else:
             return
 
-        # Command echo
-        res = self.port.expect_carriage_return()
-        # Command result
+        # Command echo result
         res = self.port.expect_carriage_return()
         if "OK" in res:
             print(_("ELM baudrate switched OK, changing UART speed now..."))
@@ -1077,20 +1092,20 @@ class ELM:
         rsp = self.cmd(req, serviceDelay)
         if 'WRONG' in rsp:
             return rsp
-        res = ""
 
+        # parse responce
+        res = ""
         if self.currentprotocol != "can":
             # Trivially reject first line (echo)
             rsp_split = rsp.split('\n')[1:]
             for s in rsp_split:
-                if '>' not in s:
+                if '>' not in s and len(s.strip()):
                     res += s.strip() + ' '
         else:
-            # parse response
             for s in rsp.split('\n'):
                 if ':' in s:
                     res += s[2:].strip() + ' '
-                else:  # response consists only of one frame
+                else:  # responce consists only from one frame
                     if s.replace(' ', '').startswith(positive.replace(' ', '')):
                         res += s.strip() + ' '
 
@@ -1102,26 +1117,21 @@ class ELM:
         # save log
 
         if self.vf != 0:
+            errorstr = "Unknown"
+            if rsp[6:8] in list(negrsp.keys()):
+                errorstr = errorval(rsp[6:8])
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
-                self.vf.write(tmstr + ";" + "0x" + dnat_ext[
-                    self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",
-                                                                                                ",0x") + ";" + "\n")
+                self.vf.write(tmstr + ";" + dnat_ext[
+                    self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
             elif self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + "0x" + dnat[
-                    self.currentaddress] + ";" + "0x" + req + ";" + "0x" + rsp.rstrip().replace(" ",
-                                                                                                ",0x") + ";" + "\n")
+                self.vf.write(tmstr + ";" + dnat[
+                    self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
             else:
-                print(_("Unknown address: "), self.currentaddress, "0x" + req, "0x" + rsp)
+                print(_("Unknown address: "), self.currentaddress, req.replace(' ', ''))
             self.vf.flush()
 
         return rsp
-
-    def errorval(self, val):
-        if val not in negrsp:
-            return "not registered error"
-        if val in negrsp.keys():
-            return negrsp[val]
 
     def cmd(self, command, serviceDelay="0"):
         tb = time.time()  # start time
@@ -1148,7 +1158,7 @@ class ELM:
             # log KeepAlive event
             if self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                self.lf.write("#[" + tmstr + "]" + "KeepAlive\n")
+                self.lf.write("# [" + tmstr + "] KeepAlive\n")
                 self.lf.flush()
 
                 # send keepalive
@@ -1168,7 +1178,7 @@ class ELM:
             if l.startswith("7F") and len(l) == 8 and l[6:8] in negrsp.keys():
                 print(l, negrsp[l[6:8]])
                 if self.lf != 0:
-                    self.lf.write("#[" + str(tc - tb) + "] rsp:" + l + ":" + negrsp[l[6:8]] + "\n")
+                    self.lf.write("# [" + str(tc - tb) + "] rsp: " + l + ": " + negrsp[l[6:8]] + "\n")
                     self.lf.flush()
         return cmdrsp
 
@@ -1282,16 +1292,16 @@ class ELM:
         # check for negative response (repeat the same as in cmd())
         if result[:2] == '7F':
             noerrors = False
-            if result[4:6] in negrsp.keys():
-                errorstr = negrsp[result[4:6]]
+            if result[4:6] in list(negrsp.keys()):
+                errorstr = errorval(result[4:6])
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
                     self.vf.write(tmstr + ";" + dnat_ext[
-                        self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                        self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
                 elif self.currentaddress in dnat:
                     self.vf.write(tmstr + ";" + dnat[
-                        self.currentaddress] + ";" + "0x" + command + ";" + result + ";" + errorstr + "\n")
+                        self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
                 self.vf.flush()
 
         # populate L1 cache
@@ -1490,7 +1500,7 @@ class ELM:
         if self.lf != 0:
             # tm = str(time.time())
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            self.lf.write(">[" + tmstr + "]" + command + "\n")
+            self.lf.write("> [" + tmstr + "] Request: " + command + "\n")
             self.lf.flush()
 
         # send command
@@ -1515,7 +1525,7 @@ class ELM:
                 break
             elif self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                self.lf.write("<[" + tmstr + "]" + self.buff + "<shifted>" + command + "\n")
+                self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
                 self.lf.flush()
 
         # count errors
@@ -1534,7 +1544,7 @@ class ELM:
 
         # save response to log
         if self.lf != 0:
-            self.lf.write("<[" + str(round(tc - tb, 3)) + "]" + self.buff + "\n")
+            self.lf.write("< [" + str(round(tc - tb, 3)) + "] Response: " + self.buff + "\n")
             self.lf.flush()
 
         return self.buff
@@ -1602,7 +1612,7 @@ class ELM:
 
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
-            self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
         self.cmd("AT E1")
@@ -1624,7 +1634,8 @@ class ELM:
             canline = 0
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + "\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# Connect to: [" + clean_bytestring(
+                ecu['ecuname']) + "] Addr: " + addr + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "can"
@@ -1719,7 +1730,7 @@ class ELM:
 
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
-            self.lf.write('#' * 60 + "\n#[" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
+            self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
         self.cmd("AT E1")
@@ -1734,8 +1745,9 @@ class ELM:
             return
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
-                'protocol'] + "\n" + '#' * 60 + "\n")
+            self.lf.write(
+                '#' * 60 + "\n# Connect to: [" + clean_bytestring(ecu['ecuname']) + "] Addr: " + addr + " Protocol: " +
+                ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "iso"
@@ -1760,8 +1772,9 @@ class ELM:
             return
 
         if self.lf != 0:
-            self.lf.write('#' * 60 + "\n#connect to: " + ecu['ecuname'] + " Addr:" + addr + " Protocol:" + ecu[
-                'protocol'] + "\n" + '#' * 60 + "\n")
+            self.lf.write(
+                '#' * 60 + "\n# Connect to: [" + clean_bytestring(ecu['ecuname']) + "] Addr: " + addr + " Protocol: " +
+                ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
         self.currentprotocol = "iso"
@@ -1793,18 +1806,19 @@ class ELM:
         self.cmd("AT AT 1")  # enable adaptive timing
         return True
 
+
 def elm_checker(port, speed, adapter, logview, app):
     """Enhanced ELM327 checker with better error handling and device detection"""
     good = 0
     total = 0
     pycom = 0
     vers = ''
-    
+
     try:
         # Check for saved settings first, use optimal settings as fallback
         device_key = DeviceManager.normalize_adapter_type(adapter)
         saved_settings = options.get_device_settings(device_key, port)
-        
+
         if saved_settings and 'baudrate' in saved_settings:
             settings = saved_settings
             speed = settings.get('baudrate', speed)
@@ -1816,7 +1830,7 @@ def elm_checker(port, speed, adapter, logview, app):
 
         logview.append(_("Connecting to device at port: ") + str(port))
         logview.append(_("Using baudrate: ") + str(speed))
-        
+
         # For ELS27 adapters, do a quick pre-test to verify device presence
         if adapter == "ELS27":
             logview.append(_("Testing for ELS27 device..."))
@@ -1837,15 +1851,15 @@ def elm_checker(port, speed, adapter, logview, app):
             else:
                 logview.append(_("Warning: No ELS27 response detected"))
                 logview.append(_("Will attempt connection anyway..."))
-        
+
         options.elm = ELM(port, speed, adapter)
 
         if options.elm_failed:
             logview.append(_("Connection failed: ") + str(options.last_error))
             return False
-            
+
         options.elm.portTimeout = 5
-        
+
         # Test basic connectivity
         logview.append(_("Testing basic connectivity..."))
         test_response = options.elm.send_raw("ATZ")  # Reset command
@@ -1853,15 +1867,15 @@ def elm_checker(port, speed, adapter, logview, app):
             logview.append(_("Warning: Device may not be ELM327 compatible"))
         else:
             logview.append(_("ELM327 device detected successfully"))
-            
+
         # Get version information
         version_response = options.elm.send_raw("ATI")
         if version_response:
             vers = version_response.strip()
             logview.append(_("Device version: ") + vers)
-            
+
     except Exception as e:
-        logview.append(_("Connection error: ") + str(e)) 
+        logview.append(_("Connection error: ") + str(e))
         return False
 
     for st in cmdb.split('#'):

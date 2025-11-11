@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import argparse
+
 import glob
 import math
 import os
@@ -8,7 +8,6 @@ import re
 import string
 import xml.dom.minidom
 import zipfile
-from io import BytesIO
 
 import elm
 import json
@@ -1003,6 +1002,7 @@ class Ecu_file:
     def connect_to_hardware(self, canline=0):
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
+        short_addr = None
         if self.ecu_protocol == 'CAN':
             if not options.simulation_mode:
                 if len(self.ecu_send_id) == 8:
@@ -1174,7 +1174,6 @@ class Ecu_ident:
 
 
 class Ecu_database:
-    jsonfile = "json/ecus.zip"
 
     def __init__(self, forceXML=False):
         global ecu_ident, protocol
@@ -1744,52 +1743,3 @@ class Ecu_scanner:
                    % (diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
-
-
-def make_zipfs():
-    options.ecus_dir = "./ecus"
-    zipoutput = BytesIO()
-    i = 0
-    ecus = glob.glob("ecus/*.xml")
-    ecus.remove("ecus/eculist.xml")
-
-    with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
-        print(_("Writing vehicles database..."))
-        db = Ecu_database(True)
-        zf.writestr("db.json", str(db.dump()))
-
-        for target in ecus:
-            name = target
-            print(_("Starting zipping ") + target + " " + str(i) + "/" + str(len(ecus)))
-            fileout = name.replace('.xml', '.json')
-            ecur = Ecu_file(name, True)
-
-            zf.writestr(fileout, ecur.dumpJson())
-            i += 1
-            # if i == 15:
-            #    break
-
-    with open("json/ecus.zip", "wb") as f:
-        f.write(zipoutput.getvalue())
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--zipfs', action="store_true", default=None, help="Create a zip filesystem of the XMLs")
-    parser.add_argument('--testdb', action="store_true", default=None, help="Test ecudatabse loading")
-    parser.add_argument('--testecufile', action="store_true", default=None, help="Test ecudatabse loading")
-    parser.add_argument('--convertxml', action="store_true", default=None, help="Convert XML file to JSON")
-
-    args = parser.parse_args()
-
-    if args.zipfs:
-        make_zipfs()
-
-    if args.testdb:
-        db = Ecu_database()
-
-    if args.convertxml:
-        db = Ecu_database()
-
-    if args.testecufile:
-        db = Ecu_file("ecus/Sim32_RD3CA0_W44_J77_X85.json", True)
