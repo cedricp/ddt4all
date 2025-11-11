@@ -2,7 +2,7 @@
 
 DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
-**Current Version**: v3.0.5 - "Okapi" - Latest stable release with enhanced device support and performance improvements.
+**Current Version**: v3.0.6 - "Okapi" - Latest stable release with enhanced device support and performance improvements.
 
 ## 🚀 **Recent Major Improvements**
 
