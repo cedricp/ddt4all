@@ -55,7 +55,7 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
-Source: "..\..\ecu.zip"; DestDir: "{app}";
+;Source: "..\..\ecu.zip"; DestDir: "{app}";
 Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\Python313-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 ;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
 Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
@@ -81,7 +81,7 @@ Filename: "{app}\Python313-x64\python.exe"; Parameters: """{app}\main.py"""; Wor
 [Code]
 procedure AfterMyProgInstall;
 begin
-    // MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
+    MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
     // remove developement config.json file
     DeleteFile(ExpandConstant('{app}\ddt4all_data\config.json'));
 end;
