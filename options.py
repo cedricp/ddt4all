@@ -41,7 +41,8 @@ configuration = {
     "read_timeout": 5,
     "max_reconnect_attempts": 3,
     "preferred_device_order": ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"],
-    "enable_device_validation": True
+    "enable_device_validation": True,
+    "carlist_sort_mode": "code"
 }
 lang_list = {
     "English": "en_US",
@@ -80,6 +81,7 @@ def create_new_config():
     configuration["max_reconnect_attempts"] = 3
     configuration["preferred_device_order"] = ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"]
     configuration["enable_device_validation"] = True
+    configuration["carlist_sort_mode"] = "code"
     save_config()
 
 
@@ -101,6 +103,7 @@ def load_configuration():
         configuration["preferred_device_order"] = config.get("preferred_device_order", 
                                                            ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
         configuration["enable_device_validation"] = config.get("enable_device_validation", True)
+        configuration["carlist_sort_mode"] = config.get("carlist_sort_mode", "code")
         
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
@@ -192,6 +195,17 @@ def is_device_validation_enabled():
 def get_preferred_device_order():
     """Get preferred device detection order"""
     return configuration.get("preferred_device_order", ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
+
+
+def get_carlist_sort_mode():
+    """Get carlist sort mode from configuration"""
+    return configuration.get("carlist_sort_mode", "code")
+
+
+def set_carlist_sort_mode(mode):
+    """Set carlist sort mode and save configuration"""
+    configuration["carlist_sort_mode"] = mode
+    save_config()
 
 
 def translator(domain):
