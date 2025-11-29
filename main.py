@@ -115,8 +115,7 @@ class Ecu_list(widgets.QWidget):
 
         self.ecu_map = {}
 
-        for k in vehicles["projects"].keys():
-            self.vehicle_combo.addItem(k)
+        self.populateVehicleCombo()
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
@@ -136,13 +135,74 @@ class Ecu_list(widgets.QWidget):
         self.list.doubleClicked.connect(self.ecuSel)
         self.init()
 
+    def populateVehicleCombo(self):
+        """Populate vehicle combo box based on current sorting mode"""
+        self.vehicle_combo.clear()
+        
+        # Get current sorting mode from configuration
+        sort_mode = options.get_carlist_sort_mode()
+        
+        if sort_mode == "name":
+            # Sort by car name (extract from project key)
+            vehicle_items = []
+            for project_key in vehicles["projects"].keys():
+                if project_key == "All":
+                    # Keep "All" as is
+                    display_name = "All"
+                else:
+                    # Extract car name from project key
+                    # Format: [CODE] - Car Name -> Display: Car Name - [CODE]
+                    if " - " in project_key:
+                        parts = project_key.split(" - ", 1)
+                        code_part = parts[0]  # [CODE]
+                        name_part = parts[1]  # Car Name
+                        display_name = f"{name_part} - {code_part}"
+                    else:
+                        display_name = project_key
+                
+                vehicle_items.append((display_name, project_key))
+            
+            # Sort by display name
+            vehicle_items.sort(key=lambda x: x[0])
+            
+            # Add to combo box
+            for display_name, project_key in vehicle_items:
+                self.vehicle_combo.addItem(display_name, project_key)
+        else:
+            # Sort by project code (default behavior)
+            for k in sorted(vehicles["projects"].keys()):
+                self.vehicle_combo.addItem(k, k)
+
+    def refreshVehicleList(self):
+        """Refresh the vehicle combo box when sorting mode changes"""
+        current_selection = self.vehicle_combo.currentText()
+        current_data = self.vehicle_combo.currentData()
+        
+        self.populateVehicleCombo()
+        
+        # Try to restore previous selection
+        if current_data:
+            index = self.vehicle_combo.findData(current_data)
+            if index >= 0:
+                self.vehicle_combo.setCurrentIndex(index)
+        elif current_selection:
+            index = self.vehicle_combo.findText(current_selection)
+            if index >= 0:
+                self.vehicle_combo.setCurrentIndex(index)
+
     def scanselvehicle(self):
-        project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
-        ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
-        elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
-        elm.snat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["snat_ext"]
-        elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
-        elm.dnat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["dnat_ext"]
+        # Get the project key (works for both sorting modes)
+        project_key = self.vehicle_combo.currentData()
+        if project_key is None:
+            # Fallback to current text for backward compatibility
+            project_key = self.vehicle_combo.currentText()
+        
+        project = str(vehicles["projects"][project_key]["code"])
+        ecu.addressing = vehicles["projects"][project_key]["addressing"]
+        elm.snat = vehicles["projects"][project_key]["snat"]
+        elm.snat_ext = vehicles["projects"][project_key]["snat_ext"]
+        elm.dnat = vehicles["projects"][project_key]["dnat"]
+        elm.dnat_ext = vehicles["projects"][project_key]["dnat_ext"]
         self.parent().parent().scan_project(project)
 
     def init(self):
@@ -234,12 +294,18 @@ class Ecu_list(widgets.QWidget):
         self.list.resizeColumnToContents(0)
 
     def filterProject(self):
-        project = str(vehicles["projects"][self.vehicle_combo.currentText()]["code"])
-        ecu.addressing = vehicles["projects"][self.vehicle_combo.currentText()]["addressing"]
-        elm.snat = vehicles["projects"][self.vehicle_combo.currentText()]["snat"]
-        elm.snat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["snat_ext"]
-        elm.dnat = vehicles["projects"][self.vehicle_combo.currentText()]["dnat"]
-        elm.dnat_ext = vehicles["projects"][self.vehicle_combo.currentText()]["dnat_ext"]
+        # Get the project key (works for both sorting modes)
+        project_key = self.vehicle_combo.currentData()
+        if project_key is None:
+            # Fallback to current text for backward compatibility
+            project_key = self.vehicle_combo.currentText()
+        
+        project = str(vehicles["projects"][project_key]["code"])
+        ecu.addressing = vehicles["projects"][project_key]["addressing"]
+        elm.snat = vehicles["projects"][project_key]["snat"]
+        elm.snat_ext = vehicles["projects"][project_key]["snat_ext"]
+        elm.dnat = vehicles["projects"][project_key]["dnat"]
+        elm.dnat_ext = vehicles["projects"][project_key]["dnat_ext"]
 
         root = self.list.invisibleRootItem()
         root_items = [root.child(i) for i in range(root.childCount())]
@@ -288,9 +354,9 @@ class Main_widget(widgets.QMainWindow):
         else:
             self.screenlogfile = None
 
-        self.sdsready = False
-        self.ecunamemap = {}
         self.plugins = {}
+        self.carlist_sort_mode = "code"  # Default sorting by project code
+        options.main_window = self  # Set reference for language switching
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
         self.ecu_scan = ecu.Ecu_scanner()
         self.ecu_scan.qapp = app
@@ -336,8 +402,8 @@ class Main_widget(widgets.QMainWindow):
 
         self.screennames = []
 
-        self.statusBar = widgets.QStatusBar()
-        self.setStatusBar(self.statusBar)
+        self.statusbar_widget = widgets.QStatusBar()
+        self.setStatusBar(self.statusbar_widget)
 
         self.connectedstatus = widgets.QLabel()
         self.connectedstatus.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
@@ -379,14 +445,14 @@ class Main_widget(widgets.QMainWindow):
         cantimeoutlabel = widgets.QLabel(_("Can timeout (ms) [0:AUTO] :"))
         cantimeoutlabel.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
-        self.statusBar.addWidget(self.connectedstatus)
-        self.statusBar.addWidget(self.protocolstatus)
-        self.statusBar.addWidget(self.progressstatus)
-        self.statusBar.addWidget(refrestimelabel)
-        self.statusBar.addWidget(self.refreshtimebox)
-        self.statusBar.addWidget(cantimeoutlabel)
-        self.statusBar.addWidget(self.cantimeout)
-        self.statusBar.addWidget(self.infostatus)
+        self.statusbar_widget.addWidget(self.connectedstatus)
+        self.statusbar_widget.addWidget(self.protocolstatus)
+        self.statusbar_widget.addWidget(self.progressstatus)
+        self.statusbar_widget.addWidget(refrestimelabel)
+        self.statusbar_widget.addWidget(self.refreshtimebox)
+        self.statusbar_widget.addWidget(cantimeoutlabel)
+        self.statusbar_widget.addWidget(self.cantimeout)
+        self.statusbar_widget.addWidget(self.infostatus)
 
         self.tabbedview = widgets.QTabWidget()
         self.setCentralWidget(self.tabbedview)
@@ -575,6 +641,51 @@ class Main_widget(widgets.QMainWindow):
 
         self.screenmenu = menu.addMenu(_("Screens"))
 
+        # View menu
+        view_menu = menu.addMenu(_("View"))
+        carlist_order_menu = view_menu.addMenu(_("CarList Order"))
+        
+        self.carlist_order_by_code = widgets.QAction(_("By Project Code"), carlist_order_menu)
+        self.carlist_order_by_code.setCheckable(True)
+        self.carlist_order_by_code.setChecked(options.get_carlist_sort_mode() == "code")
+        self.carlist_order_by_code.triggered.connect(self.setCarListOrderCode)
+        carlist_order_menu.addAction(self.carlist_order_by_code)
+        
+        self.carlist_order_by_name = widgets.QAction(_("By Car Name"), carlist_order_menu)
+        self.carlist_order_by_name.setCheckable(True)
+        self.carlist_order_by_name.setChecked(options.get_carlist_sort_mode() == "name")
+        self.carlist_order_by_name.triggered.connect(self.setCarListOrderName)
+        carlist_order_menu.addAction(self.carlist_order_by_name)
+        
+        # Make actions mutually exclusive
+        self.carlist_order_group = widgets.QActionGroup(self)
+        self.carlist_order_group.addAction(self.carlist_order_by_code)
+        self.carlist_order_group.addAction(self.carlist_order_by_name)
+
+        # Options menu
+        options_menu = menu.addMenu(_("Options"))
+        
+        # Language submenu with mutually exclusive actions
+        language_menu = options_menu.addMenu(_("Language"))
+        self.language_action_group = widgets.QActionGroup(self)
+        for lang_name in options.lang_list.keys():
+            lang_action = widgets.QAction(lang_name, language_menu)
+            lang_action.setCheckable(True)
+            # Check current language
+            current_lang_code = options.configuration.get("lang", "en_US")
+            if options.lang_list[lang_name] == current_lang_code:
+                lang_action.setChecked(True)
+            lang_action.triggered.connect(lambda checked, ln=lang_name: self.change_language_from_menu(ln))
+            self.language_action_group.addAction(lang_action)
+            language_menu.addAction(lang_action)
+        
+        # Theme toggle
+        theme_action = widgets.QAction(_("Dark Theme"), options_menu)
+        theme_action.setCheckable(True)
+        theme_action.setChecked(options.dark_mode)
+        theme_action.triggered.connect(self.toggle_theme)
+        options_menu.addAction(theme_action)
+
         actionmenu = self.screenmenu.addMenu(_("Action"))
         cat_action = widgets.QAction(_("New Category"), actionmenu)
         screen_action = widgets.QAction(_("New Screen"), actionmenu)
@@ -651,6 +762,22 @@ class Main_widget(widgets.QMainWindow):
         msgbox.setInformativeText(html)
         msgbox.exec_()
 
+    def setCarListOrderCode(self):
+        """Set CarList sorting to by project code"""
+        options.set_carlist_sort_mode("code")
+        self.carlist_order_by_code.setChecked(True)
+        self.carlist_order_by_name.setChecked(False)
+        # Refresh the vehicle combo box
+        self.eculistwidget.refreshVehicleList()
+
+    def setCarListOrderName(self):
+        """Set CarList sorting to by car name"""
+        options.set_carlist_sort_mode("name")
+        self.carlist_order_by_name.setChecked(True)
+        self.carlist_order_by_code.setChecked(False)
+        # Refresh the vehicle combo box
+        self.eculistwidget.refreshVehicleList()
+
     def wiki_about(self):
         url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
         gui.QDesktopServices().openUrl(url)
@@ -670,6 +797,49 @@ class Main_widget(widgets.QMainWindow):
     def setIcon(self):
         appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
+
+    def updateMenuBar(self):
+        """Update menu bar texts after language change"""
+        try:
+            # Update menu titles - find menus by object name or recreate
+            menu_bar = self.menuBar()
+            for action in menu_bar.actions():
+                menu = action.menu()
+                if menu:
+                    # Update menu titles based on current translation
+                    if "File" in action.text() or _("File") in action.text():
+                        menu.setTitle(_("File"))
+                    elif "Screens" in action.text() or _("Screens") in action.text():
+                        menu.setTitle(_("Screens"))
+                    elif "View" in action.text() or _("View") in action.text():
+                        menu.setTitle(_("View"))
+                    elif "Options" in action.text() or _("Options") in action.text():
+                        menu.setTitle(_("Options"))
+                    elif "Plugins" in action.text() or _("Plugins") in action.text():
+                        menu.setTitle(_("Plugins"))
+                    elif "Help" in action.text() or _("Help") in action.text():
+                        menu.setTitle(_("Help"))
+            
+            # Update vehicle list with new language
+            if hasattr(self, 'eculistwidget') and self.eculistwidget:
+                self.eculistwidget.refreshVehicleList()
+            
+        except Exception as e:
+            print(f"Error updating menu bar: {e}")
+            
+    def change_language_from_menu(self, language_name):
+        """Handle language change from menu"""
+        set_language_realtime(language_name)
+        
+    def toggle_theme(self):
+        """Toggle theme between light and dark"""
+        new_theme = not options.dark_mode
+        set_theme_style(2 if new_theme else 0)
+        
+    def show_options_dialog(self):
+        """Show options dialog for device settings"""
+        options_dialog = main_window_options()
+        options_dialog.exec_()
 
     def set_can_combo(self, bus):
         self.canlinecombo.clear()
@@ -1272,6 +1442,7 @@ class donationWidget(widgets.QLabel):
 
 
 def set_theme_style(onoff):
+    global app
     if (onoff):
         stylefile = core.QFile("ddt4all_data/qstyle-d.qss")
         options.dark_mode = True
@@ -1298,6 +1469,41 @@ def set_theme_style(onoff):
     app.setStyleSheet(StyleSheet)
     options.configuration["dark"] = options.dark_mode
     options.save_config()
+
+
+def set_language_realtime(language_name):
+    """Change language in real-time without restart"""
+    global _
+    
+    if language_name in options.lang_list:
+        lang_code = options.lang_list[language_name]
+        
+        # Update environment and configuration
+        os.environ['LANG'] = lang_code
+        options.configuration["lang"] = lang_code
+        options.save_config()
+        
+        # Reload translator
+        import gettext
+        try:
+            t = gettext.translation('ddt4all', 'ddt4all_data/locale', languages=[lang_code], fallback=True)
+            _ = t.gettext
+            
+            # Update main window if it exists
+            if hasattr(options, 'main_window') and options.main_window:
+                main_window = options.main_window
+                # Update menu bar
+                main_window.updateMenuBar()
+                # Update status bar using the widget directly
+                if hasattr(main_window, 'statusbar_widget') and main_window.statusbar_widget:
+                    main_window.statusbar_widget.showMessage(_("Language changed to") + " " + language_name, 3000)
+            
+            print(f"Language changed to {language_name} ({lang_code})")
+            return True
+        except Exception as e:
+            print(f"Error changing language: {e}")
+            return False
+    return False
 
 def set_socket_timeout(onoff):
     if (onoff):
@@ -1414,14 +1620,17 @@ class main_window_options(widgets.QDialog):
             os.environ["LANG"] = "en_US"
         langlayout = widgets.QHBoxLayout()
         self.langcombo = widgets.QComboBox()
-        langlabels = widgets.QLabel(_("Interface language (need save and close)"))
+        langlabels = widgets.QLabel(_("Interface language"))
         langlayout.addWidget(langlabels)
         langlayout.addWidget(self.langcombo)
         for s in options.lang_list:
             self.langcombo.addItem(s)
             if options.lang_list[s].split("_")[0] == os.environ['LANG'].split("_")[0]:
                 self.langcombo.setCurrentText(s)
-        # self.langcombo.setCurrentIndex(0)
+        
+        # Connect to real-time language switching
+        self.langcombo.currentTextChanged.connect(self.change_language_realtime)
+        
         layout.addLayout(langlayout)
         #
 
@@ -1442,7 +1651,7 @@ class main_window_options(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
-        button_save = widgets.QPushButton(_("Save and close"))
+        button_save = widgets.QPushButton(_("Close"))
 
         self.elmchk = button_elm_chk
 
@@ -1516,11 +1725,16 @@ class main_window_options(widgets.QDialog):
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
 
     def save_config(self):
-        options.configuration["lang"] = options.lang_list[self.langcombo.currentText()]
+        # Save configuration (language is already saved by real-time switching)
         options.configuration["dark"] = options.dark_mode
         options.configuration["socket_timeout"] = options.socket_timeout
         options.save_config()
-        app.exit(0)
+        self.close()  # Just close dialog, don't exit app
+
+    def change_language_realtime(self, language_name):
+        """Handle real-time language change from combo box"""
+        set_language_realtime(language_name)
+        # Language change is now real-time, no message box needed
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
