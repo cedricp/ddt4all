@@ -67,7 +67,7 @@ class Virginizer(gui.QDialog):
         if crash == u'crash détecté':
             self.status_check.setText(_("<font color='red'>CRASH DETECTED</font>"))
         else:
-            self.status_check.setText(-("<font color='green'>NO CRASH DETECTED</font>"))
+            self.status_check.setText(_("<font color='green'>NO CRASH DETECTED</font>"))
 
     def start_diag_session_fa(self):
         sds_request = self.airbag_ecu.requests[u"Start Diagnostic Session"]
