@@ -503,6 +503,8 @@ class Main_widget(widgets.QMainWindow):
         self.treeview_ecu = widgets.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.clicked.connect(self.changeECU)
+        
+        self.ecunamemap = {}
 
         self.eculistwidget = Ecu_list(self.ecu_scan, self.treeview_ecu)
         self.treeview_eculist = widgets.QDockWidget(self)
