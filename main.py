@@ -667,20 +667,6 @@ class Main_widget(widgets.QMainWindow):
         # Options menu
         options_menu = menu.addMenu(_("Options"))
         
-        # Language submenu with mutually exclusive actions
-        language_menu = options_menu.addMenu(_("Language"))
-        self.language_action_group = widgets.QActionGroup(self)
-        for lang_name in options.lang_list.keys():
-            lang_action = widgets.QAction(lang_name, language_menu)
-            lang_action.setCheckable(True)
-            # Check current language
-            current_lang_code = options.configuration.get("lang", "en_US")
-            if options.lang_list[lang_name] == current_lang_code:
-                lang_action.setChecked(True)
-            lang_action.triggered.connect(lambda checked, ln=lang_name: self.change_language_from_menu(ln))
-            self.language_action_group.addAction(lang_action)
-            language_menu.addAction(lang_action)
-        
         # Theme toggle
         theme_action = widgets.QAction(_("Dark Theme"), options_menu)
         theme_action.setCheckable(True)
@@ -829,10 +815,6 @@ class Main_widget(widgets.QMainWindow):
         except Exception as e:
             print(f"Error updating menu bar: {e}")
             
-    def change_language_from_menu(self, language_name):
-        """Handle language change from menu"""
-        set_language_realtime(language_name)
-        
     def toggle_theme(self):
         """Toggle theme between light and dark"""
         new_theme = not options.dark_mode
