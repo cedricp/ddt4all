@@ -402,8 +402,8 @@ class Main_widget(widgets.QMainWindow):
 
         self.screennames = []
 
-        self.statusbar_widget = widgets.QStatusBar()
-        self.setStatusBar(self.statusbar_widget)
+        self.statusBar = widgets.QStatusBar()
+        self.setStatusBar(self.statusBar)
 
         self.connectedstatus = widgets.QLabel()
         self.connectedstatus.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
@@ -445,14 +445,14 @@ class Main_widget(widgets.QMainWindow):
         cantimeoutlabel = widgets.QLabel(_("Can timeout (ms) [0:AUTO] :"))
         cantimeoutlabel.setSizePolicy(widgets.QSizePolicy.Preferred, widgets.QSizePolicy.Fixed)
 
-        self.statusbar_widget.addWidget(self.connectedstatus)
-        self.statusbar_widget.addWidget(self.protocolstatus)
-        self.statusbar_widget.addWidget(self.progressstatus)
-        self.statusbar_widget.addWidget(refrestimelabel)
-        self.statusbar_widget.addWidget(self.refreshtimebox)
-        self.statusbar_widget.addWidget(cantimeoutlabel)
-        self.statusbar_widget.addWidget(self.cantimeout)
-        self.statusbar_widget.addWidget(self.infostatus)
+        self.statusBar.addWidget(self.connectedstatus)
+        self.statusBar.addWidget(self.protocolstatus)
+        self.statusBar.addWidget(self.progressstatus)
+        self.statusBar.addWidget(refrestimelabel)
+        self.statusBar.addWidget(self.refreshtimebox)
+        self.statusBar.addWidget(cantimeoutlabel)
+        self.statusBar.addWidget(self.cantimeout)
+        self.statusBar.addWidget(self.infostatus)
 
         self.tabbedview = widgets.QTabWidget()
         self.setCentralWidget(self.tabbedview)
@@ -597,9 +597,8 @@ class Main_widget(widgets.QMainWindow):
             self.ui_edit_button = widgets.QPushButton(_("UI Edit"))
             self.ui_edit_button.setCheckable(True)
             self.toolbar.addSeparator()
-            self.toolbar.addWidget(self.ui_edit_button)
-            self.ui_edit_button.clicked.connect(self.toggle_edit)
 
+        # Create menus
         vehicle_dir = "vehicles"
         if not os.path.exists(vehicle_dir):
             os.mkdir(vehicle_dir)
@@ -644,19 +643,19 @@ class Main_widget(widgets.QMainWindow):
         # View menu
         view_menu = menu.addMenu(_("View"))
         carlist_order_menu = view_menu.addMenu(_("CarList Order"))
-        
+            
         self.carlist_order_by_code = widgets.QAction(_("By Project Code"), carlist_order_menu)
         self.carlist_order_by_code.setCheckable(True)
         self.carlist_order_by_code.setChecked(options.get_carlist_sort_mode() == "code")
         self.carlist_order_by_code.triggered.connect(self.setCarListOrderCode)
         carlist_order_menu.addAction(self.carlist_order_by_code)
-        
+            
         self.carlist_order_by_name = widgets.QAction(_("By Car Name"), carlist_order_menu)
         self.carlist_order_by_name.setCheckable(True)
         self.carlist_order_by_name.setChecked(options.get_carlist_sort_mode() == "name")
         self.carlist_order_by_name.triggered.connect(self.setCarListOrderName)
         carlist_order_menu.addAction(self.carlist_order_by_name)
-        
+            
         # Make actions mutually exclusive
         self.carlist_order_group = widgets.QActionGroup(self)
         self.carlist_order_group.addAction(self.carlist_order_by_code)
@@ -685,6 +684,11 @@ class Main_widget(widgets.QMainWindow):
         theme_action.setChecked(options.dark_mode)
         theme_action.triggered.connect(self.toggle_theme)
         options_menu.addAction(theme_action)
+        
+        # Separator and refresh option
+        options_menu.addSeparator()
+        refresh_action = options_menu.addAction(_("Refresh Interface"))
+        refresh_action.triggered.connect(self.refresh_interface)
 
         actionmenu = self.screenmenu.addMenu(_("Action"))
         cat_action = widgets.QAction(_("New Category"), actionmenu)
@@ -708,9 +712,6 @@ class Main_widget(widgets.QMainWindow):
                 category = plug.category
                 name = plug.plugin_name
                 need_hw = plug.need_hw
-
-                # if options.simulation_mode and need_hw:
-                #    continue
 
                 if not category in category_menus:
                     category_menus[category] = plugins_menu.addMenu(category)
@@ -743,6 +744,199 @@ class Main_widget(widgets.QMainWindow):
         self.setConnected(True)
         self.tabbedview.setCurrentIndex(1)
         self.showMaximized()
+
+    def updateMenuBar(self):
+        """Update menu bar texts after language change - RELOAD QT MENUS"""
+        try:
+            # Clear existing menus
+            menu_bar = self.menuBar()
+            menu_bar.clear()
+            
+            # Recreate all menus with new translations
+            menu = self.menuBar()
+
+            # File menu
+            diagmenu = menu.addMenu(_("File"))
+            xmlopenaction = diagmenu.addAction(_("Open XML"))
+            identecu = diagmenu.addAction(_("Identify ECU"))
+            newecuction = diagmenu.addAction(_("Create New ECU"))
+            saveecuaction = diagmenu.addAction(_("Save current ECU"))
+            diagmenu.addSeparator()
+            saverecordaction = diagmenu.addAction(_("Save last record"))
+            diagmenu.addSeparator()
+            savevehicleaction = diagmenu.addAction(_("Save ECU list"))
+            savevehicleaction.triggered.connect(self.saveEcus)
+            saveecuaction.triggered.connect(self.saveEcu)
+            saverecordaction.triggered.connect(self.saveRecord)
+            newecuction.triggered.connect(self.newEcu)
+            xmlopenaction.triggered.connect(self.openxml)
+            identecu.triggered.connect(self.identEcu)
+            diagmenu.addSeparator()
+            zipdbaction = diagmenu.addAction(_("Zip database"))
+            zipdbaction.triggered.connect(self.zipdb)
+            diagmenu.addSeparator()
+            closeAllThis = diagmenu.addAction(_("Exit"))
+            closeAllThis.triggered.connect(self.exit_all)
+            diagmenu.addSeparator()
+
+            # Load ECU files
+            vehicle_dir = "vehicles"
+            if not os.path.exists(vehicle_dir):
+                os.mkdir(vehicle_dir)
+            ecu_files = [basename for filename in os.listdir(vehicle_dir) if os.path.splitext(filename)[1] == '.ecu']
+            for ecuf in ecu_files:
+                ecuaction = diagmenu.addAction(ecuf)
+                ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
+
+            self.screenmenu = menu.addMenu(_("Screens"))
+
+            # View menu
+            view_menu = menu.addMenu(_("View"))
+            carlist_order_menu = view_menu.addMenu(_("CarList Order"))
+            
+            self.carlist_order_by_code = widgets.QAction(_("By Project Code"), carlist_order_menu)
+            self.carlist_order_by_code.setCheckable(True)
+            self.carlist_order_by_code.setChecked(options.get_carlist_sort_mode() == "code")
+            self.carlist_order_by_code.triggered.connect(self.setCarListOrderCode)
+            carlist_order_menu.addAction(self.carlist_order_by_code)
+            
+            self.carlist_order_by_name = widgets.QAction(_("By Car Name"), carlist_order_menu)
+            self.carlist_order_by_name.setCheckable(True)
+            self.carlist_order_by_name.setChecked(options.get_carlist_sort_mode() == "name")
+            self.carlist_order_by_name.triggered.connect(self.setCarListOrderName)
+            carlist_order_menu.addAction(self.carlist_order_by_name)
+            
+            # Make actions mutually exclusive
+            self.carlist_order_group = widgets.QActionGroup(self)
+            self.carlist_order_group.addAction(self.carlist_order_by_code)
+            self.carlist_order_group.addAction(self.carlist_order_by_name)
+
+            # Options menu
+            options_menu = menu.addMenu(_("Options"))
+            
+            # Language submenu with mutually exclusive actions
+            language_menu = options_menu.addMenu(_("Language"))
+            self.language_action_group = widgets.QActionGroup(self)
+            for lang_name in options.lang_list.keys():
+                lang_action = widgets.QAction(lang_name, language_menu)
+                lang_action.setCheckable(True)
+                # Check current language
+                current_lang_code = options.configuration.get("lang", "en_US")
+                if options.lang_list[lang_name] == current_lang_code:
+                    lang_action.setChecked(True)
+                lang_action.triggered.connect(lambda checked, ln=lang_name: self.change_language_from_menu(ln))
+                self.language_action_group.addAction(lang_action)
+                language_menu.addAction(lang_action)
+            
+            # Theme toggle
+            theme_action = widgets.QAction(_("Dark Theme"), options_menu)
+            theme_action.setCheckable(True)
+            theme_action.setChecked(options.dark_mode)
+            theme_action.triggered.connect(self.toggle_theme)
+            options_menu.addAction(theme_action)
+            
+            # Separator and refresh option
+            options_menu.addSeparator()
+            refresh_action = options_menu.addAction(_("Refresh Interface"))
+            refresh_action.triggered.connect(self.refresh_interface)
+
+            actionmenu = self.screenmenu.addMenu(_("Action"))
+            cat_action = widgets.QAction(_("New Category"), actionmenu)
+            screen_action = widgets.QAction(_("New Screen"), actionmenu)
+            rename_action = widgets.QAction(_("Rename"), actionmenu)
+            actionmenu.addAction(cat_action)
+            actionmenu.addAction(screen_action)
+            actionmenu.addAction(rename_action)
+            cat_action.triggered.connect(self.newCategory)
+            screen_action.triggered.connect(self.newScreen)
+            rename_action.triggered.connect(self.screenRename)
+
+            plugins_menu = menu.addMenu(_("Plugins"))
+            category_menus = {}
+            plugins = glob.glob("./ddtplugins/*.py")
+            for plugin in plugins:
+                try:
+                    modulename = os.path.basename(plugin).replace(".py", "")
+                    plug = SourceFileLoader(modulename, plugin).load_module()
+
+                    category = plug.category
+                    name = plug.plugin_name
+                    need_hw = plug.need_hw
+
+                    if not category in category_menus:
+                        category_menus[category] = plugins_menu.addMenu(category)
+
+                    plug_action = category_menus[category].addAction(name)
+                    plug_action.triggered.connect(lambda state, a=plug.plugin_entry: self.launchPlugin(a))
+
+                    self.plugins[modulename] = plug
+                except Exception as e:
+                    print(_("Cannot load plugin ") + plugin)
+                    print(e)
+
+            # Help menu
+            help_menu = menu.addMenu(_("Help"))
+            wiki_about = help_menu.addAction(_("Web Wiki"))
+            wiki_about.triggered.connect(self.wiki_about)
+            help_menu.addSeparator()
+            devs = help_menu.addMenu(_("About Developers"))
+            about_cedric = devs.addAction("Cedric PAILLE")
+            about_cedric.triggered.connect(self.about_cedric)
+            about_furtif = devs.addAction("--=FurtiF™=--")
+            about_furtif.triggered.connect(self.about_furtif)
+            help_menu.addSeparator()
+            githubupdate = help_menu.addAction(_("Get Git update"))
+            githubupdate.triggered.connect(self.git_update)
+            help_menu.addSeparator()
+            about_content = help_menu.addAction(_("About"))
+            about_content.triggered.connect(self.about_content_msg)
+            
+            # Force Qt to update
+            app.processEvents()
+            
+        except Exception as e:
+            print(f"Error updating menu bar: {e}")
+
+    def refresh_interface(self):
+        """Refresh the entire interface with current language"""
+        try:
+            # Recreate all menus completely
+            self.updateMenuBar()
+            # Update vehicle list
+            if hasattr(self, 'eculistwidget') and self.eculistwidget:
+                self.eculistwidget.refreshVehicleList()
+            # Show message
+            if hasattr(self, 'statusBar') and self.statusBar():
+                self.statusBar().showMessage(_("Interface refreshed"), 2000)
+        except Exception as e:
+            print(f"Error refreshing interface: {e}")
+
+    def change_language_from_menu(self, language_name):
+        """Handle language change from menu"""
+        set_language_realtime(language_name)
+        
+    def toggle_theme(self):
+        """Toggle theme between light and dark"""
+        new_theme = not options.dark_mode
+        set_theme_style(2 if new_theme else 0)
+        
+        # Also save configuration cleanly
+        clean_config = {
+            "lang": options.configuration.get("lang", "en_US"),
+            "dark": options.dark_mode,
+            "socket_timeout": options.configuration.get("socket_timeout", False),
+            "device_settings": options.configuration.get("device_settings", {}),
+            "auto_detect_devices": options.configuration.get("auto_detect_devices", True),
+            "connection_timeout": options.configuration.get("connection_timeout", 10)
+        }
+        
+        try:
+            import json
+            js = json.dumps(clean_config, ensure_ascii=False, indent=True)
+            with open("ddt4all_data/config.json", "w", encoding="UTF-8") as f:
+                f.write(js)
+        except Exception as e:
+            print(f"Error saving theme config: {e}")
 
     def about_content_msg(self):
         msgbox = widgets.QMessageBox()
@@ -798,48 +992,142 @@ class Main_widget(widgets.QMainWindow):
         appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
 
+    def set_can_combo(self, bus):
+        self.canlinecombo.clear()
+        try:
+            self.canlinecombo.clicked.disconnect()
+        except Exception:
+            pass
+        if bus == "CAN":
+            self.canlinecombo.addItem("CAN Line 1 Auto")
+            self.canlinecombo.addItem("CAN Line 1@500K")
+            self.canlinecombo.addItem("CAN Line 1@250K")
+            if options.elm is not None and options.elm.adapter_type == "ELS":
+                self.canlinecombo.addItem("CAN Line 2@500K")
+                self.canlinecombo.addItem("CAN Line 2@250K")
+                self.canlinecombo.addItem("CAN Line 2@125K")
+            self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
+        else:
+            if bus == "KWP2000":
+                self.canlinecombo.addItem("KWP2000")
+            if bus == "ISO8":
+                self.canlinecombo.addItem("ISO8")
+
+    def changeRefreshTime(self):
+        options.refreshrate = self.refreshtimebox.value()
+
+    def changeCanTimeout(self):
+        options.cantimeout = self.cantimeout.value()
+        if self.paramview:
+            self.paramview.setCanTimeout()
+
+    def flow_control(self):
+        enabled = self.fctrigger.isChecked()
+        options.opt_cfc0 = enabled
+        if self.paramview is not None:
+            self.paramview.set_soft_fc(enabled)
+
+    def identEcu(self):
+        dialog = Ecu_finder(self.ecu_scan)
+        dialog.exec_()
+
+    def changecanspeed(self):
+        item = self.canlinecombo.currentIndex()
+        if self.paramview:
+            self.paramview.setCanLine(item)
+
+    def zoomin(self):
+        if self.paramview:
+            self.paramview.zoomin_page()
+
+    def zoomout(self):
+        if self.paramview:
+            self.paramview.zoomout_page()
+
+    def toggle_edit(self):
+        options.mode_edit = self.ui_edit_button.isChecked()
+
+        if self.paramview:
+            self.paramview.reinitScreen()
+
+    def changeSds(self):
+        if not self.sdsready:
+            return
+
+        if self.paramview:
+            currenttext = self.sdscombo.currentText()
+            if len(currenttext):
+                self.paramview.changeSDS(currenttext)
+
+    def exit_all(self):
+        self.close()
+        exit(0)
+
+    def zipdb(self):
+        filename_tuple = widgets.QFileDialog.getSaveFileName(self, _("Save database (keep '.zip' extension)"),
+                                                             "./ecu.zip", "*.zip")
+
+        filename = str(filename_tuple[0])
+
+        if not filename.endswith(".zip"):
+            filename += ".zip"
+
+        if not isWritable(str(os.path.dirname(filename))):
+            mbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            mbox.setWindowIcon(appIcon)
+            mbox.setWindowTitle(version.__appname__)
+            mbox.setText("Cannot write to directory " + os.path.dirname(filename))
+            mbox.exec_()
+            return
+
+        self.logview.append(_("Zipping XML database... (this can take a few minutes)"))
+        core.QCoreApplication.processEvents()
+        parameters.zipConvertXML(filename)
+        self.logview.append(_("Zip job finished"))
+
+    def launchPlugin(self, pim):
+        self.eculistwidget.refreshVehicleList()
+
+    def setCarListOrderName(self):
+        """Set CarList sorting to by car name"""
+        options.set_carlist_sort_mode("name")
+        self.carlist_order_by_name.setChecked(True)
+        self.carlist_order_by_code.setChecked(False)
+        # Refresh the vehicle combo box
+        self.eculistwidget.refreshVehicleList()
+
+    def wiki_about(self):
+        url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def about_cedric(self):
+        url = core.QUrl("https://github.com/cedricp", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def about_furtif(self):
+        url = core.QUrl("https://github.com/Furtif", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def git_update(self):
+        url = core.QUrl("https://github.com/cedricp/ddt4all/releases", core.QUrl.TolerantMode)
+        gui.QDesktopServices().openUrl(url)
+
+    def setIcon(self):
+        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        self.setWindowIcon(appIcon)
+
     def updateMenuBar(self):
         """Update menu bar texts after language change"""
         try:
-            # Update menu titles - find menus by object name or recreate
-            menu_bar = self.menuBar()
-            for action in menu_bar.actions():
-                menu = action.menu()
-                if menu:
-                    # Update menu titles based on current translation
-                    if "File" in action.text() or _("File") in action.text():
-                        menu.setTitle(_("File"))
-                    elif "Screens" in action.text() or _("Screens") in action.text():
-                        menu.setTitle(_("Screens"))
-                    elif "View" in action.text() or _("View") in action.text():
-                        menu.setTitle(_("View"))
-                    elif "Options" in action.text() or _("Options") in action.text():
-                        menu.setTitle(_("Options"))
-                    elif "Plugins" in action.text() or _("Plugins") in action.text():
-                        menu.setTitle(_("Plugins"))
-                    elif "Help" in action.text() or _("Help") in action.text():
-                        menu.setTitle(_("Help"))
-            
-            # Update vehicle list with new language
-            if hasattr(self, 'eculistwidget') and self.eculistwidget:
-                self.eculistwidget.refreshVehicleList()
-            
+            # Update menu titles
+            self.menuBar().findChild(widgets.QMenu, _("File")).setTitle(_("File"))
+            self.menuBar().findChild(widgets.QMenu, _("Screens")).setTitle(_("Screens"))
+            self.menuBar().findChild(widgets.QMenu, _("View")).setTitle(_("View"))
+            self.menuBar().findChild(widgets.QMenu, _("Plugins")).setTitle(_("Plugins"))
+            self.menuBar().findChild(widgets.QMenu, _("Help")).setTitle(_("Help"))
         except Exception as e:
             print(f"Error updating menu bar: {e}")
-            
-    def change_language_from_menu(self, language_name):
-        """Handle language change from menu"""
-        set_language_realtime(language_name)
-        
-    def toggle_theme(self):
-        """Toggle theme between light and dark"""
-        new_theme = not options.dark_mode
-        set_theme_style(2 if new_theme else 0)
-        
-    def show_options_dialog(self):
-        """Show options dialog for device settings"""
-        options_dialog = main_window_options()
-        options_dialog.exec_()
 
     def set_can_combo(self, bus):
         self.canlinecombo.clear()
@@ -1494,9 +1782,9 @@ def set_language_realtime(language_name):
                 main_window = options.main_window
                 # Update menu bar
                 main_window.updateMenuBar()
-                # Update status bar using the widget directly
-                if hasattr(main_window, 'statusbar_widget') and main_window.statusbar_widget:
-                    main_window.statusbar_widget.showMessage(_("Language changed to") + " " + language_name, 3000)
+                # Update status bar
+                if hasattr(main_window, 'statusBar') and main_window.statusBar():
+                    main_window.statusBar().showMessage(_("Language changed to") + " " + language_name, 3000)
             
             print(f"Language changed to {language_name} ({lang_code})")
             return True
@@ -1733,8 +2021,20 @@ class main_window_options(widgets.QDialog):
 
     def change_language_realtime(self, language_name):
         """Handle real-time language change from combo box"""
-        set_language_realtime(language_name)
-        # Language change is now real-time, no message box needed
+        if set_language_realtime(language_name):
+            # Show success message
+            msgbox = widgets.QMessageBox()
+            msgbox.setWindowTitle(_("Language Changed"))
+            msgbox.setText(_("Language changed to") + " " + language_name + "\n" + _("Some texts may require restart to fully update."))
+            msgbox.setIcon(widgets.QMessageBox.Information)
+            msgbox.exec_()
+        else:
+            # Show error message
+            msgbox = widgets.QMessageBox()
+            msgbox.setWindowTitle(_("Error"))
+            msgbox.setText(_("Failed to change language to") + " " + language_name)
+            msgbox.setIcon(widgets.QMessageBox.Warning)
+            msgbox.exec_()
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
