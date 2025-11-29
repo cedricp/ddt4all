@@ -25,7 +25,7 @@ _ = options.translator('ddt4all')
 # dnat_entries = {"E7": "7E4", "E8": "644"}
 # snat_entries = {"E7": "7EC", "E8": "5C4"}
 dnat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
-snat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
+snat_entries = {} # {"E7": u"SCRCM", "E8": u"SVS"}
 
 snat = snat_entries
 snat_ext = {}
