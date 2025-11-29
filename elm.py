@@ -25,9 +25,9 @@ _ = options.translator('ddt4all')
 dnat_entries = {"E7": "7E4", "E8": "644"}
 snat_entries = {"E7": "7EC", "E8": "5C4"}
 
-snat = dnat_entries
+snat = snat_entries
 snat_ext = {}
-dnat = snat_entries
+dnat = dnat_entries
 dnat_ext = {}
 
 # Code snippet from https://github.com/rbei-etas/busmaster
