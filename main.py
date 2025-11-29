@@ -92,11 +92,11 @@ class Ecu_finder(widgets.QDialog):
         layoutv.addLayout(layouth)
         self.ecuaddr = widgets.QLineEdit()
         self.ecuident = widgets.QLineEdit()
-        layouth.addWidget(widgets.QLabel("Addr :"))
+        layouth.addWidget(widgets.QLabel(_("Address :")))
         layouth.addWidget(self.ecuaddr)
-        layouth.addWidget(widgets.QLabel("ID frame :"))
+        layouth.addWidget(widgets.QLabel(_("ID frame :")))
         layouth.addWidget(self.ecuident)
-        button = widgets.QPushButton("VALIDATE")
+        button = widgets.QPushButton(_("VALIDATE"))
         layouth.addWidget(button)
         button.clicked.connect(self.check)
 
@@ -503,6 +503,8 @@ class Main_widget(widgets.QMainWindow):
         self.treeview_ecu = widgets.QListWidget(self.treedock_ecu)
         self.treedock_ecu.setWidget(self.treeview_ecu)
         self.treeview_ecu.clicked.connect(self.changeECU)
+        
+        self.ecunamemap = {}
 
         self.eculistwidget = Ecu_list(self.ecu_scan, self.treeview_ecu)
         self.treeview_eculist = widgets.QDockWidget(self)
@@ -665,20 +667,6 @@ class Main_widget(widgets.QMainWindow):
         # Options menu
         options_menu = menu.addMenu(_("Options"))
         
-        # Language submenu with mutually exclusive actions
-        language_menu = options_menu.addMenu(_("Language"))
-        self.language_action_group = widgets.QActionGroup(self)
-        for lang_name in options.lang_list.keys():
-            lang_action = widgets.QAction(lang_name, language_menu)
-            lang_action.setCheckable(True)
-            # Check current language
-            current_lang_code = options.configuration.get("lang", "en_US")
-            if options.lang_list[lang_name] == current_lang_code:
-                lang_action.setChecked(True)
-            lang_action.triggered.connect(lambda checked, ln=lang_name: self.change_language_from_menu(ln))
-            self.language_action_group.addAction(lang_action)
-            language_menu.addAction(lang_action)
-        
         # Theme toggle
         theme_action = widgets.QAction(_("Dark Theme"), options_menu)
         theme_action.setCheckable(True)
@@ -827,10 +815,6 @@ class Main_widget(widgets.QMainWindow):
         except Exception as e:
             print(f"Error updating menu bar: {e}")
             
-    def change_language_from_menu(self, language_name):
-        """Handle language change from menu"""
-        set_language_realtime(language_name)
-        
     def toggle_theme(self):
         """Toggle theme between light and dark"""
         new_theme = not options.dark_mode
@@ -848,19 +832,19 @@ class Main_widget(widgets.QMainWindow):
         except Exception:
             pass
         if bus == "CAN":
-            self.canlinecombo.addItem("CAN Line 1 Auto")
-            self.canlinecombo.addItem("CAN Line 1@500K")
-            self.canlinecombo.addItem("CAN Line 1@250K")
+            self.canlinecombo.addItem(_("CAN Line 1 Auto"))
+            self.canlinecombo.addItem(_("CAN Line 1@500K"))
+            self.canlinecombo.addItem(_("CAN Line 1@250K"))
             if options.elm is not None and options.elm.adapter_type == "ELS":
-                self.canlinecombo.addItem("CAN Line 2@500K")
-                self.canlinecombo.addItem("CAN Line 2@250K")
-                self.canlinecombo.addItem("CAN Line 2@125K")
+                self.canlinecombo.addItem(_("CAN Line 2@500K"))
+                self.canlinecombo.addItem(_("CAN Line 2@250K"))
+                self.canlinecombo.addItem(_("CAN Line 2@125K"))
             self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
         else:
             if bus == "KWP2000":
-                self.canlinecombo.addItem("KWP2000")
+                self.canlinecombo.addItem(_("KWP2000"))
             if bus == "ISO8":
-                self.canlinecombo.addItem("ISO8")
+                self.canlinecombo.addItem(_("ISO8"))
 
     def flow_control(self):
         enabled = self.fctrigger.isChecked()
@@ -1523,7 +1507,7 @@ class main_window_options(widgets.QDialog):
         self.securitycheck = False
         self.selectedportspeed = 38400
         self.adapter = "STD"
-        self.raise_port_speed = "No"
+        self.raise_port_speed = _("No")
         super(main_window_options, self).__init__(None)
         # Set window icon and title
         appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
@@ -1548,7 +1532,7 @@ class main_window_options(widgets.QDialog):
         self.usbbutton.setFixedHeight(64)
         self.usbbutton.setFixedWidth(64)
         self.usbbutton.setCheckable(True)
-        self.usbbutton.setToolTip('USB')
+        self.usbbutton.setToolTip(_("USB"))
         medialayout.addWidget(self.usbbutton)
 
         self.wifibutton = widgets.QPushButton()
@@ -1557,7 +1541,7 @@ class main_window_options(widgets.QDialog):
         self.wifibutton.setFixedHeight(64)
         self.wifibutton.setFixedWidth(64)
         self.wifibutton.setCheckable(True)
-        self.wifibutton.setToolTip('WiFi')
+        self.wifibutton.setToolTip(_("WiFi"))
         medialayout.addWidget(self.wifibutton)
 
         self.btbutton = widgets.QPushButton()
@@ -1566,7 +1550,7 @@ class main_window_options(widgets.QDialog):
         self.btbutton.setFixedHeight(64)
         self.btbutton.setFixedWidth(64)
         self.btbutton.setCheckable(True)
-        self.btbutton.setToolTip('Bluetooth')
+        self.btbutton.setToolTip(_("Bluetooth"))
         medialayout.addWidget(self.btbutton)
 
         self.obdlinkbutton = widgets.QPushButton()
@@ -1575,7 +1559,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.setFixedHeight(64)
         self.obdlinkbutton.setFixedWidth(64)
         self.obdlinkbutton.setCheckable(True)
-        self.obdlinkbutton.setToolTip('OBDLINK SX/EX')
+        self.obdlinkbutton.setToolTip(_("OBDLINK SX/EX"))
         medialayout.addWidget(self.obdlinkbutton)
 
         self.elsbutton = widgets.QPushButton()
@@ -1584,7 +1568,7 @@ class main_window_options(widgets.QDialog):
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
         self.elsbutton.setCheckable(True)
-        self.elsbutton.setToolTip('ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device')
+        self.elsbutton.setToolTip(_("ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"))
         medialayout.addWidget(self.elsbutton)
 
         self.vlinkerbutton = widgets.QPushButton()
@@ -1593,7 +1577,7 @@ class main_window_options(widgets.QDialog):
         self.vlinkerbutton.setFixedHeight(64)
         self.vlinkerbutton.setFixedWidth(64)
         self.vlinkerbutton.setCheckable(True)
-        self.vlinkerbutton.setToolTip('Vlinker FS/MC')
+        self.vlinkerbutton.setToolTip(_("Vlinker FS/MC"))
         medialayout.addWidget(self.vlinkerbutton)
 
         self.vgatebutton = widgets.QPushButton()
@@ -1602,7 +1586,7 @@ class main_window_options(widgets.QDialog):
         self.vgatebutton.setFixedHeight(64)
         self.vgatebutton.setFixedWidth(64)
         self.vgatebutton.setCheckable(True)
-        self.vgatebutton.setToolTip('VGate (High-Speed)')
+        self.vgatebutton.setToolTip(_("VGate (High-Speed)"))
         medialayout.addWidget(self.vgatebutton)
 
         layout.addLayout(medialayout)
@@ -1913,12 +1897,12 @@ class main_window_options(widgets.QDialog):
     def usb(self):
         self.adapter = "STD_USB"
         self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("57600")
-        self.obdlinkspeedcombo.addItem("115200")
-        self.obdlinkspeedcombo.addItem("230400")
+        self.obdlinkspeedcombo.addItem(_("No"))
+        self.obdlinkspeedcombo.addItem(_("57600"))
+        self.obdlinkspeedcombo.addItem(_("115200"))
+        self.obdlinkspeedcombo.addItem(_("230400"))
         # This mode seems to not be supported by all adapters
-        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem(_("500000"))
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -1947,10 +1931,10 @@ class main_window_options(widgets.QDialog):
     def obdlink(self):
         self.adapter = "OBDLINK"
         self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("500000")
-        self.obdlinkspeedcombo.addItem("1000000")
-        self.obdlinkspeedcombo.addItem("2000000")
+        self.obdlinkspeedcombo.addItem(_("No"))
+        self.obdlinkspeedcombo.addItem(_("500000"))
+        self.obdlinkspeedcombo.addItem(_("1000000"))
+        self.obdlinkspeedcombo.addItem(_("2000000"))
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -2005,9 +1989,9 @@ class main_window_options(widgets.QDialog):
     def vlinker(self):
         self.adapter = "VLINKER"
         self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("57600")
-        self.obdlinkspeedcombo.addItem("115200")  # Vlinker can handle moderate speeds
+        self.obdlinkspeedcombo.addItem(_("No"))
+        self.obdlinkspeedcombo.addItem(_("57600"))
+        self.obdlinkspeedcombo.addItem(_("115200"))  # Vlinker can handle moderate speeds
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -2037,11 +2021,11 @@ class main_window_options(widgets.QDialog):
     def vgate(self):
         self.adapter = "VGATE"
         self.obdlinkspeedcombo.clear()
-        self.obdlinkspeedcombo.addItem("No")
-        self.obdlinkspeedcombo.addItem("115200")
-        self.obdlinkspeedcombo.addItem("230400")
-        self.obdlinkspeedcombo.addItem("500000")
-        self.obdlinkspeedcombo.addItem("1000000")  # VGate can handle very high speeds
+        self.obdlinkspeedcombo.addItem(_("No"))
+        self.obdlinkspeedcombo.addItem(_("115200"))
+        self.obdlinkspeedcombo.addItem(_("230400"))
+        self.obdlinkspeedcombo.addItem(_("500000"))
+        self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)

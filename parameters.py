@@ -1549,7 +1549,7 @@ class paramWidget(widgets.QWidget):
 
         clearbutton.clicked.connect(self.clearDTC)
 
-        html = '<h1 style="color:red">' + _('ECU trouble codes') + '</color></h1>'
+        html = '<h1 style="color:red">' + _('ECU trouble codes') + '</h1>'
 
         for dn in range(0, numberofdtc):
             html += '<h2 style="color:orange">DTC #%i' % dn + "</h2>"
