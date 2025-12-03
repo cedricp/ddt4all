@@ -24,8 +24,8 @@ _ = options.translator('ddt4all')
 # //TODO missing entries this need look side ecu addressing missing entries or ignore {}
 # dnat_entries = {"E7": "7E4", "E8": "644"}
 # snat_entries = {"E7": "7EC", "E8": "5C4"}
-dnat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
-snat_entries = {} # {"E7": u"SCRCM", "E8": u"SVS"}
+dnat_entries = {"E7": "7E4", "E8": "644"}
+snat_entries = {"E7": "7EC", "E8": "5C4"}
 
 snat = snat_entries
 snat_ext = {}
