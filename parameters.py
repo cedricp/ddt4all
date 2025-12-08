@@ -2028,8 +2028,8 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     new_dict = {"projects": {}}
     for k, v in sd:
         new_dict["projects"][k] = v
-    # js = json.dumps(new_dict, ensure_ascii=False, indent=True)
-    js = json.dumps(new_dict, ensure_ascii=False)
+    js = json.dumps(new_dict, ensure_ascii=False, indent=True)
+    # js = json.dumps(new_dict, ensure_ascii=False)
     f = open("ddt4all_data/projects.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
