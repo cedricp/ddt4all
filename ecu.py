@@ -1571,7 +1571,7 @@ class Ecu_scanner:
                 continue
 
             if not elm.addr_exist(addr):
-                print(_("Warning, address") + " %s " + _("is not mapped") % addr)
+                print(_("Warning, address") + " " + addr + " " + _("is not mapped"))
                 continue
 
             text = _("Scanning address: ")
