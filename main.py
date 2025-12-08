@@ -2026,6 +2026,11 @@ class main_window_options(widgets.QDialog):
         self.obdlinkspeedcombo.addItem(_("230400"))
         self.obdlinkspeedcombo.addItem(_("500000"))
         self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        
+        # Display STPX support information
+        self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
+        self.logview.append(_("Long command support and high-speed communication available"))
+        
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
