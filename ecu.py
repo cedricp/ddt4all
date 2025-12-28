@@ -1575,7 +1575,12 @@ class Ecu_scanner:
                 continue
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.elm.init_can()
@@ -1622,7 +1627,12 @@ class Ecu_scanner:
                 self.qapp.processEvents()
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.opt_si = True
