@@ -664,15 +664,32 @@ class Main_widget(widgets.QMainWindow):
         self.carlist_order_group.addAction(self.carlist_order_by_code)
         self.carlist_order_group.addAction(self.carlist_order_by_name)
 
-        # Options menu (moved under View menu)
+        # Theme menu (moved under View menu) with explicit Dark/Light selection
         theme_menu = view_menu.addMenu(_("Theme"))
-        
-        # Theme toggle
-        theme_action = widgets.QAction(_("Dark Theme"), theme_menu)
-        theme_action.setCheckable(True)
-        theme_action.setChecked(options.dark_mode)
-        theme_action.triggered.connect(self.toggle_theme)
-        theme_menu.addAction(theme_action)
+
+        theme_dark_action = widgets.QAction(_("Dark Theme"), theme_menu)
+        theme_dark_action.setCheckable(True)
+        theme_light_action = widgets.QAction(_("Light Theme"), theme_menu)
+        theme_light_action.setCheckable(True)
+
+        # Group theme actions so only one can be active
+        theme_action_group = widgets.QActionGroup(self)
+        theme_action_group.addAction(theme_dark_action)
+        theme_action_group.addAction(theme_light_action)
+        theme_action_group.setExclusive(True)
+
+        # Set initial checked state
+        if options.dark_mode:
+            theme_dark_action.setChecked(True)
+        else:
+            theme_light_action.setChecked(True)
+
+        # Connect actions to set the theme explicitly
+        theme_dark_action.triggered.connect(lambda checked: set_theme_style(2))
+        theme_light_action.triggered.connect(lambda checked: set_theme_style(0))
+
+        theme_menu.addAction(theme_dark_action)
+        theme_menu.addAction(theme_light_action)
 
         actionmenu = self.screenmenu.addMenu(_("Action"))
         cat_action = widgets.QAction(_("New Category"), actionmenu)
