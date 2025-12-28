@@ -664,15 +664,15 @@ class Main_widget(widgets.QMainWindow):
         self.carlist_order_group.addAction(self.carlist_order_by_code)
         self.carlist_order_group.addAction(self.carlist_order_by_name)
 
-        # Options menu
-        options_menu = menu.addMenu(_("Options"))
+        # Options menu (moved under View menu)
+        theme_menu = view_menu.addMenu(_("Theme"))
         
         # Theme toggle
-        theme_action = widgets.QAction(_("Dark Theme"), options_menu)
+        theme_action = widgets.QAction(_("Dark Theme"), theme_menu)
         theme_action.setCheckable(True)
         theme_action.setChecked(options.dark_mode)
         theme_action.triggered.connect(self.toggle_theme)
-        options_menu.addAction(theme_action)
+        theme_menu.addAction(theme_action)
 
         actionmenu = self.screenmenu.addMenu(_("Action"))
         cat_action = widgets.QAction(_("New Category"), actionmenu)
