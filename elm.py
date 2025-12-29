@@ -691,13 +691,13 @@ class Port:
                 return byte
 
             except serial.SerialException as e:
-                print(f"Serial error in read_byte: {e}")
+                print(_("Serial error in read_byte: %s") % e)
                 self.connectionStatus = False
                 return None
             except Exception as e:
                 print('*' * 40)
                 print('*       ' + _('Connection to ELM was lost'))
-                print(f'*       Error: {e}')
+                print(_('*       Error: %s') % e)
                 self.connectionStatus = False
                 self.close()
                 return None
@@ -718,10 +718,10 @@ class Port:
                         return byte.decode(encoding)
                     except:
                         continue
-                print(_("Cannot decode bytes ") + str(byte))
+                print(_("Cannot decode bytes %s") % str(byte))
                 return ""
         except Exception as e:
-            print(f"Error in read(): {e}")
+            print(_("Error in read(): %s") % e)
             return None
 
     def change_rate(self, rate):
@@ -736,7 +736,7 @@ class Port:
 
                 if self.portType == 1:  # TCP/WiFi
                     if self.tcp_needs_reconnect:
-                        print("Attempting WiFi reconnection...")
+                        print(_("Attempting WiFi reconnection..."))
                         self.tcp_needs_reconnect = False
                         self.init_wifi(True)
                         if not self.connectionStatus:
@@ -753,7 +753,7 @@ class Port:
                     return self.hdr.write(data)
 
             except serial.SerialException as e:
-                print(f"Serial write error: {e}")
+                print(_("Serial write error: %s") % e)
                 self.connectionStatus = False
                 return None
             except Exception as e:
@@ -1087,7 +1087,7 @@ class ELM:
     def raise_elm_speed(self, baudrate, device_name="ELM"):
         # Unified speed switch for ELM (ATBRD) and STN-based adapters (ST SBR)
         if self.port is None:
-            raise Exception("Port is None - cannot switch speed")
+            raise Exception(_("Port is None - cannot switch speed"))
 
         dev = (device_name or "ELM").upper()
         try:
@@ -1125,7 +1125,7 @@ class ELM:
             elif baudrate == 500000:
                 atcmd = "ATBRD 8"
             else:
-                raise Exception("Unsupported baudrate for ELM: %s" % str(baudrate))
+                raise Exception(_("Unsupported baudrate for ELM: %s") % str(baudrate))
 
             rsp = self.send_raw(atcmd)
             if "OK" in rsp:
@@ -1138,9 +1138,9 @@ class ELM:
                     print(_("Version ") + version)
                     return
                 else:
-                    raise Exception("ELM did not report version after speed switch")
+                    raise Exception(_("ELM did not report version after speed switch"))
             else:
-                raise Exception((_("Your ELM does not support baudrate ") + str(baudrate)))
+                raise Exception((_("Your ELM does not support baudrate %s") % str(baudrate)))
 
         except Exception:
             raise

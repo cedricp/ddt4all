@@ -19,7 +19,7 @@ try:
     import PyQt5.QtWebEngineWidgets as webkitwidgets
     HAS_WEBENGINE = True
 except ImportError:
-    print("Warning: PyQtWebEngine not available. Some features may be limited.")
+    print(_("Warning: PyQtWebEngine not available. Some features may be limited."))
     webkitwidgets = None
     HAS_WEBENGINE = False
 
@@ -362,7 +362,7 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan.qapp = app
         options.socket_timeout = False
         options.ecu_scanner = self.ecu_scan
-        print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
+        print(_("%d loaded ECUs in database.") % self.ecu_scan.getNumEcuDb())
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("ddt4all_data/icons/obd.png")

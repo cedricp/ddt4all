@@ -151,7 +151,7 @@ class Virginizer(gui.QDialog):
         sds_stream = " ".join(sds_request.build_data_stream({}))
 
         if options.simulation_mode:
-            print("SdSC0 stream", sds_stream)
+            print(_("SdSC0 stream: %s") % sds_stream)
             return
 
         options.elm.start_session_can(sds_stream)
