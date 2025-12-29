@@ -1739,6 +1739,8 @@ class main_window_options(widgets.QDialog):
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
+        self.elmchk.setEnabled(False)
+        self.elmchk.setText(_("Checking..."))
         currentitem = self.listview.currentItem()
         self.logview.show()
         self.logview.clear()
@@ -1799,7 +1801,10 @@ class main_window_options(widgets.QDialog):
                 
         except Exception as e:
             self.logview.append(_("Error during connection test: ") + str(e))
-
+        finally:
+            self.elmchk.setText(_("Reset and Recheck"))
+            self.elmchk.setEnabled(True)
+            
     def rescan_ports(self):
         """Enhanced port rescanning with device identification"""
         try:
