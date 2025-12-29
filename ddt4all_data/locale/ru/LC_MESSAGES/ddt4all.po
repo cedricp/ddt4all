@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-29 02:33+0100\n"
-"PO-Revision-Date: 2025-12-29 03:04+0100\n"
+"POT-Creation-Date: 2025-12-29 05:11+0100\n"
+"PO-Revision-Date: 2025-12-29 05:17+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -402,8 +402,15 @@ msgstr ""
 msgid "Attempting WiFi reconnection..."
 msgstr "Attempting connection..."
 
+msgid "Port handler is None, cannot write"
+msgstr ""
+
 #, python-format
 msgid "Serial write error: %s"
+msgstr ""
+
+#, python-format
+msgid "*       Write error: %s"
 msgstr ""
 
 msgid "TIMEOUT"
@@ -984,6 +991,11 @@ msgstr ""
 msgid "Change UART speed"
 msgstr ""
 
+#, fuzzy
+#| msgid "Check"
+msgid "Checking..."
+msgstr "Check"
+
 msgid "Please enter WiFi adapter IP address"
 msgstr "Please enter WiFi adapter IP address"
 
@@ -1028,6 +1040,9 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "Reset and Recheck"
+msgstr ""
 
 msgid "57600"
 msgstr ""

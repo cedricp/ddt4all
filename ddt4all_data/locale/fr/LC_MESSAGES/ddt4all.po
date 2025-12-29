@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-29 02:33+0100\n"
-"PO-Revision-Date: 2025-12-29 03:01+0100\n"
+"POT-Creation-Date: 2025-12-29 05:11+0100\n"
+"PO-Revision-Date: 2025-12-29 05:39+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -377,9 +377,16 @@ msgstr "Erreur lors de la lecture() : %s"
 msgid "Attempting WiFi reconnection..."
 msgstr "Tentative de connexion Wifi..."
 
+msgid "Port handler is None, cannot write"
+msgstr "Le gestionnaire de port est nul (None), impossible d’écrire"
+
 #, python-format
 msgid "Serial write error: %s"
 msgstr "Erreur d'écriture sur port serial: %s"
+
+#, python-format
+msgid "*       Write error: %s"
+msgstr "*       Erreur d’écriture: %s"
 
 msgid "TIMEOUT"
 msgstr "TEMPS DEPASSÉ"
@@ -943,6 +950,9 @@ msgstr "Thème sombre"
 msgid "Change UART speed"
 msgstr "Changer la vitesse de l'UART"
 
+msgid "Checking..."
+msgstr "Vérification…"
+
 # New strings added for enhanced device support
 msgid "Please enter WiFi adapter IP address"
 msgstr "Veuillez saisir l'adresse IP de l'adaptateur WiFi"
@@ -988,6 +998,9 @@ msgstr "Test de connexion réussi !"
 
 msgid "Error during connection test: "
 msgstr "Erreur lors du test de connexion : "
+
+msgid "Reset and Recheck"
+msgstr "Réinitialiser et vérifier"
 
 msgid "57600"
 msgstr "57600"

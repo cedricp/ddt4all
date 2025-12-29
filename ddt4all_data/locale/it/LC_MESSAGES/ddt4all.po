@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL (10.03.2023)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-29 02:33+0100\n"
-"PO-Revision-Date: 2025-12-29 03:02+0100\n"
+"POT-Creation-Date: 2025-12-29 05:11+0100\n"
+"PO-Revision-Date: 2025-12-29 05:16+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: bovirus@gmail.com\n"
 "Language: it\n"
@@ -410,9 +410,17 @@ msgstr ""
 msgid "Attempting WiFi reconnection..."
 msgstr "Attempting connection..."
 
+msgid "Port handler is None, cannot write"
+msgstr ""
+
 #, fuzzy, python-format
 #| msgid "Frame hex error : "
 msgid "Serial write error: %s"
+msgstr "Errore hex frame: "
+
+#, fuzzy, python-format
+#| msgid "Frame hex error : "
+msgid "*       Write error: %s"
 msgstr "Errore hex frame: "
 
 msgid "TIMEOUT"
@@ -999,6 +1007,11 @@ msgstr "Stile scuro"
 msgid "Change UART speed"
 msgstr "Modifica la velocità UART"
 
+#, fuzzy
+#| msgid "Check"
+msgid "Checking..."
+msgstr "Controlla"
+
 msgid "Please enter WiFi adapter IP address"
 msgstr "Please enter WiFi adapter IP address"
 
@@ -1043,6 +1056,9 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "Reset and Recheck"
+msgstr ""
 
 msgid "57600"
 msgstr ""

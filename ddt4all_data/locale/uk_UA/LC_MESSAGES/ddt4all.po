@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-29 02:33+0100\n"
-"PO-Revision-Date: 2025-12-29 03:05+0100\n"
+"POT-Creation-Date: 2025-12-29 05:11+0100\n"
+"PO-Revision-Date: 2025-12-29 05:18+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -390,9 +390,17 @@ msgstr ""
 msgid "Attempting WiFi reconnection..."
 msgstr "Attempting connection..."
 
+msgid "Port handler is None, cannot write"
+msgstr ""
+
 #, fuzzy, python-format
 #| msgid "Frame hex error: "
 msgid "Serial write error: %s"
+msgstr "Помилка hex кадру "
+
+#, fuzzy, python-format
+#| msgid "Frame hex error: "
+msgid "*       Write error: %s"
 msgstr "Помилка hex кадру "
 
 msgid "TIMEOUT"
@@ -972,6 +980,11 @@ msgstr "Темний стиль"
 msgid "Change UART speed"
 msgstr "Змінити швидкість UART"
 
+#, fuzzy
+#| msgid "Check"
+msgid "Checking..."
+msgstr "Перевірити"
+
 msgid "Please enter WiFi adapter IP address"
 msgstr "Please enter WiFi adapter IP address"
 
@@ -1016,6 +1029,9 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "Reset and Recheck"
+msgstr ""
 
 msgid "57600"
 msgstr ""
