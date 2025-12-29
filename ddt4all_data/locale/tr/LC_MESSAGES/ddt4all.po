@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 06:02+0100\n"
-"PO-Revision-Date: 2025-11-11 06:12+0100\n"
-"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
+"POT-Creation-Date: 2025-12-29 02:33+0100\n"
+"PO-Revision-Date: 2025-12-29 03:04+0100\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -177,18 +177,24 @@ msgstr "Kontrol"
 msgid "Request %s not found"
 msgstr "%s isteği bulunamadı"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=green>Request <font color=blue>'%s'</font> has no missing "
+#| "input values</font>"
 msgid ""
-"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
-"values</font>"
+"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
+"input values"
 msgstr ""
 "<font color=green>İstek <font color=blue>'%s'</font> eksik girdi değeri "
 "içermiyor</font>"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :"
+#| "</font>"
 msgid ""
-"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
-"font>"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
+"inputs :"
 msgstr ""
 "<font color=red>İstek <font color=blue>'%s'</font> eksik girdi içeriyor :</"
 "font>"
@@ -358,11 +364,35 @@ msgstr "ELM bağlı değil veya yanlış COM port"
 msgid "Port closed"
 msgstr "Bağlantı noktası kapalı"
 
+#, python-format
+msgid "Serial error in read_byte: %s"
+msgstr ""
+
 msgid "Connection to ELM was lost"
 msgstr "ELM ile bağlantı kesildi"
 
-msgid "Cannot decode bytes "
+#, python-format
+msgid "*       Error: %s"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Cannot decode bytes "
+msgid "Cannot decode bytes %s"
 msgstr "Baytlar çözülemiyor"
+
+#, python-format
+msgid "Error in read(): %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "Attempting connection..."
+msgid "Attempting WiFi reconnection..."
+msgstr "Attempting connection..."
+
+#, fuzzy, python-format
+#| msgid "Frame hex error: "
+msgid "Serial write error: %s"
+msgstr "Çerçeve hex hatası:"
 
 msgid "TIMEOUT"
 msgstr "ZAMAN AŞIMI"
@@ -378,6 +408,14 @@ msgstr "ELM yanıt vermiyor"
 
 msgid "Trying to open port "
 msgstr "Bağlantı noktası (port) açmaya çalışılıyor "
+
+#, fuzzy
+#| msgid "Screen initialization"
+msgid "Port initialization failed"
+msgstr "Ekran başlatma"
+
+msgid "Port connection failed - port object is invalid"
+msgstr ""
 
 msgid "No ELM interface on port"
 msgstr "Bağlantı noktasında ELM arayüzü yok"
@@ -396,22 +434,43 @@ msgstr ""
 msgid "Connection established successfully"
 msgstr "Connection test successful!"
 
+msgid "VGate STPX mode enabled for enhanced long command support"
+msgstr ""
+
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
 msgstr ""
 
 msgid "ELS27 V5 CAN configuration complete"
 msgstr ""
 
-msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgid "STPX mode enabled for enhanced long command support"
+msgstr ""
+
+msgid "Port is None - cannot switch speed"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr "OBDLINK baurate'i değiştirme tamam, Şimdi UART hızı değişiyor..."
 
-#, fuzzy
-#| msgid "OBDLink full speed connection OK"
-msgid "OBDLINK full speed connection OK"
-msgstr "OBDLink tam hız bağlantısı TAMAM"
+#, fuzzy, python-format
+#| msgid "Connection test failed"
+msgid "%s STN connection established"
+msgstr "Connection test failed"
 
-msgid "OBDLink Version "
-msgstr "OBDLink Sürümü"
+#, fuzzy, python-format
+#| msgid "Version "
+msgid "%s Version: "
+msgstr "Sürüm"
+
+msgid ""
+"VGate adapter detected but STN verification failed, attempting fallback..."
+msgstr ""
+
+#, python-format
+msgid "Unsupported baudrate for ELM: %s"
+msgstr ""
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr "ELM baud hızı AÇIK, UART hızı şimdi değiştiriliyor..."
@@ -422,7 +481,12 @@ msgstr "ELM tam hız bağlantısı TAMAM"
 msgid "Version "
 msgstr "Sürüm"
 
-msgid "Your ELM does not support baudrate "
+msgid "ELM did not report version after speed switch"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Your ELM does not support baudrate "
+msgid "Your ELM does not support baudrate %s"
 msgstr "ELM'niz baud hızını desteklemiyor"
 
 msgid "ELM reset..."
@@ -503,6 +567,9 @@ msgstr " Başarılı Oldu "
 msgid "ELM Max version:"
 msgstr "ELM Max sürümü:"
 
+msgid "Warning: PyQtWebEngine not available. Some features may be limited."
+msgstr ""
+
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr "ddt4all_data/projects.json bulunamadı veya doğru değil."
 
@@ -510,6 +577,15 @@ msgstr "ddt4all_data/projects.json bulunamadı veya doğru değil."
 #| msgid "ECU name"
 msgid "ECU Finder"
 msgstr "ECU Adı"
+
+msgid "Address :"
+msgstr ""
+
+msgid "ID frame :"
+msgstr ""
+
+msgid "VALIDATE"
+msgstr "DOĞRULA"
 
 msgid "ECU name"
 msgstr "ECU Adı"
@@ -526,7 +602,9 @@ msgstr "Tanılama"
 msgid "Projets"
 msgstr "Projeler"
 
-msgid "loaded ECUs in database."
+#, fuzzy, python-format
+#| msgid "loaded ECUs in database."
+msgid "%d loaded ECUs in database."
 msgstr "adet ECU veritabanında yüklü."
 
 msgid "No database found"
@@ -660,6 +738,29 @@ msgstr "Veritabanını sıkıştır"
 msgid "Exit"
 msgstr "Çıkış"
 
+msgid "View"
+msgstr "Görünüm"
+
+msgid "CarList Order"
+msgstr ""
+
+msgid "By Project Code"
+msgstr ""
+
+msgid "By Car Name"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+#, fuzzy
+#| msgid "Dark style"
+msgid "Dark Theme"
+msgstr "Karanlık mod"
+
+msgid "Light Theme"
+msgstr ""
+
 msgid "Action"
 msgstr "Eylem"
 
@@ -701,6 +802,35 @@ msgstr "sürüm:"
 
 msgid "Created by:"
 msgstr "Oluşturan:"
+
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Tarama seçenekleri"
+
+msgid "CAN Line 1 Auto"
+msgstr ""
+
+msgid "CAN Line 1@500K"
+msgstr ""
+
+msgid "CAN Line 1@250K"
+msgstr ""
+
+msgid "CAN Line 2@500K"
+msgstr ""
+
+msgid "CAN Line 2@250K"
+msgstr ""
+
+msgid "CAN Line 2@125K"
+msgstr ""
+
+msgid "KWP2000"
+msgstr ""
+
+msgid "ISO8"
+msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
 msgstr "Veritabanını kaydet ('.zip' uzantısını koru)"
@@ -781,15 +911,39 @@ msgstr ""
 "<center>Katkılarınız için teşekkür ederiz, herhangi bir şey olmazsa lütfen "
 "şu adrese gidin: https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
-#| msgid "Scan options"
-msgid "Options"
-msgstr "Tarama seçenekleri"
+msgid "Language changed to"
+msgstr ""
+
+msgid "No"
+msgstr "Hayır"
 
 msgid "ELM port selection"
 msgstr "ELM bağlantı noktası (port) seçimi"
 
-msgid "Interface language (need save and close)"
+msgid "USB"
+msgstr ""
+
+msgid "WiFi"
+msgstr ""
+
+msgid "Bluetooth"
+msgstr ""
+
+msgid "OBDLINK SX/EX"
+msgstr ""
+
+msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
+msgstr ""
+
+msgid "Vlinker FS/MC"
+msgstr ""
+
+msgid "VGate (High-Speed)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Interface language (need save and close)"
+msgid "Interface language"
 msgstr "Arayüz dili (kaydetmeniz ve kapatmanız gerekir)"
 
 msgid "Port speed"
@@ -804,8 +958,8 @@ msgstr "Deneme modu"
 msgid "ELM benchmark"
 msgstr "ELM değerlendirme testi"
 
-msgid "Save and close"
-msgstr "Kaydet ve kapat"
+msgid "Close"
+msgstr "Kapat"
 
 msgid "WiFi port : "
 msgstr "WiFi bağlantı noktası : "
@@ -863,6 +1017,30 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "57600"
+msgstr ""
+
+msgid "115200"
+msgstr ""
+
+msgid "230400"
+msgstr ""
+
+msgid "500000"
+msgstr ""
+
+msgid "1000000"
+msgstr ""
+
+msgid "2000000"
+msgstr ""
+
+msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
+msgstr ""
+
+msgid "Long command support and high-speed communication available"
+msgstr ""
 
 msgid "You must check the recommandations"
 msgstr "Önerileri kontrol etmelisiniz"
@@ -1151,6 +1329,11 @@ msgstr "<font color='red'>KAZA ALGILANDI</font>"
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>KAZA ALGILANMADI</font>"
 
+#, fuzzy, python-format
+#| msgid "Received stream "
+msgid "SdS stream: %s"
+msgstr "Alınan akış"
+
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
 
@@ -1175,9 +1358,6 @@ msgstr ""
 
 msgid "LEARN"
 msgstr "ÖĞREN"
-
-msgid "VALIDATE"
-msgstr "DOĞRULA"
 
 msgid "Algo 2"
 msgstr "2 şey"
@@ -1257,6 +1437,10 @@ msgstr "<font color='green'>EPS temiz</font>"
 msgid "<font color='red'>EPS coded</font>"
 msgstr "<font color='red'>EPS kodlanmış</font>"
 
+#, python-format
+msgid "SdSC0 stream: %s"
+msgstr ""
+
 msgid "Clio IV EPS Reset"
 msgstr "Clio IV EPS Sıfırlama"
 
@@ -1276,6 +1460,10 @@ msgstr "<font color='green'>EPS çalışmıyor</font>"
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='red'>BEKLENMEYEN YANIT</font>"
+
+#, python-format
+msgid "SdSFA stream: %s"
+msgstr ""
 
 msgid "Laguna II UCH Reset"
 msgstr "Laguna II UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
@@ -1373,6 +1561,10 @@ msgstr ""
 "YASTIĞI SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA YASTIĞI ÇARPMA "
 "VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ "
 "YOKSA UZAK DURUN</font>"
+
+#, python-format
+msgid "SdSEX stream: %s"
+msgstr ""
 
 msgid "CRC calculator"
 msgstr "CRC hesaplayıcı"
@@ -1506,6 +1698,17 @@ msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 
+#, fuzzy
+#~| msgid "OBDLink full speed connection OK"
+#~ msgid "OBDLINK full speed connection OK"
+#~ msgstr "OBDLink tam hız bağlantısı TAMAM"
+
+#~ msgid "OBDLink Version "
+#~ msgstr "OBDLink Sürümü"
+
+#~ msgid "Save and close"
+#~ msgstr "Kaydet ve kapat"
+
 #~ msgid "Writing vehicles database..."
 #~ msgstr "Araç veritabanı yazılıyor..."
 
@@ -1521,9 +1724,6 @@ msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 #~ msgid "Edit"
 #~ msgstr "Düzenle"
 
-#~ msgid "View"
-#~ msgstr "Görünüm"
-
 #~ msgid "Tools"
 #~ msgstr "Araçlar"
 
@@ -1533,17 +1733,11 @@ msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
 #~ msgid "Save"
 #~ msgstr "Kaydet"
 
-#~ msgid "Close"
-#~ msgstr "Kapat"
-
 #~ msgid "Cancel"
 #~ msgstr "İptal"
 
 #~ msgid "Yes"
 #~ msgstr "Evet"
-
-#~ msgid "No"
-#~ msgstr "Hayır"
 
 #~ msgid "Error"
 #~ msgstr "Hata"

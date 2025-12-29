@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 06:02+0100\n"
-"PO-Revision-Date: 2025-11-11 06:09+0100\n"
-"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
+"POT-Creation-Date: 2025-12-29 02:33+0100\n"
+"PO-Revision-Date: 2025-12-29 03:03+0100\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -177,18 +177,24 @@ msgstr "Sprawdź"
 msgid "Request %s not found"
 msgstr "Polecenie %s nie znalezione"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=green>Request <font color=blue>'%s'</font> has no missing "
+#| "input values</font>"
 msgid ""
-"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
-"values</font>"
+"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
+"input values"
 msgstr ""
 "<font color=green>Request <font color=blue>'%s'</font> ma brakujące wartości "
 "wejściowe</font>"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :"
+#| "</font>"
 msgid ""
-"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
-"font>"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
+"inputs :"
 msgstr ""
 "<font color=red>Request <font color=blue>'%s'</font> ma brakujące wejścia :</"
 "font>"
@@ -358,11 +364,35 @@ msgstr "ELM nie podłączony lub wybrano zły port COM"
 msgid "Port closed"
 msgstr "Port zamknięty"
 
+#, python-format
+msgid "Serial error in read_byte: %s"
+msgstr ""
+
 msgid "Connection to ELM was lost"
 msgstr "Połączenie do ELMa zostało utracone"
 
-msgid "Cannot decode bytes "
+#, python-format
+msgid "*       Error: %s"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Cannot decode bytes "
+msgid "Cannot decode bytes %s"
 msgstr "Nie można zdekodować bajtów "
+
+#, python-format
+msgid "Error in read(): %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "Attempting connection..."
+msgid "Attempting WiFi reconnection..."
+msgstr "Attempting connection..."
+
+#, fuzzy, python-format
+#| msgid "Frame hex error: "
+msgid "Serial write error: %s"
+msgstr "Błąd ramki hex: "
 
 msgid "TIMEOUT"
 msgstr ""
@@ -378,6 +408,14 @@ msgstr "ELM nie odpowiada"
 
 msgid "Trying to open port "
 msgstr "Próba otwarcia portu "
+
+#, fuzzy
+#| msgid "Screen initialization"
+msgid "Port initialization failed"
+msgstr "Inicjalizacja ekranu"
+
+msgid "Port connection failed - port object is invalid"
+msgstr ""
 
 msgid "No ELM interface on port"
 msgstr "Brak interfejsu ELM na wybranym porcie"
@@ -396,22 +434,43 @@ msgstr ""
 msgid "Connection established successfully"
 msgstr "Connection test successful!"
 
+msgid "VGate STPX mode enabled for enhanced long command support"
+msgstr ""
+
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
 msgstr ""
 
 msgid "ELS27 V5 CAN configuration complete"
 msgstr ""
 
-msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgid "STPX mode enabled for enhanced long command support"
+msgstr ""
+
+msgid "Port is None - cannot switch speed"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr "OBDLINK zmieniona prędkość OK, zmiana prędkości UART..."
 
-#, fuzzy
-#| msgid "OBDLink full speed connection OK"
-msgid "OBDLINK full speed connection OK"
-msgstr "OBDLink pełna prędkość połączenia OK"
+#, fuzzy, python-format
+#| msgid "Connection test failed"
+msgid "%s STN connection established"
+msgstr "Connection test failed"
 
-msgid "OBDLink Version "
-msgstr "Wersja OBDLink "
+#, fuzzy, python-format
+#| msgid "Version "
+msgid "%s Version: "
+msgstr "Wersja "
+
+msgid ""
+"VGate adapter detected but STN verification failed, attempting fallback..."
+msgstr ""
+
+#, python-format
+msgid "Unsupported baudrate for ELM: %s"
+msgstr ""
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr "ELM zmieniona prędkość OK, zmiana prędkości UART..."
@@ -422,7 +481,12 @@ msgstr "ELM pełna prędkość połączenia OK "
 msgid "Version "
 msgstr "Wersja "
 
-msgid "Your ELM does not support baudrate "
+msgid "ELM did not report version after speed switch"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Your ELM does not support baudrate "
+msgid "Your ELM does not support baudrate %s"
 msgstr "Twój ELM nie obsługuje tego baudrata "
 
 msgid "ELM reset..."
@@ -503,6 +567,9 @@ msgstr " udało się z "
 msgid "ELM Max version:"
 msgstr "Maksymalna wersja ELMa:"
 
+msgid "Warning: PyQtWebEngine not available. Some features may be limited."
+msgstr ""
+
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr "ddt4all_data/projects.json nie znaleziony lub niepoprawny."
 
@@ -510,6 +577,15 @@ msgstr "ddt4all_data/projects.json nie znaleziony lub niepoprawny."
 #| msgid "ECU name"
 msgid "ECU Finder"
 msgstr "Nazwa Ecu"
+
+msgid "Address :"
+msgstr ""
+
+msgid "ID frame :"
+msgstr ""
+
+msgid "VALIDATE"
+msgstr "ZWALIDUJ"
 
 msgid "ECU name"
 msgstr "Nazwa Ecu"
@@ -526,7 +602,9 @@ msgstr ""
 msgid "Projets"
 msgstr "Projekt"
 
-msgid "loaded ECUs in database."
+#, fuzzy, python-format
+#| msgid "loaded ECUs in database."
+msgid "%d loaded ECUs in database."
 msgstr "załadowane ECU w bazie danych."
 
 msgid "No database found"
@@ -660,6 +738,29 @@ msgstr "Zipuj bazę danych"
 msgid "Exit"
 msgstr "Wyjście"
 
+msgid "View"
+msgstr "Widok"
+
+msgid "CarList Order"
+msgstr ""
+
+msgid "By Project Code"
+msgstr ""
+
+msgid "By Car Name"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+#, fuzzy
+#| msgid "Dark style"
+msgid "Dark Theme"
+msgstr "Tryb ciemny"
+
+msgid "Light Theme"
+msgstr ""
+
 msgid "Action"
 msgstr "Akcja"
 
@@ -701,6 +802,35 @@ msgstr " wersja:"
 
 msgid "Created by:"
 msgstr "Stworzone przez:"
+
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Opcje skanowania"
+
+msgid "CAN Line 1 Auto"
+msgstr ""
+
+msgid "CAN Line 1@500K"
+msgstr ""
+
+msgid "CAN Line 1@250K"
+msgstr ""
+
+msgid "CAN Line 2@500K"
+msgstr ""
+
+msgid "CAN Line 2@250K"
+msgstr ""
+
+msgid "CAN Line 2@125K"
+msgstr ""
+
+msgid "KWP2000"
+msgstr ""
+
+msgid "ISO8"
+msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
 msgstr "Zapisz bazę danych (zachowaj rozszerzenie '.zip')"
@@ -781,15 +911,39 @@ msgstr ""
 "<center>Dziekujemy za twoją contybucję, jeżeli nic sie nie dzieje, proszę "
 "kliknąć tutaj: https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
-#| msgid "Scan options"
-msgid "Options"
-msgstr "Opcje skanowania"
+msgid "Language changed to"
+msgstr ""
+
+msgid "No"
+msgstr "Nie"
 
 msgid "ELM port selection"
 msgstr "Wybierz port ELMa"
 
-msgid "Interface language (need save and close)"
+msgid "USB"
+msgstr ""
+
+msgid "WiFi"
+msgstr ""
+
+msgid "Bluetooth"
+msgstr ""
+
+msgid "OBDLINK SX/EX"
+msgstr ""
+
+msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
+msgstr ""
+
+msgid "Vlinker FS/MC"
+msgstr ""
+
+msgid "VGate (High-Speed)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Interface language (need save and close)"
+msgid "Interface language"
 msgstr "Język interfejsu (wymaga zapisania i zamknięcia)"
 
 msgid "Port speed"
@@ -804,8 +958,8 @@ msgstr "Tryb edycji"
 msgid "ELM benchmark"
 msgstr "Test ELMa"
 
-msgid "Save and close"
-msgstr "Zapisz i zamknij"
+msgid "Close"
+msgstr "Zamknij"
 
 msgid "WiFi port : "
 msgstr "Port WiFi : "
@@ -864,6 +1018,30 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "57600"
+msgstr ""
+
+msgid "115200"
+msgstr ""
+
+msgid "230400"
+msgstr ""
+
+msgid "500000"
+msgstr ""
+
+msgid "1000000"
+msgstr ""
+
+msgid "2000000"
+msgstr ""
+
+msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
+msgstr ""
+
+msgid "Long command support and high-speed communication available"
+msgstr ""
 
 msgid "You must check the recommandations"
 msgstr "Musisz zaznaczyc zalecenie"
@@ -1156,6 +1334,11 @@ msgstr "<font color='red'>WYKRYTO CRASH</font>"
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>NIE WYKRYTO CRASHA</font>"
 
+#, fuzzy, python-format
+#| msgid "Received stream "
+msgid "SdS stream: %s"
+msgstr "Odebrany strumień  "
+
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
 
@@ -1180,9 +1363,6 @@ msgstr ""
 
 msgid "LEARN"
 msgstr "NAUCZ"
-
-msgid "VALIDATE"
-msgstr "ZWALIDUJ"
 
 msgid "Algo 2"
 msgstr ""
@@ -1258,6 +1438,10 @@ msgstr ""
 msgid "<font color='red'>EPS coded</font>"
 msgstr "<font color='red'>EPS zakodowany</font>"
 
+#, python-format
+msgid "SdSC0 stream: %s"
+msgstr ""
+
 msgid "Clio IV EPS Reset"
 msgstr "Clio IV Reset EPS"
 
@@ -1277,6 +1461,10 @@ msgstr "<font color='green'>EPS nie działa</font>"
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='red'>NIEOCZEKIWANA ODPOWIEDŹ</font>"
+
+#, python-format
+msgid "SdSFA stream: %s"
+msgstr ""
 
 msgid "Laguna II UCH Reset"
 msgstr "Laguna II Reset UCH"
@@ -1372,6 +1560,10 @@ msgstr ""
 "VIRGINIZER<br><font color='red'>TEN PLUGIN ODBLOKUJE DANE O WYPADKU "
 "AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ UŻYWANIE TEJ OPCJI</"
 "font>"
+
+#, python-format
+msgid "SdSEX stream: %s"
+msgstr ""
 
 msgid "CRC calculator"
 msgstr "Kalkulator CRC"
@@ -1505,6 +1697,17 @@ msgstr "<font color='green'>WYCZYŚĆ WYKONANE</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
 
+#, fuzzy
+#~| msgid "OBDLink full speed connection OK"
+#~ msgid "OBDLINK full speed connection OK"
+#~ msgstr "OBDLink pełna prędkość połączenia OK"
+
+#~ msgid "OBDLink Version "
+#~ msgstr "Wersja OBDLink "
+
+#~ msgid "Save and close"
+#~ msgstr "Zapisz i zamknij"
+
 #~ msgid "Writing vehicles database..."
 #~ msgstr "Zapisywanie bazy danych pojazdów..."
 
@@ -1520,9 +1723,6 @@ msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
 #~ msgid "Edit"
 #~ msgstr "Edytuj"
 
-#~ msgid "View"
-#~ msgstr "Widok"
-
 #~ msgid "Tools"
 #~ msgstr "Narzędzia"
 
@@ -1532,17 +1732,11 @@ msgstr "<font color='red'>WYCZYŚĆ NIEUDANE</font>"
 #~ msgid "Save"
 #~ msgstr "Zapisz"
 
-#~ msgid "Close"
-#~ msgstr "Zamknij"
-
 #~ msgid "Cancel"
 #~ msgstr "Anuluj"
 
 #~ msgid "Yes"
 #~ msgstr "Tak"
-
-#~ msgid "No"
-#~ msgstr "Nie"
 
 #~ msgid "Error"
 #~ msgstr "Błąd"

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 06:02+0100\n"
-"PO-Revision-Date: 2025-11-11 06:07+0100\n"
-"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
+"POT-Creation-Date: 2025-12-29 02:33+0100\n"
+"PO-Revision-Date: 2025-12-29 03:02+0100\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -176,18 +176,24 @@ msgstr "Ellenőrzés"
 msgid "Request %s not found"
 msgstr "Nincs %s parancs"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=green>Request <font color=blue>'%s'</font> has no missing "
+#| "input values</font>"
 msgid ""
-"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
-"values</font>"
+"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
+"input values"
 msgstr ""
 "<font color=green>A(z) <font color=blue>'%s'</font> parancsnak nincs hiányzó "
 "bemeneti értéke</font>"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :"
+#| "</font>"
 msgid ""
-"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
-"font>"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
+"inputs :"
 msgstr ""
 "<font color=red>A(z) <font color=blue>'%s'</font> parancsnak hiányos a "
 "bemenete :</font>"
@@ -373,13 +379,34 @@ msgstr "ELM nincs csatlakoztatva vagy rossz COM port"
 msgid "Port closed"
 msgstr "Port sebessége"
 
+#, python-format
+msgid "Serial error in read_byte: %s"
+msgstr ""
+
 msgid "Connection to ELM was lost"
 msgstr "Megszakadt a kapcsolat az ELM-mel"
 
-#, fuzzy
+#, python-format
+msgid "*       Error: %s"
+msgstr ""
+
+#, fuzzy, python-format
 #| msgid "Cannot call request "
-msgid "Cannot decode bytes "
+msgid "Cannot decode bytes %s"
 msgstr "Sikertelen parancshívás "
+
+#, python-format
+msgid "Error in read(): %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "Attempting connection..."
+msgid "Attempting WiFi reconnection..."
+msgstr "Attempting connection..."
+
+#, python-format
+msgid "Serial write error: %s"
+msgstr ""
 
 msgid "TIMEOUT"
 msgstr "IDŐTÚLLÉPÉS"
@@ -395,6 +422,14 @@ msgstr "ELM nem válaszol"
 
 msgid "Trying to open port "
 msgstr "Port megnyitása "
+
+#, fuzzy
+#| msgid "Screen initialization"
+msgid "Port initialization failed"
+msgstr "Képernyő inicializálása"
+
+msgid "Port connection failed - port object is invalid"
+msgstr ""
 
 msgid "No ELM interface on port"
 msgstr "Nincs ELM interfész a porton"
@@ -413,22 +448,42 @@ msgstr ""
 msgid "Connection established successfully"
 msgstr "Connection test successful!"
 
+msgid "VGate STPX mode enabled for enhanced long command support"
+msgstr ""
+
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
 msgstr ""
 
 msgid "ELS27 V5 CAN configuration complete"
 msgstr ""
 
-msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgid "STPX mode enabled for enhanced long command support"
 msgstr ""
 
-msgid "OBDLINK full speed connection OK"
+msgid "Port is None - cannot switch speed"
 msgstr ""
 
-#, fuzzy
-#| msgid "Diag version"
-msgid "OBDLink Version "
-msgstr "Diag verzió"
+#, python-format
+msgid "%s switched baudrate OK, changing UART speed now..."
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Connection test failed"
+msgid "%s STN connection established"
+msgstr "Connection test failed"
+
+#, fuzzy, python-format
+#| msgid "Version"
+msgid "%s Version: "
+msgstr "Verzió"
+
+msgid ""
+"VGate adapter detected but STN verification failed, attempting fallback..."
+msgstr ""
+
+#, python-format
+msgid "Unsupported baudrate for ELM: %s"
+msgstr ""
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr ""
@@ -441,9 +496,12 @@ msgstr ""
 msgid "Version "
 msgstr "Verzió"
 
-#, fuzzy
+msgid "ELM did not report version after speed switch"
+msgstr ""
+
+#, fuzzy, python-format
 #| msgid "ERROR - wifi do not support changing baud rate"
-msgid "Your ELM does not support baudrate "
+msgid "Your ELM does not support baudrate %s"
 msgstr "HIBA - wifi nem támogatja a adatkapcsolati sebesség megváltoztatását"
 
 msgid "ELM reset..."
@@ -526,6 +584,9 @@ msgstr " sikeres, összesen "
 msgid "ELM Max version:"
 msgstr "ELM legmagasabb verzió:"
 
+msgid "Warning: PyQtWebEngine not available. Some features may be limited."
+msgstr ""
+
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
 
@@ -533,6 +594,15 @@ msgstr ""
 #| msgid "ECU name"
 msgid "ECU Finder"
 msgstr "ECU neve"
+
+msgid "Address :"
+msgstr ""
+
+msgid "ID frame :"
+msgstr ""
+
+msgid "VALIDATE"
+msgstr ""
 
 msgid "ECU name"
 msgstr "ECU neve"
@@ -549,7 +619,9 @@ msgstr ""
 msgid "Projets"
 msgstr "Projektek"
 
-msgid "loaded ECUs in database."
+#, fuzzy, python-format
+#| msgid "loaded ECUs in database."
+msgid "%d loaded ECUs in database."
 msgstr "eCUs betöltve."
 
 msgid "No database found"
@@ -679,6 +751,27 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+msgid "View"
+msgstr "Nézet"
+
+msgid "CarList Order"
+msgstr ""
+
+msgid "By Project Code"
+msgstr ""
+
+msgid "By Car Name"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid "Dark Theme"
+msgstr ""
+
+msgid "Light Theme"
+msgstr ""
+
 msgid "Action"
 msgstr "Művelet"
 
@@ -723,6 +816,35 @@ msgid " version:"
 msgstr "Diag verzió"
 
 msgid "Created by:"
+msgstr ""
+
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Keresés beállításai"
+
+msgid "CAN Line 1 Auto"
+msgstr ""
+
+msgid "CAN Line 1@500K"
+msgstr ""
+
+msgid "CAN Line 1@250K"
+msgstr ""
+
+msgid "CAN Line 2@500K"
+msgstr ""
+
+msgid "CAN Line 2@250K"
+msgstr ""
+
+msgid "CAN Line 2@125K"
+msgstr ""
+
+msgid "KWP2000"
+msgstr ""
+
+msgid "ISO8"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -804,15 +926,37 @@ msgstr ""
 "<center>Köszönjük a hozzájárulást, ha semmi nem történik, látogass el "
 "ide:https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
-#| msgid "Scan options"
-msgid "Options"
-msgstr "Keresés beállításai"
+msgid "Language changed to"
+msgstr ""
+
+msgid "No"
+msgstr "Nem"
 
 msgid "ELM port selection"
 msgstr "ELM port kiválasztása"
 
-msgid "Interface language (need save and close)"
+msgid "USB"
+msgstr ""
+
+msgid "WiFi"
+msgstr ""
+
+msgid "Bluetooth"
+msgstr ""
+
+msgid "OBDLINK SX/EX"
+msgstr ""
+
+msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
+msgstr ""
+
+msgid "Vlinker FS/MC"
+msgstr ""
+
+msgid "VGate (High-Speed)"
+msgstr ""
+
+msgid "Interface language"
 msgstr ""
 
 msgid "Port speed"
@@ -827,8 +971,8 @@ msgstr "Szerkesztés mód"
 msgid "ELM benchmark"
 msgstr "ELM kiértékelése"
 
-msgid "Save and close"
-msgstr ""
+msgid "Close"
+msgstr "Bezárás"
 
 msgid "WiFi port : "
 msgstr "WiFi port: "
@@ -887,6 +1031,30 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "57600"
+msgstr ""
+
+msgid "115200"
+msgstr ""
+
+msgid "230400"
+msgstr ""
+
+msgid "500000"
+msgstr ""
+
+msgid "1000000"
+msgstr ""
+
+msgid "2000000"
+msgstr ""
+
+msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
+msgstr ""
+
+msgid "Long command support and high-speed communication available"
+msgstr ""
 
 msgid "You must check the recommandations"
 msgstr "Tudomásul kell venned a figyelmeztetést"
@@ -1192,6 +1360,11 @@ msgstr ""
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr ""
 
+#, fuzzy, python-format
+#| msgid "Receive bytes"
+msgid "SdS stream: %s"
+msgstr "Bájtok fogadása"
+
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr ""
 
@@ -1213,9 +1386,6 @@ msgid ""
 msgstr ""
 
 msgid "LEARN"
-msgstr ""
-
-msgid "VALIDATE"
 msgstr ""
 
 msgid "Algo 2"
@@ -1289,6 +1459,10 @@ msgstr ""
 msgid "<font color='red'>EPS coded</font>"
 msgstr ""
 
+#, python-format
+msgid "SdSC0 stream: %s"
+msgstr ""
+
 msgid "Clio IV EPS Reset"
 msgstr ""
 
@@ -1304,6 +1478,10 @@ msgid "<font color='green'>EPS not operational</font>"
 msgstr ""
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
+msgstr ""
+
+#, python-format
+msgid "SdSFA stream: %s"
 msgstr ""
 
 msgid "Laguna II UCH Reset"
@@ -1377,6 +1555,10 @@ msgid ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+#, python-format
+msgid "SdSEX stream: %s"
 msgstr ""
 
 msgid "CRC calculator"
@@ -1494,11 +1676,13 @@ msgstr "<font color=orange> - '%s'</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "OBDLink Version "
+#~ msgstr "Diag verzió"
+
 #~ msgid "Edit"
 #~ msgstr "Szerkesztés"
-
-#~ msgid "View"
-#~ msgstr "Nézet"
 
 #~ msgid "Tools"
 #~ msgstr "Eszközök"
@@ -1509,17 +1693,11 @@ msgstr "<font color=orange> - '%s'</font>"
 #~ msgid "Save"
 #~ msgstr "Mentés"
 
-#~ msgid "Close"
-#~ msgstr "Bezárás"
-
 #~ msgid "Cancel"
 #~ msgstr "Mégse"
 
 #~ msgid "Yes"
 #~ msgstr "Igen"
-
-#~ msgid "No"
-#~ msgstr "Nem"
 
 #~ msgid "Error"
 #~ msgstr "Hiba"

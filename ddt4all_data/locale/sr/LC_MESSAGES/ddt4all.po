@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 06:02+0100\n"
+"POT-Creation-Date: 2025-12-29 02:33+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: --=FurtiF™=-- <not-reply@github.com>\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
@@ -177,18 +177,24 @@ msgstr "Proveri"
 msgid "Request %s not found"
 msgstr "Zahtev %s nije pronadjen"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=green>Request <font color=blue>'%s'</font> has no missing "
+#| "input values</font>"
 msgid ""
-"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
-"values</font>"
+"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
+"input values"
 msgstr ""
 "<font color=green>Zahtev <font color=blue>'%s'</font> nema nedostajuce "
 "ulazne vrednosti</font>"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<font color=red>Request <font color=blue>'%s'</font> has missing inputs :"
+#| "</font>"
 msgid ""
-"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
-"font>"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
+"inputs :"
 msgstr ""
 "<font color=red>Zahtev <font color=blue>'%s'</font> ima nedostajuce ulazne "
 "vrednosti :</font>"
@@ -374,13 +380,34 @@ msgstr "ELM nije povezan ili je pogresan COM port"
 msgid "Port closed"
 msgstr "Brzina porta"
 
+#, python-format
+msgid "Serial error in read_byte: %s"
+msgstr ""
+
 msgid "Connection to ELM was lost"
 msgstr "Izgubljena veza sa ELM jedinicom"
 
-#, fuzzy
+#, python-format
+msgid "*       Error: %s"
+msgstr ""
+
+#, fuzzy, python-format
 #| msgid "Cannot call request "
-msgid "Cannot decode bytes "
+msgid "Cannot decode bytes %s"
 msgstr "Nije moguce pozvati zahtev "
+
+#, python-format
+msgid "Error in read(): %s"
+msgstr ""
+
+#, fuzzy
+#| msgid "Attempting connection..."
+msgid "Attempting WiFi reconnection..."
+msgstr "Attempting connection..."
+
+#, python-format
+msgid "Serial write error: %s"
+msgstr ""
 
 msgid "TIMEOUT"
 msgstr "Isteklo vreme"
@@ -396,6 +423,14 @@ msgstr "ELM se ne odaziva"
 
 msgid "Trying to open port "
 msgstr "Pokusavam da otvorim port "
+
+#, fuzzy
+#| msgid "Screen initialization"
+msgid "Port initialization failed"
+msgstr "Inicijalizacija prikaza"
+
+msgid "Port connection failed - port object is invalid"
+msgstr ""
 
 msgid "No ELM interface on port"
 msgstr "Nema ELM interfejsa na portu"
@@ -414,22 +449,42 @@ msgstr ""
 msgid "Connection established successfully"
 msgstr "Connection test successful!"
 
+msgid "VGate STPX mode enabled for enhanced long command support"
+msgstr ""
+
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
 msgstr ""
 
 msgid "ELS27 V5 CAN configuration complete"
 msgstr ""
 
-msgid "OBDLINK switched baurate OK, changing UART speed now..."
+msgid "STPX mode enabled for enhanced long command support"
 msgstr ""
 
-msgid "OBDLINK full speed connection OK"
+msgid "Port is None - cannot switch speed"
 msgstr ""
 
-#, fuzzy
-#| msgid "Diag version"
-msgid "OBDLink Version "
-msgstr "Verzija dijagnostike"
+#, python-format
+msgid "%s switched baudrate OK, changing UART speed now..."
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Connection test failed"
+msgid "%s STN connection established"
+msgstr "Connection test failed"
+
+#, fuzzy, python-format
+#| msgid "Version"
+msgid "%s Version: "
+msgstr "Verzija"
+
+msgid ""
+"VGate adapter detected but STN verification failed, attempting fallback..."
+msgstr ""
+
+#, python-format
+msgid "Unsupported baudrate for ELM: %s"
+msgstr ""
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr ""
@@ -442,9 +497,12 @@ msgstr ""
 msgid "Version "
 msgstr "Verzija"
 
-#, fuzzy
+msgid "ELM did not report version after speed switch"
+msgstr ""
+
+#, fuzzy, python-format
 #| msgid "ERROR - wifi do not support changing baud rate"
-msgid "Your ELM does not support baudrate "
+msgid "Your ELM does not support baudrate %s"
 msgstr "GRESKA - WiFi ne podrzava promenu brzine (baud rate)"
 
 msgid "ELM reset..."
@@ -527,6 +585,9 @@ msgstr " uspesno od "
 msgid "ELM Max version:"
 msgstr "ELM Max verzija:"
 
+msgid "Warning: PyQtWebEngine not available. Some features may be limited."
+msgstr ""
+
 msgid "ddt4all_data/projects.json not found or not ok."
 msgstr ""
 
@@ -534,6 +595,15 @@ msgstr ""
 #| msgid "ECU name"
 msgid "ECU Finder"
 msgstr "ECU naziv"
+
+msgid "Address :"
+msgstr ""
+
+msgid "ID frame :"
+msgstr ""
+
+msgid "VALIDATE"
+msgstr ""
 
 msgid "ECU name"
 msgstr "ECU naziv"
@@ -550,7 +620,9 @@ msgstr ""
 msgid "Projets"
 msgstr "Projekti"
 
-msgid "loaded ECUs in database."
+#, fuzzy, python-format
+#| msgid "loaded ECUs in database."
+msgid "%d loaded ECUs in database."
 msgstr "ucitane ECU jedinice u bazu podataka."
 
 msgid "No database found"
@@ -680,6 +752,27 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+msgid "View"
+msgstr "Приказ"
+
+msgid "CarList Order"
+msgstr ""
+
+msgid "By Project Code"
+msgstr ""
+
+msgid "By Car Name"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid "Dark Theme"
+msgstr ""
+
+msgid "Light Theme"
+msgstr ""
+
 msgid "Action"
 msgstr "Radnja"
 
@@ -724,6 +817,35 @@ msgid " version:"
 msgstr "Verzija dijagnostike"
 
 msgid "Created by:"
+msgstr ""
+
+#, fuzzy
+#| msgid "Scan options"
+msgid "Options"
+msgstr "Opcije skeniranja"
+
+msgid "CAN Line 1 Auto"
+msgstr ""
+
+msgid "CAN Line 1@500K"
+msgstr ""
+
+msgid "CAN Line 1@250K"
+msgstr ""
+
+msgid "CAN Line 2@500K"
+msgstr ""
+
+msgid "CAN Line 2@250K"
+msgstr ""
+
+msgid "CAN Line 2@125K"
+msgstr ""
+
+msgid "KWP2000"
+msgstr ""
+
+msgid "ISO8"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
@@ -805,15 +927,37 @@ msgstr ""
 "<center>Hvala na vašem doprinosu. Ako se ništa ne desi molaim Vas idite na : "
 "https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
-#| msgid "Scan options"
-msgid "Options"
-msgstr "Opcije skeniranja"
+msgid "Language changed to"
+msgstr ""
+
+msgid "No"
+msgstr "Не"
 
 msgid "ELM port selection"
 msgstr "Izbor ELM porta"
 
-msgid "Interface language (need save and close)"
+msgid "USB"
+msgstr ""
+
+msgid "WiFi"
+msgstr ""
+
+msgid "Bluetooth"
+msgstr ""
+
+msgid "OBDLINK SX/EX"
+msgstr ""
+
+msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
+msgstr ""
+
+msgid "Vlinker FS/MC"
+msgstr ""
+
+msgid "VGate (High-Speed)"
+msgstr ""
+
+msgid "Interface language"
 msgstr ""
 
 msgid "Port speed"
@@ -828,8 +972,8 @@ msgstr "Mod izmena"
 msgid "ELM benchmark"
 msgstr "ELM rezultati testa"
 
-msgid "Save and close"
-msgstr ""
+msgid "Close"
+msgstr "Затвори"
 
 msgid "WiFi port : "
 msgstr "WiFi port: "
@@ -887,6 +1031,30 @@ msgstr "Connection test successful!"
 
 msgid "Error during connection test: "
 msgstr "Error during connection test: "
+
+msgid "57600"
+msgstr ""
+
+msgid "115200"
+msgstr ""
+
+msgid "230400"
+msgstr ""
+
+msgid "500000"
+msgstr ""
+
+msgid "1000000"
+msgstr ""
+
+msgid "2000000"
+msgstr ""
+
+msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
+msgstr ""
+
+msgid "Long command support and high-speed communication available"
+msgstr ""
 
 msgid "You must check the recommandations"
 msgstr "Morate proveriti preporuke"
@@ -1188,6 +1356,11 @@ msgstr ""
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr ""
 
+#, fuzzy, python-format
+#| msgid "Receive bytes"
+msgid "SdS stream: %s"
+msgstr "Primi bajtove"
+
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr ""
 
@@ -1209,9 +1382,6 @@ msgid ""
 msgstr ""
 
 msgid "LEARN"
-msgstr ""
-
-msgid "VALIDATE"
 msgstr ""
 
 msgid "Algo 2"
@@ -1285,6 +1455,10 @@ msgstr ""
 msgid "<font color='red'>EPS coded</font>"
 msgstr ""
 
+#, python-format
+msgid "SdSC0 stream: %s"
+msgstr ""
+
 msgid "Clio IV EPS Reset"
 msgstr ""
 
@@ -1300,6 +1474,10 @@ msgid "<font color='green'>EPS not operational</font>"
 msgstr ""
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
+msgstr ""
+
+#, python-format
+msgid "SdSFA stream: %s"
 msgstr ""
 
 msgid "Laguna II UCH Reset"
@@ -1373,6 +1551,10 @@ msgid ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+#, python-format
+msgid "SdSEX stream: %s"
 msgstr ""
 
 msgid "CRC calculator"
@@ -1490,11 +1672,13 @@ msgstr "<font color=orange> - '%s'</font>"
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
+#, fuzzy
+#~| msgid "Diag version"
+#~ msgid "OBDLink Version "
+#~ msgstr "Verzija dijagnostike"
+
 #~ msgid "Edit"
 #~ msgstr "Уреди"
-
-#~ msgid "View"
-#~ msgstr "Приказ"
 
 #~ msgid "Tools"
 #~ msgstr "Алати"
@@ -1505,17 +1689,11 @@ msgstr "<font color=orange> - '%s'</font>"
 #~ msgid "Save"
 #~ msgstr "Сачувај"
 
-#~ msgid "Close"
-#~ msgstr "Затвори"
-
 #~ msgid "Cancel"
 #~ msgstr "Откажи"
 
 #~ msgid "Yes"
 #~ msgstr "Да"
-
-#~ msgid "No"
-#~ msgstr "Не"
 
 #~ msgid "Error"
 #~ msgstr "Грешка"
