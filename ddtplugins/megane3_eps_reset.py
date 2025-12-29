@@ -78,7 +78,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.megane_eps.requests[u"SDS - Start Diagnostic Session $FA"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSFA stream", sds_stream)
+            print(_("SdSFA stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 
@@ -86,7 +86,7 @@ class Virginizer(gui.QDialog):
         sds_request = self.megane_eps.requests[u"SDS - Start Diagnostic Session $C0"]
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print("SdSC0 stream", sds_stream)
+            print(_("SdSC0 stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 

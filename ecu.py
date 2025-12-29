@@ -1571,11 +1571,16 @@ class Ecu_scanner:
                 continue
 
             if not elm.addr_exist(addr):
-                print(_("Warning, address") + " %s " + _("is not mapped") % addr)
+                print(_("Warning, address") + " " + addr + " " + _("is not mapped"))
                 continue
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.elm.init_can()
@@ -1622,7 +1627,12 @@ class Ecu_scanner:
                 self.qapp.processEvents()
 
             text = _("Scanning address: ")
-            print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 options.opt_si = True

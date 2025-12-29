@@ -75,7 +75,7 @@ class Virginizer(gui.QDialog):
 
         sds_stream = " ".join(sds_request.build_data_stream({u'Session Name': u'extendedDiagnosticSession'}))
         if options.simulation_mode:
-            print("SdSEX stream", sds_stream)
+            print(_("SdSEX stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 

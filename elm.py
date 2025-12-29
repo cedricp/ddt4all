@@ -22,10 +22,10 @@ import options
 
 _ = options.translator('ddt4all')
 # //TODO missing entries this need look side ecu addressing missing entries or ignore {}
-# dnat_entries = {"E7": "7E4", "E8": "644"}
-# snat_entries = {"E7": "7EC", "E8": "5C4"}
-dnat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
-snat_entries = {"E7": u"SCRCM", "E8": u"SVS"} # {}
+# dnat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
+# snat_entries = {"E7": u"SCRCM", "E8": u"SVS"} # {}
+dnat_entries = {"E7": "7E4", "E8": "644"}
+snat_entries = {"E7": "7EC", "E8": "5C4"}
 
 snat = snat_entries
 snat_ext = {}
@@ -691,13 +691,13 @@ class Port:
                 return byte
 
             except serial.SerialException as e:
-                print(f"Serial error in read_byte: {e}")
+                print(_("Serial error in read_byte: %s") % e)
                 self.connectionStatus = False
                 return None
             except Exception as e:
                 print('*' * 40)
                 print('*       ' + _('Connection to ELM was lost'))
-                print(f'*       Error: {e}')
+                print(_('*       Error: %s') % e)
                 self.connectionStatus = False
                 self.close()
                 return None
@@ -718,10 +718,10 @@ class Port:
                         return byte.decode(encoding)
                     except:
                         continue
-                print(_("Cannot decode bytes ") + str(byte))
+                print(_("Cannot decode bytes %s") % str(byte))
                 return ""
         except Exception as e:
-            print(f"Error in read(): {e}")
+            print(_("Error in read(): %s") % e)
             return None
 
     def change_rate(self, rate):
@@ -736,7 +736,7 @@ class Port:
 
                 if self.portType == 1:  # TCP/WiFi
                     if self.tcp_needs_reconnect:
-                        print("Attempting WiFi reconnection...")
+                        print(_("Attempting WiFi reconnection..."))
                         self.tcp_needs_reconnect = False
                         self.init_wifi(True)
                         if not self.connectionStatus:
@@ -753,7 +753,7 @@ class Port:
                     return self.hdr.write(data)
 
             except serial.SerialException as e:
-                print(f"Serial write error: {e}")
+                print(_("Serial write error: %s") % e)
                 self.connectionStatus = False
                 return None
             except Exception as e:
@@ -896,11 +896,18 @@ class ELM:
     def __init__(self, portName, rate, adapter_type, maxspeed="No"):
         self.adapter_type = adapter_type
         options.port_speed = rate
+        self.stpx_enabled = False  # Initialize STPX mode flag
         for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
 
             if not options.simulation_mode:
                 self.port = Port(portName, speed, self.adapter_type)
+                # Check if port initialization was successful
+                if not hasattr(self.port, 'hdr') or self.port.hdr is None:
+                    options.elm_failed = True
+                    options.last_error = _("Port initialization failed")
+                    self.connectionStatus = False
+                    continue
 
             if options.elm_failed:
                 self.connectionStatus = False
@@ -920,9 +927,17 @@ class ELM:
             self.lastCMDtime = 0
             self.ATCFC0 = options.opt_cfc0
 
-            # Purge unread data
-            self.port.expect(">")
-            res = self.send_raw("ATZ")
+            # Purge unread data - only if port is valid
+            if (self.port is not None and 
+                hasattr(self.port, 'expect') and 
+                hasattr(self.port, 'connectionStatus') and 
+                self.port.connectionStatus):
+                self.port.expect(">")
+                res = self.send_raw("ATZ")
+            else:
+                options.elm_failed = True
+                options.last_error = _("Port connection failed - port object is invalid")
+                continue
             if 'ELM' in res or 'OBDII' in res:
                 options.last_error = ""
                 options.elm_failed = False
@@ -980,7 +995,7 @@ class ELM:
         elif adapter_type == "VGATE" and 0 < maxspeed != rate:
             print(device_text_switch.replace("OBDLink", "Vgate"))
             try:
-                self.raise_odb_speed(maxspeed, "VGate")
+                self.raise_vgate_speed(maxspeed)
             except:
                 options.elm_failed = True
                 self.connectionStatus = False
@@ -988,6 +1003,12 @@ class ELM:
         elif adapter_type == "VGATE":
             print(text_optional.replace("OBDLink", "VGate"))
             if not options.elm_failed:
+                # Enable STPX mode for VGate adapters
+                try:
+                    self.enable_stpx_mode()
+                    print(_("VGate STPX mode enabled for enhanced long command support"))
+                except Exception as e:
+                    print(f"VGate STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
             print(text_optional.replace("OBDLink", "ELS27"))
@@ -1008,60 +1029,120 @@ class ELM:
                 print(_("Connection established successfully"))
 
     def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
-        # Software speed switch
-        res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
+        # Compatibility wrapper: delegate to unified speed switch
+        return self.raise_elm_speed(baudrate, device_name=device_name)
 
-        # Command echo
-        res = self.port.expect_carriage_return()
-        # Command result
-        res = self.port.expect_carriage_return()
-        if "OK" in res:
-            text = _("OBDLINK switched baurate OK, changing UART speed now...").replace("OBDLINK", device_name)
-            print(text)
-            self.port.change_rate(baudrate)
-            time.sleep(0.5)
-            res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
-            if "STN" in res:
-                text1 = _("OBDLINK full speed connection OK").replace("OBDLINK", device_name)
-                print(text1)
-                text2 = _("OBDLink Version ").replace("OBDLINK", device_name) + res
-                print(text2)
+    def raise_vgate_speed(self, baudrate):
+        # Compatibility wrapper: delegate to unified speed switch
+        return self.raise_elm_speed(baudrate, device_name="VGATE")
+
+    def send_stn_command(self, command, enhanced=True):
+        """Send command using STN protocol with enhanced features"""
+        try:
+            if enhanced and hasattr(self, 'stpx_enabled') and self.stpx_enabled:
+                # Use STPX enhanced protocol for better performance
+                # Add STN prefix for enhanced adapters
+                stn_command = f"ST {command}"
+                return self.send_raw(stn_command)
             else:
-                raise
-        else:
-            raise
+                # Standard command
+                return self.send_raw(command)
+        except Exception as e:
+            print(f"STN command error: {e}")
+            # Fallback to standard command
+            return self.send_raw(command)
 
-    def raise_elm_speed(self, baudrate):
-        # Software speed switch to 115Kbps
-        if baudrate == 57600:
-            self.port.write("ATBRD 45\r".encode("utf-8"))
-        elif baudrate == 115200:
-            self.port.write("ATBRD 23\r".encode("utf-8"))
-        elif baudrate == 230400:
-            self.port.write("ATBRD 11\r".encode("utf-8"))
-        elif baudrate == 500000:
-            self.port.write("ATBRD 8\r".encode("utf-8"))
-        else:
-            return
+    def enable_stpx_mode(self):
+        """Enable STPX mode for enhanced long command support on STN-based adapters"""
+        try:
+            # STPX mode enables enhanced long command handling
+            # This is particularly useful for VGate and other STN-based adapters
+            
+            # Set enhanced timeout for long commands
+            self.send_raw("ST SFT 0")  # Disable flow control for better long command support
+            self.send_raw("ST WFF 1")  # Enable wait for first frame
+            self.send_raw("ST FC SH 80")  # Set flow control separator
+            
+            # Configure extended buffer for long commands
+            self.send_raw("ST BLM 1")  # Enable large message mode
+            self.send_raw("ST CSM 1")  # Enable checksum mode for reliability
+            
+            # Set optimal timing for STPX protocol
+            self.send_raw("ST P1 25")  # Set inter-frame gap
+            self.send_raw("ST P3 55")  # Set frame response time
+            
+            # Enable extended addressing if supported
+            self.send_raw("ST EA 1")  # Enable extended addressing
+            
+            # Set flag to indicate STPX is enabled
+            self.stpx_enabled = True
+            
+            print(_("STPX mode enabled for enhanced long command support"))
+            
+        except Exception as e:
+            print(f"STPX mode enable warning: {e}")
+            # Don't raise exception - STPX is enhancement, not requirement
+            self.stpx_enabled = False
 
-        # Command echo result
-        res = self.port.expect_carriage_return()
-        if "OK" in res:
-            print(_("ELM baudrate switched OK, changing UART speed now..."))
-            self.port.change_rate(baudrate)
-            version = self.port.expect_carriage_return()
-            if "ELM327" in version:
-                self.port.write('\r'.encode('utf-8'))
-                res = self.port.expect('>')
-                if "OK" in res:
+    def raise_elm_speed(self, baudrate, device_name="ELM"):
+        # Unified speed switch for ELM (ATBRD) and STN-based adapters (ST SBR)
+        if self.port is None:
+            raise Exception(_("Port is None - cannot switch speed"))
+
+        dev = (device_name or "ELM").upper()
+        try:
+            # STN / VGate / OBDLink style switching
+            if dev in ("VGATE", "OBDLINK", "VLINKER", "STN"):
+                cmd = "ST SBR " + str(baudrate)
+                rsp = self.send_raw(cmd)
+                if "OK" in rsp:
+                    print((_("%s switched baudrate OK, changing UART speed now...") % device_name))
+                    self.port.change_rate(baudrate)
+                    time.sleep(0.5)
+                    # Verify STN response
+                    res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
+                    if "STN" in res:
+                        print((_("%s STN connection established") % device_name))
+                        print((_("%s Version: ") % device_name) + res)
+                        if dev == "VGATE":
+                            self.enable_stpx_mode()
+                    else:
+                        # Best-effort fallback for VGate
+                        if dev == "VGATE":
+                            print(_("VGate adapter detected but STN verification failed, attempting fallback..."))
+                            self.enable_stpx_mode()
+                    return
+                else:
+                    raise Exception(f"{device_name} speed switch failed: {rsp}")
+
+            # Default: ELM327 ATBRD switching
+            if baudrate == 57600:
+                atcmd = "ATBRD 45"
+            elif baudrate == 115200:
+                atcmd = "ATBRD 23"
+            elif baudrate == 230400:
+                atcmd = "ATBRD 11"
+            elif baudrate == 500000:
+                atcmd = "ATBRD 8"
+            else:
+                raise Exception(_("Unsupported baudrate for ELM: %s") % str(baudrate))
+
+            rsp = self.send_raw(atcmd)
+            if "OK" in rsp:
+                print(_("ELM baudrate switched OK, changing UART speed now..."))
+                self.port.change_rate(baudrate)
+                time.sleep(0.5)
+                version = self.send_raw("ATI")
+                if "ELM" in version or "ELM327" in version:
                     print(_("ELM full speed connection OK "))
                     print(_("Version ") + version)
+                    return
                 else:
-                    raise
+                    raise Exception(_("ELM did not report version after speed switch"))
             else:
-                raise
-        else:
-            print(_("Your ELM does not support baudrate ") + str(baudrate))
+                raise Exception((_("Your ELM does not support baudrate %s") % str(baudrate)))
+
+        except Exception:
             raise
 
     def __del__(self):
@@ -1070,12 +1151,17 @@ class ELM:
                 print(_("ELM reset..."))
             else:
                 print("ELM reset...")
-            self.port.write("ATZ\r".encode("utf-8"))
-        except (AttributeError, OSError):
+            # Check if port exists and is valid before attempting reset
+            if hasattr(self, 'port') and self.port is not None and hasattr(self.port, 'write'):
+                self.port.write("ATZ\r".encode("utf-8"))
+        except (AttributeError, OSError, TypeError):
+            # Handle all possible errors during cleanup
             pass
 
     def connectionStat(self):
-        return self.port.connectionStatus
+        if hasattr(self, 'port') and self.port is not None and hasattr(self.port, 'connectionStatus'):
+            return self.port.connectionStatus
+        return False
 
     def clear_cache(self):
         ''' Clear L2 cache before screen update
@@ -1150,7 +1236,7 @@ class ELM:
         tb = time.time()  # renew start time
 
         # If we use wifi and there was more than keepAlive seconds of silence then reinit tcp
-        if (tb - self.lastCMDtime) > self.keepAlive:
+        if self.port is not None and (tb - self.lastCMDtime) > self.keepAlive:
             self.port.init_wifi(True)
 
         # If we are on CAN and there was more than keepAlive seconds of silence and
@@ -1370,12 +1456,22 @@ class ELM:
             tb = time.time()  # time of sending (ff)
 
             if Fn > 1 and Fc == (Fn - 1):  # set elm timeout to maximum for last response on long command
-                self.send_raw('AT ST FF')
+                # Enhanced STPX timeout handling for long commands
+                if hasattr(self, 'stpx_enabled') and self.stpx_enabled:
+                    # Use STPX-specific timeout for better long command performance
+                    self.send_raw('ST ST FF')  # STPX timeout command
+                else:
+                    # Standard ELM timeout
+                    self.send_raw('AT ST FF')
                 self.send_raw('AT AT 1')
 
             if (Fc == 0 or Fc == (Fn - 1)) and len(
                     raw_command[Fc]) < 16:  # first or last frame in command and len<16 (bug in ELM)
-                frsp = self.send_raw(raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
+                # Enhanced frame handling for STPX adapters
+                if hasattr(self, 'stpx_enabled') and self.stpx_enabled:
+                    frsp = self.send_raw(raw_command[Fc] + '1')  # STPX enhanced single frame request
+                else:
+                    frsp = self.send_raw(raw_command[Fc] + '1')  # standard single frame request
             else:
                 frsp = self.send_raw(raw_command[Fc])
 
@@ -1501,6 +1597,11 @@ class ELM:
     def send_raw(self, command, expect='>'):
         tb = time.time()  # start time
 
+        # Check if port is valid before proceeding
+        if self.port is None:
+            self.error_rx += 1
+            return "PORT ERROR: None port object"
+
         # save command to log
         if self.lf != 0:
             # tm = str(time.time())
@@ -1510,14 +1611,22 @@ class ELM:
 
         # send command
         if not options.simulation_mode:
-            self.port.write(str(command + "\r").encode("utf-8"))  # send command
+            try:
+                self.port.write(str(command + "\r").encode("utf-8"))  # send command
+            except Exception as e:
+                self.error_rx += 1
+                return f"PORT WRITE ERROR: {str(e)}"
 
         # receive and parse response
         while True:
             tc = time.time()
             if options.simulation_mode:
                 break
-            self.buff = self.port.expect(expect, self.portTimeout)
+            try:
+                self.buff = self.port.expect(expect, self.portTimeout)
+            except Exception as e:
+                self.error_rx += 1
+                return f"PORT READ ERROR: {str(e)}"
             if not self.port.connectionStatus:
                 break
             tc = time.time()

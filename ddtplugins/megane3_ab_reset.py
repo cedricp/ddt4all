@@ -74,7 +74,7 @@ class Virginizer(gui.QDialog):
 
         sds_stream = " ".join(sds_request.build_data_stream({u"Session Name": u"systemSupplierSpecific"}))
         if options.simulation_mode:
-            print("SdSFA stream", sds_stream)
+            print(_("SdSFA stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 
@@ -83,7 +83,7 @@ class Virginizer(gui.QDialog):
 
         sds_stream = " ".join(sds_request.build_data_stream({u"Session Name": u"extendedDiagnosticSession"}))
         if options.simulation_mode:
-            print("SdS stream", sds_stream)
+            print(_("SdS stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 

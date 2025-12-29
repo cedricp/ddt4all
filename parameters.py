@@ -2037,10 +2037,10 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--convert', action="store_true", default=None, help="Convert all XML to JSON")
-    parser.add_argument('--zipconvert', action="store_true", default=None,
+    parser.add_argument('-c', '--convert', action="store_true", default=None, help="Convert all XML to JSON")
+    parser.add_argument('-z', '--zipconvert', action="store_true", default=None,
                         help="Convert all XML to JSON in a Zip archive")
-    parser.add_argument('--dumpprojects', action="store_true", default=None, help="Dump Vehicles")
+    parser.add_argument('-d', '--dumpprojects', action="store_true", default=None, help="Dump Vehicles")
     args = parser.parse_args()
 
     if args.zipconvert:

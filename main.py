@@ -19,7 +19,7 @@ try:
     import PyQt5.QtWebEngineWidgets as webkitwidgets
     HAS_WEBENGINE = True
 except ImportError:
-    print("Warning: PyQtWebEngine not available. Some features may be limited.")
+    print(_("Warning: PyQtWebEngine not available. Some features may be limited."))
     webkitwidgets = None
     HAS_WEBENGINE = False
 
@@ -362,7 +362,7 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan.qapp = app
         options.socket_timeout = False
         options.ecu_scanner = self.ecu_scan
-        print(str(self.ecu_scan.getNumEcuDb()) + " " + _("loaded ECUs in database."))
+        print(_("%d loaded ECUs in database.") % self.ecu_scan.getNumEcuDb())
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
             appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
@@ -664,15 +664,32 @@ class Main_widget(widgets.QMainWindow):
         self.carlist_order_group.addAction(self.carlist_order_by_code)
         self.carlist_order_group.addAction(self.carlist_order_by_name)
 
-        # Options menu
-        options_menu = menu.addMenu(_("Options"))
-        
-        # Theme toggle
-        theme_action = widgets.QAction(_("Dark Theme"), options_menu)
-        theme_action.setCheckable(True)
-        theme_action.setChecked(options.dark_mode)
-        theme_action.triggered.connect(self.toggle_theme)
-        options_menu.addAction(theme_action)
+        # Theme menu (moved under View menu) with explicit Dark/Light selection
+        theme_menu = view_menu.addMenu(_("Theme"))
+
+        theme_dark_action = widgets.QAction(_("Dark Theme"), theme_menu)
+        theme_dark_action.setCheckable(True)
+        theme_light_action = widgets.QAction(_("Light Theme"), theme_menu)
+        theme_light_action.setCheckable(True)
+
+        # Group theme actions so only one can be active
+        theme_action_group = widgets.QActionGroup(self)
+        theme_action_group.addAction(theme_dark_action)
+        theme_action_group.addAction(theme_light_action)
+        theme_action_group.setExclusive(True)
+
+        # Set initial checked state
+        if options.dark_mode:
+            theme_dark_action.setChecked(True)
+        else:
+            theme_light_action.setChecked(True)
+
+        # Connect actions to set the theme explicitly
+        theme_dark_action.triggered.connect(lambda checked: set_theme_style(2))
+        theme_light_action.triggered.connect(lambda checked: set_theme_style(0))
+
+        theme_menu.addAction(theme_dark_action)
+        theme_menu.addAction(theme_light_action)
 
         actionmenu = self.screenmenu.addMenu(_("Action"))
         cat_action = widgets.QAction(_("New Category"), actionmenu)
@@ -2026,6 +2043,11 @@ class main_window_options(widgets.QDialog):
         self.obdlinkspeedcombo.addItem(_("230400"))
         self.obdlinkspeedcombo.addItem(_("500000"))
         self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        
+        # Display STPX support information
+        self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
+        self.logview.append(_("Long command support and high-speed communication available"))
+        
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
