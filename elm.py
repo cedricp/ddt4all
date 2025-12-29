@@ -742,14 +742,23 @@ class Port:
                         if not self.connectionStatus:
                             return None
                     # return self.hdr.sendall(data)
+                    if self.hdr is None:
+                        print(_("Port handler is None, cannot write"))
+                        return None
                     return self.hdr.write(data)
                 elif self.portType == 2:  # Bluetooth
                     if self.droid:
                         return self.droid.bluetoothWrite(data)
                     else:
                         # Fallback to serial write for Bluetooth-serial adapters
+                        if self.hdr is None:
+                            print(_("Port handler is None, cannot write"))
+                            return None
                         return self.hdr.write(data)
                 else:  # Serial/USB
+                    if self.hdr is None:
+                        print(_("Port handler is None, cannot write"))
+                        return None
                     return self.hdr.write(data)
 
             except serial.SerialException as e:
@@ -759,7 +768,7 @@ class Port:
             except Exception as e:
                 print('*' * 40)
                 print('*       ' + _('Connection to ELM was lost'))
-                print(f'*       Write error: {e}')
+                print(_('*       Write error: %s') % e)
                 self.connectionStatus = False
                 self.close()
                 return None
@@ -1150,7 +1159,7 @@ class ELM:
             if _ is not None:
                 print(_("ELM reset..."))
             else:
-                print("ELM reset...")
+                print(_("ELM reset..."))
             # Check if port exists and is valid before attempting reset
             if hasattr(self, 'port') and self.port is not None and hasattr(self.port, 'write'):
                 self.port.write("ATZ\r".encode("utf-8"))
