@@ -1029,85 +1029,12 @@ class ELM:
                 print(_("Connection established successfully"))
 
     def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
-        # Software speed switch using STN protocol for enhanced adapters
-        if self.port is None:
-            raise Exception("Port is None - cannot switch speed")
-            
-        if "VGate" in device_name or "STN" in device_name.upper():
-            # Use STN-specific commands for VGate adapters
-            res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
-        else:
-            # Standard OBDLink command
-            res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
-
-        # Command echo
-        res = self.port.expect_carriage_return()
-        # Command result
-        res = self.port.expect_carriage_return()
-        if "OK" in res:
-            text = _("OBDLINK switched baurate OK, changing UART speed now...").replace("OBDLINK", device_name)
-            print(text)
-            self.port.change_rate(baudrate)
-            time.sleep(0.5)
-            
-            # Enhanced STN/STPX verification
-            res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
-            if "STN" in res:
-                text1 = _("OBDLINK full speed connection OK").replace("OBDLINK", device_name)
-                print(text1)
-                text2 = _("OBDLink Version ").replace("OBDLINK", device_name) + res
-                print(text2)
-                
-                # Additional STPX verification for long command support
-                if "VGate" in device_name:
-                    self.enable_stpx_mode()
-            else:
-                # Fallback for adapters without STN response
-                if "VGate" in device_name:
-                    print(_("VGate adapter detected but STN verification failed, attempting fallback..."))
-                    self.enable_stpx_mode()
-                else:
-                    raise
-        else:
-            raise
+        # Compatibility wrapper: delegate to unified speed switch
+        return self.raise_elm_speed(baudrate, device_name=device_name)
 
     def raise_vgate_speed(self, baudrate):
-        # VGate-specific speed switch with STN protocol support
-        if self.port is None:
-            raise Exception("Port is None - cannot switch VGate speed")
-            
-        try:
-            # Use VGate-specific STN commands
-            res = self.port.write(("ST SBR " + str(baudrate) + "\r").encode('utf-8'))
-            
-            # Command echo
-            res = self.port.expect_carriage_return()
-            # Command result
-            res = self.port.expect_carriage_return()
-            
-            if "OK" in res:
-                print(_("VGate switched baudrate OK, changing UART speed now..."))
-                self.port.change_rate(baudrate)
-                time.sleep(0.5)
-                
-                # Verify STN connection
-                res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
-                if "STN" in res:
-                    print(_("VGate STN connection established"))
-                    print(_("VGate Version: ") + res)
-                    
-                    # Enable STPX for long commands
-                    self.enable_stpx_mode()
-                else:
-                    print(_("VGate STN verification failed, using standard mode"))
-                    # Still try to enable basic enhanced features
-                    self.enable_stpx_mode()
-            else:
-                raise Exception("VGate speed switch failed")
-                
-        except Exception as e:
-            print(f"VGate speed switch error: {e}")
-            raise
+        # Compatibility wrapper: delegate to unified speed switch
+        return self.raise_elm_speed(baudrate, device_name="VGATE")
 
     def send_stn_command(self, command, enhanced=True):
         """Send command using STN protocol with enhanced features"""
@@ -1157,40 +1084,65 @@ class ELM:
             # Don't raise exception - STPX is enhancement, not requirement
             self.stpx_enabled = False
 
-    def raise_elm_speed(self, baudrate):
-        # Software speed switch to 115Kbps
+    def raise_elm_speed(self, baudrate, device_name="ELM"):
+        # Unified speed switch for ELM (ATBRD) and STN-based adapters (ST SBR)
         if self.port is None:
-            return
-            
-        if baudrate == 57600:
-            self.port.write("ATBRD 45\r".encode("utf-8"))
-        elif baudrate == 115200:
-            self.port.write("ATBRD 23\r".encode("utf-8"))
-        elif baudrate == 230400:
-            self.port.write("ATBRD 11\r".encode("utf-8"))
-        elif baudrate == 500000:
-            self.port.write("ATBRD 8\r".encode("utf-8"))
-        else:
-            return
+            raise Exception("Port is None - cannot switch speed")
 
-        # Command echo result
-        res = self.port.expect_carriage_return()
-        if "OK" in res:
-            print(_("ELM baudrate switched OK, changing UART speed now..."))
-            self.port.change_rate(baudrate)
-            version = self.port.expect_carriage_return()
-            if "ELM327" in version:
-                self.port.write('\r'.encode('utf-8'))
-                res = self.port.expect('>')
-                if "OK" in res:
+        dev = (device_name or "ELM").upper()
+        try:
+            # STN / VGate / OBDLink style switching
+            if dev in ("VGATE", "OBDLINK", "VLINKER", "STN"):
+                cmd = "ST SBR " + str(baudrate)
+                rsp = self.send_raw(cmd)
+                if "OK" in rsp:
+                    print((_("%s switched baudrate OK, changing UART speed now...") % device_name))
+                    self.port.change_rate(baudrate)
+                    time.sleep(0.5)
+                    # Verify STN response
+                    res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
+                    if "STN" in res:
+                        print((_("%s STN connection established") % device_name))
+                        print((_("%s Version: ") % device_name) + res)
+                        if dev == "VGATE":
+                            self.enable_stpx_mode()
+                    else:
+                        # Best-effort fallback for VGate
+                        if dev == "VGATE":
+                            print(_("VGate adapter detected but STN verification failed, attempting fallback..."))
+                            self.enable_stpx_mode()
+                    return
+                else:
+                    raise Exception(f"{device_name} speed switch failed: {rsp}")
+
+            # Default: ELM327 ATBRD switching
+            if baudrate == 57600:
+                atcmd = "ATBRD 45"
+            elif baudrate == 115200:
+                atcmd = "ATBRD 23"
+            elif baudrate == 230400:
+                atcmd = "ATBRD 11"
+            elif baudrate == 500000:
+                atcmd = "ATBRD 8"
+            else:
+                raise Exception("Unsupported baudrate for ELM: %s" % str(baudrate))
+
+            rsp = self.send_raw(atcmd)
+            if "OK" in rsp:
+                print(_("ELM baudrate switched OK, changing UART speed now..."))
+                self.port.change_rate(baudrate)
+                time.sleep(0.5)
+                version = self.send_raw("ATI")
+                if "ELM" in version or "ELM327" in version:
                     print(_("ELM full speed connection OK "))
                     print(_("Version ") + version)
+                    return
                 else:
-                    raise
+                    raise Exception("ELM did not report version after speed switch")
             else:
-                raise
-        else:
-            print(_("Your ELM does not support baudrate ") + str(baudrate))
+                raise Exception((_("Your ELM does not support baudrate ") + str(baudrate)))
+
+        except Exception:
             raise
 
     def __del__(self):
