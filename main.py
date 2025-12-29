@@ -1882,7 +1882,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
-        self.elmchk.setEnabled(True)
+        # self.elmchk.setEnabled(True)
 
     def wifi(self):
         self.adapter = "STD_WIFI"
@@ -1909,7 +1909,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
-        self.elmchk.setEnabled(True)
+        # self.elmchk.setEnabled(True)
 
     def usb(self):
         self.adapter = "STD_USB"
@@ -1943,7 +1943,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
-        self.elmchk.setEnabled(True)
+        # self.elmchk.setEnabled(True)
 
     def obdlink(self):
         self.adapter = "OBDLINK"
@@ -1975,7 +1975,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
-        self.elmchk.setEnabled(False)
+        # self.elmchk.setEnabled(False)
 
     def els(self):
         self.adapter = "ELS27"
@@ -2001,7 +2001,7 @@ class main_window_options(widgets.QDialog):
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
-        self.elmchk.setEnabled(False)
+        # self.elmchk.setEnabled(False)
 
     def vlinker(self):
         self.adapter = "VLINKER"
@@ -2033,7 +2033,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vgatebutton.blockSignals(False)
-        self.elmchk.setEnabled(False)
+        # self.elmchk.setEnabled(False)
 
     def vgate(self):
         self.adapter = "VGATE"
@@ -2072,7 +2072,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
-        self.elmchk.setEnabled(False)
+        # self.elmchk.setEnabled(False)
 
     def connectedMode(self):
         self.timer.stop()
