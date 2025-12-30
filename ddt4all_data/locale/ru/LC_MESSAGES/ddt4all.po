@@ -218,7 +218,7 @@ msgid "ECU Function address"
 msgstr "ECU Function address"
 
 msgid "ECU Protocol"
-msgstr "ECU Protocol"
+msgstr "ЭБУ Protocol"
 
 msgid "Tool > Ecu ID (Hex)"
 msgstr "Tool > Ecu ID (Hex)"
@@ -344,10 +344,10 @@ msgid "Found: "
 msgstr ""
 
 msgid "Identified ECU"
-msgstr ""
+msgstr "ECU идентифицирован"
 
 msgid "Found ECU"
-msgstr ""
+msgstr "ECU найден"
 
 msgid "(not perfect match)"
 msgstr ""
@@ -367,7 +367,7 @@ msgid "Serial port opened"
 msgstr "Проверка скорости порта:"
 
 msgid "Error: "
-msgstr ""
+msgstr "Ошибка"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM не подключен или неверный COM порт"
@@ -548,25 +548,25 @@ msgstr ""
 #, fuzzy
 #| msgid "Attempting connection..."
 msgid "Will attempt connection anyway..."
-msgstr "Attempting connection..."
+msgstr "Попытка подключения..."
 
 msgid "Connection failed: "
-msgstr "Connection failed: "
+msgstr "Соединение не удалось: "
 
 msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
+msgstr "Базовый тест подключения..."
 
 msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
+msgstr "Предупреждение: Устройство может быть не совместимо с ELM327"
 
 msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
+msgstr "ELM327 оборудование определено успешно"
 
 msgid "Device version: "
-msgstr "Device version: "
+msgstr "Версия устройства: "
 
 msgid "Connection error: "
-msgstr "Connection error: "
+msgstr "Ошибка соединения: "
 
 msgid "FAIL"
 msgstr "ОШИБКА"
@@ -590,10 +590,10 @@ msgid "ELM Max version:"
 msgstr "Максимальная версия ELM:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
+msgstr "Предупреждение: PyQtWebEngine недоступен. Некоторые функции могут быть ограничены"
 
 msgid "ddt4all_data/projects.json not found or not ok."
-msgstr ""
+msgstr "ddt4all_data/projects.json не найден или не в порядке."
 
 #, fuzzy
 #| msgid "ECU name"
@@ -630,23 +630,23 @@ msgid "%d loaded ECUs in database."
 msgstr "eCUs загружено."
 
 msgid "No database found"
-msgstr ""
+msgstr "База данных не найдена"
 
 msgid "Check documentation"
-msgstr ""
+msgstr "Проверьте документацию"
 
 msgid "DDT4All Documentation"
-msgstr ""
+msgstr "DDT4All документация"
 
 msgid "WebEngine not available."
-msgstr ""
+msgstr "WebEngine недоступен."
 
 msgid ""
 "For full documentation with web browsing capability, install PyQtWebEngine:"
-msgstr ""
+msgstr "Для получения полной документации используйте браузер с установленым PyQtWebEngine:"
 
 msgid "Visit the online documentation at:"
-msgstr ""
+msgstr "Посетите онлайн-документацию по адресу:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
@@ -658,7 +658,7 @@ msgid "Can timeout (ms) [0:AUTO] :"
 msgstr ""
 
 msgid "Documentation"
-msgstr ""
+msgstr "Документация"
 
 msgid "Screen"
 msgstr "Экран"
@@ -685,16 +685,16 @@ msgid "Screens"
 msgstr "Экраны"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Логирование"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "Окно ЭБУ"
 
 msgid "Ecu List Window"
-msgstr ""
+msgstr "Список блоков ЭБУ"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Панель инструментов"
 
 msgid "Read DTC"
 msgstr "Чтение ошибок DTC"
@@ -715,19 +715,19 @@ msgid "Manual command"
 msgstr "Ручной ввод команды"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Ручной запрос"
 
 msgid "Software flow control"
 msgstr ""
 
 msgid "Zoom In"
-msgstr ""
+msgstr "Увеличить масштаб"
 
 msgid "Zoom Out"
-msgstr ""
+msgstr "Уменьшить масштаб"
 
 msgid "UI Edit"
-msgstr ""
+msgstr "Редактировать пользовательский интерфейс"
 
 msgid "File"
 msgstr "Файл"
@@ -736,7 +736,7 @@ msgid "Open XML"
 msgstr ""
 
 msgid "Identify ECU"
-msgstr ""
+msgstr "Открыть XML"
 
 msgid "Create New ECU"
 msgstr "Создать новый ЭБУ"
@@ -745,16 +745,16 @@ msgid "Save current ECU"
 msgstr "Сохранить ЭБУ"
 
 msgid "Save last record"
-msgstr ""
+msgstr "Сохранить последнюю запись"
 
 msgid "Save ECU list"
 msgstr "Сохранить список ЭБУ"
 
 msgid "Zip database"
-msgstr ""
+msgstr "Сжатие базы данных"
 
 msgid "Exit"
-msgstr ""
+msgstr "Выход"
 
 msgid "View"
 msgstr "Вид"
@@ -766,16 +766,16 @@ msgid "By Project Code"
 msgstr ""
 
 msgid "By Car Name"
-msgstr ""
+msgstr "По названию автомобиля"
 
 msgid "Theme"
-msgstr ""
+msgstr "Тема"
 
 msgid "Dark Theme"
-msgstr ""
+msgstr "Темная тема"
 
 msgid "Light Theme"
-msgstr ""
+msgstr "Светлая тема"
 
 msgid "Action"
 msgstr "Действия"
@@ -790,7 +790,7 @@ msgid "Rename"
 msgstr "Переименовать"
 
 msgid "Plugins"
-msgstr ""
+msgstr "Плагины"
 
 #, fuzzy
 #| msgid "Cannot draw input "
@@ -801,19 +801,19 @@ msgid "Help"
 msgstr "Справка"
 
 msgid "Web Wiki"
-msgstr ""
+msgstr "Онлайн Wiki"
 
 msgid "About Developers"
-msgstr ""
+msgstr "О разработчиках"
 
 msgid "Get Git update"
-msgstr ""
+msgstr "Получить Git апдейт "
 
 msgid "About"
 msgstr ""
 
 msgid "About DDT4ALL"
-msgstr ""
+msgstr "О DDT4ALL"
 
 #, fuzzy
 #| msgid "Diag version"
@@ -821,7 +821,7 @@ msgid " version:"
 msgstr "Diag version"
 
 msgid "Created by:"
-msgstr ""
+msgstr "Создано:"
 
 #, fuzzy
 #| msgid "Scan options"
@@ -859,7 +859,7 @@ msgid "Zipping XML database... (this can take a few minutes)"
 msgstr ""
 
 msgid "Zip job finished"
-msgstr ""
+msgstr "Сжатие завершено"
 
 msgid "Enter new name"
 msgstr "Введите новое название"
@@ -883,7 +883,7 @@ msgid "Scan options"
 msgstr "Опции сканирования"
 
 msgid "CANCEL"
-msgstr ""
+msgstr "ОТМЕНА"
 
 msgid "EDITION MODE"
 msgstr "РЕДАКТОР"
@@ -904,10 +904,10 @@ msgid "Save record (keep '.txt' extension)"
 msgstr "Сохранить список моих ЭБУ (.ecu)"
 
 msgid "Recorded "
-msgstr ""
+msgstr "Записано "
 
 msgid " entries"
-msgstr ""
+msgstr " записи"
 
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
@@ -932,7 +932,7 @@ msgstr ""
 "https://github.com/cedricp/ddt4all</center>"
 
 msgid "Language changed to"
-msgstr ""
+msgstr "Язык изменен на"
 
 msgid "No"
 msgstr "Нет"
@@ -962,7 +962,7 @@ msgid "VGate (High-Speed)"
 msgstr ""
 
 msgid "Interface language"
-msgstr ""
+msgstr "Язык интерфейса"
 
 msgid "Port speed"
 msgstr "Скорость порта"
@@ -986,10 +986,10 @@ msgid "I'm aware that I can harm my car if badly used"
 msgstr "Я понимаю, что могу навредить моему автомобилю"
 
 msgid "Dark style"
-msgstr ""
+msgstr "Темный стиль"
 
 msgid "Change UART speed"
-msgstr ""
+msgstr "Изменить скорость UART"
 
 #, fuzzy
 #| msgid "Check"
@@ -1088,10 +1088,10 @@ msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 или OBDLINK-SX не обнаружены на COM порту "
 
 msgid "ECU Command"
-msgstr ""
+msgstr "ЭБУ команды"
 
 msgid "Err, cannot rename "
-msgstr ""
+msgstr "Ошибка, не могу переименовать "
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Для редактирования экрана сначала сохраните его в JSON"
@@ -1109,7 +1109,7 @@ msgid "Rename label"
 msgstr "Переименовать надпись"
 
 msgid "Change color"
-msgstr ""
+msgstr "Изменить цвет"
 
 msgid "Remove element"
 msgstr "Удалить надпись"
@@ -1143,7 +1143,7 @@ msgid "Connection to ELM lost, trying to reconnect..."
 msgstr ""
 
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Переподключение невозможно..."
 
 msgid "Switching to session mode"
 msgstr "Переключение в режим"
@@ -1161,7 +1161,7 @@ msgid "Sending simulated ELM request :"
 msgstr "Отправляем симуляционный ELM запрос :"
 
 msgid "Bad ELM response :"
-msgstr ""
+msgstr "Плохой ответ ELM :"
 
 msgid "ELM response : "
 msgstr "Ответ ELM : "
@@ -1178,7 +1178,7 @@ msgid "Unknown request "
 msgstr "ECU Function address"
 
 msgid "Command aborted "
-msgstr ""
+msgstr "Команда прервана "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
 msgstr ""
@@ -1187,15 +1187,15 @@ msgid "Request aborted (look at red paramters entries): "
 msgstr "Запрос прерван (проверьте красные записи): "
 
 msgid "Delay"
-msgstr ""
+msgstr "Задержка"
 
 msgid "For your safety"
-msgstr ""
+msgstr "Для вашей безопасности"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
 "Activate expert mode to unlock"
-msgstr ""
+msgstr "Активируйте режим эксперта для разблокировки"
 
 #, fuzzy
 #| msgid "Ecu parameters"
@@ -1203,19 +1203,19 @@ msgid "Writing parameter"
 msgstr "Параметры ЭБУ"
 
 msgid "Blocked writing parameter"
-msgstr ""
+msgstr "Заблокированный параметр записи"
 
 msgid "Invalid"
 msgstr "Не считано"
 
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "ЭБУ использующих SDS"
 
 msgid "Cannot call request "
 msgstr "Не могу сформировать запрос "
 
 msgid "Update time"
-msgstr ""
+msgstr "Время обновления"
 
 msgid "Clearing DTC information"
 msgstr "Сброс ошибок DTC"
@@ -1235,7 +1235,7 @@ msgid "Clear DTC failed"
 msgstr "Сброс ошибок DTC"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "Очистка DTC выполнена успешно"
 
 #, fuzzy
 #| msgid "No ClearDTC request for that ECU, will send default 14FF00"
@@ -1246,13 +1246,13 @@ msgid "Invalid response for ReadDTC command"
 msgstr "Неверный отклик на команду чтения ошибок"
 
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "Чтение ошибок DTC вернулось с ошибкой"
 
 msgid "No DTC"
 msgstr "Нет ошибок DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Коды неисправностей"
 
 msgid "Clear ALL DTC"
 msgstr "Сбросить ВСЕ ошибки"
@@ -1269,7 +1269,7 @@ msgid "found request in input "
 msgstr "Нет параметров для кнопки : "
 
 msgid "found in display "
-msgstr ""
+msgstr "найдено на дисплее "
 
 #, fuzzy
 #| msgid "Add button"
@@ -1303,13 +1303,13 @@ msgid "Skipping current file (cannot parse it)"
 msgstr ""
 
 msgid "Writing database"
-msgstr ""
+msgstr "Запись базы данных"
 
 msgid "Writing archive"
-msgstr ""
+msgstr "Запись архива"
 
 msgid "Opening ECU Database..."
-msgstr ""
+msgstr "Открытие базы данных ЭБУ..."
 
 msgid "parts as: "
 msgstr ""
@@ -1318,10 +1318,10 @@ msgid " please review dumpVehicles def."
 msgstr ""
 
 msgid "Values"
-msgstr ""
+msgstr "Значения"
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Ожидайте..."
 
 msgid "Frame length error: "
 msgstr ""
@@ -1330,7 +1330,7 @@ msgid "Frame hex error: "
 msgstr ""
 
 msgid "Found USB adapter:"
-msgstr ""
+msgstr "Найден USB-адаптер:"
 
 msgid "ELS27 V5 CAN pin configuration complete"
 msgstr ""
@@ -1351,13 +1351,13 @@ msgid "Check ACU Virgin"
 msgstr ""
 
 msgid "Waiting"
-msgstr ""
+msgstr "Ожидание"
 
 msgid "Virginize ACU"
 msgstr ""
 
 msgid "Cannot connect to ECU"
-msgstr ""
+msgstr "Невозможно подключиться к ЭБУ"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
 msgstr ""
@@ -1590,27 +1590,27 @@ msgid "EVC Tools"
 msgstr "UCH Tools"
 
 msgid "Water pump counters"
-msgstr ""
+msgstr "Счетчик водяной помпы"
 
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #, fuzzy
 #| msgid "Port speed"
 msgid "Low Speed"
-msgstr "Скорость порта"
+msgstr "Низкая скорость"
 
 msgid "Middle Speed"
-msgstr ""
+msgstr "Средняя скорость"
 
 msgid "High Speed"
-msgstr ""
+msgstr "Высокая скорость"
 
 msgid "V_Timer_DrivWEP_ON"
 msgstr ""
 
 msgid "Reset"
-msgstr ""
+msgstr "Сброс"
 
 msgid ""
 "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
@@ -1618,7 +1618,7 @@ msgid ""
 msgstr ""
 
 msgid "Check values"
-msgstr ""
+msgstr "Проверьте значения"
 
 #, fuzzy
 #| msgid "Diag version"
@@ -1645,10 +1645,10 @@ msgid "Reading Low speed"
 msgstr "Проверка скорости порта:"
 
 msgid "Reading Middle speed"
-msgstr ""
+msgstr "Средняя скорость чтения"
 
 msgid "Reading High speed"
-msgstr ""
+msgstr "Высокая скорость чтения"
 
 msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
 msgstr ""
