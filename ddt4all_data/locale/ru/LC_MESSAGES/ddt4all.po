@@ -218,7 +218,7 @@ msgid "ECU Function address"
 msgstr "ECU Function address"
 
 msgid "ECU Protocol"
-msgstr "ЭБУ Protocol"
+msgstr "ЭБУ Протокол"
 
 msgid "Tool > Ecu ID (Hex)"
 msgstr "Tool > Ecu ID (Hex)"
@@ -260,13 +260,13 @@ msgid "No request named"
 msgstr ""
 
 msgid "Found similar"
-msgstr ""
+msgstr "Найдено похожее"
 
 msgid "DataItem not found"
-msgstr ""
+msgstr "Элемент данных не найден"
 
 msgid "Cannot find data "
-msgstr ""
+msgstr "Не удается найти данные"
 
 msgid " vs "
 msgstr ""
@@ -275,7 +275,7 @@ msgid "Cannot draw input "
 msgstr "Не могу сформировать запрос "
 
 msgid "No Value"
-msgstr ""
+msgstr "Нет значения"
 
 msgid "Generated stream "
 msgstr ""
@@ -283,27 +283,27 @@ msgstr ""
 #, fuzzy
 #| msgid "Send request bytes (HEX)"
 msgid "Send request stream "
-msgstr "Send request bytes (HEX)"
+msgstr "Байты запроса на отправку (HEX)"
 
 #, fuzzy
 #| msgid "Receive bytes"
 msgid "Received stream "
-msgstr "Receive bytes"
+msgstr "Получить байты"
 
 msgid "Request ECU Error"
-msgstr ""
+msgstr "Запросить ошибку ЭБУ"
 
 msgid "Decoded values"
-msgstr ""
+msgstr "Декодированные значения"
 
 msgid "Warning, cannot get signed value for"
-msgstr ""
+msgstr "Предупреждение, не удается получить подписанное значение для"
 
 msgid "Division by zero, please check data item: "
-msgstr ""
+msgstr "Деление на ноль, пожалуйста, проверьте элемент данных: "
 
 msgid "getHexValue >> abnormal remaining bytes "
-msgstr ""
+msgstr "getHexValue >> ненормальные оставшиеся байты"
 
 #, fuzzy
 #| msgid "Cannot draw input "
@@ -311,7 +311,7 @@ msgid "Cannot find file "
 msgstr "Не могу сформировать запрос "
 
 msgid "Cannot load ECU file"
-msgstr ""
+msgstr "Не удается загрузить файл ЭБУ"
 
 #, fuzzy
 #| msgid "XML file not found : "
@@ -319,13 +319,13 @@ msgid "XML not found"
 msgstr "XML файл не найден : "
 
 msgid "Cannot retrieve functionnal address of ECU"
-msgstr ""
+msgstr "Не удается получить функциональный адрес ЭБУ"
 
 msgid "Adding group "
-msgstr ""
+msgstr "Добавление группы "
 
 msgid "Unable to find eculist"
-msgstr ""
+msgstr "Не удалось найти список ЭБУ"
 
 #, fuzzy
 #| msgid "ECU Function address"
@@ -333,7 +333,7 @@ msgid "Warning, address"
 msgstr "ECU Function address"
 
 msgid "is not mapped"
-msgstr ""
+msgstr "не сопоставлен"
 
 #, fuzzy
 #| msgid "ECU Function address"
@@ -341,7 +341,7 @@ msgid "Scanning address: "
 msgstr "ECU Function address"
 
 msgid "Found: "
-msgstr ""
+msgstr "Найдено: "
 
 msgid "Identified ECU"
 msgstr "ECU идентифицирован"
@@ -350,10 +350,10 @@ msgid "Found ECU"
 msgstr "ECU найден"
 
 msgid "(not perfect match)"
-msgstr ""
+msgstr "(не идеальное совпадение)"
 
 msgid "(no relevant ECU file found)"
-msgstr ""
+msgstr "(соответствующий файл ЭБУ не найден)"
 
 msgid "Using saved settings for"
 msgstr ""
@@ -466,11 +466,11 @@ msgid "STPX mode enabled for enhanced long command support"
 msgstr ""
 
 msgid "Port is None - cannot switch speed"
-msgstr ""
+msgstr "Порт отсутствует - не удается переключить скорость"
 
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr ""
+msgstr "%s Смена скорости ОК, меняем скорость UART..."
 
 #, fuzzy, python-format
 #| msgid "Connection test failed"
@@ -518,19 +518,19 @@ msgid "Unknown address: "
 msgstr "ECU Function address"
 
 msgid "Using saved device settings"
-msgstr ""
+msgstr "Использование сохраненных настроек устройства"
 
 msgid "Using optimal device settings"
-msgstr ""
+msgstr "Использование оптимальных настроек устройства"
 
 msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
+msgstr "Подключение к устройству через порт: "
 
 msgid "Using baudrate: "
-msgstr "Using baudrate: "
+msgstr "Использование скорости передачи в бодах: "
 
 msgid "Testing for ELS27 device..."
-msgstr ""
+msgstr "Тестирование ELS27 устройства..."
 
 #, fuzzy
 #| msgid "ELM327 device detected successfully"
@@ -613,7 +613,7 @@ msgid "ECU name"
 msgstr "Название ЭБУ"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Protocol"
 msgstr "Протокол"
@@ -718,7 +718,7 @@ msgid "Manual request"
 msgstr "Ручной запрос"
 
 msgid "Software flow control"
-msgstr ""
+msgstr "Программное управление потоком"
 
 msgid "Zoom In"
 msgstr "Увеличить масштаб"
@@ -733,10 +733,10 @@ msgid "File"
 msgstr "Файл"
 
 msgid "Open XML"
-msgstr ""
+msgstr "Открыть XML"
 
 msgid "Identify ECU"
-msgstr "Открыть XML"
+msgstr "Определить ЭБУ"
 
 msgid "Create New ECU"
 msgstr "Создать новый ЭБУ"
@@ -807,10 +807,10 @@ msgid "About Developers"
 msgstr "О разработчиках"
 
 msgid "Get Git update"
-msgstr "Получить Git апдейт "
+msgstr "Проверить обновление на Github"
 
 msgid "About"
-msgstr ""
+msgstr "О программе"
 
 msgid "About DDT4ALL"
 msgstr "О DDT4ALL"
