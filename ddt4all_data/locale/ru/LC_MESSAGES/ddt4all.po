@@ -856,10 +856,10 @@ msgid "Save database (keep '.zip' extension)"
 msgstr ""
 
 msgid "Zipping XML database... (this can take a few minutes)"
-msgstr ""
+msgstr "Архивирование XML базы данных ... (это может занять несколько минут)"
 
 msgid "Zip job finished"
-msgstr "Сжатие завершено"
+msgstr "Архивирование завершено"
 
 msgid "Enter new name"
 msgstr "Введите новое название"
@@ -1009,40 +1009,40 @@ msgid "Selected port is no longer available"
 msgstr "Selected port is no longer available"
 
 msgid "Attempting connection..."
-msgstr "Attempting connection..."
+msgstr "Пытаюсь установить соединение..."
 
 msgid "Port: "
-msgstr "Port: "
+msgstr "Порт: "
 
 msgid "Speed: "
-msgstr "Speed: "
+msgstr "Скорость: "
 
 msgid "Connection test failed"
-msgstr "Connection test failed"
+msgstr "Не удалось выполнить проверку подключения"
 
 msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
+msgstr "Предложения по устранению неполадок:"
 
 msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
+msgstr "1. Проверьте правильность подключения устройства"
 
 msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
+msgstr "2. Попробуйте разные скорости передачи данных в бодах"
 
 msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
+msgstr "3. Убедитесь, что установлены драйверы устройств"
 
 msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
+msgstr "4. Проверьте права доступа к портам (Linux/macOS)"
 
 msgid "Connection test successful!"
-msgstr "Connection test successful!"
+msgstr "Проверка подключения прошла успешно!"
 
 msgid "Error during connection test: "
-msgstr "Error during connection test: "
+msgstr "Ошибка при проверке подключения: "
 
 msgid "Reset and Recheck"
-msgstr ""
+msgstr "Сброс и повторная проверка"
 
 msgid "57600"
 msgstr ""
@@ -1140,7 +1140,7 @@ msgid "Invalid DDT file"
 msgstr "Неверный DDT файл"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "Соединение с ELM потеряно, пытаюсь восстановить..."
 
 msgid "Cannot reconnect..."
 msgstr "Переподключение невозможно..."
