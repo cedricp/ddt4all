@@ -19,31 +19,31 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Goto data"
-msgstr "Goto data"
+msgstr "Перейти к данным"
 
 msgid "Remove"
-msgstr "Remove"
+msgstr "Удалять"
 
 msgid "Add to screen"
-msgstr "Add to screen"
+msgstr "Добавить на экран"
 
 msgid "Request name;Bytes;Manual"
 msgstr ""
 
 msgid "Add"
-msgstr "Add"
+msgstr "Добавить"
 
 msgid "Send request bytes (HEX)"
-msgstr "Send request bytes (HEX)"
+msgstr "Отправить байты запроса (HEX)"
 
 msgid "Receive bytes (HEX)"
-msgstr "Receive bytes (HEX)"
+msgstr "Получить байты (HEX)"
 
 msgid "Data length"
-msgstr "Data length"
+msgstr "Длина данных"
 
 msgid "Shift byte count"
-msgstr "Shift byte count"
+msgstr "Количество байт сдвига"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr "Data name;Start byte;Bit offset;Bit count;Endianess"
@@ -64,40 +64,40 @@ msgid "Plant"
 msgstr ""
 
 msgid "After Sale"
-msgstr ""
+msgstr "После продажи"
 
 msgid "Engineering"
 msgstr ""
 
 msgid "Supplier"
-msgstr "Supplier"
+msgstr "Поставщик"
 
 msgid "Reload requests"
-msgstr "Reload requests"
+msgstr "Переотправить запрос"
 
 msgid "Add request"
-msgstr "Add request"
+msgstr "Добавить запрос"
 
 msgid "Send bytes"
-msgstr "Send bytes"
+msgstr "Отправить байты"
 
 msgid "Receive bytes"
-msgstr "Receive bytes"
+msgstr "Получить байты"
 
 msgid "Number of bits"
-msgstr "Number of bits"
+msgstr "Количество битов"
 
 msgid "Signed"
-msgstr "Signed"
+msgstr "Подписан"
 
 msgid "Add item"
-msgstr "Add item"
+msgstr "Добавить элемент"
 
 msgid "Del item"
-msgstr "Del item"
+msgstr "Удалить элемент"
 
 msgid "New item"
-msgstr "New item"
+msgstr "Новый предмет"
 
 msgid "Value;Text"
 msgstr "Value;Text"
@@ -109,7 +109,7 @@ msgid "Unit"
 msgstr "Unit"
 
 msgid "Number of bit"
-msgstr "Number of bit"
+msgstr "Количество байт"
 
 msgid "Format"
 msgstr "Format"
@@ -118,44 +118,44 @@ msgid "Value = (AX+B) / C"
 msgstr "Value = (AX+B) / C"
 
 msgid "New"
-msgstr "New"
+msgstr "Новое"
 
 msgid "Duplicate selected"
-msgstr ""
+msgstr "Выбранный дубликат"
 
 msgid "Remove selected"
-msgstr ""
+msgstr "Удалить выбранный"
 
 msgid "Reload"
-msgstr "Reload"
+msgstr "Перезагрузить"
 
 msgid "Validate changes"
-msgstr "Validate changes"
+msgstr "Проверка изменений"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Описание"
 
 msgid "Data type"
-msgstr "Data type"
+msgstr "Тип данных"
 
 msgid "Numeric"
-msgstr "Numeric"
+msgstr "Числовой"
 
 msgid "Numeric items"
-msgstr "Numeric items"
+msgstr "Числовые элементы"
 
 msgid "Hex"
 msgstr "Hex"
 
 #, python-format
 msgid "Data is used by request %s"
-msgstr ""
+msgstr "Data is used by request %s"
 
 msgid "New data"
-msgstr "New data"
+msgstr "Новые данные"
 
 msgid "Replace me with request description"
-msgstr "Replace me with request description"
+msgstr "Замените меня c описанием запроса"
 
 msgid "Data name;Description"
 msgstr "Data name;Description"
@@ -164,13 +164,13 @@ msgid "Del"
 msgstr "Del"
 
 msgid "Refresh"
-msgstr "Refresh"
+msgstr "Обновить"
 
 msgid "Move up"
-msgstr "Move up"
+msgstr "Переместиться вверх"
 
 msgid "Check"
-msgstr "Check"
+msgstr "Проверить"
 
 #, python-format
 msgid "Request %s not found"
@@ -203,10 +203,10 @@ msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
 msgid "Delay;Request"
-msgstr "Delay;Request"
+msgstr "Задержка;Запрос"
 
 msgid "Screen initialization"
-msgstr "Screen initialization"
+msgstr "Инициализация экрана"
 
 msgid "Requests to send before screen drawing"
 msgstr "Requests to send before screen drawing"
@@ -236,16 +236,16 @@ msgid "Little Endian"
 msgstr "Little Endian"
 
 msgid "ECU Auto identification"
-msgstr ""
+msgstr "Автоматическая идентификация ЭБУ"
 
 msgid "Diag version;Supplier;Soft;Version"
 msgstr "Diag version;Supplier;Soft;Version"
 
 msgid "Add new"
-msgstr "Add new"
+msgstr "Добавить новый"
 
 msgid "Delete selected"
-msgstr "Delete selected"
+msgstr "Удалить выбранный"
 
 msgid "Diag version"
 msgstr "Diag version"
@@ -254,7 +254,7 @@ msgid "Soft"
 msgstr "Soft"
 
 msgid "Version"
-msgstr "Version"
+msgstr "Версия"
 
 msgid "No request named"
 msgstr ""
@@ -278,7 +278,7 @@ msgid "No Value"
 msgstr "Нет значения"
 
 msgid "Generated stream "
-msgstr ""
+msgstr "Сгенерированный поток "
 
 #, fuzzy
 #| msgid "Send request bytes (HEX)"
@@ -333,7 +333,7 @@ msgid "Warning, address"
 msgstr "ECU Function address"
 
 msgid "is not mapped"
-msgstr "не сопоставлен"
+msgstr ""
 
 #, fuzzy
 #| msgid "ECU Function address"
@@ -356,10 +356,10 @@ msgid "(no relevant ECU file found)"
 msgstr "(соответствующий файл ЭБУ не найден)"
 
 msgid "Using saved settings for"
-msgstr ""
+msgstr "Использование сохраненных настроек для"
 
 msgid "Using optimal settings for"
-msgstr ""
+msgstr "Использование оптимальных настроек для"
 
 #, fuzzy
 #| msgid "Checking port speed:"
@@ -543,7 +543,7 @@ msgid "Using detected baud rate: "
 msgstr "Using baudrate: "
 
 msgid "Warning: No ELS27 response detected"
-msgstr ""
+msgstr "Предупреждение: ELS27 не отвечает"
 
 #, fuzzy
 #| msgid "Attempting connection..."
@@ -664,7 +664,7 @@ msgid "Screen"
 msgstr "Экран"
 
 msgid "CAN Sniffer"
-msgstr ""
+msgstr "CAN Анализатор"
 
 msgid "Requests"
 msgstr "Запросы"
@@ -1626,7 +1626,7 @@ msgid "Waiting action"
 msgstr "Diag version"
 
 msgid "Reset all counters"
-msgstr ""
+msgstr "Сбросить все счетчики"
 
 msgid ""
 "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
