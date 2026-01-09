@@ -257,7 +257,7 @@ msgid "Version"
 msgstr "Версия"
 
 msgid "No request named"
-msgstr ""
+msgstr "Запрос не назван"
 
 msgid "Found similar"
 msgstr "Найдено похожее"
@@ -679,7 +679,7 @@ msgid "Ecu parameters"
 msgstr "Параметры ЭБУ"
 
 msgid "Ecran Window"
-msgstr ""
+msgstr "Окно функций"
 
 msgid "Screens"
 msgstr "Экраны"
@@ -853,7 +853,7 @@ msgid "ISO8"
 msgstr ""
 
 msgid "Save database (keep '.zip' extension)"
-msgstr ""
+msgstr "Сохранить базу данных (сохранять расширение '.zip')"
 
 msgid "Zipping XML database... (this can take a few minutes)"
 msgstr "Архивирование XML базы данных ... (это может занять несколько минут)"
@@ -1167,7 +1167,7 @@ msgid "ELM response : "
 msgstr "Ответ ELM : "
 
 msgid "Button request not found : "
-msgstr "Нет параметров для кнопки : "
+msgstr "Запрос кнопки не найден : "
 
 msgid "Sending request :"
 msgstr "Отправка запроса :"
@@ -1642,7 +1642,7 @@ msgstr "<font color=orange> - '%s'</font>"
 #, fuzzy
 #| msgid "Checking port speed:"
 msgid "Reading Low speed"
-msgstr "Проверка скорости порта:"
+msgstr "Низкая скорость чтения"
 
 msgid "Reading Middle speed"
 msgstr "Средняя скорость чтения"
