@@ -5,23 +5,24 @@ __appname__ = "DDT4ALL"
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright ©2016-2025"
 __credits__ = []
-__contributors__ = [
-    "Furtif",
-    "bovirus",
-    "josefe17",
-    "shrlnm",
-    "TA1AUB",
-    "jneuhauser",
-    "gobo-ws",
-    "Dante383",
-    "jan-stanek",
-    "mrechte",
-    "frederic34",
-    "memleketim05",
-    "landswellsong",
-    "krzeminskim",
-    "Jodaille"
-]
+__contributors__ = {
+    "Furtif": "Collaborator",
+    "bovirus": "Contributor",
+    "josefe17": "Contributor",
+    "shrlnm": "Contributor",
+    "jneuhauser": "Contributor",
+    "gobo-ws": "Contributor",
+    "Dante383": "Contributor",
+    "jan-stanek": "Contributor",
+    "mrechte": "Contributor",
+    "frederic34": "Contributor",
+    "memleketim05": "Contributor",
+    "landswellsong": "Contributor",
+    "krzeminskim": "Contributor",
+    "Jodaille": "Contributor",
+    "TA1AUB": "Translator",
+    "walkman2021": "Translator"
+}
 __license__ = "GPL"
 __version__ = "3.0.7"
 __maintainer__ = "Cedric PAILLE"

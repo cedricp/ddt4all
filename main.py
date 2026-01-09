@@ -758,11 +758,8 @@ class Main_widget(widgets.QMainWindow):
         text_about = version.__appname__ + _(" version:") + " %s" % version.__version__
         msgbox.setText(text_about)
         html = '<h2>' + _("Created by:") + " %s" % (version.__author__) + '</h2><table>'
-        for c in version.__contributors__:
-            if c == "Furtif":
-                html += '<tr><td>Colaborator: </td><td>' + c + '</td></tr>'
-            else:
-                html += '<tr><td>Contribuitor: </td><td>' + c + '</td></tr>'
+        for name, role in version.__contributors__.items():
+            html += f'<tr><td><a href="https://github.com/{name}" style="text-decoration: none; cursor: pointer;" target="_blank">{name}</a>: </td><td>{role}</td></tr>'
         html += '</table>'
         msgbox.setInformativeText(html)
         msgbox.exec_()
