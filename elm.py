@@ -664,8 +664,7 @@ class Port:
                 if self.portType == 1:  # TCP/WiFi
                     import socket
                     try:
-                        # byte = self.hdr.recv(1)
-                        byte = self.hdr.read(1)
+                        byte = self.hdr.recv(1)
                         if options.debug:
                             print(f"WiFi recv: {byte}")
                     except socket.timeout:
@@ -725,7 +724,13 @@ class Port:
             return None
 
     def change_rate(self, rate):
-        self.hdr.baudrate = rate
+        if self.portType == 0:  # Serial/USB only
+            self.hdr.baudrate = rate
+        elif self.portType == 1:  # TCP/WiFi - no baudrate concept
+            print(f"WiFi connection - baudrate change not applicable")
+        else:  # Bluetooth
+            if self.hdr and hasattr(self.hdr, 'baudrate'):
+                self.hdr.baudrate = rate
 
     def write(self, data):
         """Enhanced write method with automatic reconnection and better error handling"""
@@ -741,11 +746,10 @@ class Port:
                         self.init_wifi(True)
                         if not self.connectionStatus:
                             return None
-                    # return self.hdr.sendall(data)
                     if self.hdr is None:
                         print(_("Port handler is None, cannot write"))
                         return None
-                    return self.hdr.write(data)
+                    return self.hdr.sendall(data)
                 elif self.portType == 2:  # Bluetooth
                     if self.droid:
                         return self.droid.bluetoothWrite(data)
@@ -829,9 +833,26 @@ class Port:
             print("\r\t\t\t\t\r" + _("Checking port speed:"), s, )
             sys.stdout.flush()
 
-            self.hdr.baudrate = s
+            if self.portType == 0:  # Serial/USB only
+                self.hdr.baudrate = s
+            elif self.portType == 1:  # TCP/WiFi - no baudrate concept
+                print(f"WiFi connection - skipping baudrate check")
+                break
+            else:  # Bluetooth
+                if self.hdr and hasattr(self.hdr, 'baudrate'):
+                    self.hdr.baudrate = s
+                else:
+                    print(f"Bluetooth connection - skipping baudrate check")
+                    break
+            
             # self.hdr.flushInput()
-            self.hdr.reset_input_buffer()
+            if self.portType == 0:  # Serial/USB only
+                self.hdr.reset_input_buffer()
+            elif self.portType == 1:  # TCP/WiFi - no buffer reset needed
+                pass  # Sockets don't need buffer reset
+            else:  # Bluetooth
+                if self.hdr and hasattr(self.hdr, 'reset_input_buffer'):
+                    self.hdr.reset_input_buffer()
             self.write("\r")
 
             # search > string
@@ -847,7 +868,13 @@ class Port:
                 if '>' in self.buff:
                     options.port_speed = s
                     print("\n" + _("Start COM speed :"), s)
-                    self.hdr.timeout = timeout
+                    if self.portType == 0:  # Serial/USB only
+                        self.hdr.timeout = timeout
+                    elif self.portType == 1:  # TCP/WiFi
+                        self.hdr.settimeout(timeout)
+                    else:  # Bluetooth
+                        if self.hdr and hasattr(self.hdr, 'timeout'):
+                            self.hdr.timeout = timeout
                     return True
                 if (tc - tb) > 1:
                     break
