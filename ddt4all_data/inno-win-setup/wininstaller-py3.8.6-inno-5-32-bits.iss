@@ -13,42 +13,51 @@
 #define APP_ID          "{3E70988F-0D77-4639-800D-2CD9DB2617B1}"
 
 [Setup]
+AppId={{#APP_ID}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion} {#MyAppStatus}
+
 AppPublisherURL={#MyAppSupportURL}
 AppSupportURL={#MyAppSupportURL}
 AppUpdatesURL={#MyAppSupportURL}
 AppReadmeFile={#MyAppReadmeMd}
+
 AppContact={#MyAppContact}
+
 VersionInfoDescription={#MyAppName} Windows-Installer
 VersionInfoVersion={#MyAppVersion}
 VersionInfoProductName={#MyAppName}
 AppCopyright={#MyCopyright} 
+
 UninstallDisplayIcon={uninstallexe}
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
-DefaultDirName={pf}\{#MyAppDir}
-DefaultGroupName={#MyAppName}
-SetupIconFile=..\..\ddt4all_data\icons\obd.ico
-OutputBaseFilename={#MyAppName}-Windows-Installer-v{#MyAppVersion}_{#MyAppStatus}
-VersionInfoCompany={#MyAppCompany}
-ArchitecturesAllowed=x86 x64
-Compression=lzma2/ultra
-AllowUNCPath=true
+
 VersionInfoTextVersion={#MyAppVersion}
 VersionInfoCopyright={#MyCopyright}
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoProductTextVersion={#MyAppVersion}
-LicenseFile=..\..\license.txt
+VersionInfoCompany={#MyAppCompany}
+
+DefaultDirName={commondata}\{#MyAppDir}
+DefaultGroupName={#MyAppName}
+SetupIconFile=..\..\ddt4all_data\icons\obd.ico
+
+WizardStyle=modern
+
+LicenseFile=..\..\license.rtf
+
+OutputBaseFilename={#MyAppName}-Windows-Installer-v{#MyAppVersion}_{#MyAppStatus}
+ArchitecturesAllowed=x86 x64
+Compression=lzma2/ultra
+AllowUNCPath=true
 WizardSmallImageFile=installer_wizard_image.bmp
 WizardImageFile=WizardImage0.bmp
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-;WizardStyle=modern
-DisableWelcomePage=no
+DisableWelcomePage=yes
 UsedUserAreasWarning=no
-AppId={{#APP_ID}
 
 [Files]
 Source: "win32_deps\VC_redist.x86.exe"; DestDir: "{app}\win32_deps"; Tasks: microsoft_runtimes
@@ -106,7 +115,7 @@ en.MSruntimes=Install Microsoft Visual C++ Redistributable runtimes files
 de.MSruntimes=Installieren Sie Microsoft Visual C++ Redistributable-Laufzeitdateien
 fr.MSruntimes=Installer les fichiers d'exécution redistribuables Microsoft Visual C++
 es.MSruntimes=Instalar archivos de tiempo de ejecución redistribuibles de Microsoft Visual C++
-it.MSruntimes=Installare i file runtime ridistribuibili di Microsoft Visual C++
+it.MSruntimes=Installa i file runtime ridistribuibili di Microsoft Visual C++
 nl.MSruntimes=Installeer Microsoft Visual C++ Redistributable runtimes-bestanden
 pl.MSruntimes=Zainstaluj pliki środowiska wykonawczego redystrybucyjnego Microsoft Visual C++
 ptbr.MSruntimes=Instalar arquivos de tempo de execução redistribuíveis do Microsoft Visual C++
@@ -118,7 +127,7 @@ en.OpenAfterInstall=Open {#MyAppName} after installation
 de.OpenAfterInstall={#MyAppName} nach Abschluss der Installation öffnen
 fr.OpenAfterInstall=Ouvrir {#MyAppName} après l'installation
 es.OpenAfterInstall=Abrir {#MyAppName} tras la instalación
-it.OpenAfterInstall=Apri {#MyAppName} dopo l'installazione
+it.OpenAfterInstall=Ad installazione completata esegui {#MyAppName}
 nl.OpenAfterInstall={#MyAppName} starten na installatie
 pl.OpenAfterInstall=Otwórz program {#MyAppName} po zakończeniu instalacji
 ptbr.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
