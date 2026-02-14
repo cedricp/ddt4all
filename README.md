@@ -14,12 +14,17 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Cross-Platform**: Optimized for Windows, Linux, and macOS with platform-specific configurations
 - **USB CAN Support**: Added support for specialized USB CAN adapters with fallback handling
 
-### � **STN/STPX Protocol Enhancement (v3.0.7)**
-- **VGate STN Support**: Full STN protocol implementation with `send_stn_command()` function
-- **STPX Mode**: Enhanced long command support with `enable_stpx_mode()` function
-- **Enhanced Communication**: STN protocol automatically used when STPX is enabled
-- **High-Speed Support**: VGate speeds up to 1,000,000 bps with STN optimization
-- **Fallback Support**: Graceful degradation to standard protocol when STPX unavailable
+### 🌟 **Enhanced Device Manager with STN/STPX Support (v3.0.7)**
+- **Intelligent Device Detection**: Automatic adapter identification via `ATI` command
+- **Enhanced DeviceManager**: Centralized configuration with STN/STPX support
+- **VGate STN Protocol**: Full STN implementation with automatic pin swapping
+- **STPX Mode**: Enhanced long command support with comprehensive error handling
+- **OBDLink Enhanced Features**: CAN Address Filtering (CAF) and STN optimizations
+- **DerleK USB 3 Support**: Complete pin swapping and configuration management
+- **ELS27 Integration**: Specific CAN pin configuration (12-13) support
+- **Auto-Configuration**: Device-specific settings automatically applied
+- **Fallback Support**: Graceful degradation for unsupported devices
+- **Performance Optimization**: Enhanced communication speeds up to 1,000,000 bps
 - **Fully Translated Interface** in 13 languages with comprehensive translation coverage
 - **Supported Languages**: English, Français (fr), Deutsch (de), Español (es), Italiano (it), Русский (ru), Polski (pl), Nederlands (nl), Português (pt), Magyar (hu), Română (ro), Српски (sr), Türkçe (tr), Українська (uk_UA)
 - **Real-time Language Switching** with proper encoding support
@@ -584,3 +589,44 @@ To make this application more reliable and add support for new devices, hardware
 - **Discord**: [Join our community](https://discord.gg/cBqDh9bTHP) for real-time support
 - **GitHub Issues**: Technical problems and bug reports
 - **GitHub Discussions**: Feature requests and general discussions
+
+## 🔧 **Technical Implementation**
+
+### **Enhanced DeviceManager Architecture**
+The DDT4All Enhanced DeviceManager provides intelligent adapter management with automatic feature detection:
+
+```python
+# Automatic device initialization
+from elm import DeviceManager
+DeviceManager.initialize_device(elm_instance)
+```
+
+#### **Device Detection Process**
+1. **ATI Command Analysis**: Extracts device identification from ELM responses
+2. **Adapter Type Normalization**: Maps UI types to internal device types
+3. **Capability Assessment**: Determines STN/STPX and pin swapping support
+4. **Automatic Configuration**: Applies optimal settings without user intervention
+
+#### **Supported Device Classes**
+- **STN-based Adapters**: VGate, OBDLink (enhanced protocol support)
+- **Standard ELM327**: Basic functionality with fallback support
+- **Specialized Adapters**: ELS27, DerleK USB 3 (custom configurations)
+- **Unknown Devices**: Graceful degradation with standard settings
+
+#### **STN/STPX Implementation**
+- **Protocol Detection**: Automatic STN capability identification
+- **Enhanced Commands**: Large message mode, flow control, extended addressing
+- **Error Handling**: Comprehensive verification with fallback mechanisms
+- **Performance Optimization**: High-speed communication up to 2,000,000 bps
+
+#### **Pin Swapping Logic**
+- **Device-Specific Commands**: Tailored pin swapping for each adapter type
+- **Verification Testing**: Automatic validation of pin swap success
+- **Fallback Handling**: Graceful degradation if pin swapping fails
+
+### **Integration Points**
+- **Ecu_scanner**: Uses DeviceManager for CAN and KWP scanning
+- **Connection Management**: Automatic device initialization during connection
+- **Error Recovery**: Robust handling of device-specific issues
+
+This enhanced architecture ensures optimal performance across all supported adapters while maintaining backward compatibility and providing a seamless user experience.
