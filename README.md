@@ -138,6 +138,8 @@ pip install "PyQt5>=5.15.0,<5.16.0" "PyQtWebEngine>=5.15.0,<5.16.0" pyserial==3.
 | **ObdLink EX** | No, 500000, 1000000, 2000000 | 115200 | 2s | RTS/CTS | **Professional** | Confirmed working, professional grade |
 | **ELS27** | Standard speeds | 38400 | 4s | None | **Alternative** | Good ELM327 alternative |
 | **ELS27 V5** | Standard speeds | 38400 | 4s | None | **Enhanced** | CAN pins 12-13, PyRen/Renolink compatible |
+| **DERLEK USB-DIAG2** | Standard speeds | 38400 | 4s | None | **Professional** | Auto pin swapping, STN/STPX support |
+| **DERLEK USB-DIAG3** | Standard speeds | 38400 | 4s | None | **Professional** | Auto pin swapping, STN/STPX support |
 | **USB CAN** | Varies | 38400 | 5s | None | **Specialized** | Intelligent fallback, auto-detection |
 
 #### **⚙️ Connection Optimization Tips:**
