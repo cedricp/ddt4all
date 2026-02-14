@@ -2,7 +2,7 @@
 
 DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
-**Current Version**: v3.0.6 - Latest stable release with enhanced device support and performance improvements.
+**Current Version**: v3.0.7 - Latest stable release with enhanced device support and performance improvements.
 
 ## 🚀 **Recent Major Improvements**
 
@@ -14,7 +14,12 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Cross-Platform**: Optimized for Windows, Linux, and macOS with platform-specific configurations
 - **USB CAN Support**: Added support for specialized USB CAN adapters with fallback handling
 
-### 🌍 **Complete Internationalization (13 Languages)**
+### � **STN/STPX Protocol Enhancement (v3.0.7)**
+- **VGate STN Support**: Full STN protocol implementation with `send_stn_command()` function
+- **STPX Mode**: Enhanced long command support with `enable_stpx_mode()` function
+- **Enhanced Communication**: STN protocol automatically used when STPX is enabled
+- **High-Speed Support**: VGate speeds up to 1,000,000 bps with STN optimization
+- **Fallback Support**: Graceful degradation to standard protocol when STPX unavailable
 - **Fully Translated Interface** in 13 languages with comprehensive translation coverage
 - **Supported Languages**: English, Français (fr), Deutsch (de), Español (es), Italiano (it), Русский (ru), Polski (pl), Nederlands (nl), Português (pt), Magyar (hu), Română (ro), Српски (sr), Türkçe (tr), Українська (uk_UA)
 - **Real-time Language Switching** with proper encoding support
@@ -27,7 +32,7 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Memory Optimization**: Improved resource management and cleanup
 
 ### 🔧 **New Device & Speed Management**
-- **VGate iCar Pro Support**: Full support for enhanced STN-based VGate adapters
+- **VGate iCar Pro Support**: Full support for VGate adapters with high-speed communication
 - **Intelligent Speed Selection**: Device-specific speed options automatically loaded
 - **Optimal Settings Engine**: Automatic timeout and flow control configuration per device
 - **Enhanced Vlinker Support**: Improved speed options (No, 57600, 115200) for better performance
@@ -55,7 +60,7 @@ Using the application in non expert mode should not be harmful for your vehicle 
 ![python_3.13.x](ddt4all_data/icons/Python-3-13-2-new.png)
 
 #### **🔧 Core Requirements (Essential):**
-* **Python 3.8.6+ (32-bit/64-bit)** - [Python 3.13](https://www.python.org/downloads/release/python-3132/) recommended
+* **Python 3.8.6 - 3.10.x (32-bit/64-bit)** - [Python 3.10](https://www.python.org/downloads/release/python-31012/) recommended
 * [PyQt5](https://pypi.org/project/PyQt5/) - GUI framework
 * [pyserial](https://pypi.org/project/pyserial/) - Serial communication
 * [pyusb](https://pypi.org/project/pyusb/) - USB device support
@@ -86,14 +91,14 @@ pip install "PyQt5>=5.15.0,<5.16.0" "PyQtWebEngine>=5.15.0,<5.16.0" pyserial==3.
 #### **⚠️ Important Notes:**
 - **PyQt5.QtWebEngineWidgets**: Provided by PyQtWebEngine package, used for enhanced documentation viewing
 - **If PyQtWebEngine fails to install**: DDT4All will still work, but documentation viewing will be limited
-- **Python Compatibility**: 3.8.6+ supported (32-bit and 64-bit), tested on 3.8.6, 3.10.12, and 3.13+
+- **Python Compatibility**: 3.8.6 - 3.10.x supported (32-bit and 64-bit), tested on 3.8.6, 3.10.12
 - **WebEngine Compatibility**: Optional PyQtWebEngine support with graceful fallback for documentation viewing
 - **Virtual Environment**: [Recommended setup guide](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
 .
 ### 🔌 **Supported Diagnostic Adapters**
 
 * **Vlinker FS** - USB/Bluetooth (Recommended for best performance and stability)
-* **VGate iCar Pro** - USB/Bluetooth/WiFi (Enhanced STN-based adapter with advanced features)
+* **VGate iCar Pro** - USB/Bluetooth/WiFi (High-speed adapter with communication up to 1,000,000 bps)
 * **ELM327** - USB/Bluetooth/WiFi (Original with _PIC18F25K80_, some Chinese clones supported)
 * **ObdLink SX** - USB (High-speed professional adapter with RTS/CTS flow control)
 * **ObdLink EX** - USB (Professional adapter, tested and confirmed working)
@@ -120,7 +125,7 @@ pip install "PyQt5>=5.15.0,<5.16.0" "PyQtWebEngine>=5.15.0,<5.16.0" pyserial==3.
 | Device | Speed Options | Default | Timeout | Flow Control | Best For | Notes |
 |--------|---------------|---------|---------|--------------|----------|-------|
 | **Vlinker FS** | No, 57600, 115200 | 38400 | 3s | None | **Enhanced** | Most stable, best compatibility |
-| **VGate iCar Pro** | No, 115200, 230400, 500000, 1000000 | 115200 | 2s | None | **Enhanced** | STN-based, very high speeds |
+| **VGate iCar Pro** | No, 115200, 230400, 500000, 1000000 | 115200 | 2s | None | **Enhanced** | High-speed adapter, very high speeds |
 | **ELM327 Original** | Standard speeds | 38400 | 5s | None | **General use** | Verify PIC18F25K80 chip |
 | **ELM327 Clone** | Standard speeds | 9600-38400 | 5s | None | **Budget option** | Test different baud rates |
 | **ELM327 USB** | Standard speeds | 38400 | 5s | None | **USB Direct** | Dedicated USB ELM327 support |

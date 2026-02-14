@@ -1630,7 +1630,29 @@ class ELM:
         else:
             return "WRONG RESPONSE CFC0 " + errorstr
 
+    def send_stn_command(self, command, enhanced=True):
+        """Send command using STN protocol with enhanced features"""
+        try:
+            if enhanced and hasattr(self, 'stpx_enabled') and self.stpx_enabled:
+                # Use STPX enhanced protocol for better performance
+                # Add STN prefix for enhanced adapters
+                stn_command = f"ST {command}"
+                return self.send_raw(stn_command)
+            else:
+                # Standard command
+                return self.send_raw(command)
+        except Exception as e:
+            print(f"STN command error: {e}")
+            # Fallback to standard command
+            return self.send_raw(command)
+
     def send_raw(self, command, expect='>'):
+        """Enhanced send_raw with STN/STPX support"""
+        # Check if STN/STPX should be used
+        if hasattr(self, 'stpx_enabled') and self.stpx_enabled and not command.upper().startswith(('AT', 'ST')):
+            # Use STN protocol for enhanced adapters when enabled
+            return self.send_stn_command(command, enhanced=True)
+        
         tb = time.time()  # start time
 
         # Check if port is valid before proceeding
