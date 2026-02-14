@@ -353,7 +353,11 @@ class DeviceManager:
                 'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
                 'stn_support': True, 'stpx_support': True, 'pin_swap': True
             },
-            'derlek_usb3': {
+            'derlek_usb_diag2': {
+                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
+                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+            },
+            'derlek_usb_diag3': {
                 'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
                 'stn_support': False, 'stpx_support': False, 'pin_swap': True
             },
@@ -377,7 +381,8 @@ class DeviceManager:
             'ELS27': 'els27',  # ELS27 devices
             'VLINKER': 'vlinker',  # Vlinker devices
             'VGATE': 'vgate',  # VGate devices
-            'DERLEK_USB3': 'derlek_usb3',  # DerleK USB 3 devices
+            'DERLEK_USB_DIAG2': 'derlek_usb_diag2',  # DerleK USB-DIAG2 devices
+            'DERLEK_USB_DIAG3': 'derlek_usb_diag3',  # DerleK USB-DIAG3 devices
             'USBCAN': 'unknown'  # USB CAN adapters - use unknown defaults
         }
         return adapter_mapping.get(adapter_type.upper(), 'elm327')
@@ -401,8 +406,13 @@ class DeviceManager:
                 return 'vgate'
             elif "OBDLINK" in elm_version or "STN" in elm_version:
                 return 'obdlink'
-            elif "DERLEK" in elm_version or "USB3" in elm_version:
-                return 'derlek_usb3'
+            elif "DERLEK USB-DIAG2" in elm_version or "DERLEK USB-DIAG3" in elm_version:
+                if "DIAG2" in elm_version:
+                    return 'derlek_usb_diag2'
+                elif "DIAG3" in elm_version:
+                    return 'derlek_usb_diag3'
+                else:
+                    return 'derlek_usb_diag2'  # Default to DIAG2
             elif "ELS27" in elm_version:
                 return 'els27'
             elif "VLINKER" in elm_version:
@@ -481,8 +491,10 @@ class DeviceManager:
                 return DeviceManager._swap_vgate_pins(elm_instance)
             elif device_type == 'obdlink':
                 return DeviceManager._swap_obdlink_pins(elm_instance)
-            elif device_type == 'derlek_usb3':
-                return DeviceManager._swap_derlek_pins(elm_instance)
+            elif device_type == 'derlek_usb_diag2':
+                return DeviceManager._swap_derlek_diag2_pins()
+            elif device_type == 'derlek_usb_diag3':
+                return DeviceManager._swap_derlek_diag3_pins(elm_instance)
             elif device_type == 'els27':
                 return DeviceManager._swap_els27_pins(elm_instance)
             else:
@@ -546,28 +558,55 @@ class DeviceManager:
             return False
 
     @staticmethod
-    def _swap_derlek_pins(elm_instance):
-        """Swap pins for DerleK USB 3 adapters"""
+    def _swap_derlek_diag2_pins(elm_instance):
+        """Swap pins for DerleK USB-DIAG2 adapters"""
         try:
-            # DerleK USB 3 specific pin swapping
+            # DerleK USB-DIAG2 specific pin swapping
             pin_swap_commands = [
                 ("AT BRD 23", "Set baudrate 115200"),
                 ("AT SP 6", "CAN protocol"),
                 ("AT SH 7E0", "Set header"),
-                ("AT FC SH 7E0", "Flow control header")
+                ("AT FC SH 7E0", "Flow control header"),
+                ("AT DP 02", "DIAG2 pin configuration")
             ]
             
             for cmd, desc in pin_swap_commands:
                 response = elm_instance.cmd(cmd)
                 if "?" in response:
-                    print(f"DerleK pin swap command failed: {cmd} ({desc})")
+                    print(f"DerleK USB-DIAG2 pin swap command failed: {cmd} ({desc})")
                     return False
             
-            print("DerleK USB 3 pin swapping completed")
+            print("DerleK USB-DIAG2 pin swapping completed")
             return True
             
         except Exception as e:
-            print(f"DerleK pin swap error: {e}")
+            print(f"DerleK USB-DIAG2 pin swap error: {e}")
+            return False
+
+    @staticmethod
+    def _swap_derlek_diag3_pins(elm_instance):
+        """Swap pins for DerleK USB-DIAG3 adapters"""
+        try:
+            # DerleK USB-DIAG3 specific pin swapping
+            pin_swap_commands = [
+                ("AT BRD 23", "Set baudrate 115200"),
+                ("AT SP 6", "CAN protocol"),
+                ("AT SH 7E0", "Set header"),
+                ("AT FC SH 7E0", "Flow control header"),
+                ("AT DP 03", "DIAG3 pin configuration")
+            ]
+            
+            for cmd, desc in pin_swap_commands:
+                response = elm_instance.cmd(cmd)
+                if "?" in response:
+                    print(f"DerleK USB-DIAG3 pin swap command failed: {cmd} ({desc})")
+                    return False
+            
+            print("DerleK USB-DIAG3 pin swapping completed")
+            return True
+            
+        except Exception as e:
+            print(f"DerleK USB-DIAG3 pin swap error: {e}")
             return False
 
     @staticmethod
