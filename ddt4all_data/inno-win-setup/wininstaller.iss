@@ -55,9 +55,7 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
-;Source: "..\..\ecu.zip"; DestDir: "{app}";
 Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\Python313-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-;Source: "\DDT4ALL-Dist-Versions\Git-2.43.0\x64\*"; DestDir: "{app}\Git"; Flags: ignoreversion recursesubdirs
 Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
 Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
 Source: "..\..\ddt4all_data\icons\*"; DestDir: "{app}\ddt4all_data\icons"; Flags: ignoreversion recursesubdirs
