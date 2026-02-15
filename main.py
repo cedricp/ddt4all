@@ -112,7 +112,7 @@ class Ecu_list(widgets.QWidget):
         self.selected = ''
         self.treeview_ecu = treeview_ecu
         self.vehicle_combo = widgets.QComboBox()
-
+        self.ecuscan = ecuscan  # Store reference to ecuscan
         self.ecu_map = {}
 
         self.populateVehicleCombo()
@@ -131,13 +131,20 @@ class Ecu_list(widgets.QWidget):
         self.list = widgets.QTreeWidget(self)
         self.list.setSelectionMode(widgets.QAbstractItemView.SingleSelection)
         layout.addWidget(self.list)
-        self.ecuscan = ecuscan
+        self.ecuscan = ecuscan  # Store reference to ecuscan
         self.list.doubleClicked.connect(self.ecuSel)
         self.init()
 
     def populateVehicleCombo(self):
         """Populate vehicle combo box based on current sorting mode"""
         self.vehicle_combo.clear()
+        
+        # Check if vehicles database is available AND has ECUs
+        if not vehicles or not vehicles.get("projects") or self.ecuscan.getNumEcuDb() == 0:
+            # No database available - add placeholder item
+            self.vehicle_combo.addItem(_("No vehicles available"))
+            self.vehicle_combo.setEnabled(False)
+            return
         
         # Get current sorting mode from configuration
         sort_mode = options.get_carlist_sort_mode()
@@ -172,6 +179,9 @@ class Ecu_list(widgets.QWidget):
             # Sort by project code (default behavior)
             for k in sorted(vehicles["projects"].keys()):
                 self.vehicle_combo.addItem(k, k)
+        
+        # Enable combo box only if we have vehicles
+        self.vehicle_combo.setEnabled(True)
 
     def refreshVehicleList(self):
         """Refresh the vehicle combo box when sorting mode changes"""
@@ -191,11 +201,19 @@ class Ecu_list(widgets.QWidget):
                 self.vehicle_combo.setCurrentIndex(index)
 
     def scanselvehicle(self):
-        # Get the project key (works for both sorting modes)
+        # Check if vehicles database is available AND has ECUs
+        if not vehicles or not vehicles.get("projects") or self.ecuscan.getNumEcuDb() == 0:
+            return  # No database available, do nothing
+        
+        # Get project key (works for both sorting modes)
         project_key = self.vehicle_combo.currentData()
         if project_key is None:
             # Fallback to current text for backward compatibility
             project_key = self.vehicle_combo.currentText()
+        
+        # Skip if it's placeholder message
+        if project_key == _("No vehicles available"):
+            return
         
         project = str(vehicles["projects"][project_key]["code"])
         ecu.addressing = vehicles["projects"][project_key]["addressing"]
@@ -294,11 +312,19 @@ class Ecu_list(widgets.QWidget):
         self.list.resizeColumnToContents(0)
 
     def filterProject(self):
-        # Get the project key (works for both sorting modes)
+        # Check if vehicles database is available AND has ECUs
+        if not vehicles or not vehicles.get("projects") or self.ecuscan.getNumEcuDb() == 0:
+            return  # No database available, do nothing
+        
+        # Get project key (works for both sorting modes)
         project_key = self.vehicle_combo.currentData()
         if project_key is None:
             # Fallback to current text for backward compatibility
             project_key = self.vehicle_combo.currentText()
+        
+        # Skip if it's placeholder message
+        if project_key == _("No vehicles available"):
+            return
         
         project = str(vehicles["projects"][project_key]["code"])
         ecu.addressing = vehicles["projects"][project_key]["addressing"]
