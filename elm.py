@@ -282,6 +282,8 @@ def get_available_ports():
                 device_desc = f"{desc} (Vlinker Compatible)"
             elif any(keyword in desc_upper for keyword in ['VGATE', 'ICAR']):
                 device_desc = f"{desc} (VGate Compatible)"
+            elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
+                device_desc = f"{desc} (DERLEK Compatible)"
             elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
                 device_desc = f"{desc} (OBDLink Compatible)"
             # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
@@ -354,11 +356,11 @@ class DeviceManager:
                 'stn_support': True, 'stpx_support': True, 'pin_swap': True
             },
             'derlek_usb_diag2': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False,
                 'stn_support': False, 'stpx_support': False, 'pin_swap': True
             },
             'derlek_usb_diag3': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False,
                 'stn_support': False, 'stpx_support': False, 'pin_swap': True
             },
             'unknown': {
@@ -375,12 +377,12 @@ class DeviceManager:
             'STD_BT': 'elm327',  # Bluetooth ELM327
             'STD_WIFI': 'elm327',  # WiFi ELM327
             'STD_USB': 'elm327',  # USB ELM327
-            'STD': 'elm327',  # Standard ELM327
             'OBDLINK': 'obdlink',  # OBDLink devices
             'OBDLINK_EX': 'obdlink_ex',  # OBDLink EX devices
             'ELS27': 'els27',  # ELS27 devices
             'VLINKER': 'vlinker',  # Vlinker devices
             'VGATE': 'vgate',  # VGate devices
+            'DERLEK': 'derlek_usb_diag2',  # DerleK USB-DIAG2 devices (default to DIAG2)
             'DERLEK_USB_DIAG2': 'derlek_usb_diag2',  # DerleK USB-DIAG2 devices
             'DERLEK_USB_DIAG3': 'derlek_usb_diag3',  # DerleK USB-DIAG3 devices
             'USBCAN': 'unknown'  # USB CAN adapters - use unknown defaults

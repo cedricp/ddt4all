@@ -1620,6 +1620,15 @@ class main_window_options(widgets.QDialog):
         self.vlinkerbutton.setToolTip(_("Vlinker FS/MC"))
         medialayout.addWidget(self.vlinkerbutton)
 
+        self.derelekbutton = widgets.QPushButton()
+        self.derelekbutton.setIcon(gui.QIcon("ddt4all_data/icons/derelek.png"))
+        self.derelekbutton.setIconSize(core.QSize(60, 60))
+        self.derelekbutton.setFixedHeight(64)
+        self.derelekbutton.setFixedWidth(64)
+        self.derelekbutton.setCheckable(True)
+        self.derelekbutton.setToolTip(_("DERLEK USB-DIAG2/3"))
+        medialayout.addWidget(self.derelekbutton)
+
         self.vgatebutton = widgets.QPushButton()
         self.vgatebutton.setIcon(gui.QIcon("ddt4all_data/icons/vgate.png"))
         self.vgatebutton.setIconSize(core.QSize(60, 60))
@@ -1637,6 +1646,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.toggled.connect(self.obdlink)
         self.elsbutton.toggled.connect(self.els)
         self.vlinkerbutton.toggled.connect(self.vlinker)
+        self.derelekbutton.toggled.connect(self.derelek)
         self.vgatebutton.toggled.connect(self.vgate)
 
         # languages setting
@@ -1893,6 +1903,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(True)
         self.elsbutton.blockSignals(True)
         self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
 
         self.speedcombo.setCurrentIndex(2)
         self.btbutton.setChecked(True)
@@ -1901,6 +1912,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.setChecked(False)
         self.elsbutton.setChecked(False)
         self.vlinkerbutton.setChecked(False)
+        self.derelekbutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
 
@@ -1910,6 +1922,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(True)
 
     def wifi(self):
@@ -1921,6 +1934,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(True)
         self.elsbutton.blockSignals(True)
         self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
 
         self.wifibutton.setChecked(True)
         self.btbutton.setChecked(False)
@@ -1928,6 +1942,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.setChecked(False)
         self.elsbutton.setChecked(False)
         self.vlinkerbutton.setChecked(False)
+        self.derelekbutton.setChecked(False)
         self.wifiinput.setEnabled(True)
         self.speedcombo.setEnabled(False)
 
@@ -1937,6 +1952,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(True)
 
     def usb(self):
@@ -1954,6 +1970,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(True)
         self.elsbutton.blockSignals(True)
         self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
 
         self.usbbutton.setChecked(True)
         self.speedcombo.setCurrentIndex(0)
@@ -1971,6 +1988,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(True)
 
     def obdlink(self):
@@ -1986,6 +2004,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(True)
         self.elsbutton.blockSignals(True)
         self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
 
         self.usbbutton.setChecked(False)
         self.speedcombo.setCurrentIndex(2)  # 115200 baud for OBDLINK
@@ -2003,6 +2022,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(False)
 
     def els(self):
@@ -2042,6 +2062,7 @@ class main_window_options(widgets.QDialog):
         self.usbbutton.blockSignals(True)
         self.obdlinkbutton.blockSignals(True)
         self.elsbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
         self.vgatebutton.blockSignals(True)
 
         self.usbbutton.setChecked(False)
@@ -2050,6 +2071,7 @@ class main_window_options(widgets.QDialog):
         self.wifibutton.setChecked(False)
         self.obdlinkbutton.setChecked(False)
         self.elsbutton.setChecked(False)
+        self.derelekbutton.setChecked(False)
         self.vgatebutton.setChecked(False)
         self.wifiinput.setEnabled(False)
         self.speedcombo.setEnabled(True)
@@ -2060,6 +2082,43 @@ class main_window_options(widgets.QDialog):
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
+        self.vgatebutton.blockSignals(False)
+
+    def derelek(self):
+        self.adapter = "DERLEK"
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem(_("No"))
+        self.obdlinkspeedcombo.addItem(_("38400"))
+        self.obdlinkspeedcombo.addItem(_("115200"))  # DERLEK can handle high speeds (optional)
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
+        self.vgatebutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(0)  # 38400 baud for DERLEK
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
+        self.vgatebutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.derelekbutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
         self.vgatebutton.blockSignals(False)
         # self.elmchk.setEnabled(False)
 
@@ -2082,6 +2141,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(True)
         self.elsbutton.blockSignals(True)
         self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
 
         self.usbbutton.setChecked(False)
         self.speedcombo.setCurrentIndex(2)  # 115200 baud for VGate (high speed)
@@ -2100,6 +2160,7 @@ class main_window_options(widgets.QDialog):
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(False)
 
     def connectedMode(self):
