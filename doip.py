@@ -138,24 +138,26 @@ class DoIPConnection:
         try:
             message_type, payload = self.receive_message()
             if message_type == DoIPMessageType.VEHICLE_IDENTIFICATION_RESPONSE:
-                # Parse response according to ISO 13400-2 specification
-                # VIN: 17 bytes, Logical Address: 2 bytes, EID: 6 bytes, GID: 6 bytes
-                if len(payload) >= 31:
-                    vin = payload[0:17].decode('ascii', errors='ignore').strip()
+                if len(payload) >= 5:
+                    # Parse VIN (17 bytes), logical address (2 bytes), EID (6 bytes), GID (6 bytes), and additional data
+                    vin = payload[0:17].decode('ascii', errors='ignore')
                     logical_address = struct.unpack('>H', payload[17:19])[0]
-                    eid = payload[19:25].hex().upper()
-                    gid = payload[25:31].hex().upper()
+                    eid = payload[19:25].hex()
+                    gid = payload[25:31].hex()
                     
                     return {
                         'vin': vin,
                         'logical_address': logical_address,
                         'eid': eid,
-                        'gid': gid
+                        'gid': gid,
+                        'additional_data': payload[31:] if len(payload) > 31 else b''
                     }
+                else:
+                    raise DoIPProtocolError(_("Insufficient vehicle identification data"))
             else:
-                raise DoIPProtocolError(f"Expected vehicle identification response, got: {message_type}")
+                raise DoIPProtocolError(_("Expected vehicle identification response, got: {}").format(message_type))
         except Exception as e:
-            raise DoIPProtocolError(f"Vehicle identification failed: {e}")
+            raise DoIPProtocolError(_("Vehicle identification failed: {}").format(e))
     
     def diagnostic_session_control(self, session_type):
         """Control diagnostic session according to ISO 13400"""
@@ -169,11 +171,11 @@ class DoIPConnection:
                     session_status = struct.unpack('>H', payload[0:2])[0]
                     return session_status
                 else:
-                    raise DoIPProtocolError("Insufficient session control data")
+                    raise DoIPProtocolError(_("Insufficient session control data"))
             else:
-                raise DoIPProtocolError(f"Expected diagnostic session control response, got: {message_type}")
+                raise DoIPProtocolError(_("Expected diagnostic session control response, got: {}").format(message_type))
         except Exception as e:
-            raise DoIPProtocolError(f"Diagnostic session control failed: {e}")
+            raise DoIPProtocolError(_("Diagnostic session control failed: {}").format(e))
     
     def send_diagnostic_message(self, req_bytes):
         """Send diagnostic message with addressing according to ISO 13400"""
@@ -198,9 +200,9 @@ class DoIPConnection:
                 else:
                     raise DoIPProtocolError(_("Insufficient diagnostic message data"))
             else:
-                raise DoIPProtocolError(_("Expected diagnostic message response, got: {message_type}"))
+                raise DoIPProtocolError(_("Expected diagnostic message response, got: {}").format(message_type))
         except Exception as e:
-            raise DoIPProtocolError(f"DoIP request failed: {e}")
+            raise DoIPProtocolError(_("DoIP request failed: {}").format(e))
     
     def alive_check(self):
         """Perform alive check according to ISO 13400"""
@@ -215,9 +217,9 @@ class DoIPConnection:
                 else:
                     raise DoIPProtocolError(_("Insufficient alive check data"))
             else:
-                raise DoIPProtocolError(_("Expected alive check response, got: {message_type}"))
+                raise DoIPProtocolError(_("Expected alive check response, got: {}").format(message_type))
         except Exception as e:
-            raise DoIPProtocolError(_("Alive check failed: {e}"))
+            raise DoIPProtocolError(_("Alive check failed: {}").format(e))
 
 
 class DoIPDevice:
@@ -271,14 +273,14 @@ class DoIPDevice:
         try:
             req_bytes = bytes.fromhex(req.replace(' ', ''))
         except ValueError as e:
-            raise DoIPProtocolError(_("Invalid hex request format: {e}"))
+            raise DoIPProtocolError(_("Invalid hex request format: {}").format(e))
         
         # Send diagnostic message with addressing
         try:
             response = self.doip.send_diagnostic_message(req_bytes)
             return response
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP request failed: {e}"))
+            raise DoIPProtocolError(_("DoIP request failed: {}").format(e))
     
     def start_session_can(self, start_session):
         """Start diagnostic session over DoIP according to ISO 13400"""
@@ -294,7 +296,7 @@ class DoIPDevice:
                 return True
             return False
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP session start failed: {e}"))
+            raise DoIPProtocolError(_("DoIP session start failed: {}").format(e))
     
     def init_can(self):
         """Initialize CAN communication over DoIP"""
@@ -305,7 +307,7 @@ class DoIPDevice:
             # Start diagnostic session with extended addressing
             return self.start_session_can("10C0")
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP CAN initialization failed: {e}"))
+            raise DoIPProtocolError(_("DoIP CAN initialization failed: {}").format(e))
             return False
     
     def set_can_addr(self, addr, ecu, canline=0):
@@ -342,24 +344,24 @@ class DoIPDevice:
         
         if is_electric_ecu:
             self.doip.extended_29bit = True
-            print(_("DoIP: Electric ECU detected - {addr}"))
+            print(_("DoIP: Electric ECU detected - {}").format(addr))
             print(_("DoIP: Using extended addressing for Electric Vehicle Systems"))
             # Configure for 29-bit addressing if needed (newer vehicles)
             # Electric ECUs and EVC typically use 29-bit addressing
             if TXa > 0x7FF or RXa > 0x7FF:
                 self.doip.extended_29bit = True
-                print(_("DoIP: Using 29-bit extended addressing - TX:0x{TXa:04X}, RX:0x{RXa:04X}"))
+                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}").format(TXa, RXa))
             else:
                 self.doip.extended_29bit = False
-                print(_("DoIP: Using 11-bit standard addressing - TX:0x{TXa:03X}, RX:0x{RXa:03X}"))
+                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}").format(TXa, RXa))
         else:
             # Configure for 29-bit addressing if needed (newer vehicles)
             if TXa > 0x7FF or RXa > 0x7FF:
                 self.doip.extended_29bit = True
-                print(_("DoIP: Using 29-bit extended addressing - TX:0x{TXa:04X}, RX:0x{RXa:04X}"))
+                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}").format(TXa, RXa))
             else:
                 self.doip.extended_29bit = False
-                print(_("DoIP: Using 11-bit standard addressing - TX:0x{TXa:03X}, RX:0x{RXa:03X}"))
+                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}").format(TXa, RXa))
 
         self.doip.source_address = TXa
         self.doip.target_address = RXa
@@ -379,9 +381,9 @@ if __name__ == '__main__':
         # Test diagnostic request
         try:
             response = doip_device.request("22 F1 90")  # Read VIN
-            print(_("DoIP response: {response}"))
+            print(_("DoIP response: {}").format(response))
         except Exception as e:
-            print(_("DoIP request failed: {e}"))
+            print(_("DoIP request failed: {}").format(e))
         
         # Test Electric ECU configurations
         electric_ecus = [
@@ -395,11 +397,11 @@ if __name__ == '__main__':
         ]
         
         for ecu_name, ecu_data in electric_ecus:
-            print(f"\n{_('Testing Electric ECU: {ecu_name}')}")
+            print("\n" + _("Testing Electric ECU: {}").format(ecu_name))
             doip_device.set_can_addr(ecu_name, ecu_data)
             response = doip_device.request("22 F1 90")  # Read VIN
-            print(_("DoIP response: {response}"))
+            print(_("DoIP response: {}").format(response))
         
         doip_device.disconnect()
     else:
-        print("Failed to connect to DoIP device")
+        print(_("Failed to connect to DoIP device"))
