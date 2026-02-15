@@ -21,6 +21,7 @@ import time
 import platform
 import threading
 import re
+import string
 
 import serial
 from serial.tools import list_ports
