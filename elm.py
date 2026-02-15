@@ -1710,7 +1710,7 @@ class ELM:
             errorstr = "Unknown"
             if rsp[6:8] in list(negrsp.keys()):
                 errorstr = errorval(rsp[6:8])
-            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
                 self.vf.write(tmstr + ";" + dnat_ext[
                     self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
@@ -1747,7 +1747,7 @@ class ELM:
 
             # log KeepAlive event
             if self.lf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("# [" + tmstr + "] KeepAlive\n")
                 self.lf.flush()
 
@@ -1885,7 +1885,7 @@ class ELM:
             if result[4:6] in list(negrsp.keys()):
                 errorstr = errorval(result[4:6])
             if self.vf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
                     self.vf.write(tmstr + ";" + dnat_ext[
                         self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
@@ -2126,7 +2126,7 @@ class ELM:
         # save command to log
         if self.lf != 0:
             # tm = str(time.time())
-            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
             self.lf.write("> [" + tmstr + "] Request: " + command + "\n")
             self.lf.flush()
 
@@ -2159,7 +2159,7 @@ class ELM:
             if command in self.buff:
                 break
             elif self.lf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
                 self.lf.flush()
 
@@ -2246,7 +2246,7 @@ class ELM:
         self.l1_cache = {}
 
         if self.lf != 0:
-            tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
@@ -2364,7 +2364,7 @@ class ELM:
         self.lastinitrsp = ""
 
         if self.lf != 0:
-            tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
