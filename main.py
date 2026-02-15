@@ -1856,25 +1856,36 @@ class main_window_options(widgets.QDialog):
             self.portcount = len(ports)
             
             for p in ports:
-                if len(p) >= 3:
+                if len(p) >= 4:
+                    port, desc, hwid, status = p
+                elif len(p) >= 3:
                     port, desc, hwid = p
+                    status = "unknown"
                 else:
                     port, desc = p
                     hwid = ""
+                    status = "unknown"
                 
                 # Use port description as-is
                 item = widgets.QListWidgetItem(self.listview)
                 itemname = f"{port}[{desc}]"
                 item.setText(itemname)
-                self.ports[itemname] = (port, desc, hwid)
+                self.ports[itemname] = (port, desc, hwid, status)
+                
+                # Set color based on status (optimized for dark theme)
+                if status == "online":
+                    item.setBackground(gui.QColor(50, 150, 50))  # Dark green background
+                elif status == "offline":
+                    item.setBackground(gui.QColor(150, 50, 50))  # Dark red background
+                else:
+                    item.setBackground(gui.QColor(100, 100, 100))  # Dark gray background
                 
                 # Highlight potential OBD devices based on description
                 desc_lower = desc.lower()
-                if any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27']):
+                if any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27', 'doip']):
                     font = item.font()
                     font.setBold(True)
                     item.setFont(font)
-                    item.setBackground(gui.QColor(200, 255, 200))  # Light green background
                     
             # Auto-select first OBD device if available
             if self.listview.count() > 0 and not self.listview.currentItem():
@@ -2186,8 +2197,9 @@ class main_window_options(widgets.QDialog):
             currentitem = self.listview.currentItem()
             if currentitem:
                 portinfo = currentitem.text()
-                self.port = self.ports[portinfo][0]
-                options.port_name = self.ports[portinfo][1]
+                port_data = self.ports[portinfo]
+                self.port = port_data[0]
+                options.port_name = port_data[1]
                 self.mode = 1
                 self.raise_port_speed = self.obdlinkspeedcombo.currentText()
                 self.done(True)

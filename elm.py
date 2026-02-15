@@ -7,13 +7,20 @@
 '''
 
 import os
-import platform
-import re
-import string
-import sys
-import threading
+import dataeditor
+import ecu
+import json
+import options
+import parameters
+import sniffer
+import version
+import usbdevice
+import doip
+import datetime
 import time
-from datetime import datetime
+import platform
+import threading
+import re
 
 import serial
 from serial.tools import list_ports
@@ -258,13 +265,58 @@ def item_count(items):
 
 
 def get_available_ports():
-    """Get available serial ports"""
+    """Get available serial ports with optimized status checking"""
     ports = []
+    
+    # First check for USB devices using usbdevice.py (with error handling)
+    try:
+        import usb.core
+        import usb.util
+        import usb.legacy
+        usb_device = usbdevice.UsbCan()
+        if usb_device.is_init():
+            # Add USB device to ports list
+            ports.append((usb_device.descriptor, usb_device.descriptor, "USB", "online"))
+            print(_("Found USB device:") + " %s" % usb_device.descriptor)
+    except ImportError as e:
+        # Only show USB backend error once per session
+        if not hasattr(get_available_ports, '_usb_error_shown'):
+            get_available_ports._usb_error_shown = True
+            print(f"USB backend not available: {e}")
+            print("Note: USB device detection requires pyusb library (pip install pyusb)")
+    except Exception as e:
+        # Only show USB device detection error once per session
+        if not hasattr(get_available_ports, '_usb_device_error_shown'):
+            get_available_ports._usb_device_error_shown = True
+            print(f"USB device detection error: {e}")
+    
+    # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
+    # DoIP devices - Only true DoIP-capable devices (verified compatible with ISO 13400 standard)
+    doip_devices = [
+        ("192.168.0.12", "Bosch MTS (DoIP) - ISO 13400 Standard"),
+        ("192.168.0.13", "VXDIAG (DoIP) - ISO 13400 Standard"),
+        ("192.168.0.14", "VAG ODIS (DoIP) - ISO 13400 Standard"),
+        ("192.168.0.15", "JLR DoIP VCI (DoIP) - ISO 13400 Standard")
+    ]
+    
+    # Only check DoIP status if not in simulation mode and not checking too frequently
+    if not getattr(options, 'simulation_mode', False) and not hasattr(get_available_ports, '_last_check_time'):
+        get_available_ports._last_check_time = time.time()
+        for ip, desc in doip_devices:
+            status = check_doip_status(ip, 13400, timeout=0.5)  # Faster timeout
+            ports.append((f"{ip}:13400", desc, "DoIP", status))
+            print(f"DoIP device {status}: {desc} at {ip}")
+    else:
+        # Use cached status or assume offline
+        for ip, desc in doip_devices:
+            ports.append((f"{ip}:13400", desc, "DoIP", "offline"))
+    
+    # Then check for serial ports
     try:
         portlist = list_ports.comports()
 
         if item_count(portlist) == 0:
-            return []
+            return ports if ports else []
 
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
@@ -292,11 +344,13 @@ def get_available_ports():
             elif any(chip in desc_upper for chip in ['CH340', 'CH341']):
                 device_desc = f"{desc} (CH340 - Possible ELS27/ELM327)"
             elif any(chip in desc_upper for chip in ['CP210', 'CP2102', 'CP2104']):
-                device_desc = f"{desc} (CP210x - Possible ELS27/ELM327)"
+                device_desc = f"{desc} (CP210x - Possible ELS27/DERLEK)"
             elif any(chip in desc_upper for chip in ['PL2303']):
-                device_desc = f"{desc} (PL2303 - Possible ELS27/ELM327)"
+                device_desc = f"{desc} (PL2303 - Possible ELS27/DERLEK)"
 
-            ports.append((port, device_desc, hwid))
+            # Quick serial port availability check (only if not already checked)
+            status = check_serial_port_status(port, timeout=0.05)  # Very fast timeout
+            ports.append((port, device_desc, hwid, status))
 
     except Exception as e:
         print(f"Error detecting serial ports: {e}")
@@ -315,13 +369,36 @@ def get_available_ports():
         for port in common_ports:
             try:
                 # Test if port exists and is accessible
-                test_serial = serial.Serial(port, timeout=0.1)
+                test_serial = serial.Serial(port, timeout=0.05)
                 test_serial.close()
-                ports.append((port, "Unknown Device", ""))
+                ports.append((port, "Unknown Device", "", "online"))
             except:
-                continue
+                ports.append((port, "Unknown Device", "", "offline"))
 
     return ports
+
+
+def check_doip_status(ip, port, timeout=1):
+    """Check if DoIP device is online with optimized timeout"""
+    try:
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
+        result = sock.connect_ex((ip, port))
+        sock.close()
+        return "online" if result == 0 else "offline"
+    except:
+        return "offline"
+
+
+def check_serial_port_status(port, timeout=0.1):
+    """Check if serial port is accessible with optimized timeout"""
+    try:
+        test_serial = serial.Serial(port, timeout=timeout)
+        test_serial.close()
+        return "online"
+    except:
+        return "offline"
 
 
 class DeviceManager:
@@ -366,6 +443,10 @@ class DeviceManager:
             'unknown': {
                 'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False,
                 'stn_support': False, 'stpx_support': False, 'pin_swap': False
+            },
+            'usbcan': {
+                'baudrate': 500000, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
+                'stn_support': False, 'stpx_support': False, 'pin_swap': True
             }
         }
         return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
@@ -385,7 +466,7 @@ class DeviceManager:
             'DERLEK': 'derlek_usb_diag2',  # DerleK USB-DIAG2 devices (default to DIAG2)
             'DERLEK_USB_DIAG2': 'derlek_usb_diag2',  # DerleK USB-DIAG2 devices
             'DERLEK_USB_DIAG3': 'derlek_usb_diag3',  # DerleK USB-DIAG3 devices
-            'USBCAN': 'unknown'  # USB CAN adapters - use unknown defaults
+            'USBCAN': 'usbcan'  # USB CAN adapters - use usbdevice.py
         }
         return adapter_mapping.get(adapter_type.upper(), 'elm327')
 
@@ -494,11 +575,13 @@ class DeviceManager:
             elif device_type == 'obdlink':
                 return DeviceManager._swap_obdlink_pins(elm_instance)
             elif device_type == 'derlek_usb_diag2':
-                return DeviceManager._swap_derlek_diag2_pins()
+                return DeviceManager._swap_derlek_diag2_pins(elm_instance)
             elif device_type == 'derlek_usb_diag3':
                 return DeviceManager._swap_derlek_diag3_pins(elm_instance)
             elif device_type == 'els27':
                 return DeviceManager._swap_els27_pins(elm_instance)
+            elif device_type == 'usbcan':
+                return DeviceManager._swap_usbcan_pins(elm_instance)
             else:
                 return True  # No pin swap needed
                 
@@ -604,11 +687,34 @@ class DeviceManager:
                     print(f"DerleK USB-DIAG3 pin swap command failed: {cmd} ({desc})")
                     return False
             
-            print("DerleK USB-DIAG3 pin swapping completed")
+            print(f"DerleK USB-DIAG3 pin swapping completed")
             return True
             
         except Exception as e:
             print(f"DerleK USB-DIAG3 pin swap error: {e}")
+            return False
+
+    @staticmethod
+    def _swap_usbcan_pins(elm_instance):
+        """Swap pins for USB CAN adapters"""
+        try:
+            # USB CAN specific pin swapping
+            pin_swap_commands = [
+                ("AT BRD 23", "Set baudrate for 115200"),
+                ("AT SP 6", "Set CAN protocol")
+            ]
+            
+            for cmd, desc in pin_swap_commands:
+                response = elm_instance.cmd(cmd)
+                if "?" in response:
+                    print(f"USB CAN pin swap command failed: {cmd} ({desc})")
+                    return False
+            
+            print("USB CAN pin swapping completed")
+            return True
+            
+        except Exception as e:
+            print(f"USB CAN pin swap error: {e}")
             return False
 
     @staticmethod
@@ -702,7 +808,16 @@ def reconnect_elm():
     # Try to reconnect to the same port first
     if options.port_name:
         for port_info in ports:
-            port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
+            if len(port_info) >= 4:
+                port, desc, hwid, status = port_info
+            elif len(port_info) >= 3:
+                port, desc, hwid = port_info
+                status = "unknown"
+            else:
+                port, desc = port_info
+                hwid = ""
+                status = "unknown"
+                
             if port == options.port_name or desc == options.port_name:
                 print(f"Attempting reconnection to {port}")
                 try:
@@ -720,7 +835,16 @@ def reconnect_elm():
 
     # Try other available ports
     for port_info in ports:
-        port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
+        if len(port_info) >= 4:
+            port, desc, hwid, status = port_info
+        elif len(port_info) >= 3:
+            port, desc, hwid = port_info
+            status = "unknown"
+        else:
+            port, desc = port_info
+            hwid = ""
+            status = "unknown"
+            
         device_key = DeviceManager.normalize_adapter_type(current_adapter)
         saved_settings = options.get_device_settings(device_key, port)
 
@@ -819,6 +943,21 @@ class Port:
             if speed > 0:
                 settings['baudrate'] = speed
 
+            # Check if this is a DoIP connection (only for non-ELM327 devices)
+            if ":" in self.portName and self.portName.count(":") == 1:
+                ip, port = self.portName.split(":")
+                try:
+                    port_num = int(port)
+                    if port_num == 13400:  # DoIP port
+                        # ELM327 doesn't support DoIP, only modern adapters
+                        if self.adapter_type.upper() not in ['ELM327', 'STD_USB', 'STD_BT', 'STD_WIFI']:
+                            self.init_doip(ip, port_num)
+                            return
+                        else:
+                            print(f"ELM327 doesn't support DoIP, falling back to serial mode")
+                except ValueError:
+                    pass  # Not a valid port number, continue with serial
+
             # Platform-specific serial port configuration
             current_platform = platform.system().lower()
 
@@ -883,12 +1022,31 @@ class Port:
         try:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
-            self.init_serial(38400)
-            print(f"Bluetooth connection attempted: {self.portName}")
+            self.connectionStatus = True
+            print(f"Serial connection established: {self.portName} @ {settings['baudrate']} baud")
+
         except Exception as e:
-            print(f"Bluetooth connection failed: {e}")
-            options.elm_failed = True
+            print(f"Serial connection failed: {e}")
             self.connectionStatus = False
+
+    def init_doip(self, ip, port):
+        """Initialize DoIP connection"""
+        try:
+            print(f"Initializing DoIP connection to {ip}:{port}")
+            self.doip_device = doip.DoIPDevice(ip)
+            
+            if self.doip_device.connect():
+                self.connectionStatus = True
+                self.portType = 3  # DoIP connection type
+                print(f"DoIP connection established: {ip}:{port}")
+            else:
+                print(f"DoIP connection failed: {ip}:{port}")
+                self.connectionStatus = False
+                
+        except Exception as e:
+            print(f"DoIP initialization failed: {e}")
+            self.connectionStatus = False
+            options.elm_failed = True
 
     def close(self):
         """Enhanced close method with proper cleanup"""

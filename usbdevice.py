@@ -71,6 +71,14 @@ class UsbCan:
             # Vlinker USB variants
             (0x1a86, 0x7584, "Vlinker USB CAN"),
             (0x0403, 0x6010, "Vlinker FTDI USB"),
+            # DERLEK USB-DIAG adapters
+            (0x0483, 0x5740, "DERLEK USB-DIAG2"),
+            (0x0483, 0x5741, "DERLEK USB-DIAG3"),
+            # Bosch MTS adapters (RNM Manager compatible)
+            (0x108c, 0x0156, "Bosch MTS 6531"),
+            (0x108c, 0x0157, "Bosch MTS 6532"),
+            (0x108c, 0x0158, "Bosch MTS 6533"),
+            (0x108c, 0x0159, "Bosch MTS 6534"),
         ]
         
         for vid, pid, desc in usb_adapters:
@@ -91,6 +99,16 @@ class UsbCan:
                     elif "OBDLINK" in descriptor_str.upper():
                         self.device_type = "obdlink"
                         device_name = "ObdLink"
+                    elif "DERLEK" in descriptor_str.upper() or "DIAG" in descriptor_str.upper():
+                        if "DIAG3" in descriptor_str.upper():
+                            self.device_type = "derlek_usb_diag3"
+                            device_name = "DERLEK USB-DIAG3"
+                        else:
+                            self.device_type = "derlek_usb_diag2"
+                            device_name = "DERLEK USB-DIAG2"
+                    elif "BOSCH" in descriptor_str.upper() or "MTS" in descriptor_str.upper():
+                        self.device_type = "bosch_mts"
+                        device_name = "Bosch MTS"
                     elif "ELM327" in descriptor_str.upper():
                         self.device_type = "elm327"
                         device_name = "ELM327"
@@ -104,17 +122,27 @@ class UsbCan:
                 except:
                     # If we can't get descriptor, determine type from VID/PID and description
                     if "ELS27" in desc or "ELM327" in desc:
-                        self.device_type = "els27"
-                        device_name = "ELS27 V5"
-                    elif "VGate" in desc:
+                        self.device_type = "elm327"
+                        device_name = "ELM327"
+                    elif "VGATE" in desc:
                         self.device_type = "vgate"
                         device_name = "VGate"
                     elif "Vlinker" in desc:
                         self.device_type = "vlinker" 
                         device_name = "Vlinker"
-                    elif "ObdLink" in desc:
+                    elif "OBDLINK" in desc:
                         self.device_type = "obdlink"
                         device_name = "ObdLink"
+                    elif "DERLEK" in desc or "DIAG" in desc:
+                        if "DIAG3" in desc:
+                            self.device_type = "derlek_usb_diag3"
+                            device_name = "DERLEK USB-DIAG3"
+                        else:
+                            self.device_type = "derlek_usb_diag2"
+                            device_name = "DERLEK USB-DIAG2"
+                    elif "BOSCH" in desc or "MTS" in desc:
+                        self.device_type = "bosch_mts"
+                        device_name = "Bosch MTS"
                     else:
                         self.device_type = "usbcan"
                         device_name = "USB CAN"
