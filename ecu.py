@@ -1984,65 +1984,9 @@ class Ecu_scanner:
                     soft = can_response[18:26].replace(' ', '')
                     version = can_response[27:35].replace(' ', '')
                     targetNum = 0
+                    self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
                 except:
                     return  # Changed from continue to return since we're not in a loop
-
-                for target in self.ecu_database.targets:
-                    if target.protocol == "CAN" and protocol != "CAN":
-                        continue
-                    elif target.protocol == "KWP" and protocol != "KWP":
-                        continue
-                    elif target.protocol == "DoIP" and protocol != "DoIP":
-                        continue
-                    elif target.protocol == "FlexRay" and protocol != "FlexRay":
-                        continue
-                    elif target.protocol == "Ethernet" and protocol != "Ethernet":
-                        continue
-                    # Shouldn't happen, but...
-                    if target.protocol.startswith("ISO8"):
-                        ecu_protocol = "KWP"
-                        if protocol != "KWP":
-                            continue
-                    else:
-                        ecu_protocol = target.protocol
-
-                if target.checkApproximate(diagversion, supplier, soft, addr):
-                    approximate_ecu.append(target)
-                    found_approximate = True
-                else:
-                    # If version contains ASCII characters, I can do nothing for you...
-                    try:
-                        int_version = int('0x' + version, 16)
-                        int_tgt_version = int('0x' + target.version, 16)
-                    except ValueError:
-                        return  # Changed from continue to return since we're not in a loop
-                    if delta < min_delta_version:
-                        min_delta_version = delta
-                        kept_ecu = tgt
-
-            if kept_ecu:
-                self.approximate_ecus[kept_ecu.name] = kept_ecu
-                self.num_ecu_found += 1
-                if label is not None:
-                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
-
-                text = _("Found ECU")
-                text1 = _("(not perfect match)")
-                # accessbbitity blue color for reason in window bad reader
-                line = f"<font color='blue'>{text} {ecu_type} {text1} :" \
-                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
-                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
-
-                options.main_window.logview.append(line)
-
-        if not found_exact and not found_approximate:
-            text = _("Found ECU")
-            text1 = _("(no relevant ECU file found)")
-            line = f"<font color='red'>{text} {ecu_type} {text1} :" \
-                   "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                   % (diagversion, supplier, soft, version)
-
-            options.main_window.logview.append(line)
 
     def scan_doip(self, progress=None, label=None, vehiclefilter=None):
         """Scan for DoIP ECUs using ISO 13400 protocol"""
