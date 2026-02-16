@@ -1510,40 +1510,6 @@ def set_theme_style(onoff):
     options.configuration["dark"] = options.dark_mode
     options.save_config()
 
-
-def set_language_realtime(language_name):
-    """Change language in real-time without restart"""
-    global _
-    
-    if language_name in options.lang_list:
-        lang_code = options.lang_list[language_name]
-        
-        # Update environment and configuration
-        os.environ['LANG'] = lang_code
-        options.configuration["lang"] = lang_code
-        options.save_config()
-        
-        # Reload translator
-        try:
-            t = gettext.translation('ddt4all', 'ddt4all_data/locale', languages=[lang_code], fallback=True)
-            _ = t.gettext
-            
-            # Update main window if it exists
-            if hasattr(options, 'main_window') and options.main_window:
-                main_window = options.main_window
-                # Update menu bar
-                main_window.updateMenuBar()
-                # Update status bar using the widget directly
-                if hasattr(main_window, 'statusbar_widget') and main_window.statusbar_widget:
-                    main_window.statusbar_widget.showMessage(_("Language changed to") + " " + language_name, 3000)
-            
-            print(f"Language changed to {language_name} ({lang_code})")
-            return True
-        except Exception as e:
-            print(f"Error changing language: {e}")
-            return False
-    return False
-
 def set_socket_timeout(onoff):
     if (onoff):
         options.socket_timeout = True
@@ -1889,9 +1855,29 @@ class main_window_options(widgets.QDialog):
 
     def change_language_realtime(self, language_name):
         """Handle real-time language change from combo box"""
-        set_language_realtime(language_name)
-        # Language change is now real-time, no message box needed
-
+        # Get the language code from the selected language name
+        if language_name in options.lang_list:
+            lang_code = options.lang_list[language_name]
+            
+            # Update configuration
+            options.configuration["lang"] = lang_code
+            
+            # Update environment variable
+            os.environ['LANG'] = lang_code
+            
+            # Save configuration
+            options.save_config()
+            
+            # Reinitialize the global translator with new language
+            global _
+            _ = options.translator('ddt4all')
+            
+            # Close current window and return to main flow
+            # This will allow the main application to recreate everything with new language
+            self.mode = 0  # Set mode to 0 to trigger restart in main loop
+            self.done(True)
+            exit(0)
+            
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
         self.elmchk.setEnabled(False)
@@ -2584,7 +2570,6 @@ class main_window_options(widgets.QDialog):
         options.report_data = False
         options.simulation_mode = True
         self.done(True)
-
 
 if __name__ == '__main__':
     # For InnoSetup version.h auto generator
