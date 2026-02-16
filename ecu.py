@@ -1935,6 +1935,21 @@ class Ecu_scanner:
 
 
     def check_ecu(self, can_response, label, addr, protocol):
+        kept_ecu = None
+        min_delta_version = float('inf')
+        found_exact = False
+        found_approximate = False
+        approximate_ecu = []
+        diagversion = ""
+        supplier = ""
+        soft = ""
+        version = ""
+                    
+        if addr in self.ecu_database.addr_group_mapping:
+            ecu_type = self.ecu_database.addr_group_mapping[addr]
+        else:
+            ecu_type = "UNKNOWN"
+
         if len(can_response) > 59:
             diagversion = str(int(can_response[21:23], 16))
             supplier = bytes.fromhex(can_response[24:32].replace(' ', '')).decode('utf-8')
@@ -1961,7 +1976,7 @@ class Ecu_scanner:
             else:
                 print(f"DoIP ECU at {addr} responded with minimal data: {can_response}")
         else:
-            # Handle other protocols (CAN, KWP)
+            # Handle other protocols (CAN, KWP)                
             if len(can_response) > 20:
                 try:
                     diagversion = str(int(can_response[6:8], 16))
@@ -1971,12 +1986,6 @@ class Ecu_scanner:
                     targetNum = 0
                 except:
                     return  # Changed from continue to return since we're not in a loop
-
-                min_delta_version = float('inf')
-                kept_ecu = None
-                found_exact = False
-                found_approximate = False
-                approximate_ecu = []
 
                 for target in self.ecu_database.targets:
                     if target.protocol == "CAN" and protocol != "CAN":
