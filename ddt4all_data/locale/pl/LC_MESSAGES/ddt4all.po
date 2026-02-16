@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-15 18:07+0100\n"
-"PO-Revision-Date: 2026-02-15 18:41+0100\n"
+"POT-Creation-Date: 2026-02-15 22:35+0100\n"
+"PO-Revision-Date: 2026-02-15 23:00+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -343,6 +343,11 @@ msgstr "(nie dokładne dopasowanie)"
 
 msgid "(no relevant ECU file found)"
 msgstr "(nie znaleziono odpowiedniego pliku ECU)"
+
+#, fuzzy
+#| msgid "Found USB adapter:"
+msgid "Found USB device:"
+msgstr "Znaleziono adapter USB:"
 
 msgid "Using saved settings for"
 msgstr ""
@@ -949,6 +954,9 @@ msgstr ""
 msgid "Vlinker FS/MC"
 msgstr ""
 
+msgid "DERLEK USB-DIAG2/3"
+msgstr ""
+
 msgid "VGate (High-Speed)"
 msgstr ""
 
@@ -1054,6 +1062,9 @@ msgid "1000000"
 msgstr ""
 
 msgid "2000000"
+msgstr ""
+
+msgid "38400"
 msgstr ""
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
