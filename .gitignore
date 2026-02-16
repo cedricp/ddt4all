@@ -1,5 +1,5 @@
 ### ddt4all specific
-/ecus/
+#/ecus/
 /logs/
 /btpDB/
 /checkBaseDDT/

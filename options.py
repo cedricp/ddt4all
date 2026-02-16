@@ -31,6 +31,14 @@ cantimeout = 0
 refreshrate = 5
 mode_edit = False
 safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
+
+# DoIP Configuration
+doip_target_ip = "192.168.0.12"
+doip_target_port = 13400
+doip_timeout = 5
+doip_vehicle_announcement = True
+doip_auto_reconnect = False
+doip_preset = "Custom"
 configuration = {
     "lang": None,
     "dark": False,
@@ -42,7 +50,13 @@ configuration = {
     "max_reconnect_attempts": 3,
     "preferred_device_order": ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"],
     "enable_device_validation": True,
-    "carlist_sort_mode": "code"
+    "carlist_sort_mode": "code",
+    "doip_target_ip": "192.168.0.12",
+    "doip_target_port": 13400,
+    "doip_timeout": 5,
+    "doip_vehicle_announcement": True,
+    "doip_auto_reconnect": False,
+    "doip_preset": "Custom"
 }
 lang_list = {
     "English": "en_US",
@@ -104,6 +118,22 @@ def load_configuration():
                                                            ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
         configuration["enable_device_validation"] = config.get("enable_device_validation", True)
         configuration["carlist_sort_mode"] = config.get("carlist_sort_mode", "code")
+        
+        # Load DoIP configuration
+        global doip_target_ip, doip_target_port, doip_timeout, doip_vehicle_announcement, doip_auto_reconnect, doip_preset
+        doip_target_ip = config.get("doip_target_ip", "192.168.0.12")
+        doip_target_port = config.get("doip_target_port", 13400)
+        doip_timeout = config.get("doip_timeout", 5)
+        doip_vehicle_announcement = config.get("doip_vehicle_announcement", True)
+        doip_auto_reconnect = config.get("doip_auto_reconnect", False)
+        doip_preset = config.get("doip_preset", "Custom")
+        
+        configuration["doip_target_ip"] = doip_target_ip
+        configuration["doip_target_port"] = doip_target_port
+        configuration["doip_timeout"] = doip_timeout
+        configuration["doip_vehicle_announcement"] = doip_vehicle_announcement
+        configuration["doip_auto_reconnect"] = doip_auto_reconnect
+        configuration["doip_preset"] = doip_preset
         
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
