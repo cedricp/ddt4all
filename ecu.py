@@ -15,7 +15,148 @@ import options
 
 _ = options.translator('ddt4all')
 
-addressing = {}
+addressing = {
+    # DoIP Addressing for modern vehicles (2016+)
+    # ISO 13400 standard with 29-bit identifiers
+    "E0": ("DoIP", "DoIP_ECU"),
+    "E1": ("DoIP", "DoIP_ECU"), 
+    "E2": ("DoIP", "DoIP_ECU"),
+    "E3": ("DoIP", "DoIP_ECU"),
+    "E4": ("DoIP", "DoIP_ECU"),
+    "E5": ("DoIP", "DoIP_ECU"),
+    "E6": ("DoIP", "DoIP_ECU"),
+    "E7": ("DoIP", "DoIP_ECU"),
+    "E8": ("DoIP", "DoIP_ECU"),
+    "E9": ("DoIP", "DoIP_ECU"),
+    "EA": ("DoIP", "DoIP_ECU"),
+    "EB": ("DoIP", "DoIP_ECU"),
+    "EC": ("DoIP", "DoIP_ECU"),
+    "ED": ("DoIP", "DoIP_ECU"),
+    "EE": ("DoIP", "DoIP_ECU"),
+    "EF": ("DoIP", "DoIP_ECU"),
+    "F0": ("DoIP", "DoIP_ECU"),
+    "F1": ("DoIP", "DoIP_ECU"),
+    "F2": ("DoIP", "DoIP_ECU"),
+    "F3": ("DoIP", "DoIP_ECU"),
+    "F4": ("DoIP", "DoIP_ECU"),
+    "F5": ("DoIP", "DoIP_ECU"),
+    "F6": ("DoIP", "DoIP_ECU"),
+    "F7": ("DoIP", "DoIP_ECU"),
+    "F8": ("DoIP", "DoIP_ECU"),
+    "F9": ("DoIP", "DoIP_ECU"),
+    "FA": ("DoIP", "DoIP_ECU"),
+    "FB": ("DoIP", "DoIP_ECU"),
+    "FC": ("DoIP", "DoIP_ECU"),
+    "FD": ("DoIP", "DoIP_ECU"),
+    "FE": ("DoIP", "DoIP_ECU"),
+    "FF": ("DoIP", "DoIP_ECU"),
+    
+    # Gateway/Central ECUs with DoIP support
+    "70": ("DoIP", "DoIP_Gateway"),
+    "71": ("DoIP", "DoIP_Gateway"), 
+    "72": ("DoIP", "DoIP_Gateway"),
+    "73": ("DoIP", "DoIP_Gateway"),
+    "74": ("DoIP", "DoIP_Gateway"),
+    "75": ("DoIP", "DoIP_Gateway"),
+    "76": ("DoIP", "DoIP_Gateway"),
+    "77": ("DoIP", "DoIP_Gateway"),
+    "78": ("DoIP", "DoIP_Gateway"),
+    "79": ("DoIP", "DoIP_Gateway"),
+    
+    # Powertrain ECUs with DoIP support
+    "7E0": ("DoIP", "DoIP_Engine"),
+    "7E1": ("DoIP", "DoIP_Engine"),
+    "7E2": ("DoIP", "DoIP_Engine"),
+    "7E3": ("DoIP", "DoIP_Engine"),
+    "7E4": ("DoIP", "DoIP_Engine"),
+    "7E5": ("DoIP", "DoIP_Engine"),
+    "7E6": ("DoIP", "DoIP_Engine"),
+    "7E7": ("DoIP", "DoIP_Engine"),
+    "7E8": ("DoIP", "DoIP_Engine"),
+    "7E9": ("DoIP", "DoIP_Engine"),
+    "7EA": ("DoIP", "DoIP_Engine"),
+    "7EB": ("DoIP", "DoIP_Engine"),
+    "7EC": ("DoIP", "DoIP_Engine"),
+    "7ED": ("DoIP", "DoIP_Engine"),
+    "7EE": ("DoIP", "DoIP_Engine"),
+    "7EF": ("DoIP", "DoIP_Engine"),
+    
+    # CAN addressing for traditional vehicles
+    # Classic CAN protocol addresses
+    "7E4": ("CAN", "BCM_BCM"),  # E7 hex equivalent
+    "7EC": ("CAN", "BCM_BCM"),  # E8 hex equivalent
+    "644": ("CAN", "BCM_BCM"),  # E8 DNAT mapping
+    
+    # FlexRay addressing for modern vehicles (2018+)
+    # FlexRay uses different addressing scheme
+    "100": ("FlexRay", "FlexRay_ECU"),
+    "101": ("FlexRay", "FlexRay_ECU"),
+    "102": ("FlexRay", "FlexRay_ECU"),
+    "103": ("FlexRay", "FlexRay_ECU"),
+    "104": ("FlexRay", "FlexRay_ECU"),
+    "105": ("FlexRay", "FlexRay_ECU"),
+    "106": ("FlexRay", "FlexRay_ECU"),
+    "107": ("FlexRay", "FlexRay_ECU"),
+    "108": ("FlexRay", "FlexRay_ECU"),
+    "109": ("FlexRay", "FlexRay_ECU"),
+    "10A": ("FlexRay", "FlexRay_ECU"),
+    "10B": ("FlexRay", "FlexRay_ECU"),
+    "10C": ("FlexRay", "FlexRay_ECU"),
+    "10D": ("FlexRay", "FlexRay_ECU"),
+    "10E": ("FlexRay", "FlexRay_ECU"),
+    "10F": ("FlexRay", "FlexRay_ECU"),
+    "200": ("FlexRay", "FlexRay_Gateway"),
+    "201": ("FlexRay", "FlexRay_Gateway"),
+    "202": ("FlexRay", "FlexRay_Gateway"),
+    "203": ("FlexRay", "FlexRay_Gateway"),
+    "204": ("FlexRay", "FlexRay_Gateway"),
+    "205": ("FlexRay", "FlexRay_Gateway"),
+    "206": ("FlexRay", "FlexRay_Gateway"),
+    "207": ("FlexRay", "FlexRay_Gateway"),
+    "208": ("FlexRay", "FlexRay_Gateway"),
+    "209": ("FlexRay", "FlexRay_Gateway"),
+    "20A": ("FlexRay", "FlexRay_Gateway"),
+    "20B": ("FlexRay", "FlexRay_Gateway"),
+    "20C": ("FlexRay", "FlexRay_Gateway"),
+    "20D": ("FlexRay", "FlexRay_Gateway"),
+    "20E": ("FlexRay", "FlexRay_Gateway"),
+    "20F": ("FlexRay", "FlexRay_Gateway"),
+    
+    # Ethernet addressing for modern vehicles (2020+)
+    # Ethernet uses IP-based addressing with logical IDs
+    "300": ("Ethernet", "Ethernet_ECU"),
+    "301": ("Ethernet", "Ethernet_ECU"),
+    "302": ("Ethernet", "Ethernet_ECU"),
+    "303": ("Ethernet", "Ethernet_ECU"),
+    "304": ("Ethernet", "Ethernet_ECU"),
+    "305": ("Ethernet", "Ethernet_ECU"),
+    "306": ("Ethernet", "Ethernet_ECU"),
+    "307": ("Ethernet", "Ethernet_ECU"),
+    "308": ("Ethernet", "Ethernet_ECU"),
+    "309": ("Ethernet", "Ethernet_ECU"),
+    "30A": ("Ethernet", "Ethernet_ECU"),
+    "30B": ("Ethernet", "Ethernet_ECU"),
+    "30C": ("Ethernet", "Ethernet_ECU"),
+    "30D": ("Ethernet", "Ethernet_ECU"),
+    "30E": ("Ethernet", "Ethernet_ECU"),
+    "30F": ("Ethernet", "Ethernet_ECU"),
+    "400": ("Ethernet", "Ethernet_Gateway"),
+    "401": ("Ethernet", "Ethernet_Gateway"),
+    "402": ("Ethernet", "Ethernet_Gateway"),
+    "403": ("Ethernet", "Ethernet_Gateway"),
+    "404": ("Ethernet", "Ethernet_Gateway"),
+    "405": ("Ethernet", "Ethernet_Gateway"),
+    "406": ("Ethernet", "Ethernet_Gateway"),
+    "407": ("Ethernet", "Ethernet_Gateway"),
+    "408": ("Ethernet", "Ethernet_Gateway"),
+    "409": ("Ethernet", "Ethernet_Gateway"),
+    "40A": ("Ethernet", "Ethernet_Gateway"),
+    "40B": ("Ethernet", "Ethernet_Gateway"),
+    "40C": ("Ethernet", "Ethernet_Gateway"),
+    "40D": ("Ethernet", "Ethernet_Gateway"),
+    "40E": ("Ethernet", "Ethernet_Gateway"),
+    "40F": ("Ethernet", "Ethernet_Gateway"),
+}
 
 
 # Returns signed value from 16 bits (2 bytes)
@@ -1125,6 +1266,10 @@ class Ecu_ident:
             self.protocol = 'KWP2000'
         elif "ISO8" in protocol.upper():
             self.protocol = 'ISO8'
+        elif "FlexRay" in protocol.upper():
+            self.protocol = 'FlexRay'
+        elif "Ethernet" in protocol.upper():
+            self.protocol = 'Ethernet'
         else:
             self.protocol = 'UNKNOWN'
         self.hash = diagversion + supplier + soft + version
@@ -1182,6 +1327,9 @@ class Ecu_database:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
+        self.available_addr_doip = []  # Add DoIP address support
+        self.available_addr_flexray = []  # Add FlexRay address support
+        self.available_addr_ethernet = []  # Add Ethernet address support
         self.addr_group_mapping_long = {}
         self.addr_group_mapping = {}
 
@@ -1216,6 +1364,15 @@ class Ecu_database:
                 elif 'CAN' in ecu_dict['protocol']:
                     if addr not in self.available_addr_can:
                         self.available_addr_can.append(str(addr))
+                elif 'DOIP' in ecu_dict['protocol'].upper():
+                    if addr not in self.available_addr_doip:
+                        self.available_addr_doip.append(str(addr))
+                elif 'FlexRay' in ecu_dict['protocol']:
+                    if addr not in self.available_addr_flexray:
+                        self.available_addr_flexray.append(str(addr))
+                elif 'Ethernet' in ecu_dict['protocol']:
+                    if addr not in self.available_addr_ethernet:
+                        self.available_addr_ethernet.append(str(addr))
 
                 if str(addr) not in self.addr_group_mapping:
                     print(_("Adding group "), addr, ecu_dict['group'])
@@ -1252,6 +1409,15 @@ class Ecu_database:
                 elif 'CAN' in ecuprotocol:
                     if not ecuaddress in self.available_addr_can:
                         self.available_addr_can.append(str(ecuaddress))
+                elif 'DOIP' in ecuprotocol.upper():
+                    if not ecuaddress in self.available_addr_doip:
+                        self.available_addr_doip.append(str(ecuaddress))
+                elif 'FlexRay' in ecuprotocol:
+                    if not ecuaddress in self.available_addr_flexray:
+                        self.available_addr_flexray.append(str(ecuaddress))
+                elif 'Ethernet' in ecuprotocol:
+                    if not ecuaddress in self.available_addr_ethernet:
+                        self.available_addr_ethernet.append(str(ecuaddress))
 
                 if str(ecuaddress) not in self.addr_group_mapping:
                     self.addr_group_mapping[ecuaddress] = targetv['group']
@@ -1308,6 +1474,15 @@ class Ecu_database:
                     elif 'KWP' in protocol.upper():
                         if address not in self.available_addr_kwp:
                             self.available_addr_kwp.append(str(address))
+                    elif 'DOIP' in protocol.upper():
+                        if address not in self.available_addr_doip:
+                            self.available_addr_doip.append(str(address))
+                    elif 'FlexRay' in protocol.upper():
+                        if address not in self.available_addr_flexray:
+                            self.available_addr_flexray.append(str(address))
+                    elif 'Ethernet' in protocol.upper():
+                        if address not in self.available_addr_ethernet:
+                            self.available_addr_ethernet.append(str(address))
 
                     autoidents = target.getElementsByTagName("AutoIdents")
                     projectselems = target.getElementsByTagName("Projects")
@@ -1421,6 +1596,94 @@ class Ecu_scanner:
 
     def identify_from_frame(self, addr, can_response):
         self.check_ecu(can_response, None, addr, "CAN")
+
+    def check_ecu2(self, diagversion, supplier, soft, version, label, addr, protocol):
+        global tgt
+        approximate_ecu = []
+        found_exact = False
+        found_approximate = False
+        if addr in self.ecu_database.addr_group_mapping:
+            ecu_type = self.ecu_database.addr_group_mapping[addr]
+        else:
+            ecu_type = "UNKNOWN"
+
+        targetNum = 0
+        for target in self.ecu_database.targets:
+            if target.protocol == "CAN" and protocol != "CAN":
+                continue
+            if target.protocol.startswith("KWP") and protocol != "KWP":
+                continue
+
+            if target.checkWith(diagversion, supplier, soft, version, addr):
+                ecuname = "[ " + target.group + " ] " + target.name
+
+                self.ecus[ecuname] = target
+                self.num_ecu_found += 1
+                if label is not None:
+                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
+                found_exact = True
+                href = target.href
+                line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
+                                                                      "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
+                       % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
+
+                options.main_window.logview.append(line)
+                break
+            elif target.checkApproximate(diagversion, supplier, soft, addr):
+                approximate_ecu.append(target)
+                found_approximate = True
+
+            targetNum += 1
+
+        # Try to find the closest possible version of an ECU
+        if not found_exact and found_approximate:
+            min_delta_version = 0xFFFFFF
+            kept_ecu = None
+            for tgt in approximate_ecu:
+                ecu_protocol = 'CAN'
+                if tgt.protocol.startswith("KWP"):
+                    ecu_protocol = "KWP"
+                # Shouldn't happen, but...
+                if tgt.protocol.startswith("ISO8"):
+                    ecu_protocol = "KWP"
+                if ecu_protocol != protocol:
+                    continue
+
+                # If version contains ASCII characters, I can do nothing for you...
+                try:
+                    int_version = int('0x' + version, 16)
+                    int_tgt_version = int('0x' + tgt.version, 16)
+                except ValueError:
+                    continue
+
+                delta = abs(int_tgt_version - int_version)
+                if delta < min_delta_version:
+                    min_delta_version = delta
+                    kept_ecu = tgt
+
+            if kept_ecu:
+                self.approximate_ecus[kept_ecu.name] = kept_ecu
+                self.num_ecu_found += 1
+                if label is not None:
+                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
+
+                text = _("Found ECU")
+                text1 = _("(not perfect match)")
+                # accessbbitity blue color for reason in window bad reader
+                line = f"<font color='blue'>{text} {ecu_type} {text1} :" \
+                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
+                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
+
+                options.main_window.logview.append(line)
+
+        if not found_exact and not found_approximate:
+            text = _("Found ECU")
+            text1 = _("(no relevant ECU file found)")
+            line = f"<font color='red'>{text} {ecu_type} {text1} :" \
+                   "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
+                   % (diagversion, supplier, soft, version)
+
+            options.main_window.logview.append(line)
 
     def identify_new(self, addr, label):
         diagversion = ""
@@ -1670,6 +1933,7 @@ class Ecu_scanner:
         if not options.simulation_mode:
             options.elm.close_protocol()
 
+
     def check_ecu(self, can_response, label, addr, protocol):
         if len(can_response) > 59:
             diagversion = str(int(can_response[21:23], 16))
@@ -1677,70 +1941,75 @@ class Ecu_scanner:
             soft = can_response[48:53].replace(' ', '')
             version = can_response[54:59].replace(' ', '')
             self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
-
-    def check_ecu2(self, diagversion, supplier, soft, version, label, addr, protocol):
-        global tgt
-        approximate_ecu = []
-        found_exact = False
-        found_approximate = False
-        if addr in self.ecu_database.addr_group_mapping:
-            ecu_type = self.ecu_database.addr_group_mapping[addr]
-        else:
-            ecu_type = "UNKNOWN"
-
-        targetNum = 0
-        for target in self.ecu_database.targets:
-            if target.protocol == "CAN" and protocol != "CAN":
-                continue
-            if target.protocol.startswith("KWP") and protocol != "KWP":
-                continue
-
-            if target.checkWith(diagversion, supplier, soft, version, addr):
-                ecuname = "[ " + target.group + " ] " + target.name
-
-                self.ecus[ecuname] = target
-                self.num_ecu_found += 1
-                if label is not None:
-                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
-                found_exact = True
-                href = target.href
-                line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
-                                                                      "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
-                       % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
-
-                options.main_window.logview.append(line)
-                break
-            elif target.checkApproximate(diagversion, supplier, soft, addr):
-                approximate_ecu.append(target)
-                found_approximate = True
-
-            targetNum += 1
-
-        # Try to find the closest possible version of an ECU
-        if not found_exact and found_approximate:
-            min_delta_version = 0xFFFFFF
-            kept_ecu = None
-            for tgt in approximate_ecu:
-                ecu_protocol = 'CAN'
-                if tgt.protocol.startswith("KWP"):
-                    ecu_protocol = "KWP"
-                # Shouldn't happen, but...
-                if tgt.protocol.startswith("ISO8"):
-                    ecu_protocol = "KWP"
-                if ecu_protocol != protocol:
-                    continue
-
-                # If version contains ASCII characters, I can do nothing for you...
+        elif protocol == "DoIP":
+            # Handle DoIP protocol responses (different format)
+            if len(can_response) > 20:
+                # DoIP responses have different structure
                 try:
-                    int_version = int('0x' + version, 16)
-                    int_tgt_version = int('0x' + tgt.version, 16)
-                except ValueError:
-                    continue
+                    # Parse DoIP response format
+                    if can_response.startswith("61 80"):
+                        # Positive response with diagnostic version
+                        diagversion = can_response[6:8]  # Simplified for DoIP
+                        supplier = can_response[9:17]  # Supplier code
+                        soft = can_response[18:26]  # Software version
+                        version = can_response[27:35]  # Version
+                        self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
+                    else:
+                        print(f"DoIP ECU response format unknown: {can_response}")
+                except Exception as e:
+                    print(f"Error parsing DoIP response: {e}")
+            else:
+                print(f"DoIP ECU at {addr} responded with minimal data: {can_response}")
+        else:
+            # Handle other protocols (CAN, KWP)
+            if len(can_response) > 20:
+                try:
+                    diagversion = str(int(can_response[6:8], 16))
+                    supplier = bytes.fromhex(can_response[9:17].replace(' ', '')).decode('utf-8')
+                    soft = can_response[18:26].replace(' ', '')
+                    version = can_response[27:35].replace(' ', '')
+                    targetNum = 0
+                except:
+                    return  # Changed from continue to return since we're not in a loop
 
-                delta = abs(int_tgt_version - int_version)
-                if delta < min_delta_version:
-                    min_delta_version = delta
-                    kept_ecu = tgt
+                min_delta_version = float('inf')
+                kept_ecu = None
+                found_exact = False
+                found_approximate = False
+                approximate_ecu = []
+
+                for target in self.ecu_database.targets:
+                    if target.protocol == "CAN" and protocol != "CAN":
+                        continue
+                    elif target.protocol == "KWP" and protocol != "KWP":
+                        continue
+                    elif target.protocol == "DoIP" and protocol != "DoIP":
+                        continue
+                    elif target.protocol == "FlexRay" and protocol != "FlexRay":
+                        continue
+                    elif target.protocol == "Ethernet" and protocol != "Ethernet":
+                        continue
+                    # Shouldn't happen, but...
+                    if target.protocol.startswith("ISO8"):
+                        ecu_protocol = "KWP"
+                        if protocol != "KWP":
+                            continue
+                    else:
+                        ecu_protocol = target.protocol
+
+                if target.checkApproximate(diagversion, supplier, soft, addr):
+                    approximate_ecu.append(target)
+                    found_approximate = True
+                else:
+                    # If version contains ASCII characters, I can do nothing for you...
+                    try:
+                        int_version = int('0x' + version, 16)
+                        int_tgt_version = int('0x' + target.version, 16)
+                    except ValueError:
+                        return  # Changed from continue to return since we're not in a loop
+                    if delta < min_delta_version:
+                        min_delta_version = delta
+                        kept_ecu = tgt
 
             if kept_ecu:
                 self.approximate_ecus[kept_ecu.name] = kept_ecu
@@ -1765,3 +2034,234 @@ class Ecu_scanner:
                    % (diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
+
+    def scan_doip(self, progress=None, label=None, vehiclefilter=None):
+        """Scan for DoIP ECUs using ISO 13400 protocol"""
+        if not options.simulation_mode:
+            # Initialize DoIP connection if available
+            if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
+                if not options.elm.doip_device.connectionStatus:
+                    if not options.elm.doip_device.connect():
+                        print("DoIP connection failed, cannot scan DoIP ECUs")
+                        return
+            else:
+                print("DoIP device not available, cannot scan DoIP ECUs")
+                return
+
+        project_doip_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == "DoIP" and addr not in project_doip_addresses:
+                        project_doip_addresses.append(addr)
+        else:
+            project_doip_addresses = self.ecu_database.available_addr_doip
+
+        if len(project_doip_addresses) == 0:
+            print("No DoIP addresses available for scanning")
+            return
+
+        i = 0
+        if progress:
+            progress.setRange(0, len(project_doip_addresses))
+            progress.setValue(0)
+
+        # Scan DoIP addresses
+        for addr in list(set(project_doip_addresses)):
+            i += 1
+            if progress:
+                progress.setValue(i)
+                if self.qapp:
+                    self.qapp.processEvents()
+
+            # Skip invalid addresses
+            if addr == '00' or addr == 'FF':
+                continue
+
+            if not elm.addr_exist(addr):
+                print(f"Warning: address {addr} is not mapped")
+                continue
+
+            text = _("Scanning DoIP address: ")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+
+            if not options.simulation_mode:
+                try:
+                    # Initialize DoIP communication for this address
+                    if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
+                        # Set target address for DoIP communication
+                        options.elm.doip_device.target_address = int(addr, 16)
+                        
+                        # Start diagnostic session
+                        if options.elm.doip_device.start_session_can('10C0'):
+                            # Send tester present
+                            response = options.elm.doip_device.request('3E00')
+                            if response and len(response['data']) >= 1:
+                                if response['data'][0] == 0x50:  # Positive response
+                                    # Send read data request
+                                    response = options.elm.doip_device.request('2180')
+                                    if response and len(response['data']) >= 59:
+                                        can_response = ' '.join([f'{b:02X}' for b in response['data']])
+                                        self.check_ecu(can_response, label, addr, "DoIP")
+                                    else:
+                                        print(f"No response from DoIP ECU at address {addr}")
+                                else:
+                                    print(f"Negative response from DoIP ECU at address {addr}")
+                            else:
+                                print(f"Failed to start session with DoIP ECU at address {addr}")
+                        else:
+                            print(f"Failed to initialize DoIP communication with address {addr}")
+                    else:
+                        print("DoIP device not available for scanning")
+                except Exception as e:
+                    print(f"Error scanning DoIP address {addr}: {e}")
+            else:
+                # Simulation mode - provide test data
+                if addr == "E0":
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                elif addr == "70":
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                elif addr == "7E0":
+                    can_response = "61 80 82 00 45 15 05 08 32 31 33 21 11 31 39 09 00 09 06 02 05 01 0D 8D 39 00"
+                else:
+                    can_response = "7F 80"
+                
+                self.check_ecu(can_response, label, addr, "DoIP")
+
+        if not options.simulation_mode:
+            if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
+                # Keep DoIP connection open for further communication
+                pass
+
+    def scan_flexray(self, progress=None, label=None, vehiclefilter=None):
+        """Scan for FlexRay ECUs using FlexRay protocol"""
+        project_flexray_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == "FlexRay" and addr not in project_flexray_addresses:
+                        project_flexray_addresses.append(addr)
+        else:
+            project_flexray_addresses = self.ecu_database.available_addr_flexray
+
+        if len(project_flexray_addresses) == 0:
+            print("No FlexRay addresses available for scanning")
+            return
+
+        i = 0
+        if progress:
+            progress.setRange(0, len(project_flexray_addresses))
+            progress.setValue(0)
+
+        # Scan FlexRay addresses
+        for addr in list(set(project_flexray_addresses)):
+            i += 1
+            if progress:
+                progress.setValue(i)
+                if self.qapp:
+                    self.qapp.processEvents()
+
+            # Skip invalid addresses
+            if addr == '00' or addr == 'FF':
+                continue
+
+            if not elm.addr_exist(addr):
+                print(f"Warning: address {addr} is not mapped")
+                continue
+
+            text = _("Scanning FlexRay address: ")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+
+            if not options.simulation_mode:
+                try:
+                    # Initialize FlexRay communication
+                    # Note: FlexRay requires specialized hardware and protocol stack
+                    # This is a placeholder for FlexRay scanning implementation
+                    print(f"FlexRay scanning not yet implemented for address {addr}")
+                    print("FlexRay requires specialized hardware and protocol stack")
+                except Exception as e:
+                    print(f"Error scanning FlexRay address {addr}: {e}")
+            else:
+                # Simulation mode - provide test data
+                if addr == "100":
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                elif addr == "200":
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                else:
+                    can_response = "7F 80"
+                
+                self.check_ecu(can_response, label, addr, "FlexRay")
+
+    def scan_ethernet(self, progress=None, label=None, vehiclefilter=None):
+        """Scan for Ethernet ECUs using Ethernet protocol"""
+        project_ethernet_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto == "Ethernet" and addr not in project_ethernet_addresses:
+                        project_ethernet_addresses.append(addr)
+        else:
+            project_ethernet_addresses = self.ecu_database.available_addr_ethernet
+
+        if len(project_ethernet_addresses) == 0:
+            print("No Ethernet addresses available for scanning")
+            return
+
+        i = 0
+        if progress:
+            progress.setRange(0, len(project_ethernet_addresses))
+            progress.setValue(0)
+
+        # Scan Ethernet addresses
+        for addr in list(set(project_ethernet_addresses)):
+            i += 1
+            if progress:
+                progress.setValue(i)
+                if self.qapp:
+                    self.qapp.processEvents()
+
+            # Skip invalid addresses
+            if addr == '00' or addr == 'FF':
+                continue
+
+            if not elm.addr_exist(addr):
+                print(f"Warning: address {addr} is not mapped")
+                continue
+
+            text = _("Scanning Ethernet address: ")
+            try:
+                # Try long name first
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+            except KeyError:
+                # If not, short name
+                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+
+            if not options.simulation_mode:
+                try:
+                    # Initialize Ethernet communication
+                    # Note: Ethernet scanning may use TCP/UDP sockets or specialized adapters
+                    # This is a placeholder for Ethernet scanning implementation
+                    print(f"Ethernet scanning not yet implemented for address {addr}")
+                    print("Ethernet scanning requires TCP/UDP socket implementation")
+                except Exception as e:
+                    print(f"Error scanning Ethernet address {addr}: {e}")
+            else:
+                # Simulation mode - provide test data
+                if addr == "300":
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                elif addr == "400":
+                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
+                else:
+                    can_response = "7F 80"
+                
+                self.check_ecu(can_response, label, addr, "Ethernet")

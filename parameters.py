@@ -731,6 +731,15 @@ class paramWidget(widgets.QWidget):
                 self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.funcaddr)
             elif self.ecurequestsparser.ecu_protocol == "ISO8":
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
+            elif self.ecurequestsparser.ecu_protocol == "DoIP":
+                self.startDiagnosticSession()
+                self.main_protocol_status.setText("DoIP @ " + self.ecurequestsparser.funcaddr)
+            elif self.ecurequestsparser.ecu_protocol == "FlexRay":
+                self.startDiagnosticSession()
+                self.main_protocol_status.setText("FlexRay @ " + self.ecurequestsparser.funcaddr)
+            elif self.ecurequestsparser.ecu_protocol == "Ethernet":
+                self.startDiagnosticSession()
+                self.main_protocol_status.setText("Ethernet @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
                 print(_("Protocol not supported: ") + self.ecurequestsparser.ecu_protocol)

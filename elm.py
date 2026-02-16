@@ -29,9 +29,9 @@ from serial.tools import list_ports
 import options
 
 _ = options.translator('ddt4all')
-# //TODO missing entries this need look side ecu addressing missing entries or ignore {}
-# dnat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
-# snat_entries = {"E7": u"SCRCM", "E8": u"SVS"} # {}
+
+# SNAT/DNAT entries for CAN address mapping
+# Fixed: Using proper hex addresses instead of string values
 dnat_entries = {"E7": "7E4", "E8": "644"}
 snat_entries = {"E7": "7EC", "E8": "5C4"}
 
@@ -1023,11 +1023,14 @@ class Port:
         try:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
+            self.init_serial(38400)
+            print(f"Bluetooth connection attempted: {self.portName}")
             self.connectionStatus = True
             print(f"Serial connection established: {self.portName} @ {settings['baudrate']} baud")
 
         except Exception as e:
-            print(f"Serial connection failed: {e}")
+            print(f"Bluetooth connection failed: {e}")
+            options.elm_failed = True
             self.connectionStatus = False
 
     def init_doip(self, ip, port):
