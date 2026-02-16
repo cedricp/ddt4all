@@ -8,11 +8,15 @@ import locale
 import os
 import sys
 import tempfile
+import gettext
+import re
+import time
 from importlib.machinery import SourceFileLoader
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
+
 
 # Optional WebEngine import for enhanced features
 try:
@@ -45,7 +49,7 @@ def load_this():
         with open("ddt4all_data/projects.json", "r", encoding="UTF-8") as f:
             vehicles_loc = json.loads(f.read())
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
-        ecu.doip = vehicles_loc["projects"]["All"]["DoIP"]
+        ecu.doip_addressing = vehicles_loc["projects"]["All"]["DoIP"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
         elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
@@ -1520,7 +1524,6 @@ def set_language_realtime(language_name):
         options.save_config()
         
         # Reload translator
-        import gettext
         try:
             t = gettext.translation('ddt4all', 'ddt4all_data/locale', languages=[lang_code], fallback=True)
             _ = t.gettext
@@ -1770,7 +1773,7 @@ class main_window_options(widgets.QDialog):
         if index >= 0:
             self.doip_presetcombo.setCurrentIndex(index)
         
-        self.doip_presetcombo.currentTextChanged.connect(self.apply_doip_preset)
+        self.doip_presetcombo.activated.connect(self.apply_doip_preset)
         doip_presetlayout.addWidget(doip_presetlabel)
         doip_presetlayout.addWidget(self.doip_presetcombo)
         doip_presetlayout.addStretch()
@@ -1905,7 +1908,6 @@ class main_window_options(widgets.QDialog):
                     self.logview.append(_("Please enter WiFi adapter IP address"))
                     return
                 # Validate IP:port format
-                import re
                 if not re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", port):
                     self.logview.append(_("Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"))
                     return
@@ -2323,8 +2325,16 @@ class main_window_options(widgets.QDialog):
         self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(False)
 
-    def apply_doip_preset(self, preset_name):
+    def apply_doip_preset(self, index):
         """Apply DoIP device preset configurations"""
+        # Prevent multiple rapid calls
+        if hasattr(self, '_last_preset_time') and time.time() - self._last_preset_time < 1.0:
+            return
+        
+        self._last_preset_time = time.time()
+        
+        preset_name = self.doip_presetcombo.itemText(index)
+        
         presets = {
             _("Bosch MTS"): {
                 "ip": "192.168.0.100",
@@ -2365,17 +2375,129 @@ class main_window_options(widgets.QDialog):
         
         if preset_name in presets:
             preset = presets[preset_name]
+            
+            # Update GUI fields
             self.doip_ipinput.setText(preset["ip"])
             self.doip_portinput.setValue(preset["port"])
             self.doip_timeoutinput.setValue(preset["timeout"])
             self.doip_announcecheck.setChecked(preset["announcement"])
             self.doip_reconnectcheck.setChecked(preset["auto_reconnect"])
             
+            # Check if the IP actually changed BEFORE updating options
+            current_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            ip_changed = current_ip != preset['ip']
+            
+            # Update options module variables
+            options.doip_target_ip = preset["ip"]
+            options.doip_target_port = preset["port"]
+            options.doip_timeout = preset["timeout"]
+            options.doip_vehicle_announcement = preset["announcement"]
+            options.doip_auto_reconnect = preset["auto_reconnect"]
+            options.doip_preset = preset_name
+            
+            # Update configuration dictionary
+            options.configuration["doip_target_ip"] = preset["ip"]
+            options.configuration["doip_target_port"] = preset["port"]
+            options.configuration["doip_timeout"] = preset["timeout"]
+            options.configuration["doip_vehicle_announcement"] = preset["announcement"]
+            options.configuration["doip_auto_reconnect"] = preset["auto_reconnect"]
+            options.configuration["doip_preset"] = preset_name
+            
+            # Save configuration automatically
+            options.save_config()
+            
+            # Reload device list to reflect new DoIP configuration
+            # Use robust DoIP-only mode to prevent all crashes
+            try:
+                if ip_changed:
+                    # Use QTimer to delay the update and prevent crashes
+                    core.QTimer.singleShot(300, self._force_doip_update)
+                    print(f"DoIP preset applied: {preset_name} -> {preset['ip']}")
+                else:
+                    print(f"DoIP preset applied: {preset_name} (IP unchanged)")
+            except Exception as e:
+                print(f"Error preparing DoIP update: {e}")
+            
             # Log the preset application
             self.logview.append(f"Applied {preset_name} preset:")
             self.logview.append(f"  IP: {preset['ip']}")
             self.logview.append(f"  Port: {preset['port']}")
             self.logview.append(f"  Timeout: {preset['timeout']}s")
+            self.logview.append(f"  Configuration saved and device list reloaded")
+
+    def _force_doip_update(self):
+        """Force DoIP update bypassing all problematic operations"""
+        try:
+            # Get current DoIP configuration
+            doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            doip_port = getattr(options, 'doip_target_port', 13400)
+            
+            # Clear the device list completely - no rescan_ports()
+            self.listview.clear()
+            self.ports = {}
+            self.portcount = 0
+            
+            # Add only DoIP device - no COM port scanning
+
+            item = widgets.QListWidgetItem(self.listview)
+            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+            item.setText(itemname)
+            item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            
+        except Exception as e:
+            print(f"Error in force DoIP update: {e}")
+
+    def _delayed_doip_update(self):
+        """Delayed DoIP device list update to prevent crashes"""
+        try:
+            # Check if we're still in a valid state
+            if not hasattr(self, 'listview') or self.listview is None:
+                return
+                
+            # Force DoIP update - bypass all problematic operations
+            self._force_doip_update()
+                
+        except Exception as e:
+            print(f"Error in delayed DoIP update: {e}")
+            # Try force update as last resort
+            try:
+                self._force_doip_update()
+            except:
+                pass
+
+    def _update_doip_device_only(self):
+        """Update only the DoIP device in the list without full rescan"""
+        try:
+            # Get current DoIP configuration
+            doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            doip_port = getattr(options, 'doip_target_port', 13400)
+            
+            # Find and remove existing DoIP device
+            items_to_remove = []
+            for i in range(self.listview.count()):
+                item = self.listview.item(i)
+                item_text = item.text()
+                if 'DoIP Device' in item_text and doip_ip in item_text:
+                    items_to_remove.append(item)
+            
+            # Remove old DoIP devices
+            for item in items_to_remove:
+                row = self.listview.row(item)
+                self.listview.takeItem(row)
+                
+            # Add new DoIP device
+            item = widgets.QListWidgetItem(self.listview)
+            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+            item.setText(itemname)
+            item.setBackground(core.QColor(150, 50, 50))  # Dark red for offline
+            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            
+            print(f"DoIP device updated: {doip_ip}:{doip_port}")
+            
+        except Exception as e:
+            print(f"Error in targeted DoIP update: {e}")
+            raise
 
     def doip(self):
         self.adapter = "DOIP"

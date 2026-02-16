@@ -8,7 +8,7 @@
 
 import os
 import dataeditor
-import ecu
+import sys
 import json
 import options
 import parameters
@@ -22,6 +22,11 @@ import platform
 import threading
 import re
 import string
+import socket
+# import usb.core
+# import usb.util
+# import usb.legacy
+import glob
 
 import serial
 from serial.tools import list_ports
@@ -271,9 +276,6 @@ def get_available_ports():
     
     # First check for USB devices using usbdevice.py (with error handling)
     try:
-        import usb.core
-        import usb.util
-        import usb.legacy
         usb_device = usbdevice.UsbCan()
         if usb_device.is_init():
             # Add USB device to ports list
@@ -292,25 +294,27 @@ def get_available_ports():
             print(f"USB device detection error: {e}")
     
     # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
-    # DoIP devices - Only true DoIP-capable devices (verified compatible with ISO 13400 standard)
+    # DoIP devices - Use configured IP address instead of hardcoded values
+    doip_target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+    doip_target_port = getattr(options, 'doip_target_port', 13400)
+    
     doip_devices = [
-        ("192.168.0.12", "Bosch MTS (DoIP) - ISO 13400 Standard"),
-        ("192.168.0.13", "VXDIAG (DoIP) - ISO 13400 Standard"),
-        ("192.168.0.14", "VAG ODIS (DoIP) - ISO 13400 Standard"),
-        ("192.168.0.15", "JLR DoIP VCI (DoIP) - ISO 13400 Standard")
+        (doip_target_ip, f"DoIP Device - {doip_target_ip}:{doip_target_port}"),
     ]
     
     # Only check DoIP status if not in simulation mode and not checking too frequently
     if not getattr(options, 'simulation_mode', False) and not hasattr(get_available_ports, '_last_check_time'):
         get_available_ports._last_check_time = time.time()
         for ip, desc in doip_devices:
-            status = check_doip_status(ip, 13400, timeout=0.5)  # Faster timeout
-            ports.append((f"{ip}:13400", desc, "DoIP", status))
+            status = check_doip_status(ip, doip_target_port, timeout=0.5)  # Use configured port
+            port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", status)
+            ports.append(port_entry)
             print(f"DoIP device {status}: {desc} at {ip}")
     else:
         # Use cached status or assume offline
         for ip, desc in doip_devices:
-            ports.append((f"{ip}:13400", desc, "DoIP", "offline"))
+            port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", "offline")
+            ports.append(port_entry)
     
     # Then check for serial ports
     try:
@@ -364,7 +368,6 @@ def get_available_ports():
                            [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
                            [f'/dev/rfcomm{i}' for i in range(0, 5)]
         elif platform.system().lower() == 'darwin':
-            import glob
             common_ports = glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
 
         for port in common_ports:
@@ -382,7 +385,6 @@ def get_available_ports():
 def check_doip_status(ip, port, timeout=1):
     """Check if DoIP device is online with optimized timeout"""
     try:
-        import socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(timeout)
         result = sock.connect_ex((ip, port))
@@ -742,7 +744,6 @@ class DeviceManager:
 
 def is_els27_device(port, timeout=2):
     """Test if a serial port has an ELS27 device with multiple baud rates"""
-    import serial
     test_bauds = [38400, 9600, 115200]  # Common ELS27 baud rates
 
     for baud in test_bauds:
@@ -866,6 +867,7 @@ class Port:
     tcp_needs_reconnect = False
     reconnect_attempts = 0
     max_reconnect_attempts = 3
+    settings = {}
 
     def __init__(self, portName, speed, adapter_type):
         options.elm_failed = False
@@ -877,7 +879,6 @@ class Port:
 
         # WiFi/TCP connection (e.g., 192.168.0.10:35000)
         if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", portName):
-            import socket
             self.ipaddr, self.tcpprt = portName.split(':')
             self.tcpprt = int(self.tcpprt)
             self.portType = 1
@@ -902,17 +903,17 @@ class Port:
             saved_settings = options.get_device_settings(device_key, self.portName)
 
             if saved_settings and 'baudrate' in saved_settings:
-                settings = saved_settings
+                self.settings = saved_settings
                 translate_arg = _("Using saved settings for")
-                print (f"{translate_arg} {self.adapter_type}: {settings}")
+                print (f"{translate_arg} {self.adapter_type}: {self.settings}")
             else:
-                settings = DeviceManager.get_optimal_settings(self.adapter_type)
+                self.settings = DeviceManager.get_optimal_settings(self.adapter_type)
                 translate_arg = _("Using optimal settings for")
-                print(f"{translate_arg} {self.adapter_type}: {settings}")
+                print(f"{translate_arg} {self.adapter_type}: {self.settings}")
 
             # Use provided speed if specified, otherwise use setting
             if speed > 0:
-                settings['baudrate'] = speed
+                self.settings['baudrate'] = speed
 
             # Check if this is a DoIP connection (only for non-ELM327 devices)
             if ":" in self.portName and self.portName.count(":") == 1:
@@ -935,14 +936,14 @@ class Port:
             # Enhanced serial parameters using device-specific settings
             serial_params = {
                 'port': self.portName,
-                'baudrate': settings.get('baudrate', speed),
-                'timeout': settings.get('timeout', 5),
+                'baudrate': self.settings.get('baudrate', speed),
+                'timeout': self.settings.get('timeout', 5),
                 'parity': serial.PARITY_NONE,
                 'stopbits': serial.STOPBITS_ONE,
                 'bytesize': serial.EIGHTBITS,
                 'xonxoff': False,
-                'rtscts': settings.get('rtscts', False),
-                'dsrdtr': settings.get('dsrdtr', False)
+                'rtscts': self.settings.get('rtscts', False),
+                'dsrdtr': self.settings.get('dsrdtr', False)
             }
 
             # Platform-specific adjustments
@@ -996,7 +997,7 @@ class Port:
             self.init_serial(38400)
             print(f"Bluetooth connection attempted: {self.portName}")
             self.connectionStatus = True
-            print(f"Serial connection established: {self.portName} @ {settings['baudrate']} baud")
+            print(f"Serial connection established: {self.portName} @ {self.settings['baudrate']} baud")
 
         except Exception as e:
             print(f"Bluetooth connection failed: {e}")
@@ -1046,8 +1047,6 @@ class Port:
         '''
         if self.portType != 1:
             return
-
-        import socket
 
         try:
             if reinit and self.hdr:
@@ -1099,7 +1098,6 @@ class Port:
             try:
                 byte = b""
                 if self.portType == 1:  # TCP/WiFi
-                    import socket
                     try:
                         byte = self.hdr.recv(1)
                         if options.debug:

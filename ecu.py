@@ -9,14 +9,18 @@ import string
 import xml.dom.minidom
 import zipfile
 
+import doip
 import elm
 import json
 import options
+import ecu
+
+from elm import DeviceManager
 
 _ = options.translator('ddt4all')
 
 addressing = {}
-doip = {}
+doip_addressing = {}
 
 # Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
@@ -1195,7 +1199,7 @@ class Ecu_database:
         self.addr_group_mapping_long = {}
         self.addr_group_mapping = {}
 
-        for k, v in doip.items():
+        for k, v in doip_addressing.items():
             self.addr_group_mapping[k] = v
             self.addr_group_mapping_long[k] = v
 
@@ -1655,7 +1659,6 @@ class Ecu_scanner:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
-                from elm import DeviceManager
                 DeviceManager.initialize_device(options.elm)
             
             options.elm.init_can()
@@ -1721,7 +1724,6 @@ class Ecu_scanner:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
-                from elm import DeviceManager
                 DeviceManager.initialize_device(options.elm)
             
             options.elm.init_iso()
@@ -1822,14 +1824,31 @@ class Ecu_scanner:
     def scan_doip(self, progress=None, label=None, vehiclefilter=None):
         """Scan for DoIP ECUs using ISO 13400 protocol"""
         if not options.simulation_mode:
-            # Initialize DoIP connection if available
-            if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
-                if not options.elm.doip_device.connectionStatus:
-                    if not options.elm.doip_device.connect():
-                        print("DoIP connection failed, cannot scan DoIP ECUs")
-                        return
-            else:
-                print("DoIP device not available, cannot scan DoIP ECUs")
+            # Initialize DoIP connection with target IP from options
+            try:
+                target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+                target_port = getattr(options, 'doip_target_port', 13400)
+                timeout = getattr(options, 'doip_timeout', 5)
+                
+                print(f"Initializing DoIP connection to {target_ip}:{target_port} (timeout: {timeout}s)")
+                
+                # Create DoIP device independently (not through ELM)
+                doip_device = doip_addressing.DoIPDevice(target_ip)
+                
+                # Set timeout if supported
+                if hasattr(doip_device, 'timeout'):
+                    doip_device.timeout = timeout
+                
+                if not doip_device.connect():
+                    print("DoIP connection failed, cannot scan DoIP ECUs")
+                    return
+                else:
+                    print(f"DoIP connection established: {target_ip}:{target_port}")
+                    # Store the device for scanning use
+                    self.current_doip_device = doip_device
+                    
+            except Exception as e:
+                print(f"DoIP initialization error: {e}")
                 return
 
         project_doip_addresses = []
@@ -1840,9 +1859,8 @@ class Ecu_scanner:
                         project_doip_addresses.append(addr)
         else:
             # Use DoIP addresses from projects.json (loaded in main.py)
-            import ecu
-            if hasattr(ecu, 'doip') and ecu.doip:
-                project_doip_addresses = list(ecu.doip.keys())
+            if hasattr(ecu, 'doip') and ecu.doip_addressing:
+                project_doip_addresses = list(ecu.doip_addressing.keys())
             else:
                 # Fallback to database
                 project_doip_addresses = self.ecu_database.available_addr_doip
@@ -1869,9 +1887,8 @@ class Ecu_scanner:
             # Skip invalid addresses
             if addr not in self.ecu_database.addr_group_mapping:
                 # Try to get name from projects.json DoIP data
-                import ecu
-                if hasattr(ecu, 'doip') and ecu.doip and addr in ecu.doip:
-                    print(f"{text + addr:<35} ECU: {ecu.doip[addr]}")
+                if hasattr(ecu, 'doip') and ecu.doip_addressing and addr in ecu.doip_addressing:
+                    print(f"{text + addr:<35} ECU: {ecu.doip_addressing[addr]}")
                 else:
                     print(f"Warning: address {addr} is not mapped")
                     continue
@@ -1885,19 +1902,19 @@ class Ecu_scanner:
 
             if not options.simulation_mode:
                 try:
-                    # Initialize DoIP communication for this address
-                    if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
+                    # Use the independent DoIP device
+                    if hasattr(self, 'current_doip_device') and self.current_doip_device:
                         # Set target address for DoIP communication
-                        options.elm.doip_device.target_address = int(addr, 16)
+                        self.current_doip_device.target_address = int(addr, 16)
                         
                         # Start diagnostic session
-                        if options.elm.doip_device.start_session_can('10C0'):
+                        if self.current_doip_device.start_session_can('10C0'):
                             # Send tester present
-                            response = options.elm.doip_device.request('3E00')
+                            response = self.current_doip_device.request('3E00')
                             if response and len(response['data']) >= 1:
                                 if response['data'][0] == 0x50:  # Positive response
                                     # Send read data request - get actual ECU identification from DDT database
-                                    response = options.elm.doip_device.request('2180')
+                                    response = self.current_doip_device.request('2180')
                                     if response and len(response['data']) >= 59:
                                         can_response = ' '.join([f'{b:02X}' for b in response['data']])
                                         # Parse real DoIP response from ECU
@@ -1921,6 +1938,14 @@ class Ecu_scanner:
                 print(f"Would connect to DoIP ECU at address {addr} and read identification data")
 
         if not options.simulation_mode:
-            if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
-                # Keep DoIP connection open for further communication
-                pass
+            # Clean up DoIP connection
+            if hasattr(self, 'current_doip_device') and self.current_doip_device:
+                try:
+                    # Close DoIP connection
+                    if hasattr(self.current_doip_device, 'disconnect'):
+                        self.current_doip_device.disconnect()
+                    print("DoIP connection closed")
+                except Exception as e:
+                    print(f"Error closing DoIP connection: {e}")
+                finally:
+                    self.current_doip_device = None

@@ -48,7 +48,7 @@ configuration = {
     "connection_timeout": 10,
     "read_timeout": 5,
     "max_reconnect_attempts": 3,
-    "preferred_device_order": ["vlinker", "vgate", "obdlink", "obdlink_ex", "elm327", "els27"],
+    "preferred_device_order": ["vlinker", "vgate", "derlek_usb_diag2", "derlek_usb_diag3", "obdlink", "obdlink_ex", "elm327", "els27"],
     "enable_device_validation": True,
     "carlist_sort_mode": "code",
     "doip_target_ip": "192.168.0.12",
@@ -93,7 +93,7 @@ def create_new_config():
     configuration["connection_timeout"] = 10
     configuration["read_timeout"] = 5
     configuration["max_reconnect_attempts"] = 3
-    configuration["preferred_device_order"] = ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"]
+    configuration["preferred_device_order"] = ["vlinker", "vgate", "derlek_usb_diag2", "derlek_usb_diag3", "obdlink", "obdlink_ex", "els27", "elm327"]
     configuration["enable_device_validation"] = True
     configuration["carlist_sort_mode"] = "code"
     save_config()
@@ -115,7 +115,7 @@ def load_configuration():
         configuration["read_timeout"] = config.get("read_timeout", 5)
         configuration["max_reconnect_attempts"] = config.get("max_reconnect_attempts", 3)
         configuration["preferred_device_order"] = config.get("preferred_device_order", 
-                                                           ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
+                                                           ["vlinker", "vgate", "derlek_usb_diag2", "derlek_usb_diag3", "obdlink", "obdlink_ex", "els27", "elm327"])
         configuration["enable_device_validation"] = config.get("enable_device_validation", True)
         configuration["carlist_sort_mode"] = config.get("carlist_sort_mode", "code")
         
@@ -224,7 +224,7 @@ def is_device_validation_enabled():
 
 def get_preferred_device_order():
     """Get preferred device detection order"""
-    return configuration.get("preferred_device_order", ["vlinker", "vgate", "obdlink", "obdlink_ex", "els27", "elm327"])
+    return configuration.get("preferred_device_order", ["vlinker", "vgate", "derlek_usb_diag2", "derlek_usb_diag3", "obdlink", "obdlink_ex", "els27", "elm327"])
 
 
 def get_carlist_sort_mode():
