@@ -1933,13 +1933,7 @@ class Ecu_scanner:
         if not options.simulation_mode:
             options.elm.close_protocol()
 
-
     def check_ecu(self, can_response, label, addr, protocol):
-        kept_ecu = None
-        min_delta_version = float('inf')
-        found_exact = False
-        found_approximate = False
-        approximate_ecu = []
         diagversion = ""
         supplier = ""
         soft = ""
@@ -1983,7 +1977,6 @@ class Ecu_scanner:
                     supplier = bytes.fromhex(can_response[9:17].replace(' ', '')).decode('utf-8')
                     soft = can_response[18:26].replace(' ', '')
                     version = can_response[27:35].replace(' ', '')
-                    targetNum = 0
                     self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
                 except:
                     return  # Changed from continue to return since we're not in a loop
