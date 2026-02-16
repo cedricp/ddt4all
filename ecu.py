@@ -1934,16 +1934,6 @@ class Ecu_scanner:
             options.elm.close_protocol()
 
     def check_ecu(self, can_response, label, addr, protocol):
-        diagversion = ""
-        supplier = ""
-        soft = ""
-        version = ""
-                    
-        if addr in self.ecu_database.addr_group_mapping:
-            ecu_type = self.ecu_database.addr_group_mapping[addr]
-        else:
-            ecu_type = "UNKNOWN"
-
         if len(can_response) > 59:
             diagversion = str(int(can_response[21:23], 16))
             supplier = bytes.fromhex(can_response[24:32].replace(' ', '')).decode('utf-8')
