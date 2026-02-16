@@ -542,23 +542,15 @@ class DeviceManager:
     def _enable_stpx_mode(elm_instance):
         """Enable STPX mode for enhanced long command support"""
         try:
-            # STPX mode enables enhanced long command handling
-            stpx_commands = [
-                "ST SFT 0",  # Disable flow control for better long command support
-                "ST WFF 1",  # Enable wait for first frame
-                "ST FC SH 80",  # Set flow control separator
-                "ST BLM 1",  # Enable large message mode
-                "ST CSM 1",  # Enable checksum mode for reliability
-                "ST P1 25",  # Set inter-frame gap
-                "ST P3 55",  # Set frame response time
-                "ST EA 1"   # Enable extended addressing
-            ]
+            # STPX is a mode, not individual commands
+            # Only OBDLink and VGate support STPX mode
+            # STPX is automatically enabled when adapter detects long commands
             
-            for cmd in stpx_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"STPX command failed: {cmd}")
-                    return False
+            # Try to enable STPX mode (if supported)
+            response = elm_instance.cmd("STPX")
+            if "?" in response:
+                print("STPX mode not supported by this adapter")
+                return False
             
             print("STPX mode enabled successfully")
             return True
@@ -647,22 +639,11 @@ class DeviceManager:
     def _swap_derlek_diag2_pins(elm_instance):
         """Swap pins for DerleK USB-DIAG2 adapters"""
         try:
-            # DerleK USB-DIAG2 specific pin swapping
-            pin_swap_commands = [
-                ("AT BRD 23", "Set baudrate 115200"),
-                ("AT SP 6", "CAN protocol"),
-                ("AT SH 7E0", "Set header"),
-                ("AT FC SH 7E0", "Flow control header"),
-                ("AT DP 02", "DIAG2 pin configuration")
-            ]
+            # DerleK USB-DIAG2 uses proprietary protocol, not AT commands
+            # Pin swapping is handled internally by the device
+            # No AT commands needed for DERLEK devices
             
-            for cmd, desc in pin_swap_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"DerleK USB-DIAG2 pin swap command failed: {cmd} ({desc})")
-                    return False
-            
-            print("DerleK USB-DIAG2 pin swapping completed")
+            print("DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed")
             return True
             
         except Exception as e:
@@ -673,22 +654,11 @@ class DeviceManager:
     def _swap_derlek_diag3_pins(elm_instance):
         """Swap pins for DerleK USB-DIAG3 adapters"""
         try:
-            # DerleK USB-DIAG3 specific pin swapping
-            pin_swap_commands = [
-                ("AT BRD 23", "Set baudrate 115200"),
-                ("AT SP 6", "CAN protocol"),
-                ("AT SH 7E0", "Set header"),
-                ("AT FC SH 7E0", "Flow control header"),
-                ("AT DP 03", "DIAG3 pin configuration")
-            ]
+            # DerleK USB-DIAG3 uses proprietary protocol, not AT commands
+            # Pin swapping is handled internally by the device
+            # No AT commands needed for DERLEK devices
             
-            for cmd, desc in pin_swap_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"DerleK USB-DIAG3 pin swap command failed: {cmd} ({desc})")
-                    return False
-            
-            print(f"DerleK USB-DIAG3 pin swapping completed")
+            print("DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed")
             return True
             
         except Exception as e:

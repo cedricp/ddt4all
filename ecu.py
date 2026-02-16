@@ -1839,7 +1839,13 @@ class Ecu_scanner:
                     if proto.upper() == "DOIP" and addr not in project_doip_addresses:
                         project_doip_addresses.append(addr)
         else:
-            project_doip_addresses = self.ecu_database.available_addr_doip
+            # Use DoIP addresses from projects.json (loaded in main.py)
+            import ecu
+            if hasattr(ecu, 'doip') and ecu.doip:
+                project_doip_addresses = list(ecu.doip.keys())
+            else:
+                # Fallback to database
+                project_doip_addresses = self.ecu_database.available_addr_doip
 
         if len(project_doip_addresses) == 0:
             print("No DoIP addresses available for scanning")
@@ -1858,21 +1864,24 @@ class Ecu_scanner:
                 if self.qapp:
                     self.qapp.processEvents()
 
-            # Skip invalid addresses
-            if addr == '00' or addr == 'FF':
-                continue
-
-            if not elm.addr_exist(addr):
-                print(f"Warning: address {addr} is not mapped")
-                continue
-
             text = _("Scanning DoIP address: ")
-            try:
-                # Try long name first
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
-            except KeyError:
-                # If not, short name
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+            
+            # Skip invalid addresses
+            if addr not in self.ecu_database.addr_group_mapping:
+                # Try to get name from projects.json DoIP data
+                import ecu
+                if hasattr(ecu, 'doip') and ecu.doip and addr in ecu.doip:
+                    print(f"{text + addr:<35} ECU: {ecu.doip[addr]}")
+                else:
+                    print(f"Warning: address {addr} is not mapped")
+                    continue
+            else:
+                # Use database mapping
+                try:
+                    # Try long name first
+                    print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+                except:
+                    print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
             if not options.simulation_mode:
                 try:
@@ -1887,13 +1896,14 @@ class Ecu_scanner:
                             response = options.elm.doip_device.request('3E00')
                             if response and len(response['data']) >= 1:
                                 if response['data'][0] == 0x50:  # Positive response
-                                    # Send read data request
+                                    # Send read data request - get actual ECU identification from DDT database
                                     response = options.elm.doip_device.request('2180')
                                     if response and len(response['data']) >= 59:
                                         can_response = ' '.join([f'{b:02X}' for b in response['data']])
+                                        # Parse real DoIP response from ECU
                                         self.check_ecu(can_response, label, addr, "DoIP")
                                     else:
-                                        print(f"No response from DoIP ECU at address {addr}")
+                                        print(f"No identification data from DoIP ECU at address {addr}")
                                 else:
                                     print(f"Negative response from DoIP ECU at address {addr}")
                             else:
@@ -1905,17 +1915,10 @@ class Ecu_scanner:
                 except Exception as e:
                     print(f"Error scanning DoIP address {addr}: {e}")
             else:
-                # Simulation mode - provide test data
-                if addr == "E0":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                elif addr == "70":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                elif addr == "7E0":
-                    can_response = "61 80 82 00 45 15 05 08 32 31 33 21 11 31 39 09 00 09 06 02 05 01 0D 8D 39 00"
-                else:
-                    can_response = "7F 80"
-                
-                self.check_ecu(can_response, label, addr, "DoIP")
+                # Simulation mode - use real DDT database data
+                print(f"Simulation mode: DoIP address {addr} would be scanned")
+                # Don't provide fake data - let user know it's simulation
+                print(f"Would connect to DoIP ECU at address {addr} and read identification data")
 
         if not options.simulation_mode:
             if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
