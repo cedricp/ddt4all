@@ -734,12 +734,6 @@ class paramWidget(widgets.QWidget):
             elif self.ecurequestsparser.ecu_protocol == "DoIP":
                 self.startDiagnosticSession()
                 self.main_protocol_status.setText("DoIP @ " + self.ecurequestsparser.funcaddr)
-            elif self.ecurequestsparser.ecu_protocol == "FlexRay":
-                self.startDiagnosticSession()
-                self.main_protocol_status.setText("FlexRay @ " + self.ecurequestsparser.funcaddr)
-            elif self.ecurequestsparser.ecu_protocol == "Ethernet":
-                self.startDiagnosticSession()
-                self.main_protocol_status.setText("Ethernet @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
                 print(_("Protocol not supported: ") + self.ecurequestsparser.ecu_protocol)
@@ -1985,6 +1979,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     dict = {}
     dict["projects"] = {}
     dict["projects"]["All"] = {}
+    dict["projects"]["All"]["DoIP"] = {}
     dict["projects"]["All"]["code"] = "ALL"
     dict["projects"]["All"]["addressing"] = dumpAddressing(os.path.join("vehicles", "GenericAddressing.xml"))
     dict["projects"]["All"]["snat"] = dumpSNAT(os.path.join("vehicles", "GenericAddressing.xml"))
@@ -1996,6 +1991,19 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
         name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
         projects = getChildNodesByName(manufacturer, u"project")
         for project in projects:
+            protocols = getChildNodesByName(project, u"ProtocolList")
+            for protocol in protocols:
+                proto = getChildNodesByName(protocol, u"Protocol")
+                for prtc in proto:
+                    test = prtc.getAttribute(u"Name")
+                    if test == "DoIP":
+                        fcts = getChildNodesByName(prtc, u"Fct")
+                        for fct in fcts:
+                            #print(fct.getAttribute(u"Name"))
+                            #print(int(fct.getAttribute(u"Value"), 16))
+                            add_doip = int(fct.getAttribute(u"Value"), 16)
+                            name_doip = fct.getAttribute(u"Name")
+                            dict["projects"]["All"]["DoIP"][add_doip] = name_doip
             code = project.getAttribute(u"code")
             p_name = project.getAttribute(u"name")
             addressing = os.path.join("vehicles", "GenericAddressing.xml")

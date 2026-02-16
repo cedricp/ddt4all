@@ -15,149 +15,8 @@ import options
 
 _ = options.translator('ddt4all')
 
-addressing = {
-    # DoIP Addressing for modern vehicles (2016+)
-    # ISO 13400 standard with 29-bit identifiers
-    "E0": ("DoIP", "DoIP_ECU"),
-    "E1": ("DoIP", "DoIP_ECU"), 
-    "E2": ("DoIP", "DoIP_ECU"),
-    "E3": ("DoIP", "DoIP_ECU"),
-    "E4": ("DoIP", "DoIP_ECU"),
-    "E5": ("DoIP", "DoIP_ECU"),
-    "E6": ("DoIP", "DoIP_ECU"),
-    "E7": ("DoIP", "DoIP_ECU"),
-    "E8": ("DoIP", "DoIP_ECU"),
-    "E9": ("DoIP", "DoIP_ECU"),
-    "EA": ("DoIP", "DoIP_ECU"),
-    "EB": ("DoIP", "DoIP_ECU"),
-    "EC": ("DoIP", "DoIP_ECU"),
-    "ED": ("DoIP", "DoIP_ECU"),
-    "EE": ("DoIP", "DoIP_ECU"),
-    "EF": ("DoIP", "DoIP_ECU"),
-    "F0": ("DoIP", "DoIP_ECU"),
-    "F1": ("DoIP", "DoIP_ECU"),
-    "F2": ("DoIP", "DoIP_ECU"),
-    "F3": ("DoIP", "DoIP_ECU"),
-    "F4": ("DoIP", "DoIP_ECU"),
-    "F5": ("DoIP", "DoIP_ECU"),
-    "F6": ("DoIP", "DoIP_ECU"),
-    "F7": ("DoIP", "DoIP_ECU"),
-    "F8": ("DoIP", "DoIP_ECU"),
-    "F9": ("DoIP", "DoIP_ECU"),
-    "FA": ("DoIP", "DoIP_ECU"),
-    "FB": ("DoIP", "DoIP_ECU"),
-    "FC": ("DoIP", "DoIP_ECU"),
-    "FD": ("DoIP", "DoIP_ECU"),
-    "FE": ("DoIP", "DoIP_ECU"),
-    "FF": ("DoIP", "DoIP_ECU"),
-    
-    # Gateway/Central ECUs with DoIP support
-    "70": ("DoIP", "DoIP_Gateway"),
-    "71": ("DoIP", "DoIP_Gateway"), 
-    "72": ("DoIP", "DoIP_Gateway"),
-    "73": ("DoIP", "DoIP_Gateway"),
-    "74": ("DoIP", "DoIP_Gateway"),
-    "75": ("DoIP", "DoIP_Gateway"),
-    "76": ("DoIP", "DoIP_Gateway"),
-    "77": ("DoIP", "DoIP_Gateway"),
-    "78": ("DoIP", "DoIP_Gateway"),
-    "79": ("DoIP", "DoIP_Gateway"),
-    
-    # Powertrain ECUs with DoIP support
-    "7E0": ("DoIP", "DoIP_Engine"),
-    "7E1": ("DoIP", "DoIP_Engine"),
-    "7E2": ("DoIP", "DoIP_Engine"),
-    "7E3": ("DoIP", "DoIP_Engine"),
-    "7E4": ("DoIP", "DoIP_Engine"),
-    "7E5": ("DoIP", "DoIP_Engine"),
-    "7E6": ("DoIP", "DoIP_Engine"),
-    "7E7": ("DoIP", "DoIP_Engine"),
-    "7E8": ("DoIP", "DoIP_Engine"),
-    "7E9": ("DoIP", "DoIP_Engine"),
-    "7EA": ("DoIP", "DoIP_Engine"),
-    "7EB": ("DoIP", "DoIP_Engine"),
-    "7EC": ("DoIP", "DoIP_Engine"),
-    "7ED": ("DoIP", "DoIP_Engine"),
-    "7EE": ("DoIP", "DoIP_Engine"),
-    "7EF": ("DoIP", "DoIP_Engine"),
-    
-    # CAN addressing for traditional vehicles
-    # Classic CAN protocol addresses
-    "7E4": ("CAN", "BCM_BCM"),  # E7 hex equivalent
-    "7EC": ("CAN", "BCM_BCM"),  # E8 hex equivalent
-    "644": ("CAN", "BCM_BCM"),  # E8 DNAT mapping
-    
-    # FlexRay addressing for modern vehicles (2018+)
-    # FlexRay uses different addressing scheme
-    "100": ("FlexRay", "FlexRay_ECU"),
-    "101": ("FlexRay", "FlexRay_ECU"),
-    "102": ("FlexRay", "FlexRay_ECU"),
-    "103": ("FlexRay", "FlexRay_ECU"),
-    "104": ("FlexRay", "FlexRay_ECU"),
-    "105": ("FlexRay", "FlexRay_ECU"),
-    "106": ("FlexRay", "FlexRay_ECU"),
-    "107": ("FlexRay", "FlexRay_ECU"),
-    "108": ("FlexRay", "FlexRay_ECU"),
-    "109": ("FlexRay", "FlexRay_ECU"),
-    "10A": ("FlexRay", "FlexRay_ECU"),
-    "10B": ("FlexRay", "FlexRay_ECU"),
-    "10C": ("FlexRay", "FlexRay_ECU"),
-    "10D": ("FlexRay", "FlexRay_ECU"),
-    "10E": ("FlexRay", "FlexRay_ECU"),
-    "10F": ("FlexRay", "FlexRay_ECU"),
-    "200": ("FlexRay", "FlexRay_Gateway"),
-    "201": ("FlexRay", "FlexRay_Gateway"),
-    "202": ("FlexRay", "FlexRay_Gateway"),
-    "203": ("FlexRay", "FlexRay_Gateway"),
-    "204": ("FlexRay", "FlexRay_Gateway"),
-    "205": ("FlexRay", "FlexRay_Gateway"),
-    "206": ("FlexRay", "FlexRay_Gateway"),
-    "207": ("FlexRay", "FlexRay_Gateway"),
-    "208": ("FlexRay", "FlexRay_Gateway"),
-    "209": ("FlexRay", "FlexRay_Gateway"),
-    "20A": ("FlexRay", "FlexRay_Gateway"),
-    "20B": ("FlexRay", "FlexRay_Gateway"),
-    "20C": ("FlexRay", "FlexRay_Gateway"),
-    "20D": ("FlexRay", "FlexRay_Gateway"),
-    "20E": ("FlexRay", "FlexRay_Gateway"),
-    "20F": ("FlexRay", "FlexRay_Gateway"),
-    
-    # Ethernet addressing for modern vehicles (2020+)
-    # Ethernet uses IP-based addressing with logical IDs
-    "300": ("Ethernet", "Ethernet_ECU"),
-    "301": ("Ethernet", "Ethernet_ECU"),
-    "302": ("Ethernet", "Ethernet_ECU"),
-    "303": ("Ethernet", "Ethernet_ECU"),
-    "304": ("Ethernet", "Ethernet_ECU"),
-    "305": ("Ethernet", "Ethernet_ECU"),
-    "306": ("Ethernet", "Ethernet_ECU"),
-    "307": ("Ethernet", "Ethernet_ECU"),
-    "308": ("Ethernet", "Ethernet_ECU"),
-    "309": ("Ethernet", "Ethernet_ECU"),
-    "30A": ("Ethernet", "Ethernet_ECU"),
-    "30B": ("Ethernet", "Ethernet_ECU"),
-    "30C": ("Ethernet", "Ethernet_ECU"),
-    "30D": ("Ethernet", "Ethernet_ECU"),
-    "30E": ("Ethernet", "Ethernet_ECU"),
-    "30F": ("Ethernet", "Ethernet_ECU"),
-    "400": ("Ethernet", "Ethernet_Gateway"),
-    "401": ("Ethernet", "Ethernet_Gateway"),
-    "402": ("Ethernet", "Ethernet_Gateway"),
-    "403": ("Ethernet", "Ethernet_Gateway"),
-    "404": ("Ethernet", "Ethernet_Gateway"),
-    "405": ("Ethernet", "Ethernet_Gateway"),
-    "406": ("Ethernet", "Ethernet_Gateway"),
-    "407": ("Ethernet", "Ethernet_Gateway"),
-    "408": ("Ethernet", "Ethernet_Gateway"),
-    "409": ("Ethernet", "Ethernet_Gateway"),
-    "40A": ("Ethernet", "Ethernet_Gateway"),
-    "40B": ("Ethernet", "Ethernet_Gateway"),
-    "40C": ("Ethernet", "Ethernet_Gateway"),
-    "40D": ("Ethernet", "Ethernet_Gateway"),
-    "40E": ("Ethernet", "Ethernet_Gateway"),
-    "40F": ("Ethernet", "Ethernet_Gateway"),
-}
-
+addressing = {}
+doip = {}
 
 # Returns signed value from 16 bits (2 bytes)
 def hex16_tosigned(value):
@@ -1176,6 +1035,13 @@ class Ecu_file:
             if not options.simulation_mode:
                 options.elm.init_iso()
                 options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
+
+        # DOIP handling
+        # elif self.ecu_protocol == 'DOIP':
+        #     ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'DOIP'}
+        #     if not options.simulation_mode:
+        #         options.elm.init()
+        #         options.elm.set_doip_addr(self.funcaddr, ecu_conf)
         else:
             return False
 
@@ -1266,10 +1132,8 @@ class Ecu_ident:
             self.protocol = 'KWP2000'
         elif "ISO8" in protocol.upper():
             self.protocol = 'ISO8'
-        elif "FlexRay" in protocol.upper():
-            self.protocol = 'FlexRay'
-        elif "Ethernet" in protocol.upper():
-            self.protocol = 'Ethernet'
+        elif "DOIP" in protocol.upper():
+            self.protocol = 'DOIP'
         else:
             self.protocol = 'UNKNOWN'
         self.hash = diagversion + supplier + soft + version
@@ -1328,10 +1192,12 @@ class Ecu_database:
         self.available_addr_kwp = []
         self.available_addr_can = []
         self.available_addr_doip = []  # Add DoIP address support
-        self.available_addr_flexray = []  # Add FlexRay address support
-        self.available_addr_ethernet = []  # Add Ethernet address support
         self.addr_group_mapping_long = {}
         self.addr_group_mapping = {}
+
+        for k, v in doip.items():
+            self.addr_group_mapping[k] = v
+            self.addr_group_mapping_long[k] = v
 
         for k, v in addressing.items():
             self.addr_group_mapping[k] = v[0]
@@ -1367,12 +1233,6 @@ class Ecu_database:
                 elif 'DOIP' in ecu_dict['protocol'].upper():
                     if addr not in self.available_addr_doip:
                         self.available_addr_doip.append(str(addr))
-                elif 'FlexRay' in ecu_dict['protocol']:
-                    if addr not in self.available_addr_flexray:
-                        self.available_addr_flexray.append(str(addr))
-                elif 'Ethernet' in ecu_dict['protocol']:
-                    if addr not in self.available_addr_ethernet:
-                        self.available_addr_ethernet.append(str(addr))
 
                 if str(addr) not in self.addr_group_mapping:
                     print(_("Adding group "), addr, ecu_dict['group'])
@@ -1412,12 +1272,6 @@ class Ecu_database:
                 elif 'DOIP' in ecuprotocol.upper():
                     if not ecuaddress in self.available_addr_doip:
                         self.available_addr_doip.append(str(ecuaddress))
-                elif 'FlexRay' in ecuprotocol:
-                    if not ecuaddress in self.available_addr_flexray:
-                        self.available_addr_flexray.append(str(ecuaddress))
-                elif 'Ethernet' in ecuprotocol:
-                    if not ecuaddress in self.available_addr_ethernet:
-                        self.available_addr_ethernet.append(str(ecuaddress))
 
                 if str(ecuaddress) not in self.addr_group_mapping:
                     self.addr_group_mapping[ecuaddress] = targetv['group']
@@ -1477,12 +1331,6 @@ class Ecu_database:
                     elif 'DOIP' in protocol.upper():
                         if address not in self.available_addr_doip:
                             self.available_addr_doip.append(str(address))
-                    elif 'FlexRay' in protocol.upper():
-                        if address not in self.available_addr_flexray:
-                            self.available_addr_flexray.append(str(address))
-                    elif 'Ethernet' in protocol.upper():
-                        if address not in self.available_addr_ethernet:
-                            self.available_addr_ethernet.append(str(address))
 
                     autoidents = target.getElementsByTagName("AutoIdents")
                     projectselems = target.getElementsByTagName("Projects")
@@ -1940,7 +1788,7 @@ class Ecu_scanner:
             soft = can_response[48:53].replace(' ', '')
             version = can_response[54:59].replace(' ', '')
             self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
-        elif protocol == "DoIP":
+        elif protocol.upper() == "DOIP":
             # Handle DoIP protocol responses (different format)
             if len(can_response) > 20:
                 # DoIP responses have different structure
@@ -1988,7 +1836,7 @@ class Ecu_scanner:
         if vehiclefilter:
             if vehiclefilter in self.ecu_database.vehiclemap:
                 for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
-                    if proto == "DoIP" and addr not in project_doip_addresses:
+                    if proto.upper() == "DOIP" and addr not in project_doip_addresses:
                         project_doip_addresses.append(addr)
         else:
             project_doip_addresses = self.ecu_database.available_addr_doip
@@ -2073,131 +1921,3 @@ class Ecu_scanner:
             if hasattr(options, 'elm') and options.elm and hasattr(options.elm, 'doip_device'):
                 # Keep DoIP connection open for further communication
                 pass
-
-    def scan_flexray(self, progress=None, label=None, vehiclefilter=None):
-        """Scan for FlexRay ECUs using FlexRay protocol"""
-        project_flexray_addresses = []
-        if vehiclefilter:
-            if vehiclefilter in self.ecu_database.vehiclemap:
-                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
-                    if proto == "FlexRay" and addr not in project_flexray_addresses:
-                        project_flexray_addresses.append(addr)
-        else:
-            project_flexray_addresses = self.ecu_database.available_addr_flexray
-
-        if len(project_flexray_addresses) == 0:
-            print("No FlexRay addresses available for scanning")
-            return
-
-        i = 0
-        if progress:
-            progress.setRange(0, len(project_flexray_addresses))
-            progress.setValue(0)
-
-        # Scan FlexRay addresses
-        for addr in list(set(project_flexray_addresses)):
-            i += 1
-            if progress:
-                progress.setValue(i)
-                if self.qapp:
-                    self.qapp.processEvents()
-
-            # Skip invalid addresses
-            if addr == '00' or addr == 'FF':
-                continue
-
-            if not elm.addr_exist(addr):
-                print(f"Warning: address {addr} is not mapped")
-                continue
-
-            text = _("Scanning FlexRay address: ")
-            try:
-                # Try long name first
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
-            except KeyError:
-                # If not, short name
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
-
-            if not options.simulation_mode:
-                try:
-                    # Initialize FlexRay communication
-                    # Note: FlexRay requires specialized hardware and protocol stack
-                    # This is a placeholder for FlexRay scanning implementation
-                    print(f"FlexRay scanning not yet implemented for address {addr}")
-                    print("FlexRay requires specialized hardware and protocol stack")
-                except Exception as e:
-                    print(f"Error scanning FlexRay address {addr}: {e}")
-            else:
-                # Simulation mode - provide test data
-                if addr == "100":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                elif addr == "200":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                else:
-                    can_response = "7F 80"
-                
-                self.check_ecu(can_response, label, addr, "FlexRay")
-
-    def scan_ethernet(self, progress=None, label=None, vehiclefilter=None):
-        """Scan for Ethernet ECUs using Ethernet protocol"""
-        project_ethernet_addresses = []
-        if vehiclefilter:
-            if vehiclefilter in self.ecu_database.vehiclemap:
-                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
-                    if proto == "Ethernet" and addr not in project_ethernet_addresses:
-                        project_ethernet_addresses.append(addr)
-        else:
-            project_ethernet_addresses = self.ecu_database.available_addr_ethernet
-
-        if len(project_ethernet_addresses) == 0:
-            print("No Ethernet addresses available for scanning")
-            return
-
-        i = 0
-        if progress:
-            progress.setRange(0, len(project_ethernet_addresses))
-            progress.setValue(0)
-
-        # Scan Ethernet addresses
-        for addr in list(set(project_ethernet_addresses)):
-            i += 1
-            if progress:
-                progress.setValue(i)
-                if self.qapp:
-                    self.qapp.processEvents()
-
-            # Skip invalid addresses
-            if addr == '00' or addr == 'FF':
-                continue
-
-            if not elm.addr_exist(addr):
-                print(f"Warning: address {addr} is not mapped")
-                continue
-
-            text = _("Scanning Ethernet address: ")
-            try:
-                # Try long name first
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
-            except KeyError:
-                # If not, short name
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
-
-            if not options.simulation_mode:
-                try:
-                    # Initialize Ethernet communication
-                    # Note: Ethernet scanning may use TCP/UDP sockets or specialized adapters
-                    # This is a placeholder for Ethernet scanning implementation
-                    print(f"Ethernet scanning not yet implemented for address {addr}")
-                    print("Ethernet scanning requires TCP/UDP socket implementation")
-                except Exception as e:
-                    print(f"Error scanning Ethernet address {addr}: {e}")
-            else:
-                # Simulation mode - provide test data
-                if addr == "300":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                elif addr == "400":
-                    can_response = "61 80 30 36 32 36 52 35 37 31 31 35 32 31 36 52 01 99 00 00 00 00 02 00 00 88"
-                else:
-                    can_response = "7F 80"
-                
-                self.check_ecu(can_response, label, addr, "Ethernet")

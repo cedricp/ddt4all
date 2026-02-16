@@ -45,6 +45,7 @@ def load_this():
         with open("ddt4all_data/projects.json", "r", encoding="UTF-8") as f:
             vehicles_loc = json.loads(f.read())
         ecu.addressing = vehicles_loc["projects"]["All"]["addressing"]
+        ecu.doip = vehicles_loc["projects"]["All"]["DoIP"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
         elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
@@ -1071,10 +1072,6 @@ class Main_widget(widgets.QMainWindow):
         self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus, project)
         self.logview.append(_("Scanning DoIP") + " -> " + project)
         self.ecu_scan.scan_doip(self.progressstatus, self.infostatus, project)
-        self.logview.append(_("Scanning FlexRay") + " -> " + project)
-        self.ecu_scan.scan_flexray(self.progressstatus, self.infostatus, project)
-        self.logview.append(_("Scanning Ethernet") + " -> " + project)
-        self.ecu_scan.scan_ethernet(self.progressstatus, self.infostatus, project)
 
         for ecu in self.ecu_scan.ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
@@ -1103,21 +1100,15 @@ class Main_widget(widgets.QMainWindow):
         scancan2 = False
         scankwp = False
         scandoip = False
-        scanflexray = False
-        scanethernet = False
 
         canbutton = widgets.QPushButton('CAN')
         kwpbutton = widgets.QPushButton('KWP')
         doipbutton = widgets.QPushButton('DoIP')
-        flexraybutton = widgets.QPushButton('FlexRay')
-        ethernetbutton = widgets.QPushButton('Ethernet')
         cancelbutton = widgets.QPushButton(_('CANCEL'))
 
         msgBox.addButton(canbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(doipbutton, widgets.QMessageBox.ActionRole)
-        msgBox.addButton(flexraybutton, widgets.QMessageBox.ActionRole)
-        msgBox.addButton(ethernetbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(cancelbutton, widgets.QMessageBox.NoRole)
         msgBox.exec_()
 
@@ -1136,14 +1127,6 @@ class Main_widget(widgets.QMainWindow):
             self.logview.append(_("Scanning DoIP"))
             scandoip = True
 
-        if msgBox.clickedButton() == flexraybutton:
-            self.logview.append(_("Scanning FlexRay"))
-            scanflexray = True
-
-        if msgBox.clickedButton() == ethernetbutton:
-            self.logview.append(_("Scanning Ethernet"))
-            scanethernet = True
-
         progressWidget = widgets.QWidget(None)
         progressLayout = widgets.QVBoxLayout()
         progressWidget.setLayout(progressLayout)
@@ -1157,10 +1140,6 @@ class Main_widget(widgets.QMainWindow):
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
         if scandoip:
             self.ecu_scan.scan_doip(self.progressstatus, self.infostatus)
-        if scanflexray:
-            self.ecu_scan.scan_flexray(self.progressstatus, self.infostatus)
-        if scanethernet:
-            self.ecu_scan.scan_ethernet(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()
