@@ -4,6 +4,10 @@ import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
 import ddt4all.options as options
+from ddt4all.ui.main_window.icons_paths import (
+    ICON_OBD,
+    ICON_DONATE
+)
 import ddt4all.version as version
 
 _ = options.translator('ddt4all')
@@ -12,14 +16,14 @@ _ = options.translator('ddt4all')
 class DonationWidget(widgets.QLabel):
     def __init__(self):
         super(DonationWidget, self).__init__()
-        img = gui.QPixmap("ddt4all_data/icons/donate.png")
+        img = gui.QPixmap(ICON_DONATE)
         self.setPixmap(img)
         self.setAlignment(core.Qt.AlignCenter)
         self.setFrameStyle((widgets.QFrame.Panel | widgets.QFrame.StyledPanel))
 
     def mousePressEvent(self, mousevent):
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(
@@ -37,7 +41,7 @@ class DonationWidget(widgets.QLabel):
         gui.QDesktopServices().openUrl(url)
         msgbox = widgets.QMessageBox()
         msgbox.setWindowTitle(version.__appname__)
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         msgbox.setWindowIcon(appIcon)
         translate_arg = _("Thank you for you contribution, if nothing happens, please go to")
         msgbox.setText("<center>" + translate_arg + ": https://github.com/cedricp/ddt4all</center>")

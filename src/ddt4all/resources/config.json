@@ -1,7 +1,7 @@
 {
  "lang": "fr_FR",
- "dark": false,
- "socket_timeout": false,
+ "dark": true,
+ "socket_timeout": true,
  "device_settings": {},
  "auto_detect_devices": true,
  "connection_timeout": 10,

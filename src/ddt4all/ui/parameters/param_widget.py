@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+from pathlib import Path
 import time
 import xml.dom.minidom
 import zipfile
@@ -18,11 +19,13 @@ from ddt4all.ui.displaymod.input_widget import InputWidget
 from ddt4all.ui.displaymod.label_widget import LabelWidget
 from ddt4all.ui.displaymod.screen_widget import ScreenWidget
 from ddt4all.ui.parameters.ecu_command import EcuCommand
-from ddt4all.ui.parameters.utils import dumpXML
+from ddt4all.ui.parameters.utils import (
+    dumpXML,
+    PATH_PNG_ODB,
+)
 import ddt4all.version as version
 
 _ = options.translator('ddt4all')
-
 
 class ParamWidget(widgets.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status, canline):
@@ -924,7 +927,7 @@ class ParamWidget(widgets.QWidget):
             messages = self.button_messages[txt]
             for message in messages:
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                appIcon = gui.QIcon(PATH_PNG_ODB)
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(version.__appname__)
                 msgbox.setText(message)
@@ -1002,7 +1005,7 @@ class ParamWidget(widgets.QWidget):
             elm_response = self.sendElm(' '.join(elm_data_stream))
             if elm_response == "BLOCKED":
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                appIcon = gui.QIcon(PATH_PNG_ODB)
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(_("For your safety"))
                 msgbox.setText(_("<center>BLOCKED COMMAND</center>\nActivate expert mode to unlock"))
@@ -1242,7 +1245,7 @@ class ParamWidget(widgets.QWidget):
             request = "14FF00"
 
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(PATH_PNG_ODB)
         msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(_("<center>You are about to clear diagnostic troubles codes</center>") +
@@ -1272,7 +1275,7 @@ class ParamWidget(widgets.QWidget):
 
         if 'WRONG' in response:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(PATH_PNG_ODB)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText("There was an error clearing DTC")
@@ -1310,7 +1313,7 @@ class ParamWidget(widgets.QWidget):
 
         if "RESPONSE" in can_response:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(PATH_PNG_ODB)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("Invalid response for ReadDTC command"))
@@ -1322,7 +1325,7 @@ class ParamWidget(widgets.QWidget):
         # Handle error
         if can_response[0].upper() == "7F":
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(PATH_PNG_ODB)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("Read DTC returned an error"))
@@ -1333,7 +1336,7 @@ class ParamWidget(widgets.QWidget):
         if len(can_response) == 2:
             # No errors
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(PATH_PNG_ODB)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No DTC"))
@@ -1356,7 +1359,7 @@ class ParamWidget(widgets.QWidget):
         numberofdtc = int('0x' + can_response[1], 16)
         self.dtcdialog = widgets.QDialog(None)
         # Set window icon and title
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(PATH_PNG_ODB)
         self.dtcdialog.setWindowIcon(appIcon)
         self.dtcdialog.setWindowTitle(_("Diagnostic Trouble Codes"))
         dtc_view = widgets.QTextEdit(None)

@@ -9,6 +9,7 @@ import PyQt5.QtWidgets as widgets
 import ddt4all.core.ecu.ecu_database as ecudb
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
+from ddt4all.ui.main_window.icons_paths import ICON_SCAN
 
 _ = options.translator('ddt4all')
 
@@ -38,7 +39,7 @@ class EcuList(widgets.QWidget):
         layout = widgets.QVBoxLayout()
         layouth = widgets.QHBoxLayout()
         scanbutton = widgets.QPushButton()
-        scanbutton.setIcon(gui.QIcon("ddt4all_data/icons/scan.png"))
+        scanbutton.setIcon(gui.QIcon(ICON_SCAN))
         scanbutton.clicked.connect(self.scanselvehicle)
         layouth.addWidget(self.vehicle_combo)
         layouth.addWidget(scanbutton)

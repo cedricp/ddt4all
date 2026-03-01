@@ -2,6 +2,7 @@ import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
 import ddt4all.options as options
+from ddt4all.ui.main_window.icons_paths import ICON_OBD
 
 _ = options.translator('ddt4all')
 
@@ -18,7 +19,7 @@ class EcuFinder(widgets.QDialog):
     def __init__(self, ecuscanner):
         super(EcuFinder, self).__init__()
         # Set window icon and title
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("ECU Finder"))
         self.ecuscanner = ecuscanner

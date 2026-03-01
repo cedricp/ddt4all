@@ -3,6 +3,7 @@ import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
 import ddt4all.options as options
+from ddt4all.ui.parameters.utils import PATH_PNG_ODB
 import ddt4all.version as version
 
 _ = options.translator('ddt4all')
@@ -11,7 +12,7 @@ class EcuCommand(widgets.QDialog):
     def __init__(self, paramview, ecurequestparser, sds):
         super(EcuCommand, self).__init__(None)
         # Set window icon and title
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(PATH_PNG_ODB)
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("ECU Command"))
         self.ecu = ecurequestparser
@@ -65,7 +66,7 @@ class EcuCommand(widgets.QDialog):
         text += "<center>Use it at your own risk</center>\n"
         text += "<center>and if you know exactely what you do</center>\n"
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(PATH_PNG_ODB)
         msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(version.__appname__)
         msgbox.setText(text)
@@ -87,7 +88,7 @@ class EcuCommand(widgets.QDialog):
             else:
                 if check:
                     msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                    appIcon = gui.QIcon(PATH_PNG_ODB)
                     msgbox.setWindowIcon(appIcon)
                     msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText("Missing data in table")
@@ -114,7 +115,7 @@ class EcuCommand(widgets.QDialog):
         reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
         if reveived_stream.startswith("WRONG"):
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(PATH_PNG_ODB)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText("ECU returned error (check logview)")

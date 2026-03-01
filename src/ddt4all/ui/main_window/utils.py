@@ -1,5 +1,6 @@
 import errno
 import os
+from pathlib import Path
 import sys
 import tempfile
 
@@ -8,6 +9,9 @@ import PyQt5.QtCore as core
 import ddt4all.options as options
 
 _ = options.translator('ddt4all')
+
+BASE_DIR = Path(__file__).resolve().parent
+styles_base_dir = BASE_DIR / ".." / ".." / "resources" / "styles"
 
 def isWritable(path):
     try:
@@ -25,12 +29,12 @@ def isWritable(path):
 def set_theme_style(app, onoff):
 
     if (onoff):
-        stylefile = core.QFile("ddt4all_data/qstyle-d.qss")
+        stylefile = core.QFile(str(styles_base_dir / "qstyle-d.qss"))
         options.dark_mode = True
         stylefile.open(core.QFile.ReadOnly)
         StyleSheet = bytes(stylefile.readAll()).decode()
     else:
-        stylefile = core.QFile("ddt4all_data/qstyle.qss")
+        stylefile = core.QFile(str(styles_base_dir / "qstyle.qss"))
         stylefile.open(core.QFile.ReadOnly)
         options.dark_mode = False
         StyleSheet = bytes(stylefile.readAll()).decode()

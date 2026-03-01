@@ -8,6 +8,17 @@ import PyQt5.QtWidgets as widgets
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
 from ddt4all.ui.main_window.donation_widget import DonationWidget
+from ddt4all.ui.main_window.icons_paths import (
+    ICON_BT,
+    ICON_DERELEK,
+    ICON_ELS27,
+    ICON_OBD,
+    ICON_OBDLINK,
+    ICON_USB,
+    ICON_VGATE,
+    ICON_VLINKER,
+    ICON_WIFI,
+)
 from ddt4all.ui.main_window.utils import (
     set_theme_style,
     set_socket_timeout,
@@ -39,7 +50,7 @@ class MainWindowOptions(widgets.QDialog):
         self.raise_port_speed = _("No")
         super(MainWindowOptions, self).__init__(None)
         # Set window icon and title
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Options"))
         layout = widgets.QVBoxLayout()
@@ -56,7 +67,7 @@ class MainWindowOptions(widgets.QDialog):
 
         medialayout = widgets.QHBoxLayout()
         self.usbbutton = widgets.QPushButton()
-        self.usbbutton.setIcon(gui.QIcon("ddt4all_data/icons/usb.png"))
+        self.usbbutton.setIcon(gui.QIcon(ICON_USB))
         self.usbbutton.setIconSize(core.QSize(60, 60))
         self.usbbutton.setFixedHeight(64)
         self.usbbutton.setFixedWidth(64)
@@ -65,7 +76,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.usbbutton)
 
         self.wifibutton = widgets.QPushButton()
-        self.wifibutton.setIcon(gui.QIcon("ddt4all_data/icons/wifi.png"))
+        self.wifibutton.setIcon(gui.QIcon(ICON_WIFI))
         self.wifibutton.setIconSize(core.QSize(60, 60))
         self.wifibutton.setFixedHeight(64)
         self.wifibutton.setFixedWidth(64)
@@ -74,7 +85,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.wifibutton)
 
         self.btbutton = widgets.QPushButton()
-        self.btbutton.setIcon(gui.QIcon("ddt4all_data/icons/bt.png"))
+        self.btbutton.setIcon(gui.QIcon(ICON_BT))
         self.btbutton.setIconSize(core.QSize(60, 60))
         self.btbutton.setFixedHeight(64)
         self.btbutton.setFixedWidth(64)
@@ -83,7 +94,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.btbutton)
 
         self.obdlinkbutton = widgets.QPushButton()
-        self.obdlinkbutton.setIcon(gui.QIcon("ddt4all_data/icons/obdlink.png"))
+        self.obdlinkbutton.setIcon(gui.QIcon(ICON_OBDLINK))
         self.obdlinkbutton.setIconSize(core.QSize(60, 60))
         self.obdlinkbutton.setFixedHeight(64)
         self.obdlinkbutton.setFixedWidth(64)
@@ -92,7 +103,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.obdlinkbutton)
 
         self.elsbutton = widgets.QPushButton()
-        self.elsbutton.setIcon(gui.QIcon("ddt4all_data/icons/els27.png"))
+        self.elsbutton.setIcon(gui.QIcon(ICON_ELS27))
         self.elsbutton.setIconSize(core.QSize(60, 60))
         self.elsbutton.setFixedHeight(64)
         self.elsbutton.setFixedWidth(64)
@@ -101,7 +112,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.elsbutton)
 
         self.vlinkerbutton = widgets.QPushButton()
-        self.vlinkerbutton.setIcon(gui.QIcon("ddt4all_data/icons/vlinker.png"))
+        self.vlinkerbutton.setIcon(gui.QIcon(ICON_VLINKER))
         self.vlinkerbutton.setIconSize(core.QSize(60, 60))
         self.vlinkerbutton.setFixedHeight(64)
         self.vlinkerbutton.setFixedWidth(64)
@@ -110,7 +121,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.vlinkerbutton)
 
         self.derelekbutton = widgets.QPushButton()
-        self.derelekbutton.setIcon(gui.QIcon("ddt4all_data/icons/derelek.png"))
+        self.derelekbutton.setIcon(gui.QIcon(ICON_DERELEK))
         self.derelekbutton.setIconSize(core.QSize(60, 60))
         self.derelekbutton.setFixedHeight(64)
         self.derelekbutton.setFixedWidth(64)
@@ -119,7 +130,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.derelekbutton)
 
         self.vgatebutton = widgets.QPushButton()
-        self.vgatebutton.setIcon(gui.QIcon("ddt4all_data/icons/vgate.png"))
+        self.vgatebutton.setIcon(gui.QIcon(ICON_VGATE))
         self.vgatebutton.setIconSize(core.QSize(60, 60))
         self.vgatebutton.setFixedHeight(64)
         self.vgatebutton.setFixedWidth(64)
@@ -660,7 +671,7 @@ class MainWindowOptions(widgets.QDialog):
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not self.securitycheck:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(ICON_OBD)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("You must check the recommandations"))
@@ -684,7 +695,7 @@ class MainWindowOptions(widgets.QDialog):
                 self.done(True)
             else:
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                appIcon = gui.QIcon(ICON_OBD)
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(version.__appname__)
                 msgbox.setText(_("Please select a communication port"))

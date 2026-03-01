@@ -9,6 +9,7 @@ import ddt4all.options as options
 from ddt4all.ui.data_editor.numeric_list_panel import NumericListPanel
 from ddt4all.ui.data_editor.numeric_panel import NumericPanel
 from ddt4all.ui.data_editor.other_panel import OtherPanel
+from ddt4all.ui.main_window.icons_paths import ICON_OBD
 import ddt4all.version as version
 
 _ = options.translator('ddt4all')
@@ -102,7 +103,7 @@ class DataEditor(widgets.QWidget):
             for rcvname, rcvdi in request.dataitems.items():
                 if rcvname == dataname:
                     msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                    appIcon = gui.QIcon(ICON_OBD)
                     msgbox.setWindowIcon(appIcon)
                     msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText(_("Data is used by request %s") % reqname)
@@ -111,7 +112,7 @@ class DataEditor(widgets.QWidget):
             for sndname, snddi in request.sendbyte_dataitems.items():
                 if sndname == dataname:
                     msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                    appIcon = gui.QIcon(ICON_OBD)
                     msgbox.setWindowIcon(appIcon)
                     msgbox.setWindowTitle(version.__appname__)
                     msgbox.setText(_("Data is used by request %s") % reqname)

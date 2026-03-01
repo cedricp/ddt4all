@@ -4,6 +4,7 @@ import gettext
 import json
 import locale
 import os
+from pathlib import Path
 
 simulation_mode = False
 port_speed = 38400
@@ -61,6 +62,7 @@ lang_list = {
     "Ukrainian": "uk_UA"
 }
 
+BASE_DIR = Path(__file__).resolve().parent
 
 def save_config():
     # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
@@ -87,7 +89,8 @@ def create_new_config():
 
 def load_configuration():
     try:
-        f = open("ddt4all_data/config.json", "r", encoding="UTF-8")
+
+        f = open(str(BASE_DIR / "resources" / "config.json"), "r", encoding="UTF-8")
         config = json.loads(f.read())
         # load config as multiplatform (mac fix macOs load conf)
         configuration["lang"] = config.get("lang", get_translator_lang())
@@ -125,11 +128,11 @@ def get_translator_lang():
     try:
         lang, enc = locale.getdefaultlocale()
         loc_lang = lang
-    except:
+    except Exception:
         try:
             lang, enc = locale.getlocale()
             loc_lang = lang
-        except:
+        except Exception:
             pass
     return loc_lang
 

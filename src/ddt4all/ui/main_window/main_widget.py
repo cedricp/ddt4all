@@ -17,6 +17,18 @@ from ddt4all.ui.data_editor.data_editor import DataEditor
 from ddt4all.ui.parameters.utils import zipConvertXML
 from ddt4all.ui.main_window.ecu_finder import EcuFinder
 from ddt4all.ui.main_window.ecu_list import EcuList
+from ddt4all.ui.main_window.icons_paths import (
+    ICON_OBD,
+    ICON_DTC,
+    ICON_LOG,
+    ICON_EXPERT,
+    ICON_EXPERT_B,
+    ICON_AUTOREFRESH,
+    ICON_REFRESH,
+    ICON_HEX,
+    ICON_COMMAND,
+    ICON_FLOWCONTROL,
+)
 from ddt4all.ui.main_window.main_window_options import MainWindowOptions
 from ddt4all.ui.main_window.utils import (
     isWritable,
@@ -38,7 +50,7 @@ except ImportError:
     HAS_WEBENGINE = False
 
 class MainWidget(widgets.QMainWindow):
-    def __init__(self, app, parent=None):
+    def __init__(self, app, vehicles, parent=None):
         super(MainWidget, self).__init__(parent)
         self.setIcon()
         if not options.simulation_mode:
@@ -49,6 +61,7 @@ class MainWidget(widgets.QMainWindow):
             self.screenlogfile = None
 
         self.app = app
+        self.vehicles = vehicles
         self.plugins = {}
         self.carlist_sort_mode = "code"  # Default sorting by project code
         options.main_window = self  # Set reference for language switching
@@ -60,7 +73,7 @@ class MainWidget(widgets.QMainWindow):
         print(_("%d loaded ECUs in database.") % self.ecu_scan.getNumEcuDb())
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(ICON_OBD)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -201,7 +214,7 @@ class MainWidget(widgets.QMainWindow):
         
         self.ecunamemap = {}
 
-        self.eculistwidget = EcuList(self.ecu_scan, self.treeview_ecu)
+        self.eculistwidget = EcuList(self.ecu_scan, self.treeview_ecu, self.vehicles)
         self.treeview_eculist = widgets.QDockWidget(self)
         self.treeview_eculist.setWindowTitle(_("Ecu List Window"))
         self.treeview_eculist.setWidget(self.eculistwidget)
@@ -213,40 +226,40 @@ class MainWidget(widgets.QMainWindow):
 
         self.toolbar = self.addToolBar(_("ToolBar"))
 
-        self.diagaction = widgets.QAction(gui.QIcon("ddt4all_data/icons/dtc.png"), _("Read DTC"), self)
+        self.diagaction = widgets.QAction(gui.QIcon(ICON_DTC), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
         self.diagaction.setEnabled(False)
 
-        self.log = widgets.QAction(gui.QIcon("ddt4all_data/icons/log.png"), _("Full log"), self)
+        self.log = widgets.QAction(gui.QIcon(ICON_LOG), _("Full log"), self)
         self.log.setCheckable(True)
         self.log.setChecked(options.log_all)
         self.log.triggered.connect(self.changeLogMode)
         if options.dark_mode:
-            self.expert = widgets.QAction(gui.QIcon("ddt4all_data/icons/expert-b.png"), _("Expert mode (enable writing)"), self)
+            self.expert = widgets.QAction(gui.QIcon(ICON_EXPERT_B), _("Expert mode (enable writing)"), self)
         else:
-            self.expert = widgets.QAction(gui.QIcon("ddt4all_data/icons/expert.png"), _("Expert mode (enable writing)"), self)
+            self.expert = widgets.QAction(gui.QIcon(ICON_EXPERT), _("Expert mode (enable writing)"), self)
         self.expert.setCheckable(True)
         self.expert.setChecked(options.promode)
         self.expert.triggered.connect(self.changeUserMode)
 
-        self.autorefresh = widgets.QAction(gui.QIcon("ddt4all_data/icons/autorefresh.png"), _("Auto refresh"), self)
+        self.autorefresh = widgets.QAction(gui.QIcon(ICON_AUTOREFRESH), _("Auto refresh"), self)
         self.autorefresh.setCheckable(True)
         self.autorefresh.setChecked(options.auto_refresh)
         self.autorefresh.triggered.connect(self.changeAutorefresh)
 
-        self.refresh = widgets.QAction(gui.QIcon("ddt4all_data/icons/refresh.png"), _("Refresh (one shot)"), self)
+        self.refresh = widgets.QAction(gui.QIcon(ICON_REFRESH), _("Refresh (one shot)"), self)
         self.refresh.triggered.connect(self.refreshParams)
         self.refresh.setEnabled(not options.auto_refresh)
 
-        self.hexinput = widgets.QAction(gui.QIcon("ddt4all_data/icons/hex.png"), _("Manual command"), self)
+        self.hexinput = widgets.QAction(gui.QIcon(ICON_HEX), _("Manual command"), self)
         self.hexinput.triggered.connect(self.hexeditor)
         self.hexinput.setEnabled(False)
 
-        self.cominput = widgets.QAction(gui.QIcon("ddt4all_data/icons/command.png"), _("Manual request"), self)
+        self.cominput = widgets.QAction(gui.QIcon(ICON_COMMAND), _("Manual request"), self)
         self.cominput.triggered.connect(self.command_editor)
         self.cominput.setEnabled(False)
 
-        self.fctrigger = widgets.QAction(gui.QIcon("ddt4all_data/icons/flowcontrol.png"), _("Software flow control"), self)
+        self.fctrigger = widgets.QAction(gui.QIcon(ICON_FLOWCONTROL), _("Software flow control"), self)
         self.fctrigger.setCheckable(True)
         self.fctrigger.triggered.connect(self.flow_control)
 
@@ -445,7 +458,7 @@ class MainWidget(widgets.QMainWindow):
 
     def about_content_msg(self):
         msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         msgbox.setWindowIcon(appIcon)
         msgbox.setIcon(widgets.QMessageBox.Information)
         msgbox.setWindowTitle(_("About DDT4ALL"))
@@ -491,7 +504,7 @@ class MainWidget(widgets.QMainWindow):
         gui.QDesktopServices().openUrl(url)
 
     def setIcon(self):
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         self.setWindowIcon(appIcon)
 
     def updateMenuBar(self):
@@ -607,7 +620,7 @@ class MainWidget(widgets.QMainWindow):
 
         if not isWritable(str(os.path.dirname(filename))):
             mbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(ICON_OBD)
             mbox.setWindowIcon(appIcon)
             mbox.setWindowTitle(version.__appname__)
             mbox.setText("Cannot write to directory " + os.path.dirname(filename))
@@ -624,7 +637,7 @@ class MainWidget(widgets.QMainWindow):
             self.paramview.init('')
         if self.ecu_scan.getNumEcuDb() == 0:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(ICON_OBD)
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -667,7 +680,7 @@ class MainWidget(widgets.QMainWindow):
         if necatname:
             if self.ecu_scan.getNumEcuDb() == 0:
                 msgbox = widgets.QMessageBox()
-                appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+                appIcon = gui.QIcon(ICON_OBD)
                 msgbox.setWindowIcon(appIcon)
                 msgbox.setWindowTitle(version.__appname__)
                 msgbox.setIcon(widgets.QMessageBox.Warning)
@@ -757,7 +770,7 @@ class MainWidget(widgets.QMainWindow):
 
     def scan(self):
         msgBox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = gui.QIcon(ICON_OBD)
         msgBox.setWindowIcon(appIcon)
         msgBox.setWindowTitle(version.__appname__)
         msgBox.setText(_('Scan options'))

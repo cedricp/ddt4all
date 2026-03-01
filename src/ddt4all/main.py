@@ -35,6 +35,7 @@ except ImportError:
 
 app = None
 BASE_DIR = Path(__file__).resolve().parent
+icons_base_dir = BASE_DIR / "resources" / "icons"
 
 # remove Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway 
 if sys.platform[:3] == "lin":
@@ -139,7 +140,7 @@ if __name__ == '__main__':
 
         if not options.port:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(str(icons_base_dir / "obd.png"))
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No COM port selected"))
@@ -151,7 +152,7 @@ if __name__ == '__main__':
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            appIcon = gui.QIcon(str(icons_base_dir / "obd.png"))
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
@@ -159,7 +160,7 @@ if __name__ == '__main__':
         else:
             nok = False
 
-    w = MainWidget()
+    w = MainWidget(app, vehicles)
     options.main_window = w
     w.show()
     app.exec_()
