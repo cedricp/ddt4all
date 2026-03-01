@@ -1,64 +1,17 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import string
-import time
 
 import PyQt5.QtCore as core
 import PyQt5.QtWidgets as widgets
 
-import ecu
-import options
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
+from ddt4all.ui.sniffer.sniffer_thread import SnifferThread
 
 _ = options.translator('ddt4all')
 
-
-class snifferThread(core.QThread):
-    # Use a thread to avoid ELM buffer flooding
-    try:
-        # TODO:// basestring not defined use bytes.
-        # dataready = core.pyqtSignal(basestring)
-        dataready = core.pyqtSignal(bytes)
-    except:
-        dataready = core.pyqtSignal(str)
-
-    def __init__(self, address, br):
-        super(snifferThread, self).__init__()
-        self.filter = address
-        self.running = True
-        if not options.simulation_mode:
-            options.elm.monitorstop = False
-            options.elm.init_can_sniffer(self.filter, br)
-
-    def stop(self):
-        if not options.simulation_mode:
-            options.elm.monitorstop = True
-        else:
-            return
-
-        while self.running:
-            time.sleep(.1)
-
-    def senddata(self, data):
-        self.dataready.emit(data)
-
-    def run(self):
-        if options.simulation_mode:
-            if options.simulation_mode:
-                while 1:
-                    time.sleep(.1)
-                    # Test data
-                    self.dataready.emit("0300000000400000")
-            return
-
-        while not options.elm.monitorstop:
-            options.elm.monitor_can_bus(self.senddata)
-
-        self.running = False
-
-
-class sniffer(widgets.QWidget):
+class Sniffer(widgets.QWidget):
     def __init__(self, parent=None):
-        super(sniffer, self).__init__(parent)
+        super(Sniffer, self).__init__(parent)
         self.ecu_file = None
         self.ecurequests = None
         self.snifferthread = None
@@ -143,7 +96,7 @@ class sniffer(widgets.QWidget):
         self.framecombo.setEnabled(False)
         self.stopthread()
 
-        self.snifferthread = snifferThread(ecu_filter, self.ecurequests.baudrate)
+        self.snifferthread = SnifferThread(ecu_filter, self.ecurequests.baudrate)
         self.snifferthread.dataready.connect(self.callback)
         self.snifferthread.start()
 
@@ -179,7 +132,7 @@ class sniffer(widgets.QWidget):
                 i += 1
 
     def init(self):
-        self.ecurequests = ecu.Ecu_file(self.ecu_file, True)
+        self.ecurequests = EcuFile(self.ecu_file, True)
         self.framecombo.clear()
         self.table.clear()
         self.table.setRowCount(0)
