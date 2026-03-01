@@ -1,212 +1,32 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-import argparse
 import datetime
-import glob
+import json
 import os
 import time
 import xml.dom.minidom
 import zipfile
-from io import BytesIO
 
 import PyQt5.QtCore as core
+import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
-import displaymod
-import ecu
-import elm
-import json
-import options
-import version
-from uiutils import *
+from ddt4all.core.ecu.ecu_file import EcuFile
+from ddt4all.core.elm.elm import reconnect_elm
+import ddt4all.options as options
+from ddt4all.ui.displaymod.button_request import ButtonRequest
+from ddt4all.ui.displaymod.display_widget import DisplayWidget
+from ddt4all.ui.displaymod.input_widget import InputWidget
+from ddt4all.ui.displaymod.label_widget import LabelWidget
+from ddt4all.ui.displaymod.screen_widget import ScreenWidget
+from ddt4all.ui.parameters.ecu_command import EcuCommand
+from ddt4all.ui.parameters.utils import dumpXML
+import ddt4all.version as version
 
 _ = options.translator('ddt4all')
 
-# TODO :
-# Read freezeframe data // Done (partially)
-# Check ELM response validity (mode + 0x40)
 
-class ecuCommand(widgets.QDialog):
-    def __init__(self, paramview, ecurequestparser, sds):
-        super(ecuCommand, self).__init__(None)
-        # Set window icon and title
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-        self.setWindowIcon(appIcon)
-        self.setWindowTitle(_("ECU Command"))
-        self.ecu = ecurequestparser
-        self.ecu.requests.keys()
-        self.sds = sds
-        self.paramview = paramview
-
-        layout = widgets.QVBoxLayout()
-        self.req_combo = widgets.QComboBox()
-        self.sds_combo = widgets.QComboBox()
-        self.com_table = widgets.QTableWidget()
-        self.rcv_table = widgets.QTableWidget()
-        self.isotp_frame_edit = widgets.QLineEdit()
-        self.com_table.setColumnCount(2)
-        self.com_table.verticalHeader().hide()
-
-        self.rcv_table.setColumnCount(2)
-        self.rcv_table.verticalHeader().hide()
-        layout.addWidget(widgets.QLabel("Start diagnostic session"))
-        layout.addWidget(self.sds_combo)
-        layout.addWidget(widgets.QLabel("Request"))
-        layout.addWidget(self.req_combo)
-        layout.addWidget(widgets.QLabel("Data to send"))
-        layout.addWidget(self.com_table)
-        layout.addWidget(widgets.QLabel("Computed ISOTP Frame"))
-        layout.addWidget(self.isotp_frame_edit)
-        checkbutton = widgets.QPushButton("Compute frame")
-        layout.addWidget(checkbutton)
-        layout.addWidget(widgets.QLabel("Data received"))
-        layout.addWidget(self.rcv_table)
-        button = widgets.QPushButton("Execute")
-        layout.addWidget(button)
-        button.clicked.connect(self.execute)
-        self.setLayout(layout)
-        self.reqs = []
-        self.send_data = []
-        self.current_request = None
-        checkbutton.clicked.connect(self.recompute)
-
-        reqlist = [a for a in self.ecu.requests.keys()]
-        reqlist.sort()
-        for k in reqlist:
-            self.req_combo.addItem(k)
-            self.reqs.append(k)
-        self.req_combo.currentIndexChanged.connect(self.req_changed)
-
-        for k, v in self.sds.items():
-            self.sds_combo.addItem(k)
-
-        text = "<center>This feature is experimental</center>\n"
-        text += "<center>Use it at your own risk</center>\n"
-        text += "<center>and if you know exactely what you do</center>\n"
-        msgbox = widgets.QMessageBox()
-        appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-        msgbox.setWindowIcon(appIcon)
-        msgbox.setWindowTitle(version.__appname__)
-        msgbox.setText(text)
-        msgbox.exec_()
-
-    def recompute(self):
-        frame = self.compute_frame(False)
-        self.isotp_frame_edit.setText(frame)
-
-    def compute_frame(self, check=True):
-        data_to_stream = {}
-        for i in range(0, self.com_table.rowCount()):
-            cellwidget = self.com_table.cellWidget(i, 1)
-            reqkey = self.com_table.item(i, 0).text()
-            if cellwidget:
-                curtext = cellwidget.currentText()
-            elif self.com_table.item(i, 1) is not None:
-                curtext = self.com_table.item(i, 1).text()
-            else:
-                if check:
-                    msgbox = widgets.QMessageBox()
-                    appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-                    msgbox.setWindowIcon(appIcon)
-                    msgbox.setWindowTitle(version.__appname__)
-                    msgbox.setText("Missing data in table")
-                    msgbox.exec_()
-                return "Missing input data"
-
-            if curtext is None:
-                # Error here
-                data_to_stream[reqkey] = ""
-            else:
-                data_to_stream[reqkey] = curtext
-
-        stream_to_send = " ".join(self.current_request.build_data_stream(data_to_stream))
-        return stream_to_send
-
-    def execute(self):
-        if self.current_request is None:
-            return
-
-        sds = self.sds[self.sds_combo.currentText()]
-        self.paramview.sendElm(sds)
-
-        stream_to_send = self.compute_frame()
-        reveived_stream = self.paramview.sendElm(stream_to_send, False, True)
-        if reveived_stream.startswith("WRONG"):
-            msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
-            msgbox.setWindowIcon(appIcon)
-            msgbox.setWindowTitle(version.__appname__)
-            msgbox.setText("ECU returned error (check logview)")
-            msgbox.exec_()
-            return
-        received_data = self.current_request.get_values_from_stream(reveived_stream)
-
-        self.rcv_table.setRowCount(len(received_data))
-        itemcount = 0
-        for k, v in received_data.items():
-            item = widgets.QTableWidgetItem(k)
-            self.rcv_table.setItem(itemcount, 0, item)
-            if v is not None:
-                item = widgets.QTableWidgetItem(v)
-            else:
-                item = widgets.QTableWidgetItem("NONE")
-            self.rcv_table.setItem(itemcount, 1, item)
-            itemcount += 1
-
-        self.rcv_table.resizeColumnsToContents()
-        self.rcv_table.resizeRowsToContents()
-
-    def req_changed(self, item):
-        self.com_table.clear()
-        self.com_table.setColumnCount(5)
-        self.current_request = self.ecu.requests[self.reqs[item]]
-        self.com_table.setRowCount(len(self.current_request.sendbyte_dataitems))
-        self.send_data = []
-
-        self.com_table.setHorizontalHeaderLabels(["Key", "Value", "Unit", "Data type", "Description"])
-        self.rcv_table.setHorizontalHeaderLabels(["Key", "Value"])
-
-        itemcount = 0
-        for k, v in self.current_request.sendbyte_dataitems.items():
-            self.send_data.append(k)
-            ecudata = self.ecu.data[k]
-
-            item = widgets.QTableWidgetItem(k)
-            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
-            self.com_table.setItem(itemcount, 0, item)
-            item = widgets.QTableWidgetItem(ecudata.unit)
-            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
-            self.com_table.setItem(itemcount, 2, item)
-            if ecudata.scaled:
-                item = widgets.QTableWidgetItem("Numeric decimal")
-            elif len(ecudata.items):
-                item = widgets.QTableWidgetItem("List")
-            elif ecudata.bytesascii:
-                item = widgets.QTableWidgetItem("String")
-            else:
-                item = widgets.QTableWidgetItem("Hexadecimal")
-            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
-            self.com_table.setItem(itemcount, 3, item)
-            item = widgets.QTableWidgetItem(ecudata.description)
-            item.setFlags(item.flags() ^ core.Qt.ItemIsEditable)
-            self.com_table.setItem(itemcount, 4, item)
-
-            if len(ecudata.items):
-                items = ecudata.items.keys()
-                combo = widgets.QComboBox()
-                for item in items:
-                    combo.addItem(item)
-                self.com_table.setCellWidget(itemcount, 1, combo)
-            itemcount += 1
-
-        self.com_table.resizeColumnsToContents()
-        self.com_table.resizeRowsToContents()
-        self.rcv_table.setRowCount(0)
-
-
-class paramWidget(widgets.QWidget):
+class ParamWidget(widgets.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status, canline):
-        super(paramWidget, self).__init__(parent)
+        super(ParamWidget, self).__init__(parent)
         self.pagename = ""
         self.logfile = None
         self.updatelog = False
@@ -427,7 +247,7 @@ class paramWidget(widgets.QWidget):
         if self.currentwidget is None:
             return
 
-        if isinstance(self.currentwidget, displaymod.labelWidget):
+        if isinstance(self.currentwidget, LabelWidget):
             colordialog = widgets.QColorDialog()
             color = colordialog.getColor()
             if color.isValid():
@@ -439,7 +259,7 @@ class paramWidget(widgets.QWidget):
         if self.currentwidget is None:
             return
 
-        if isinstance(self.currentwidget, displaymod.labelWidget):
+        if isinstance(self.currentwidget, LabelWidget):
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
                 if txt == self.currentwidget.text():
@@ -456,7 +276,7 @@ class paramWidget(widgets.QWidget):
         if self.currentwidget is None:
             return
 
-        if isinstance(self.currentwidget, displaymod.labelWidget):
+        if isinstance(self.currentwidget, LabelWidget):
             count = 0
             for label in self.layoutdict['screens'][self.current_screen]['labels']:
                 txt = label['text']
@@ -465,7 +285,7 @@ class paramWidget(widgets.QWidget):
                     break
                 count += 1
 
-        if isinstance(self.currentwidget, displaymod.inputWidget):
+        if isinstance(self.currentwidget, InputWidget):
             count = 0
             for inp in self.layoutdict['screens'][self.current_screen]['inputs']:
                 txt = inp['text']
@@ -474,7 +294,7 @@ class paramWidget(widgets.QWidget):
                     break
                 count += 1
 
-        if isinstance(self.currentwidget, displaymod.displayWidget):
+        if isinstance(self.currentwidget, DisplayWidget):
             count = 0
             for display in self.layoutdict['screens'][self.current_screen]['displays']:
                 txt = display['text']
@@ -483,7 +303,7 @@ class paramWidget(widgets.QWidget):
                     break
                 count += 1
 
-        if isinstance(self.currentwidget, displaymod.buttonRequest):
+        if isinstance(self.currentwidget, ButtonRequest):
             count = 0
             for button in self.layoutdict['screens'][self.current_screen]['buttons']:
                 txt = button['uniquename']
@@ -517,7 +337,7 @@ class paramWidget(widgets.QWidget):
                 addbuttonaction.triggered.connect(self.addButton)
                 addlabelaction.triggered.connect(self.addLabel)
 
-                if isinstance(widget, displaymod.labelWidget):
+                if isinstance(widget, LabelWidget):
                     renamelabelaction = widgets.QAction(_("Rename label"), popmenu)
                     changecoloraction = widgets.QAction(_("Change color"), popmenu)
                     popmenu.addAction(renamelabelaction)
@@ -541,7 +361,7 @@ class paramWidget(widgets.QWidget):
 
                 self.mouseOldX = event.globalX()
                 self.mouseOldY = event.globalY()
-                if not widget in self.movingwidgets:
+                if widget not in self.movingwidgets:
                     self.movingwidgets.append(widget)
                 widget.toggle_selected(True)
         else:
@@ -560,7 +380,7 @@ class paramWidget(widgets.QWidget):
             self.sliding = False
 
     def mouseMoveEvent(self, event):
-        if options.simulation_mode and options.mode_edit == True:
+        if options.simulation_mode and options.mode_edit:
             if len(self.movingwidgets):
                 sizemodifier = widgets.QApplication.keyboardModifiers() == core.Qt.ControlModifier
                 ratiomodifier = widgets.QApplication.keyboardModifiers() == core.Qt.ShiftModifier
@@ -635,7 +455,7 @@ class paramWidget(widgets.QWidget):
         return scr_init
 
     def command_editor(self):
-        editor = ecuCommand(self, self.ecurequestsparser, self.sds)
+        editor = EcuCommand(self, self.ecurequestsparser, self.sds)
         editor.exec_()
 
     def hexeditor(self):
@@ -785,7 +605,7 @@ class paramWidget(widgets.QWidget):
 
         if '.json' in self.ddtfile:
             self.parser = 'json'
-            self.ecurequestsparser = ecu.Ecu_file(self.ddtfile, True)
+            self.ecurequestsparser = EcuFile(self.ddtfile, True)
             self.initJSON()
         else:
             self.parser = 'xml'
@@ -796,7 +616,7 @@ class paramWidget(widgets.QWidget):
                 print(_("XML file not found : ") + self.ddtfile)
                 return
 
-            self.ecurequestsparser = ecu.Ecu_file(self.ddtfile, True)
+            self.ecurequestsparser = EcuFile(self.ddtfile, True)
 
             target = self.getChildNodesByName(xdoc, u"Target")[0]
             if not target:
@@ -877,7 +697,7 @@ class paramWidget(widgets.QWidget):
             if not options.elm.connectionStat():
                 options.main_window.setConnected(False)
                 self.logview.append(_("Connection to ELM lost, trying to reconnect..."))
-                if elm.reconnect_elm():
+                if reconnect_elm():
                     if not options.elm.connectionStatus:
                         self.logview.append(_("Cannot reconnect..."))
                         return
@@ -967,16 +787,16 @@ class paramWidget(widgets.QWidget):
 
         try:
             self.timer.timeout.disconnect()
-        except:
+        except Exception:
             pass
 
-        if not screen_name in self.xmlscreen.keys():
+        if screen_name not in self.xmlscreen.keys():
             self.current_screen = ''
             return False
 
         screen = self.xmlscreen[screen_name]
 
-        self.panel = displaymod.screenWidget(self, self.uiscale)
+        self.panel = ScreenWidget(self, self.uiscale)
 
         if self.parser == 'xml':
             self.panel.initXML(screen)
@@ -1000,12 +820,12 @@ class paramWidget(widgets.QWidget):
             displays = self.getChildNodesByName(screen, "Display")
 
             for disp in displays:
-                displaywidget = displaymod.displayWidget(self.panel, self.uiscale, self.ecurequestsparser)
+                displaywidget = DisplayWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 displaywidget.initXML(disp, self.displaydict)
         else:
             displays = screen['displays']
             for disp in displays:
-                displaywidget = displaymod.displayWidget(self.panel, self.uiscale, self.ecurequestsparser)
+                displaywidget = DisplayWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 displaywidget.initJson(disp, self.displaydict)
 
     def drawButtons(self, screen):
@@ -1017,7 +837,7 @@ class paramWidget(widgets.QWidget):
             button_count = 0
 
             for button in buttons:
-                qbutton = displaymod.buttonRequest(self.panel, self.uiscale, self.ecurequestsparser, button_count)
+                qbutton = ButtonRequest(self.panel, self.uiscale, self.ecurequestsparser, button_count)
                 qbutton.initXML(button)
                 button_count += 1
 
@@ -1026,7 +846,7 @@ class paramWidget(widgets.QWidget):
                     messagetext = message.getAttribute("Text")
                     if not messagetext:
                         continue
-                    if not qbutton.butname in self.button_messages:
+                    if qbutton.butname not in self.button_messages:
                         self.button_messages[qbutton.butname] = []
                     self.button_messages[qbutton.butname].append(messagetext)
 
@@ -1052,7 +872,7 @@ class paramWidget(widgets.QWidget):
         else:
             button_count = 0
             for button in screen['buttons']:
-                qbutton = displaymod.buttonRequest(self.panel, self.uiscale, self.ecurequestsparser, button_count)
+                qbutton = ButtonRequest(self.panel, self.uiscale, self.ecurequestsparser, button_count)
                 qbutton.initJson(button)
                 button_count += 1
 
@@ -1069,12 +889,12 @@ class paramWidget(widgets.QWidget):
         if self.parser == 'xml':
             labels = self.getChildNodesByName(screen, "Label")
             for label in labels:
-                qlabel = displaymod.labelWidget(self.panel, self.uiscale)
+                qlabel = LabelWidget(self.panel, self.uiscale)
                 qlabel.initXML(label)
                 labeldict[qlabel] = qlabel.area
         else:
             for label in screen['labels']:
-                qlabel = displaymod.labelWidget(self.panel, self.uiscale)
+                qlabel = LabelWidget(self.panel, self.uiscale)
                 qlabel.initJson(label)
                 labeldict[qlabel] = qlabel.area
 
@@ -1088,15 +908,15 @@ class paramWidget(widgets.QWidget):
         if self.parser == 'xml':
             inputs = self.getChildNodesByName(screen, "Input")
             for inp in inputs:
-                inputwidget = displaymod.inputWidget(self.panel, self.uiscale, self.ecurequestsparser)
+                inputwidget = InputWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 inputwidget.initXML(inp, self.inputdict)
         else:
             for inp in screen['inputs']:
-                inputwidget = displaymod.inputWidget(self.panel, self.uiscale, self.ecurequestsparser)
+                inputwidget = InputWidget(self.panel, self.uiscale, self.ecurequestsparser)
                 inputwidget.initJson(inp, self.inputdict)
 
     def buttonClicked(self, txt):
-        if not txt in self.button_requests:
+        if txt not in self.button_requests:
             self.logview.append(u"<font color=red>" + _("Button request not found : ") + txt + u"</font>")
             return
 
@@ -1130,14 +950,14 @@ class paramWidget(widgets.QWidget):
             for k in sendbytes_data_items.keys():
                 dataitem = sendbytes_data_items[k]
 
-                if not request_name in self.inputdict:
+                if request_name not in self.inputdict:
                     # Simple command with no user parameters
                     continue
 
                 inputdict = self.inputdict[request_name]
                 data = inputdict.getDataByName(k)
 
-                if data == None:
+                if data is None:
                     # Keep values provided by sentbytes
                     # Confirmed with S3000 ECU request "ReadMemoryByAddress" value "MEMSIZE"
                     continue
@@ -1160,7 +980,7 @@ class paramWidget(widgets.QWidget):
                 try:
                     elm_data_stream = ecu_data.setValue(input_value, elm_data_stream, dataitem,
                                                     ecu_request.ecu_file.endianness)
-                except:
+                except Exception:
                     error = _("Value error of this stuff need a bypass gateway maybe.")
                     options.main_window.logview.append("<font color='red'>" + error + "</font>")
                     return
@@ -1210,7 +1030,7 @@ class paramWidget(widgets.QWidget):
                     dd_request_data = self.displaydict[request_name]
                     data = dd_request_data.getDataByName(key)
 
-                    if value == None:
+                    if value is None:
                         if data:
                             data.widget.setStyleSheet("background-color: red;color: black")
                         value = _("Invalid")
@@ -1619,435 +1439,3 @@ class paramWidget(widgets.QWidget):
                     display_data['text'] = newname
 
         self.reinitScreen()
-
-
-def dumpXML(xmlname):
-    try:
-        xdom = xml.dom.minidom.parse(xmlname)
-        xdoc = xdom.documentElement
-    except:
-        return None
-    return dumpDOC(xdoc)
-
-
-def dumpAddressing(file):
-    xdom = xml.dom.minidom.parse(file)
-    xdoc = xdom.documentElement
-    dict = ecu.addressing
-    xml_funcs = getChildNodesByName(xdoc, u"Function")
-    for func in xml_funcs:
-        shortname = func.getAttribute(u"Name")
-        address = func.getAttribute(u"Address")
-        for name in getChildNodesByName(func, u"Name"):
-            try:
-                if str(name.firstChild.nodeValue).startswith("\n"):
-                    longname = shortname
-                else:
-                    longname = name.firstChild.nodeValue
-            except:
-                longname = shortname
-
-            strHex = "%0.2X" % int(address)
-            dict[strHex] = (shortname, longname)
-            break
-    return dict
-
-
-def dumpSNAT(file):
-    xdom = xml.dom.minidom.parse(file)
-    xdoc = xdom.documentElement
-    dict = elm.snat
-    xml_funcs = getChildNodesByName(xdoc, u"Function")
-    for func in xml_funcs:
-        address = func.getAttribute(u"Address")
-        protolist = getChildNodesByName(func, u"ProtocolList")
-        for rid in protolist:
-            proto = getChildNodesByName(rid, u"Protocol")
-            for prtc in proto:
-                grid = getChildNodesByName(prtc, u"Address")
-                for ok in grid:
-                    ext = ok.getAttribute(u"Extended")
-                    if ext == "0":
-                        rid_add = ok.getAttribute(u"Rid")
-                        strHex = "%0.2X" % int(address)
-                        dict[strHex] = rid_add
-                        break
-    return dict
-
-
-def dumpSNAT_ext(file):
-    xdom = xml.dom.minidom.parse(file)
-    xdoc = xdom.documentElement
-    dict = elm.snat_ext
-    xml_funcs = getChildNodesByName(xdoc, u"Function")
-    for func in xml_funcs:
-        address = func.getAttribute(u"Address")
-        protolist = getChildNodesByName(func, u"ProtocolList")
-        for rid in protolist:
-            proto = getChildNodesByName(rid, u"Protocol")
-            for prtc in proto:
-                grid = getChildNodesByName(prtc, u"Address")
-                for ok in grid:
-                    ext = ok.getAttribute(u"Extended")
-                    if ext == "1":
-                        rid_add = ok.getAttribute(u"Rid")
-                        strHex = "%0.2X" % int(address)
-                        dict[strHex] = rid_add
-                        break
-    return dict
-
-
-def dumpDNAT(file):
-    xdom = xml.dom.minidom.parse(file)
-    xdoc = xdom.documentElement
-    dict = elm.dnat
-    xml_funcs = getChildNodesByName(xdoc, u"Function")
-    for func in xml_funcs:
-        address = func.getAttribute(u"Address")
-        protolist = getChildNodesByName(func, u"ProtocolList")
-        for xid in protolist:
-            proto = getChildNodesByName(xid, u"Protocol")
-            for prtc in proto:
-                gxid = getChildNodesByName(prtc, u"Address")
-                for ok in gxid:
-                    ext = ok.getAttribute(u"Extended")
-                    if ext == "0":
-                        xid_add = ok.getAttribute(u"Xid")
-                        strHex = "%0.2X" % int(address)
-                        dict[strHex] = xid_add
-                        break
-    return dict
-
-
-def dumpDNAT_ext(file):
-    xdom = xml.dom.minidom.parse(file)
-    xdoc = xdom.documentElement
-    dict = elm.dnat_ext
-    xml_funcs = getChildNodesByName(xdoc, u"Function")
-    for func in xml_funcs:
-        address = func.getAttribute(u"Address")
-        protolist = getChildNodesByName(func, u"ProtocolList")
-        for xid in protolist:
-            proto = getChildNodesByName(xid, u"Protocol")
-            for prtc in proto:
-                gxid = getChildNodesByName(prtc, u"Address")
-                for ok in gxid:
-                    ext = ok.getAttribute(u"Extended")
-                    if ext == "1":
-                        xid_add = ok.getAttribute(u"Xid")
-                        strHex = "%0.2X" % int(address)
-                        dict[strHex] = xid_add
-                        break
-    return dict
-
-
-def dumpDOC(xdoc):
-    target = getChildNodesByName(xdoc, u"Target")
-    if not target:
-        return None
-
-    target = target[0]
-    js_screens = {}
-
-    xml_categories = getChildNodesByName(target, u"Categories")
-
-    xmlscreens = {}
-    js_categories = {}
-
-    for cats in xml_categories:
-        xml_cats = getChildNodesByName(cats, u"Category")
-        for category in xml_cats:
-            category_name = category.getAttribute(u"Name")
-            js_categories[category_name] = []
-            screens_name = getChildNodesByName(category, u"Screen")
-            for screen in screens_name:
-                screen_name = screen.getAttribute(u"Name")
-                xmlscreens[screen_name] = screen
-                js_categories[category_name].append(screen_name)
-
-    for scrname, screen in xmlscreens.items():
-        screen_name = scrname
-        js_screens[screen_name] = {}
-        js_screens[screen_name]['width'] = int(screen.getAttribute("Width"))
-        js_screens[screen_name]['height'] = int(screen.getAttribute("Height"))
-        js_screens[screen_name]['color'] = colorConvert(screen.getAttribute("Color"))
-        js_screens[screen_name]['labels'] = {}
-
-        presend = []
-        for elem in getChildNodesByName(screen, u"Send"):
-            delay = elem.getAttribute('Delay')
-            req_name = elem.getAttribute('RequestName')
-            presend.append({"Delay": delay, "RequestName": req_name})
-        js_screens[screen_name]['presend'] = presend
-
-        labels = getChildNodesByName(screen, "Label")
-        js_screens[screen_name]['labels'] = []
-        for label in labels:
-            label_dict = {}
-            label_dict['text'] = label.getAttribute("Text")
-            label_dict['color'] = colorConvert(label.getAttribute("Color"))
-            label_dict['alignment'] = label.getAttribute("Alignment")
-            label_dict['fontcolor'] = getFontColor(label)
-            label_dict['bbox'] = getRectangleXML(getChildNodesByName(label, "Rectangle")[0])
-            label_dict['font'] = getFontXML(label)
-            js_screens[screen_name]['labels'].append(label_dict)
-
-        displays = getChildNodesByName(screen, "Display")
-        js_screens[screen_name]['displays'] = []
-        for display in displays:
-            display_dict = {}
-            display_dict['text'] = display.getAttribute("DataName")
-            display_dict['request'] = display.getAttribute("RequestName")
-            display_dict['color'] = colorConvert(display.getAttribute("Color"))
-            display_dict['width'] = int(display.getAttribute("Width"))
-            display_dict['rect'] = getRectangleXML(getChildNodesByName(display, "Rectangle")[0])
-            display_dict['font'] = getFontXML(display)
-            display_dict['fontcolor'] = getFontColor(display)
-            js_screens[screen_name]['displays'].append(display_dict)
-
-        buttons = getChildNodesByName(screen, "Button")
-        js_screens[screen_name]['buttons'] = []
-        count = 0
-        for button in buttons:
-            button_dict = {}
-            txt = button.getAttribute("Text")
-            button_dict['text'] = txt
-            button_dict['uniquename'] = txt + "_%i" % count
-            button_dict['rect'] = getRectangleXML(getChildNodesByName(button, "Rectangle")[0])
-            button_dict['font'] = getFontXML(button)
-
-            xmlmessages = getChildNodesByName(button, "Message")
-            messages = []
-            # Get messages
-            for message in xmlmessages:
-                messages.append(message.getAttribute("Text"))
-
-            button_dict['messages'] = messages
-
-            send = getChildNodesByName(button, "Send")
-            if send:
-                sendlist = []
-                for snd in send:
-                    smap = {}
-                    delay = snd.getAttribute("Delay")
-                    reqname = snd.getAttribute("RequestName")
-                    smap['Delay'] = delay
-                    smap['RequestName'] = reqname
-                    sendlist.append(smap)
-                button_dict['send'] = sendlist
-
-            js_screens[screen_name]['buttons'].append(button_dict)
-            count += 1
-
-        inputs = getChildNodesByName(screen, "Input")
-        js_screens[screen_name]['inputs'] = []
-
-        for input in inputs:
-            input_dict = {}
-            input_dict['text'] = input.getAttribute("DataName")
-            input_dict['request'] = input.getAttribute("RequestName")
-            color = input.getAttribute("Color")
-            if not color:
-                color = 0xAAAAAA
-            input_dict['color'] = colorConvert(color)
-            input_dict['fontcolor'] = getFontColor(input)
-            input_dict['width'] = int(input.getAttribute("Width"))
-            input_dict['rect'] = getRectangleXML(getChildNodesByName(input, "Rectangle")[0])
-            input_dict['font'] = getFontXML(input)
-            js_screens[screen_name]['inputs'].append(input_dict)
-
-    return json.dumps({'screens': js_screens, 'categories': js_categories}, indent=1)
-
-
-def zipConvertXML(dbfilename="ecu.zip"):
-    zipoutput = BytesIO()
-    options.ecus_dir = "./ecus"
-
-    ecus_glob = glob.glob("ecus/*.xml")
-    imgs = []
-    if os.path.exists("./graphics"):
-        for dirpath, dirs, files in os.walk("graphics/"):
-            for file in files:
-                if ".gif" in file.lower():
-                    imgs.append(os.path.join(dirpath, file))
-
-    if len(ecus_glob) == 0:
-        print(_("Cannot zip database, no 'ecus' directory"))
-        return
-
-    ecus = []
-    for e in ecus_glob:
-        if 'eculist.xml' in e.lower():
-            continue
-        ecus.append(e)
-
-    i = 1
-    print(_("Starting conversion"))
-
-    targetsdict = {}
-    with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
-        for img in imgs:
-            zf.write(img)
-        for target in ecus:
-            filename = target.replace(".xml", ".json")
-            if filename.startswith("ecus/"):
-                filename = filename.replace("ecus/", "")
-            else:
-                filename = filename.replace("ecus\\", "")
-            print(_("Starting processing ") + target + " " + str(i) + "/" + str(len(ecus)) + _(" to ") + filename)
-
-            i += 1
-            layoutjs = dumpXML(target)
-            if layoutjs is None:
-                print(_("Skipping current file (cannot parse it)"))
-                continue
-            ecufile = ecu.Ecu_file(target, True)
-            js = ecufile.dumpJson()
-
-            if js:
-                zf.writestr(filename, str(js))
-
-            if layoutjs:
-                zf.writestr(filename + ".layout", str(layoutjs))
-
-            ecu_ident = ecufile.dump_idents()
-
-            targetsdict[filename] = ecu_ident
-
-        print(_("Writing database"))
-        zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
-
-    print(_("Writing archive"))
-    with open(dbfilename, "wb") as f:
-        f.write(zipoutput.getvalue())
-
-
-def convertXML():
-    options.ecus_dir = "./ecus"
-
-    ecus = glob.glob("ecus/*.xml")
-    ecus.remove("ecus/eculist.xml")
-    i = 1
-
-    print(_("Opening ECU Database..."))
-    ecu_database = ecu.Ecu_database()
-    print(_("Starting conversion"))
-
-    for target in ecus:
-        filename = target.replace(".xml", ".json")
-        filename = filename.replace("ecus/", "json/")
-        print(_("Starting processing ") + target + " " + str(i) + "/" + str(len(ecus)) + _(" to ") + filename)
-
-        i += 1
-        layoutjs = dumpXML(target)
-        if layoutjs is None:
-            print(_("Skipping current file (cannot parse it)"))
-            continue
-        ecufile = ecu.Ecu_file(target, True)
-        js = ecufile.dumpJson()
-
-        if js:
-            jsfile = open(filename, "w")
-            jsfile.write(js)
-            jsfile.close()
-
-        if layoutjs:
-            jsfile = open(filename + ".layout", "w")
-            jsfile.write(layoutjs)
-            jsfile.close()
-
-        target_name = filename + ".targets"
-        ecu_ident = ecu_database.getTargets(ecufile.ecuname)
-
-        js_targets = []
-        for ecui in ecu_ident:
-            js_targets.append(ecui.dump())
-
-        js = json.dumps(js_targets, indent=1)
-        if js:
-            jsfile = open(target_name, "w")
-            jsfile.write(js)
-            jsfile.close()
-
-
-def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
-    xdom = xml.dom.minidom.parse(file)
-    xdoc = xdom.documentElement
-    dict = {}
-    dict["projects"] = {}
-    dict["projects"]["All"] = {}
-    dict["projects"]["All"]["code"] = "ALL"
-    dict["projects"]["All"]["addressing"] = dumpAddressing(os.path.join("vehicles", "GenericAddressing.xml"))
-    dict["projects"]["All"]["snat"] = dumpSNAT(os.path.join("vehicles", "GenericAddressing.xml"))
-    dict["projects"]["All"]["snat_ext"] = dumpSNAT_ext(os.path.join("vehicles", "GenericAddressing.xml"))
-    dict["projects"]["All"]["dnat"] = dumpDNAT(os.path.join("vehicles", "GenericAddressing.xml"))
-    dict["projects"]["All"]["dnat_ext"] = dumpDNAT_ext(os.path.join("vehicles", "GenericAddressing.xml"))
-    manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
-    for manufacturer in manufacturers:
-        name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
-        projects = getChildNodesByName(manufacturer, u"project")
-        for project in projects:
-            code = project.getAttribute(u"code")
-            p_name = project.getAttribute(u"name")
-            addressing = os.path.join("vehicles", "GenericAddressing.xml")
-            parts = []
-            try:
-                parts = str(project.getElementsByTagName(u"addressing")[0].childNodes[0].nodeValue).split('/')
-            except:
-                pass
-            if len(parts) == 0:
-                addressing = os.path.join("vehicles", "GenericAddressing.xml")
-            elif len(parts) == 2:
-                addressing = os.path.join("vehicles", parts[0], parts[1])
-            elif len(parts) == 3:
-                addressing = os.path.join("vehicles", parts[0], parts[1], parts[2])
-            elif len(parts) == 4:
-                addressing = os.path.join("vehicles", parts[0], parts[1], parts[2], parts[3])
-            elif len(parts) > 4:
-                print(_("parts as: ") + len(parts) + _(" please review dumpVehicles def."))
-                addressing = os.path.join("vehicles", "GenericAddressing.xml")
-            else:
-                raise "Error in dumpVehicles def."
-            if not os.path.isfile(addressing):
-                addressing = os.path.join("vehicles", "GenericAddressing.xml")
-
-            project_name = "[%s] - %s %s" % (str(code).upper(), name, p_name)
-            # if project_name in  dict["projects"].keys():
-            #     project_name = "%s %s (%s)" % (name, p_name, str(code).upper())
-
-            dict["projects"][project_name] = {}
-            dict["projects"][project_name]["code"] = str(code).upper()
-            dict["projects"][project_name]["addressing"] = dumpAddressing(addressing)
-            dict["projects"][project_name]["snat"] = dumpSNAT(addressing)
-            dict["projects"][project_name]["snat_ext"] = dumpSNAT_ext(addressing)
-            dict["projects"][project_name]["dnat"] = dumpDNAT(addressing)
-            dict["projects"][project_name]["dnat_ext"] = dumpDNAT_ext(addressing)
-            print(f'{code:18} => {addressing:40} => OK')
-
-    sd = sorted(dict["projects"].items())
-    new_dict = {"projects": {}}
-    for k, v in sd:
-        new_dict["projects"][k] = v
-    # js = json.dumps(new_dict, ensure_ascii=False, indent=True)
-    js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("ddt4all_data/projects.json", "w", encoding="UTF-8")
-    f.write(js)
-    f.close()
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--convert', action="store_true", default=None, help="Convert all XML to JSON")
-    parser.add_argument('-z', '--zipconvert', action="store_true", default=None,
-                        help="Convert all XML to JSON in a Zip archive")
-    parser.add_argument('-d', '--dumpprojects', action="store_true", default=None, help="Dump Vehicles")
-    args = parser.parse_args()
-
-    if args.zipconvert:
-        zipConvertXML()
-
-    if args.convert:
-        convertXML()
-
-    if args.dumpprojects:
-        dumpVehicles()
