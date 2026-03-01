@@ -1,9 +1,9 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import sys
 
 import PyQt5.QtGui as gui
 
+def unicode(a):
+    return str(a)
 
 def getChildNodesByName(parent, name):
     nodes = []
@@ -70,32 +70,6 @@ def getXMLFont(xml, scale=1):
     qfnt = gui.QFont(font_name, int(font_size), fnt_flags)
     qfnt.setPixelSize(int(font_size))
     return qfnt
-
-
-class displayData:
-    def __init__(self, data, widget, is_combo=False):
-        self.data = data
-        self.widget = widget
-        self.is_combo = is_combo
-
-
-class displayDict:
-    def __init__(self, request_name, request):
-        self.request = request
-        self.request_name = request_name
-        self.data = []
-        self.datadict = {}
-
-    def addData(self, displaydata):
-        self.data.append(displaydata)
-        if not displaydata.data.name in self.datadict:
-            self.datadict[displaydata.data.name] = displaydata
-
-    def getDataByName(self, name):
-        for data in self.data:
-            if data.data.name == name:
-                return data
-        return None
 
 
 def jsonFont(fnt, scale):
