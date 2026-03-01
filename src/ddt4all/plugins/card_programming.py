@@ -9,8 +9,8 @@ import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
-import ecu
-import options
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
@@ -108,7 +108,7 @@ class CardProg(gui.QDialog):
         self.setWindowTitle(_("Megane/Scenic II card programming"))
         options.debug = True
         self.apvok = False
-        self.megane_ecu = ecu.Ecu_file(ecufile, True)
+        self.megane_ecu = EcuFile(ecufile, True)
         self.start_session_request = self.megane_ecu.requests[u'Start Diagnostic Session']
         self.after_sale_request = self.megane_ecu.requests[u'ACCEDER AU MODE APRES-VENTE']
         self.learn_key_request = self.megane_ecu.requests[u'APPRENDRE BADGE']

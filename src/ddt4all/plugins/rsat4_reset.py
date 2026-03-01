@@ -7,8 +7,8 @@ import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
-import ecu
-import options
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
@@ -21,7 +21,7 @@ ecufile = "RSAT4_ACU_eng_v15_20150511T131328"
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.airbag_ecu = ecu.Ecu_file(ecufile, True)
+        self.airbag_ecu = EcuFile(ecufile, True)
         # Set window icon and title
         appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)

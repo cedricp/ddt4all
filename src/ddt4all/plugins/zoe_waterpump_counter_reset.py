@@ -7,9 +7,14 @@
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QLabel
-import ecu
-import options
+from PyQt5.QtWidgets import (
+    QTableWidget,
+    QTableWidgetItem,
+    QLabel
+)
+
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
@@ -21,7 +26,7 @@ ecufile = "EVC_3180_RH5_510_V1.1_20210422T184714"
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.evc_ecu = ecu.Ecu_file(ecufile, True)
+        self.evc_ecu = EcuFile(ecufile, True)
         self.setWindowTitle(_("Water pump counters"))
         # Set window icon
         appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")

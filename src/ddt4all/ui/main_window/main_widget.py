@@ -1,7 +1,8 @@
 import glob
+from importlib.machinery import SourceFileLoader
 import json
 import os
-from importlib.machinery import SourceFileLoader
+from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
@@ -48,6 +49,9 @@ except ImportError:
     print(_("Warning: PyQtWebEngine not available. Some features may be limited."))
     webkitwidgets = None
     HAS_WEBENGINE = False
+
+BASE_DIR = Path(__file__).resolve().parent
+plugins_base_dir = BASE_DIR / ".." / ".." / "plugins"
 
 class MainWidget(widgets.QMainWindow):
     def __init__(self, app, vehicles, parent=None):
@@ -412,7 +416,7 @@ class MainWidget(widgets.QMainWindow):
 
         plugins_menu = menu.addMenu(_("Plugins"))
         category_menus = {}
-        plugins = glob.glob("./ddtplugins/*.py")
+        plugins = glob.glob(str(plugins_base_dir) + "/*.py")
         for plugin in plugins:
             try:
                 modulename = os.path.basename(plugin).replace(".py", "")

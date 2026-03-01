@@ -1,34 +1,33 @@
 # -*- coding: utf-8 -*-
 
 # (c) 2017
-# This is an example plugin
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
-import ecu
-import options
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
-plugin_name = _("Laguna II UCH Reset")
+plugin_name = _("Laguna III UCH Reset")
 category = _("UCH Tools")
 need_hw = True
-ecufile = "UCH___M2S_X74_et_X73"
+ecufile = "BCM_X91_L43_S_S_SWC_v1.30_20140613T140906"
 
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.laguna_uch = ecu.Ecu_file(ecufile, True)
+        self.megane_uch = EcuFile(ecufile, True)
         # Set window icon and title
         appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
-        self.setWindowTitle(_("Laguna II UCH Reset"))
+        self.setWindowTitle(_("Laguna III UCH Reset"))
         layout = gui.QVBoxLayout()
         infos = gui.QLabel(
-            _("LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
+            _("LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
         check_button = gui.QPushButton(_("Check UCH Virgin"))
         self.status_check = gui.QLabel(_("Waiting"))
@@ -43,11 +42,9 @@ class Virginizer(gui.QDialog):
         self.virginize_button.clicked.connect(self.reset_ecu)
         check_button.clicked.connect(self.check_virgin_status)
         self.ecu_connect()
-        # Start comm immediately
-        self.start_diag_session_study()
 
     def ecu_connect(self):
-        connection = self.laguna_uch.connect_to_hardware()
+        connection = self.megane_uch.connect_to_hardware()
         if not connection:
             options.main_window.logview.append(_("Cannot connect to ECU"))
             self.finished()
@@ -55,44 +52,36 @@ class Virginizer(gui.QDialog):
     def check_virgin_status(self):
         self.start_diag_session_aftersales()
 
-        virigin_check_request = self.laguna_uch.requests[u'Lecture Etats Antidémarrage et acces']
-        response_values = virigin_check_request.send_request()
+        virigin_check_request = self.megane_uch.requests[
+            u'Read_A_AC_General_Identifiers_Learning_Status_(bits)_BCM_Input/Output']
+        virgin_check_values = virigin_check_request.send_request()
 
-        if response_values is not None:
-            virgin = response_values[u"UCH vierge"]
-
-            if virgin == u'oui':
+        if virgin_check_values is not None:
+            virgin = virgin_check_values[u"BCM_IS_BLANK_S"]
+            if virgin == u'true':
                 self.virginize_button.setEnabled(False)
                 self.status_check.setText(_("<font color='green'>UCH virgin</font>"))
                 return
 
-            if virgin == u'non':
+            if virgin == u'false':
                 self.virginize_button.setEnabled(True)
                 self.status_check.setText(_("<font color='red'>UCH coded</font>"))
                 return
 
-        self.status_check.setText(_("<font color='orange'>UNEXPECTED RESPONSE</font>"))
-
-    def start_diag_session_study(self):
-        sds_request = self.laguna_uch.requests[u"Start Diagnostic Session"]
-        sds_stream = " ".join(sds_request.build_data_stream({u'Session Name': u'Etude'}))
-        if options.simulation_mode:
-            print("SdSA stream", sds_stream)
-            return
-        options.elm.start_session_iso(sds_stream)
+        self.status_check.setText("<font color='orange'>UNEXPECTED RESPONSE</font>")
 
     def start_diag_session_aftersales(self):
-        sds_request = self.laguna_uch.requests[u"Start Diagnostic Session"]
-        sds_stream = " ".join(sds_request.build_data_stream({u'Session Name': u'APV'}))
+        sds_request = self.megane_uch.requests[u"Start Diagnostic Session"]
+        sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
             print("SdSS stream", sds_stream)
             return
-        options.elm.request(sds_stream)
+        options.elm.start_session_can(sds_stream)
 
     def reset_ecu(self):
-        self.start_diag_session_study()
+        self.start_diag_session_aftersales()
 
-        reset_request = self.laguna_uch.requests[u"Effacement_données_antidem_acces"]
+        reset_request = self.megane_uch.requests[u"SR_RESERVED VSC 1"]
         request_response = reset_request.send_request()
 
         if request_response is not None:

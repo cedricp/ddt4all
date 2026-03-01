@@ -6,27 +6,27 @@ import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 
-import ecu
-import options
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
-plugin_name = _("Megane3 AIRBAG Reset")
+plugin_name = _("AB90 AIRBAG Reset")
 category = _("Airbag Tools")
 need_hw = True
-ecufile = "MRSZ_X95_L38_L43_L47_20110505T101858"
+ecufile = "AB90_J77_X85"
 
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.airbag_ecu = ecu.Ecu_file(ecufile, True)
+        self.airbag_ecu = EcuFile(ecufile, True)
         # Set window icon and title
         appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
-        self.setWindowTitle(_("Megane3 AIRBAG Reset"))
+        self.setWindowTitle(_("AB90 AIRBAG Reset"))
         layout = gui.QVBoxLayout()
-        infos = gui.QLabel(_("Megane III<br>"
+        infos = gui.QLabel(_("AB90 (Clio III)/2<br>"
                              "AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>"
                              "GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"))
         infos.setAlignment(core.Qt.AlignHCenter)
@@ -53,7 +53,7 @@ class Virginizer(gui.QDialog):
     def check_virgin_status(self):
         self.start_diag_session()
 
-        crash_reset_request = self.airbag_ecu.requests[u'Synthèse état UCE avant crash']
+        crash_reset_request = self.airbag_ecu.requests[u'Synthèse état UCE']
         values_dict = crash_reset_request.send_request({}, "62 02 04 00 00 00 00 00 00 00 00 00 00 00 00")
 
         if values_dict is None:
@@ -61,37 +61,25 @@ class Virginizer(gui.QDialog):
 
         crash = values_dict[u'crash détecté']
 
-        if options.debug:
-            print(">> ", crash)
-
         if crash == u'crash détecté':
             self.status_check.setText(_("<font color='red'>CRASH DETECTED</font>"))
         else:
             self.status_check.setText(_("<font color='green'>NO CRASH DETECTED</font>"))
 
-    def start_diag_session_fa(self):
-        sds_request = self.airbag_ecu.requests[u"Start Diagnostic Session"]
-
-        sds_stream = " ".join(sds_request.build_data_stream({u"Session Name": u"systemSupplierSpecific"}))
-        if options.simulation_mode:
-            print(_("SdSFA stream: %s") % sds_stream)
-            return
-        options.elm.start_session_can(sds_stream)
-
     def start_diag_session(self):
         sds_request = self.airbag_ecu.requests[u"Start Diagnostic Session"]
 
-        sds_stream = " ".join(sds_request.build_data_stream({u"Session Name": u"extendedDiagnosticSession"}))
+        sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
             print(_("SdS stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 
     def reset_ecu(self):
-        self.start_diag_session_fa()
+        self.start_diag_session()
 
         reset_request = self.airbag_ecu.requests[u"Reset crash ou accès au mode fournisseur"]
-        request_response = reset_request.send_request({u"code d'accès pour reset UCE": '27081977'})
+        request_response = reset_request.send_request({u"code d'accès pour reset UCE": '22041998'})
 
         if request_response is not None:
             self.status_check.setText(_("<font color='green'>CLEAR EXECUTED</font>"))

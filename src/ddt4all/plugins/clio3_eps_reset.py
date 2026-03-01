@@ -9,8 +9,8 @@ import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 import crcmod
 
-import ecu
-import options
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
@@ -35,7 +35,7 @@ def calc_crc(vin=None):
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
-        self.clio_eps = ecu.Ecu_file(ecufile, True)
+        self.clio_eps = EcuFile(ecufile, True)
         # Set window icon and title
         appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
         self.setWindowIcon(appIcon)
@@ -88,7 +88,7 @@ class Virginizer(gui.QDialog):
         try:
             vin = str(self.vin_output.text().toAscii()).upper()
             self.vin_output.setText(vin)
-        except:
+        except Exception:
             self.status_check.setText(_("<font color='red'>VIN - INVALID</font>"))
             return
 

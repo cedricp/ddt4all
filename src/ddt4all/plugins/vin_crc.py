@@ -11,7 +11,7 @@ import PyQt5.QtGui as qtgui
 import PyQt5.QtWidgets as gui
 import crcmod.predefined
 
-import options
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
