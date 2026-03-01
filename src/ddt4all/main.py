@@ -1,0 +1,164 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+import argparse
+import codecs
+import json
+import os
+import sys
+
+import PyQt5.QtGui as gui
+import PyQt5.QtWidgets as widgets
+
+import ddt4all.core.ecu.ecu_database as ecu_db
+import ddt4all.core.elm.elm as elm
+import ddt4all.options as options
+from ddt4all.ui.main_window.main_widget import MainWidget
+from ddt4all.ui.main_window.main_window_options import MainWindowOptions
+from ddt4all.ui.main_window.utils import (
+    set_socket_timeout,
+    set_theme_style
+)
+import ddt4all.version as version
+
+_ = options.translator('ddt4all')
+
+# Optional WebEngine import for enhanced features
+try:
+    import PyQt5.QtWebEngineWidgets as webkitwidgets
+    HAS_WEBENGINE = True
+except ImportError:
+    print(_("Warning: PyQtWebEngine not available. Some features may be limited."))
+    webkitwidgets = None
+    HAS_WEBENGINE = False
+
+
+app = None
+
+# remove Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway 
+if sys.platform[:3] == "lin":
+    os.environ["XDG_SESSION_TYPE"] = "xcb"
+
+
+def load_this():
+    try:
+        with open("ddt4all_data/projects.json", "r", encoding="UTF-8") as f:
+            vehicles_loc = json.loads(f.read())
+        ecu_db.addressing = vehicles_loc["projects"]["All"]["addressing"]
+        elm.snat = vehicles_loc["projects"]["All"]["snat"]
+        elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
+        elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
+        elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
+        return vehicles_loc
+    except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+        print(_("ddt4all_data/projects.json not found or not ok.") + f" Error: {e}")
+        exit(-1)
+
+
+vehicles = load_this()
+
+# args
+parser = argparse.ArgumentParser()
+parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
+args = parser.parse_args()
+not_qt5_show = args.git_workfallowmode
+
+
+
+if __name__ == '__main__':
+    # For InnoSetup version.h auto generator
+    if os.path.isdir('ddt4all_data/inno-win-setup'):
+        try:
+            with open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
+                f.write(f'#define __appname__ "{version.__appname__}"\n')
+                f.write(f'#define __author__ "{version.__author__}"\n')
+                f.write(f'#define __copyright__ "{version.__copyright__}"\n')
+                f.write(f'#define __version__ "{version.__version__}"\n')
+                f.write(f'#define __email__ "{version.__email__}"\n')
+                f.write(f'#define __status__ "{version.__status__}"')
+        except (OSError, IOError) as e:
+            print(f"Warning: Could not write version.h: {e}")
+            
+    if not_qt5_show:
+        exit(0)
+    try:
+        sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
+    except (OSError, ValueError):
+        sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+    os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
+
+    options.simulation_mode = True
+    options.socket_timeout = False
+    app = widgets.QApplication(sys.argv)
+
+    try:
+        with open("ddt4all_data/config.json", "r", encoding="UTF-8") as f:
+            configuration = json.loads(f.read())
+        if configuration["dark"]:
+            set_theme_style(2)
+        else:
+            set_theme_style(0)
+        if configuration["socket_timeout"]:
+            set_socket_timeout(1)
+        else:
+            set_socket_timeout(0)
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        set_theme_style(0)
+
+    app.setStyle("plastic")
+
+    ecudirfound = False
+    if os.path.exists(options.ecus_dir + '/eculist.xml'):
+        print(_("Using custom DDT database"))
+        ecudirfound = True
+
+    if not os.path.exists("./json"):
+        os.mkdir("./json")
+
+    if not os.path.exists("./logs"):
+        os.mkdir("./logs")
+
+    pc = MainWindowOptions()
+    nok = True
+    while nok:
+        pcres = pc.exec_()
+
+        if pc.mode == 0 or pcres == widgets.QDialog.Rejected:
+            exit(0)
+        if pc.mode == 1:
+            options.promode = False
+            options.simulation_mode = False
+        if pc.mode == 2:
+            options.promode = False
+            options.simulation_mode = True
+            break
+
+        options.port = str(pc.port)
+        port_speed = pc.selectedportspeed
+
+        if not options.port:
+            msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle(version.__appname__)
+            msgbox.setText(_("No COM port selected"))
+            msgbox.exec_()
+
+        print(_("Initilizing ELM with speed %i...") % port_speed)
+        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
+        if options.elm_failed:
+            pc.show()
+            pc.logview.append(options.get_last_error())
+            msgbox = widgets.QMessageBox()
+            appIcon = gui.QIcon("ddt4all_data/icons/obd.png")
+            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowTitle(version.__appname__)
+            msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
+            msgbox.exec_()
+        else:
+            nok = False
+
+    w = MainWidget()
+    options.main_window = w
+    w.show()
+    app.exec_()
+

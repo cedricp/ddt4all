@@ -1,6 +1,12 @@
+import glob
+from io import BytesIO
 import json
+import os
 import xml.dom.minidom
+import zipfile
 
+from ddt4all.core.ecu.ecu_file import EcuFile
+import ddt4all.options as options
 from ddt4all.ui.utils import (
     colorConvert,
     getChildNodesByName,
@@ -8,6 +14,70 @@ from ddt4all.ui.utils import (
     getFontXML,
     getRectangleXML,
 )
+
+_ = options.translator('ddt4all')
+
+def zipConvertXML(dbfilename="ecu.zip"):
+    zipoutput = BytesIO()
+    options.ecus_dir = "./ecus"
+
+    ecus_glob = glob.glob("ecus/*.xml")
+    imgs = []
+    if os.path.exists("./graphics"):
+        for dirpath, dirs, files in os.walk("graphics/"):
+            for file in files:
+                if ".gif" in file.lower():
+                    imgs.append(os.path.join(dirpath, file))
+
+    if len(ecus_glob) == 0:
+        print(_("Cannot zip database, no 'ecus' directory"))
+        return
+
+    ecus = []
+    for e in ecus_glob:
+        if 'eculist.xml' in e.lower():
+            continue
+        ecus.append(e)
+
+    i = 1
+    print(_("Starting conversion"))
+
+    targetsdict = {}
+    with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
+        for img in imgs:
+            zf.write(img)
+        for target in ecus:
+            filename = target.replace(".xml", ".json")
+            if filename.startswith("ecus/"):
+                filename = filename.replace("ecus/", "")
+            else:
+                filename = filename.replace("ecus\\", "")
+            print(_("Starting processing ") + target + " " + str(i) + "/" + str(len(ecus)) + _(" to ") + filename)
+
+            i += 1
+            layoutjs = dumpXML(target)
+            if layoutjs is None:
+                print(_("Skipping current file (cannot parse it)"))
+                continue
+            ecufile = EcuFile(target, True)
+            js = ecufile.dumpJson()
+
+            if js:
+                zf.writestr(filename, str(js))
+
+            if layoutjs:
+                zf.writestr(filename + ".layout", str(layoutjs))
+
+            ecu_ident = ecufile.dump_idents()
+
+            targetsdict[filename] = ecu_ident
+
+        print(_("Writing database"))
+        zf.writestr("db.json", str(json.dumps(targetsdict, indent=1)))
+
+    print(_("Writing archive"))
+    with open(dbfilename, "wb") as f:
+        f.write(zipoutput.getvalue())
 
 def dumpXML(xmlname):
     try:
