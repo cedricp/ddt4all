@@ -107,7 +107,7 @@ class DisplayWidget(widgets.QWidget):
 
         try:
             data = self.ecurequestsparser.data[text]
-        except:
+        except Exception:
             print(_("Cannot find data "), text)
             return
 
