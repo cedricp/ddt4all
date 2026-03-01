@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
 __appname__ = "DDT4ALL"
 __author__ = "Cedric PAILLE"
 __copyright__ = "Copyright ©2016-2025"
