@@ -2,6 +2,7 @@
 
 # (c) 2017
 # This is an example plugin
+from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -16,13 +17,15 @@ plugin_name = _("Megane/Scenic II UCH Reset")
 category = _("UCH Tools")
 need_hw = True
 
+BASE_DIR = Path(__file__).resolve().parent
+icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.megane_uch = EcuFile("UCH_84_J84_03_60", True)
         # Set window icon and title
-        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Megane/Scenic II UCH Reset"))
         layout = gui.QVBoxLayout()

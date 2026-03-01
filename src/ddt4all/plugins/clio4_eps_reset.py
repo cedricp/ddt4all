@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # (c) 2017
+from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -16,13 +17,15 @@ category = _("EPS Tools")
 need_hw = True
 ecufile = "X98ph2_X87ph2_EPS_HFP_v1.00_20150622T140219_20160726T172209"
 
+BASE_DIR = Path(__file__).resolve().parent
+icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
 
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.clio_eps = EcuFile(ecufile, True)
         # Set window icon and title
-        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Clio IV EPS Reset"))
         layout = gui.QVBoxLayout()

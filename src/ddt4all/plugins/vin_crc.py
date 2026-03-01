@@ -5,6 +5,7 @@
 
 from binascii import hexlify
 from binascii import unhexlify
+from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -20,6 +21,8 @@ category = _("VIN")
 # We need an ELM to work
 need_hw = False
 
+BASE_DIR = Path(__file__).resolve().parent
+icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
 
 def calc_crc(vin=None):
     VIN = hexlify(bytes(vin, 'utf-8'))
@@ -38,7 +41,7 @@ class CrcWidget(gui.QDialog):
     def __init__(self):
         super(CrcWidget, self).__init__(None)
         # Set window icon
-        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("CRC Calculator"))
         layout = gui.QVBoxLayout()

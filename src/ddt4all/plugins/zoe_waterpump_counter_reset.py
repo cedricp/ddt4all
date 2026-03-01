@@ -3,6 +3,7 @@
 # (c) 2025
 # Zoé EVC water pump counter reset values (low, medium, high speed + timer)
 # cf error code: SYST ELEC A CONTROLLER
+from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -23,13 +24,16 @@ category = _("EVC Tools")
 need_hw = True
 ecufile = "EVC_3180_RH5_510_V1.1_20210422T184714"
 
+BASE_DIR = Path(__file__).resolve().parent
+icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
+
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.evc_ecu = EcuFile(ecufile, True)
         self.setWindowTitle(_("Water pump counters"))
         # Set window icon
-        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
         self.setWindowIcon(appIcon)
         layout = gui.QVBoxLayout()
         # Création du tableau

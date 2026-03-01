@@ -4,6 +4,7 @@
 # (c) 2017
 # This is an example plugin
 
+from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -18,6 +19,9 @@ plugin_name = _("Megane/Scenic II card programming")
 category = _("Keys")
 need_hw = True
 ecufile = "UCH_84_J84_03_60"
+
+BASE_DIR = Path(__file__).resolve().parent
+icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
 
 a8_mess = [19, 29, 39, 4, 24, 46, 31, 12,
            16, 28, 7, 10, 15, 0, 40, 26,
@@ -103,7 +107,7 @@ class CardProg(gui.QDialog):
     def __init__(self):
         super(CardProg, self).__init__()
         # Set window icon and title
-        appIcon = qtgui.QIcon("ddt4all_data/icons/obd.png")
+        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Megane/Scenic II card programming"))
         options.debug = True

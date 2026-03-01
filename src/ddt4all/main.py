@@ -4,8 +4,8 @@ import argparse
 import codecs
 import json
 import os
-import sys
 from pathlib import Path
+import sys
 
 import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
