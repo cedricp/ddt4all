@@ -22,8 +22,8 @@ def isWritable(path):
     except Exception:
         return False
 
-def set_theme_style(onoff):
-    global app
+def set_theme_style(app, onoff):
+
     if (onoff):
         stylefile = core.QFile("ddt4all_data/qstyle-d.qss")
         options.dark_mode = True

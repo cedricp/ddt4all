@@ -5,6 +5,7 @@ import codecs
 import json
 import os
 import sys
+from pathlib import Path
 
 import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
@@ -33,6 +34,7 @@ except ImportError:
 
 
 app = None
+BASE_DIR = Path(__file__).resolve().parent
 
 # remove Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway 
 if sys.platform[:3] == "lin":
@@ -41,7 +43,7 @@ if sys.platform[:3] == "lin":
 
 def load_this():
     try:
-        with open("ddt4all_data/projects.json", "r", encoding="UTF-8") as f:
+        with open(BASE_DIR / "resources" / "projects.json", "r", encoding="UTF-8") as f:
             vehicles_loc = json.loads(f.read())
         ecu_db.addressing = vehicles_loc["projects"]["All"]["addressing"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
@@ -50,7 +52,7 @@ def load_this():
         elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
         return vehicles_loc
     except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-        print(_("ddt4all_data/projects.json not found or not ok.") + f" Error: {e}")
+        print(_("resources/projects.json not found or not ok.") + f" Error: {e}")
         exit(-1)
 
 
@@ -91,18 +93,18 @@ if __name__ == '__main__':
     app = widgets.QApplication(sys.argv)
 
     try:
-        with open("ddt4all_data/config.json", "r", encoding="UTF-8") as f:
+        with open(BASE_DIR / "resources" / "config.json", "r", encoding="UTF-8") as f:
             configuration = json.loads(f.read())
         if configuration["dark"]:
-            set_theme_style(2)
+            set_theme_style(app, 2)
         else:
-            set_theme_style(0)
+            set_theme_style(app, 0)
         if configuration["socket_timeout"]:
             set_socket_timeout(1)
         else:
             set_socket_timeout(0)
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
-        set_theme_style(0)
+        set_theme_style(app, 0)
 
     app.setStyle("plastic")
 
@@ -117,7 +119,7 @@ if __name__ == '__main__':
     if not os.path.exists("./logs"):
         os.mkdir("./logs")
 
-    pc = MainWindowOptions()
+    pc = MainWindowOptions(app)
     nok = True
     while nok:
         pcres = pc.exec_()

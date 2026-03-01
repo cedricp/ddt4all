@@ -65,7 +65,7 @@ lang_list = {
 def save_config():
     # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
     js = json.dumps(configuration, ensure_ascii=False, indent=True)
-    f = open("ddt4all_data/config.json", "w", encoding="UTF-8")
+    f = open("resources/config.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 

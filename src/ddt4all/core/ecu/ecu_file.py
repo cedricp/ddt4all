@@ -4,13 +4,15 @@ import re
 import xml.dom.minidom
 import zipfile
 
-import elm
 import json
 
-from ddt4all.core.ecu.utils import getChildNodesByName
+from ddt4all.core.ecu.utils import (
+    getChildNodesByName,
+)
 from ddt4all.core.ecu.ecu_device import EcuDevice
 from ddt4all.core.ecu.ecu_request import EcuRequest
 from ddt4all.core.ecu.ecu_data import EcuData
+import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
 
 _ = options.translator('ddt4all')

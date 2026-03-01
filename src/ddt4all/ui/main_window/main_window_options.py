@@ -28,7 +28,7 @@ except ImportError:
 
 
 class MainWindowOptions(widgets.QDialog):
-    def __init__(self):
+    def __init__(self, app):
         portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
         self.port = None
         self.ports = {}
@@ -198,7 +198,9 @@ class MainWindowOptions(widgets.QDialog):
         darkstylelayout = widgets.QHBoxLayout()
         self.darklayoutcheck = widgets.QCheckBox()
         self.darklayoutcheck.setChecked(options.dark_mode)
-        self.darklayoutcheck.stateChanged.connect(set_theme_style)
+        self.darklayoutcheck.stateChanged.connect(
+            lambda onoff: set_theme_style(app, onoff)
+        )
         darkstylelabel = widgets.QLabel(_("Dark style"))
         darkstylelayout.addWidget(self.darklayoutcheck)
         darkstylelayout.addWidget(darkstylelabel)

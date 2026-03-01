@@ -4,6 +4,7 @@ import PyQt5.QtWidgets as widgets
 import ddt4all.options as options
 from ddt4all.ui.display_data import DisplayData
 from ddt4all.ui.display_dict import DisplayDict
+from ddt4all.ui.displaymod.style_label import StyleLabel
 from ddt4all.ui.utils import (
     colorConvert,
     jsonFont,
@@ -11,7 +12,6 @@ from ddt4all.ui.utils import (
     getFontColor,
     getRectangleXML,
     getXMLFont,
-    styleLabel,
     unicode,
 )
 
@@ -125,7 +125,7 @@ class DisplayWidget(widgets.QWidget):
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = styleLabel(self)
+        self.qlabelval = StyleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(rect['width'] - int(width), rect['height'])
@@ -193,7 +193,7 @@ class DisplayWidget(widgets.QWidget):
         self.qlabel.setAlignment(core.Qt.AlignLeft)
         self.qlabel.setWordWrap(True)
 
-        self.qlabelval = styleLabel(self)
+        self.qlabelval = StyleLabel(self)
         self.qlabelval.setFont(qfnt)
         self.qlabelval.setText("")
         self.qlabelval.resize(int(rect['width'] / self.uiscale - width), int(rect['height'] / self.uiscale))

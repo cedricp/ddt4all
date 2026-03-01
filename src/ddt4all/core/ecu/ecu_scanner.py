@@ -1,8 +1,8 @@
-import elm
-import options
 
 from ddt4all.core.ecu.ecu_database import EcuDatabase
 from ddt4all.core.ecu.ecu_ident import EcuIdent
+import ddt4all.core.elm.elm as elm
+import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 

@@ -1,0 +1,20 @@
+{
+ "lang": "fr_FR",
+ "dark": false,
+ "socket_timeout": false,
+ "device_settings": {},
+ "auto_detect_devices": true,
+ "connection_timeout": 10,
+ "read_timeout": 5,
+ "max_reconnect_attempts": 3,
+ "preferred_device_order": [
+  "vlinker",
+  "vgate",
+  "obdlink",
+  "obdlink_ex",
+  "els27",
+  "elm327"
+ ],
+ "enable_device_validation": true,
+ "carlist_sort_mode": "code"
+}

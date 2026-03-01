@@ -48,6 +48,7 @@ class MainWidget(widgets.QMainWindow):
         else:
             self.screenlogfile = None
 
+        self.app = app
         self.plugins = {}
         self.carlist_sort_mode = "code"  # Default sorting by project code
         options.main_window = self  # Set reference for language switching
@@ -379,8 +380,8 @@ class MainWidget(widgets.QMainWindow):
             theme_light_action.setChecked(True)
 
         # Connect actions to set the theme explicitly
-        theme_dark_action.triggered.connect(lambda checked: set_theme_style(2))
-        theme_light_action.triggered.connect(lambda checked: set_theme_style(0))
+        theme_dark_action.triggered.connect(lambda checked: set_theme_style(app, 2))
+        theme_light_action.triggered.connect(lambda checked: set_theme_style(app, 0))
 
         theme_menu.addAction(theme_dark_action)
         theme_menu.addAction(theme_light_action)
@@ -529,7 +530,7 @@ class MainWidget(widgets.QMainWindow):
         
     def show_options_dialog(self):
         """Show options dialog for device settings"""
-        options_dialog = MainWindowOptions()
+        options_dialog = MainWindowOptions(self.app)
         options_dialog.exec_()
 
     def set_can_combo(self, bus):
