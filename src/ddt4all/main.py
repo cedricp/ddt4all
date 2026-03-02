@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import argparse
 import codecs
 import json
@@ -32,8 +30,6 @@ except ImportError:
     webkitwidgets = None
     HAS_WEBENGINE = False
 
-
-app = None
 BASE_DIR = Path(__file__).resolve().parent
 icons_base_dir = BASE_DIR / "resources" / "icons"
 
@@ -54,20 +50,17 @@ def load_this():
         return vehicles_loc
     except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
         print(_("resources/projects.json not found or not ok.") + f" Error: {e}")
-        exit(-1)
+        raise
 
 
-vehicles = load_this()
+def main(argv=None) -> int:
+    argv = sys.argv[1:] if argv is None else argv
 
-# args
-parser = argparse.ArgumentParser()
-parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
-args = parser.parse_args()
-not_qt5_show = args.git_workfallowmode
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
+    args = parser.parse_args(argv)
+    not_qt5_show = args.git_workfallowmode
 
-
-
-if __name__ == '__main__':
     # For InnoSetup version.h auto generator
     if os.path.isdir('ddt4all_data/inno-win-setup'):
         try:
@@ -80,43 +73,41 @@ if __name__ == '__main__':
                 f.write(f'#define __status__ "{version.__status__}"')
         except (OSError, IOError) as e:
             print(f"Warning: Could not write version.h: {e}")
-            
+
     if not_qt5_show:
-        exit(0)
+        return 0
+
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
     except (OSError, ValueError):
         sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+
+    # ⚠️ cette ligne rend les chemins relatifs dépendants du lancement
+    # Idéalement, évite-la si tu construis tes paths avec BASE_DIR (ce que tu fais déjà).
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
+
+    vehicles = load_this()
 
     options.simulation_mode = True
     options.socket_timeout = False
+
     app = widgets.QApplication(sys.argv)
 
     try:
         with open(BASE_DIR / "resources" / "config.json", "r", encoding="UTF-8") as f:
             configuration = json.loads(f.read())
-        if configuration["dark"]:
-            set_theme_style(app, 2)
-        else:
-            set_theme_style(app, 0)
-        if configuration["socket_timeout"]:
-            set_socket_timeout(1)
-        else:
-            set_socket_timeout(0)
+        set_theme_style(app, 2 if configuration.get("dark") else 0)
+        set_socket_timeout(1 if configuration.get("socket_timeout") else 0)
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
         set_theme_style(app, 0)
 
     app.setStyle("plastic")
 
-    ecudirfound = False
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
         print(_("Using custom DDT database"))
-        ecudirfound = True
 
     if not os.path.exists("./json"):
         os.mkdir("./json")
-
     if not os.path.exists("./logs"):
         os.mkdir("./logs")
 
@@ -126,7 +117,8 @@ if __name__ == '__main__':
         pcres = pc.exec_()
 
         if pc.mode == 0 or pcres == widgets.QDialog.Rejected:
-            exit(0)
+            return 0
+
         if pc.mode == 1:
             options.promode = False
             options.simulation_mode = False
@@ -140,20 +132,19 @@ if __name__ == '__main__':
 
         if not options.port:
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon(str(icons_base_dir / "obd.png"))
-            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowIcon(gui.QIcon(str(icons_base_dir / "obd.png")))
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
         print(_("Initilizing ELM with speed %i...") % port_speed)
         options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
+
         if options.elm_failed:
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = widgets.QMessageBox()
-            appIcon = gui.QIcon(str(icons_base_dir / "obd.png"))
-            msgbox.setWindowIcon(appIcon)
+            msgbox.setWindowIcon(gui.QIcon(str(icons_base_dir / "obd.png")))
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
@@ -164,4 +155,8 @@ if __name__ == '__main__':
     options.main_window = w
     w.show()
     app.exec_()
+    return 0
 
+
+if __name__ == "__main__":
+    raise SystemExit(main())
