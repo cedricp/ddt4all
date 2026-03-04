@@ -19,7 +19,7 @@ from ddt4all.ui.utils import (
 _ = options.translator('ddt4all')
 
 BASE_DIR = Path(__file__).resolve().parent
-PATH_PNG_ODB = str(BASE_DIR / ".." / ".." / "resources" / "icons" / "odb.png")
+PATH_PNG_ODB = ":/icons/odb.png"
 
 
 def zipConvertXML(dbfilename="ecu.zip"):

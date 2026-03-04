@@ -73,7 +73,7 @@ QComboBox::drop-down {
   border-bottom-right-radius: 3px;
 }
 QComboBox::down-arrow {
-  image: url("resources/icons/down_arrow.png");
+  image: url(":/icons/down_arrow.png");
 }
 QComboBox::disabled {
   background: #808080;
@@ -183,7 +183,7 @@ QMainWindow::separator:hover {
 }
 QToolBar::handle {
   spacing: 3px;
-  background: url("resources/icons/handle.png");
+  background: url(":/icons/handle.png");
 }
 QMenu::separator {
   height: 2px;
@@ -245,7 +245,7 @@ QRadioButton::indicator:unchecked {
   border-radius: 6px;
 }
 QRadioButton::indicator:checked {
-  image: url("resources/icons/checkbox-n.png");
+  image: url(":/icons/checkbox-n.png");
   width: 15px;
   height: 15px;
 }
@@ -270,7 +270,7 @@ QCheckBox::indicator:hover {
   height: 15px;
 }
 QCheckBox::indicator:checked {
-  image: url("resources/icons/checkbox-n.png");
+  image: url(":/icons/checkbox-n.png");
   width: 15px;
   height: 15px;
 }

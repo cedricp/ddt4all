@@ -10,6 +10,7 @@ import PyQt5.QtWidgets as widgets
 
 import ddt4all.core.ecu.ecu_database as ecu_db
 import ddt4all.core.elm.elm as elm
+import ddt4all.generated.resources_rc  # noqa: F401
 import ddt4all.options as options
 from ddt4all.ui.main_window.main_widget import MainWidget
 from ddt4all.ui.main_window.main_window_options import MainWindowOptions
@@ -83,7 +84,6 @@ def main(argv=None) -> int:
         sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
     # ⚠️ cette ligne rend les chemins relatifs dépendants du lancement
-    # Idéalement, évite-la si tu construis tes paths avec BASE_DIR (ce que tu fais déjà).
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     vehicles = load_this()
@@ -132,7 +132,7 @@ def main(argv=None) -> int:
 
         if not options.port:
             msgbox = widgets.QMessageBox()
-            msgbox.setWindowIcon(gui.QIcon(str(icons_base_dir / "obd.png")))
+            msgbox.setWindowIcon(gui.QIcon(":icons/obd.png"))
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
@@ -144,7 +144,7 @@ def main(argv=None) -> int:
             pc.show()
             pc.logview.append(options.get_last_error())
             msgbox = widgets.QMessageBox()
-            msgbox.setWindowIcon(gui.QIcon(str(icons_base_dir / "obd.png")))
+            msgbox.setWindowIcon(gui.QIcon(":icons/obd.png"))
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()

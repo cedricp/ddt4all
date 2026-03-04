@@ -2,7 +2,6 @@
 
 # (c) 2017
 # This is an example plugin
-from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -18,15 +17,12 @@ category = _("UCH Tools")
 need_hw = True
 ecufile = "UCH___M2S_X74_et_X73"
 
-BASE_DIR = Path(__file__).resolve().parent
-icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
-
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.laguna_uch = EcuFile(ecufile, True)
         # Set window icon and title
-        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
+        appIcon = qtgui.QIcon(":icons/obd.png")
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Laguna II UCH Reset"))
         layout = gui.QVBoxLayout()

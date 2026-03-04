@@ -29,12 +29,12 @@ def isWritable(path):
 def set_theme_style(app, onoff):
 
     if (onoff):
-        stylefile = core.QFile(str(styles_base_dir / "qstyle-d.qss"))
+        stylefile = core.QFile(":/styles/qstyle-d.qss")
         options.dark_mode = True
         stylefile.open(core.QFile.ReadOnly)
         StyleSheet = bytes(stylefile.readAll()).decode()
     else:
-        stylefile = core.QFile(str(styles_base_dir / "qstyle.qss"))
+        stylefile = core.QFile(":/styles/qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
         options.dark_mode = False
         StyleSheet = bytes(stylefile.readAll()).decode()

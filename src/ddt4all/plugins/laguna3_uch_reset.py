@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # (c) 2017
-from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -17,15 +16,12 @@ category = _("UCH Tools")
 need_hw = True
 ecufile = "BCM_X91_L43_S_S_SWC_v1.30_20140613T140906"
 
-BASE_DIR = Path(__file__).resolve().parent
-icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
-
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.megane_uch = EcuFile(ecufile, True)
         # Set window icon and title
-        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
+        appIcon = qtgui.QIcon(":icons/obd.png")
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Laguna III UCH Reset"))
         layout = gui.QVBoxLayout()

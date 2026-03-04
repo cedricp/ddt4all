@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # (c) 2017
-from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -17,15 +16,12 @@ category = _("Airbag Tools")
 need_hw = True
 ecufile = "MRSZ_X95_L38_L43_L47_20110505T101858"
 
-BASE_DIR = Path(__file__).resolve().parent
-icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
-
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.airbag_ecu = EcuFile(ecufile, True)
         # Set window icon and title
-        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
+        appIcon = qtgui.QIcon(":icons/obd.png")
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Megane3 AIRBAG Reset"))
         layout = gui.QVBoxLayout()

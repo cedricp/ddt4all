@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # (c) 2017
-from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -16,15 +15,12 @@ plugin_name = _("ZOE/FLENCE/Megane III/Scenic III EPS Reset")
 category = _("EPS Tools")
 need_hw = True
 
-BASE_DIR = Path(__file__).resolve().parent
-icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
-
 class Virginizer(gui.QDialog):
     def __init__(self):
         super(Virginizer, self).__init__()
         self.megane_eps = EcuFile("DAE_X95_X38_X10_v1.88_20120228T113904", True)
         # Set window icon and title
-        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
+        appIcon = qtgui.QIcon(":icons/obd.png")
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("ZOE/FLENCE/Megane III/Scenic III EPS Reset"))
         layout = gui.QVBoxLayout()

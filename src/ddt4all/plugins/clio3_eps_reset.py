@@ -3,7 +3,6 @@
 # (c) 2017
 
 from binascii import unhexlify
-from pathlib import Path
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as qtgui
@@ -19,9 +18,6 @@ plugin_name = _("Modus/Clio III EPS Reset")
 category = _("EPS Tools")
 need_hw = True
 ecufile = "DAE_J77_X85_Gen2___v3.7"
-
-BASE_DIR = Path(__file__).resolve().parent
-icons_base_dir = BASE_DIR / ".." / "resources" / "icons"
 
 def calc_crc(vin=None):
     VIN = vin.encode("hex")
@@ -40,7 +36,7 @@ class Virginizer(gui.QDialog):
         super(Virginizer, self).__init__()
         self.clio_eps = EcuFile(ecufile, True)
         # Set window icon and title
-        appIcon = qtgui.QIcon(str(icons_base_dir / "obd.png"))
+        appIcon = qtgui.QIcon(":icons/obd.png")
         self.setWindowIcon(appIcon)
         self.setWindowTitle(_("Modus/Clio III EPS Reset"))
         layout = gui.QVBoxLayout()
