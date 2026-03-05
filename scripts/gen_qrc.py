@@ -13,14 +13,12 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 
 @dataclass(frozen=True)
 class ResourceGroup:
-    prefix: str                 # ex: "/icons"
-    root: Path                  # ex: "resources/icons"
-    alias_mode: str = "basename"  # "basename" (recommandé) ou "relative"
+    prefix: str     # ex: "/icons"
+    root: Path      # ex: "resources/icons"
 
 
 DEFAULT_EXTS = {".png", ".jpg", ".jpeg", ".svg", ".ico", ".qss", ".ui", ".ttf", ".otf"}
@@ -38,33 +36,6 @@ def rel_posix(path: Path, base: Path) -> str:
     return path.resolve().relative_to(base.resolve()).as_posix()
 
 
-def make_unique_alias(desired: str, used: set[str]) -> str:
-    """
-    Ensure alias is unique within the whole qrc.
-    If collision, append _2, _3...
-    """
-    if desired not in used:
-        used.add(desired)
-        return desired
-    stem = desired
-    suffix = 2
-    while True:
-        candidate = f"{stem.rsplit('.', 1)[0]}_{suffix}.{stem.rsplit('.', 1)[1]}" if "." in stem else f"{stem}_{suffix}"
-        if candidate not in used:
-            used.add(candidate)
-            return candidate
-        suffix += 1
-
-
-def compute_alias(file_path: Path, group_root: Path, mode: str) -> str:
-    if mode == "basename":
-        return file_path.name
-    if mode == "relative":
-        # alias garde le sous-chemin relatif au root du groupe
-        return rel_posix(file_path, group_root)
-    raise ValueError(f"Unknown alias_mode: {mode}")
-
-
 def generate_qrc(
     *,
     project_root: Path,
@@ -74,7 +45,6 @@ def generate_qrc(
 ) -> None:
     output_qrc.parent.mkdir(parents=True, exist_ok=True)
 
-    used_aliases: set[str] = set()
     lines: list[str] = []
     lines.append("<RCC>")
 
@@ -88,16 +58,10 @@ def generate_qrc(
         lines.append(f'  <qresource prefix="{g.prefix}">')
 
         for f in files:
-            # Le contenu du <file> doit être un chemin relatif au project_root (pour la compilation)
-            file_rel = rel_posix(f, project_root)
+            file_rel = rel_posix(f, project_root)   # chemin réel pour compilation
+            alias = rel_posix(f, group_root)        # chemin exposé dans Qt (relatif au groupe)
 
-            # Alias propre: par défaut basename => :/icons/checkbox.png
-            alias = compute_alias(f, group_root, g.alias_mode)
-
-            # Rend l'alias unique globalement (évite collisions checkbox.png etc)
-            alias_unique = make_unique_alias(alias, used_aliases)
-
-            lines.append(f'    <file alias="{alias_unique}">{file_rel}</file>')
+            lines.append(f'    <file alias="{alias}">{file_rel}</file>')
 
         lines.append("  </qresource>")
 
@@ -115,17 +79,18 @@ def compile_qrc(qrc_path: Path, output_py: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Generate Qt .qrc from resource directories (with aliases).")
+    parser = argparse.ArgumentParser(
+        description="Generate Qt .qrc from resource directories (preserve subdirs, no flatten)."
+    )
     parser.add_argument("--project-root", default=".", help="Project root (default: current directory).")
     parser.add_argument("--out-qrc", default="resources.qrc", help="Output .qrc path relative to project root.")
     parser.add_argument("--compile", action="store_true", help="Also compile to a Python module using pyrcc5.")
-    parser.add_argument("--out-py", default="src/ddt4all/generated/resources_rc.py",
-                        help="Output python module for compiled resources.")
+    parser.add_argument(
+        "--out-py",
+        default="src/ddt4all/generated/resources_rc.py",
+        help="Output python module for compiled resources.",
+    )
     parser.add_argument("--ext", action="append", default=[], help="Extra extension to include (repeatable).")
-
-    # Permet de choisir le mode d'alias si tu veux garder une arbo partielle
-    parser.add_argument("--alias-mode", choices=["basename", "relative"], default="basename",
-                        help="Alias strategy: basename -> 'file.png', relative -> 'sub/dir/file.png'.")
 
     args = parser.parse_args(argv)
 
@@ -137,10 +102,9 @@ def main(argv: list[str] | None = None) -> int:
     for e in args.ext:
         exts.add(e if e.startswith(".") else f".{e}")
 
-    # Adapte ces dossiers à ton repo (dans ton cas: resources/icons + resources/styles à la racine)
     groups = [
-        ResourceGroup(prefix="/icons", root=Path("resources/icons"), alias_mode=args.alias_mode),
-        ResourceGroup(prefix="/styles", root=Path("resources/styles"), alias_mode=args.alias_mode),
+        ResourceGroup(prefix="/icons", root=Path("resources/icons")),
+        ResourceGroup(prefix="/styles", root=Path("resources/styles")),
     ]
 
     generate_qrc(project_root=project_root, groups=groups, output_qrc=out_qrc, exts=exts)
