@@ -94,7 +94,7 @@ def main(argv=None) -> int:
     app = widgets.QApplication(sys.argv)
 
     try:
-        with open(BASE_DIR / "resources" / "config.json", "r", encoding="UTF-8") as f:
+        with open("config.json", "r", encoding="UTF-8") as f:
             configuration = json.loads(f.read())
         set_theme_style(app, 2 if configuration.get("dark") else 0)
         set_socket_timeout(1 if configuration.get("socket_timeout") else 0)

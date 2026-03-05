@@ -67,7 +67,7 @@ BASE_DIR = Path(__file__).resolve().parent
 def save_config():
     # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
     js = json.dumps(configuration, ensure_ascii=False, indent=True)
-    f = open("resources/config.json", "w", encoding="UTF-8")
+    f = open("config.json", "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -90,7 +90,7 @@ def create_new_config():
 def load_configuration():
     try:
 
-        f = open(str(BASE_DIR / "resources" / "config.json"), "r", encoding="UTF-8")
+        f = open("config.json", "r", encoding="UTF-8")
         config = json.loads(f.read())
         # load config as multiplatform (mac fix macOs load conf)
         configuration["lang"] = config.get("lang", get_translator_lang())
