@@ -214,5 +214,5 @@ def set_carlist_sort_mode(mode):
 def translator(domain):
     load_configuration()
     # Set up message catalog access
-    t = gettext.translation(domain, 'ddt4all_data/locale', fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
+    t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext

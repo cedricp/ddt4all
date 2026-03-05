@@ -1,0 +1,1631 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-05 20:43+0100\n"
+"PO-Revision-Date: 2026-02-15 18:42+0100\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
+"Language-Team: Portuguese\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Warning, cannot get signed value for"
+msgstr "Aviso, não é possível obter o valor assinado para"
+
+msgid "Division by zero, please check data item: "
+msgstr "Divisão por zero, verifique o item de dados: "
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr "getHexValue >> bytes restantes anormais "
+
+msgid "Adding group "
+msgstr "Adicionando grupo "
+
+msgid "Unable to find eculist"
+msgstr "Não foi possível encontrar o eculista"
+
+msgid "Cannot find file "
+msgstr "Não é possível encontrar o arquivo "
+
+msgid "Cannot load ECU file"
+msgstr "Não é possível carregar o arquivo ECU"
+
+msgid "XML not found"
+msgstr "XML não encontrado"
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr "Não é possível recuperar o endereço funcional da ECU"
+
+msgid "Generated stream "
+msgstr "Fluxo gerado "
+
+msgid "Send request stream "
+msgstr "Enviar fluxo de solicitação "
+
+msgid "Received stream "
+msgstr "Transmissão recebida "
+
+msgid "Request ECU Error"
+msgstr "Solicitar erro de ECU"
+
+msgid "Decoded values"
+msgstr "Valores decodificados"
+
+msgid "Warning, address"
+msgstr "Aviso, endereço"
+
+msgid "is not mapped"
+msgstr "não está mapeado"
+
+msgid "Scanning address: "
+msgstr "Endereço de digitalização: "
+
+msgid "Found: "
+msgstr "Encontrados: "
+
+msgid "Identified ECU"
+msgstr "ECU identificada"
+
+msgid "Found ECU"
+msgstr "ECU encontrada"
+
+msgid "(not perfect match)"
+msgstr "(não combinação perfeita)"
+
+msgid "(no relevant ECU file found)"
+msgstr "(nenhum arquivo ECU relevante encontrado)"
+
+msgid "Trying to open port "
+msgstr "Tentando abrir a porta "
+
+msgid "Port initialization failed"
+msgstr "Porta de iniciação falhou"
+
+msgid "Port connection failed - port object is invalid"
+msgstr "Conexão com a porta falhou – objeto da porta é inválido"
+
+msgid "No ELM interface on port"
+msgstr "No há interface ELM neste porta"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr "Conexão OBDLink OK, tentando switch UART de velocidade total"
+
+msgid "Failed to switch to change OBDLink to "
+msgstr "Falha ao mudar para alterar OBDLink para "
+
+msgid "OBDLINK Connection OK, using optimal settings"
+msgstr "Conexão OBDLINK de velocidade total OK"
+
+msgid "Connection established successfully"
+msgstr "Conexão estabelecida com êxito"
+
+msgid "VGate STPX mode enabled for enhanced long command support"
+msgstr "Modo STPX do VGate ativado para suporte aprimorado a comandos longos"
+
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr "Configuração ELS27 V5 CAN pins (12-13)"
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr "ELS27 V5 CAN configuração completa"
+
+msgid "STPX mode enabled for enhanced long command support"
+msgstr "Modo STPX ativado para suporte aprimorado a comandos longos"
+
+msgid "Port is None - cannot switch speed"
+msgstr "Porta é None – não é possível alterar a velocidade"
+
+#, python-format
+msgid "%s switched baudrate OK, changing UART speed now..."
+msgstr "%s mudou baurate OK, mudando a velocidade do UART agora..."
+
+#, python-format
+msgid "%s STN connection established"
+msgstr "Conexão com successo %s"
+
+#, python-format
+msgid "%s Version: "
+msgstr "Versão %s"
+
+msgid ""
+"VGate adapter detected but STN verification failed, attempting fallback..."
+msgstr ""
+"Adaptador VGate detectado, mas a verificação STN falhou, tentando "
+"alternativa…"
+
+#, python-format
+msgid "Unsupported baudrate for ELM: %s"
+msgstr "Baudrate não suportada para o ELM: %s"
+
+msgid "ELM baudrate switched OK, changing UART speed now..."
+msgstr ""
+"Taxa de transmissão do ELM ativada, alterando a velocidade do UART agora..."
+
+msgid "ELM full speed connection OK "
+msgstr "Conexão ELM de velocidade total OK "
+
+msgid "Version "
+msgstr "Versão "
+
+msgid "ELM did not report version after speed switch"
+msgstr "O ELM não informou a versão após a troca de velocidade"
+
+#, python-format
+msgid "Your ELM does not support baudrate %s"
+msgstr "O seu WIFI não suporta racio de bauds %s"
+
+msgid "ELM reset..."
+msgstr "Reinicialização do ELM..."
+
+msgid "Unknown address: "
+msgstr "Endereço desconhecido: "
+
+msgid "Using saved device settings"
+msgstr "Uso dos parametros salvos"
+
+msgid "Using optimal device settings"
+msgstr "Uso dos parametros optimal"
+
+msgid "Connecting to device at port: "
+msgstr "Connecting to device at port: "
+
+msgid "Using baudrate: "
+msgstr "Using baudrate: "
+
+msgid "Testing for ELS27 device..."
+msgstr "Test em device ELS27..."
+
+msgid "ELS27 device detected: "
+msgstr "ELM327 device detectado: "
+
+msgid "Using detected baud rate: "
+msgstr "Uso do baud rate detectado; "
+
+msgid "Warning: No ELS27 response detected"
+msgstr "Atenção: Resposta não detectada em ELS27"
+
+msgid "Will attempt connection anyway..."
+msgstr "Espera de conexions ..."
+
+msgid "Connection failed: "
+msgstr "Connection failed: "
+
+msgid "Testing basic connectivity..."
+msgstr "Testing basic connectivity..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "Warning: Device may not be ELM327 compatible"
+
+msgid "ELM327 device detected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "Device version: "
+msgstr "Device version: "
+
+msgid "Connection error: "
+msgstr "Connection error: "
+
+msgid "FAIL"
+msgstr "FALHA"
+
+msgid "OK/TIMEOUT"
+msgstr "OK/TIMEOUT TEMPO ESGOTADO"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Incompatible adapter on ARM core"
+msgstr "Adaptador com ARM incompatível"
+
+msgid "Result: "
+msgstr "Resultado: "
+
+msgid " succeeded from "
+msgstr " bem sucedidos sobre "
+
+msgid "ELM Max version:"
+msgstr "Versão ELM máxima:"
+
+msgid "Using saved settings for"
+msgstr "Uso dos parametros salvos"
+
+msgid "Using optimal settings for"
+msgstr "Uso dos parametros optimal"
+
+msgid "Serial port opened"
+msgstr "Verificando velocidade da porta"
+
+msgid "Error: "
+msgstr "Erro: "
+
+msgid "ELM not connected or wrong COM port"
+msgstr "ELM não conetado ou porta COM errado"
+
+msgid "Port closed"
+msgstr "Porta fechada"
+
+#, python-format
+msgid "Serial error in read_byte: %s"
+msgstr "Erro serial ao ler byte: %s"
+
+msgid "Connection to ELM was lost"
+msgstr "Coneção ELM perdida"
+
+#, python-format
+msgid "*       Error: %s"
+msgstr "*       Error: %s"
+
+#, python-format
+msgid "Cannot decode bytes %s"
+msgstr "Não é possível decodificar os bytes %s"
+
+#, python-format
+msgid "Error in read(): %s"
+msgstr "Error leitura(): %s"
+
+msgid "Attempting WiFi reconnection..."
+msgstr "Tentando reconectar ao WiFi…"
+
+msgid "Port handler is None, cannot write"
+msgstr "O manipulador da porta é None, não é possível escrever"
+
+#, python-format
+msgid "Serial write error: %s"
+msgstr "Serial - Erro au escrever: %s "
+
+#, python-format
+msgid "*       Write error: %s"
+msgstr "*       Erro ao escrever: %s"
+
+msgid "TIMEOUT"
+msgstr "TIMEOUT Tempo esgotado"
+
+msgid "Checking port speed:"
+msgstr "Verificando velocidade da porta:"
+
+msgid "Start COM speed :"
+msgstr "Iniciando COM a velocidade de:"
+
+msgid "ELM not responding"
+msgstr "ELM não responde"
+
+msgid "ELS27 V5 CAN pin configuration complete"
+msgstr "ELS27 V5 CAN pin configuração completa"
+
+msgid "Found USB adapter:"
+msgstr "Adaptador USB encontrado:"
+
+msgid "Warning: PyQtWebEngine not available. Some features may be limited."
+msgstr ""
+"Aviso: PyQtWebEngine não disponível. Alguns recursos podem estar limitados."
+
+#, fuzzy
+msgid "resources/projects.json not found or not ok."
+msgstr "ddt4all_data/projects.json não encontrado ou não está ok."
+
+msgid "Using custom DDT database"
+msgstr "Usando base de dados DDT personalizada"
+
+msgid "No COM port selected"
+msgstr "Porta COM não selecionado"
+
+#, python-format
+msgid "Initilizing ELM with speed %i..."
+msgstr "Iniciando ELM à velocidade de %i..."
+
+msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr "Erro, Interface OBDLink-SX ou ELM não detetado "
+
+msgid "AB90 AIRBAG Reset"
+msgstr "Reinicialização do AIRBAG AB90"
+
+msgid "Airbag Tools"
+msgstr "Ferramentas de airbag"
+
+msgid ""
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
+"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
+"font>"
+msgstr ""
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ "
+"DESBLOQUEAR DADOS DE CRASH DO AIRBAG<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
+
+msgid "Check ACU Virgin"
+msgstr "Verifique ACU Virgem"
+
+msgid "Waiting"
+msgstr "Esperando"
+
+msgid "Virginize ACU"
+msgstr "Virginizar ACU"
+
+msgid "Cannot connect to ECU"
+msgstr "Não é possível conectar à ECU"
+
+msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
+msgstr "<font color='orange'>RESPOSTA INESPERADA</font>"
+
+msgid "<font color='red'>CRASH DETECTED</font>"
+msgstr "<font color='red'>CRASH DETECTADO</font>"
+
+msgid "<font color='green'>NO CRASH DETECTED</font>"
+msgstr "<font color='green'>NENHUM CRASH DETECTADO</font>"
+
+#, python-format
+msgid "SdS stream: %s"
+msgstr "Transmissão recebida %s"
+
+msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA</font>"
+
+msgid "Megane/Scenic II card programming"
+msgstr "Programação de cartão Megane/Scenic II"
+
+msgid "Keys"
+msgstr "Chaves"
+
+msgid "ENTER AFTER SALE MODE"
+msgstr "ENTRE NO MODO PÓS-VENDA"
+
+msgid ""
+"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
+"YET</font>"
+msgstr ""
+"<font color='red'>PROGRAMAÇÃO DO CARTÃO MEGANE II<br>EXPERIMENTAL: AINDA NÃO "
+"TESTADO</font>"
+
+msgid "LEARN"
+msgstr "APRENDER"
+
+msgid "VALIDATE"
+msgstr "VALIDAR"
+
+msgid "CANCEL"
+msgstr "CANCELAR"
+
+msgid "Algo 2"
+msgstr "Algo 2"
+
+msgid "ISK"
+msgstr "ISK"
+
+msgid "PIN"
+msgstr "PIN"
+
+msgid "Num key learnt"
+msgstr "Tecla numérica aprendida"
+
+msgid "CARD IDE"
+msgstr "IDE DO CARTÃO"
+
+msgid "Cannot get ISK, check connections and UCH compatibility"
+msgstr "Não é possível obter ISK, verificar conexões e compatibilidade com UCH"
+
+msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
+msgstr "<font color='red'>CÓDIGO PIN NÃO RECONHECIDO</font>"
+
+msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
+msgstr "<font color='green'>CÓDIGO PIN OK / APRENDIZAGEM DE CHAVE</font>"
+
+msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
+msgstr "<font color='green'>CÓDIGO PIN OK / UCH APRENDIZAGEM</font>"
+
+msgid "Modus/Clio III EPS Reset"
+msgstr "Modus/Clio III EPS Redefinir"
+
+msgid "EPS Tools"
+msgstr "Ferramentas EPS"
+
+msgid ""
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
+"EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ "
+"DADOS EPS IMMO<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+msgid "BLANK STATUS & VIN READ"
+msgstr "STATUS EM BRANCO E LEITURA DE VIN"
+
+msgid "Virginize EPS"
+msgstr "Virginizar EPS"
+
+msgid "VIN - READ"
+msgstr "VIN - LEITURA"
+
+msgid "VIN - WRITE"
+msgstr "VIN - ESCREVER"
+
+msgid "Write VIN"
+msgstr "Escrever VIN"
+
+msgid "<font color='red'>VIN - INVALID</font>"
+msgstr "<font color='red'>VIN - INVÁLIDO</font>"
+
+msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgstr "<font color='res'>VIN - COMPRIMENTO RUIM</font>"
+
+msgid "<font color='orange'>VIN WRITE FAILED</font>"
+msgstr "<font color='orange'>VIN ESCRITA FALHA</font>"
+
+msgid "<font color='green'>VIN WRITE OK</font>"
+msgstr "<font color='green'>VIN ESCRITA OK</font>"
+
+msgid "<font color='green'>EPS virgin</font>"
+msgstr "<font color='green'>EPS virgem</font>"
+
+msgid "<font color='red'>EPS coded</font>"
+msgstr "<font color='red'>Codificado EPS</font>"
+
+#, python-format
+msgid "SdSC0 stream: %s"
+msgstr "SdSC0 stream: %s"
+
+msgid "Clio IV EPS Reset"
+msgstr "Reinicialização do Clio IV EPS"
+
+msgid ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ DADOS EPS "
+"IMMO<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+msgid "Check EPS Virgin"
+msgstr "Verificação EPS Virgem"
+
+msgid "<font color='green'>EPS not operational</font>"
+msgstr "<font color='green'>EPS não operacional</font>"
+
+msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
+msgstr "<font color='red'>RESPOSTA INESPERADA</font>"
+
+#, python-format
+msgid "SdSFA stream: %s"
+msgstr "SdSFA stream: %s"
+
+msgid "Laguna II UCH Reset"
+msgstr "Laguna II UCH Reinicialização"
+
+msgid "UCH Tools"
+msgstr "Ferramentas UCH"
+
+msgid ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+msgid "Check UCH Virgin"
+msgstr "Verificação UCH Virgem"
+
+msgid "Virginize UCH"
+msgstr "Virginizar UCH"
+
+msgid "<font color='green'>UCH virgin</font>"
+msgstr "<font color='green'>UCH virgem</font>"
+
+msgid "<font color='red'>UCH coded</font>"
+msgstr "<font color='red'>Codificado UCH</font>"
+
+msgid "Laguna III UCH Reset"
+msgstr "Laguna III UCH Reinicialização"
+
+msgid ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+msgid "Megane/Scenic II UCH Reset"
+msgstr "Reinicialização do Megane/Scenic II UCH"
+
+msgid ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+msgid "Megane3 AIRBAG Reset"
+msgstr "Reinicialização do AIRBAG Megane 3"
+
+msgid ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
+"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ "
+"DESBLOQUEAR DADOS DE CRASH DO AIRBAG<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
+
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
+msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
+
+msgid ""
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
+"PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
+"MEANS</font>"
+msgstr ""
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>ESTE "
+"PLUGIN REINICIARÁ DADOS EPS IMMO<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
+
+msgid "Megane/Scenic III UCH Reset"
+msgstr "Megane/Scenic III UCH Reset"
+
+msgid ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN APAGARÁ SEU "
+"UCH<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+msgid "RSAT4 AIRBAG Reset"
+msgstr "RSAT4 AIRBAG Reset"
+
+msgid ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ DESBLOQUEAR DADOS DE CRASH "
+"DO AIRBAG<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO SIGNIFICA</font>"
+
+#, python-format
+msgid "SdSEX stream: %s"
+msgstr "SdSEX stream: %s"
+
+msgid "CRC calculator"
+msgstr "CRC calculator"
+
+msgid "VIN"
+msgstr "VIN"
+
+msgid "CRC Calculator"
+msgstr "CRC calculador"
+
+msgid "CRC CALCULATOR"
+msgstr "CRC CALCULATOR"
+
+msgid "Zoe water pump Reset"
+msgstr "Zoe bomba a agua reset"
+
+msgid "EVC Tools"
+msgstr "Ferramentas EVC"
+
+msgid "Water pump counters"
+msgstr "Contadores de Bomba a agua"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Values"
+msgstr "Valores"
+
+msgid "Action"
+msgstr "Ação"
+
+msgid "Low Speed"
+msgstr "Velocidade baixa"
+
+msgid "Middle Speed"
+msgstr "Velocidade média"
+
+msgid "High Speed"
+msgstr "Velocidade alta"
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr "V_Timer_DrivWEP_ON"
+
+msgid "Reset"
+msgstr "Resetar"
+
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+"Zoe contadores de bomba a agua<br><font color='red'>ESTE PLUGIN APAGARÁ "
+"CONTADORES DE BOMBA A AGUA<br>VÁ SE VOCÊ NÃO TEM IDEIA DO QUE ISSO "
+"SIGNIFICA</font>"
+
+msgid "Check values"
+msgstr "Verificar valores"
+
+msgid "Waiting action"
+msgstr "Espera da acção"
+
+msgid "Reset all counters"
+msgstr "Resetar todos contadores"
+
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
+msgstr ""
+"<h1>AJUDA</h1><ul><li>Insira a sua carta</li><li>Coloque em Posição D</"
+"li><li>Presione Stay START até aparecer <b>Retire a carta</b> Mensagem</"
+"li><li>Coloque em posição P</li><li>Deixe a carta inserida</li></ul>"
+
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>Valores lidos</font>"
+
+msgid "Reading Low speed"
+msgstr "Lendo velocidade baixa"
+
+msgid "Reading Middle speed"
+msgstr "Leitura velocidade média"
+
+msgid "Reading High speed"
+msgstr "Leitura velocidade alta"
+
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR V_Timer_DrivWEP_ON EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>LIMPAR V_Timer_DrivWEP_ON FALHOU</font>"
+
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR BAIXO EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA BAIXO</font>"
+
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR MEDIO EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA MEDIO</font>"
+
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>LIMPAR ALTO EXECUTADO</font>"
+
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>LIMPAR FALHA ALTA</font>"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "Del"
+msgstr "Apagar"
+
+msgid "Refresh"
+msgstr "Refrescar"
+
+msgid "Move up"
+msgstr "Para cima"
+
+msgid "Check"
+msgstr "Verificar"
+
+#, python-format
+msgid "Request %s not found"
+msgstr "Pedido %s não encontrado"
+
+#, python-format
+msgid ""
+"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
+"input values"
+msgstr ""
+"<font color=green>Pedido</font><font color=blue>'%s'</font> não tem os "
+"valores seguintes perdidos"
+
+#, python-format
+msgid ""
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
+"inputs :"
+msgstr ""
+"<font color=red>Pedido</font><font color=blue>'%s'</font> tem os valores "
+"perdidos:"
+
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+msgid "Delay;Request"
+msgstr "Atraso;Pedido"
+
+msgid "Screen initialization"
+msgstr "Inicialização ecrã"
+
+msgid "Requests to send before screen drawing"
+msgstr "Pedidos a enviar antes fixar o ecrã"
+
+msgid "Button name;Unique name"
+msgstr "Nome botão;Nome único"
+
+msgid "New"
+msgstr "Novo"
+
+msgid "Duplicate selected"
+msgstr "Duplicar selecionado"
+
+msgid "Remove selected"
+msgstr "Remover selecionado"
+
+msgid "Reload"
+msgstr "Recarregar"
+
+msgid "Validate changes"
+msgstr "Validar mudanças"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Data type"
+msgstr "Tipo de dados"
+
+msgid "Numeric"
+msgstr "Numérico"
+
+msgid "Numeric items"
+msgstr "Itens numéricos"
+
+msgid "Hex"
+msgstr "Hex"
+
+#, python-format
+msgid "Data is used by request %s"
+msgstr "Os dados são usados pela solicitação %s"
+
+msgid "New data"
+msgstr "Novo dado"
+
+msgid "Replace me with request description"
+msgstr "Substitua-me com o descritivo do pedido"
+
+msgid "Data name;Description"
+msgstr "Nome dado;Descritivo"
+
+msgid "Goto data"
+msgstr "Ir a Dados"
+
+msgid "Remove"
+msgstr "Eliminar"
+
+msgid "Add to screen"
+msgstr "Adicionar ecrã"
+
+msgid "ECU Function address"
+msgstr "Endereço da função ECU"
+
+msgid "ECU Protocol"
+msgstr "Protocolo ECU"
+
+msgid "Tool > Ecu ID (Hex)"
+msgstr "Ferramentas > ID Ecu (Hex)"
+
+msgid "Ecu > Tool ID (Hex)"
+msgstr "Ecu > ID Ferramentas (Hex)"
+
+msgid "Coding"
+msgstr "Codificação"
+
+msgid "Big Endian"
+msgstr "Grande endian"
+
+msgid "Little Endian"
+msgstr "Pequeno endian"
+
+msgid "ECU Auto identification"
+msgstr "Identificação automática da ECU"
+
+msgid "Diag version;Supplier;Soft;Version"
+msgstr "Versão Diag;Fornecedor;Soft; Versão"
+
+msgid "Add new"
+msgstr "Adicionar novo"
+
+msgid "Delete selected"
+msgstr "Apagar selecionado"
+
+msgid "Diag version"
+msgstr "Versão diagnóstico"
+
+msgid "Supplier"
+msgstr "Fornecedor"
+
+msgid "Soft"
+msgstr "Soft"
+
+msgid "Version"
+msgstr "Versão"
+
+msgid "Number of bits"
+msgstr "Numero de bits"
+
+msgid "Signed"
+msgstr "Assinado"
+
+msgid "Add item"
+msgstr "Adicionar entrada"
+
+msgid "Del item"
+msgstr "Apagar entrada"
+
+msgid "New item"
+msgstr "Nova entrada"
+
+msgid "Value;Text"
+msgstr "Valor;Texto"
+
+msgid "Number of bit"
+msgstr "Numero de bits"
+
+msgid "Unit"
+msgstr "Unidade"
+
+msgid "Format"
+msgstr "Formato"
+
+msgid "Value = (AX+B) / C"
+msgstr "Valor =(AX+B) / C"
+
+msgid "Number of bytes"
+msgstr "Numero de bytes"
+
+msgid "Send request bytes (HEX)"
+msgstr "Enviar bytes ecrã (HEX)"
+
+msgid "Receive bytes (HEX)"
+msgstr "Bytes recebidos (HEXA)"
+
+msgid "Data length"
+msgstr "Comprimento dos dados"
+
+msgid "Shift byte count"
+msgstr "Contagem octets desfasadoss"
+
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "Nome dados;Byte de inicio;Desfasagem bit;Quantidade de bits;Endianess"
+
+msgid "Little"
+msgstr "Pequeno"
+
+msgid "Big"
+msgstr "Grande"
+
+msgid "Inherits globals"
+msgstr "Herdados globais"
+
+msgid "No SDS"
+msgstr "Sem SDS"
+
+msgid "Plant"
+msgstr "Plantar"
+
+msgid "After Sale"
+msgstr "Pós-venda"
+
+msgid "Engineering"
+msgstr "Engenharia"
+
+msgid "Reload requests"
+msgstr "Recarregar pedidos"
+
+msgid "Add request"
+msgstr "Adicionar pedido"
+
+msgid "Send bytes"
+msgstr "Bytes enviados"
+
+msgid "Receive bytes"
+msgstr "Bytes recebidos"
+
+msgid "Request name;Bytes;Manual"
+msgstr "Nome da solicitação;Bytes;Manual"
+
+msgid "No request named"
+msgstr "Nenhuma solicitação nomeada"
+
+msgid "Found similar"
+msgstr "Encontrado semelhante"
+
+msgid "DataItem not found"
+msgstr "DataItem não encontrado"
+
+msgid "Cannot find data "
+msgstr "Não é possível encontrar dados "
+
+msgid " vs "
+msgstr " contra "
+
+msgid "Cannot draw input "
+msgstr "Não se pode realizar pedido de chamada "
+
+msgid "No Value"
+msgstr "Não tem valor"
+
+msgid ""
+"<center>This Software is free, but I need money to buy cables/ECUs and make "
+"this application more reliable</center>"
+msgstr ""
+"<center>Este software é gratuito, portanto necessito dinheiro para comprar "
+"cabos/ECUs e por esta aplicação mais estavel</center>"
+
+msgid "Yes I contribute"
+msgstr "Sim, quero contribuir"
+
+msgid "No, I don't"
+msgstr "Não, obrigado"
+
+msgid "Thank you for you contribution, if nothing happens, please go to"
+msgstr "Obrigado pela sua contribuição, se não ocorre nada, por favor va a"
+
+msgid "ECU Finder"
+msgstr "Procura de ECU"
+
+msgid "Address :"
+msgstr "Address :"
+
+msgid "ID frame :"
+msgstr "ID frame :"
+
+msgid "No vehicles available"
+msgstr "Não há veículos disponíveis"
+
+msgid "ECU name"
+msgstr "ECU"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Protocol"
+msgstr "Protocolo"
+
+msgid "Diag"
+msgstr "Diag"
+
+msgid "Projets"
+msgstr "Projetos"
+
+#, python-format
+msgid "%d loaded ECUs in database."
+msgstr "%d eCUs carregadas na base de dados."
+
+msgid "No database found"
+msgstr "Database não encontrada"
+
+msgid "Check documentation"
+msgstr "Verifique a documentação"
+
+#, fuzzy
+msgid "DDT4All Documentation"
+msgstr "Documentação"
+
+msgid "WebEngine not available."
+msgstr ""
+
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr ""
+
+#, fuzzy
+msgid "Visit the online documentation at:"
+msgstr "Verifique a documentação"
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr ""
+
+msgid "Refresh rate (ms):"
+msgstr "Racio de refresco (ms):"
+
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr "Pode atingir o tempo limite (ms) [0:AUTO] :"
+
+msgid "Documentation"
+msgstr "Documentação"
+
+msgid "Screen"
+msgstr "Ecrã"
+
+msgid "CAN Sniffer"
+msgstr "CAN Sniffer"
+
+msgid "Requests"
+msgstr "Pedidos"
+
+msgid "Data"
+msgstr "Dados"
+
+msgid "Buttons"
+msgstr "Botões"
+
+msgid "Ecu parameters"
+msgstr "Parametros ECU"
+
+msgid "Ecran Window"
+msgstr "Janela Ecran"
+
+msgid "Screens"
+msgstr "Ecrãs"
+
+msgid "Logs Window"
+msgstr "Janela de registros"
+
+msgid "Ecu Window"
+msgstr "Janela Ecu"
+
+msgid "Ecu List Window"
+msgstr "Janela Lista Ecu"
+
+msgid "ToolBar"
+msgstr "Barra de ferramentas"
+
+msgid "Read DTC"
+msgstr "Ler DTC"
+
+msgid "Full log"
+msgstr "Log completo"
+
+msgid "Expert mode (enable writing)"
+msgstr ""
+"<font color=red>Modo Perito <font color=blue> Atenção! Modo Escritura</"
+"font></font>"
+
+msgid "Auto refresh"
+msgstr "Auto refrescar"
+
+msgid "Refresh (one shot)"
+msgstr "Refrescar (uma vez)"
+
+msgid "Manual command"
+msgstr "Comando manual"
+
+msgid "Manual request"
+msgstr "Solicitação manual"
+
+msgid "Software flow control"
+msgstr "Controle de fluxo de software"
+
+msgid "Zoom In"
+msgstr "Mais Zoom"
+
+msgid "Zoom Out"
+msgstr "Reduzir o zoom"
+
+msgid "UI Edit"
+msgstr "Editar interface do usuário"
+
+msgid "File"
+msgstr "Ficheiro"
+
+msgid "Open XML"
+msgstr "Abrir XML"
+
+msgid "Identify ECU"
+msgstr "Identificar ECU"
+
+msgid "Create New ECU"
+msgstr "Criar nova ECU"
+
+msgid "Save current ECU"
+msgstr "Salvar ECU atual"
+
+msgid "Save last record"
+msgstr "Salvar último registro"
+
+msgid "Save ECU list"
+msgstr "Salvar lista de ECUs"
+
+msgid "Zip database"
+msgstr "Compressar a database"
+
+msgid "Exit"
+msgstr "Sair"
+
+msgid "View"
+msgstr "Visualizar"
+
+msgid "CarList Order"
+msgstr "Ordem da Lista de Carros"
+
+msgid "By Project Code"
+msgstr "Pelo Código do Projeto"
+
+msgid "By Car Name"
+msgstr "Pelo Nome do Carro"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Dark Theme"
+msgstr "Estilo escuro"
+
+msgid "Light Theme"
+msgstr "Tema Claro"
+
+msgid "New Category"
+msgstr "Nova categoria"
+
+msgid "New Screen"
+msgstr "Novo ecrã"
+
+msgid "Rename"
+msgstr "Renomear"
+
+msgid "Plugins"
+msgstr "Plug-ins"
+
+msgid "Cannot load plugin "
+msgstr "Não é possível carregar o plugin "
+
+msgid "Help"
+msgstr "Ajuda"
+
+msgid "Web Wiki"
+msgstr "WebWiki"
+
+msgid "About Developers"
+msgstr "Sobre desenvolvedores"
+
+msgid "Get Git update"
+msgstr "Obtenha atualização do Git"
+
+msgid "About"
+msgstr "Sobre"
+
+msgid "About DDT4ALL"
+msgstr "Sobre DDT4ALL"
+
+msgid " version:"
+msgstr " versão:"
+
+msgid "Created by:"
+msgstr "Criado por:"
+
+msgid "Options"
+msgstr "Opções"
+
+msgid "CAN Line 1 Auto"
+msgstr "CAN Line 1 Auto"
+
+msgid "CAN Line 1@500K"
+msgstr "CAN Line 1@500K"
+
+msgid "CAN Line 1@250K"
+msgstr "CAN Line 1@250K"
+
+msgid "CAN Line 2@500K"
+msgstr "CAN Line 2@500K"
+
+msgid "CAN Line 2@250K"
+msgstr "CAN Line 2@250K"
+
+msgid "CAN Line 2@125K"
+msgstr "CAN Line 2@125K"
+
+msgid "KWP2000"
+msgstr "KWP2000"
+
+msgid "ISO8"
+msgstr "ISO8"
+
+msgid "Save database (keep '.zip' extension)"
+msgstr "Salvar banco de dados (manter a extensão '.zip')"
+
+msgid "Zipping XML database... (this can take a few minutes)"
+msgstr "Compactando o banco de dados XML... (isso pode levar alguns minutos)"
+
+msgid "Zip job finished"
+msgstr "Trabalho zip concluído"
+
+msgid "Enter new name"
+msgstr "Introduzir novo nome"
+
+msgid "Enter category name"
+msgstr "Introduzir nova categoria"
+
+msgid "Please select a category before creating new screen"
+msgstr "Por favor selecione uma categoria antes de criar novo ecrã"
+
+msgid "Enter screen name"
+msgstr "Introduza nome do ecrã"
+
+msgid "Scanning CAN"
+msgstr "Escaneando CAN"
+
+msgid "Scanning KWP"
+msgstr "Escaneando KWP"
+
+msgid "Scan options"
+msgstr "Opções de escaneo"
+
+msgid "EDITION MODE"
+msgstr "MODO EDITOR"
+
+msgid "CONNECTED"
+msgstr "CONECTADO"
+
+msgid "DISCONNECTED"
+msgstr "DESCONETADO"
+
+msgid "Save vehicule (keep '.ecu' extension)"
+msgstr "Salvar ECU (manter extensão '.ecu')"
+
+msgid "Save ECU (keep '.json' extension)"
+msgstr "Salvar ECU (manter extensão '.json')"
+
+msgid "Save record (keep '.txt' extension)"
+msgstr "Salvar registro (manter a extensão '.txt')"
+
+msgid "Recorded "
+msgstr "Gravado "
+
+msgid " entries"
+msgstr " entradas"
+
+msgid "No"
+msgstr "Não"
+
+msgid "ELM port selection"
+msgstr "Seleção da porta ELM"
+
+msgid "USB"
+msgstr "USB"
+
+msgid "WiFi"
+msgstr "WiFi"
+
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+msgid "OBDLINK SX/EX"
+msgstr "OBDLINK SX/EX"
+
+msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
+msgstr "ELS27/ELS27 V5 – Pode aparecer como um dispositivo FTDI/CH340/CP210x"
+
+msgid "Vlinker FS/MC"
+msgstr "Vlinker FS/MC"
+
+msgid "DERLEK USB-DIAG2/3"
+msgstr ""
+
+msgid "VGate (High-Speed)"
+msgstr "VGate (Velocidade alta)"
+
+msgid "Interface language"
+msgstr "Idioma da interface (é necessário salvar e fechar)"
+
+msgid "Port speed"
+msgstr "Velocidade da porta"
+
+msgid "Connected mode"
+msgstr "Modo conetado"
+
+msgid "Edition mode"
+msgstr "Modo Editor"
+
+msgid "ELM benchmark"
+msgstr "Testar ELM"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "WiFi port : "
+msgstr "Porta WIFI: "
+
+msgid "I'm aware that I can harm my car if badly used"
+msgstr "Estou consciente de que posso danificar o carro ao usar incorretamente"
+
+msgid "Dark style"
+msgstr "Estilo escuro"
+
+msgid "Change UART speed"
+msgstr "Alterar a velocidade UART"
+
+msgid "Checking..."
+msgstr "Verificar..."
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "Please enter WiFi adapter IP address"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "Please select a serial port"
+
+msgid "Selected port is no longer available"
+msgstr "Selected port is no longer available"
+
+msgid "Attempting connection..."
+msgstr "Attempting connection..."
+
+msgid "Port: "
+msgstr "Port: "
+
+msgid "Speed: "
+msgstr "Speed: "
+
+msgid "Connection test failed"
+msgstr "Connection test failed"
+
+msgid "Troubleshooting suggestions:"
+msgstr "Troubleshooting suggestions:"
+
+msgid "1. Check device is properly connected"
+msgstr "1. Check device is properly connected"
+
+msgid "2. Try different baud rates"
+msgstr "2. Try different baud rates"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. Ensure device drivers are installed"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. Check port permissions (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "Connection test successful!"
+
+msgid "Error during connection test: "
+msgstr "Error during connection test: "
+
+msgid "Reset and Recheck"
+msgstr "Reiniciar e Verificar"
+
+msgid "57600"
+msgstr "57600"
+
+msgid "115200"
+msgstr "115200"
+
+msgid "230400"
+msgstr "230400"
+
+msgid "500000"
+msgstr "500000"
+
+msgid "1000000"
+msgstr "1000000"
+
+msgid "2000000"
+msgstr "2000000"
+
+msgid "38400"
+msgstr ""
+
+msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
+msgstr "VGate iCar Pro selecionado – Suporte aprimorado a STN/STPX ativado"
+
+msgid "Long command support and high-speed communication available"
+msgstr "Suporte a comandos longos e comunicação de alta velocidade disponível"
+
+msgid "You must check the recommandations"
+msgstr "Deve aceitar as recomendações"
+
+msgid "Please select a communication port"
+msgstr "Deve elegir uma porta de comunicação"
+
+msgid "Language changed to"
+msgstr "Idioma alterado para"
+
+msgid "ECU Command"
+msgstr "ECU comando"
+
+msgid "Err, cannot rename "
+msgstr "Erro, não é possível renomear "
+
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "Para editar este ecrã, primero deve exportar-se em formato .JSON"
+
+msgid "Enter label name"
+msgstr "Introduzir nome etiqueta"
+
+msgid "Add button"
+msgstr "Adicionar botão"
+
+msgid "Add label"
+msgstr "Adicionar etiqueta"
+
+msgid "Rename label"
+msgstr "Renomear etiqueta"
+
+msgid "Change color"
+msgstr "Mudar cor"
+
+msgid "Remove element"
+msgstr "Apagar elemento"
+
+msgid "Diagnotic session"
+msgstr "Sessão de dianóstico"
+
+msgid "Input"
+msgstr "Entrada"
+
+msgid "Output"
+msgstr "Saída"
+
+msgid "Protocol not supported"
+msgstr "Protocolo não suportado"
+
+msgid "Protocol not supported: "
+msgstr "Protocolo não suportado: "
+
+msgid "XML file not found : "
+msgstr "Fichero XML não encontrado: "
+
+msgid "Invalid DDT file"
+msgstr "Fichero DDT não valido"
+
+msgid "Connection to ELM lost, trying to reconnect..."
+msgstr "Conexão com ELM perdida, tentando reconectar..."
+
+msgid "Cannot reconnect..."
+msgstr "Não é possível reconectar..."
+
+msgid "Switching to session mode"
+msgstr "Mudar para modo sessão"
+
+msgid "Sending ELM request :"
+msgstr "Enviando petido ELM:"
+
+msgid "Blocked ELM request :"
+msgstr "Pedido ELM bloqueado:"
+
+msgid "Sending ELM request:"
+msgstr "Enviando pedido ELM:"
+
+msgid "Sending simulated ELM request :"
+msgstr "Enviando pedido ELM simulado:"
+
+msgid "Bad ELM response :"
+msgstr "Resposta ruim do ELM:"
+
+msgid "ELM response : "
+msgstr "Resposta ELM : "
+
+msgid "Button request not found : "
+msgstr "Butão pedido não encontrado: "
+
+msgid "Sending request :"
+msgstr "Enviando pedido:"
+
+msgid "Unknown request "
+msgstr "Solicitação desconhecida "
+
+msgid "Command aborted "
+msgstr "Comando abortado "
+
+msgid "Value error of this stuff need a bypass gateway maybe."
+msgstr ""
+"O erro de valor deste material talvez necessite de um gateway de desvio."
+
+msgid "Request aborted (look at red paramters entries): "
+msgstr "Pedido abortado (ver entradas de parametros em vermelho): "
+
+msgid "Delay"
+msgstr "Atraso"
+
+msgid "For your safety"
+msgstr "Para sua segurança"
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
+"<center>COMANDO BLOQUEADO</center>\n"
+"Ative o modo especialista para desbloquear"
+
+msgid "Writing parameter"
+msgstr "Parâmetro de escrita"
+
+msgid "Blocked writing parameter"
+msgstr "Parâmetro de escrita bloqueada"
+
+msgid "Invalid"
+msgstr "Inválido"
+
+msgid "ECU uses SDS "
+msgstr "ECU usa SDS "
+
+msgid "Cannot call request "
+msgstr "Não se pode realizar pedido de chamada "
+
+msgid "Update time"
+msgstr "Tempo de atualização"
+
+msgid "Clearing DTC information"
+msgstr "Apagando informação DTC"
+
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "Não há pedidos ClearDTC para esta ECU, se enviará por defeito 14FF00"
+
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>Está prestes a apagar os erros DTC<center>"
+
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>Tem a certeza que é isso que quer?</center>"
+
+msgid "Clear DTC failed"
+msgstr "Falha ao limpar DTC"
+
+msgid "Clear DTC successfully done"
+msgstr "Limpar DTC concluído com sucesso"
+
+msgid "No ReadDTC request for that ECU"
+msgstr "Nenhuma solicitação ReadDTC para essa ECU"
+
+msgid "Invalid response for ReadDTC command"
+msgstr "Resposta não válida para o comando ReadDTC"
+
+msgid "Read DTC returned an error"
+msgstr "Ler DTC retornou um erro"
+
+msgid "No DTC"
+msgstr "Sem DTC"
+
+msgid "Diagnostic Trouble Codes"
+msgstr "Codigos de erro"
+
+msgid "Clear ALL DTC"
+msgstr "Apagar todos os DTC"
+
+msgid "ECU trouble codes"
+msgstr "Códigos de erros ECU"
+
+msgid "Parsing screen "
+msgstr "Analizando ecrã "
+
+msgid "found request in input "
+msgstr "solicitação encontrada na entrada "
+
+msgid "found in display "
+msgstr "encontrado em exibição "
+
+msgid "found in button "
+msgstr "encontrado no botão "
+
+msgid "found in presend "
+msgstr "encontrado no presend "
+
+msgid "found data in input "
+msgstr "dados encontrados na entrada "
+
+msgid "found data in display "
+msgstr "dados encontrados no display "
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr "Não é possível compactar o banco de dados, não há diretório 'ecus'"
+
+msgid "Starting conversion"
+msgstr "Iniciando conversão"
+
+msgid "Starting processing "
+msgstr "Iniciando processamento "
+
+msgid " to "
+msgstr " a "
+
+msgid "Skipping current file (cannot parse it)"
+msgstr "Ignorando o arquivo atual (não é possível analisá-lo)"
+
+msgid "Writing database"
+msgstr "Escrita de banco de dados"
+
+msgid "Writing archive"
+msgstr "Escrita de arquivo"
+
+msgid "Waiting..."
+msgstr "Esperando..."
+
+msgid "Frame length error: "
+msgstr "Erro no comprimento do quadro: "
+
+msgid "Frame hex error: "
+msgstr "Erro hexadecimal de quadro: "

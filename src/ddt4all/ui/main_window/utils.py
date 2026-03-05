@@ -70,7 +70,7 @@ def set_language_realtime(language_name):
         # Reload translator
         import gettext
         try:
-            t = gettext.translation('ddt4all', 'ddt4all_data/locale', languages=[lang_code], fallback=True)
+            t = gettext.translation('ddt4all', str(BASE_DIR / ".." / ".." / "generated" / "locales"), languages=[lang_code], fallback=True)
             _ = t.gettext
             
             # Update main window if it exists
