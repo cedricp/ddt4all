@@ -83,8 +83,6 @@ def main(argv=None) -> int:
     except (OSError, ValueError):
         sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
-    # ⚠️ cette ligne rend les chemins relatifs dépendants du lancement
-    os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     vehicles = load_this()
 
