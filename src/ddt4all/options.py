@@ -6,6 +6,9 @@ import locale
 import os
 from pathlib import Path
 
+from ddt4all.file_manager import get_config_dir
+
+
 simulation_mode = False
 port_speed = 38400
 port_name = ""
@@ -67,7 +70,7 @@ BASE_DIR = Path(__file__).resolve().parent
 def save_config():
     # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
     js = json.dumps(configuration, ensure_ascii=False, indent=True)
-    f = open("config.json", "w", encoding="UTF-8")
+    f = open(str(get_config_dir() / "config.json"), "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
@@ -90,7 +93,7 @@ def create_new_config():
 def load_configuration():
     try:
 
-        f = open("config.json", "r", encoding="UTF-8")
+        f = open(get_config_dir() / "config.json", "r", encoding="UTF-8")
         config = json.loads(f.read())
         # load config as multiplatform (mac fix macOs load conf)
         configuration["lang"] = config.get("lang", get_translator_lang())

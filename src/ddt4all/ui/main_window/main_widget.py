@@ -11,6 +11,10 @@ import PyQt5.QtWidgets as widgets
 import ddt4all.options as options
 from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.ecu.ecu_scanner import EcuScanner
+from ddt4all.file_manager import (
+    get_logs_dir,
+    get_vehicles_dir
+)
 from ddt4all.ui.data_editor.button_editor import ButtonEditor
 from ddt4all.ui.data_editor.request_editor import RequestEditor
 from ddt4all.ui.data_editor.ecu_param_editor import EcuParamEditor
@@ -58,9 +62,9 @@ class MainWidget(widgets.QMainWindow):
         super(MainWidget, self).__init__(parent)
         self.setIcon()
         if not options.simulation_mode:
-            if not os.path.exists("./logs"):
-                os.mkdir("./logs")
-            self.screenlogfile = open("./logs/screens.txt", "at", encoding="utf-8")
+            if not os.path.exists(get_logs_dir()):
+                os.mkdir(get_logs_dir())
+            self.screenlogfile = open(get_logs_dir() / "screens.txt", "at", encoding="utf-8")
         else:
             self.screenlogfile = None
 
@@ -314,12 +318,11 @@ class MainWidget(widgets.QMainWindow):
             self.toolbar.addWidget(self.ui_edit_button)
             self.ui_edit_button.clicked.connect(self.toggle_edit)
 
-        vehicle_dir = "vehicles"
-        if not os.path.exists(vehicle_dir):
-            os.mkdir(vehicle_dir)
+        if not os.path.exists(get_vehicles_dir()):
+            os.mkdir(get_vehicles_dir())
 
         ecu_files = []
-        for filename in os.listdir(vehicle_dir):
+        for filename in os.listdir(get_vehicles_dir()):
             basename, ext = os.path.splitext(filename)
             if ext == '.ecu':
                 ecu_files.append(basename)

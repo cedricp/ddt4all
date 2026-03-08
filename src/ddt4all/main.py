@@ -10,6 +10,11 @@ import PyQt5.QtWidgets as widgets
 
 import ddt4all.core.ecu.ecu_database as ecu_db
 import ddt4all.core.elm.elm as elm
+from ddt4all.file_manager import (
+    get_config_dir,
+    get_json_dir,
+    get_logs_dir,
+)
 import ddt4all.generated.resources_rc  # noqa: F401
 import ddt4all.options as options
 from ddt4all.ui.main_window.main_widget import MainWidget
@@ -92,7 +97,7 @@ def main(argv=None) -> int:
     app = widgets.QApplication(sys.argv)
 
     try:
-        with open("config.json", "r", encoding="UTF-8") as f:
+        with open(get_config_dir() / "config.json", "r", encoding="UTF-8") as f:
             configuration = json.loads(f.read())
         set_theme_style(app, 2 if configuration.get("dark") else 0)
         set_socket_timeout(1 if configuration.get("socket_timeout") else 0)
@@ -104,10 +109,10 @@ def main(argv=None) -> int:
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
         print(_("Using custom DDT database"))
 
-    if not os.path.exists("./json"):
-        os.mkdir("./json")
-    if not os.path.exists("./logs"):
-        os.mkdir("./logs")
+    if not os.path.exists(get_json_dir()):
+        os.mkdir(get_json_dir())
+    if not os.path.exists(get_logs_dir()):
+        os.mkdir(get_logs_dir())
 
     pc = MainWindowOptions(app)
     nok = True

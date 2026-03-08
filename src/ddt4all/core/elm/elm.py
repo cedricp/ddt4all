@@ -17,6 +17,7 @@ from ddt4all.core.elm.constants import (
 )
 from ddt4all.core.elm.device_manager import DeviceManager
 from ddt4all.core.elm.port import Port
+from ddt4all.file_manager import get_logs_dir
 import ddt4all.options as options
 
 _ = options.translator('ddt4all')
@@ -103,12 +104,12 @@ class ELM:
 
             options.port_speed = speed
 
-            if not os.path.exists("./logs"):
-                os.mkdir("./logs")
+            if not os.path.exists(get_logs_dir()):
+                os.mkdir(get_logs_dir())
 
             if len(options.log) > 0:
-                self.lf = open("./logs/elm_" + options.log + ".txt", "at", encoding="utf-8")
-                self.vf = open("./logs/ecu_" + options.log + ".txt", "at", encoding="utf-8")
+                self.lf = open(get_logs_dir() / "elm_" + options.log + ".txt", "at", encoding="utf-8")
+                self.vf = open(get_logs_dir() / "ecu_" + options.log + ".txt", "at", encoding="utf-8")
                 self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
 
             self.lastCMDtime = 0
