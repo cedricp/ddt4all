@@ -199,18 +199,10 @@ DDT4All now automatically provides optimal speed options based on your selected 
 
 > **Note**: If you have successfully tested other devices with DDT4All, please let us know so we can update this list!
 
-Next, you need to get the source code.  This source code repository uses git submodules. So when you clone the source code, you will need to clone recursively:
+Next, you need to get the source code.
 
-```
-git clone --recursive https://github.com/cedricp/ddt4all.git
-```
-
-Or if you already cloned without the recursive option, you can update the submodules by running:
-
-```
-git clone --recursive https://github.com/cedricp/ddt4all.git
-cd ddt4all
-git submodule update --init --recursive
+```sh
+git clone https://github.com/cedricp/ddt4all.git
 ```
 
 ## Windows installer
