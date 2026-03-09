@@ -1,36 +1,40 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
 name: Python App
 
 on:
   push:
-    branches: [ master]
   pull_request:
     branches: [ master ]
 
-
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-    
+
     strategy:
+      fail-fast: false
       matrix:
-        versions: [1.0]
+        python-version: ["3.13"]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.13
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.13
-    - name: Run build of version ${{ matrix.versions }}
-      run: |
-        # Install dependencies...
-        # python -m venv ./venv
-        # venv\scripts\activate
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        python main.py -git_test
-        #venv\scripts\deactivate
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install system deps (Qt headless)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: Install project (pyproject.toml + dev deps)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Run tests (pytest under Xvfb)
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          xvfb-run -a pytest
