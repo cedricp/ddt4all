@@ -42,3 +42,5 @@ __pycache__/
 /Simulator/
 *.egg
 *.egg-info
+.coverage
+coverage.xml

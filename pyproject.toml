@@ -43,6 +43,14 @@ bluetooth = [
 [project.scripts]
 ddt4all = "ddt4all.main:main"
 
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.coverage.run]
+source = ["ddt4all"]
+branch = true
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
