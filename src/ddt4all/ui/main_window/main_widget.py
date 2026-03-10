@@ -13,7 +13,8 @@ from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.ecu.ecu_scanner import EcuScanner
 from ddt4all.file_manager import (
     get_logs_dir,
-    get_vehicles_dir
+    get_vehicles_dir,
+    is_not_package_file
 )
 from ddt4all.ui.data_editor.button_editor import ButtonEditor
 from ddt4all.ui.data_editor.request_editor import RequestEditor
@@ -419,7 +420,8 @@ class MainWidget(widgets.QMainWindow):
 
         plugins_menu = menu.addMenu(_("Plugins"))
         category_menus = {}
-        plugins = glob.glob(str(plugins_base_dir) + "/*.py")
+
+        plugins = list(filter(is_not_package_file, glob.glob(str(plugins_base_dir) + "/*.py")))
         for plugin in plugins:
             try:
                 modulename = os.path.basename(plugin).replace(".py", "")
@@ -1115,4 +1117,3 @@ class MainWidget(widgets.QMainWindow):
                 param_item = widgets.QTreeWidgetItem(item, [param])
                 param_item.setData(0, core.Qt.UserRole, param)
                 self.screennames.append(param)
-

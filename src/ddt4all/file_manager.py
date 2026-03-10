@@ -30,3 +30,6 @@ def get_vehicles_dir():
 
 def get_config_dir():
     return get_dir(".")
+
+def is_not_package_file(path):
+    return not path.endswith("__init__.py")
