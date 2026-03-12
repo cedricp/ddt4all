@@ -61,6 +61,7 @@ lang_list = {
     "Romanian": "ro",
     "Russian": "ru",
     "Serbian": "sr",
+    "Czech":"cs_CZ",
     "Turkish": "tr",
     "Ukrainian": "uk_UA"
 }

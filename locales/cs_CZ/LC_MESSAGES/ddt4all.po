@@ -1,21 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Abdullah YILMAZ (TA1AUB) <h.abdullahyilmaz@hotmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-12 08:24+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-03-09 22:22+0100\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
+"Language-Team: Czech\n"
+"Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Warning, cannot get signed value for"
 msgstr ""
@@ -134,7 +135,8 @@ msgstr ""
 msgid "%s Version: "
 msgstr ""
 
-msgid "VGate adapter detected but STN verification failed, attempting fallback..."
+msgid ""
+"VGate adapter detected but STN verification failed, attempting fallback..."
 msgstr ""
 
 #, python-format
@@ -323,7 +325,10 @@ msgstr ""
 msgid "Airbag Tools"
 msgstr ""
 
-msgid "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
+"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
+"font>"
 msgstr ""
 
 msgid "Check ACU Virgin"
@@ -366,7 +371,9 @@ msgstr ""
 msgid "ENTER AFTER SALE MODE"
 msgstr ""
 
-msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
+msgid ""
+"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
+"YET</font>"
 msgstr ""
 
 msgid "LEARN"
@@ -411,7 +418,9 @@ msgstr ""
 msgid "EPS Tools"
 msgstr ""
 
-msgid "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
+"EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "BLANK STATUS & VIN READ"
@@ -454,7 +463,9 @@ msgstr ""
 msgid "Clio IV EPS Reset"
 msgstr ""
 
-msgid "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "Check EPS Virgin"
@@ -476,7 +487,9 @@ msgstr ""
 msgid "UCH Tools"
 msgstr ""
 
-msgid "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "Check UCH Virgin"
@@ -494,37 +507,51 @@ msgstr ""
 msgid "Laguna III UCH Reset"
 msgstr ""
 
-msgid "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr ""
 
-msgid "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "Megane3 AIRBAG Reset"
 msgstr ""
 
-msgid "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
+"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr ""
 
-msgid "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
+"PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
+"MEANS</font>"
 msgstr ""
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr ""
 
-msgid "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
+"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr ""
 
-msgid "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
+"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 #, python-format
@@ -576,7 +603,9 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-msgid "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid ""
+"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
+"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 
 msgid "Check values"
@@ -588,7 +617,10 @@ msgstr ""
 msgid "Reset all counters"
 msgstr ""
 
-msgid "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/Stay START until <b>Remove card</b> message</li><li>Put P position</li><li>Keep key card inserted</li></ul>"
+msgid ""
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
+"Stay START until <b>Remove card</b> message</li><li>Put P position</"
+"li><li>Keep key card inserted</li></ul>"
 msgstr ""
 
 msgid "<font color='green'>Values read</font>"
@@ -647,11 +679,15 @@ msgid "Request %s not found"
 msgstr ""
 
 #, python-format
-msgid "<font color=green>Request</font><font color=blue>'%s'</font> has no missing input values"
+msgid ""
+"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
+"input values"
 msgstr ""
 
 #, python-format
-msgid "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs :"
+msgid ""
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
+"inputs :"
 msgstr ""
 
 #, python-format
@@ -872,7 +908,9 @@ msgstr ""
 msgid "No Value"
 msgstr ""
 
-msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
+msgid ""
+"<center>This Software is free, but I need money to buy cables/ECUs and make "
+"this application more reliable</center>"
 msgstr ""
 
 msgid "Yes I contribute"
@@ -927,7 +965,8 @@ msgstr ""
 msgid "WebEngine not available."
 msgstr ""
 
-msgid "For full documentation with web browsing capability, install PyQtWebEngine:"
+msgid ""
+"For full documentation with web browsing capability, install PyQtWebEngine:"
 msgstr ""
 
 msgid "Visit the online documentation at:"
