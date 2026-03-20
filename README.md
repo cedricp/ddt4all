@@ -26,7 +26,7 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Fallback Support**: Graceful degradation for unsupported devices
 - **Performance Optimization**: Enhanced communication speeds up to 1,000,000 bps
 - **Fully Translated Interface** in 13 languages with comprehensive translation coverage
-- **Supported Languages**: English, Français (fr), Deutsch (de), Español (es), Italiano (it), Русский (ru), Polski (pl), Nederlands (nl), Português (pt), Magyar (hu), Română (ro), Српски (sr), Türkçe (tr), Українська (uk_UA)
+- **Supported Languages**: English, Français (fr), Czech(cs_CZ), Deutsch (de), Español (es), Italiano (it), Русский (ru), Polski (pl), Nederlands (nl), Português (pt), Magyar (hu), Română (ro), Српски (sr), Türkçe (tr), Українська (uk_UA)
 - **Real-time Language Switching** with proper encoding support
 - **HTML-Aware Translations** preserving markup while translating content
 
@@ -476,6 +476,7 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 | English | en_US | ✅ Complete | Native | Core Team |
 | Français | fr | 📝 Complete | Core Team | Core Team |
 | Português | pt | 📝 Complete | Core Team | Core Team |
+| Czech | cs_CZ | 📝 Complete | +30 new strings | Community |
 | Deutsch | de | 🔄 Enhanced | +30 new strings | Community |
 | Español | es | 🔄 Enhanced | +30 new strings | Community |
 | Italiano | it | 🔄 Enhanced | +30 new strings | Community |
@@ -531,7 +532,7 @@ ddt4all/
 └── ddt4all_data/         # Application data and resources
     ├── config.json       # User configuration
     ├── projects.json     # Vehicle project definitions
-    ├── locale/           # Translation files (13 languages)
+    ├── locale/           # Translation files (14 languages)
     ├── icons/            # Application icons
     ├── tools/            # Development and build tools
     ├── inno-win-setup/   # Windows installer configuration
