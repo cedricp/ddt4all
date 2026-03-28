@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-05 20:43+0100\n"
+"POT-Creation-Date: 2026-03-28 10:47+0100\n"
 "PO-Revision-Date: 2026-02-15 18:39+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -17,6 +17,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+#, fuzzy
+msgid "DoIP device connected successfully"
+msgstr "ELM327-Gerät erfolgreich erkannt"
+
+msgid "DoIP CAN initialized with Electric ECU support"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "DoIP response: {}"
+msgstr "ELM antwortet: "
+
+#, python-brace-format
+msgid "DoIP request failed: {}"
+msgstr ""
+
+#, python-brace-format
+msgid "Testing Electric ECU: {}"
+msgstr ""
+
+msgid "Failed to connect to DoIP device"
+msgstr ""
+
+msgid "Insufficient vehicle identification data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected vehicle identification response, got: {}"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "Vehicle identification failed: {}"
+msgstr "Bildschirm laden"
+
+msgid "Insufficient session control data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected diagnostic session control response, got: {}"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "Diagnostic session control failed: {}"
+msgstr "Diagnosesitzung"
+
+msgid "Insufficient diagnostic message data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected diagnostic message response, got: {}"
+msgstr ""
+
+msgid "Insufficient alive check data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected alive check response, got: {}"
+msgstr ""
+
+#, python-brace-format
+msgid "Alive check failed: {}"
+msgstr ""
+
+msgid "Not connected to DoIP device"
+msgstr ""
+
+#, python-brace-format
+msgid "Invalid hex request format: {}"
+msgstr ""
+
+#, python-brace-format
+msgid "DoIP session start failed: {}"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "DoIP CAN initialization failed: {}"
+msgstr "Bildschirm laden"
+
+#, python-brace-format
+msgid "DoIP: Electric ECU detected - {}"
+msgstr ""
+
+msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
+msgstr ""
+
+#, python-brace-format
+msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+
+#, python-brace-format
+msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
 
 msgid "Warning, cannot get signed value for"
 msgstr ""
@@ -64,17 +156,6 @@ msgstr ""
 msgid "Decoded values"
 msgstr ""
 
-#, fuzzy
-msgid "Warning, address"
-msgstr "ECU Funktionsadresse"
-
-msgid "is not mapped"
-msgstr ""
-
-#, fuzzy
-msgid "Scanning address: "
-msgstr "ECU Funktionsadresse"
-
 msgid "Found: "
 msgstr ""
 
@@ -89,6 +170,24 @@ msgid "(not perfect match)"
 msgstr ""
 
 msgid "(no relevant ECU file found)"
+msgstr ""
+
+#, fuzzy
+msgid "Warning, address"
+msgstr "ECU Funktionsadresse"
+
+msgid "is not mapped"
+msgstr ""
+
+#, fuzzy
+msgid "Scanning address: "
+msgstr "ECU Funktionsadresse"
+
+#, fuzzy
+msgid "Scanning DoIP address: "
+msgstr "ECU Funktionsadresse"
+
+msgid "Found USB device:"
 msgstr ""
 
 msgid "Trying to open port "
@@ -311,6 +410,37 @@ msgstr "Starten mit Baudrate:"
 
 msgid "ELM not responding"
 msgstr "ELM antwortet nicht"
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+msgid "Starting conversion"
+msgstr "Diag version"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+msgid "Writing database"
+msgstr ""
+
+msgid "Writing archive"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
 
 msgid "ELS27 V5 CAN pin configuration complete"
 msgstr ""
@@ -1245,6 +1375,10 @@ msgstr "CAN scannen"
 msgid "Scanning KWP"
 msgstr "KWP scannen"
 
+#, fuzzy
+msgid "Scanning DoIP"
+msgstr "KWP scannen"
+
 msgid "Scan options"
 msgstr "Scannen Auswahl"
 
@@ -1302,6 +1436,9 @@ msgstr ""
 msgid "VGate (High-Speed)"
 msgstr ""
 
+msgid "DoIP (Diagnostics over IP)"
+msgstr ""
+
 msgid "Interface language"
 msgstr ""
 
@@ -1328,6 +1465,47 @@ msgstr "Ich bin mir bewusst, dass falsche Benutzung meinem Auto schaden kann"
 
 msgid "Dark style"
 msgstr "Dunkler Modus"
+
+msgid "DoIP (Diagnostics over IP) Configuration"
+msgstr ""
+
+#, fuzzy
+msgid "Device Preset : "
+msgstr "Geräteversion: "
+
+msgid "Custom"
+msgstr ""
+
+msgid "Bosch MTS"
+msgstr ""
+
+msgid "VXDIAG VCX Nano"
+msgstr ""
+
+msgid "VAG ODIS"
+msgstr ""
+
+msgid "JLR DoIP VCI"
+msgstr ""
+
+msgid "Generic DoIP"
+msgstr ""
+
+msgid "DoIP Target IP : "
+msgstr ""
+
+#, fuzzy
+msgid "DoIP Port : "
+msgstr "Port: "
+
+msgid "DoIP Timeout (seconds) : "
+msgstr ""
+
+msgid "Enable Vehicle Announcement Discovery"
+msgstr ""
+
+msgid "Auto-reconnect on connection loss"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr ""
@@ -1412,14 +1590,23 @@ msgstr ""
 msgid "Long command support and high-speed communication available"
 msgstr ""
 
+msgid "N/A"
+msgstr ""
+
+msgid "DoIP (Diagnostics over IP) selected"
+msgstr ""
+
+msgid "Ethernet-based diagnostic communication"
+msgstr ""
+
+msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
+msgstr ""
+
 msgid "You must check the recommandations"
 msgstr ";-) Du musst das Lesen der Warnung bestaetigen"
 
 msgid "Please select a communication port"
 msgstr "Bitte waehle einen Anschluss aus"
-
-msgid "Language changed to"
-msgstr ""
 
 msgid "ECU Command"
 msgstr ""
@@ -1615,28 +1802,6 @@ msgid "found data in input "
 msgstr ""
 
 msgid "found data in display "
-msgstr ""
-
-msgid "Cannot zip database, no 'ecus' directory"
-msgstr ""
-
-#, fuzzy
-msgid "Starting conversion"
-msgstr "Diag version"
-
-msgid "Starting processing "
-msgstr ""
-
-msgid " to "
-msgstr ""
-
-msgid "Skipping current file (cannot parse it)"
-msgstr ""
-
-msgid "Writing database"
-msgstr ""
-
-msgid "Writing archive"
 msgstr ""
 
 msgid "Waiting..."

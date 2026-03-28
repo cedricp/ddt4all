@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-05 20:43+0100\n"
+"POT-Creation-Date: 2026-03-28 10:47+0100\n"
 "PO-Revision-Date: 2026-02-15 18:42+0100\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -16,6 +16,98 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
+
+#, fuzzy
+msgid "DoIP device connected successfully"
+msgstr "ELM327 device detected successfully"
+
+msgid "DoIP CAN initialized with Electric ECU support"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "DoIP response: {}"
+msgstr "Raspuns ELM : "
+
+#, python-brace-format
+msgid "DoIP request failed: {}"
+msgstr ""
+
+#, python-brace-format
+msgid "Testing Electric ECU: {}"
+msgstr ""
+
+msgid "Failed to connect to DoIP device"
+msgstr ""
+
+msgid "Insufficient vehicle identification data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected vehicle identification response, got: {}"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "Vehicle identification failed: {}"
+msgstr "Initializarea ecranului"
+
+msgid "Insufficient session control data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected diagnostic session control response, got: {}"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "Diagnostic session control failed: {}"
+msgstr "Sesiune de diagnosticare"
+
+msgid "Insufficient diagnostic message data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected diagnostic message response, got: {}"
+msgstr ""
+
+msgid "Insufficient alive check data"
+msgstr ""
+
+#, python-brace-format
+msgid "Expected alive check response, got: {}"
+msgstr ""
+
+#, python-brace-format
+msgid "Alive check failed: {}"
+msgstr ""
+
+msgid "Not connected to DoIP device"
+msgstr ""
+
+#, python-brace-format
+msgid "Invalid hex request format: {}"
+msgstr ""
+
+#, python-brace-format
+msgid "DoIP session start failed: {}"
+msgstr ""
+
+#, fuzzy, python-brace-format
+msgid "DoIP CAN initialization failed: {}"
+msgstr "Initializarea ecranului"
+
+#, python-brace-format
+msgid "DoIP: Electric ECU detected - {}"
+msgstr ""
+
+msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
+msgstr ""
+
+#, python-brace-format
+msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+
+#, python-brace-format
+msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
 
 msgid "Warning, cannot get signed value for"
 msgstr ""
@@ -63,17 +155,6 @@ msgstr ""
 msgid "Decoded values"
 msgstr ""
 
-#, fuzzy
-msgid "Warning, address"
-msgstr "ECU Adresa functiei"
-
-msgid "is not mapped"
-msgstr ""
-
-#, fuzzy
-msgid "Scanning address: "
-msgstr "ECU Adresa functiei"
-
 msgid "Found: "
 msgstr ""
 
@@ -88,6 +169,24 @@ msgid "(not perfect match)"
 msgstr ""
 
 msgid "(no relevant ECU file found)"
+msgstr ""
+
+#, fuzzy
+msgid "Warning, address"
+msgstr "ECU Adresa functiei"
+
+msgid "is not mapped"
+msgstr ""
+
+#, fuzzy
+msgid "Scanning address: "
+msgstr "ECU Adresa functiei"
+
+#, fuzzy
+msgid "Scanning DoIP address: "
+msgstr "ECU Adresa functiei"
+
+msgid "Found USB device:"
 msgstr ""
 
 msgid "Trying to open port "
@@ -310,6 +409,38 @@ msgstr ""
 
 msgid "ELM not responding"
 msgstr "ELM nu raspunde"
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr ""
+
+#, fuzzy
+msgid "Starting conversion"
+msgstr "Versiune Diag"
+
+msgid "Starting processing "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Skipping current file (cannot parse it)"
+msgstr ""
+
+#, fuzzy
+msgid "Writing database"
+msgstr "Baza de date zip"
+
+msgid "Writing archive"
+msgstr ""
+
+msgid "Opening ECU Database..."
+msgstr ""
+
+msgid "parts as: "
+msgstr ""
+
+msgid " please review dumpVehicles def."
+msgstr ""
 
 msgid "ELS27 V5 CAN pin configuration complete"
 msgstr ""
@@ -1267,6 +1398,10 @@ msgstr "Scanare CAN"
 msgid "Scanning KWP"
 msgstr "Scanarea KWP"
 
+#, fuzzy
+msgid "Scanning DoIP"
+msgstr "Scanarea KWP"
+
 msgid "Scan options"
 msgstr "Optiuni de scanare"
 
@@ -1324,6 +1459,9 @@ msgstr ""
 msgid "VGate (High-Speed)"
 msgstr ""
 
+msgid "DoIP (Diagnostics over IP)"
+msgstr ""
+
 msgid "Interface language"
 msgstr ""
 
@@ -1350,6 +1488,47 @@ msgstr "Sunt constient ca imi pot strica masina daca este folosita prost"
 
 msgid "Dark style"
 msgstr "Stil intunecat"
+
+msgid "DoIP (Diagnostics over IP) Configuration"
+msgstr ""
+
+#, fuzzy
+msgid "Device Preset : "
+msgstr "Device version: "
+
+msgid "Custom"
+msgstr ""
+
+msgid "Bosch MTS"
+msgstr ""
+
+msgid "VXDIAG VCX Nano"
+msgstr ""
+
+msgid "VAG ODIS"
+msgstr ""
+
+msgid "JLR DoIP VCI"
+msgstr ""
+
+msgid "Generic DoIP"
+msgstr ""
+
+msgid "DoIP Target IP : "
+msgstr ""
+
+#, fuzzy
+msgid "DoIP Port : "
+msgstr "Port: "
+
+msgid "DoIP Timeout (seconds) : "
+msgstr ""
+
+msgid "Enable Vehicle Announcement Discovery"
+msgstr ""
+
+msgid "Auto-reconnect on connection loss"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr ""
@@ -1433,14 +1612,23 @@ msgstr ""
 msgid "Long command support and high-speed communication available"
 msgstr ""
 
+msgid "N/A"
+msgstr ""
+
+msgid "DoIP (Diagnostics over IP) selected"
+msgstr ""
+
+msgid "Ethernet-based diagnostic communication"
+msgstr ""
+
+msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
+msgstr ""
+
 msgid "You must check the recommandations"
 msgstr "Trebuie sa verificati recomandarile"
 
 msgid "Please select a communication port"
 msgstr "Va rugam sa selectati un port de comunicare"
-
-msgid "Language changed to"
-msgstr ""
 
 msgid "ECU Command"
 msgstr ""
@@ -1634,29 +1822,6 @@ msgid "found data in input "
 msgstr ""
 
 msgid "found data in display "
-msgstr ""
-
-msgid "Cannot zip database, no 'ecus' directory"
-msgstr ""
-
-#, fuzzy
-msgid "Starting conversion"
-msgstr "Versiune Diag"
-
-msgid "Starting processing "
-msgstr ""
-
-msgid " to "
-msgstr ""
-
-msgid "Skipping current file (cannot parse it)"
-msgstr ""
-
-#, fuzzy
-msgid "Writing database"
-msgstr "Baza de date zip"
-
-msgid "Writing archive"
 msgstr ""
 
 msgid "Waiting..."
