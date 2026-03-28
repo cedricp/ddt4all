@@ -1,0 +1,13 @@
+<Ecu>
+    <Target Name="KWP_ECU">
+        <Function Address="38" Name="Engine" />
+        <K>
+            <KWP>
+                <FastInit>
+                    <KW1 Value="129" />
+                    <KW2 Value="130" />
+                </FastInit>
+            </KWP>
+        </K>
+    </Target>
+</Ecu>

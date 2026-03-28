@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ecu>
+    <Target Name="ISO8_ECU">
+        <Function Address="39" Name="Body" />
+        <K>
+            <ISO8>
+                <KW1 Value="145" />
+                <KW2 Value="146" />
+            </ISO8>
+        </K>
+    </Target>
+</Ecu>

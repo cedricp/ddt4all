@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ecu>
+    <Target Name="EXT_CAN_ECU">
+        <Function Address="26" Name="Injection" />
+        <CAN BaudRate="500000">
+            <SendId><CANId Value="417001713" /></SendId>
+            <ReceiveId><CANId Value="417067249" /></ReceiveId>
+        </CAN>
+    </Target>
+</Ecu>
