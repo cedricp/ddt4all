@@ -56,40 +56,6 @@ def set_theme_style(app, onoff):
     options.save_config()
 
 
-# def set_language_realtime(language_name):
-#     """Change language in real-time without restart"""
-#     global _
-    
-#     if language_name in options.lang_list:
-#         lang_code = options.lang_list[language_name]
-        
-#         # Update environment and configuration
-#         os.environ['LANG'] = lang_code
-#         options.configuration["lang"] = lang_code
-#         options.save_config()
-        
-#         # Reload translator
-#         import gettext
-#         try:
-#             t = gettext.translation('ddt4all', str(BASE_DIR / ".." / ".." / "generated" / "locales"), languages=[lang_code], fallback=True)
-#             _ = t.gettext
-            
-#             # Update main window if it exists
-#             if hasattr(options, 'main_window') and options.main_window:
-#                 main_window = options.main_window
-#                 # Update menu bar
-#                 main_window.updateMenuBar()
-#                 # Update status bar using the widget directly
-#                 if hasattr(main_window, 'statusbar_widget') and main_window.statusbar_widget:
-#                     main_window.statusbar_widget.showMessage(_("Language changed to") + " " + language_name, 3000)
-            
-#             print(f"Language changed to {language_name} ({lang_code})")
-#             return True
-#         except Exception as e:
-#             print(f"Error changing language: {e}")
-#             return False
-#     return False
-
 def set_socket_timeout(onoff):
     if (onoff):
         options.socket_timeout = True
