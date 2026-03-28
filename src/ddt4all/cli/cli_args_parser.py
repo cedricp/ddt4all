@@ -32,6 +32,10 @@ COMMANDS: list[CommandSpec] = [
         handler=cmd_parameters,
         arguments=[
             ArgumentSpec(
+                ("-c", "--convert"),
+                {"action": "store_true", "help": "Convert XML to JSON"}
+            ),
+            ArgumentSpec(
                 ("-z", "--zipconvert"),
                 {"action": "store_true", "help": "Convert all XML to JSON in a Zip archive"}
             ),
