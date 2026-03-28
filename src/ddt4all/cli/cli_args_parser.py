@@ -21,7 +21,7 @@ COMMANDS: list[CommandSpec] = [
     ),
     CommandSpec(
         name="usbdevice",
-        help="Test DoIP implementation with Electric ECU support",
+        help="",
         handler=cmd_usbdevice,
         arguments=[
         ],
@@ -54,7 +54,7 @@ def build_parser() -> argparse.ArgumentParser:
     # global arguments
     for arg in ARGUMENTS:
         parser.add_argument(*arg.flags, **arg.kwargs)
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers = parser.add_subparsers(dest="command", required=False)
 
     # sub commands & arguments
     for cmd in COMMANDS:
@@ -64,30 +64,4 @@ def build_parser() -> argparse.ArgumentParser:
         sub.set_defaults(handler=cmd.handler)
 
     return parser
-
-
-def run_cli(argv):
-
-    parser = build_parser()
-    args = parser.parse_args(argv)
-    
-    
-
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = build_parser()
-    args = parser.parse_args(argv)
-    return args.handler(args)
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-class ArgsParser():
-
-    parser = argparse.ArgumentParser()
 

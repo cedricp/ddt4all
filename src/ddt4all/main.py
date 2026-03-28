@@ -1,4 +1,3 @@
-import argparse
 import codecs
 import json
 import os
@@ -8,6 +7,7 @@ import sys
 import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
+from ddt4all.cli.cli_args_parser import build_parser
 import ddt4all.core.ecu.ecu_database as ecu_db
 import ddt4all.core.elm.elm as elm
 from ddt4all.file_manager import (
@@ -62,13 +62,14 @@ def load_this():
 
 def main(argv=None) -> int:
 
+    parser = build_parser()
+    args = parser.parse_args()
 
-    argv = sys.argv[1:] if argv is None else argv
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-git_test", "--git_workfallowmode", action='store_true', help="Mode build test's")
-    args = parser.parse_args(argv)
-    not_qt5_show = args.git_workfallowmode
+    # If subcommand : run then exit
+    if hasattr(args, "handler"):
+        result = args.handler(args)
+        # Propagation éventuelle d’un code retour
+        raise SystemExit(result if isinstance(result, int) else 0)
 
     # For InnoSetup version.h auto generator
     if os.path.isdir('ddt4all_data/inno-win-setup'):
@@ -82,9 +83,6 @@ def main(argv=None) -> int:
                 f.write(f'#define __status__ "{version.__status__}"')
         except (OSError, IOError) as e:
             print(f"Warning: Could not write version.h: {e}")
-
-    if not_qt5_show:
-        return 0
 
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)

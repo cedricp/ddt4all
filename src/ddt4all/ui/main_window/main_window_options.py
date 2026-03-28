@@ -1,6 +1,7 @@
 
 import os
 import re
+import time
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
@@ -12,6 +13,7 @@ from ddt4all.ui.main_window.donation_widget import DonationWidget
 from ddt4all.ui.main_window.icons_paths import (
     ICON_BT,
     ICON_DERELEK,
+    ICON_DOIP,
     ICON_ELS27,
     ICON_OBD,
     ICON_OBDLINK,
@@ -139,7 +141,7 @@ class MainWindowOptions(widgets.QDialog):
         medialayout.addWidget(self.vgatebutton)
 
         self.doipbutton = widgets.QPushButton()
-        self.doipbutton.setIcon(gui.QIcon("ddt4all_data/icons/doip.png"))
+        self.doipbutton.setIcon(gui.QIcon(ICON_DOIP))
         self.doipbutton.setIconSize(core.QSize(60, 60))
         self.doipbutton.setFixedHeight(64)
         self.doipbutton.setFixedWidth(64)
