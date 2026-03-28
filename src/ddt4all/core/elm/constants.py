@@ -53,6 +53,7 @@ negrsp = {"10": "NR: General Reject",
           "93": "NR: Voltage Too Low"
           }
 
+
 cmdb = '''
 #v1.0 ;AC P; ATZ                   ; Z                  ; reset all
 #v1.0 ;AC P; ATE1                  ; E0, E1             ; Echo off, or on*
@@ -169,3 +170,4 @@ cmdb = '''
 #v2.1 ;AC  ; ATCTM5                ; CTM5               ; set Timer Multiplier to 5
 #v2.1 ;ACH ; ATZ                   ; Z                  ; reset all
 '''
+

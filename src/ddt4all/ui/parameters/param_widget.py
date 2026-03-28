@@ -11,6 +11,7 @@ import PyQt5.QtWidgets as widgets
 
 from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.elm.elm import reconnect_elm
+from ddt4all.core.parameters.helpers import dumpXML
 import ddt4all.options as options
 from ddt4all.ui.displaymod.button_request import ButtonRequest
 from ddt4all.ui.displaymod.display_widget import DisplayWidget
@@ -18,10 +19,7 @@ from ddt4all.ui.displaymod.input_widget import InputWidget
 from ddt4all.ui.displaymod.label_widget import LabelWidget
 from ddt4all.ui.displaymod.screen_widget import ScreenWidget
 from ddt4all.ui.parameters.ecu_command import EcuCommand
-from ddt4all.ui.parameters.utils import (
-    dumpXML,
-    PATH_PNG_ODB,
-)
+from ddt4all.ui.utils import PATH_PNG_ODB
 import ddt4all.version as version
 
 _ = options.translator('ddt4all')
@@ -553,6 +551,9 @@ class ParamWidget(widgets.QWidget):
                 self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.funcaddr)
             elif self.ecurequestsparser.ecu_protocol == "ISO8":
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
+            elif self.ecurequestsparser.ecu_protocol == "DoIP":
+                self.startDiagnosticSession()
+                self.main_protocol_status.setText("DoIP @ " + self.ecurequestsparser.funcaddr)
             else:
                 self.main_protocol_status.setText("??? @ " + self.ecurequestsparser.funcaddr)
                 print(_("Protocol not supported: ") + self.ecurequestsparser.ecu_protocol)

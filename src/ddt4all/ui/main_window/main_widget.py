@@ -11,6 +11,7 @@ import PyQt5.QtWidgets as widgets
 import ddt4all.options as options
 from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.ecu.ecu_scanner import EcuScanner
+from ddt4all.core.parameters.helpers import zipConvertXML
 from ddt4all.file_manager import (
     get_logs_dir,
     get_vehicles_dir,
@@ -20,7 +21,6 @@ from ddt4all.ui.data_editor.button_editor import ButtonEditor
 from ddt4all.ui.data_editor.request_editor import RequestEditor
 from ddt4all.ui.data_editor.ecu_param_editor import EcuParamEditor
 from ddt4all.ui.data_editor.data_editor import DataEditor
-from ddt4all.ui.parameters.utils import zipConvertXML
 from ddt4all.ui.main_window.ecu_finder import EcuFinder
 from ddt4all.ui.main_window.ecu_list import EcuList
 from ddt4all.ui.main_window.icons_paths import (
@@ -759,6 +759,8 @@ class MainWidget(widgets.QMainWindow):
         self.ecu_scan.scan(self.progressstatus, self.infostatus, project)
         self.logview.append(_("Scanning KWP") + " -> " + project)
         self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus, project)
+        self.logview.append(_("Scanning DoIP") + " -> " + project)
+        self.ecu_scan.scan_doip(self.progressstatus, self.infostatus, project)
 
         for ecu in self.ecu_scan.ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
@@ -785,13 +787,16 @@ class MainWidget(widgets.QMainWindow):
         msgBox.setText(_('Scan options'))
         scancan = False
         scankwp = False
+        scandoip = False
 
         canbutton = widgets.QPushButton('CAN')
         kwpbutton = widgets.QPushButton('KWP')
+        doipbutton = widgets.QPushButton('DoIP')
         cancelbutton = widgets.QPushButton(_('CANCEL'))
 
         msgBox.addButton(canbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, widgets.QMessageBox.ActionRole)
+        msgBox.addButton(doipbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(cancelbutton, widgets.QMessageBox.NoRole)
         msgBox.exec_()
 
@@ -806,6 +811,10 @@ class MainWidget(widgets.QMainWindow):
             self.logview.append(_("Scanning KWP"))
             scankwp = True
 
+        if msgBox.clickedButton() == doipbutton:
+            self.logview.append(_("Scanning DoIP"))
+            scandoip = True
+
         progressWidget = widgets.QWidget(None)
         progressLayout = widgets.QVBoxLayout()
         progressWidget.setLayout(progressLayout)
@@ -817,6 +826,8 @@ class MainWidget(widgets.QMainWindow):
             self.ecu_scan.scan(self.progressstatus, self.infostatus, None, self.canlinecombo.currentIndex())
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
+        if scandoip:
+            self.ecu_scan.scan_doip(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()
         self.treeview_params.clear()

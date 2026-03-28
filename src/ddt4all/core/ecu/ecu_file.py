@@ -268,6 +268,13 @@ class EcuFile:
             if not options.simulation_mode:
                 options.elm.init_iso()
                 options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
+
+        # DOIP handling
+        # elif self.ecu_protocol == 'DOIP':
+        #     ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'DOIP'}
+        #     if not options.simulation_mode:
+        #         options.elm.init()
+        #         options.elm.set_doip_addr(self.funcaddr, ecu_conf)
         else:
             return False
 

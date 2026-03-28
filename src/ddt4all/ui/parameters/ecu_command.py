@@ -3,7 +3,7 @@ import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
 import ddt4all.options as options
-from ddt4all.ui.parameters.utils import PATH_PNG_ODB
+from ddt4all.ui.utils import PATH_PNG_ODB
 import ddt4all.version as version
 
 _ = options.translator('ddt4all')

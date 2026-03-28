@@ -1,6 +1,7 @@
 import platform
 import re
 import serial
+import socket
 import sys
 import threading
 import time
@@ -30,6 +31,7 @@ class Port:
     tcp_needs_reconnect = False
     reconnect_attempts = 0
     max_reconnect_attempts = 3
+    settings = {}
 
     def __init__(self, portName, speed, adapter_type):
         options.elm_failed = False
@@ -66,17 +68,32 @@ class Port:
             saved_settings = options.get_device_settings(device_key, self.portName)
 
             if saved_settings and 'baudrate' in saved_settings:
-                settings = saved_settings
+                self.settings = saved_settings
                 translate_arg = _("Using saved settings for")
-                print (f"{translate_arg} {self.adapter_type}: {settings}")
+                print (f"{translate_arg} {self.adapter_type}: {self.settings}")
             else:
-                settings = DeviceManager.get_optimal_settings(self.adapter_type)
+                self.settings = DeviceManager.get_optimal_settings(self.adapter_type)
                 translate_arg = _("Using optimal settings for")
-                print(f"{translate_arg} {self.adapter_type}: {settings}")
+                print(f"{translate_arg} {self.adapter_type}: {self.settings}")
 
             # Use provided speed if specified, otherwise use setting
             if speed > 0:
-                settings['baudrate'] = speed
+                self.settings['baudrate'] = speed
+
+            # Check if this is a DoIP connection (only for non-ELM327 devices)
+            if ":" in self.portName and self.portName.count(":") == 1:
+                ip, port = self.portName.split(":")
+                try:
+                    port_num = int(port)
+                    if port_num == 13400:  # DoIP port
+                        # ELM327 doesn't support DoIP, only modern adapters
+                        if self.adapter_type.upper() not in ['ELM327', 'STD_USB', 'STD_BT', 'STD_WIFI']:
+                            self.init_doip(ip, port_num)
+                            return
+                        else:
+                            print("ELM327 doesn't support DoIP, falling back to serial mode")
+                except ValueError:
+                    pass  # Not a valid port number, continue with serial
 
             # Platform-specific serial port configuration
             current_platform = platform.system().lower()
@@ -84,14 +101,14 @@ class Port:
             # Enhanced serial parameters using device-specific settings
             serial_params = {
                 'port': self.portName,
-                'baudrate': settings.get('baudrate', speed),
-                'timeout': settings.get('timeout', 5),
+                'baudrate': self.settings.get('baudrate', speed),
+                'timeout': self.settings.get('timeout', 5),
                 'parity': serial.PARITY_NONE,
                 'stopbits': serial.STOPBITS_ONE,
                 'bytesize': serial.EIGHTBITS,
                 'xonxoff': False,
-                'rtscts': settings.get('rtscts', False),
-                'dsrdtr': settings.get('dsrdtr', False)
+                'rtscts': self.settings.get('rtscts', False),
+                'dsrdtr': self.settings.get('dsrdtr', False)
             }
 
             # Platform-specific adjustments
@@ -144,10 +161,32 @@ class Port:
             # Future enhancement: implement proper Bluetooth socket handling
             self.init_serial(38400)
             print(f"Bluetooth connection attempted: {self.portName}")
+            self.connectionStatus = True
+            print(f"Serial connection established: {self.portName} @ {self.settings['baudrate']} baud")
+
         except Exception as e:
             print(f"Bluetooth connection failed: {e}")
             options.elm_failed = True
             self.connectionStatus = False
+
+    def init_doip(self, ip, port):
+        """Initialize DoIP connection"""
+        try:
+            print(f"Initializing DoIP connection to {ip}:{port}")
+            self.doip_device = doip.DoIPDevice(ip)
+            
+            if self.doip_device.connect():
+                self.connectionStatus = True
+                self.portType = 3  # DoIP connection type
+                print(f"DoIP connection established: {ip}:{port}")
+            else:
+                print(f"DoIP connection failed: {ip}:{port}")
+                self.connectionStatus = False
+                
+        except Exception as e:
+            print(f"DoIP initialization failed: {e}")
+            self.connectionStatus = False
+            options.elm_failed = True
 
     def close(self):
         """Enhanced close method with proper cleanup"""
@@ -173,8 +212,6 @@ class Port:
         '''
         if self.portType != 1:
             return
-
-        import socket
 
         try:
             if reinit and self.hdr:
@@ -226,7 +263,6 @@ class Port:
             try:
                 byte = b""
                 if self.portType == 1:  # TCP/WiFi
-                    import socket
                     try:
                         byte = self.hdr.recv(1)
                         if options.debug:

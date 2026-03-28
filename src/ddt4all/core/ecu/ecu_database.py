@@ -10,6 +10,7 @@ import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 addressing = {}
+doip_addressing = {}
 
 
 class EcuDatabase:
@@ -21,8 +22,13 @@ class EcuDatabase:
         self.numecu = 0
         self.available_addr_kwp = []
         self.available_addr_can = []
+        self.available_addr_doip = []  # Add DoIP address support
         self.addr_group_mapping_long = {}
         self.addr_group_mapping = {}
+
+        for k, v in doip_addressing.items():
+            self.addr_group_mapping[k] = v
+            self.addr_group_mapping_long[k] = v
 
         for k, v in addressing.items():
             self.addr_group_mapping[k] = v[0]
@@ -55,6 +61,9 @@ class EcuDatabase:
                 elif 'CAN' in ecu_dict['protocol']:
                     if addr not in self.available_addr_can:
                         self.available_addr_can.append(str(addr))
+                elif 'DOIP' in ecu_dict['protocol'].upper():
+                    if addr not in self.available_addr_doip:
+                        self.available_addr_doip.append(str(addr))
 
                 if str(addr) not in self.addr_group_mapping:
                     print(_("Adding group "), addr, ecu_dict['group'])
@@ -91,6 +100,9 @@ class EcuDatabase:
                 elif 'CAN' in ecuprotocol:
                     if ecuaddress not in self.available_addr_can:
                         self.available_addr_can.append(str(ecuaddress))
+                elif 'DOIP' in ecuprotocol.upper():
+                    if ecuaddress not in self.available_addr_doip:
+                        self.available_addr_doip.append(str(ecuaddress))
 
                 if str(ecuaddress) not in self.addr_group_mapping:
                     self.addr_group_mapping[ecuaddress] = targetv['group']
@@ -147,6 +159,9 @@ class EcuDatabase:
                     elif 'KWP' in protocol.upper():
                         if address not in self.available_addr_kwp:
                             self.available_addr_kwp.append(str(address))
+                    elif 'DOIP' in protocol.upper():
+                        if address not in self.available_addr_doip:
+                            self.available_addr_doip.append(str(address))
 
                     autoidents = target.getElementsByTagName("AutoIdents")
                     projectselems = target.getElementsByTagName("Projects")

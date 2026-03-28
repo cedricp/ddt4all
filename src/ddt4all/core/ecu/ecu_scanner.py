@@ -63,6 +63,94 @@ class EcuScanner:
     def identify_from_frame(self, addr, can_response):
         self.check_ecu(can_response, None, addr, "CAN")
 
+    def check_ecu2(self, diagversion, supplier, soft, version, label, addr, protocol):
+        global tgt
+        approximate_ecu = []
+        found_exact = False
+        found_approximate = False
+        if addr in self.ecu_database.addr_group_mapping:
+            ecu_type = self.ecu_database.addr_group_mapping[addr]
+        else:
+            ecu_type = "UNKNOWN"
+
+        targetNum = 0
+        for target in self.ecu_database.targets:
+            if target.protocol == "CAN" and protocol != "CAN":
+                continue
+            if target.protocol.startswith("KWP") and protocol != "KWP":
+                continue
+
+            if target.checkWith(diagversion, supplier, soft, version, addr):
+                ecuname = "[ " + target.group + " ] " + target.name
+
+                self.ecus[ecuname] = target
+                self.num_ecu_found += 1
+                if label is not None:
+                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
+                found_exact = True
+                href = target.href
+                line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
+                                                                      "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
+                       % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
+
+                options.main_window.logview.append(line)
+                break
+            elif target.checkApproximate(diagversion, supplier, soft, addr):
+                approximate_ecu.append(target)
+                found_approximate = True
+
+            targetNum += 1
+
+        # Try to find the closest possible version of an ECU
+        if not found_exact and found_approximate:
+            min_delta_version = 0xFFFFFF
+            kept_ecu = None
+            for tgt in approximate_ecu:
+                ecu_protocol = 'CAN'
+                if tgt.protocol.startswith("KWP"):
+                    ecu_protocol = "KWP"
+                # Shouldn't happen, but...
+                if tgt.protocol.startswith("ISO8"):
+                    ecu_protocol = "KWP"
+                if ecu_protocol != protocol:
+                    continue
+
+                # If version contains ASCII characters, I can do nothing for you...
+                try:
+                    int_version = int('0x' + version, 16)
+                    int_tgt_version = int('0x' + tgt.version, 16)
+                except ValueError:
+                    continue
+
+                delta = abs(int_tgt_version - int_version)
+                if delta < min_delta_version:
+                    min_delta_version = delta
+                    kept_ecu = tgt
+
+            if kept_ecu:
+                self.approximate_ecus[kept_ecu.name] = kept_ecu
+                self.num_ecu_found += 1
+                if label is not None:
+                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
+
+                text = _("Found ECU")
+                text1 = _("(not perfect match)")
+                # accessbbitity blue color for reason in window bad reader
+                line = f"<font color='blue'>{text} {ecu_type} {text1} :" \
+                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
+                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
+
+                options.main_window.logview.append(line)
+
+        if not found_exact and not found_approximate:
+            text = _("Found ECU")
+            text1 = _("(no relevant ECU file found)")
+            line = f"<font color='red'>{text} {ecu_type} {text1} :" \
+                   "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
+                   % (diagversion, supplier, soft, version)
+
+            options.main_window.logview.append(line)
+
     def identify_new(self, addr, label):
         diagversion = ""
         supplier = ""
@@ -185,7 +273,6 @@ class EcuScanner:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
-                from elm import DeviceManager
                 DeviceManager.initialize_device(options.elm)
             
             options.elm.init_can()
@@ -251,9 +338,8 @@ class EcuScanner:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
-                from elm import DeviceManager
                 DeviceManager.initialize_device(options.elm)
-            
+
             options.elm.init_iso()
 
         project_kwp_addresses = []
@@ -319,90 +405,162 @@ class EcuScanner:
             version = can_response[54:59].replace(' ', '')
             self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
 
-    def check_ecu2(self, diagversion, supplier, soft, version, label, addr, protocol):
-        global tgt
-        approximate_ecu = []
-        found_exact = False
-        found_approximate = False
-        if addr in self.ecu_database.addr_group_mapping:
-            ecu_type = self.ecu_database.addr_group_mapping[addr]
-        else:
-            ecu_type = "UNKNOWN"
-
-        targetNum = 0
-        for target in self.ecu_database.targets:
-            if target.protocol == "CAN" and protocol != "CAN":
-                continue
-            if target.protocol.startswith("KWP") and protocol != "KWP":
-                continue
-
-            if target.checkWith(diagversion, supplier, soft, version, addr):
-                ecuname = "[ " + target.group + " ] " + target.name
-
-                self.ecus[ecuname] = target
-                self.num_ecu_found += 1
-                if label is not None:
-                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
-                found_exact = True
-                href = target.href
-                line = "<font color='green'>" + _("Identified ECU") + " [%s]@%s : %s DIAGVERSION [%s]" \
-                                                                      "SUPPLIER [%s] SOFT [%s] VERSION [%s] {%i}</font>" \
-                       % (ecu_type, target.addr, href, diagversion, supplier, soft, version, targetNum)
-
-                options.main_window.logview.append(line)
-                break
-            elif target.checkApproximate(diagversion, supplier, soft, addr):
-                approximate_ecu.append(target)
-                found_approximate = True
-
-            targetNum += 1
-
-        # Try to find the closest possible version of an ECU
-        if not found_exact and found_approximate:
-            min_delta_version = 0xFFFFFF
-            kept_ecu = None
-            for tgt in approximate_ecu:
-                ecu_protocol = 'CAN'
-                if tgt.protocol.startswith("KWP"):
-                    ecu_protocol = "KWP"
-                # Shouldn't happen, but...
-                if tgt.protocol.startswith("ISO8"):
-                    ecu_protocol = "KWP"
-                if ecu_protocol != protocol:
-                    continue
-
-                # If version contains ASCII characters, I can do nothing for you...
+        elif protocol.upper() == "DOIP":
+            # Handle DoIP protocol responses (different format)
+            if len(can_response) > 20:
+                # DoIP responses have different structure
                 try:
-                    int_version = int('0x' + version, 16)
-                    int_tgt_version = int('0x' + tgt.version, 16)
-                except ValueError:
+                    # Parse DoIP response format
+                    if can_response.startswith("61 80"):
+                        # Positive response with diagnostic version
+                        diagversion = can_response[6:8]  # Simplified for DoIP
+                        supplier = can_response[9:17]  # Supplier code
+                        soft = can_response[18:26]  # Software version
+                        version = can_response[27:35]  # Version
+                        self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
+                    else:
+                        print(f"DoIP ECU response format unknown: {can_response}")
+                except Exception as e:
+                    print(f"Error parsing DoIP response: {e}")
+            else:
+                print(f"DoIP ECU at {addr} responded with minimal data: {can_response}")
+        else:
+            # Handle other protocols (CAN, KWP)                
+            if len(can_response) > 20:
+                try:
+                    diagversion = str(int(can_response[6:8], 16))
+                    supplier = bytes.fromhex(can_response[9:17].replace(' ', '')).decode('utf-8')
+                    soft = can_response[18:26].replace(' ', '')
+                    version = can_response[27:35].replace(' ', '')
+                    self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
+                except Exception:
+                    return  # Changed from continue to return since we're not in a loop
+
+    def scan_doip(self, progress=None, label=None, vehiclefilter=None):
+        """Scan for DoIP ECUs using ISO 13400 protocol"""
+        if not options.simulation_mode:
+            # Initialize DoIP connection with target IP from options
+            try:
+                target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+                target_port = getattr(options, 'doip_target_port', 13400)
+                timeout = getattr(options, 'doip_timeout', 5)
+                
+                print(f"Initializing DoIP connection to {target_ip}:{target_port} (timeout: {timeout}s)")
+                
+                # Create DoIP device independently (not through ELM)
+                doip_device = doip_addressing.DoIPDevice(target_ip)
+                
+                # Set timeout if supported
+                if hasattr(doip_device, 'timeout'):
+                    doip_device.timeout = timeout
+                
+                if not doip_device.connect():
+                    print("DoIP connection failed, cannot scan DoIP ECUs")
+                    return
+                else:
+                    print(f"DoIP connection established: {target_ip}:{target_port}")
+                    # Store the device for scanning use
+                    self.current_doip_device = doip_device
+                    
+            except Exception as e:
+                print(f"DoIP initialization error: {e}")
+                return
+
+        project_doip_addresses = []
+        if vehiclefilter:
+            if vehiclefilter in self.ecu_database.vehiclemap:
+                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
+                    if proto.upper() == "DOIP" and addr not in project_doip_addresses:
+                        project_doip_addresses.append(addr)
+        else:
+            # Use DoIP addresses from projects.json (loaded in main.py)
+            if hasattr(ecu, 'doip') and ecu.doip_addressing:
+                project_doip_addresses = list(ecu.doip_addressing.keys())
+            else:
+                # Fallback to database
+                project_doip_addresses = self.ecu_database.available_addr_doip
+
+        if len(project_doip_addresses) == 0:
+            print("No DoIP addresses available for scanning")
+            return
+
+        i = 0
+        if progress:
+            progress.setRange(0, len(project_doip_addresses))
+            progress.setValue(0)
+
+        # Scan DoIP addresses
+        for addr in list(set(project_doip_addresses)):
+            i += 1
+            if progress:
+                progress.setValue(i)
+                if self.qapp:
+                    self.qapp.processEvents()
+
+            text = _("Scanning DoIP address: ")
+            
+            # Skip invalid addresses
+            if addr not in self.ecu_database.addr_group_mapping:
+                # Try to get name from projects.json DoIP data
+                if hasattr(ecu, 'doip') and ecu.doip_addressing and addr in ecu.doip_addressing:
+                    print(f"{text + addr:<35} ECU: {ecu.doip_addressing[addr]}")
+                else:
+                    print(f"Warning: address {addr} is not mapped")
                     continue
+            else:
+                # Use database mapping
+                try:
+                    # Try long name first
+                    print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+                except:
+                    print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
 
-                delta = abs(int_tgt_version - int_version)
-                if delta < min_delta_version:
-                    min_delta_version = delta
-                    kept_ecu = tgt
+            if not options.simulation_mode:
+                try:
+                    # Use the independent DoIP device
+                    if hasattr(self, 'current_doip_device') and self.current_doip_device:
+                        # Set target address for DoIP communication
+                        self.current_doip_device.target_address = int(addr, 16)
+                        
+                        # Start diagnostic session
+                        if self.current_doip_device.start_session_can('10C0'):
+                            # Send tester present
+                            response = self.current_doip_device.request('3E00')
+                            if response and len(response['data']) >= 1:
+                                if response['data'][0] == 0x50:  # Positive response
+                                    # Send read data request - get actual ECU identification from DDT database
+                                    response = self.current_doip_device.request('2180')
+                                    if response and len(response['data']) >= 59:
+                                        can_response = ' '.join([f'{b:02X}' for b in response['data']])
+                                        # Parse real DoIP response from ECU
+                                        self.check_ecu(can_response, label, addr, "DoIP")
+                                    else:
+                                        print(f"No identification data from DoIP ECU at address {addr}")
+                                else:
+                                    print(f"Negative response from DoIP ECU at address {addr}")
+                            else:
+                                print(f"Failed to start session with DoIP ECU at address {addr}")
+                        else:
+                            print(f"Failed to initialize DoIP communication with address {addr}")
+                    else:
+                        print("DoIP device not available for scanning")
+                except Exception as e:
+                    print(f"Error scanning DoIP address {addr}: {e}")
+            else:
+                # Simulation mode - use real DDT database data
+                print(f"Simulation mode: DoIP address {addr} would be scanned")
+                # Don't provide fake data - let user know it's simulation
+                print(f"Would connect to DoIP ECU at address {addr} and read identification data")
 
-            if kept_ecu:
-                self.approximate_ecus[kept_ecu.name] = kept_ecu
-                self.num_ecu_found += 1
-                if label is not None:
-                    label.setText(_("Found: ") + " %i ECU" % self.num_ecu_found)
-
-                text = _("Found ECU")
-                text1 = _("(not perfect match)")
-                # accessbbitity blue color for reason in window bad reader
-                line = f"<font color='blue'>{text} {ecu_type} {text1} :" \
-                       "%s DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s instead %s]</font>" \
-                       % (kept_ecu.name, diagversion, supplier, soft, version, tgt.version)
-
-                options.main_window.logview.append(line)
-
-        if not found_exact and not found_approximate:
-            text = _("Found ECU")
-            text1 = _("(no relevant ECU file found)")
-            line = f"<font color='red'>{text} {ecu_type} {text1} :" \
-                   "DIAGVERSION [%s] SUPPLIER [%s] SOFT [%s] VERSION [%s]</font>" \
-                   % (diagversion, supplier, soft, version)
-
-            options.main_window.logview.append(line)
+        if not options.simulation_mode:
+            # Clean up DoIP connection
+            if hasattr(self, 'current_doip_device') and self.current_doip_device:
+                try:
+                    # Close DoIP connection
+                    if hasattr(self.current_doip_device, 'disconnect'):
+                        self.current_doip_device.disconnect()
+                    print("DoIP connection closed")
+                except Exception as e:
+                    print(f"Error closing DoIP connection: {e}")
+                finally:
+                    self.current_doip_device = None

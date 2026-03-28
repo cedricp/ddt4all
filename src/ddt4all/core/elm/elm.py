@@ -4,10 +4,12 @@
 '''
 
 from datetime import datetime
+import glob
 import os
 import platform
 import serial
 from serial.tools import list_ports
+import socket
 import string
 import time
 
@@ -17,15 +19,14 @@ from ddt4all.core.elm.constants import (
 )
 from ddt4all.core.elm.device_manager import DeviceManager
 from ddt4all.core.elm.port import Port
+from ddt4all.core.usbdevice.usb_can import UsbCan
 from ddt4all.file_manager import get_logs_dir
 import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
-
-# //TODO missing entries this need look side ecu addressing missing entries or ignore {}
-# dnat_entries = {"E7": u"SCRCM", "E8": u"SVS"}
-# snat_entries = {"E7": u"SCRCM", "E8": u"SVS"} # {}
+# SNAT/DNAT entries for CAN address mapping
+# Fixed: Using proper hex addresses instead of string values
 dnat_entries = {"E7": "7E4", "E8": "644"}
 snat_entries = {"E7": "7EC", "E8": "5C4"}
 
@@ -33,6 +34,302 @@ snat = snat_entries
 snat_ext = {}
 dnat = dnat_entries
 dnat_ext = {}
+
+
+
+
+def clean_bytestring(value):
+    # If is bytes -> decode
+    # print(repr(value), type(value))
+    if isinstance(value, bytes):
+        return value.decode('utf-8', errors='ignore')
+    # If is string type "b'xxxx'" -> remove prefix b''
+    value = str(value)
+    if value.startswith("b'") and value.endswith("'"):
+        return value[2:-1]
+    return value
+
+
+def addr_exist(addr):
+    result = True
+    if addr not in dnat:
+        if addr not in dnat_ext:
+            result = False
+    return result
+
+
+def get_can_addr(txa):
+    for d in dnat.keys():
+        if dnat[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def get_can_addr_ext(txa):
+    for d in dnat_ext.keys():
+        if dnat_ext[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def get_can_addr_snat(txa):
+    for d in snat.keys():
+        if snat[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def get_can_addr_snat_ext(txa):
+    for d in snat_ext.keys():
+        if snat_ext[d].upper() == txa.upper():
+            return d
+    return None
+
+
+def item_count(items):
+    return sum(1 for _ in items)
+
+
+def get_available_ports():
+    """Get available serial ports with optimized status checking"""
+    ports = []
+    
+    # First check for USB devices using usbdevice.py (with error handling)
+    try:
+        usb_device = UsbCan()
+        if usb_device.is_init():
+            # Add USB device to ports list
+            ports.append((usb_device.descriptor, usb_device.descriptor, "USB", "online"))
+            print(_("Found USB device:") + " %s" % usb_device.descriptor)
+    except ImportError as e:
+        # Only show USB backend error once per session
+        if not hasattr(get_available_ports, '_usb_error_shown'):
+            get_available_ports._usb_error_shown = True
+            print(f"USB backend not available: {e}")
+            print("Note: USB device detection requires pyusb library (pip install pyusb)")
+    except Exception as e:
+        # Only show USB device detection error once per session
+        if not hasattr(get_available_ports, '_usb_device_error_shown'):
+            get_available_ports._usb_device_error_shown = True
+            print(f"USB device detection error: {e}")
+    
+    # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
+    # DoIP devices - Use configured IP address instead of hardcoded values
+    doip_target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+    doip_target_port = getattr(options, 'doip_target_port', 13400)
+    
+    doip_devices = [
+        (doip_target_ip, f"DoIP Device - {doip_target_ip}:{doip_target_port}"),
+    ]
+    
+    # Only check DoIP status if not in simulation mode and not checking too frequently
+    if not getattr(options, 'simulation_mode', False) and not hasattr(get_available_ports, '_last_check_time'):
+        get_available_ports._last_check_time = time.time()
+        for ip, desc in doip_devices:
+            status = check_doip_status(ip, doip_target_port, timeout=0.5)  # Use configured port
+            port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", status)
+            ports.append(port_entry)
+            print(f"DoIP device {status}: {desc} at {ip}")
+    else:
+        # Use cached status or assume offline
+        for ip, desc in doip_devices:
+            port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", "offline")
+            ports.append(port_entry)
+    
+    # Then check for serial ports
+    try:
+        portlist = list_ports.comports()
+
+        if item_count(portlist) == 0:
+            return ports if ports else []
+
+        iterator = sorted(list(portlist))
+        for port, desc, hwid in iterator:
+            # Enhanced device identification for ELS27 and other adapters
+            device_desc = desc
+            desc_upper = desc.upper()
+
+            # Direct device name detection
+            if any(keyword in desc_upper for keyword in ['ELS27', 'ELM327']):
+                if 'ELS27' in desc_upper:
+                    device_desc = f"{desc} (ELS27 V5 Compatible)"
+                else:
+                    device_desc = f"{desc} (ELM327 Compatible)"
+            elif any(keyword in desc_upper for keyword in ['VLINKER', 'OBDII']):
+                device_desc = f"{desc} (Vlinker Compatible)"
+            elif any(keyword in desc_upper for keyword in ['VGATE', 'ICAR']):
+                device_desc = f"{desc} (VGate Compatible)"
+            elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
+                device_desc = f"{desc} (DERLEK Compatible)"
+            elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
+                device_desc = f"{desc} (OBDLink Compatible)"
+            # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
+            elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
+                device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['CH340', 'CH341']):
+                device_desc = f"{desc} (CH340 - Possible ELS27/ELM327)"
+            elif any(chip in desc_upper for chip in ['CP210', 'CP2102', 'CP2104']):
+                device_desc = f"{desc} (CP210x - Possible ELS27/DERLEK)"
+            elif any(chip in desc_upper for chip in ['PL2303']):
+                device_desc = f"{desc} (PL2303 - Possible ELS27/DERLEK)"
+
+            # Quick serial port availability check (only if not already checked)
+            status = check_serial_port_status(port, timeout=0.05)  # Very fast timeout
+            ports.append((port, device_desc, hwid, status))
+
+    except Exception as e:
+        print(f"Error detecting serial ports: {e}")
+        # Fallback: try common port patterns
+        common_ports = []
+        if platform.system().lower() == 'windows':
+            common_ports = [f'COM{i}' for i in range(1, 21)]
+        elif platform.system().lower() == 'linux':
+            common_ports = [f'/dev/ttyUSB{i}' for i in range(0, 5)] + \
+                           [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
+                           [f'/dev/rfcomm{i}' for i in range(0, 5)]
+        elif platform.system().lower() == 'darwin':
+            common_ports = glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
+
+        for port in common_ports:
+            try:
+                # Test if port exists and is accessible
+                test_serial = serial.Serial(port, timeout=0.05)
+                test_serial.close()
+                ports.append((port, "Unknown Device", "", "online"))
+            except Exception:
+                ports.append((port, "Unknown Device", "", "offline"))
+
+    return ports
+
+
+def check_doip_status(ip, port, timeout=1):
+    """Check if DoIP device is online with optimized timeout"""
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
+        result = sock.connect_ex((ip, port))
+        sock.close()
+        return "online" if result == 0 else "offline"
+    except Exception:
+        return "offline"
+
+
+def check_serial_port_status(port, timeout=0.1):
+    """Check if serial port is accessible with optimized timeout"""
+    try:
+        test_serial = serial.Serial(port, timeout=timeout)
+        test_serial.close()
+        return "online"
+    except Exception:
+        return "offline"
+
+
+def is_els27_device(port, timeout=2):
+    """Test if a serial port has an ELS27 device with multiple baud rates"""
+    test_bauds = [38400, 9600, 115200]  # Common ELS27 baud rates
+
+    for baud in test_bauds:
+        try:
+            ser = serial.Serial(port, baud, timeout=timeout)
+
+            # Clear buffers
+            ser.reset_input_buffer()
+            ser.reset_output_buffer()
+
+            # Send ATZ (reset) command
+            ser.write(b'ATZ\r')
+            response = ser.read(100).decode('ascii', errors='ignore')
+            ser.close()
+
+            # Check for ELS27 or ELM327 response
+            response_upper = response.upper()
+            if any(keyword in response_upper for keyword in ['ELS27', 'ELM327', 'OBD']):
+                return True, f"{response.strip()} (at {baud} baud)"
+
+        except Exception:
+            continue
+
+    return False, "No ELS27 response at any baud rate"
+
+
+def reconnect_elm():
+    """Enhanced reconnection with device-specific handling"""
+    ports = get_available_ports()
+    current_adapter = "STD"
+    if options.elm:
+        current_adapter = options.elm.adapter_type
+
+    # Try to reconnect to the same port first
+    if options.port_name:
+        for port_info in ports:
+            if len(port_info) >= 4:
+                port, desc, hwid, status = port_info
+            elif len(port_info) >= 3:
+                port, desc, hwid = port_info
+                status = "unknown"
+            else:
+                port, desc = port_info
+                hwid = ""
+                status = "unknown"
+                
+            if port == options.port_name or desc == options.port_name:
+                print(f"Attempting reconnection to {port}")
+                try:
+                    # Use saved settings for reconnection
+                    device_key = DeviceManager.normalize_adapter_type(current_adapter)
+                    saved_settings = options.get_device_settings(device_key, port)
+                    speed = saved_settings.get('baudrate', options.port_speed) if saved_settings else options.port_speed
+
+                    options.elm = ELM(port, speed, current_adapter)
+                    if options.elm.connectionStatus:
+                        return True
+                except Exception as e:
+                    print(f"Reconnection failed: {e}")
+                    continue
+
+    # Try other available ports
+    for port_info in ports:
+        if len(port_info) >= 4:
+            port, desc, hwid, status = port_info
+        elif len(port_info) >= 3:
+            port, desc, hwid = port_info
+            status = "unknown"
+        else:
+            port, desc = port_info
+            hwid = ""
+            status = "unknown"
+            
+        device_key = DeviceManager.normalize_adapter_type(current_adapter)
+        saved_settings = options.get_device_settings(device_key, port)
+
+        if saved_settings and 'baudrate' in saved_settings:
+            settings = saved_settings
+            print(f"Trying {current_adapter} device at {port} with saved settings")
+        else:
+            settings = DeviceManager.get_optimal_settings(current_adapter)
+            print(f"Trying {current_adapter} device at {port} with optimal settings")
+
+        try:
+            options.elm = ELM(port, settings['baudrate'], current_adapter)
+            if options.elm.connectionStatus:
+                options.port_name = port
+                options.port_speed = settings['baudrate']
+                return True
+        except Exception as e:
+            print(f"Connection to {port} failed: {e}")
+            continue
+
+    return False
+
+
+def errorval(val):
+    if val in list(negrsp.keys()):
+        return negrsp[val]
+
+    return "Unregistered error"
+
+
+
 
 class ELM:
     '''ELM327 class'''
@@ -435,7 +732,7 @@ class ELM:
 
             # log KeepAlive event
             if self.lf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("# [" + tmstr + "] KeepAlive\n")
                 self.lf.flush()
 
@@ -573,7 +870,7 @@ class ELM:
             if result[4:6] in list(negrsp.keys()):
                 errorstr = errorval(negrsp, result[4:6])
             if self.vf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
                     self.vf.write(tmstr + ";" + dnat_ext[
                         self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
@@ -798,7 +1095,7 @@ class ELM:
         # save command to log
         if self.lf != 0:
             # tm = str(time.time())
-            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
             self.lf.write("> [" + tmstr + "] Request: " + command + "\n")
             self.lf.flush()
 
@@ -831,7 +1128,7 @@ class ELM:
             if command in self.buff:
                 break
             elif self.lf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                tmstr = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
                 self.lf.flush()
 
@@ -918,7 +1215,7 @@ class ELM:
         self.l1_cache = {}
 
         if self.lf != 0:
-            tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
@@ -1036,7 +1333,7 @@ class ELM:
         self.lastinitrsp = ""
 
         if self.lf != 0:
-            tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
+            tmstr = datetime.datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
         # self.cmd("AT WS")
@@ -1223,212 +1520,4 @@ def elm_checker(port, speed, adapter, logview, app):
     logview.append(
         _('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n' + _('ELM Max version:') + vers + '\n')
     return True
-
-def clean_bytestring(value):
-    # If is bytes -> decode
-    # print(repr(value), type(value))
-    if isinstance(value, bytes):
-        return value.decode('utf-8', errors='ignore')
-    # If is string type "b'xxxx'" -> remove prefix b''
-    value = str(value)
-    if value.startswith("b'") and value.endswith("'"):
-        return value[2:-1]
-    return value
-
-
-def addr_exist(addr):
-    result = True
-    if addr not in dnat:
-        if addr not in dnat_ext:
-            result = False
-    return result
-
-
-def get_can_addr(txa):
-    for d in dnat.keys():
-        if dnat[d].upper() == txa.upper():
-            return d
-    return None
-
-
-def get_can_addr_ext(txa):
-    for d in dnat_ext.keys():
-        if dnat_ext[d].upper() == txa.upper():
-            return d
-    return None
-
-
-def get_can_addr_snat(txa):
-    for d in snat.keys():
-        if snat[d].upper() == txa.upper():
-            return d
-    return None
-
-
-def get_can_addr_snat_ext(txa):
-    for d in snat_ext.keys():
-        if snat_ext[d].upper() == txa.upper():
-            return d
-    return None
-
-
-def item_count(items):
-    return sum(1 for _ in items)
-
-
-def get_available_ports():
-    """Get available serial ports"""
-    ports = []
-    try:
-        portlist = list_ports.comports()
-
-        if item_count(portlist) == 0:
-            return []
-
-        iterator = sorted(list(portlist))
-        for port, desc, hwid in iterator:
-            # Enhanced device identification for ELS27 and other adapters
-            device_desc = desc
-            desc_upper = desc.upper()
-
-            # Direct device name detection
-            if any(keyword in desc_upper for keyword in ['ELS27', 'ELM327']):
-                if 'ELS27' in desc_upper:
-                    device_desc = f"{desc} (ELS27 V5 Compatible)"
-                else:
-                    device_desc = f"{desc} (ELM327 Compatible)"
-            elif any(keyword in desc_upper for keyword in ['VLINKER', 'OBDII']):
-                device_desc = f"{desc} (Vlinker Compatible)"
-            elif any(keyword in desc_upper for keyword in ['VGATE', 'ICAR']):
-                device_desc = f"{desc} (VGate Compatible)"
-            elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
-                device_desc = f"{desc} (DERLEK Compatible)"
-            elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
-                device_desc = f"{desc} (OBDLink Compatible)"
-            # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
-            elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
-                device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
-            elif any(chip in desc_upper for chip in ['CH340', 'CH341']):
-                device_desc = f"{desc} (CH340 - Possible ELS27/ELM327)"
-            elif any(chip in desc_upper for chip in ['CP210', 'CP2102', 'CP2104']):
-                device_desc = f"{desc} (CP210x - Possible ELS27/ELM327)"
-            elif any(chip in desc_upper for chip in ['PL2303']):
-                device_desc = f"{desc} (PL2303 - Possible ELS27/ELM327)"
-
-            ports.append((port, device_desc, hwid))
-
-    except Exception as e:
-        print(f"Error detecting serial ports: {e}")
-        # Fallback: try common port patterns
-        common_ports = []
-        if platform.system().lower() == 'windows':
-            common_ports = [f'COM{i}' for i in range(1, 21)]
-        elif platform.system().lower() == 'linux':
-            common_ports = [f'/dev/ttyUSB{i}' for i in range(0, 5)] + \
-                           [f'/dev/ttyACM{i}' for i in range(0, 5)] + \
-                           [f'/dev/rfcomm{i}' for i in range(0, 5)]
-        elif platform.system().lower() == 'darwin':
-            import glob
-            common_ports = glob.glob('/dev/cu.*') + glob.glob('/dev/tty.*')
-
-        for port in common_ports:
-            try:
-                # Test if port exists and is accessible
-                test_serial = serial.Serial(port, timeout=0.1)
-                test_serial.close()
-                ports.append((port, "Unknown Device", ""))
-            except:
-                continue
-
-    return ports
-
-
-
-
-def is_els27_device(port, timeout=2):
-    """Test if a serial port has an ELS27 device with multiple baud rates"""
-    import serial
-    test_bauds = [38400, 9600, 115200]  # Common ELS27 baud rates
-
-    for baud in test_bauds:
-        try:
-            ser = serial.Serial(port, baud, timeout=timeout)
-
-            # Clear buffers
-            ser.reset_input_buffer()
-            ser.reset_output_buffer()
-
-            # Send ATZ (reset) command
-            ser.write(b'ATZ\r')
-            response = ser.read(100).decode('ascii', errors='ignore')
-            ser.close()
-
-            # Check for ELS27 or ELM327 response
-            response_upper = response.upper()
-            if any(keyword in response_upper for keyword in ['ELS27', 'ELM327', 'OBD']):
-                return True, f"{response.strip()} (at {baud} baud)"
-
-        except Exception:
-            continue
-
-    return False, "No ELS27 response at any baud rate"
-
-
-def reconnect_elm():
-    """Enhanced reconnection with device-specific handling"""
-    ports = get_available_ports()
-    current_adapter = "STD"
-    if options.elm:
-        current_adapter = options.elm.adapter_type
-
-    # Try to reconnect to the same port first
-    if options.port_name:
-        for port_info in ports:
-            port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
-            if port == options.port_name or desc == options.port_name:
-                print(f"Attempting reconnection to {port}")
-                try:
-                    # Use saved settings for reconnection
-                    device_key = DeviceManager.normalize_adapter_type(current_adapter)
-                    saved_settings = options.get_device_settings(device_key, port)
-                    speed = saved_settings.get('baudrate', options.port_speed) if saved_settings else options.port_speed
-
-                    options.elm = ELM(port, speed, current_adapter)
-                    if options.elm.connectionStatus:
-                        return True
-                except Exception as e:
-                    print(f"Reconnection failed: {e}")
-                    continue
-
-    # Try other available ports
-    for port_info in ports:
-        port, desc, hwid = port_info if len(port_info) == 3 else (port_info[0], port_info[1], "")
-        device_key = DeviceManager.normalize_adapter_type(current_adapter)
-        saved_settings = options.get_device_settings(device_key, port)
-
-        if saved_settings and 'baudrate' in saved_settings:
-            settings = saved_settings
-            print(f"Trying {current_adapter} device at {port} with saved settings")
-        else:
-            settings = DeviceManager.get_optimal_settings(current_adapter)
-            print(f"Trying {current_adapter} device at {port} with optimal settings")
-
-        try:
-            options.elm = ELM(port, settings['baudrate'], current_adapter)
-            if options.elm.connectionStatus:
-                options.port_name = port
-                options.port_speed = settings['baudrate']
-                return True
-        except Exception as e:
-            print(f"Connection to {port} failed: {e}")
-            continue
-
-    return False
-
-
-def errorval(val):
-    if val in list(negrsp.keys()):
-        return negrsp[val]
-
-    return "Unregistered error"
 

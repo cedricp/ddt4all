@@ -1,5 +1,6 @@
 
 import os
+import re
 
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
@@ -21,8 +22,7 @@ from ddt4all.ui.main_window.icons_paths import (
 )
 from ddt4all.ui.main_window.utils import (
     set_theme_style,
-    set_socket_timeout,
-    set_language_realtime
+    set_socket_timeout
 )
 import ddt4all.version as version
 
@@ -138,6 +138,15 @@ class MainWindowOptions(widgets.QDialog):
         self.vgatebutton.setToolTip(_("VGate (High-Speed)"))
         medialayout.addWidget(self.vgatebutton)
 
+        self.doipbutton = widgets.QPushButton()
+        self.doipbutton.setIcon(gui.QIcon("ddt4all_data/icons/doip.png"))
+        self.doipbutton.setIconSize(core.QSize(60, 60))
+        self.doipbutton.setFixedHeight(64)
+        self.doipbutton.setFixedWidth(64)
+        self.doipbutton.setCheckable(True)
+        self.doipbutton.setToolTip(_("DoIP (Diagnostics over IP)"))
+        medialayout.addWidget(self.doipbutton)
+
         layout.addLayout(medialayout)
 
         self.btbutton.toggled.connect(self.bt)
@@ -148,6 +157,7 @@ class MainWindowOptions(widgets.QDialog):
         self.vlinkerbutton.toggled.connect(self.vlinker)
         self.derelekbutton.toggled.connect(self.derelek)
         self.vgatebutton.toggled.connect(self.vgate)
+        self.doipbutton.toggled.connect(self.doip)
 
         # languages setting
         if "LANG" not in os.environ.keys():
@@ -228,6 +238,87 @@ class MainWindowOptions(widgets.QDialog):
         socket_timeoutlayout.addStretch()
         layout.addLayout(socket_timeoutlayout)
 
+        # DoIP configuration section
+        doip_grouplayout = widgets.QVBoxLayout()
+        doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration"))
+        doip_groupbox.setLayout(doip_grouplayout)
+        
+        # DoIP Preset Configuration
+        doip_presetlayout = widgets.QHBoxLayout()
+        doip_presetlabel = widgets.QLabel(_("Device Preset : "))
+        self.doip_presetcombo = widgets.QComboBox()
+        self.doip_presetcombo.addItem(_("Custom"))
+        self.doip_presetcombo.addItem(_("Bosch MTS"))
+        self.doip_presetcombo.addItem(_("VXDIAG VCX Nano"))
+        self.doip_presetcombo.addItem(_("VAG ODIS"))
+        self.doip_presetcombo.addItem(_("JLR DoIP VCI"))
+        self.doip_presetcombo.addItem(_("Generic DoIP"))
+        
+        # Set current preset from saved configuration
+        saved_preset = getattr(options, 'doip_preset', 'Custom')
+        index = self.doip_presetcombo.findText(saved_preset)
+        if index >= 0:
+            self.doip_presetcombo.setCurrentIndex(index)
+        
+        self.doip_presetcombo.activated.connect(self.apply_doip_preset)
+        doip_presetlayout.addWidget(doip_presetlabel)
+        doip_presetlayout.addWidget(self.doip_presetcombo)
+        doip_presetlayout.addStretch()
+        doip_grouplayout.addLayout(doip_presetlayout)
+        
+        # DoIP IP Address configuration
+        doip_iplayout = widgets.QHBoxLayout()
+        doip_iplabel = widgets.QLabel(_("DoIP Target IP : "))
+        self.doip_ipinput = widgets.QLineEdit()
+        self.doip_ipinput.setText(getattr(options, 'doip_target_ip', '192.168.0.12'))
+        doip_iplayout.addWidget(doip_iplabel)
+        doip_iplayout.addWidget(self.doip_ipinput)
+        doip_grouplayout.addLayout(doip_iplayout)
+        
+        # DoIP Port configuration
+        doip_portlayout = widgets.QHBoxLayout()
+        doip_portlabel = widgets.QLabel(_("DoIP Port : "))
+        self.doip_portinput = widgets.QSpinBox()
+        self.doip_portinput.setRange(1, 65535)
+        self.doip_portinput.setValue(getattr(options, 'doip_target_port', 13400))
+        doip_portlayout.addWidget(doip_portlabel)
+        doip_portlayout.addWidget(self.doip_portinput)
+        doip_portlayout.addStretch()
+        doip_grouplayout.addLayout(doip_portlayout)
+        
+        # DoIP Timeout configuration
+        doip_timeoutlayout = widgets.QHBoxLayout()
+        doip_timeoutlabel = widgets.QLabel(_("DoIP Timeout (seconds) : "))
+        self.doip_timeoutinput = widgets.QSpinBox()
+        self.doip_timeoutinput.setRange(1, 60)
+        self.doip_timeoutinput.setValue(getattr(options, 'doip_timeout', 5))
+        doip_timeoutlayout.addWidget(doip_timeoutlabel)
+        doip_timeoutlayout.addWidget(self.doip_timeoutinput)
+        doip_timeoutlayout.addStretch()
+        doip_grouplayout.addLayout(doip_timeoutlayout)
+        
+        # DoIP Vehicle Announcement
+        doip_announcelayout = widgets.QHBoxLayout()
+        self.doip_announcecheck = widgets.QCheckBox()
+        self.doip_announcecheck.setChecked(getattr(options, 'doip_vehicle_announcement', True))
+        doip_announcelabel = widgets.QLabel(_("Enable Vehicle Announcement Discovery"))
+        doip_announcelayout.addWidget(self.doip_announcecheck)
+        doip_announcelayout.addWidget(doip_announcelabel)
+        doip_announcelayout.addStretch()
+        doip_grouplayout.addLayout(doip_announcelayout)
+        
+        # DoIP Auto-reconnect
+        doip_reconnectlayout = widgets.QHBoxLayout()
+        self.doip_reconnectcheck = widgets.QCheckBox()
+        self.doip_reconnectcheck.setChecked(getattr(options, 'doip_auto_reconnect', False))
+        doip_reconnectlabel = widgets.QLabel(_("Auto-reconnect on connection loss"))
+        doip_reconnectlayout.addWidget(self.doip_reconnectcheck)
+        doip_reconnectlayout.addWidget(doip_reconnectlabel)
+        doip_reconnectlayout.addStretch()
+        doip_grouplayout.addLayout(doip_reconnectlayout)
+
+        layout.addWidget(doip_groupbox)
+
         obdlinkspeedlayout = widgets.QHBoxLayout()
         self.obdlinkspeedcombo = widgets.QComboBox()
         obdlinkspeedlabel = widgets.QLabel(_("Change UART speed"))
@@ -264,13 +355,49 @@ class MainWindowOptions(widgets.QDialog):
         # Save configuration (language is already saved by real-time switching)
         options.configuration["dark"] = options.dark_mode
         options.configuration["socket_timeout"] = options.socket_timeout
+
+        # Save DoIP configuration
+        options.doip_target_ip = self.doip_ipinput.text()
+        options.doip_target_port = self.doip_portinput.value()
+        options.doip_timeout = self.doip_timeoutinput.value()
+        options.doip_vehicle_announcement = self.doip_announcecheck.isChecked()
+        options.doip_auto_reconnect = self.doip_reconnectcheck.isChecked()
+        options.doip_preset = self.doip_presetcombo.currentText()
+
+        options.configuration["doip_target_ip"] = options.doip_target_ip
+        options.configuration["doip_target_port"] = options.doip_target_port
+        options.configuration["doip_timeout"] = options.doip_timeout
+        options.configuration["doip_vehicle_announcement"] = options.doip_vehicle_announcement
+        options.configuration["doip_auto_reconnect"] = options.doip_auto_reconnect
+        options.configuration["doip_preset"] = options.doip_preset
+
         options.save_config()
         self.close()  # Just close dialog, don't exit app
 
     def change_language_realtime(self, language_name):
         """Handle real-time language change from combo box"""
-        set_language_realtime(language_name)
-        # Language change is now real-time, no message box needed
+        # Get the language code from the selected language name
+        if language_name in options.lang_list:
+            lang_code = options.lang_list[language_name]
+
+            # Update configuration
+            options.configuration["lang"] = lang_code
+
+            # Update environment variable
+            os.environ['LANG'] = lang_code
+
+            # Save configuration
+            options.save_config()
+
+            # Reinitialize the global translator with new language
+            global _
+            _ = options.translator('ddt4all')
+
+            # Close current window and return to main flow
+            # This will allow the main application to recreate everything with new language
+            self.mode = 0  # Set mode to 0 to trigger restart in main loop
+            self.done(True)
+            exit(0)
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
@@ -288,7 +415,6 @@ class MainWindowOptions(widgets.QDialog):
                     self.logview.append(_("Please enter WiFi adapter IP address"))
                     return
                 # Validate IP:port format
-                import re
                 if not re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$", port):
                     self.logview.append(_("Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"))
                     return
@@ -358,21 +484,33 @@ class MainWindowOptions(widgets.QDialog):
             self.portcount = len(ports)
             
             for p in ports:
-                if len(p) >= 3:
+                if len(p) >= 4:
+                    port, desc, hwid, status = p
+                elif len(p) >= 3:
                     port, desc, hwid = p
+                    status = "unknown"
                 else:
                     port, desc = p
                     hwid = ""
-                
+                    status = "unknown"
+
                 # Use port description as-is
                 item = widgets.QListWidgetItem(self.listview)
                 itemname = f"{port}[{desc}]"
                 item.setText(itemname)
-                self.ports[itemname] = (port, desc, hwid)
-                
+                self.ports[itemname] = (port, desc, hwid, status)
+
+                # Set color based on status (optimized for dark theme)
+                if status == "online":
+                    item.setBackground(gui.QColor(50, 150, 50))  # Dark green background
+                elif status == "offline":
+                    item.setBackground(gui.QColor(150, 50, 50))  # Dark red background
+                else:
+                    item.setBackground(gui.QColor(100, 100, 100))  # Dark gray background
+
                 # Highlight potential OBD devices based on description
                 desc_lower = desc.lower()
-                if any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27']):
+                if any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27', 'doip']):
                     font = item.font()
                     font.setBold(True)
                     item.setFont(font)
@@ -619,9 +757,39 @@ class MainWindowOptions(widgets.QDialog):
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
+        self.obdlinkspeedcombo.addItem(_("500000"))
+        self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        
+        # Display STPX support information
+        self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
+        self.logview.append(_("Long command support and high-speed communication available"))
+        
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.speedcombo.setCurrentIndex(2)  # 115200 baud for VGate (high speed)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(True)
+        self.vgatebutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
         self.vlinkerbutton.blockSignals(False)
         self.derelekbutton.blockSignals(False)
-        self.vgatebutton.blockSignals(False)
         # self.elmchk.setEnabled(False)
 
     def vgate(self):
@@ -665,6 +833,220 @@ class MainWindowOptions(widgets.QDialog):
         self.derelekbutton.blockSignals(False)
         # self.elmchk.setEnabled(False)
 
+    def apply_doip_preset(self, index):
+        """Apply DoIP device preset configurations"""
+        # Prevent multiple rapid calls
+        if hasattr(self, '_last_preset_time') and time.time() - self._last_preset_time < 1.0:
+            return
+        
+        self._last_preset_time = time.time()
+        
+        preset_name = self.doip_presetcombo.itemText(index)
+        
+        presets = {
+            _("Bosch MTS"): {
+                "ip": "192.168.0.100",
+                "port": 13400,
+                "timeout": 10,
+                "announcement": True,
+                "auto_reconnect": True
+            },
+            _("VXDIAG VCX Nano"): {
+                "ip": "192.168.0.200",
+                "port": 13400,
+                "timeout": 8,
+                "announcement": True,
+                "auto_reconnect": False
+            },
+            _("VAG ODIS"): {
+                "ip": "192.168.0.10",
+                "port": 13400,
+                "timeout": 5,
+                "announcement": True,
+                "auto_reconnect": True
+            },
+            _("JLR DoIP VCI"): {
+                "ip": "192.168.0.50",
+                "port": 13400,
+                "timeout": 7,
+                "announcement": True,
+                "auto_reconnect": True
+            },
+            _("Generic DoIP"): {
+                "ip": "192.168.0.12",
+                "port": 13400,
+                "timeout": 5,
+                "announcement": True,
+                "auto_reconnect": False
+            }
+        }
+        
+        if preset_name in presets:
+            preset = presets[preset_name]
+            
+            # Update GUI fields
+            self.doip_ipinput.setText(preset["ip"])
+            self.doip_portinput.setValue(preset["port"])
+            self.doip_timeoutinput.setValue(preset["timeout"])
+            self.doip_announcecheck.setChecked(preset["announcement"])
+            self.doip_reconnectcheck.setChecked(preset["auto_reconnect"])
+            
+            # Check if the IP actually changed BEFORE updating options
+            current_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            ip_changed = current_ip != preset['ip']
+            
+            # Update options module variables
+            options.doip_target_ip = preset["ip"]
+            options.doip_target_port = preset["port"]
+            options.doip_timeout = preset["timeout"]
+            options.doip_vehicle_announcement = preset["announcement"]
+            options.doip_auto_reconnect = preset["auto_reconnect"]
+            options.doip_preset = preset_name
+            
+            # Update configuration dictionary
+            options.configuration["doip_target_ip"] = preset["ip"]
+            options.configuration["doip_target_port"] = preset["port"]
+            options.configuration["doip_timeout"] = preset["timeout"]
+            options.configuration["doip_vehicle_announcement"] = preset["announcement"]
+            options.configuration["doip_auto_reconnect"] = preset["auto_reconnect"]
+            options.configuration["doip_preset"] = preset_name
+            
+            # Save configuration automatically
+            options.save_config()
+            
+            # Reload device list to reflect new DoIP configuration
+            # Use robust DoIP-only mode to prevent all crashes
+            try:
+                if ip_changed:
+                    # Use QTimer to delay the update and prevent crashes
+                    core.QTimer.singleShot(300, self._force_doip_update)
+                    print(f"DoIP preset applied: {preset_name} -> {preset['ip']}")
+                else:
+                    print(f"DoIP preset applied: {preset_name} (IP unchanged)")
+            except Exception as e:
+                print(f"Error preparing DoIP update: {e}")
+            
+            # Log the preset application
+            self.logview.append(f"Applied {preset_name} preset:")
+            self.logview.append(f"  IP: {preset['ip']}")
+            self.logview.append(f"  Port: {preset['port']}")
+            self.logview.append(f"  Timeout: {preset['timeout']}s")
+            self.logview.append(f"  Configuration saved and device list reloaded")
+
+    def _force_doip_update(self):
+        """Force DoIP update bypassing all problematic operations"""
+        try:
+            # Get current DoIP configuration
+            doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            doip_port = getattr(options, 'doip_target_port', 13400)
+            
+            # Clear the device list completely - no rescan_ports()
+            self.listview.clear()
+            self.ports = {}
+            self.portcount = 0
+            
+            # Add only DoIP device - no COM port scanning
+
+            item = widgets.QListWidgetItem(self.listview)
+            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+            item.setText(itemname)
+            item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            
+        except Exception as e:
+            print(f"Error in force DoIP update: {e}")
+
+    def _delayed_doip_update(self):
+        """Delayed DoIP device list update to prevent crashes"""
+        try:
+            # Check if we're still in a valid state
+            if not hasattr(self, 'listview') or self.listview is None:
+                return
+                
+            # Force DoIP update - bypass all problematic operations
+            self._force_doip_update()
+                
+        except Exception as e:
+            print(f"Error in delayed DoIP update: {e}")
+            # Try force update as last resort
+            try:
+                self._force_doip_update()
+            except:
+                pass
+
+    def _update_doip_device_only(self):
+        """Update only the DoIP device in the list without full rescan"""
+        try:
+            # Get current DoIP configuration
+            doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            doip_port = getattr(options, 'doip_target_port', 13400)
+            
+            # Find and remove existing DoIP device
+            items_to_remove = []
+            for i in range(self.listview.count()):
+                item = self.listview.item(i)
+                item_text = item.text()
+                if 'DoIP Device' in item_text and doip_ip in item_text:
+                    items_to_remove.append(item)
+            
+            # Remove old DoIP devices
+            for item in items_to_remove:
+                row = self.listview.row(item)
+                self.listview.takeItem(row)
+                
+            # Add new DoIP device
+            item = widgets.QListWidgetItem(self.listview)
+            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+            item.setText(itemname)
+            item.setBackground(core.QColor(150, 50, 50))  # Dark red for offline
+            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            
+            print(f"DoIP device updated: {doip_ip}:{doip_port}")
+            
+        except Exception as e:
+            print(f"Error in targeted DoIP update: {e}")
+            raise
+
+    def doip(self):
+        self.adapter = "DOIP"
+        self.obdlinkspeedcombo.clear()
+        self.obdlinkspeedcombo.addItem(_("N/A"))  # DoIP doesn't use UART speeds
+        
+        # Display DoIP support information
+        self.logview.append(_("DoIP (Diagnostics over IP) selected"))
+        self.logview.append(_("Ethernet-based diagnostic communication"))
+        self.logview.append(_("Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"))
+        
+        self.wifibutton.blockSignals(True)
+        self.btbutton.blockSignals(True)
+        self.usbbutton.blockSignals(True)
+        self.obdlinkbutton.blockSignals(True)
+        self.elsbutton.blockSignals(True)
+        self.vlinkerbutton.blockSignals(True)
+        self.derelekbutton.blockSignals(True)
+        self.vgatebutton.blockSignals(True)
+
+        self.usbbutton.setChecked(False)
+        self.btbutton.setChecked(False)
+        self.wifibutton.setChecked(False)
+        self.obdlinkbutton.setChecked(False)
+        self.elsbutton.setChecked(False)
+        self.vlinkerbutton.setChecked(False)
+        self.vgatebutton.setChecked(False)
+        self.wifiinput.setEnabled(False)
+        self.speedcombo.setEnabled(False)  # DoIP doesn't use serial port speeds
+        self.doipbutton.setChecked(True)
+
+        self.wifibutton.blockSignals(False)
+        self.btbutton.blockSignals(False)
+        self.usbbutton.blockSignals(False)
+        self.obdlinkbutton.blockSignals(False)
+        self.elsbutton.blockSignals(False)
+        self.vlinkerbutton.blockSignals(False)
+        self.derelekbutton.blockSignals(False)
+        self.vgatebutton.blockSignals(False)
+        # self.elmchk.setEnabled(False)
+
     def connectedMode(self):
         self.timer.stop()
         self.securitycheck = self.safetycheck.isChecked()
@@ -688,8 +1070,9 @@ class MainWindowOptions(widgets.QDialog):
             currentitem = self.listview.currentItem()
             if currentitem:
                 portinfo = currentitem.text()
-                self.port = self.ports[portinfo][0]
-                options.port_name = self.ports[portinfo][1]
+                port_data = self.ports[portinfo]
+                self.port = port_data[0]
+                options.port_name = port_data[1]
                 self.mode = 1
                 self.raise_port_speed = self.obdlinkspeedcombo.currentText()
                 self.done(True)

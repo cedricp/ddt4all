@@ -49,6 +49,7 @@ def load_this():
         with open(BASE_DIR / "resources" / "projects.json", "r", encoding="UTF-8") as f:
             vehicles_loc = json.loads(f.read())
         ecu_db.addressing = vehicles_loc["projects"]["All"]["addressing"]
+        ecu_db.doip_addressing = vehicles_loc["projects"]["All"]["DoIP"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
         elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
         elm.dnat = vehicles_loc["projects"]["All"]["dnat"]
@@ -56,10 +57,12 @@ def load_this():
         return vehicles_loc
     except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
         print(_("resources/projects.json not found or not ok.") + f" Error: {e}")
-        raise
+        exit(-1) # TODO raise ?
 
 
 def main(argv=None) -> int:
+
+
     argv = sys.argv[1:] if argv is None else argv
 
     parser = argparse.ArgumentParser()

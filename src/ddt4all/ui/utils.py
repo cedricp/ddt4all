@@ -2,6 +2,8 @@ import sys
 
 import PyQt5.QtGui as gui
 
+PATH_PNG_ODB = ":/icons/odb.png"
+
 def unicode(a):
     return str(a)
 
