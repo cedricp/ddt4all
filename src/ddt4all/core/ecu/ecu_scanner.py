@@ -1,5 +1,8 @@
 
-from ddt4all.core.ecu.ecu_database import EcuDatabase
+from ddt4all.core.ecu.ecu_database import (
+    EcuDatabase,
+    doip_addressing
+)
 from ddt4all.core.ecu.ecu_ident import EcuIdent
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
@@ -273,7 +276,7 @@ class EcuScanner:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
-                DeviceManager.initialize_device(options.elm)
+                elm.DeviceManager.initialize_device(options.elm)
             
             options.elm.init_can()
 
@@ -338,7 +341,7 @@ class EcuScanner:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
-                DeviceManager.initialize_device(options.elm)
+                elm.DeviceManager.initialize_device(options.elm)
 
             options.elm.init_iso()
 
@@ -474,8 +477,8 @@ class EcuScanner:
                         project_doip_addresses.append(addr)
         else:
             # Use DoIP addresses from projects.json (loaded in main.py)
-            if hasattr(ecu, 'doip') and ecu.doip_addressing:
-                project_doip_addresses = list(ecu.doip_addressing.keys())
+            if doip_addressing:
+                project_doip_addresses = list(doip_addressing.keys())
             else:
                 # Fallback to database
                 project_doip_addresses = self.ecu_database.available_addr_doip
@@ -502,8 +505,8 @@ class EcuScanner:
             # Skip invalid addresses
             if addr not in self.ecu_database.addr_group_mapping:
                 # Try to get name from projects.json DoIP data
-                if hasattr(ecu, 'doip') and ecu.doip_addressing and addr in ecu.doip_addressing:
-                    print(f"{text + addr:<35} ECU: {ecu.doip_addressing[addr]}")
+                if doip_addressing and addr in doip_addressing:
+                    print(f"{text + addr:<35} ECU: {doip_addressing[addr]}")
                 else:
                     print(f"Warning: address {addr} is not mapped")
                     continue
