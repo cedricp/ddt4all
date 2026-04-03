@@ -23,7 +23,7 @@ dev = [
     "PyQt5-stubs>=5.15.0",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
-    "pytest-mock>=3.15.0",
+    "pytest-mock>=3.14.1",
     "pytest-qt",
 ]
 
@@ -51,6 +51,16 @@ skip_covered = true
 [tool.coverage.run]
 source = ["ddt4all"]
 branch = true
+
+[tool.ruff]
+target-version = "py38"
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "UP",
+    "FA",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}

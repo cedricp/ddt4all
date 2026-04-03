@@ -1,3 +1,4 @@
+from __future__ import annotations
 import argparse
 
 from ddt4all.cli.helpers import (
