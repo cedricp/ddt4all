@@ -6,6 +6,7 @@
 /EDT/
 /failures/
 /FlashingTimeAnalysis/
+/OdxSpecFiles/
 /vehicles/
 /venv/
 /zipper/
@@ -15,6 +16,11 @@
 /graphics/
 /Output/
 /json/
+/$29/
+/utt_certificates/
+/TradConf.conf
+/parameters.xml
+/EcuList.xml
 
 ### Python generic ###
 # Byte-compiled / optimized / DLL files
@@ -27,8 +33,6 @@ __pycache__/
 /.idea/
 /dist/
 /.venv/
-/OdxSpecFiles/
-/TradConf.conf
 
 /build/
 /setup.py
@@ -39,6 +43,7 @@ __pycache__/
 /setup_tools/mac-os/build/
 /setup_tools/mac-os/dist/
 /Simulator/
+/.pytest_cache/
 *.egg
 *.egg-info
 .coverage
