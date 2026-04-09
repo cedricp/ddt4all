@@ -331,9 +331,14 @@ ddt4all
 
 ### **Development Installation**
 ```bash
-# Install with development tools
+# Install with development tools (testing, linting, etc.)
 pip install -e ".[dev]"
+
+# Linux: Fix Qt platform plugin issues (if needed)
 sudo apt-get install --reinstall libxcb-xinerama0
+
+# Launch application in development mode
+python -m ddt4all
 ```
 
 ---
@@ -342,23 +347,49 @@ sudo apt-get install --reinstall libxcb-xinerama0
 
 ### **🪟 Windows**
 ```bash
-cd ddt4all
-.\venv\Scripts\activate.bat
-.\venv\Scripts\python .\main.py
+# After installation with pip install -e .
+ddt4all
 ```
 
 ### **🐧 Linux/macOS**
 ```bash
-cd ddt4all
-source ./venv/bin/activate
-python ./main.py
+# After installation with pip install -e .
+ddt4all
 ```
 
 ### **💡 Pro Tip**
 Create desktop shortcuts or shell aliases for faster access:
+
+#### **Shell Aliases**
 ```bash
-# Linux/macOS alias example
-alias ddt4all='cd /path/to/ddt4all && source ./venv/bin/activate && python ./main.py'
+# Linux/macOS - Modern installation
+alias ddt4all='ddt4all'
+
+# Linux/macOS - Development mode
+alias ddt4all-dev='cd /path/to/ddt4all && source ./venv/bin/activate && python -m ddt4all'
+
+# Windows (PowerShell)
+Set-Alias -Name ddt4all -Value "ddt4all"
+```
+
+#### **Desktop Shortcuts**
+- **Windows**: Right-click desktop > New > Shortcut > Target: `ddt4all`
+- **Linux**: Create `.desktop` file in `~/.local/share/applications/`
+- **macOS**: Drag application from Applications folder to Dock
+
+#### **Batch Scripts**
+```bash
+# Windows batch file (ddt4all.bat)
+@echo off
+cd /d "C:\path\to\ddt4all"
+call .\venv\Scripts\activate.bat
+ddt4all
+
+# Linux/macOS shell script (ddt4all.sh)
+#!/bin/bash
+cd /path/to/ddt4all
+source ./venv/bin/activate
+ddt4all
 ```
 
 ## Platforms
