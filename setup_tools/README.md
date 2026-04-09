@@ -1,3 +1,3 @@
-# ddt4all_data
+# setup_tools
 
-The ddt4all/ddt4all_data folder contains data and resources for dtt4all app.
+The setup_tools folder contains tools for dtt4all build setup apps.
