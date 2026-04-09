@@ -1,0 +1,34 @@
+<RCC>
+  <qresource prefix="/icons">
+    <file alias="autorefresh.png">../resources/icons/autorefresh.png</file>
+    <file alias="bt.png">../resources/icons/bt.png</file>
+    <file alias="checkbox-n.png">../resources/icons/checkbox-n.png</file>
+    <file alias="checkbox.png">../resources/icons/checkbox.png</file>
+    <file alias="command.png">../resources/icons/command.png</file>
+    <file alias="derelek.png">../resources/icons/derelek.png</file>
+    <file alias="doip.png">../resources/icons/doip.png</file>
+    <file alias="donate.png">../resources/icons/donate.png</file>
+    <file alias="down_arrow.png">../resources/icons/down_arrow.png</file>
+    <file alias="dtc.png">../resources/icons/dtc.png</file>
+    <file alias="els27.png">../resources/icons/els27.png</file>
+    <file alias="expert-b.png">../resources/icons/expert-b.png</file>
+    <file alias="expert.png">../resources/icons/expert.png</file>
+    <file alias="flowcontrol.png">../resources/icons/flowcontrol.png</file>
+    <file alias="handle.png">../resources/icons/handle.png</file>
+    <file alias="hex.png">../resources/icons/hex.png</file>
+    <file alias="log.png">../resources/icons/log.png</file>
+    <file alias="obd.ico">../resources/icons/obd.ico</file>
+    <file alias="obd.png">../resources/icons/obd.png</file>
+    <file alias="obdlink.png">../resources/icons/obdlink.png</file>
+    <file alias="refresh.png">../resources/icons/refresh.png</file>
+    <file alias="scan.png">../resources/icons/scan.png</file>
+    <file alias="usb.png">../resources/icons/usb.png</file>
+    <file alias="vgate.png">../resources/icons/vgate.png</file>
+    <file alias="vlinker.png">../resources/icons/vlinker.png</file>
+    <file alias="wifi.png">../resources/icons/wifi.png</file>
+  </qresource>
+  <qresource prefix="/styles">
+    <file alias="qstyle-d.qss">../resources/styles/qstyle-d.qss</file>
+    <file alias="qstyle.qss">../resources/styles/qstyle.qss</file>
+  </qresource>
+</RCC>

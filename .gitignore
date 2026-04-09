@@ -6,16 +6,22 @@
 /EDT/
 /failures/
 /FlashingTimeAnalysis/
+/OdxSpecFiles/
 /vehicles/
 /venv/
 /zipper/
 *.htm
-*.xml
 *.zip
 /images/
 /graphics/
 /Output/
 /json/
+/$29/
+/Simulator/
+/utt_certificates/
+/TradConf.conf
+/parameters.xml
+/EcuList.xml
 
 ### Python generic ###
 # Byte-compiled / optimized / DLL files
@@ -28,16 +34,18 @@ __pycache__/
 /.idea/
 /dist/
 /.venv/
-/OdxSpecFiles/
-/TradConf.conf
 
+# Others
 /build/
 /setup.py
 /setup.cfg
-/pyproject.toml
-/ddt4all_data/inno-win-setup/Output/
-/ddt4all_data/config.json
-/ddt4all_data/inno-win-setup/version.h
-/ddt4all_data/mac-os/build/
-/ddt4all_data/mac-os/dist/
-/Simulator/
+/setup_tools/inno-win-setup/Output/
+/**/config.json
+/setup_tools/inno-win-setup/version.h
+/setup_tools/mac-os/build/
+/setup_tools/mac-os/dist/
+/.pytest_cache/
+*.egg
+*.egg-info
+.coverage
+coverage.xml

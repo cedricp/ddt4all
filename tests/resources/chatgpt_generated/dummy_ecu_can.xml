@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ecu>
+    <Target Name="TEST_ECU">
+        <AutoIdents>
+            <AutoIdent DiagVersion="10" Supplier="ABC" Soft="1234" Version="01" />
+            <AutoIdent DiagVersion="11" Supplier="XYZ" Soft="5678" Version="02" />
+        </AutoIdents>
+        <Projects><PROJECT_A/><PROJECT_B/></Projects>
+        <Function Address="26" Name="Injection" />
+        <CAN BaudRate="250000">
+            <SendId><CANId Value="2016" /></SendId>
+            <ReceiveId><CANId Value="2024" /></ReceiveId>
+        </CAN>
+    </Target>
+
+    <Target Name="EXT_CAN_ECU">
+        <Function Address="26" Name="Injection" />
+        <CAN BaudRate="500000">
+            <SendId><CANId Value="417001713" /></SendId>
+            <ReceiveId><CANId Value="417067249" /></ReceiveId>
+        </CAN>
+    </Target>
+
+    <Device Name="DEVICE_1" DTC="4660" Type="2">
+        <DeviceData Name="State" FailureFlag="FF" />
+    </Device>
+
+    <Requests Endian="Little">
+        <Request Name="ReadVIN">
+            <DenyAccess>
+                <Supplier />
+                <Engineering />
+            </DenyAccess>
+            <ManuelSend />
+            <ShiftBytesCount>1</ShiftBytesCount>
+            <ReplyBytes>62F190</ReplyBytes>
+            <Sent>
+                <SentBytes>22F190</SentBytes>
+                <DataItem Name="VIN" FirstByte="1" BitOffset="0" />
+            </Sent>
+            <Received MinBytes="3">
+                <DataItem Name="VIN" FirstByte="1" BitOffset="0" />
+            </Received>
+        </Request>
+    </Requests>
+
+    <Data Name="VIN">
+        <Description>Vehicle identification</Description>
+        <Comment><![CDATA[<b>VIN comment</b>]]></Comment>
+        <Bytes count="17" ascii="1" />
+    </Data>
+
+    <Data Name="Mode">
+        <List>
+            <Item Value="1" Text="ON" />
+            <Item Value="2" Text="OFF" />
+        </List>
+        <Bits count="8" />
+    </Data>
+</Ecu>
