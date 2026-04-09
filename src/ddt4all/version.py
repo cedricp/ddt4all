@@ -1,6 +1,6 @@
 __appname__ = "DDT4ALL"
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright ©2016-2025"
+__copyright__ = "Copyright ©2016-2026"
 __credits__ = []
 __contributors__ = {
     "Furtif": "Collaborator",
