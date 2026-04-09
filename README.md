@@ -2,11 +2,12 @@
 [![Python App](https://github.com/cedricp/ddt4all/actions/workflows/python-app.yml/badge.svg)](https://github.com/cedricp/ddt4all/actions/workflows/python-app.yml)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cedricpaille%40gmail%2ecom&lc=CY&item_name=codetronic&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) 
 [![Discord](https://img.shields.io/discord/1117970325267820675?label=Discord&style=flat-square)](https://discord.gg/cBqDh9bTHP)
-
+[![Python Package](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-GPL%203.0-green.svg)](https://opensource.org/licenses/GPL-3.0)
 
 DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
-**Current Version**: v3.0.7 - Latest stable release with enhanced device support and performance improvements.
+**Current Version**: v3.0.7 (Kakapo) - Production-ready with enhanced device support, STN/STPX protocols, and modern Python packaging.
 
 ## 🚀 **Recent Major Improvements**
 
@@ -69,42 +70,61 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ![python_3.13.x](setup_tools/Python-3-13-2-new.png)
 
-#### **🔧 Core Requirements (Essential):**
-* **Python 3.8.6 - 3.10.x (32-bit/64-bit)** - [Python 3.10](https://www.python.org/downloads/release/python-31012/) recommended
-* [PyQt5](https://pypi.org/project/PyQt5/) - GUI framework
-* [pyserial](https://pypi.org/project/pyserial/) - Serial communication
-* [pyusb](https://pypi.org/project/pyusb/) - USB device support
-* [crcmod](https://pypi.org/project/crcmod/) - Checksum functions
+#### **Modern Python Packaging (Recommended)**
+DDT4All now uses modern Python packaging with `pyproject.toml` for streamlined installation:
 
-#### **🌐 Enhanced Features (Optional but Recommended):**
-* [PyQtWebEngine](https://pypi.org/project/PyQtWebEngine/) - Provides `PyQt5.QtWebEngineWidgets` for documentation viewing
-* [pywin32](https://pypi.org/project/pywin32/) - Windows serial support (Windows only)
-
-#### **📦 Quick Installation:**
 ```bash
-# Basic installation (minimum requirements)
-pip install PyQt5 pyserial pyusb crcmod
+# Clone the repository
+git clone https://github.com/cedricp/ddt4all.git
+cd ddt4all
 
-# Enhanced installation (recommended)
-pip install PyQt5 PyQtWebEngine pyserial pyusb crcmod
+# Install in development mode (recommended for developers)
+pip install -e .
 
-# Windows users (additional - recommended)
-pip install pywin32
+# Install with optional dependencies
+pip install -e ".[dev]"          # Development tools
+pip install -e ".[can]"          # CAN bus support
+pip install -e ".[network]"      # Network protocols
+pip install -e ".[bluetooth]"   # Bluetooth support (Linux/Windows)
 
-# Complete installation (all features)
-pip install -r requirements.txt
-
-# Alternative with specific versions (matches requirements.txt)
-pip install "PyQt5>=5.15.0,<5.16.0" "PyQtWebEngine>=5.15.0,<5.16.0" pyserial==3.5 pyusb==1.2.1 crcmod==1.7
+# Install all optional dependencies
+pip install -e ".[dev,can,network,bluetooth]"
 ```
 
-#### **⚠️ Important Notes:**
-- **PyQt5.QtWebEngineWidgets**: Provided by PyQtWebEngine package, used for enhanced documentation viewing
-- **If PyQtWebEngine fails to install**: DDT4All will still work, but documentation viewing will be limited
-- **Python Compatibility**: 3.8.6 - 3.10.x supported (32-bit and 64-bit), tested on 3.8.6, 3.10.12
-- **WebEngine Compatibility**: Optional PyQtWebEngine support with graceful fallback for documentation viewing
+#### **Core Requirements (Essential):**
+* **Python 3.8+** - [Python 3.10+](https://www.python.org/downloads/) recommended
+* [PyQt5](https://pypi.org/project/PyQt5/) - GUI framework (>=5.15.0,<5.16.0)
+* [pyserial](https://pypi.org/project/pyserial/) - Serial communication (==3.5)
+* [pyusb](https://pypi.org/project/pyusb/) - USB device support (==1.2.1)
+* [crcmod](https://pypi.org/project/crcmod/) - Checksum functions (==1.7)
+
+#### **Enhanced Features (Optional but Recommended):**
+* [PyQtWebEngine](https://pypi.org/project/PyQtWebEngine/) - Enhanced documentation viewing
+* [pywin32](https://pypi.org/project/pywin32/) - Windows serial support (Windows only, >=227)
+* [python-can](https://pypi.org/project/python-can/) - Advanced CAN bus support (>=4.0.0)
+* [obd](https://pypi.org/project/obd/) - OBD-II protocol support (>=0.7.1)
+
+#### **Development Tools:**
+* [PyQt5-stubs](https://pypi.org/project/PyQt5-stubs/) - Type hints for PyQt5
+* [pytest](https://pypi.org/project/pytest/) - Testing framework
+* [pytest-cov](https://pypi.org/project/pytest-cov/) - Coverage reporting
+* [pytest-qt](https://pypi.org/project/pytest-qt/) - PyQt testing utilities
+
+#### **Legacy Installation (Alternative):**
+```bash
+# Manual dependency installation
+pip install "PyQt5>=5.15.0,<5.16.0" "PyQtWebEngine>=5.15.0,<5.16.0" pyserial==3.5 pyusb==1.2.1 crcmod==1.7
+
+# Windows-specific dependencies
+pip install pywin32>=227
+```
+
+#### **Important Notes:**
+- **Modern Packaging**: Uses `pyproject.toml` for dependency management and build configuration
+- **Python Compatibility**: 3.8+ supported (32-bit and 64-bit), tested on 3.8.6, 3.10.12, 3.13.x
+- **WebEngine Compatibility**: Optional PyQtWebEngine support with graceful fallback
 - **Virtual Environment**: [Recommended setup guide](https://gist.github.com/dreamorosi/e2947827e5de92b69df68c88475eba38)
-.
+- **Development Mode**: Use `pip install -e .` for development to enable editable installs
 ### 🔌 **Supported Diagnostic Adapters**
 
 * **Vlinker FS** - USB/Bluetooth (Recommended for best performance and stability)
@@ -287,48 +307,32 @@ The plugin architecture allows developers to create custom automation scripts fo
 
 ## 📦 **Installation Guide**
 
-### **🪟 Windows Installation**
+### **Modern Installation (Recommended)**
 ```bash
-# Navigate to project directory
+# Clone the repository
+git clone https://github.com/cedricp/ddt4all.git
 cd ddt4all
 
 # Create virtual environment
 python -m venv ./venv
 
 # Activate virtual environment
+# Windows:
 .\venv\Scripts\activate.bat
-
-# Install dependencies
-.\venv\Scripts\pip install -r requirements.txt
-
-# Launch application
-.\venv\Scripts\python .\main.py
-```
-
-### **🐧 Linux/macOS Installation**
-```bash
-# Navigate to project directory
-cd ddt4all
-
-# Create virtual environment
-python3 -m venv ./venv
-
-# Set permissions (if needed)
-chmod +x ./venv/bin/activate
-
-# Activate virtual environment
+# Linux/macOS:
 source ./venv/bin/activate
 
-# Install dependencies
-pip install -r ./requirements.txt
+# Install DDT4All with dependencies
+pip install -e .
 
 # Launch application
-python ./main.py
+ddt4all
 ```
 
-### **🔧 Linux Ubuntu Fix**
-If you encounter Qt platform plugin "xcb" errors:
+### **Development Installation**
 ```bash
+# Install with development tools
+pip install -e ".[dev]"
 sudo apt-get install --reinstall libxcb-xinerama0
 ```
 
@@ -515,33 +519,93 @@ We welcome contributions to improve existing translations or add new languages. 
 - **Cross-Platform Building**: Support for Linux, Windows, and macOS builds
 - **Build Scripts**: Automated installer generation for Windows (InnoSetup)
 
-### **📁 Project Structure:**
-```
+### **📁 Modern Project Structure:**
+```python
 ddt4all/
-├── main.py                 # Main application entry point
-├── elm.py                  # ELM327 and OBD-II adapter communication
-├── ecu.py                  # ECU communication and protocols
-├── options.py              # Configuration and settings management
-├── parameters.py           # Parameter definitions and handling
-├── dataeditor.py          # Data editing and validation
-├── displaymod.py          # Display modules and widgets
-├── sniffer.py             # CAN bus sniffing functionality
-├── uiutils.py             # UI utilities and helpers
-├── version.py             # Version information
-├── requirements.txt       # Python dependencies
-├── ecu.zip               # ECU DATABASE (download separately)
-├── ddtplugins/           # Plugin system directory
-│   ├── README.md         # Plugin documentation
-│   └── *.py              # Individual plugin modules (13 plugins)
-├── json/                 # JSON database directory (for ecu.zip extraction)
-└── ddt4all_data/         # Application data and resources
-    ├── config.json       # User configuration
-    ├── projects.json     # Vehicle project definitions
-    ├── locale/           # Translation files (14 languages)
-    ├── icons/            # Application icons
-    ├── tools/            # Development and build tools
-    ├── inno-win-setup/   # Windows installer configuration
-    └── mac-os/           # macOS build configuration
+|--------------------------------------------------------------------------
+| pyproject.toml         # Modern Python packaging configuration
+| README.md              # Project documentation
+| license.txt            # GPL-3.0 license
+| src/                   # Source code directory
+|   |-- ddt4all/         # Main package
+|       |-- main.py      # Main application entry point
+|       |-- version.py   # Version and contributor information
+|       |-- options.py   # Configuration and settings management
+|       |-- file_manager.py # File and directory management utilities
+|       |-- cli/         # Command-line interface
+|       |   |-- cli_args_parser.py
+|       |   |-- cmd_handlers/
+|       |   |-- helpers.py
+|       |-- core/        # Core functionality modules
+|       |   |-- elm/     # ELM327/adapter communication
+|       |   |   |-- elm.py
+|       |   |   |-- device_manager.py
+|       |   |   |-- port.py
+|       |   |   |-- constants.py
+|       |   |-- ecu/     # ECU database and protocols
+|       |   |   |-- ecu_database.py
+|       |   |   |-- ecu_scanner.py
+|       |   |   |-- ecu_device.py
+|       |   |   |-- ecu_file.py
+|       |   |   |-- ecu_request.py
+|       |   |   |-- ecu_ident.py
+|       |   |   |-- data_item.py
+|       |   |   |-- utils.py
+|       |   |-- doip/    # DoIP protocol support
+|       |   |   |-- doip_connection.py
+|       |   |   |-- doip_devices.py
+|       |   |   |-- doip_message_type.py
+|       |   |   |-- doip_protocol_error.py
+|       |   |-- parameters/ # Parameter handling
+|       |   |   |-- helpers.py
+|       |   |-- usbdevice/ # USB device support
+|       |       |-- obd_device.py
+|       |       |-- usb_can.py
+|       |       |-- constants.py
+|       |-- plugins/     # Plugin system (13 vehicle-specific modules)
+|       |   |-- ab90_reset.py
+|       |   |-- card_programming.py
+|       |   |-- clio3_eps_reset.py
+|       |   |-- clio4_eps_reset.py
+|       |   |-- laguna2_uch_reset.py
+|       |   |-- laguna3_uch_reset.py
+|       |   |-- megane2_uch_reset.py
+|       |   |-- megane3_ab_reset.py
+|       |   |-- megane3_eps_reset.py
+|       |   |-- megane3_uch_reset.py
+|       |   |-- rsat4_reset.py
+|       |   |-- vin_crc.py
+|       |   |-- zoe_waterpump_counter_reset.py
+|       |-- ui/          # User interface components
+|       |   |-- main_window/
+|       |   |-- widgets/
+|       |   |-- dialogs/
+|       |-- generated/   # Auto-generated resources
+|       |   |-- resources_rc.py
+|       |-- resources/  # Application resources
+|       |   |-- icons/
+|       |   |-- projects.json
+| tests/                 # Test suite
+|   |-- unit/           # Unit tests
+|   |-- integration/    # Integration tests
+|   |-- smoke/          # Smoke tests
+|   |-- resources/      # Test resources
+| setup_tools/          # Build and packaging tools
+|   |-- inno-win-setup/ # Windows installer (InnoSetup)
+|   |   |-- wininstaller.iss
+|   |   |-- version.h
+|   |   |-- win32_deps/
+|   |-- mac-os/         # macOS build scripts
+|   |   |-- builddmg.sh
+|   |   |-- main.spec
+|   |   |-- entitlements.plist
+|   |-- README.md       # Build tools documentation
+| locales/              # Translation files (15 languages)
+| resources.qrc         # Qt resource configuration
+| config.json           # Default configuration
+| logs/                 # Application logs directory
+| vehicles/             # Vehicle-specific data
+| json/                 # JSON database directory
 ```
 
 ## 📋 **Important Information**
