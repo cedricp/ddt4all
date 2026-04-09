@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-28 10:47+0100\n"
-"PO-Revision-Date: 2026-02-15 18:42+0100\n"
+"PO-Revision-Date: 2026-04-10 00:04+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #, fuzzy
@@ -439,7 +439,7 @@ msgstr ""
 
 #, fuzzy
 msgid "resources/projects.json not found or not ok."
-msgstr "ddt4all_data/projects.json não encontrado ou não está ok."
+msgstr "resources/projects.json não encontrado ou não está ok."
 
 msgid "Using custom DDT database"
 msgstr "Usando base de dados DDT personalizada"

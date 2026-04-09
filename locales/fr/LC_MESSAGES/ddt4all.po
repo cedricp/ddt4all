@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-28 10:47+0100\n"
-"PO-Revision-Date: 2026-02-15 18:40+0100\n"
+"PO-Revision-Date: 2026-04-10 00:03+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -15,23 +15,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#, fuzzy
 msgid "DoIP device connected successfully"
-msgstr "Appareil ELM327 détecté avec succès"
+msgstr "Appareil DoIP détecté avec succès"
 
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP response: {}"
-msgstr "Réponse ELM : "
+msgstr "DoIP réponse: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP request failed: {}"
-msgstr "Aucune demande nommée"
+msgstr "DoIP demande echoue: {}"
 
 #, python-brace-format
 msgid "Testing Electric ECU: {}"
@@ -47,9 +46,9 @@ msgstr ""
 msgid "Expected vehicle identification response, got: {}"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Vehicle identification failed: {}"
-msgstr "Initialization port echoué"
+msgstr "Vehicle identification échoué: {}"
 
 msgid "Insufficient session control data"
 msgstr ""
@@ -58,9 +57,9 @@ msgstr ""
 msgid "Expected diagnostic session control response, got: {}"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Diagnostic session control failed: {}"
-msgstr "Session de dianostic"
+msgstr "Session de diagnostic échoué: {}"
 
 msgid "Insufficient diagnostic message data"
 msgstr ""
@@ -91,9 +90,9 @@ msgstr ""
 msgid "DoIP session start failed: {}"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP CAN initialization failed: {}"
-msgstr "Initialization port echoué"
+msgstr "Échec de l'initialisation du DoIP CAN : {}"
 
 #, python-brace-format
 msgid "DoIP: Electric ECU detected - {}"
@@ -176,11 +175,9 @@ msgstr "n'est pas cartographié"
 msgid "Scanning address: "
 msgstr "Adresse de numérisation: "
 
-#, fuzzy
 msgid "Scanning DoIP address: "
-msgstr "Adresse de numérisation: "
+msgstr "Adresse de numérisation DoIP: "
 
-#, fuzzy
 msgid "Found USB device:"
 msgstr "Adaptateur USB trouvé :"
 
@@ -442,9 +439,8 @@ msgstr ""
 "Avertissement : PyQtWebEngine non disponible. Certaines fonctionnalités "
 "peuvent être limitées."
 
-#, fuzzy
 msgid "resources/projects.json not found or not ok."
-msgstr "ddt4all_data/projects.json introuvable ou pas ok."
+msgstr "resources/projects.json introuvable ou pas ok."
 
 msgid "Using custom DDT database"
 msgstr "Utilisation de la base de donnée personnelle"
@@ -1143,9 +1139,8 @@ msgstr "Data base introuvable"
 msgid "Check documentation"
 msgstr "Veuillez voir la documentation"
 
-#, fuzzy
 msgid "DDT4All Documentation"
-msgstr "Documentation"
+msgstr "DDT4ALL Documentation"
 
 msgid "WebEngine not available."
 msgstr ""
@@ -1154,9 +1149,8 @@ msgid ""
 "For full documentation with web browsing capability, install PyQtWebEngine:"
 msgstr ""
 
-#, fuzzy
 msgid "Visit the online documentation at:"
-msgstr "Veuillez voir la documentation"
+msgstr "Veuillez voir la documentation:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
@@ -1380,9 +1374,8 @@ msgstr "Balayage CAN"
 msgid "Scanning KWP"
 msgstr "Balayage KWP"
 
-#, fuzzy
 msgid "Scanning DoIP"
-msgstr "Balayage KWP"
+msgstr "Balayage DoIP"
 
 msgid "Scan options"
 msgstr "Options de balayage"
@@ -1477,7 +1470,6 @@ msgstr "Thème sombre"
 msgid "DoIP (Diagnostics over IP) Configuration"
 msgstr ""
 
-#, fuzzy
 msgid "Device Preset : "
 msgstr "Version de l'appareil : "
 
@@ -1502,9 +1494,8 @@ msgstr ""
 msgid "DoIP Target IP : "
 msgstr ""
 
-#, fuzzy
 msgid "DoIP Port : "
-msgstr "Port : "
+msgstr "DoIP Port : "
 
 msgid "DoIP Timeout (seconds) : "
 msgstr ""

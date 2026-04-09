@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-09 17:39+0200\n"
-"PO-Revision-Date: 2026-03-20 09:16+0100\n"
+"PO-Revision-Date: 2026-04-10 00:03+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #, fuzzy
@@ -438,7 +438,7 @@ msgstr ""
 
 #, fuzzy
 msgid "resources/projects.json not found or not ok."
-msgstr "soubor ddt4all_data/projects.json nebyl nalezen nebo není v pořádku."
+msgstr "soubor resources/projects.json nebyl nalezen nebo není v pořádku."
 
 msgid "Using custom DDT database"
 msgstr "Použití optimálního nastavení zařízení"

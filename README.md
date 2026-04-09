@@ -514,9 +514,9 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 | Language | Code | Status | Recent Updates | Contributors |
 |----------|------|--------|----------------|--------------|
 | English | en_US | ✅ Complete | Native | Core Team |
-| Français | fr | 📝 Complete | Core Team | Core Team |
-| Português | pt | 📝 Complete | Core Team | Core Team |
-| Czech | cs_CZ | 📝 Complete | +30 new strings | Community |
+| Français | fr | 🔄 Enhanced | Core Team | Core Team |
+| Português | pt | 🔄 Enhanced | Core Team | Core Team |
+| Czech | cs_CZ | 🔄 Enhanced | +30 new strings | Community |
 | Deutsch | de | 🔄 Enhanced | +30 new strings | Community |
 | Español | es | 🔄 Enhanced | +30 new strings | Community |
 | Italiano | it | 🔄 Enhanced | +30 new strings | Community |
@@ -542,10 +542,9 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 - 📝 **Ongoing**: Community contributions welcome for refinements
 
 ### **Contributing Translations:**
-We welcome contributions to improve existing translations or add new languages. Translation files are located in `ddt4all_data/locale/`. Recent focus areas include device connection messages and error handling.
+We welcome contributions to improve existing translations or add new languages. Translation files are located in `locales/`. Recent focus areas include device connection messages and error handling.
 
 ### **🛠️ Development Tools:**
-- **Translation Tools**: Located in `ddt4all_data/tools/` for managing .po/.mo files
 - **Automated Testing**: GitHub Actions workflow ensures code quality
 - **Cross-Platform Building**: Support for Linux, Windows, and macOS builds
 - **Build Scripts**: Automated installer generation for Windows (InnoSetup)
