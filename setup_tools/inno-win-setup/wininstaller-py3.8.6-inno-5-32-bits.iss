@@ -1,6 +1,6 @@
 ﻿;--------------------- This requires Inno Setup 5 for compatibilities, an python 3.8.6 - 32 bits for autonomous modes.
 #include "version.h"
-#define MyAppName       Str(__appname__)
+#define MyAppName       Str(__appname__) 
 #define MyAppVersion    Str(__version__)
 #define MyAppStatus     Str(__status__) + "-x86"    
 #define MyAppDir        MyAppName
@@ -30,7 +30,7 @@ UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppCompany}
 DefaultDirName={pf}\{#MyAppDir}
 DefaultGroupName={#MyAppName}
-SetupIconFile=..\..\ddt4all_data\icons\obd.ico
+SetupIconFile=..\..\resources\icons\obd.ico
 OutputBaseFilename={#MyAppName}-Windows-Installer-v{#MyAppVersion}_{#MyAppStatus}
 VersionInfoCompany={#MyAppCompany}
 ArchitecturesAllowed=x86 x64
@@ -50,53 +50,46 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
-Source: "win32_deps\VC_redist.x86.exe"; DestDir: "{app}\win32_deps"; Tasks: microsoft_runtimes
 Source: "\DDT4ALL-Dist-Versions\Python38-32\*"; DestDir: "{app}\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "..\..\ddtplugins\*.py"; DestDir: "{app}\ddtplugins"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "..\..\json\*"; DestDir: "{app}\json"; Flags: ignoreversion recursesubdirs onlyifdoesntexist skipifsourcedoesntexist
-Source: "..\..\ddt4all_data\icons\*"; DestDir: "{app}\ddt4all_data\icons"; Flags: ignoreversion recursesubdirs
-Source: "..\..\ddt4all_data\tools\*"; DestDir: "{app}\ddt4all_data\tools"; Flags: ignoreversion recursesubdirs
-Source: "..\..\ddt4all_data\locale\*"; DestDir: "{app}\ddt4all_data\locale"; Flags: ignoreversion recursesubdirs
-Source: "..\..\*.py"; DestDir: "{app}"; Excludes: "*.pyc"
-Source: "..\..\ddt4all_data\*.qss"; DestDir: "{app}\ddt4all_data"
-Source: "..\..\ddt4all_data\projects.json"; DestDir: "{app}\ddt4all_data"; AfterInstall: AfterMyProgInstall
+Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs
+Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Excludes: "*.pyc"
+Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
-Type: filesandordirs; Name: "{group}";
+Type: filesandordirs; Name: "{group}"
 Type: filesandordirs; Name: "{app}"
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{group}";
+Type: filesandordirs; Name: "{group}"
 Type: filesandordirs; Name: "{app}"
 
 [Run]
 Filename: "{app}\win32_deps\VC_redist.x86.exe"; Tasks: microsoft_runtimes
-Filename: "{app}\Python386-32\python.exe"; Parameters: """{app}\main.py"""; WorkingDir: "{app}"; Description: {cm:OpenAfterInstall}; Flags: postinstall nowait skipifsilent runasoriginaluser
+Filename: "{app}\Python386-32\python.exe"; Parameters: "-m ddt4all"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser; Description: "{cm:OpenAfterInstall}"
 
 [Code]
 procedure AfterMyProgInstall;
 begin
     MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
     // remove developement config.json file
-    DeleteFile(ExpandConstant('{app}\ddt4all_data\config.json'));
+    DeleteFile(ExpandConstant('{app}\config.json'));
 end;
 
 [Dirs]
 Name: "{app}"; Permissions: users-full
 Name: "{app}\logs"; Permissions: users-full
 Name: "{app}\json"; Permissions: users-full
-Name: "{app}\ddt4all_data"; Permissions: users-full
 Name: "{app}\vehicles"; Permissions: users-full
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "microsoft_runtimes"; Description: "{cm:MSruntimes}"; GroupDescription: "Microsoft Visual C++ Redistributable"
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkedonce
+Name: "microsoft_runtimes"; Description: "{cm:MSruntimes}"; GroupDescription: "Microsoft Visual C++ Redistributable"; Flags: checkedonce unchecked
 
 [Icons]
-Name: "{app}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{app}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#MyAppName} Diagnostic Tool"
-Name: "{group}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\ddt4all_data\icons\obd.ico"; Parameters: """{app}\main.py"""; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
 en.MSruntimes=Install Microsoft Visual C++ Redistributable runtimes files
