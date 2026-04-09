@@ -1,6 +1,5 @@
 <RCC>
   <qresource prefix="/icons">
-    <file alias="Python-3-13-2-new.png">resources/icons/Python-3-13-2-new.png</file>
     <file alias="autorefresh.png">resources/icons/autorefresh.png</file>
     <file alias="bt.png">resources/icons/bt.png</file>
     <file alias="checkbox-n.png">resources/icons/checkbox-n.png</file>

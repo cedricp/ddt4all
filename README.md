@@ -67,7 +67,8 @@ Using the application in non expert mode should not be harmful for your vehicle 
 
 ## `Cloning Source Code`
 ### `Dependencies :`
-![python_3.13.x](ddt4all_data/icons/Python-3-13-2-new.png)
+
+![python_3.13.x](setup_tools/Python-3-13-2-new.png)
 
 #### **🔧 Core Requirements (Essential):**
 * **Python 3.8.6 - 3.10.x (32-bit/64-bit)** - [Python 3.10](https://www.python.org/downloads/release/python-31012/) recommended
