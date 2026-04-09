@@ -17,6 +17,7 @@
 /Output/
 /json/
 /$29/
+/Simulator/
 /utt_certificates/
 /TradConf.conf
 /parameters.xml
@@ -34,6 +35,7 @@ __pycache__/
 /dist/
 /.venv/
 
+# Others
 /build/
 /setup.py
 /setup.cfg
@@ -42,7 +44,6 @@ __pycache__/
 /setup_tools/inno-win-setup/version.h
 /setup_tools/mac-os/build/
 /setup_tools/mac-os/dist/
-/Simulator/
 /.pytest_cache/
 *.egg
 *.egg-info
