@@ -4,7 +4,7 @@
 # , 2018.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-28 10:47+0100\n"
 "PO-Revision-Date: 2026-02-15 18:40+0100\n"
