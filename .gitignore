@@ -33,11 +33,11 @@ __pycache__/
 /build/
 /setup.py
 /setup.cfg
-/ddt4all_data/inno-win-setup/Output/
+/setup_tools/inno-win-setup/Output/
 /**/config.json
-/ddt4all_data/inno-win-setup/version.h
-/ddt4all_data/mac-os/build/
-/ddt4all_data/mac-os/dist/
+/setup_tools/inno-win-setup/version.h
+/setup_tools/mac-os/build/
+/setup_tools/mac-os/dist/
 /Simulator/
 *.egg
 *.egg-info
