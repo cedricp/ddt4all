@@ -61,7 +61,7 @@ def generate_qrc(
             file_rel = rel_posix(f, project_root)   # chemin réel pour compilation
             alias = rel_posix(f, group_root)        # chemin exposé dans Qt (relatif au groupe)
 
-            lines.append(f'    <file alias="{alias}">{file_rel}</file>')
+            lines.append(f'    <file alias="{alias}">../{file_rel}</file>')
 
         lines.append("  </qresource>")
 
@@ -76,6 +76,8 @@ def compile_qrc(qrc_path: Path, output_py: Path) -> None:
     print("[gen-qrc] Compile:", " ".join(cmd))
     subprocess.check_call(cmd)
     print(f"[gen-qrc] Wrote: {output_py}")
+    # Remove the generated qrc file
+    #qrc_path.unlink()
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -83,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
         description="Generate Qt .qrc from resource directories (preserve subdirs, no flatten)."
     )
     parser.add_argument("--project-root", default=".", help="Project root (default: current directory).")
-    parser.add_argument("--out-qrc", default="resources.qrc", help="Output .qrc path relative to project root.")
+    parser.add_argument("--out-qrc", default="scripts/resources.qrc", help="Output .qrc path relative to project root.")
     parser.add_argument("--compile", action="store_true", help="Also compile to a Python module using pyrcc5.")
     parser.add_argument(
         "--out-py",

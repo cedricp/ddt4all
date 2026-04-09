@@ -72,9 +72,9 @@ def main(argv=None) -> int:
         raise SystemExit(result if isinstance(result, int) else 0)
 
     # For InnoSetup version.h auto generator
-    if os.path.isdir('ddt4all_data/inno-win-setup'):
+    if os.path.isdir('setup_tools/inno-win-setup'):
         try:
-            with open("ddt4all_data/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
+            with open("setup_tools/inno-win-setup/version.h", "w", encoding="UTF-8") as f:
                 f.write(f'#define __appname__ "{version.__appname__}"\n')
                 f.write(f'#define __author__ "{version.__author__}"\n')
                 f.write(f'#define __copyright__ "{version.__copyright__}"\n')

@@ -4,6 +4,7 @@ from ddt4all.core.ecu.ecu_database import (
     doip_addressing
 )
 from ddt4all.core.ecu.ecu_ident import EcuIdent
+from ddt4all.core.doip.doip_devices import DoIPDevice
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
 
@@ -451,7 +452,7 @@ class EcuScanner:
                 print(f"Initializing DoIP connection to {target_ip}:{target_port} (timeout: {timeout}s)")
                 
                 # Create DoIP device independently (not through ELM)
-                doip_device = doip_addressing.DoIPDevice(target_ip)
+                doip_device = DoIPDevice(target_ip)
                 
                 # Set timeout if supported
                 if hasattr(doip_device, 'timeout'):

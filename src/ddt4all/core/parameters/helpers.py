@@ -11,6 +11,7 @@ from ddt4all.core.ecu.ecu_database import (
 )
 from ddt4all.core.ecu.ecu_file import EcuFile
 import ddt4all.core.elm.elm as elm
+from ddt4all.file_manager import get_dir
 import ddt4all.options as options
 from ddt4all.ui.utils import (
     colorConvert,
@@ -437,12 +438,12 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             dictionary["projects"][project_name]["dnat_ext"] = dumpDNAT_ext(addressing)
             print(f'{code:18} => {addressing:40} => OK')
 
-    sd = sorted(dict["projects"].items())
+    sd = sorted(dictionary["projects"].items())
     new_dict = {"projects": {}}
     for k, v in sd:
         new_dict["projects"][k] = v
     # js = json.dumps(new_dict, ensure_ascii=False, indent=True)
     js = json.dumps(new_dict, ensure_ascii=False)
-    f = open("ddt4all_data/projects.json", "w", encoding="UTF-8")
+    f = open(os.path.join(get_dir("src"), "ddt4all", "resources", "projects.json"), "w", encoding="UTF-8")
     f.write(js)
     f.close()
