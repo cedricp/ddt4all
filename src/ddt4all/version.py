@@ -4,6 +4,7 @@ __copyright__ = "Copyright ©2016-2026"
 __credits__ = []
 __contributors__ = {
     "Furtif": "Collaborator",
+    "jyte": "Contributor",
     "bovirus": "Contributor",
     "josefe17": "Contributor",
     "shrlnm": "Contributor",
