@@ -1013,7 +1013,7 @@ class ParamWidget(widgets.QWidget):
                 blocked = True
 
             if self.logfile is not None and len(logdict) > 0:
-                self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
+                self.logfile.write("\t@ " + datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
                 if not blocked:
                     self.logfile.write("\t%s: \n\t\t" % _("Writing parameter"))
                 else:
@@ -1217,7 +1217,7 @@ class ParamWidget(widgets.QWidget):
                                 data.widget.setCurrentIndex(combovalueindex)
 
         if self.updatelog and self.logfile is not None:
-            self.logfile.write("\t@ " + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
+            self.logfile.write("\t@ " + datetime.now().strftime("%H:%M:%S.%f")[:-3] + "\n")
             self.logfile.write("\tScreen : " + self.pagename + "\tRequest : " + request_name + "\n")
             string = json.dumps(logdict)
             self.logfile.write(u"\t\t" + string)
