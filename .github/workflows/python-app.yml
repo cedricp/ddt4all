@@ -1,4 +1,4 @@
-name: Python App
+name: DDT4ALL APP
 
 on:
   push:
