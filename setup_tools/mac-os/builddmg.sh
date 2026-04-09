@@ -39,13 +39,13 @@ fi
 
 # Verify we're in the correct directory
 if [ ! -f "main.spec" ]; then
-    print_error "main.spec not found. Please run this script from the ddt4all_data/mac-os directory."
+    print_error "main.spec not found. Please run this script from the setup_tools/mac-os directory."
     exit 1
 fi
 
 # Verify icon files exist
-if [ ! -f "../icons/obd.icns" ]; then
-    print_error "Icon file ../icons/obd.icns not found."
+if [ ! -f "../../resources/icons/obd.icns" ]; then
+    print_error "Icon file ../../resources/icons/obd.icns not found."
     exit 1
 fi
 
@@ -92,7 +92,7 @@ fi
 print_status "Creating DMG..."
 create-dmg \
   --volname "DDT4ALL" \
-  --volicon "../icons/obd.icns" \
+  --volicon "../../resources/icons/obd.icns" \
   --window-pos 200 120 \
   --window-size 600 300 \
   --icon-size 100 \

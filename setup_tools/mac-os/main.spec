@@ -10,30 +10,49 @@ import sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, project_root)
 
+# Core application files
+main_script = os.path.join(project_root, 'src', 'ddt4all', 'main.py')
+
+# Data files to include
+datas = [
+    # Icons and resources
+    (os.path.join(project_root, 'resources', 'icons'), 'resources/icons'),
+    
+    # Translation files
+    (os.path.join(project_root, 'locales'), 'locales'),
+    
+    # Plugin files
+    (os.path.join(project_root, 'src', 'ddt4all', 'plugins'), 'ddtplugins'),
+    
+    # Style files
+    (os.path.join(project_root, 'resources', 'styles'), 'resources/styles'),
+    
+    # Documentation
+    (os.path.join(project_root, 'license.txt'), '.'),
+    (os.path.join(project_root, 'README.md'), '.'),
+]
+
+# Add QSS files explicitly
+styles_dir = os.path.join(project_root, 'resources', 'styles')
+if os.path.exists(styles_dir):
+    for file in os.listdir(styles_dir):
+        if file.endswith('.qss'):
+            datas.append((os.path.join(styles_dir, file), 'resources/styles'))
+
 a = Analysis(
-    ['../../main.py'],
+    [main_script],
     pathex=[project_root],
     binaries=[],
-    datas=[
-        ('../../ddt4all_data/icons', 'ddt4all_data/icons'),
-        ('../../ddt4all_data/locale', 'ddt4all_data/locale'),
-        ('../../ddt4all_data/tools', 'ddt4all_data/tools'),
-        ('../../ddt4all_data/projects.json', 'ddt4all_data'),
-        ('../../ddt4all_data/config.json', 'ddt4all_data'),
-        ('../../ddtplugins', 'ddtplugins'),
-        ('../../requirements.txt', '.'),
-        ('../../license.txt', '.'),
-        ('../../README.md', '.'),
-    ],
+    datas=datas,
     hiddenimports=[
-        # PyQt5 modules that may not be auto-detected
+        # PyQt5 modules
         'PyQt5.QtCore',
         'PyQt5.QtGui', 
         'PyQt5.QtWidgets',
         'PyQt5.QtNetwork',
         'PyQt5.QtPrintSupport',
         'PyQt5.QtSvg',
-        'PyQt5.QtWebEngineWidgets',  # Optional but recommended
+        'PyQt5.QtWebEngineWidgets',
         
         # Serial communication
         'serial',
@@ -82,21 +101,12 @@ a = Analysis(
         'pandas',
         'PIL',
         'cv2',
+        'jupyter',
+        'notebook',
     ],
     noarchive=False,
     optimize=0,
 )
-
-# Filter out QSS files and add them properly
-qss_files = []
-qss_dir = os.path.join(project_root, 'ddt4all_data')
-if os.path.exists(qss_dir):
-    for file in os.listdir(qss_dir):
-        if file.endswith('.qss'):
-            qss_files.append((os.path.join(qss_dir, file), 'ddt4all_data'))
-
-# Add QSS files to datas
-a.datas.extend(qss_files)
 
 pyz = PYZ(a.pure)
 
@@ -115,7 +125,7 @@ exe = EXE(
     argv_emulation=False,
     target_arch='universal2',  # Support both Intel and Apple Silicon
     codesign_identity=None,  # Set to your Developer ID for distribution
-    entitlements_file=None,  # Add entitlements.plist for enhanced permissions
+    entitlements_file='entitlements.plist',  # Use entitlements for hardware access
 )
 
 coll = COLLECT(
@@ -132,14 +142,14 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='DDT4ALL.app',
-    icon='../icons/obd.icns',
+    icon=os.path.join(project_root, 'resources', 'icons', 'obd.icns'),
     bundle_identifier='com.github.cedricp.ddt4all',
-    version='3.0.4',  # Should match version.py
+    version='3.0.7',
     info_plist={
         'CFBundleName': 'DDT4ALL',
         'CFBundleDisplayName': 'DDT4ALL Diagnostic Tool',
-        'CFBundleShortVersionString': '3.0.4',
-        'CFBundleVersion': '3.0.4',
+        'CFBundleShortVersionString': '3.0.7',
+        'CFBundleVersion': '3.0.7',
         'CFBundleExecutable': 'DDT4ALL',
         'CFBundleIdentifier': 'com.github.cedricp.ddt4all',
         'CFBundleInfoDictionaryVersion': '6.0',
@@ -149,7 +159,7 @@ app = BUNDLE(
         'LSApplicationCategoryType': 'public.app-category.developer-tools',
         'NSHighResolutionCapable': True,
         'NSRequiresAquaSystemAppearance': False,  # Support dark mode
-        'NSHumanReadableCopyright': 'Copyright ©2016-2025 Cedric PAILLE',
+        'NSHumanReadableCopyright': 'Copyright ©2016-2026 Cedric PAILLE',
         'CFBundleDocumentTypes': [
             {
                 'CFBundleTypeExtensions': ['ddt'],
@@ -158,9 +168,10 @@ app = BUNDLE(
                 'LSHandlerRank': 'Owner',
             }
         ],
-        # USB and Serial port access permissions
+        # Hardware access permissions
         'NSBluetoothAlwaysUsageDescription': 'DDT4ALL needs Bluetooth access to communicate with OBD adapters.',
         'NSBluetoothPeripheralUsageDescription': 'DDT4ALL needs Bluetooth access to communicate with OBD adapters.',
         'NSLocationWhenInUseUsageDescription': 'DDT4ALL may use location services for enhanced diagnostic features.',
+        'NSUSBDeviceUsageDescription': 'DDT4ALL needs USB access to communicate with OBD adapters.',
     },
 )
