@@ -417,7 +417,14 @@ class ELM:
                 hasattr(self.port, 'expect') and 
                 hasattr(self.port, 'connectionStatus') and 
                 self.port.connectionStatus):
-                self.port.expect(">")
+                if getattr(self.port, "portType", 0) == 1:
+                    try:
+                        self.port.write(b"\r")
+                        self.port.expect(">", time_out=0.5)
+                    except Exception:
+                        pass
+                else:
+                    self.port.expect(">", time_out=1)
                 res = self.send_raw("ATZ")
             else:
                 options.elm_failed = True
