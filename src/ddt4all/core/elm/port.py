@@ -1,6 +1,7 @@
 import platform
 import re
 import serial
+import select
 import socket
 import sys
 import threading
@@ -402,29 +403,34 @@ class Port:
         # return ''
 
     def expect(self, pattern, time_out=1):
-        tb = time.time()  # start time
+        tb = time.time()
         self.buff = ""
-
+        deadline = tb + time_out
+    
         while True:
             if not options.simulation_mode:
+                if self.portType == 1 and self.hdr is not None:
+                    remaining = deadline - time.time()
+                    if remaining <= 0:
+                        return self.buff + _("TIMEOUT")
+                    rlist, _, _ = select.select([self.hdr], [], [], min(0.05, remaining))
+                    if not rlist:
+                        continue
                 byte = self.read()
             else:
                 byte = '>'
-
+    
             if byte == '\r':
                 byte = '\n'
+    
             if byte:
                 self.buff += byte
-            tc = time.time()
+    
             if pattern in self.buff:
                 return self.buff
-            if (tc - tb) > time_out:
+    
+            if time.time() > deadline:
                 return self.buff + _("TIMEOUT")
-
-        # self.close()
-        # self.connectionStatus = False
-        # return ''
-
     def check_elm(self):
 
         timeout = 2
