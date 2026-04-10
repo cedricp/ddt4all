@@ -695,7 +695,7 @@ class ELM:
         if self.vf != 0:
             errorstr = "Unknown"
             if rsp[6:8] in list(negrsp.keys()):
-                errorstr = errorval(negrsp, rsp[6:8])
+                errorstr = errorval(rsp[6:8])
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
                 self.vf.write(tmstr + ";" + dnat_ext[
@@ -868,7 +868,7 @@ class ELM:
         if result[:2] == '7F':
             noerrors = False
             if result[4:6] in list(negrsp.keys()):
-                errorstr = errorval(negrsp, result[4:6])
+                errorstr = errorval(result[4:6])
             if self.vf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
