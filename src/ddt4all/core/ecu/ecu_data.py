@@ -223,12 +223,19 @@ class EcuData:
         else:
             if not test_mode:
                 # Check input length and validity
-                if not all(c in string.hexdigits for c in value):
+                if isinstance(value, list):
+                    if not all(len(byte) == 2 and all(c in string.hexdigits for c in byte) for byte in value):
+                        return None
+                    value = int('0x' + ''.join(value), 16)
+                elif isinstance(value, str):
+                    if not all(c in string.hexdigits for c in value):
+                        return None
+                    value = int('0x' + value, 16)
+                else:
                     return None
-                # Value is base 16
-                value = int('0x' + str(value), 16)
             else:
-                value = int("0x" + value, 16)
+                # Value is base 16
+                value = int('0x' + value, 16)
 
         valueasbin = bin(value)[2:].zfill(self.bitscount)
 
