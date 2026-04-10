@@ -413,7 +413,7 @@ class Port:
                     remaining = deadline - time.time()
                     if remaining <= 0:
                         return self.buff + _("TIMEOUT")
-                    rlist, _, _ = select.select([self.hdr], [], [], min(0.05, remaining))
+                    rlist, __, ___ = select.select([self.hdr], [], [], min(0.05, remaining))
                     if not rlist:
                         continue
                 byte = self.read()
