@@ -514,8 +514,8 @@ DDT4All supports **13 languages** with ongoing translation improvements:
 | Language | Code | Status | Recent Updates | Contributors |
 |----------|------|--------|----------------|--------------|
 | English | en_US | ✅ Complete | Native | Core Team |
-| Français | fr | 🔄 Enhanced | Core Team | Core Team |
-| Português | pt | 🔄 Enhanced | Core Team | Core Team |
+| Français | fr | ✅ Complete | Core Team | Core Team |
+| Português | pt | ✅ Complete | Core Team | Core Team |
 | Czech | cs_CZ | 🔄 Enhanced | +30 new strings | Community |
 | Deutsch | de | 🔄 Enhanced | +30 new strings | Community |
 | Español | es | 🔄 Enhanced | +30 new strings | Community |
