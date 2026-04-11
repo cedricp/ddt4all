@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Batch translate all strings using deep-translator (efficient)
-Usage: python scripts/translate_batch.py
+Usage: python scripts/translate_batch_ia.py
 """
 
 import sys
