@@ -1,4 +1,4 @@
-﻿;--------------------- This requires Inno Setup 5 for compatibilities, an python 3.8.6 - 32 bits for autonomous modes.
+﻿;--------------------- This requires Inno Setup 5 for compatibilities, an python 3.8.6 - Windows 7 32/64 bits for autonomous modes.
 #include "version.h"
 #define MyAppName       Str(__appname__) 
 #define MyAppVersion    Str(__version__)
@@ -50,10 +50,13 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
-Source: "\DDT4ALL-Dist-Versions\Python38-32\*"; DestDir: "{app}\Python386-32"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs
-Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Excludes: "*.pyc"
-Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; AfterInstall: AfterMyProgInstall
+Source: "win32_deps\VC_redist.x86.exe"; DestDir: "{app}\win32_deps"; Flags: ignoreversion; Permissions: users-full
+Source: "\DDT4ALL-Dist-Versions\Python38-32\*"; DestDir: "{app}\Python386-32"; Flags: ignoreversion recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
+Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full
+Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
+Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
+Source: "..\..\README.md"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
+Source: "..\..\license.txt"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
 Type: filesandordirs; Name: "{group}"
@@ -69,10 +72,20 @@ Filename: "{app}\Python386-32\python.exe"; Parameters: "-m ddt4all"; WorkingDir:
 
 [Code]
 procedure AfterMyProgInstall;
+  var
+  ResultCode: Integer;
 begin
-    MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
-    // remove developement config.json file
-    DeleteFile(ExpandConstant('{app}\config.json'));
+  Exec(
+    ExpandConstant('{cmd}'),
+    '/c cd /d "' + ExpandConstant('{app}') + '" && "' +
+    ExpandConstant('{app}\Python386-32\python.exe') +
+    '" -m pip install -e .[dev,can,network,bluetooth] --no-warn-script-location --disable-pip-version-check', // debug & pause',
+    '',
+    SW_SHOWNORMAL,
+    ewWaitUntilTerminated,
+    ResultCode
+  );
+  MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
 end;
 
 [Dirs]
@@ -83,7 +96,7 @@ Name: "{app}\vehicles"; Permissions: users-full
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkedonce
-Name: "microsoft_runtimes"; Description: "{cm:MSruntimes}"; GroupDescription: "Microsoft Visual C++ Redistributable"; Flags: checkedonce unchecked
+Name: "microsoft_runtimes"; Description: "{cm:MSruntimes}"; GroupDescription: "Microsoft Visual C++ Redistributable"; Flags: checkedonce
 
 [Icons]
 Name: "{app}\{#MyAppName}"; Filename: "{app}\Python386-32\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
@@ -117,15 +130,15 @@ ru.OpenAfterInstall=Открыть {#MyAppName} после окончания у
 tr.OpenAfterInstall=Kurulumdan sonra {#MyAppName}'i aç
 ; -----------------------------------------------------------------------------
 en.AfterMyProgInstall=Do not forget to install database to %n%n
-de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in%n%n
-fr.AfterMyProgInstall=Pensez a installer une base de données dans%n%n
-es.AfterMyProgInstall=Considere instalar una base de datos en%n%n
-it.AfterMyProgInstall=Non dimenticare di installare il database in%n%n
-nl.AfterMyProgInstall=Overweeg een database te installeren in%n%n
-pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w%n%n
-ptbr.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
-pt.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
-ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в%n%n
+de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in %n%n
+fr.AfterMyProgInstall=Pensez a installer une base de données dans %n%n
+es.AfterMyProgInstall=Considere instalar una base de datos en %n%n
+it.AfterMyProgInstall=Non dimenticare di installare il database in %n%n
+nl.AfterMyProgInstall=Overweeg een database te installeren in %n%n
+pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w %n%n
+ptbr.AfterMyProgInstall=Considere instalar um banco de dados em %n%n
+pt.AfterMyProgInstall=Considere instalar um banco de dados em %n%n
+ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в %n%n
 tr.AfterMyProgInstall=Veritabanını şuraya yüklemeyi unutmayın %n%n
 
 [Languages]

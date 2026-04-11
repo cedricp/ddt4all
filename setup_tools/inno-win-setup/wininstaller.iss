@@ -55,10 +55,12 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
-Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\Python313-x64"; Flags: ignoreversion recursesubdirs; Excludes: "*.pyc"
-Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs
-Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Excludes: "*.pyc"
-Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; AfterInstall: AfterMyProgInstall
+Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\Python313-x64"; Flags: ignoreversion recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
+Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full
+Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
+Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
+Source: "..\..\README.md"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
+Source: "..\..\license.txt"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
 Type: filesandordirs; Name: "{group}"
@@ -73,10 +75,20 @@ Filename: "{app}\Python313-x64\python.exe"; Parameters: "-m ddt4all"; WorkingDir
 
 [Code]
 procedure AfterMyProgInstall;
+  var
+  ResultCode: Integer;
 begin
-    MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
-    // remove developement config.json file
-    DeleteFile(ExpandConstant('{app}\ddt4all_data\config.json'));
+  Exec(
+    ExpandConstant('{cmd}'),
+    '/c cd /d "' + ExpandConstant('{app}') + '" && "' +
+    ExpandConstant('{app}\Python313-x64\python.exe') +
+    '" -m pip install -e .[dev,can,network,bluetooth] --no-warn-script-location --disable-pip-version-check', //debug & pause',
+    '',
+    SW_SHOWNORMAL,
+    ewWaitUntilTerminated,
+    ResultCode
+  ); 
+  MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
 end;
 
 [Dirs]
@@ -106,16 +118,17 @@ ptbr.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
 pt.OpenAfterInstall=Abrir o {#MyAppName} após a instalação
 ru.OpenAfterInstall=Открыть {#MyAppName} после окончания установки
 tr.OpenAfterInstall=Kurulumdan sonra {#MyAppName}'i aç
+; -----------------------------------------------------------------------------
 en.AfterMyProgInstall=Do not forget to install database to %n%n
-de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in%n%n
+de.AfterMyProgInstall=Erwägen Sie die Installation einer Datenbank in %n%n
 fr.AfterMyProgInstall=Pensez a installer une base de données dans%n%n
-es.AfterMyProgInstall=Considere instalar una base de datos en%n%n
-it.AfterMyProgInstall=Non dimenticare di installare il database in%n%n
-nl.AfterMyProgInstall=Overweeg een database te installeren in%n%n
-pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w%n%n
-ptbr.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
-pt.AfterMyProgInstall=Considere instalar um banco de dados em%n%n
-ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в%n%n
+es.AfterMyProgInstall=Considere instalar una base de datos en %n%n
+it.AfterMyProgInstall=Non dimenticare di installare il database in %n%n
+nl.AfterMyProgInstall=Overweeg een database te installeren in %n%n
+pl.AfterMyProgInstall=Rozważ zainstalowanie bazy danych w %n%n
+ptbr.AfterMyProgInstall=Considere instalar um banco de dados em %n%n
+pt.AfterMyProgInstall=Considere instalar um banco de dados em %n%n
+ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в %n%n
 tr.AfterMyProgInstall=Veritabanını şuraya yüklemeyi unutmayın %n%n
 
 [Languages]
