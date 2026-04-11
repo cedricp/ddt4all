@@ -56,7 +56,7 @@ def load_this():
         elm.dnat_ext = vehicles_loc["projects"]["All"]["dnat_ext"]
         return vehicles_loc
     except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-        print(_("resources/projects.json not found or not ok.") + f" Error: {e}")
+        print(_("resources/projects.json not found or invalid.") + f" Error: {e}")
         exit(-1) # TODO raise ?
 
 
@@ -68,7 +68,7 @@ def main(argv=None) -> int:
     # If subcommand : run then exit
     if hasattr(args, "handler"):
         result = args.handler(args)
-        # Propagation éventuelle d’un code retour
+        # Potential return code propagation
         raise SystemExit(result if isinstance(result, int) else 0)
 
     # For InnoSetup version.h auto generator
@@ -141,7 +141,7 @@ def main(argv=None) -> int:
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print(_("Initilizing ELM with speed %i...") % port_speed)
+        print(_("Initializing ELM with speed %i...") % port_speed)
         options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
 
         if options.elm_failed:

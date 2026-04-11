@@ -32,7 +32,7 @@ class Virginizer(gui.QDialog):
         appIcon = qtgui.QIcon(":icons/obd.png")
         self.setWindowIcon(appIcon)
         layout = gui.QVBoxLayout()
-        # Création du tableau
+        # Create table
         self.table = QTableWidget()
         self.table.setRowCount(4)  # Number of lines
         self.table.setColumnCount(3)
@@ -47,9 +47,9 @@ class Virginizer(gui.QDialog):
             [_("V_Timer_DrivWEP_ON"), "", ""], #V_Timer_DrivWEP_ON
         ]
 
-        for row, (nom, valeur, action) in enumerate(data):
-            self.table.setItem(row, 0, QTableWidgetItem(nom))
-            self.table.setItem(row, 1, QTableWidgetItem(valeur))
+        for row, (name, value, action) in enumerate(data):
+            self.table.setItem(row, 0, QTableWidgetItem(name))
+            self.table.setItem(row, 1, QTableWidgetItem(value))
             self.table.setItem(row, 2, QTableWidgetItem(action))
 
         resetLabel = _("Reset")
@@ -173,7 +173,7 @@ class Virginizer(gui.QDialog):
 
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print(_("SdS stream: %s") % sds_stream)
+            print(_("SDS stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 
@@ -182,7 +182,7 @@ class Virginizer(gui.QDialog):
 
         sds_stream = " ".join(sds_request.build_data_stream({}))
         if options.simulation_mode:
-            print(_("SdS stream: %s") % sds_stream)
+            print(_("SDS stream: %s") % sds_stream)
             return
         options.elm.start_session_can(sds_stream)
 

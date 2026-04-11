@@ -446,7 +446,7 @@ class ELM:
             maxspeed = 0
 
         device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
-        text_switck_error = _("Failed to switch to change OBDLink to ") + str(maxspeed)
+        text_switch_error = _("Failed to switch OBDLink to ") + str(maxspeed)
         text_optional = _("OBDLINK Connection OK, using optimal settings")
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
             print(device_text_switch.replace("OBDLink", "OBDLink"))
@@ -455,7 +455,7 @@ class ELM:
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switck_error.replace("OBDLink", "OBDLink"))
+                print(text_switch_error.replace("OBDLink", "OBDLink"))
         elif adapter_type == "OBDLINK":
             print(text_optional.replace("OBDLink", "OBDLink"))
             if not options.elm_failed:
@@ -467,7 +467,7 @@ class ELM:
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switck_error.replace("OBDLink", "ELM"))
+                print(text_switch_error.replace("OBDLink", "ELM"))
         elif adapter_type == "STD_USB":
             print(text_optional.replace("OBDLink", "ELM"))
             if not options.elm_failed:
@@ -479,7 +479,7 @@ class ELM:
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switck_error.replace("OBDLink", "Vlinker"))
+                print(text_switch_error.replace("OBDLink", "Vlinker"))
         elif adapter_type == "VLINKER":
             print(text_optional.replace("OBDLink", "Vlinker"))
             if not options.elm_failed:
@@ -491,7 +491,7 @@ class ELM:
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switck_error.replace("OBDLink", "VGate"))
+                print(text_switch_error.replace("OBDLink", "VGate"))
         elif adapter_type == "VGATE":
             print(text_optional.replace("OBDLink", "VGate"))
             if not options.elm_failed:

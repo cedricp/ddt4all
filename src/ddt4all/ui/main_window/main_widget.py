@@ -197,7 +197,7 @@ class MainWidget(widgets.QMainWindow):
 
         screen_widget = widgets.QWidget()
         self.treedock_widget = widgets.QDockWidget(self)
-        self.treedock_widget.setWindowTitle(_("Ecran Window"))
+        self.treedock_widget.setWindowTitle(_("Screen Window"))
         self.treedock_widget.setWidget(screen_widget)
         self.treeview_params = widgets.QTreeWidget()
         self.treeview_params.setSortingEnabled(True)

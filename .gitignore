@@ -50,3 +50,4 @@ __pycache__/
 .coverage
 coverage.xml
 /scripts/resources.qrc
+*.po~
