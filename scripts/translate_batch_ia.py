@@ -5,6 +5,7 @@ Batch translate all strings using deep-translator (efficient)
 Usage: python scripts/translate_batch_ia.py
 """
 
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -83,7 +84,6 @@ def main():
 
     print(f"\n[SUMMARY] Total: {total} strings translated")
     print("\nCompiling .mo files...")
-    import subprocess
     subprocess.run([sys.executable, "scripts/i18n.py", "po-to-mo"])
 
 
