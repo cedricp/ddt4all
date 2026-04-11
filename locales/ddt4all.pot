@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 18:25+0200\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr ""
 
-msgid "Failed to switch to change OBDLink to "
+msgid "Failed to switch OBDLink to "
 msgstr ""
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -428,7 +428,7 @@ msgstr ""
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
 
-msgid "resources/projects.json not found or not ok."
+msgid "resources/projects.json not found or invalid."
 msgstr ""
 
 msgid "Using custom DDT database"
@@ -438,7 +438,7 @@ msgid "No COM port selected"
 msgstr ""
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initializing ELM with speed %i..."
 msgstr ""
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -475,7 +475,7 @@ msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr ""
 
 #, python-format
-msgid "SdS stream: %s"
+msgid "SDS stream: %s"
 msgstr ""
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -634,6 +634,10 @@ msgid "Megane3 AIRBAG Reset"
 msgstr ""
 
 msgid "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr ""
+
+#, python-format
+msgid "SDS FA stream: %s"
 msgstr ""
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
@@ -1090,7 +1094,7 @@ msgstr ""
 msgid "Ecu parameters"
 msgstr ""
 
-msgid "Ecran Window"
+msgid "Screen Window"
 msgstr ""
 
 msgid "Screens"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 10:47+0100\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
 "PO-Revision-Date: 2026-04-10 00:04+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -205,7 +205,7 @@ msgstr "No hay interface ELM en el puerto"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr ""
 
-msgid "Failed to switch to change OBDLink to "
+msgid "Failed to switch OBDLink to "
 msgstr ""
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -450,7 +450,7 @@ msgstr ""
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
 
-msgid "resources/projects.json not found or not ok."
+msgid "resources/projects.json not found or invalid."
 msgstr ""
 
 msgid "Using custom DDT database"
@@ -459,8 +459,8 @@ msgstr "Usando base de datos DDT personalizada"
 msgid "No COM port selected"
 msgstr "Puerto COM no seleccionado"
 
-#, python-format
-msgid "Initilizing ELM with speed %i..."
+#, fuzzy, python-format
+msgid "Initializing ELM with speed %i..."
 msgstr "Iniciando ELM a velocidad %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -500,7 +500,7 @@ msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr ""
 
 #, fuzzy, python-format
-msgid "SdS stream: %s"
+msgid "SDS stream: %s"
 msgstr "Bytes recibidos"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -674,6 +674,10 @@ msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+
+#, fuzzy, python-format
+msgid "SDS FA stream: %s"
+msgstr "Bytes recibidos"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr ""
@@ -1169,8 +1173,9 @@ msgstr "Botones"
 msgid "Ecu parameters"
 msgstr "Parametros ECU"
 
-msgid "Ecran Window"
-msgstr ""
+#, fuzzy
+msgid "Screen Window"
+msgstr "Pantalla"
 
 msgid "Screens"
 msgstr "Pantallas"

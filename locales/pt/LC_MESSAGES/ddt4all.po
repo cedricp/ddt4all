@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 10:47+0100\n"
-"PO-Revision-Date: 2026-04-10 19:17+0200\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
+"PO-Revision-Date: 2026-04-11 21:49+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -199,7 +199,7 @@ msgstr "No há interface ELM neste porta"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "Conexão OBDLink OK, tentando switch UART de velocidade total"
 
-msgid "Failed to switch to change OBDLink to "
+msgid "Failed to switch OBDLink to "
 msgstr "Falha ao mudar para alterar OBDLink para "
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -437,8 +437,9 @@ msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
 "Aviso: PyQtWebEngine não disponível. Alguns recursos podem ser limitados."
 
-msgid "resources/projects.json not found or not ok."
-msgstr "resources/projects.json não encontrado ou não está ok."
+msgid "resources/projects.json not found or invalid."
+msgstr ""
+"O ficheiro resources/projects.json não foi encontrado ou está inválido."
 
 msgid "Using custom DDT database"
 msgstr "Usando banco de dados DDT personalizado"
@@ -447,7 +448,7 @@ msgid "No COM port selected"
 msgstr "Nenhuma porta COM selecionada"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initializing ELM with speed %i..."
 msgstr "Inicializando o ELM com velocidade %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -490,7 +491,7 @@ msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>NENHUMA CRASH DETECTADA</font>"
 
 #, python-format
-msgid "SdS stream: %s"
+msgid "SDS stream: %s"
 msgstr "Fluxo SdS: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -679,6 +680,10 @@ msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE PLUGIN IRÁ "
 "DESBLOQUEAR DADOS DE ACIDENTE DO AIRBAG<br>VAI SE VOCÊ NÃO TEM IDEIA DO QUE "
 "SIGNIFICA</font>"
+
+#, python-format
+msgid "SDS FA stream: %s"
+msgstr "Fluxo SdS FA: %s"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Redefinir"
@@ -1179,7 +1184,7 @@ msgstr "Botões"
 msgid "Ecu parameters"
 msgstr "Parâmetros da ECU"
 
-msgid "Ecran Window"
+msgid "Screen Window"
 msgstr "Janela Ecran"
 
 msgid "Screens"

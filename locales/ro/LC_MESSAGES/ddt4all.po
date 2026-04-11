@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 10:47+0100\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
 "PO-Revision-Date: 2026-04-10 00:04+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -205,7 +205,7 @@ msgstr "Nu exista interfata ELM in port"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr ""
 
-msgid "Failed to switch to change OBDLink to "
+msgid "Failed to switch OBDLink to "
 msgstr ""
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -451,7 +451,7 @@ msgstr ""
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
 
-msgid "resources/projects.json not found or not ok."
+msgid "resources/projects.json not found or invalid."
 msgstr ""
 
 msgid "Using custom DDT database"
@@ -460,8 +460,8 @@ msgstr "Utilizarea bazei de date DDT personalizate"
 msgid "No COM port selected"
 msgstr "Niciun port COM nu a fost selectat"
 
-#, python-format
-msgid "Initilizing ELM with speed %i..."
+#, fuzzy, python-format
+msgid "Initializing ELM with speed %i..."
 msgstr "Initializeaza ELM cu viteza %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -503,7 +503,7 @@ msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>NICI O AVARIE DETECTATA</font>"
 
 #, fuzzy, python-format
-msgid "SdS stream: %s"
+msgid "SDS stream: %s"
 msgstr "Primiti octeti"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -693,6 +693,10 @@ msgstr ""
 "Megane III<br>VIRGINIZATOR AIRBAG<br><font color='red'>ACEST PLUGIN VA "
 "DEBLOCA DATELE DE AVARIE A AIRBAG-ului<br>NU MERGE MAI DEPARTE, DACA NU AI "
 "IDEE CE INSEAMNA ASTA</font>"
+
+#, fuzzy, python-format
+msgid "SDS FA stream: %s"
+msgstr "Primiti octeti"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
@@ -1201,8 +1205,9 @@ msgstr "Butoane"
 msgid "Ecu parameters"
 msgstr "Parametri ECU"
 
-msgid "Ecran Window"
-msgstr ""
+#, fuzzy
+msgid "Screen Window"
+msgstr "Ecran"
 
 msgid "Screens"
 msgstr "Ecrane"

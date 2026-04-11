@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 10:47+0100\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
 "PO-Revision-Date: 2026-04-10 00:04+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -200,7 +200,8 @@ msgstr "Brak interfejsu ELM na wybranym porcie"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "OBDLink Połączenie OK, próba zmiany na pełną prędkość UART"
 
-msgid "Failed to switch to change OBDLink to "
+#, fuzzy
+msgid "Failed to switch OBDLink to "
 msgstr "Nieudane przełączenie OBDLink na "
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -441,7 +442,7 @@ msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
 
 #, fuzzy
-msgid "resources/projects.json not found or not ok."
+msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nie znaleziony lub niepoprawny."
 
 msgid "Using custom DDT database"
@@ -450,8 +451,8 @@ msgstr "Używanie customowej bazy DDT"
 msgid "No COM port selected"
 msgstr "Nie wybrano portu COM"
 
-#, python-format
-msgid "Initilizing ELM with speed %i..."
+#, fuzzy, python-format
+msgid "Initializing ELM with speed %i..."
 msgstr "Inicjowanie ELM-a z prędkością %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -494,7 +495,7 @@ msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>NIE WYKRYTO CRASHA</font>"
 
 #, fuzzy, python-format
-msgid "SdS stream: %s"
+msgid "SDS stream: %s"
 msgstr "Odebrany strumień  "
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -688,6 +689,10 @@ msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TEN PLUGIN ODBLOKUJE "
 "DANE O WYPADKU AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ SOBIĘ "
 "UŻYWANIE TEJ OPCJI</font>"
+
+#, fuzzy, python-format
+msgid "SDS FA stream: %s"
+msgstr "Odebrany strumień  "
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III Reset EPS"
@@ -1205,7 +1210,8 @@ msgstr "Przyciski"
 msgid "Ecu parameters"
 msgstr "Parametry ECU"
 
-msgid "Ecran Window"
+#, fuzzy
+msgid "Screen Window"
 msgstr "Okno ekranu"
 
 msgid "Screens"

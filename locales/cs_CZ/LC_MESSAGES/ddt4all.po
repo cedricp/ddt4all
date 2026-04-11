@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 17:39+0200\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
 "PO-Revision-Date: 2026-04-10 00:03+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -198,7 +198,8 @@ msgstr "Na portu není žádné rozhraní ELM"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "Připojení OBDLink v pořádku, pokus o přepnutí UART na plnou rychlost"
 
-msgid "Failed to switch to change OBDLink to "
+#, fuzzy
+msgid "Failed to switch OBDLink to "
 msgstr "Nepodařilo se přepnout na změnu OBDLinku na "
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -437,7 +438,7 @@ msgstr ""
 "Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezené."
 
 #, fuzzy
-msgid "resources/projects.json not found or not ok."
+msgid "resources/projects.json not found or invalid."
 msgstr "soubor resources/projects.json nebyl nalezen nebo není v pořádku."
 
 msgid "Using custom DDT database"
@@ -446,8 +447,8 @@ msgstr "Použití optimálního nastavení zařízení"
 msgid "No COM port selected"
 msgstr "Není vybrán žádný port COM"
 
-#, python-format
-msgid "Initilizing ELM with speed %i..."
+#, fuzzy, python-format
+msgid "Initializing ELM with speed %i..."
 msgstr "Inicializace ELM rychlostí %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -489,8 +490,8 @@ msgstr "<font color='red'>VYMAZÁNÍ média NEÚSPĚŠNÉ</font>"
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>VIN KÓD V POŘÁDKU / NAUČENÍ KLÍČE</font>"
 
-#, python-format
-msgid "SdS stream: %s"
+#, fuzzy, python-format
+msgid "SDS stream: %s"
 msgstr "Stream SdS: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -679,6 +680,10 @@ msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMKNE "
 "ÚDAJE O NEHODÁCH AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE HO</"
 "font>"
+
+#, fuzzy, python-format
+msgid "SDS FA stream: %s"
+msgstr "Stream SdSFA: %s"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "Reset EPS u ZOE/FLENCE/Megane III/Scénic III"
@@ -1177,7 +1182,8 @@ msgstr "Buttons"
 msgid "Ecu parameters"
 msgstr "Identifikovaná řídicí jednotka motoru (ECU)"
 
-msgid "Ecran Window"
+#, fuzzy
+msgid "Screen Window"
 msgstr "Okno Window"
 
 msgid "Screens"

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 10:47+0100\n"
-"PO-Revision-Date: 2026-04-10 18:46+0200\n"
+"POT-Creation-Date: 2026-04-11 21:32+0200\n"
+"PO-Revision-Date: 2026-04-11 21:48+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -200,7 +200,7 @@ msgstr "Pas d'interface ELM sur le port"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "Connexion OBDLink OK, tentative de commutation UART à pleine vitesse"
 
-msgid "Failed to switch to change OBDLink to "
+msgid "Failed to switch OBDLink to "
 msgstr "Échec du basculement pour remplacer OBDLink par "
 
 msgid "OBDLINK Connection OK, using optimal settings"
@@ -443,8 +443,9 @@ msgstr ""
 "Attention : PyQtWebEngine n'est pas disponible. Certaines fonctionnalités "
 "peuvent être limitées."
 
-msgid "resources/projects.json not found or not ok."
-msgstr "resources/projects.json introuvable ou pas ok."
+msgid "resources/projects.json not found or invalid."
+msgstr ""
+"Le fichier resources/projects.json est introuvable ou n'est pas valide."
 
 msgid "Using custom DDT database"
 msgstr "Utilisation d'une base de données DDT personnalisée"
@@ -453,7 +454,7 @@ msgid "No COM port selected"
 msgstr "Aucun port COM sélectionné"
 
 #, python-format
-msgid "Initilizing ELM with speed %i..."
+msgid "Initializing ELM with speed %i..."
 msgstr "Initialisation d'ELM avec la vitesse %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
@@ -496,7 +497,7 @@ msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>AUCUN CRASH DÉTECTÉ</font>"
 
 #, python-format
-msgid "SdS stream: %s"
+msgid "SDS stream: %s"
 msgstr "Flux SdS : %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
@@ -688,6 +689,10 @@ msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>CE PLUGIN DÉBLOQUERA "
 "LES DONNÉES DE CRASH D'AIRBAG<br>PARTEZ SI VOUS N'AVEZ AUCUNE IDÉE DE CE QUE "
 "CELA SIGNIFIE</font>"
+
+#, python-format
+msgid "SDS FA stream: %s"
+msgstr "Flux SdS FA : %s"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Réinitialiser"
@@ -1189,7 +1194,7 @@ msgstr "Boutons"
 msgid "Ecu parameters"
 msgstr "Paramètres du calculateur"
 
-msgid "Ecran Window"
+msgid "Screen Window"
 msgstr "Fenêtre d'écran"
 
 msgid "Screens"
