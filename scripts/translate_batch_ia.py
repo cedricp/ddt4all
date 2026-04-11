@@ -55,7 +55,6 @@ def translate_po_file(lang_code, lang_dest):
 
             for entry, result in zip(batch, results):
                 if result:
-                    entry.msgstr = None
                     entry.msgstr = result
                     translated += 1
 
