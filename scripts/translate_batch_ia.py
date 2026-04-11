@@ -41,7 +41,7 @@ def translate_po_file(lang_code, lang_dest):
     po = polib.pofile(str(po_path))
     translator = GoogleTranslator(source='en', target=lang_dest)
     
-    # Traduzir TODAS as strings (mesmo as que já têm tradução)
+    # Translate ALL strings (even those that already have translation)
     # all_entries = [e for e in po if e.msgid and e.msgid.strip()]
     all_entries = [e for e in po if e.msgid]
     if not all_entries:
