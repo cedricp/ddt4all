@@ -16,6 +16,8 @@ dependencies = [
     "pyusb==1.2.1",
     "crcmod==1.7",
     "pywin32>=227; sys_platform == 'win32'",
+    "deep_translator>=1.11.4",
+    "polib>=1.2.0",
 ]
 
 [project.optional-dependencies]

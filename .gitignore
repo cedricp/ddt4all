@@ -49,3 +49,4 @@ __pycache__/
 *.egg-info
 .coverage
 coverage.xml
+/scripts/resources.qrc
