@@ -40,6 +40,14 @@ except ImportError:
     HAS_WEBENGINE = False
 
 
+class PortScanWorker(core.QThread):
+    portsFound = core.pyqtSignal(list)
+
+    def run(self):
+        ports = elm.get_available_ports()
+        self.portsFound.emit(ports or [])
+
+
 class MainWindowOptions(widgets.QDialog):
     def __init__(self, app):
         portSpeeds = [38400, 57600, 115200, 230400, 500000, 1000000]
@@ -346,11 +354,13 @@ class MainWindowOptions(widgets.QDialog):
         button_save.clicked.connect(self.save_config)
         button_elm_chk.clicked.connect(self.check_elm)
 
+        self._scan_worker = None
         self.timer = core.QTimer()
         self.timer.timeout.connect(self.rescan_ports)
-        self.timer.start(500)
+        self.timer.start(2000)
         self.portcount = -1
         self.usb()
+        self.rescan_ports()
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
 
     def save_config(self):
@@ -470,9 +480,15 @@ class MainWindowOptions(widgets.QDialog):
             
     def rescan_ports(self):
         """Enhanced port rescanning with device identification"""
+        if self._scan_worker is not None and self._scan_worker.isRunning():
+            return
+        self._scan_worker = PortScanWorker()
+        self._scan_worker.portsFound.connect(self._on_ports_found)
+        self._scan_worker.start()
+
+    def _on_ports_found(self, ports):
         try:
-            ports = elm.get_available_ports()
-            if ports is None:
+            if not ports:
                 self.listview.clear()
                 self.ports = {}
                 self.portcount = 0
@@ -484,7 +500,7 @@ class MainWindowOptions(widgets.QDialog):
             self.listview.clear()
             self.ports = {}
             self.portcount = len(ports)
-            
+
             for p in ports:
                 if len(p) >= 4:
                     port, desc, hwid, status = p
@@ -517,7 +533,7 @@ class MainWindowOptions(widgets.QDialog):
                     font.setBold(True)
                     item.setFont(font)
                     item.setBackground(gui.QColor(200, 255, 200))  # Light green background
-                    
+
             # Auto-select first OBD device if available
             if self.listview.count() > 0 and not self.listview.currentItem():
                 # Prioritize known OBD devices
@@ -530,11 +546,8 @@ class MainWindowOptions(widgets.QDialog):
                     # If no known OBD device, select first item
                     self.listview.setCurrentItem(self.listview.item(0))
 
-            self.timer.start(500)
-            
         except Exception as e:
-            print(f"Error rescanning ports: {e}")
-            self.timer.start(500)
+            print(f"Error updating port list: {e}")
 
     def bt(self):
         self.adapter = "STD_BT"
@@ -1051,6 +1064,8 @@ class MainWindowOptions(widgets.QDialog):
 
     def connectedMode(self):
         self.timer.stop()
+        if self._scan_worker is not None and self._scan_worker.isRunning():
+            self._scan_worker.wait()
         self.securitycheck = self.safetycheck.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not self.securitycheck:
@@ -1088,6 +1103,8 @@ class MainWindowOptions(widgets.QDialog):
 
     def demoMode(self):
         self.timer.stop()
+        if self._scan_worker is not None and self._scan_worker.isRunning():
+            self._scan_worker.wait()
         self.securitycheck = self.safetycheck.isChecked()
         self.port = 'DUMMY'
         self.mode = 2
