@@ -1,132 +1,131 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Abdullah YILMAZ (TA1AUB) <h.abdullahyilmaz@hotmail.com>, 2022.
+# Abdullah YILMAZ (TA1GI) <h.abdullahyilmaz@hotmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-11 21:32+0200\n"
-"PO-Revision-Date: 2026-04-10 00:05+0200\n"
-"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
+"PO-Revision-Date: 2026-04-29 23:58+0300\n"
+"Last-Translator: Abdullah YILMAZ (TA1GI) <h.abdullahyilmaz@hotmail.com>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#, fuzzy
 msgid "DoIP device connected successfully"
-msgstr "ELM327 device detected successfully"
+msgstr "DoIP cihazı başarıyla bağlandı"
 
 msgid "DoIP CAN initialized with Electric ECU support"
-msgstr ""
+msgstr "DoIP CAN, Elektrikli ECU desteğiyle başlatıldı"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP response: {}"
-msgstr "ELM yanıtı: "
+msgstr "DoIP yanıtı: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP request failed: {}"
-msgstr "Adlandırılmış istek yok"
+msgstr "DoIP isteği başarısız: {}"
 
 #, python-brace-format
 msgid "Testing Electric ECU: {}"
-msgstr ""
+msgstr "Elektrikli ECU test ediliyor: {}"
 
 msgid "Failed to connect to DoIP device"
-msgstr ""
+msgstr "DoIP cihazına bağlanılamadı"
 
 msgid "Insufficient vehicle identification data"
-msgstr ""
+msgstr "Yetersiz araç tanımlama verisi"
 
 #, python-brace-format
 msgid "Expected vehicle identification response, got: {}"
-msgstr ""
+msgstr "Araç tanımlama yanıtı beklendi, alınan: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Vehicle identification failed: {}"
-msgstr "Ekran başlatma"
+msgstr "Araç tanımlama başarısız: {}"
 
 msgid "Insufficient session control data"
-msgstr ""
+msgstr "Yetersiz oturum kontrol verisi"
 
 #, python-brace-format
 msgid "Expected diagnostic session control response, got: {}"
-msgstr ""
+msgstr "Tanılama oturumu kontrol yanıtı beklendi, alınan: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Diagnostic session control failed: {}"
-msgstr "Tanılama oturumu"
+msgstr "Tanılama oturumu kontrolü başarısız: {}"
 
 msgid "Insufficient diagnostic message data"
-msgstr ""
+msgstr "Yetersiz tanılama mesajı verisi"
 
 #, python-brace-format
 msgid "Expected diagnostic message response, got: {}"
-msgstr ""
+msgstr "Tanılama mesajı yanıtı beklendi, alınan: {}"
 
 msgid "Insufficient alive check data"
-msgstr ""
+msgstr "Yetersiz canlılık kontrolü verisi"
 
 #, python-brace-format
 msgid "Expected alive check response, got: {}"
-msgstr ""
+msgstr "Canlılık kontrolü yanıtı beklendi, alınan: {}"
 
 #, python-brace-format
 msgid "Alive check failed: {}"
-msgstr ""
+msgstr "Canlılık kontrolü başarısız: {}"
 
 msgid "Not connected to DoIP device"
-msgstr ""
+msgstr "DoIP cihazına bağlı değil"
 
 #, python-brace-format
 msgid "Invalid hex request format: {}"
-msgstr ""
+msgstr "Geçersiz hex istek biçimi: {}"
 
 #, python-brace-format
 msgid "DoIP session start failed: {}"
-msgstr ""
+msgstr "DoIP oturum başlatma başarısız: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP CAN initialization failed: {}"
-msgstr "Ekran başlatma"
+msgstr "DoIP CAN başlatma başarısız: {}"
 
 #, python-brace-format
 msgid "DoIP: Electric ECU detected - {}"
-msgstr ""
+msgstr "DoIP: Elektrikli ECU algılandı - {}"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr ""
+msgstr "DoIP: Elektrikli Araç Sistemleri için genişletilmiş adresleme kullanılıyor"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
+msgstr "DoIP: 29-bit genişletilmiş adresleme - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
+msgstr "DoIP: 11-bit standart adresleme - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Uyarı, imzalı değer alınamıyor"
 
 msgid "Division by zero, please check data item: "
-msgstr "Sıfıra bölme, lütfen veri öğesini kontrol edin:"
+msgstr "Sıfıra bölme, lütfen veri öğesini kontrol edin: "
 
 msgid "getHexValue >> abnormal remaining bytes "
-msgstr "getHexValue >> anormal kalan baytlar"
+msgstr "getHexValue >> anormal kalan baytlar "
 
 msgid "Adding group "
-msgstr "Grup ekleme"
+msgstr "Grup ekleme "
 
 msgid "Unable to find eculist"
 msgstr "Eculist bulunamadı"
 
 msgid "Cannot find file "
-msgstr "Dosya bulunamadı"
+msgstr "Dosya bulunamadı "
 
 msgid "Cannot load ECU file"
 msgstr "ECU dosyası yüklenemiyor"
@@ -138,22 +137,22 @@ msgid "Cannot retrieve functionnal address of ECU"
 msgstr "ECU'nun işlevsel adresi alınamıyor"
 
 msgid "Generated stream "
-msgstr "Oluşturulan akış"
+msgstr "Oluşturulan akış "
 
 msgid "Send request stream "
-msgstr "İstek akışını gönder"
+msgstr "İstek akışını gönder "
 
 msgid "Received stream "
-msgstr "Alınan akış"
+msgstr "Alınan akış "
 
 msgid "Request ECU Error"
 msgstr "ECU isteği Hatası"
 
 msgid "Decoded values"
-msgstr "Kodlanmış değerler"
+msgstr "Çözümlenmiş değerler"
 
 msgid "Found: "
-msgstr "Bulunan:"
+msgstr "Bulunan: "
 
 msgid "Identified ECU"
 msgstr "Tanımlanmış ECU"
@@ -165,7 +164,7 @@ msgid "(not perfect match)"
 msgstr "(mükemmel bir eşleşme değil)"
 
 msgid "(no relevant ECU file found)"
-msgstr "(ilgili ECU dosyası bulunamadı)(ilgili ECU dosyası bulunamadı)"
+msgstr "(ilgili ECU dosyası bulunamadı)"
 
 msgid "Warning, address"
 msgstr "Uyarı, adres"
@@ -174,25 +173,22 @@ msgid "is not mapped"
 msgstr "haritalanmamış"
 
 msgid "Scanning address: "
-msgstr "Adres taranıyor:"
+msgstr "Adres taranıyor: "
 
-#, fuzzy
 msgid "Scanning DoIP address: "
-msgstr "Adres taranıyor:"
+msgstr "Adres taranıyor: "
 
-#, fuzzy
 msgid "Found USB device:"
-msgstr "USB adaptörü bulundu:"
+msgstr "USB cihazı bulundu:"
 
 msgid "Trying to open port "
 msgstr "Bağlantı noktası (port) açmaya çalışılıyor "
 
-#, fuzzy
 msgid "Port initialization failed"
-msgstr "Ekran başlatma"
+msgstr "Port başlatma başarısız"
 
 msgid "Port connection failed - port object is invalid"
-msgstr ""
+msgstr "Port bağlantısı başarısız - port nesnesi geçersiz"
 
 msgid "No ELM interface on port"
 msgstr "Bağlantı noktasında ELM arayüzü yok"
@@ -200,121 +196,115 @@ msgstr "Bağlantı noktasında ELM arayüzü yok"
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "OBDLink Bağlantısı TAMAM, tam hız UART anahtarı deneniyor"
 
-#, fuzzy
 msgid "Failed to switch OBDLink to "
-msgstr "OBDLink'i değiştirmek için geçiş yapılamadı"
+msgstr "OBDLink şu hıza geçemedi: "
 
 msgid "OBDLINK Connection OK, using optimal settings"
-msgstr ""
+msgstr "OBDLINK Bağlantısı TAMAM, optimal ayarlar kullanılıyor"
 
-#, fuzzy
 msgid "Connection established successfully"
-msgstr "Connection test successful!"
+msgstr "Bağlantı başarıyla kuruldu"
 
 msgid "VGate STPX mode enabled for enhanced long command support"
-msgstr ""
+msgstr "VGate STPX modu etkinleştirildi - uzun komut desteği aktif"
 
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
-msgstr ""
+msgstr "ELS27 V5 CAN pinleri yapılandırılıyor (12-13)"
 
 msgid "ELS27 V5 CAN configuration complete"
-msgstr ""
+msgstr "ELS27 V5 CAN yapılandırması tamamlandı"
 
 msgid "STPX mode enabled for enhanced long command support"
-msgstr ""
+msgstr "STPX modu etkinleştirildi - uzun komut desteği aktif"
 
 msgid "Port is None - cannot switch speed"
-msgstr ""
+msgstr "Port Yok - hız değiştirilemiyor"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr "OBDLINK baurate'i değiştirme tamam, Şimdi UART hızı değişiyor..."
+msgstr "%s baud hızı değişimi tamam, UART hızı şimdi değiştiriliyor..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s STN connection established"
-msgstr "Connection test failed"
+msgstr "%s STN bağlantısı kuruldu"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s Version: "
-msgstr "Sürüm"
+msgstr "%s Sürümü: "
 
-msgid ""
-"VGate adapter detected but STN verification failed, attempting fallback..."
-msgstr ""
+msgid "VGate adapter detected but STN verification failed, attempting fallback..."
+msgstr "VGate adaptörü algılandı ancak STN doğrulaması başarısız, geri dönüş deneniyor..."
 
 #, python-format
 msgid "Unsupported baudrate for ELM: %s"
-msgstr ""
+msgstr "ELM için desteklenmeyen baud hızı: %s"
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr "ELM baud hızı AÇIK, UART hızı şimdi değiştiriliyor..."
 
 msgid "ELM full speed connection OK "
-msgstr "ELM tam hız bağlantısı TAMAM"
+msgstr "ELM tam hız bağlantısı TAMAM "
 
 msgid "Version "
-msgstr "Sürüm"
+msgstr "Sürüm "
 
 msgid "ELM did not report version after speed switch"
-msgstr ""
+msgstr "ELM hız değişiminden sonra sürüm bildirmedi"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Your ELM does not support baudrate %s"
-msgstr "ELM'niz baud hızını desteklemiyor"
+msgstr "ELM'niz %s baud hızını desteklemiyor"
 
 msgid "ELM reset..."
 msgstr "ELM sıfırlandı..."
 
 msgid "Unknown address: "
-msgstr "Bilinmeyen adres:"
+msgstr "Bilinmeyen adres: "
 
 msgid "Using saved device settings"
-msgstr ""
+msgstr "Kayıtlı cihaz ayarları kullanılıyor"
 
 msgid "Using optimal device settings"
-msgstr ""
+msgstr "Optimal cihaz ayarları kullanılıyor"
 
 msgid "Connecting to device at port: "
-msgstr "Connecting to device at port: "
+msgstr "Cihaza bağlanılıyor, port: "
 
 msgid "Using baudrate: "
-msgstr "Using baudrate: "
+msgstr "Baud hızı kullanılıyor: "
 
 msgid "Testing for ELS27 device..."
-msgstr ""
+msgstr "ELS27 cihazı test ediliyor..."
 
-#, fuzzy
 msgid "ELS27 device detected: "
-msgstr "ELM327 device detected successfully"
+msgstr "ELS27 cihazı algılandı: "
 
-#, fuzzy
 msgid "Using detected baud rate: "
-msgstr "Using baudrate: "
+msgstr "Algılanan baud hızı kullanılıyor: "
 
 msgid "Warning: No ELS27 response detected"
-msgstr ""
+msgstr "Uyarı: ELS27 yanıtı algılanamadı"
 
-#, fuzzy
 msgid "Will attempt connection anyway..."
-msgstr "Attempting connection..."
+msgstr "Bağlantı yine de denenecek..."
 
 msgid "Connection failed: "
-msgstr "Connection failed: "
+msgstr "Bağlantı başarısız: "
 
 msgid "Testing basic connectivity..."
-msgstr "Testing basic connectivity..."
+msgstr "Temel bağlantı test ediliyor..."
 
 msgid "Warning: Device may not be ELM327 compatible"
-msgstr "Warning: Device may not be ELM327 compatible"
+msgstr "Uyarı: Cihaz ELM327 uyumlu olmayabilir"
 
 msgid "ELM327 device detected successfully"
-msgstr "ELM327 device detected successfully"
+msgstr "ELM327 cihazı başarıyla algılandı"
 
 msgid "Device version: "
-msgstr "Device version: "
+msgstr "Cihaz sürümü: "
 
 msgid "Connection error: "
-msgstr "Connection error: "
+msgstr "Bağlantı hatası: "
 
 msgid "FAIL"
 msgstr "BAŞARISIZ"
@@ -338,17 +328,16 @@ msgid "ELM Max version:"
 msgstr "ELM Max sürümü:"
 
 msgid "Using saved settings for"
-msgstr ""
+msgstr "Kayıtlı ayarlar kullanılıyor:"
 
 msgid "Using optimal settings for"
-msgstr ""
+msgstr "Optimal ayarlar kullanılıyor:"
 
-#, fuzzy
 msgid "Serial port opened"
-msgstr "Kontrol edilen port hızı:"
+msgstr "Seri port açıldı"
 
 msgid "Error: "
-msgstr "Hata:"
+msgstr "Hata: "
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM bağlı değil veya yanlış COM port"
@@ -358,37 +347,36 @@ msgstr "Bağlantı noktası kapalı"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
-msgstr ""
+msgstr "read_byte'ta seri iletişim hatası: %s"
 
 msgid "Connection to ELM was lost"
 msgstr "ELM ile bağlantı kesildi"
 
 #, python-format
 msgid "*       Error: %s"
-msgstr ""
+msgstr "*       Hata: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Cannot decode bytes %s"
-msgstr "Baytlar çözülemiyor"
+msgstr "%s baytları çözülemiyor"
 
 #, python-format
 msgid "Error in read(): %s"
-msgstr ""
+msgstr "read() içinde hata: %s"
 
-#, fuzzy
 msgid "Attempting WiFi reconnection..."
-msgstr "Attempting connection..."
+msgstr "WiFi yeniden bağlantısı deneniyor..."
 
 msgid "Port handler is None, cannot write"
-msgstr ""
+msgstr "Port işleyicisi Yok, yazılamıyor"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Serial write error: %s"
-msgstr "Çerçeve hex hatası:"
+msgstr "Seri yazma hatası: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "*       Write error: %s"
-msgstr "Çerçeve hex hatası:"
+msgstr "*       Yazma hatası: %s"
 
 msgid "TIMEOUT"
 msgstr "ZAMAN AŞIMI"
@@ -409,10 +397,10 @@ msgid "Starting conversion"
 msgstr "Dönüşüm başlatılıyor"
 
 msgid "Starting processing "
-msgstr "İşleme başlanıyor"
+msgstr "İşleme başlanıyor "
 
 msgid " to "
-msgstr "ile"
+msgstr " --> "
 
 msgid "Skipping current file (cannot parse it)"
 msgstr "Geçerli dosya atlanıyor (ayrıştırılamıyor)"
@@ -424,26 +412,25 @@ msgid "Writing archive"
 msgstr "Arşiv Yazılıyor"
 
 msgid "Opening ECU Database..."
-msgstr ""
+msgstr "ECU Veritabanı açılıyor..."
 
 msgid "parts as: "
-msgstr ""
+msgstr "parçalar olarak: "
 
 msgid " please review dumpVehicles def."
-msgstr ""
+msgstr " lütfen dumpVehicles tanımını inceleyin."
 
 msgid "ELS27 V5 CAN pin configuration complete"
-msgstr ""
+msgstr "ELS27 V5 CAN pin yapılandırması tamamlandı"
 
 msgid "Found USB adapter:"
 msgstr "USB adaptörü bulundu:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
+msgstr "Uyarı: PyQtWebEngine mevcut değil. Bazı özellikler sınırlı olabilir."
 
-#, fuzzy
 msgid "resources/projects.json not found or invalid."
-msgstr "resources/projects.json bulunamadı veya doğru değil."
+msgstr "resources/projects.json bulunamadı veya geçersiz."
 
 msgid "Using custom DDT database"
 msgstr "Özel DDT veritabanı kullanımı"
@@ -451,7 +438,7 @@ msgstr "Özel DDT veritabanı kullanımı"
 msgid "No COM port selected"
 msgstr "COM port seçilmedi"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Initializing ELM with speed %i..."
 msgstr "ELM %i hızıyla başlatılıyor..."
 
@@ -464,14 +451,10 @@ msgstr "AB90 HAVA YASTIĞI Sıfırlama"
 msgid "Airbag Tools"
 msgstr "Hava Yastığı Araçları"
 
-msgid ""
-"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
-"UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
-"font>"
+msgid "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"AB90 (Clio III)/2<br>AIRBAG SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA "
-"YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİNE İLİŞKİN BİR "
-"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"AB90 (Clio III)/2<br>AIRBAG SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİNE İLİŞKİN BİR FİKİRİNİZ YOKSA "
+"UZAK DURUN</font>"
 
 msgid "Check ACU Virgin"
 msgstr "Sıfır ACU'yu kontrol et"
@@ -494,9 +477,9 @@ msgstr "<font color='red'>KAZA ALGILANDI</font>"
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>KAZA ALGILANMADI</font>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "SDS stream: %s"
-msgstr "Alınan akış"
+msgstr "SDS akışı: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
@@ -513,12 +496,8 @@ msgstr "Anahtarlar"
 msgid "ENTER AFTER SALE MODE"
 msgstr "SATIŞ SONRASI MODUNA GİRİN"
 
-msgid ""
-"<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
-"YET</font>"
-msgstr ""
-"<font color='red'>MEGANE II KART PROGRAMLAMA<br>DENEYSEL : HENÜZ TEST "
-"EDİLMEDİ</font>"
+msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
+msgstr "<font color='red'>MEGANE II KART PROGRAMLAMA<br>DENEYSEL : HENÜZ TEST EDİLMEDİ</font>"
 
 msgid "LEARN"
 msgstr "ÖĞREN"
@@ -530,7 +509,7 @@ msgid "CANCEL"
 msgstr "İPTAL"
 
 msgid "Algo 2"
-msgstr "2 şey"
+msgstr "Algoritma 2"
 
 msgid "ISK"
 msgstr "ISK"
@@ -539,15 +518,13 @@ msgid "PIN"
 msgstr "PIN"
 
 msgid "Num key learnt"
-msgstr "Sayı anahtarı öğrenildi"
+msgstr "Öğrenilen anahtar sayısı"
 
 msgid "CARD IDE"
 msgstr "KART IDE"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
-"ISK alınamıyor, bağlantıları ve UCH (Araç İçi Merkezi Kontrol Ünitesi) "
-"uyumluluğunu kontrol et"
+msgstr "ISK alınamıyor, bağlantıları ve UCH (Araç İçi Merkezi Kontrol Ünitesi) uyumluluğunu kontrol et"
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
 msgstr "<font color='red'>PIN KODU TANINMADI</font>"
@@ -556,9 +533,7 @@ msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
 msgstr "<font color='green'>PIN KODU TAMAM / ANAHTAR ÖĞRENME</font>"
 
 msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
-msgstr ""
-"<font color='green'>PIN KODU TAMAM / UCH (Araç İçi Merkezi Kontrol Ünitesi) "
-"ÖĞRENME</font>"
+msgstr "<font color='green'>PIN KODU TAMAM / UCH (Araç İçi Merkezi Kontrol Ünitesi) ÖĞRENME</font>"
 
 msgid "Modus/Clio III EPS Reset"
 msgstr "Modus/Clio III EPS Sıfırlama"
@@ -566,13 +541,9 @@ msgstr "Modus/Clio III EPS Sıfırlama"
 msgid "EPS Tools"
 msgstr "EPS Araçları"
 
-msgid ""
-"Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
-"EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Modus/Clio III EPS SIFIRLAMA<br><font color='red'>BU EKLENTİ, EPS IMMO "
-"VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
-"UZAK DURUN</font>"
+"Modus/Clio III EPS SIFIRLAMA<br><font color='red'>BU EKLENTİ, EPS IMMO VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "BOŞ DURUM & VIN (ŞASİ NO) OKUMA"
@@ -609,18 +580,13 @@ msgstr "<font color='red'>EPS kodlanmış</font>"
 
 #, python-format
 msgid "SdSC0 stream: %s"
-msgstr ""
+msgstr "SdSC0 akışı: %s"
 
 msgid "Clio IV EPS Reset"
 msgstr "Clio IV EPS Sıfırlama"
 
-msgid ""
-"Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
-"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"Clio IV EPS SIFIRLAMA<br><font color='red'>BU EKLENTİ EPS IMMO VERİLERİNİ "
-"SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA UZAK "
-"DURUN</font>V"
+msgid "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Clio IV EPS SIFIRLAMA<br><font color='red'>BU EKLENTİ EPS IMMO VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
 msgid "Check EPS Virgin"
 msgstr "Sıfır EPS'yi kontrol et"
@@ -633,7 +599,7 @@ msgstr "<font color='red'>BEKLENMEYEN YANIT</font>"
 
 #, python-format
 msgid "SdSFA stream: %s"
-msgstr ""
+msgstr "SdSFA akışı: %s"
 
 msgid "Laguna II UCH Reset"
 msgstr "Laguna II UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
@@ -641,13 +607,10 @@ msgstr "Laguna II UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 msgid "UCH Tools"
 msgstr "UCH (Araç İçi Merkezi Kontrol Ünitesi) Araçları"
 
-msgid ""
-"LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA II UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi "
-"Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
-"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"LAGUNA II UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
+"UZAK DURUN</font>"
 
 msgid "Check UCH Virgin"
 msgstr "Sıfır UCH'yi (Araç İçi Merkezi Kontrol Ünitesini) kontrol et"
@@ -656,89 +619,68 @@ msgid "Virginize UCH"
 msgstr "UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırla"
 
 msgid "<font color='green'>UCH virgin</font>"
-msgstr ""
-"<font color='green'>UCH (Araç İçi Merkezi Kontrol Ünitesi) temiz</font>"
+msgstr "<font color='green'>UCH (Araç İçi Merkezi Kontrol Ünitesi) temiz</font>"
 
 msgid "<font color='red'>UCH coded</font>"
-msgstr ""
-"<font color='red'>UCH (Araç İçi Merkezi Kontrol Ünitesi) kodlanmış</font>"
+msgstr "<font color='red'>UCH (Araç İçi Merkezi Kontrol Ünitesi) kodlanmış</font>"
 
 msgid "Laguna III UCH Reset"
 msgstr "Laguna III UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-msgid ""
-"LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA III UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi "
-"Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
-"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"LAGUNA III UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
+"UZAK DURUN</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-msgid ""
-"MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"MEGANE II UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi "
-"Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
-"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"MEGANE II UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
+"UZAK DURUN</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 HAVA YASTIĞI Sıfırlama"
 
-msgid ""
-"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
-"AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Megane III<br>HAVA YASTIĞI SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA "
-"YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA "
-"HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"Megane III<br>HAVA YASTIĞI SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ "
+"YOKSA UZAK DURUN</font>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "SDS FA stream: %s"
-msgstr "Alınan akış"
+msgstr "SDS FA akışı: %s"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III EPS Sıfırlama"
 
-msgid ""
-"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
-"PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
-"MEANS</font>"
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"ZOE/FLENCE/Megane III/Scenic III EPS SIFIRLAMA<br><font color='red'>BU "
-"EKLENTİ EPS IMMO VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA "
-"HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"ZOE/FLENCE/Megane III/Scenic III EPS SIFIRLAMA<br><font color='red'>BU EKLENTİ EPS IMMO VERİLERİNİ SIFIRLAYACAK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
+"UZAK DURUN</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III UCH (Araç İçi Merkezi Kontrol Ünitesi) Sıfırlama"
 
-msgid ""
-"MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
-"UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgid "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"MEGANE III UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi "
-"Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
-"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+"MEGANE III UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA "
+"UZAK DURUN</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 HAVA YASTIĞI Sıfırlama"
 
 msgid ""
-"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
-"VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
-"DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU "
+"HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>HAVA "
-"YASTIĞI SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA YASTIĞI ÇARPMA "
-"VERİLERİNİN KİLİDİNİ AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ "
-"YOKSA UZAK DURUN</font>"
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>HAVA YASTIĞI SIFIRLAMA<br><font color='red'>BU EKLENTİ HAVA YASTIĞI ÇARPMA VERİLERİNİN KİLİDİNİ "
+"AÇAR<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
-msgstr ""
+msgstr "SdSEX akışı: %s"
 
 msgid "CRC calculator"
 msgstr "CRC hesaplayıcı"
@@ -746,25 +688,23 @@ msgstr "CRC hesaplayıcı"
 msgid "VIN"
 msgstr "VIN (Şasi Numarası)"
 
-#, fuzzy
 msgid "CRC Calculator"
-msgstr "CRC hesaplayıcı"
+msgstr "CRC Hesaplayıcı"
 
 msgid "CRC CALCULATOR"
 msgstr "CRC HESAPLAYICI"
 
 msgid "Zoe water pump Reset"
-msgstr ""
+msgstr "Zoe su pompası Sıfırlama"
 
-#, fuzzy
 msgid "EVC Tools"
-msgstr "EPS Araçları"
+msgstr "EVC Araçları"
 
 msgid "Water pump counters"
-msgstr ""
+msgstr "Su pompası sayaçları"
 
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 msgid "Values"
 msgstr "Değerler"
@@ -772,93 +712,75 @@ msgstr "Değerler"
 msgid "Action"
 msgstr "Eylem"
 
-#, fuzzy
 msgid "Low Speed"
-msgstr "Bağlantı noktası (port) hızı"
+msgstr "Düşük Hız"
 
 msgid "Middle Speed"
-msgstr ""
+msgstr "Orta Hız"
 
 msgid "High Speed"
-msgstr ""
+msgstr "Yüksek Hız"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr ""
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
-msgstr ""
+msgstr "Sıfırla"
 
-#, fuzzy
-msgid ""
-"Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
-"PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
-msgstr ""
-"LAGUNA II UCH SIFIRLAMA<br><font color='red'>BU EKLENTİ UCH'İNİZİ (Araç İçi "
-"Merkezi Kontrol Ünitesini) SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR "
-"FİKİRİNİZ YOKSA UZAK DURUN</font>"
+msgid "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Zoe su pompası sayaçları<br><font color='red'>BU EKLENTİ SU POMPASI SAYAÇLARINI SİLECEK<br>NE ANLAMA GELDİĞİ HAKKINDA HİÇBİR FİKİRİNİZ YOKSA UZAK DURUN</font>"
 
-#, fuzzy
 msgid "Check values"
-msgstr "Kodlanmış değerler"
+msgstr "Değerleri kontrol et"
 
-#, fuzzy
 msgid "Waiting action"
-msgstr "Arşiv Yazılıyor"
+msgstr "Eylem bekleniyor"
 
 msgid "Reset all counters"
-msgstr ""
+msgstr "Tüm sayaçları sıfırla"
 
 msgid ""
-"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
-"Stay START until <b>Remove card</b> message</li><li>Put P position</"
-"li><li>Keep key card inserted</li></ul>"
+"<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/Stay START until <b>Remove card</b> message</li><li>Put P position</li><li>Keep key card "
+"inserted</li></ul>"
 msgstr ""
+"<h1>İPUÇLARI</h1><ul><li>Anahtar KART'ı takın</li><li>D konumuna alın</li><li><b>Kartı çıkarın</b> mesajı görünene kadar START'a basılı tutun</li><li>P konumuna alın</"
+"li><li>Anahtar kartı takılı tutun</li></ul>"
 
-#, fuzzy
 msgid "<font color='green'>Values read</font>"
-msgstr "<font color='green'>EPS temiz</font>"
+msgstr "<font color='green'>Değerler okundu</font>"
 
-#, fuzzy
 msgid "Reading Low speed"
-msgstr "Kontrol edilen port hızı:"
+msgstr "Düşük hız okunuyor"
 
 msgid "Reading Middle speed"
-msgstr ""
+msgstr "Orta hız okunuyor"
 
 msgid "Reading High speed"
-msgstr ""
+msgstr "Yüksek hız okunuyor"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
-msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+msgstr "<font color='green'>V_Timer_DrivWEP_ON TEMİZLEME UYGULANDI</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
-msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+msgstr "<font color='red'>V_Timer_DrivWEP_ON TEMİZLEME BAŞARISIZ</font>"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR Low EXECUTED</font>"
-msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+msgstr "<font color='green'>Düşük Hız TEMİZLEME UYGULANDI</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR Low FAILED</font>"
-msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+msgstr "<font color='red'>Düşük Hız TEMİZLEME BAŞARISIZ</font>"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
-msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+msgstr "<font color='green'>Orta Hız TEMİZLEME UYGULANDI</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR Medium FAILED</font>"
-msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+msgstr "<font color='red'>Orta Hız TEMİZLEME BAŞARISIZ</font>"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
-msgstr "<font color='green'>TEMİZLEME UYGULANDI</font>"
+msgstr "<font color='green'>Yüksek Hız TEMİZLEME UYGULANDI</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
-msgstr "<font color='red'>TEMİZLEME BAŞARISIZ</font>"
+msgstr "<font color='red'>Yüksek Hız TEMİZLEME BAŞARISIZ</font>"
 
 msgid "Add"
 msgstr "Ekle"
@@ -879,21 +801,13 @@ msgstr "Kontrol"
 msgid "Request %s not found"
 msgstr "%s isteği bulunamadı"
 
-#, fuzzy, python-format
-msgid ""
-"<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
-"input values"
-msgstr ""
-"<font color=green>İstek <font color=blue>'%s'</font> eksik girdi değeri "
-"içermiyor</font>"
+#, python-format
+msgid "<font color=green>Request</font><font color=blue>'%s'</font> has no missing input values"
+msgstr "<font color=green>İstek</font><font color=blue>'%s'</font> için eksik giriş değeri içermiyor"
 
-#, fuzzy, python-format
-msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
-msgstr ""
-"<font color=red>İstek <font color=blue>'%s'</font> eksik girdi içeriyor :</"
-"font>"
+#, python-format
+msgid "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs :"
+msgstr "<font color=red>İstek</font><font color=blue>'%s'</font> eksik girişlere sahip :"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1042,7 +956,7 @@ msgid "Number of bytes"
 msgstr "Bayt Sayısı"
 
 msgid "Send request bytes (HEX)"
-msgstr "Alınan istek baytları (HEX)"
+msgstr "Gönderilecek istek baytları (HEX)"
 
 msgid "Receive bytes (HEX)"
 msgstr "Alınan bayt (HEXA)"
@@ -1054,8 +968,7 @@ msgid "Shift byte count"
 msgstr "Bayt sayısını değiştir"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr ""
-"Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
+msgstr "Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
 
 msgid "Little"
 msgstr "Küçük"
@@ -1070,7 +983,7 @@ msgid "No SDS"
 msgstr "SDS yok"
 
 msgid "Plant"
-msgstr "Ek"
+msgstr "Fabrika"
 
 msgid "After Sale"
 msgstr "Satış Sonrası"
@@ -1106,7 +1019,7 @@ msgid "Cannot find data "
 msgstr "Veri bulunamıyor "
 
 msgid " vs "
-msgstr "vs"
+msgstr " vs "
 
 msgid "Cannot draw input "
 msgstr "Giriş çizilemiyor "
@@ -1114,12 +1027,8 @@ msgstr "Giriş çizilemiyor "
 msgid "No Value"
 msgstr "Değer Yok"
 
-msgid ""
-"<center>This Software is free, but I need money to buy cables/ECUs and make "
-"this application more reliable</center>"
-msgstr ""
-"<center>Bu Yazılım ücretsizdir, ancak kablolar/ECU'lar satın almak ve bu "
-"uygulamayı daha güvenli hale getirmek için paraya ihtiyacım var</center>"
+msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
+msgstr "<center>Bu Yazılım ücretsizdir, ancak kablolar/ECU'lar satın almak ve bu uygulamayı daha güvenli hale getirmek için paraya ihtiyacım var</center>"
 
 msgid "Yes I contribute"
 msgstr "Evet katkıda bulunurum"
@@ -1127,24 +1036,20 @@ msgstr "Evet katkıda bulunurum"
 msgid "No, I don't"
 msgstr "Hayır, yapmam"
 
-#, fuzzy
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"<center>Katkılarınız için teşekkür ederiz, herhangi bir şey olmazsa lütfen "
-"şu adrese gidin: https://github.com/cedricp/ddt4all</center>"
+msgstr "Katkılarınız için teşekkür ederiz, hiçbir şey olmamışsa lütfen şu adrese gidin:"
 
-#, fuzzy
 msgid "ECU Finder"
-msgstr "ECU Adı"
+msgstr "ECU Bulucu"
 
 msgid "Address :"
-msgstr ""
+msgstr "Adres :"
 
 msgid "ID frame :"
-msgstr ""
+msgstr "ID çerçeve :"
 
 msgid "No vehicles available"
-msgstr ""
+msgstr "Araç bulunamadı"
 
 msgid "ECU name"
 msgstr "ECU Adı"
@@ -1161,9 +1066,9 @@ msgstr "Tanılama"
 msgid "Projets"
 msgstr "Projeler"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%d loaded ECUs in database."
-msgstr "adet ECU veritabanında yüklü."
+msgstr "Veritabanına %d adet ECU yüklendi."
 
 msgid "No database found"
 msgstr "Veritabanı bulunamadı"
@@ -1171,23 +1076,20 @@ msgstr "Veritabanı bulunamadı"
 msgid "Check documentation"
 msgstr "Belgeleri kontrol edin"
 
-#, fuzzy
 msgid "DDT4All Documentation"
-msgstr "Belgeler"
+msgstr "DDT4All Belgeleri"
 
 msgid "WebEngine not available."
-msgstr ""
+msgstr "WebEngine mevcut değil."
 
-msgid ""
-"For full documentation with web browsing capability, install PyQtWebEngine:"
-msgstr ""
+msgid "For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr "Web tarama özellikli tam belgeleme için PyQtWebEngine kurun:"
 
-#, fuzzy
 msgid "Visit the online documentation at:"
-msgstr "Belgeleri kontrol edin"
+msgstr "Çevrimiiçi belgeleri ziyaret edin:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
+msgstr "Bu temel görünüm, mevcut olduğunda ECU belgelerini göstermeye devam edecek."
 
 msgid "Refresh rate (ms):"
 msgstr "Yenileme hızı (ms):"
@@ -1216,7 +1118,6 @@ msgstr "Butonlar"
 msgid "Ecu parameters"
 msgstr "ECU parametreleri"
 
-#, fuzzy
 msgid "Screen Window"
 msgstr "Ekran Penceresi"
 
@@ -1299,23 +1200,22 @@ msgid "View"
 msgstr "Görünüm"
 
 msgid "CarList Order"
-msgstr ""
+msgstr "Araç Listesi Sıralaması"
 
 msgid "By Project Code"
-msgstr ""
+msgstr "Proje Koduna Göre"
 
 msgid "By Car Name"
-msgstr ""
+msgstr "Araç Adına Göre"
 
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
-#, fuzzy
 msgid "Dark Theme"
-msgstr "Karanlık mod"
+msgstr "Karanlık Tema"
 
 msgid "Light Theme"
-msgstr ""
+msgstr "Açık Tema"
 
 msgid "New Category"
 msgstr "Yeni kategori"
@@ -1330,7 +1230,7 @@ msgid "Plugins"
 msgstr "Eklentiler"
 
 msgid "Cannot load plugin "
-msgstr "Eklenti yüklenemiyor"
+msgstr "Eklenti yüklenemiyor "
 
 msgid "Help"
 msgstr "Yardım"
@@ -1351,38 +1251,37 @@ msgid "About DDT4ALL"
 msgstr "DDT4ALL Hakkında"
 
 msgid " version:"
-msgstr "sürüm:"
+msgstr " sürüm:"
 
 msgid "Created by:"
 msgstr "Oluşturan:"
 
-#, fuzzy
 msgid "Options"
-msgstr "Tarama seçenekleri"
+msgstr "Seçenekler"
 
 msgid "CAN Line 1 Auto"
-msgstr ""
+msgstr "CAN Hat 1 Otomatik"
 
 msgid "CAN Line 1@500K"
-msgstr ""
+msgstr "CAN Hat 1@500K"
 
 msgid "CAN Line 1@250K"
-msgstr ""
+msgstr "CAN Hat 1@250K"
 
 msgid "CAN Line 2@500K"
-msgstr ""
+msgstr "CAN Hat 2@500K"
 
 msgid "CAN Line 2@250K"
-msgstr ""
+msgstr "CAN Hat 2@250K"
 
 msgid "CAN Line 2@125K"
-msgstr ""
+msgstr "CAN Hat 2@125K"
 
 msgid "KWP2000"
-msgstr ""
+msgstr "KWP2000"
 
 msgid "ISO8"
-msgstr ""
+msgstr "ISO8"
 
 msgid "Save database (keep '.zip' extension)"
 msgstr "Veritabanını kaydet ('.zip' uzantısını koru)"
@@ -1411,15 +1310,14 @@ msgstr "CAN Taranıyor"
 msgid "Scanning KWP"
 msgstr "KWP Taranıyor"
 
-#, fuzzy
 msgid "Scanning DoIP"
-msgstr "KWP Taranıyor"
+msgstr "DoIP Taranıyor"
 
 msgid "Scan options"
 msgstr "Tarama seçenekleri"
 
 msgid "EDITION MODE"
-msgstr "DENEME MODU"
+msgstr "DÜZENLEME MODU"
 
 msgid "CONNECTED"
 msgstr "BAĞLANDI"
@@ -1437,10 +1335,10 @@ msgid "Save record (keep '.txt' extension)"
 msgstr "Kaydı kaydet ('.txt' uzantısını koru)"
 
 msgid "Recorded "
-msgstr "Kaydedildi"
+msgstr "Kaydedildi "
 
 msgid " entries"
-msgstr "girişler"
+msgstr " girişler"
 
 msgid "No"
 msgstr "Hayır"
@@ -1449,35 +1347,34 @@ msgid "ELM port selection"
 msgstr "ELM bağlantı noktası (port) seçimi"
 
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 msgid "WiFi"
-msgstr ""
+msgstr "WiFi"
 
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 msgid "OBDLINK SX/EX"
-msgstr ""
+msgstr "OBDLINK SX/EX"
 
 msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
-msgstr ""
+msgstr "ELS27/ELS27 V5 - FTDI/CH340/CP210x cihazı olarak görünebilir"
 
 msgid "Vlinker FS/MC"
-msgstr ""
+msgstr "Vlinker FS/MC"
 
 msgid "DERLEK USB-DIAG2/3"
-msgstr ""
+msgstr "DERLEK USB-DIAG2/3"
 
 msgid "VGate (High-Speed)"
-msgstr ""
+msgstr "VGate (Yüksek Hızlı)"
 
 msgid "DoIP (Diagnostics over IP)"
-msgstr ""
+msgstr "DoIP (IP Üzerine Tanılama)"
 
-#, fuzzy
 msgid "Interface language"
-msgstr "Arayüz dili (kaydetmeniz ve kapatmanız gerekir)"
+msgstr "Arayüz dili"
 
 msgid "Port speed"
 msgstr "Bağlantı noktası (port) hızı"
@@ -1486,7 +1383,7 @@ msgid "Connected mode"
 msgstr "Bağlantı modu"
 
 msgid "Edition mode"
-msgstr "Deneme modu"
+msgstr "Düzenleme modu"
 
 msgid "ELM benchmark"
 msgstr "ELM değerlendirme testi"
@@ -1504,139 +1401,136 @@ msgid "Dark style"
 msgstr "Karanlık mod"
 
 msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr ""
+msgstr "DoIP (IP Üzerine Tanılama) Yapılandırması"
 
-#, fuzzy
 msgid "Device Preset : "
-msgstr "Device version: "
+msgstr "Cihaz Önayarı : "
 
 msgid "Custom"
-msgstr ""
+msgstr "Özel"
 
 msgid "Bosch MTS"
-msgstr ""
+msgstr "Bosch MTS"
 
 msgid "VXDIAG VCX Nano"
-msgstr ""
+msgstr "VXDIAG VCX Nano"
 
 msgid "VAG ODIS"
-msgstr ""
+msgstr "VAG ODIS"
 
 msgid "JLR DoIP VCI"
-msgstr ""
+msgstr "JLR DoIP VCI"
 
 msgid "Generic DoIP"
-msgstr ""
+msgstr "Genel DoIP"
 
 msgid "DoIP Target IP : "
-msgstr ""
+msgstr "DoIP Hedef IP : "
 
-#, fuzzy
 msgid "DoIP Port : "
-msgstr "Port: "
+msgstr "DoIP Port : "
 
 msgid "DoIP Timeout (seconds) : "
-msgstr ""
+msgstr "DoIP Zaman Aşımı (saniye) : "
 
 msgid "Enable Vehicle Announcement Discovery"
-msgstr ""
+msgstr "Araç Duyurusu Keşfini Etkinleştir"
 
 msgid "Auto-reconnect on connection loss"
-msgstr ""
+msgstr "Bağlantı kesildiğinde otomatik yeniden bağlan"
 
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
 
-#, fuzzy
 msgid "Checking..."
-msgstr "Kontrol"
+msgstr "Kontrol ediliyor..."
 
 msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
+msgstr "Lütfen WiFi adaptörü IP adresini girin"
 
 msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "Geçersiz WiFi biçimi. IP:PORT kullanın (örn: 192.168.0.10:35000)"
 
 msgid "Please select a serial port"
-msgstr "Please select a serial port"
+msgstr "Lütfen bir seri port seçin"
 
 msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
+msgstr "Seçilen port artık mevcut değil"
 
 msgid "Attempting connection..."
-msgstr "Attempting connection..."
+msgstr "Bağlantı deneniyor..."
 
 msgid "Port: "
 msgstr "Port: "
 
 msgid "Speed: "
-msgstr "Speed: "
+msgstr "Hız: "
 
 msgid "Connection test failed"
-msgstr "Connection test failed"
+msgstr "Bağlantı testi başarısız"
 
 msgid "Troubleshooting suggestions:"
-msgstr "Troubleshooting suggestions:"
+msgstr "Sorun giderme önerileri:"
 
 msgid "1. Check device is properly connected"
-msgstr "1. Check device is properly connected"
+msgstr "1. Cihazın düzgün bağlandığını kontrol edin"
 
 msgid "2. Try different baud rates"
-msgstr "2. Try different baud rates"
+msgstr "2. Farklı baud hızları deneyin"
 
 msgid "3. Ensure device drivers are installed"
-msgstr "3. Ensure device drivers are installed"
+msgstr "3. Cihaz sürücülerinin kurulu olduğundan emin olun"
 
 msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Check port permissions (Linux/macOS)"
+msgstr "4. Port izinlerini kontrol edin (Linux/macOS)"
 
 msgid "Connection test successful!"
-msgstr "Connection test successful!"
+msgstr "Bağlantı testi başarılı!"
 
 msgid "Error during connection test: "
-msgstr "Error during connection test: "
+msgstr "Bağlantı testi sırasında hata: "
 
 msgid "Reset and Recheck"
-msgstr ""
+msgstr "Sıfırla ve Yeniden Kontrol Et"
 
 msgid "57600"
-msgstr ""
+msgstr "57600"
 
 msgid "115200"
-msgstr ""
+msgstr "115200"
 
 msgid "230400"
-msgstr ""
+msgstr "230400"
 
 msgid "500000"
-msgstr ""
+msgstr "500000"
 
 msgid "1000000"
-msgstr ""
+msgstr "1000000"
 
 msgid "2000000"
-msgstr ""
+msgstr "2000000"
 
 msgid "38400"
-msgstr ""
+msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr ""
+msgstr "VGate iCar Pro seçildi - Gelişmiş STN/STPX desteği etkin"
 
 msgid "Long command support and high-speed communication available"
-msgstr ""
+msgstr "Uzun komut desteği ve yüksek hızlı iletişim mevcut"
 
 msgid "N/A"
-msgstr ""
+msgstr "Mevcut Değil"
 
 msgid "DoIP (Diagnostics over IP) selected"
-msgstr ""
+msgstr "DoIP (IP Üzerine Tanılama) seçildi"
 
 msgid "Ethernet-based diagnostic communication"
-msgstr ""
+msgstr "Ethernet tabanlı tanılama iletişimi"
 
 msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
-msgstr ""
+msgstr "Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI ile uyumlu"
 
 msgid "You must check the recommandations"
 msgstr "Önerileri kontrol etmelisiniz"
@@ -1645,10 +1539,10 @@ msgid "Please select a communication port"
 msgstr "Lütfen bir bağlantı noktası (port) seçin"
 
 msgid "ECU Command"
-msgstr ""
+msgstr "ECU Komutu"
 
 msgid "Err, cannot rename "
-msgstr "Hata, yeniden adlandıramıyorum"
+msgstr "Hata, yeniden adlandıramıyorum "
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr "Ekranınızı düzenleyebilmek için önce JSON formatında dışa aktarın"
@@ -1684,7 +1578,7 @@ msgid "Protocol not supported"
 msgstr "Protokol desteklenmiyor"
 
 msgid "Protocol not supported: "
-msgstr "Protokol desteklenmiyor:"
+msgstr "Protokol desteklenmiyor: "
 
 msgid "XML file not found : "
 msgstr "XML dosyası bulunamadı: "
@@ -1726,13 +1620,13 @@ msgid "Sending request :"
 msgstr "Gönderilen istek :"
 
 msgid "Unknown request "
-msgstr "Bilinmeyen istek"
+msgstr "Bilinmeyen istek "
 
 msgid "Command aborted "
-msgstr "Komut iptal edildi"
+msgstr "Komut iptal edildi "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Bu şeyin değer hatası belki bir bypass geçidine ihtiyaç duyar."
+msgstr "Bu değerin işlenmesi için bypass ağ geçidi gerekli olabilir."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "İstek iptal edildi (kırmızı parametre girişlerine bakın): "
@@ -1769,16 +1663,16 @@ msgid "Update time"
 msgstr "Güncelleme zamanı"
 
 msgid "Clearing DTC information"
-msgstr "DTC bilgilerini temizleniyor"
+msgstr "DTC bilgileri temizleniyor"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Bu ECU için Net DTC talebi yok, varsayılan olarak 14FF00 gönderecek"
+msgstr "Bu ECU için ClearDTC isteği yok, varsayılan 14FF00 gönderilecek"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Tanılama arıza kodlarını temizlemek üzeresiniz</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
-msgstr "<center>İstediğinizin bu olduğundan emin misiniz.</center>"
+msgstr "<center>Bunu istediğinizden emin misiniz?</center>"
 
 msgid "Clear DTC failed"
 msgstr "DTC temizleme başarısız oldu"
@@ -1799,7 +1693,7 @@ msgid "No DTC"
 msgstr "DTC yok"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Tanılama Arıza Kodları"
 
 msgid "Clear ALL DTC"
 msgstr "TÜM DTC'leri Temizle"
@@ -1811,28 +1705,28 @@ msgid "Parsing screen "
 msgstr "Ayrıştırma ekranı "
 
 msgid "found request in input "
-msgstr "girişte istek bulundu"
+msgstr "girişte istek bulundu "
 
 msgid "found in display "
-msgstr "ekranda bulunan"
+msgstr "ekranda bulunan "
 
 msgid "found in button "
-msgstr "düğmede bulunan"
+msgstr "düğmede bulunan "
 
 msgid "found in presend "
-msgstr "şu anda bulunan"
+msgstr "ön gönderimde bulunan "
 
 msgid "found data in input "
-msgstr "girişte bulunan veriler"
+msgstr "girişte bulunan veriler "
 
 msgid "found data in display "
-msgstr "Ekranda bulunan veriler"
+msgstr "ekranda bulunan veriler "
 
 msgid "Waiting..."
-msgstr "Bekle..."
+msgstr "Bekleniyor..."
 
 msgid "Frame length error: "
-msgstr "Çerçeve uzunluğu hatası:"
+msgstr "Çerçeve uzunluğu hatası: "
 
 msgid "Frame hex error: "
-msgstr "Çerçeve hex hatası:"
+msgstr "Çerçeve hex hatası: "
