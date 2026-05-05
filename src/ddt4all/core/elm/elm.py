@@ -27,16 +27,13 @@ _ = options.translator('ddt4all')
 
 # SNAT/DNAT entries for CAN address mapping
 # Fixed: Using proper hex addresses instead of string values
-dnat_entries = {"E7": "7E4", "E8": "644"}
-snat_entries = {"E7": "7EC", "E8": "5C4"}
+dnat_entries = {} #{"E7": "7E4", "E8": "644"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
+snat_entries = {} #{"E7": "7EC", "E8": "5C4"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
 
 snat = snat_entries
 snat_ext = {}
 dnat = dnat_entries
 dnat_ext = {}
-
-
-
 
 def clean_bytestring(value):
     # If is bytes -> decode
