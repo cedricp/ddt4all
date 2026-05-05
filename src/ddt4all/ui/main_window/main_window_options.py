@@ -512,27 +512,36 @@ class MainWindowOptions(widgets.QDialog):
                     hwid = ""
                     status = "unknown"
 
-                # Use port description as-is
+                # Use port description with USB VID:PID if available
                 item = widgets.QListWidgetItem(self.listview)
-                itemname = f"{port}[{desc}]"
+                if hwid and 'USB VID:PID=' in hwid:
+                    itemname = f"{port}[{desc}] {hwid}"
+                else:
+                    itemname = f"{port}[{desc}]"
                 item.setText(itemname)
                 self.ports[itemname] = (port, desc, hwid, status)
 
-                # Set color based on status (optimized for dark theme)
-                if status == "online":
-                    item.setBackground(gui.QColor(50, 150, 50))  # Dark green background
-                elif status == "offline":
-                    item.setBackground(gui.QColor(150, 50, 50))  # Dark red background
-                else:
-                    item.setBackground(gui.QColor(100, 100, 100))  # Dark gray background
-
-                # Highlight potential OBD devices based on description
+                # Highlight potential OBD devices based on description first
                 desc_lower = desc.lower()
-                if any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27', 'doip']):
+                is_obd_device = any(keyword in desc_lower for keyword in ['elm327', 'elm', 'obd', 'vlinker', 'obdlink', 'els27', 'doip'])
+                
+                # Set device type with realistic, distinctive colors
+                if is_obd_device:
+                    if 'doip' in desc_lower:
+                        item.setData(32, "doip")  # Qt.UserRole + 1 for device type
+                        item.setBackground(gui.QColor(135, 206, 235))  # Sky blue for DoIP
+                    else:
+                        item.setData(32, "obd")  # Qt.UserRole + 1 for device type
+                        item.setBackground(gui.QColor(144, 238, 144))  # Light green for OBD
                     font = item.font()
                     font.setBold(True)
                     item.setFont(font)
-                    item.setBackground(gui.QColor(200, 255, 200))  # Light green background
+                elif status == "online":
+                    item.setBackground(gui.QColor(60, 179, 113))  # Medium sea green
+                elif status == "offline":
+                    item.setBackground(gui.QColor(205, 92, 92))  # Indian red
+                else:
+                    item.setBackground(gui.QColor(192, 192, 192))  # Silver
 
             # Auto-select first OBD device if available
             if self.listview.count() > 0 and not self.listview.currentItem():

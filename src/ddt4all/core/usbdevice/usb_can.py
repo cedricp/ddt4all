@@ -1,9 +1,14 @@
 import time
-from usb import (
-    util,
-    core,
-    legacy
-)
+
+try:
+    from usb import (
+        util,
+        core,
+        legacy
+    )
+    USB_AVAILABLE = True
+except ImportError:
+    USB_AVAILABLE = False
 
 from ddt4all.core.usbdevice.constants import (
     CAN_ISOTP_MODE,
@@ -30,6 +35,19 @@ class UsbCan:
         self.init()
 
     def init(self):
+        # Check if USB is available before attempting device detection
+        if not USB_AVAILABLE:
+            return False
+        
+        # Test if USB backend is available before attempting device detection
+        try:
+            import usb.backend.libusb1
+            backend = usb.backend.libusb1.get_backend()
+            if backend is None:
+                return False
+        except ImportError:
+            return False
+            
         # Try to find various USB CAN adapters
         # Standard USB CAN adapter
         self.device = core.find(idVendor=0x16c0, idProduct=0x05df)
@@ -142,6 +160,9 @@ class UsbCan:
         return self.device is not None
 
     def get_string_descriptor(self):
+        if not USB_AVAILABLE:
+            return _("USB not available")
+            
         try:
             response = self.device.ctrl_transfer(util.ENDPOINT_IN,
                                                  legacy.REQ_GET_DESCRIPTOR,
@@ -151,11 +172,11 @@ class UsbCan:
             if len(response) >= 2:
                 return response[2:].tostring().decode('utf-16')
             else:
-                return "USB Device"
+                return _("USB Device")
         except Exception as e:
             # Fallback for devices with limited descriptor support
-            print(f"Warning: Could not read string descriptor: {e}")
-            return "USB OBD Device"
+            print(_("Warning: Could not read string descriptor:") + f" {e}")
+            return _("USB OBD Device")
 
     def get_vendor_request(self, vendor_id):
         try:
@@ -164,7 +185,7 @@ class UsbCan:
                                               wIndex=vendor_id)
             return bytes
         except Exception as e:
-            print(f"Warning: Vendor request failed: {e}")
+            print(_("Warning: Vendor request failed:") + f" {e}")
             return b''
 
     def set_vendor_request(self, vendor_id, value):
@@ -175,7 +196,7 @@ class UsbCan:
                                               wValue=value)
             return bytes
         except Exception as e:
-            print(f"Warning: Vendor request failed: {e}")
+            print(_("Warning: Vendor request failed:") + f" {e}")
             return b''
 
     def get_data(self, length=511):
