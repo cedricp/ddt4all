@@ -512,9 +512,12 @@ class MainWindowOptions(widgets.QDialog):
                     hwid = ""
                     status = "unknown"
 
-                # Use port description as-is
+                # Use port description with USB VID:PID if available
                 item = widgets.QListWidgetItem(self.listview)
-                itemname = f"{port}[{desc}]"
+                if hwid and 'USB VID:PID=' in hwid:
+                    itemname = f"{port}[{desc}] {hwid}"
+                else:
+                    itemname = f"{port}[{desc}]"
                 item.setText(itemname)
                 self.ports[itemname] = (port, desc, hwid, status)
 

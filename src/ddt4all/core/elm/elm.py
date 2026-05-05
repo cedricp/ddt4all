@@ -93,22 +93,32 @@ def get_available_ports():
     
     # First check for USB devices using usbdevice.py (with error handling)
     try:
-        usb_device = UsbCan()
-        if usb_device.is_init():
-            # Add USB device to ports list
-            ports.append((usb_device.descriptor, usb_device.descriptor, "USB", "online"))
-            print(_("Found USB device:") + " %s" % usb_device.descriptor)
-    except ImportError as e:
-        # Only show USB backend error once per session
-        if not hasattr(get_available_ports, '_usb_error_shown'):
-            get_available_ports._usb_error_shown = True
-            print(f"USB backend not available: {e}")
-            print("Note: USB device detection requires pyusb library (pip install pyusb)")
+        # Check if pyusb is available before attempting USB device detection
+        import usb.core
+        import usb.util
+        import usb.legacy
+        import usb.backend.libusb1
+        
+        # Test if USB backend is available before attempting device detection
+        backend = usb.backend.libusb1.get_backend()
+        if backend is None:
+            # No USB backend available - silently continue for bypass cable users
+            pass
+        else:
+            usb_device = UsbCan()
+            if usb_device.is_init():
+                # Add USB device to ports list
+                ports.append((usb_device.descriptor, usb_device.descriptor, "USB", "online"))
+                print(_("Found USB device:") + " %s" % usb_device.descriptor)
+    except ImportError:
+        # USB device detection not available - silently continue for bypass cable users
+        pass
     except Exception as e:
         # Only show USB device detection error once per session
         if not hasattr(get_available_ports, '_usb_device_error_shown'):
             get_available_ports._usb_device_error_shown = True
-            print(f"USB device detection error: {e}")
+            print(_("USB device detection error:") + f" {e}")
+            print(_("Note: This error does not affect serial communication or bypass cable functionality."))
     
     # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
     # DoIP devices - Use configured IP address instead of hardcoded values
