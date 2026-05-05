@@ -464,7 +464,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     f = open(os.path.join(get_dir("src"), "ddt4all", "resources", "projects.json"), "w", encoding="UTF-8")
     f.write(js)
     f.close()
-    for p in sorted(projects_list):
+    for p in sorted(projects_list, key=str.casefold):
         projects_str += f'<{p}/>'
     projects_str += "</Projects>"
     print(projects_str)
