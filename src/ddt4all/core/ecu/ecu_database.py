@@ -143,6 +143,7 @@ class EcuDatabase:
                 address = hex(int(address))[2:].zfill(2).upper()
 
                 for target in targets:
+                    self.numecu += 1
                     group = target.getAttribute("group")
                     href = target.getAttribute("href")
                     name = target.getAttribute("Name")
@@ -170,7 +171,6 @@ class EcuDatabase:
                         for c in projectselems[0].childNodes:
                             projects.append(c.nodeName)
                     for autoident in autoidents:
-                        self.numecu += 1
                         if len(autoident.getElementsByTagName("AutoIdent")) == 0:
                             ecu_ident = EcuIdent("00", "??????", "0000", "0000", name, group, href, protocol,
                                                   projects, address)
