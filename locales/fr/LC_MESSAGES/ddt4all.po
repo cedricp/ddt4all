@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-05-05 17:51+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:44+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
@@ -289,9 +289,8 @@ msgstr ""
 "Remarque: Cette erreur n'affecte pas la communication série ou la "
 "fonctionnalité du câble de contournement."
 
-#, fuzzy
 msgid "Trying to open port "
-msgstr "Tentative d'ouverture du port %s"
+msgstr "Tentative d'ouverture du port "
 
 msgid "Port initialization failed"
 msgstr "Échec de l'initialisation du port"
@@ -559,7 +558,7 @@ msgid "USB OBD Device"
 msgstr "Périphérique OBD USB"
 
 msgid "Warning: Vendor request failed:"
-msgstr "Avertissement : la requête du fournisseur a échoué."
+msgstr "Avertissement : la requête du fournisseur a échoué:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
@@ -719,8 +718,7 @@ msgstr "Écrire le VIN"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - INVALIDE</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - MAUVAISE LONGUEUR</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -940,9 +938,8 @@ msgstr "Vérifier les valeurs"
 msgid "Waiting action"
 msgstr "Action en attente"
 
-#, fuzzy
 msgid "Reset all counters"
-msgstr "Réinitialiser les compteurs"
+msgstr "Réinitialiser tous les compteurs"
 
 msgid ""
 "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
@@ -1022,11 +1019,10 @@ msgstr ""
 
 #, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "La <font color=red>Requête</font><font color=blue>'%s'</font> comporte des "
-"entrées manquantes :"
+"entrées manquantes"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1767,7 +1763,6 @@ msgstr "Communication de diagnostic basée sur Ethernet"
 msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 msgstr "Compatible avec Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 
-#, fuzzy
 msgid "You must check the recommandations"
 msgstr "Vous devez vérifier les recommandations"
 
@@ -1801,7 +1796,6 @@ msgstr "Changer de couleur"
 msgid "Remove element"
 msgstr "Supprimer l'élément"
 
-#, fuzzy
 msgid "Diagnotic session"
 msgstr "Session de diagnostic"
 
@@ -1867,7 +1861,6 @@ msgstr ""
 "Erreur de valeur de cet élément - peut nécessiter une passerelle de "
 "contournement."
 
-#, fuzzy
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Requête abandonnée (vérifiez les paramètres en rouge): "
 
@@ -1912,7 +1905,6 @@ msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr ""
 "<center>Vous êtes sur le point d'effacer les codes de diagnostic</center>"
 
-#, fuzzy
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Êtes-vous sûr que c'est ce que vous voulez.</center>"
 
@@ -1944,31 +1936,31 @@ msgid "ECU trouble codes"
 msgstr "Codes de défaut ECU"
 
 msgid "Parsing screen "
-msgstr "Analyse de l'écran"
+msgstr "Analyse de l'écran "
 
 msgid "found request in input "
-msgstr "requête trouvée dans l'entrée"
+msgstr "requête trouvée dans l'entrée "
 
 msgid "found in display "
-msgstr "trouvé dans l'affichage"
+msgstr "trouvé dans l'affichage "
 
 msgid "found in button "
-msgstr "trouvé dans le bouton"
+msgstr "trouvé dans le bouton "
 
 msgid "found in presend "
-msgstr "trouvé dans l'envoi"
+msgstr "trouvé dans l'envoi "
 
 msgid "found data in input "
-msgstr "trouvé des données en entrée"
+msgstr "données trouvées en entrée "
 
 msgid "found data in display "
-msgstr "données trouvées dans l'affichage"
+msgstr "données trouvées dans l'affichage "
 
 msgid "Waiting..."
-msgstr "Attente..."
+msgstr "En attente..."
 
 msgid "Frame length error: "
-msgstr "Erreur de longueur de trame: "
+msgstr "Erreur de longueur de trame : "
 
 msgid "Frame hex error: "
-msgstr "Erreur hexadécimale du cadre: "
+msgstr "Erreur hex de trame : "

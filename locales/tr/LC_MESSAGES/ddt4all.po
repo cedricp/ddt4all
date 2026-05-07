@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-04-29 23:58+0300\n"
-"Last-Translator: Abdullah YILMAZ (TA1GI) <h.abdullahyilmaz@hotmail.com>\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:51+0200\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "DoIP device connected successfully"
@@ -124,7 +124,7 @@ msgid "Adding group "
 msgstr "Grup ekleniyor "
 
 msgid "Unable to find eculist"
-msgstr "eculist bulunamadı"
+msgstr "Eculist bulunamadı"
 
 msgid "Cannot find file "
 msgstr "Dosya bulunamadı "
@@ -434,10 +434,10 @@ msgid "ELM Max version:"
 msgstr "ELM Max sürümü:"
 
 msgid "Using saved settings for"
-msgstr "Kayıtlı ayarlar kullanılıyor:"
+msgstr "Kayıtlı ayarlar kullanılıyor"
 
 msgid "Using optimal settings for"
-msgstr "Optimal ayarlar kullanılıyor:"
+msgstr "Optimal ayarlar kullanılıyor"
 
 msgid "Serial port opened"
 msgstr "Seri port açıldı"
@@ -453,7 +453,7 @@ msgstr "Port kapalı"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
-msgstr "read_byte'ta seri iletişim hatası: %s"
+msgstr "Read_byte'ta seri iletişim hatası: %s"
 
 msgid "Connection to ELM was lost"
 msgstr "ELM ile bağlantısı kesildi"
@@ -468,7 +468,7 @@ msgstr "%s baytları çözülemiyor"
 
 #, python-format
 msgid "Error in read(): %s"
-msgstr "read() içinde hata: %s"
+msgstr "Read() içinde hata: %s"
 
 msgid "Attempting WiFi reconnection..."
 msgstr "WiFi yeniden bağlantısı deneniyor..."
@@ -699,8 +699,7 @@ msgstr "VIN Yaz"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - GEÇERSİZ</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - KÖTÜ UZUNLUK</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -761,9 +760,8 @@ msgstr "UCH Virgin Kontrolü"
 msgid "Virginize UCH"
 msgstr "UCH Virgin Yap"
 
-#, fuzzy
 msgid "<font color='green'>UCH virgin</font>"
-msgstr "<font color='green'>EPS virgin</font>"
+msgstr "<font color='green'>UCH virgin</font>"
 
 msgid "<font color='red'>UCH coded</font>"
 msgstr "<font color='red'>UCH kodlanmış</font>"
@@ -899,9 +897,8 @@ msgstr "Değerleri kontrol et"
 msgid "Waiting action"
 msgstr "Eylem bekleniyor"
 
-#, fuzzy
 msgid "Reset all counters"
-msgstr "Sayaçları sıfırla"
+msgstr "Tüm sayaçları sıfırla"
 
 msgid ""
 "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
@@ -977,11 +974,10 @@ msgstr ""
 
 #, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "<font color=red>İstek</font><font color=blue>'%s'</font> eksik girişlere "
-"sahip :"
+"sahip"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1218,7 +1214,7 @@ msgstr "Hayır, yapmam"
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
 "Katkılarınız için teşekkür ederiz, hiçbir şey olmamışsa lütfen şu adrese "
-"gidin:"
+"gidin"
 
 msgid "ECU Finder"
 msgstr "ECU Bulucu"
@@ -1891,25 +1887,25 @@ msgid "found request in input "
 msgstr "girişte istek bulundu "
 
 msgid "found in display "
-msgstr "ekranda bulunan "
+msgstr "ekranda bulundu "
 
 msgid "found in button "
 msgstr "düğmede bulunan "
 
 msgid "found in presend "
-msgstr "ön gönderimde bulunan "
+msgstr "önceden gönderimde bulundu "
 
 msgid "found data in input "
-msgstr "girişte bulunan veriler "
+msgstr "girişte veri bulundu "
 
 msgid "found data in display "
-msgstr "ekranda bulunan veriler "
+msgstr "ekranda veri bulundu "
 
 msgid "Waiting..."
 msgstr "Bekleniyor..."
 
 msgid "Frame length error: "
-msgstr "Çerçeve uzunluğu hatası: "
+msgstr "Çerçeve uzunluk hatası: "
 
 msgid "Frame hex error: "
 msgstr "Çerçeve hex hatası: "

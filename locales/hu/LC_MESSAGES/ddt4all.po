@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-04-10 00:04+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:46+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -272,7 +272,7 @@ msgid "Found USB device:"
 msgstr "USB eszköz találva:"
 
 msgid "USB device detection error:"
-msgstr "USB eszköz észlelési hiba"
+msgstr "USB eszköz észlelési hiba:"
 
 msgid ""
 "Note: This error does not affect serial communication or bypass cable "
@@ -434,10 +434,10 @@ msgid "ELM Max version:"
 msgstr "ELM Max verzió:"
 
 msgid "Using saved settings for"
-msgstr "Mentett beállítások használata ehhez:"
+msgstr "Mentett beállítások használata ehhez"
 
 msgid "Using optimal settings for"
-msgstr "Optimális beállítások használata ehhez:"
+msgstr "Optimális beállítások használata ehhez"
 
 msgid "Serial port opened"
 msgstr "Soros port megnyitva"
@@ -681,9 +681,7 @@ msgid ""
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>EZ A PLUGIN VISSZAÁLLÍTJA "
-"AZ EPS IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>Modus/"
-"Clio III EPS VIRGINIZER<br><font color='red'>EZ A PLUGIN VISSZAÁLLÍTJA AZ "
-"EPS IMMO ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"AZ EPS IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "ÜRES ÁLLAPOT & VIN OLVASÁS"
@@ -703,8 +701,7 @@ msgstr "VIN írása"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - ÉRVÉNYTELEN</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - ROSSZ HOSSZ</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -731,9 +728,8 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>EZ A PLUGIN VISSZAÁLLÍTJA AZ EPS "
-"IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>Clio IV EPS "
-"VIRGINIZER<br><font color='red'>EZ A PLUGIN VISSZAÁLLÍTJA AZ EPS IMMO "
-"ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</"
+"font>ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
 
 msgid "Check EPS Virgin"
 msgstr "EPS Virgin ellenőrzése"
@@ -759,9 +755,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>LAGUNA II UCH "
-"VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRÖLNI FOGJA AZ ÖN UCH-"
-"JÁT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>JÁT<br>TÁVOZZON EL, HA "
+"NINCS ÖTLETE, MIT JELENT EZ</font>"
 
 msgid "Check UCH Virgin"
 msgstr "UCH Virgin ellenőrzése"
@@ -783,9 +778,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>LAGUNA III UCH "
-"VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRÖLNI FOGJA AZ ÖN UCH-"
-"JÁT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>JÁT<br>TÁVOZZON EL, HA "
+"NINCS ÖTLETE, MIT JELENT EZ</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH Reset"
@@ -795,9 +789,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>MEGANE II UCH "
-"VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRÖLNI FOGJA AZ ÖN UCH-"
-"JÁT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>JÁT<br>TÁVOZZON EL, HA "
+"NINCS ÖTLETE, MIT JELENT EZ</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 AIRBAG Reset"
@@ -808,9 +801,8 @@ msgid ""
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>EZ A PLUGIN FELOLDJA AZ "
 "AIRBAG ÜTKÖZÉSI ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</"
-"font>Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>EZ A PLUGIN "
-"FELOLDJA AZ AIRBAG ÜTKÖZÉSI ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT "
-"JELENT EZ</font>"
+"font>FELOLDJA AZ AIRBAG ÜTKÖZÉSI ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, "
+"MIT JELENT EZ</font>"
 
 #, python-format
 msgid "SDS FA stream: %s"
@@ -993,23 +985,19 @@ msgstr "Ellenőrzés"
 msgid "Request %s not found"
 msgstr "Nincs %s parancs"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
 "input values"
 msgstr ""
 "<font color=green>Kérés</font><font color=blue>'%s'</font> nem hiányoznak a "
-"bemeneti értékek</font><font color=green>A(z) <font color=blue>'%s'</font> "
-"parancsnak nincs hiányzó bemeneti értéke</font>"
+"bemeneti értékek"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
-"<font color=red>Kérés</font><font color=blue>'%s'</font> hiányzó bemenetek :"
-"<font color=red>A(z) <font color=blue>'%s'</font> parancsnak hiányos a "
-"bemenete :</font>"
+"<font color=red>Kérés</font><font color=blue>'%s'</font> hiányzó bemenetek"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1234,11 +1222,7 @@ msgid ""
 "this application more reliable</center>"
 msgstr ""
 "<center>Ez a szoftver ingyenes, de pénzre van szükségem kábelek/ECU-k "
-"vásárlásához és ehhez az alkalmazás megbízhatóbbá tételéhez</"
-"center><center>Ez a szoftver ingyenes, de pénzre van szükségem kábelek/ECU-k "
-"vásárlásához és az alkalmazás megbízhatóbbá tételéhez</center><center>Ez a "
-"program ingyenes, de szükségem van pénzre, hogy kábeleket/ECU-kat vásároljak "
-"és megbízhatóbbá tegyem az alkalmazást</center>"
+"vásárlásához és ehhez az alkalmazás megbízhatóbbá tételéhez</center>"
 
 msgid "Yes I contribute"
 msgstr "Igen, hozzájárulok"
@@ -1247,7 +1231,7 @@ msgid "No, I don't"
 msgstr "Nem"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr "Köszönjük a hozzájárulását, ha semmi nem történik, látogasson el ide:"
+msgstr "Köszönjük a hozzájárulását, ha semmi nem történik, látogasson el ide"
 
 msgid "ECU Finder"
 msgstr "ECU kereső"
@@ -1332,24 +1316,23 @@ msgstr "Gombok"
 msgid "Ecu parameters"
 msgstr "ECU paraméterek"
 
-#, fuzzy
 msgid "Screen Window"
-msgstr "Képernyő"
+msgstr "Képernyő ablak"
 
 msgid "Screens"
 msgstr "Képernyők"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Napló ablak"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "ECU ablak"
 
 msgid "Ecu List Window"
-msgstr ""
+msgstr "ECU lista ablak"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Eszköztár"
 
 msgid "Read DTC"
 msgstr "DTC olvasása"
@@ -1370,25 +1353,25 @@ msgid "Manual command"
 msgstr "Manuális parancs"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Manuális kérés"
 
 msgid "Software flow control"
-msgstr ""
+msgstr "Szoftver folyamatvezérlés"
 
 msgid "Zoom In"
-msgstr ""
+msgstr "Nagyítás"
 
 msgid "Zoom Out"
-msgstr ""
+msgstr "Kicsinyítés"
 
 msgid "UI Edit"
-msgstr ""
+msgstr "UI szerkesztés"
 
 msgid "File"
 msgstr "Fájl"
 
 msgid "Open XML"
-msgstr ""
+msgstr "XML megnyitása"
 
 msgid "Identify ECU"
 msgstr "ECU azonosítása"
@@ -1444,7 +1427,6 @@ msgstr "Átnevezés"
 msgid "Plugins"
 msgstr "Bővítmények"
 
-#, fuzzy
 msgid "Cannot load plugin "
 msgstr "Nem lehet betölteni a bővítményt "
 
@@ -1466,14 +1448,12 @@ msgstr "Névjegy"
 msgid "About DDT4ALL"
 msgstr "A DDT4ALL-ről"
 
-#, fuzzy
 msgid " version:"
 msgstr " verzió:"
 
 msgid "Created by:"
 msgstr "Készítette:"
 
-#, fuzzy
 msgid "Options"
 msgstr "Beállítások"
 
@@ -1528,7 +1508,6 @@ msgstr "CAN keresés"
 msgid "Scanning KWP"
 msgstr "KWP keresés"
 
-#, fuzzy
 msgid "Scanning DoIP"
 msgstr "DoIP keresés"
 
@@ -1623,9 +1602,8 @@ msgstr "Sötét stílus"
 msgid "DoIP (Diagnostics over IP) Configuration"
 msgstr "DoIP (Diagnosztika IP-n keresztül) konfiguráció"
 
-#, fuzzy
 msgid "Device Preset : "
-msgstr "Device version: "
+msgstr "Eszköz beállítás : "
 
 msgid "Custom"
 msgstr "Egyéni"
@@ -1648,9 +1626,8 @@ msgstr "Általános DoIP"
 msgid "DoIP Target IP : "
 msgstr "DoIP cél IP : "
 
-#, fuzzy
 msgid "DoIP Port : "
-msgstr "Port: "
+msgstr "DoIP port : "
 
 msgid "DoIP Timeout (seconds) : "
 msgstr "DoIP időtúllépés (másodperc) : "
@@ -1664,9 +1641,8 @@ msgstr "Automatikus újracsatlakozás kapcsolatvesztés esetén"
 msgid "Change UART speed"
 msgstr "UART sebesség módosítása"
 
-#, fuzzy
 msgid "Checking..."
-msgstr "Ellenőrzés"
+msgstr "Ellenőrzés..."
 
 msgid "Please enter WiFi adapter IP address"
 msgstr "Kérem, adja meg a WiFi adapter IP címét"
@@ -1800,13 +1776,11 @@ msgstr "Bemenet"
 msgid "Output"
 msgstr "Kimenet"
 
-#, fuzzy
 msgid "Protocol not supported"
-msgstr "HIBA - nem támogatott parancs"
+msgstr "Protokoll nem támogatott"
 
-#, fuzzy
 msgid "Protocol not supported: "
-msgstr "HIBA - nem támogatott parancs"
+msgstr "Protokoll nem támogatott: "
 
 msgid "XML file not found : "
 msgstr "XML fájl nem létezik: "
@@ -1815,10 +1789,10 @@ msgid "Invalid DDT file"
 msgstr "Hibás DDT fájl"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr ""
+msgstr "ELM kapcsolat elveszett, újracsatlakozás..."
 
 msgid "Cannot reconnect..."
-msgstr ""
+msgstr "Nem lehet újracsatlakozni..."
 
 msgid "Switching to session mode"
 msgstr "Munkaszakasz módba váltás"
@@ -1836,7 +1810,7 @@ msgid "Sending simulated ELM request :"
 msgstr "Szimulált ELM parancs küldése:"
 
 msgid "Bad ELM response :"
-msgstr ""
+msgstr "Rossz ELM válasz :"
 
 msgid "ELM response : "
 msgstr "ELM válasz: "
@@ -1847,24 +1821,23 @@ msgstr "Gomb parancs nem létezik: "
 msgid "Sending request :"
 msgstr "Parancs küldése:"
 
-#, fuzzy
 msgid "Unknown request "
-msgstr "ECU funkció címe"
+msgstr "Ismeretlen kérés "
 
 msgid "Command aborted "
-msgstr ""
+msgstr "Parancs megszakítva "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr ""
+msgstr "Értékhiba, lehet hogy bypass átjáró szükséges."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Parancs visszautasítva (ellenőrizd a piros paramétereket): "
 
 msgid "Delay"
-msgstr ""
+msgstr "Késleltetés"
 
 msgid "For your safety"
-msgstr ""
+msgstr "A biztonságodért"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
@@ -1873,24 +1846,23 @@ msgstr ""
 "<center>BLOKKOLT PARANCS</center>\n"
 "Aktiválja a szakértői módot a feloldáshoz"
 
-#, fuzzy
 msgid "Writing parameter"
-msgstr "ECU paraméterek"
+msgstr "Paraméter írása"
 
 msgid "Blocked writing parameter"
-msgstr ""
+msgstr "Blokkolt paraméter írás"
 
 msgid "Invalid"
 msgstr "Érvénytelen"
 
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "Az ECU SDS-t használ "
 
 msgid "Cannot call request "
 msgstr "Sikertelen parancshívás "
 
 msgid "Update time"
-msgstr ""
+msgstr "Frissítési idő"
 
 msgid "Clearing DTC information"
 msgstr "DTC információk törlése"
@@ -1906,30 +1878,26 @@ msgstr "<center>Törölni fogod a diagnosztikai hibakódokat</center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Tényleg ezt akarod.</center>"
 
-#, fuzzy
 msgid "Clear DTC failed"
-msgstr "DTC információk törlése"
+msgstr "DTC törlése sikertelen"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "DTC törlése sikeresen megtörtént"
 
-#, fuzzy
 msgid "No ReadDTC request for that ECU"
-msgstr ""
-"Nem létezik ClearDTC parancs ehhez az ECU-hoz, az alapértelmezett 14FF00 "
-"küldése"
+msgstr "Nincs ReadDTC kérés ehhez az ECU-hozküldése"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Érvénytelen válasz a ReadDTC parancsra"
 
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "A Read DTC hibát adott vissza"
 
 msgid "No DTC"
 msgstr "Nincs DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Diagnosztikai hibakódok"
 
 msgid "Clear ALL DTC"
 msgstr "Összes DTC törlése"
@@ -1940,31 +1908,29 @@ msgstr "ECU hibakódok"
 msgid "Parsing screen "
 msgstr "Képernyő beolvasása "
 
-#, fuzzy
 msgid "found request in input "
-msgstr "Gomb parancs nem létezik: "
+msgstr "kérés található a bemenetben "
 
 msgid "found in display "
-msgstr ""
+msgstr "kijelzőben található "
 
-#, fuzzy
 msgid "found in button "
-msgstr "Gomb hozzáadása"
+msgstr "gombban található "
 
 msgid "found in presend "
-msgstr ""
+msgstr "előküldésben található "
 
 msgid "found data in input "
-msgstr ""
+msgstr "adat található a bemenetben "
 
 msgid "found data in display "
-msgstr ""
+msgstr "adat található a kijelzőben "
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Várakozás..."
 
 msgid "Frame length error: "
-msgstr ""
+msgstr "Kerethossz hiba: "
 
 msgid "Frame hex error: "
-msgstr ""
+msgstr "Keret hex hiba: "

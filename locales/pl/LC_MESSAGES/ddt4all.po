@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-04-10 00:04+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:47+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -284,8 +284,7 @@ msgid ""
 "functionality."
 msgstr ""
 "Uwaga: Ten błąd nie wpływa na komunikację szeregową ani funkcjonalność "
-"przewodu obejścia.Uwaga: Ten błąd nie wpływa na komunikację szeregową ani "
-"funkcjonalność kabla bypass."
+"przewodu obejścia."
 
 msgid "Trying to open port "
 msgstr "Próba otwarcia portu "
@@ -344,9 +343,7 @@ msgstr "%s Wersja: "
 msgid ""
 "VGate adapter detected but STN verification failed, attempting fallback..."
 msgstr ""
-"Wykryto adapter VGate, ale weryfikacja STN nie powiodła się, próba "
-"powrotu...Wykryto adapter VGate, ale weryfikacja STN nie powiodła się, próba "
-"powrotu..."
+"Wykryto adapter VGate, ale weryfikacja STN nie powiodła się, próba powrotu..."
 
 #, python-format
 msgid "Unsupported baudrate for ELM: %s"
@@ -487,9 +484,9 @@ msgstr "Obsługa portu jest None, nie można zapisać"
 msgid "Serial write error: %s"
 msgstr "Błąd zapisu portu szeregowego: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "*       Write error: %s"
-msgstr "*       Błąd: %s"
+msgstr "*       Błąd zapisu: %s"
 
 msgid "TIMEOUT"
 msgstr "CZAS OCZEKIWANIA"
@@ -712,8 +709,7 @@ msgstr "Zapisz VIN"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - NIEPRAWIDŁOWY</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - ZŁA DŁUGOŚĆ</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -821,9 +817,9 @@ msgstr ""
 "ODBLOKUJE DANE O WYPADKU AIRBAGU<br>JEŚLI NIE WIESZ CO TO OZNACZA TO ODPUŚĆ "
 "SOBIĘ UŻYWANIE TEJ OPCJI</font>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "SDS FA stream: %s"
-msgstr "Odebrany strumień  "
+msgstr "Strumień SDS FA: %s"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
 msgstr "ZOE/FLENCE/Megane III/Scenic III Reset EPS"
@@ -1002,27 +998,24 @@ msgstr "Sprawdź"
 msgid "Request %s not found"
 msgstr "Polecenie %s nie znalezione"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
 "input values"
 msgstr ""
 "<font color=green>Zapytanie</font><font color=blue>'%s'</font> nie ma "
-"brakujących wartości wejściowych</font><font color=green>Request <font "
-"color=blue>'%s'</font> ma brakujące wartości wejściowe</font>"
+"brakujących wartości wejściowych"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "<font color=red>Zapytanie</font><font color=blue>'%s'</font> ma brakujące "
-"wejścia :<font color=red>Request <font color=blue>'%s'</font> ma brakujące "
-"wejścia :</font>"
+"wejścia"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
-msgstr ""
+msgstr "<font color=orange> - '%s'</font>"
 
 msgid "Delay;Request"
 msgstr "Opożnienie;Request"
@@ -1104,10 +1097,10 @@ msgid "Coding"
 msgstr "Kodowanie"
 
 msgid "Big Endian"
-msgstr ""
+msgstr "Big Endian"
 
 msgid "Little Endian"
-msgstr ""
+msgstr "Little Endian"
 
 msgid "ECU Auto identification"
 msgstr "Automatyczna identyfikacja ECU"
@@ -1128,7 +1121,7 @@ msgid "Supplier"
 msgstr "Dostawca"
 
 msgid "Soft"
-msgstr ""
+msgstr "Soft"
 
 msgid "Version"
 msgstr "Wersja"
@@ -1195,7 +1188,7 @@ msgid "No SDS"
 msgstr "Nie SDS"
 
 msgid "Plant"
-msgstr ""
+msgstr "Plant"
 
 msgid "After Sale"
 msgstr "Po sprzedaży"
@@ -1231,7 +1224,7 @@ msgid "Cannot find data "
 msgstr "Nie można znaleźć danych "
 
 msgid " vs "
-msgstr ""
+msgstr " vs "
 
 msgid "Cannot draw input "
 msgstr "Nie można narysować wejścia "
@@ -1254,43 +1247,41 @@ msgstr "Tak chce wspomóc"
 msgid "No, I don't"
 msgstr "Nie, nie chce"
 
-#, fuzzy
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"<center>Dziekujemy za twoją contybucję, jeżeli nic sie nie dzieje, proszę "
-"kliknąć tutaj: https://github.com/cedricp/ddt4all</center>"
+"<center>Dziękujemy za Twój wkład, jeśli nic się nie stanie, proszę przejdź "
+"na: https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
 msgid "ECU Finder"
-msgstr "Nazwa Ecu"
+msgstr "Wyszukiwarka ECU"
 
 msgid "Address :"
-msgstr ""
+msgstr "Adres :"
 
 msgid "ID frame :"
-msgstr ""
+msgstr "ID ramki :"
 
 msgid "No vehicles available"
-msgstr ""
+msgstr "Brak dostępnych pojazdów"
 
 msgid "ECU name"
 msgstr "Nazwa Ecu"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Protocol"
 msgstr "Protokół"
 
 msgid "Diag"
-msgstr ""
+msgstr "Diag"
 
 msgid "Projets"
 msgstr "Projekt"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%d loaded ECUs in database."
-msgstr "załadowane ECU w bazie danych."
+msgstr "%d załadowanych ECU w bazie danych."
 
 msgid "No database found"
 msgstr "Nie znaleziono bazy danych"
@@ -1298,9 +1289,8 @@ msgstr "Nie znaleziono bazy danych"
 msgid "Check documentation"
 msgstr "Sprawdź dokumentację"
 
-#, fuzzy
 msgid "DDT4All Documentation"
-msgstr "Dokumentacja"
+msgstr "Dokumentacja DDT4All"
 
 msgid "WebEngine not available."
 msgstr "WebEngine nie jest dostępny."
@@ -1311,12 +1301,13 @@ msgstr ""
 "Pełną dokumentację z możliwością przeglądania internetowego, zainstaluj "
 "PyQtWebEngine:"
 
-#, fuzzy
 msgid "Visit the online documentation at:"
-msgstr "Sprawdź dokumentację"
+msgstr "Odwiedź dokumentację online pod adresem:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
+"Ten podstawowy widok będzie nadal wyświetlał dokumentację ECU, jeśli "
+"dostępna."
 
 msgid "Refresh rate (ms):"
 msgstr "Prędkość odświeżania (ms):"
@@ -1331,7 +1322,7 @@ msgid "Screen"
 msgstr "Ekran"
 
 msgid "CAN Sniffer"
-msgstr ""
+msgstr "CAN Sniffer"
 
 msgid "Requests"
 msgstr "Polecenie"
@@ -1345,7 +1336,6 @@ msgstr "Przyciski"
 msgid "Ecu parameters"
 msgstr "Parametry ECU"
 
-#, fuzzy
 msgid "Screen Window"
 msgstr "Okno ekranu"
 
@@ -1362,7 +1352,7 @@ msgid "Ecu List Window"
 msgstr "Okno Listy ECU"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Pasek narzędzi"
 
 msgid "Read DTC"
 msgstr "Czytaj DTC"
@@ -1439,9 +1429,8 @@ msgstr "Według nazwy samochodu"
 msgid "Theme"
 msgstr "Motyw"
 
-#, fuzzy
 msgid "Dark Theme"
-msgstr "Tryb ciemny"
+msgstr "Ciemny motyw"
 
 msgid "Light Theme"
 msgstr "Jasny motyw"
@@ -1485,9 +1474,8 @@ msgstr " wersja:"
 msgid "Created by:"
 msgstr "Stworzone przez:"
 
-#, fuzzy
 msgid "Options"
-msgstr "Opcje skanowania"
+msgstr "Opcje"
 
 msgid "CAN Line 1 Auto"
 msgstr "Automatyczna linia CAN 1"
@@ -1540,9 +1528,8 @@ msgstr "Skanuj CAN"
 msgid "Scanning KWP"
 msgstr "Skanuj KWP"
 
-#, fuzzy
 msgid "Scanning DoIP"
-msgstr "Skanuj KWP"
+msgstr "Skanowanie DoIP"
 
 msgid "Scan options"
 msgstr "Opcje skanowania"
@@ -1604,9 +1591,8 @@ msgstr "VGate (Wysoka prędkość)"
 msgid "DoIP (Diagnostics over IP)"
 msgstr "DoIP (Diagnostyka przez IP)"
 
-#, fuzzy
 msgid "Interface language"
-msgstr "Język interfejsu (wymaga zapisania i zamknięcia)"
+msgstr "Język interfejsu"
 
 msgid "Port speed"
 msgstr "Prędkość portu"
@@ -1636,9 +1622,8 @@ msgstr "Tryb ciemny"
 msgid "DoIP (Diagnostics over IP) Configuration"
 msgstr "Konfiguracja DoIP (Diagnostyka przez IP)"
 
-#, fuzzy
 msgid "Device Preset : "
-msgstr "Device version: "
+msgstr "Ustawienia urządzenia : "
 
 msgid "Custom"
 msgstr "Niestandardowy"
@@ -1661,9 +1646,8 @@ msgstr "Ogólny DoIP"
 msgid "DoIP Target IP : "
 msgstr "Docelowy IP DoIP : "
 
-#, fuzzy
 msgid "DoIP Port : "
-msgstr "Port: "
+msgstr "Port DoIP : "
 
 msgid "DoIP Timeout (seconds) : "
 msgstr "Timeout DoIP (sekundy) : "
@@ -1677,9 +1661,8 @@ msgstr "Automatyczne ponowne łączenie przy utracie połączenia"
 msgid "Change UART speed"
 msgstr "Zmień prędkość UART"
 
-#, fuzzy
 msgid "Checking..."
-msgstr "Sprawdź"
+msgstr "Sprawdzanie..."
 
 msgid "Please enter WiFi adapter IP address"
 msgstr "Wprowadź adres IP adaptera WiFi"
@@ -1881,7 +1864,6 @@ msgstr ""
 "Aktywuj tryb eksperta aby odblokować<center>KOMENDA ZABLOKOWANA</center>\n"
 "Aktywuj tryb eksperta aby odblokować"
 
-#, fuzzy
 msgid "Writing parameter"
 msgstr "Zapisywanie parametru"
 
@@ -1933,7 +1915,7 @@ msgid "No DTC"
 msgstr "Brak DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Kody błędów diagnostycznych"
 
 msgid "Clear ALL DTC"
 msgstr "Wyczysc wszystkie DTC"

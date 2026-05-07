@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-04-10 00:04+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:44+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -128,16 +128,14 @@ msgstr "Añadiendo grupo "
 msgid "Unable to find eculist"
 msgstr "No se puede encontrar eculist"
 
-#, fuzzy
 msgid "Cannot find file "
-msgstr "No se puede realizar petición de llamada "
+msgstr "No se puede encontrar el archivo "
 
 msgid "Cannot load ECU file"
 msgstr "No se puede cargar el archivo ECU"
 
-#, fuzzy
 msgid "XML not found"
-msgstr "Fichero XML no encontrado: "
+msgstr "XML no encontrado"
 
 msgid "Cannot retrieve functionnal address of ECU"
 msgstr "No se puede recuperar la dirección funcional de la ECU"
@@ -149,7 +147,7 @@ msgid "Send request stream "
 msgstr "Enviar flujo de solicitud "
 
 msgid "Received stream "
-msgstr "Flujo recibido"
+msgstr "Flujo recibido "
 
 msgid "Request ECU Error"
 msgstr "Error de solicitud ECU"
@@ -172,24 +170,21 @@ msgstr "(coincidencia no perfecta)"
 msgid "(no relevant ECU file found)"
 msgstr "(no se encontró archivo ECU relevante)"
 
-#, fuzzy
 msgid "Warning, address"
-msgstr "Dirección de función ECU"
+msgstr "Advertencia, dirección"
 
 msgid "is not mapped"
 msgstr "no está mapeado"
 
-#, fuzzy
 msgid "Scanning address: "
-msgstr "Dirección de función ECU"
+msgstr "Escaneando dirección: "
 
-#, fuzzy
 msgid "Scanning DoIP address: "
-msgstr "Dirección de función ECU"
+msgstr "Escaneando dirección DoIP: "
 
-#, fuzzy, python-format
+#, python-format
 msgid "Device detection error: %s"
-msgstr "Error de conexión: "
+msgstr "Error de detección de dispositivo: %s"
 
 #, python-format
 msgid "STPX mode enabled for %s"
@@ -274,16 +269,15 @@ msgstr "Dispositivo %s inicializado exitosamente con funciones mejoradas"
 msgid "Device %s initialized with basic features only"
 msgstr "Dispositivo %s inicializado solo con funciones básicas"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Device initialization error: %s"
-msgstr "Inicialización de pantalla"
+msgstr "Error de inicialización de dispositivo: %s"
 
 msgid "Found USB device:"
 msgstr "Dispositivo USB encontrado:"
 
-#, fuzzy
 msgid "USB device detection error:"
-msgstr "Dispositivo ELM327 detectado exitosamente"
+msgstr "Error de detección de dispositivo USB:"
 
 msgid ""
 "Note: This error does not affect serial communication or bypass cable "
@@ -295,9 +289,8 @@ msgstr ""
 msgid "Trying to open port "
 msgstr "Intentando abrir Puerto "
 
-#, fuzzy
 msgid "Port initialization failed"
-msgstr "Inicialización de pantalla"
+msgstr "Fallo en inicialización de puerto"
 
 msgid "Port connection failed - port object is invalid"
 msgstr "Conexión de puerto fallida - objeto de puerto inválido"
@@ -345,7 +338,7 @@ msgstr "Conexión STN %s establecida"
 
 #, python-format
 msgid "%s Version: "
-msgstr "Versión %s"
+msgstr "Versión %s "
 
 msgid ""
 "VGate adapter detected but STN verification failed, attempting fallback..."
@@ -395,7 +388,7 @@ msgid "Testing for ELS27 device..."
 msgstr "Probando dispositivo ELS27..."
 
 msgid "ELS27 device detected: "
-msgstr "Dispositivo ELS27 detectado"
+msgstr "Dispositivo ELS27 detectado "
 
 msgid "Using detected baud rate: "
 msgstr "Usando velocidad de baudios detectada: "
@@ -445,13 +438,11 @@ msgstr " logrado desde "
 msgid "ELM Max version:"
 msgstr "Versión ELM maxima:"
 
-#, fuzzy
 msgid "Using saved settings for"
-msgstr "Usando configuraciones guardadas del dispositivo"
+msgstr "Usando configuraciones guardadas para"
 
-#, fuzzy
 msgid "Using optimal settings for"
-msgstr "Usando configuraciones óptimas del dispositivo"
+msgstr "Usando configuraciones óptimas para"
 
 msgid "Serial port opened"
 msgstr "Puerto serie abierto"
@@ -490,21 +481,19 @@ msgstr "Intentando reconexión WiFi..."
 msgid "Port handler is None, cannot write"
 msgstr "Manejador de puerto es None, no se puede escribir"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Serial write error: %s"
-msgstr "Error de intercambio de pines: %s"
+msgstr "Error de escritura serie: %s"
 
 #, python-format
 msgid "*       Write error: %s"
 msgstr "*       Error de escritura: %s"
 
-#, fuzzy
 msgid "TIMEOUT"
-msgstr "OK/TIMEOUT"
+msgstr "TIEMPO DE ESPERA AGOTADO"
 
-#, fuzzy
 msgid "Checking port speed:"
-msgstr "Leyendo velocidad baja"
+msgstr "Verificando velocidad de puerto:"
 
 msgid "Start COM speed :"
 msgstr "Velocidad inicial COM :"
@@ -548,13 +537,11 @@ msgstr "Configuración ELS27 V5 CAN completada"
 msgid "Found USB adapter:"
 msgstr "Adaptador USB encontrado:"
 
-#, fuzzy
 msgid "USB not available"
-msgstr "WebEngine no disponible."
+msgstr "USB no disponible"
 
-#, fuzzy
 msgid "USB Device"
-msgstr "Dispositivo USB encontrado:"
+msgstr "Dispositivo USB"
 
 msgid "Warning: Could not read string descriptor:"
 msgstr "Advertencia: No se pudo leer descriptor de cadena:"
@@ -579,16 +566,15 @@ msgstr "Usando base de datos DDT personalizada"
 msgid "No COM port selected"
 msgstr "Puerto COM no seleccionado"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Initializing ELM with speed %i..."
-msgstr "Iniciando ELM a velocidad %i..."
+msgstr "Inicializando ELM con velocidad %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "No se ha detectado OBDLink-SX o ELM "
 
-#, fuzzy
 msgid "Initializing device features..."
-msgstr "Iniciando ELM a velocidad %i..."
+msgstr "Inicializando funciones de dispositivo..."
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Reinicio AIRBAG AB90"
@@ -699,9 +685,8 @@ msgid ""
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ "
-"DATOS IMMO EPS<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>Modus/"
-"Clio III EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ DATOS "
-"IMMO EPS<br>ALÉJATE SI NO TIENES IDEA DE LO QUE SIGNIFICA</font>"
+"DATOS IMMO EPS<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>IMMO "
+"EPS<br>ALÉJATE SI NO TIENES IDEA DE LO QUE SIGNIFICA</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "ESTADO BLANK & LECTURA VIN"
@@ -721,8 +706,7 @@ msgstr "Escribir VIN"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - INVÁLIDO</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - LONGITUD INCORRECTA</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -749,9 +733,8 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ DATOS "
-"IMMO EPS<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>Clio IV EPS "
-"VIRGINIZER<br><font color='red'>ESTE PLUGIN REINICIARÁ DATOS IMMO "
-"EPS<br>ALÉJATE SI NO TIENES IDEA DE LO QUE SIGNIFICA</font>"
+"IMMO EPS<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>EPS<br>ALÉJATE "
+"SI NO TIENES IDEA DE LO QUE SIGNIFICA</font>"
 
 msgid "Check EPS Virgin"
 msgstr "Verificar Virgin EPS"
@@ -777,9 +760,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ SU "
-"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>LAGUNA II UCH "
-"VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ TU UCH<br>ALÉJATE SI NO "
-"TIENES IDEA DE LO QUE SIGNIFICA</font>"
+"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>TIENES IDEA DE LO "
+"QUE SIGNIFICA</font>"
 
 msgid "Check UCH Virgin"
 msgstr "Verificar Virgin UCH"
@@ -801,9 +783,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ SU "
-"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>LAGUNA III UCH "
-"VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ TU UCH<br>ALÉJATE SI NO "
-"TIENES IDEA DE LO QUE SIGNIFICA</font>"
+"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>TIENES IDEA DE LO "
+"QUE SIGNIFICA</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Reinicio UCH Megane/Scenic II"
@@ -813,9 +794,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ SU "
-"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>MEGANE II UCH "
-"VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ TU UCH<br>ALÉJATE SI NO "
-"TIENES IDEA DE LO QUE SIGNIFICA</font>"
+"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>TIENES IDEA DE LO "
+"QUE SIGNIFICA</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Reinicio AIRBAG Megane3"
@@ -826,9 +806,8 @@ msgid ""
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE PLUGIN "
 "DESBLOQUEARÁ DATOS DE CHOQUE DE AIRBAG<br>VÁYASE SI NO TIENE IDEA DE LO QUE "
-"SIGNIFICA</font>Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ESTE "
-"PLUGIN DESBLOQUEARÁ DATOS DE CHOQUE DE AIRBAG<br>ALÉJATE SI NO TIENES IDEA "
-"DE LO QUE SIGNIFICA</font>"
+"SIGNIFICA</font>PLUGIN DESBLOQUEARÁ DATOS DE CHOQUE DE AIRBAG<br>ALÉJATE SI "
+"NO TIENES IDEA DE LO QUE SIGNIFICA</font>"
 
 #, python-format
 msgid "SDS FA stream: %s"
@@ -844,9 +823,8 @@ msgid ""
 msgstr ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>ESTE "
 "PLUGIN REINICIARÁ DATOS IMMO EPS<br>VÁYASE SI NO TIENE IDEA DE LO QUE "
-"SIGNIFICA</font>ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font "
-"color='red'>ESTE PLUGIN REINICIARÁ DATOS IMMO EPS<br>ALÉJATE SI NO TIENES "
-"IDEA DE LO QUE SIGNIFICA</font>"
+"SIGNIFICA</font>color='red'>ESTE PLUGIN REINICIARÁ DATOS IMMO EPS<br>ALÉJATE "
+"SI NO TIENES IDEA DE LO QUE SIGNIFICA</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Reinicio UCH Megane/Scenic III"
@@ -856,9 +834,8 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ SU "
-"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>MEGANE III UCH "
-"VIRGINIZER<br><font color='red'>ESTE PLUGIN BORRARÁ TU UCH<br>ALÉJATE SI NO "
-"TIENES IDEA DE LO QUE SIGNIFICA</font>"
+"UCH<br>VÁYASE SI NO TIENE IDEA DE LO QUE SIGNIFICA</font>TIENES IDEA DE LO "
+"QUE SIGNIFICA</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "Reinicio AIRBAG RSAT4"
@@ -1010,23 +987,20 @@ msgstr "Verificar"
 msgid "Request %s not found"
 msgstr "Petición %s no encontrada"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
 "input values"
 msgstr ""
 "<font color=green>Petición</font><font color=blue>'%s'</font> no tiene "
-"valores de entrada faltantes</font><font color=green>Petición <font "
-"color=blue>'%s'</font> no tiene entradas perdidas manquante</font>"
+"valores de entrada faltantes"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "<font color=red>Petición</font><font color=blue>'%s'</font> tiene entradas "
-"faltantes :<font color=red>Petición <font color=blue>'%s'</font> tiene "
-"entradas perdidas: </font>"
+"faltantes"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1442,7 +1416,6 @@ msgstr "Por nombre vehículo"
 msgid "Theme"
 msgstr "Tema"
 
-#, fuzzy
 msgid "Dark Theme"
 msgstr "Tema oscuro"
 
@@ -1494,7 +1467,6 @@ msgstr "Opciones"
 msgid "CAN Line 1 Auto"
 msgstr "Línea CAN 1 Auto"
 
-#, fuzzy
 msgid "CAN Line 1@500K"
 msgstr "Línea CAN 1@500K"
 
@@ -1507,7 +1479,6 @@ msgstr "Línea CAN 2@500K"
 msgid "CAN Line 2@250K"
 msgstr "Línea CAN 2@250K"
 
-#, fuzzy
 msgid "CAN Line 2@125K"
 msgstr "Línea CAN 2@125K"
 
@@ -1676,7 +1647,6 @@ msgstr "Auto-reconectar en pérdida de conexión"
 msgid "Change UART speed"
 msgstr "Cambiar velocidad UART"
 
-#, fuzzy
 msgid "Checking..."
 msgstr "Verificando..."
 
@@ -1809,11 +1779,9 @@ msgstr "Entrada"
 msgid "Output"
 msgstr "Salida"
 
-#, fuzzy
 msgid "Protocol not supported"
 msgstr "Protocolo no soportado"
 
-#, fuzzy
 msgid "Protocol not supported: "
 msgstr "Protocolo no soportado: "
 
@@ -1856,7 +1824,6 @@ msgstr "Botón petición no encontrado: "
 msgid "Sending request :"
 msgstr "Enviando petición:"
 
-#, fuzzy
 msgid "Unknown request "
 msgstr "Petición desconocida "
 
@@ -1882,9 +1849,8 @@ msgstr ""
 "<center>COMANDO BLOQUEADO</center>\n"
 "Activar modo experto para desbloquear"
 
-#, fuzzy
 msgid "Writing parameter"
-msgstr "Parametros ECU"
+msgstr "Escribiendo parámetro"
 
 msgid "Blocked writing parameter"
 msgstr "Parámetro de escritura bloqueado"
@@ -1893,13 +1859,13 @@ msgid "Invalid"
 msgstr "No valido"
 
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "El ECU usa SDS "
 
 msgid "Cannot call request "
 msgstr "No se puede realizar petición de llamada "
 
 msgid "Update time"
-msgstr ""
+msgstr "Tiempo de actualización"
 
 msgid "Clearing DTC information"
 msgstr "Limpiando información DTC"
@@ -1914,29 +1880,26 @@ msgstr "<center>Vous êtes sur le point d'effacer les DTC<center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Estas seguro de que es lo que quieres.</center>"
 
-#, fuzzy
 msgid "Clear DTC failed"
-msgstr "Limpiando información DTC"
+msgstr "Fallo al limpiar DTC"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "Limpieza DTC realizada con éxito"
 
-#, fuzzy
 msgid "No ReadDTC request for that ECU"
-msgstr ""
-"No hay peticiones ClearDTC para esta ECU, se enviará por defecto 14FF00"
+msgstr "No hay petición ReadDTC para esa ECU"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Respuesta no valida para el comando ReadDTC"
 
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "La lectura DTC devolvió un error"
 
 msgid "No DTC"
 msgstr "No DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Códigos de problemas de diagnóstico"
 
 msgid "Clear ALL DTC"
 msgstr "Limpiar todos los DTC"
@@ -1947,31 +1910,29 @@ msgstr "Codigos de problema ECU"
 msgid "Parsing screen "
 msgstr "Analizando Pantalla "
 
-#, fuzzy
 msgid "found request in input "
-msgstr "Botón petición no encontrado: "
+msgstr "petición encontrada en entrada "
 
 msgid "found in display "
-msgstr ""
+msgstr "encontrado en pantalla "
 
-#, fuzzy
 msgid "found in button "
-msgstr "Añadir boton"
+msgstr "encontrado en botón "
 
 msgid "found in presend "
-msgstr ""
+msgstr "encontrado en preenvío "
 
 msgid "found data in input "
-msgstr ""
+msgstr "datos encontrados en entrada "
 
 msgid "found data in display "
-msgstr ""
+msgstr "datos encontrados en pantalla "
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Esperando..."
 
 msgid "Frame length error: "
-msgstr ""
+msgstr "Error de longitud de trama: "
 
 msgid "Frame hex error: "
-msgstr ""
+msgstr "Error hex de trama: "

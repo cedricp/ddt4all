@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-04-10 00:04+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:48+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
 "Language: ro\n"
@@ -560,9 +560,9 @@ msgstr "Utilizarea bazei de date DDT personalizate"
 msgid "No COM port selected"
 msgstr "Niciun port COM nu a fost selectat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Initializing ELM with speed %i..."
-msgstr "Initializează ELM cu viteza %i..."
+msgstr "Inițializare ELM cu viteza %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Niciun ELM327 sau OBDLINK-SX nu a fost detectat în portul COM "
@@ -679,9 +679,7 @@ msgid ""
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>ACEST PLUGIN VA RESETA "
-"DATELE IMMO EPS<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>Modus/Clio "
-"III VIRGINIZATOR EPS<br><font color='red'>ACEST PLUGIN VA RESETA DATELE EPS "
-"IMMO<br>PLECAȚI DACĂ NU AVEȚI IDEA CE ÎNSEAMNĂ</font>"
+"DATELE IMMO EPS<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "ȘTERGE STATUS ȘI CITESTE VIN"
@@ -701,8 +699,8 @@ msgstr "Scrie VIN"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - INVALID</font>"
 
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
-msgstr "<font color='res'>VIN - LUNGIME FALSA</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
+msgstr "<font color='red'>VIN - LUNGIME FALSA</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
 msgstr "<font color='orange'>SCRIERE VIN EȘUATĂ</font>"
@@ -728,9 +726,7 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>ACEST PLUGIN VA RESETA DATELE "
-"IMMO EPS<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>Clio IV "
-"VIRGINIZATOR EPS<br><font color='red'>ACEST PLUGIN VA RESETA DATELE "
-"IMMO<br>PLECAȚI DACĂ NU AVEȚI IDEA CE ÎNSEAMNĂ</font>"
+"IMMO EPS<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>"
 
 msgid "Check EPS Virgin"
 msgstr "Verifică EPS Virgin"
@@ -756,9 +752,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>ACEST PLUGIN VA ȘTERGE UCH-ul "
-"DVS.<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>LAGUNA II VIRGINIZATOR "
-"UCH<br><font color='red'>ACEST PLUGIN VA ȘTERGE UCH-UL TĂU<br>PLECAȚI DACĂ "
-"NU AVEȚI IDEA CE ÎNSEAMNĂ</font>"
+"DVS.<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>"
 
 msgid "Check UCH Virgin"
 msgstr "Verifică UCH Virgin"
@@ -780,9 +774,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>ACEST PLUGIN VA ȘTERGE UCH-ul "
-"DVS.<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>LAGUNA III "
-"VIRGINIZATOR UCH<br><font color='red'>ACEST PLUGIN VA ȘTERGE UCH-UL "
-"TĂU<br>PLECAȚI DACĂ NU AVEȚI IDEA CE ÎNSEAMNĂ</font>"
+"DVS.<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH Reset"
@@ -792,9 +784,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>ACEST PLUGIN VA ȘTERGE UCH-ul "
-"DVS.<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>MEGANE II VIRGINIZATOR "
-"UCH<br><font color='red'>ACEST PLUGIN VA ȘTERGE UCH-UL TĂU<br>PLECAȚI DACĂ "
-"NU AVEȚI IDEA CE ÎNSEAMNĂ</font>"
+"DVS.<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 AIRBAG Reset"
@@ -805,8 +795,7 @@ msgid ""
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ACEST PLUGIN VA DEBLOCA "
 "DATELE DE CIURNIRE AIRBAG<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</"
-"font>Megane III<br>VIRGINIZATOR AIRBAG<br><font color='red'>ACEST PLUGIN VA "
-"DEBLOCA DATELE DE AVARIE A AIRBAG-ULUI<br>PLECAȚI DACĂ NU AVEȚI IDEA CE "
+"font>DEBLOCA DATELE DE AVARIE A AIRBAG-ULUI<br>PLECAȚI DACĂ NU AVEȚI IDEA CE "
 "ÎNSEAMNĂ</font>"
 
 #, python-format
@@ -989,22 +978,19 @@ msgstr "Verifica"
 msgid "Request %s not found"
 msgstr "Cererea %s nu a fost gasita"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
 "input values"
 msgstr ""
 "<font color=green>Cerere</font><font color=blue>'%s'</font> nu are valori de "
-"intrare lipsă</font>"
+"intrare lipsă"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
-"<font color=red>Cerere</font><font color=blue>'%s'</font> are intrări lipsă :"
-"<font color=red>Cererea <font color=blue>'%s'</font> are intrari lipsa :</"
-"font>"
+"<font color=red>Cerere</font><font color=blue>'%s'</font> are intrări lipsă"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1271,9 +1257,9 @@ msgstr "Diag"
 msgid "Projets"
 msgstr "Proiecte"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%d loaded ECUs in database."
-msgstr "eCUs incarcate in baza de date."
+msgstr "%d ECU-uri încărcate în baza de date."
 
 msgid "No database found"
 msgstr "Baza de date zip"
@@ -1281,9 +1267,8 @@ msgstr "Baza de date zip"
 msgid "Check documentation"
 msgstr "Documentatie"
 
-#, fuzzy
 msgid "DDT4All Documentation"
-msgstr "Documentatie"
+msgstr "Documentație DDT4All"
 
 msgid "WebEngine not available."
 msgstr "WebEngine nu este disponibil."
@@ -1294,12 +1279,13 @@ msgstr ""
 "Pentru documentație completă cu capacitate de navigare web, instalați "
 "PyQtWebEngine:"
 
-#, fuzzy
 msgid "Visit the online documentation at:"
-msgstr "Documentatie"
+msgstr "Vizitează documentația online la:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
+"Această vizualizare de bază va afișa în continuare documentația ECU atunci "
+"când este disponibilă."
 
 msgid "Refresh rate (ms):"
 msgstr "Rata de actualizare (ms):"
@@ -1328,24 +1314,23 @@ msgstr "Butoane"
 msgid "Ecu parameters"
 msgstr "Parametri ECU"
 
-#, fuzzy
 msgid "Screen Window"
-msgstr "Ecran"
+msgstr "Fereastră ecran"
 
 msgid "Screens"
 msgstr "Ecrane"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Fereastră jurnale"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "Fereastră ECU"
 
 msgid "Ecu List Window"
-msgstr ""
+msgstr "Fereastră listă ECU"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Bară unelte"
 
 msgid "Read DTC"
 msgstr "Cititi DTC"
@@ -1369,7 +1354,7 @@ msgid "Manual request"
 msgstr "Cerere manuala"
 
 msgid "Software flow control"
-msgstr ""
+msgstr "Controlul fluxului software"
 
 msgid "Zoom In"
 msgstr "Mareste"
@@ -1422,9 +1407,8 @@ msgstr "Dupa numele masinii"
 msgid "Theme"
 msgstr "Tema"
 
-#, fuzzy
 msgid "Dark Theme"
-msgstr "Tema intunecata"
+msgstr "Temă întunecată"
 
 msgid "Light Theme"
 msgstr "Tema deschisa"
@@ -1441,9 +1425,8 @@ msgstr "Redenumiti"
 msgid "Plugins"
 msgstr "Plugin-uri"
 
-#, fuzzy
 msgid "Cannot load plugin "
-msgstr "Pluginul nu se poate incarca "
+msgstr "Plugin-ul nu poate fi încărcat "
 
 msgid "Help"
 msgstr "Ajutor"
@@ -1463,16 +1446,14 @@ msgstr "Despre"
 msgid "About DDT4ALL"
 msgstr "Despre DDT4ALL"
 
-#, fuzzy
 msgid " version:"
 msgstr " versiune:"
 
 msgid "Created by:"
 msgstr "Creat de:"
 
-#, fuzzy
 msgid "Options"
-msgstr "Optiuni"
+msgstr "Opțiuni"
 
 msgid "CAN Line 1 Auto"
 msgstr "Linie CAN 1 Auto"
@@ -1501,9 +1482,8 @@ msgstr "ISO8"
 msgid "Save database (keep '.zip' extension)"
 msgstr "Salvati baza de date (pastrati extensia \".zip\")"
 
-#, fuzzy
 msgid "Zipping XML database... (this can take a few minutes)"
-msgstr "Arhivarea bazei de date XML ... (poate dura cateva minute)"
+msgstr "Arhivarea bazei de date XML... (poate dura câteva minute)"
 
 msgid "Zip job finished"
 msgstr "S-a terminat arhivarea"
@@ -1526,9 +1506,8 @@ msgstr "Scanare CAN"
 msgid "Scanning KWP"
 msgstr "Scanarea KWP"
 
-#, fuzzy
 msgid "Scanning DoIP"
-msgstr "Scanarea DoIP"
+msgstr "Scanare DoIP"
 
 msgid "Scan options"
 msgstr "Optiuni de scanare"
@@ -1620,9 +1599,8 @@ msgstr "Stil intunecat"
 msgid "DoIP (Diagnostics over IP) Configuration"
 msgstr "Configurare DoIP (Diagnosticare prin IP)"
 
-#, fuzzy
 msgid "Device Preset : "
-msgstr "Device version: "
+msgstr "Presetare dispozitiv : "
 
 msgid "Custom"
 msgstr "Personalizat"
@@ -1645,9 +1623,8 @@ msgstr "DoIP Generic"
 msgid "DoIP Target IP : "
 msgstr "IP Tinta DoIP : "
 
-#, fuzzy
 msgid "DoIP Port : "
-msgstr "Port: "
+msgstr "Port DoIP : "
 
 msgid "DoIP Timeout (seconds) : "
 msgstr "Timeout DoIP (secunde) : "
@@ -1661,9 +1638,8 @@ msgstr "Reconectare automata la pierderea conexiunii"
 msgid "Change UART speed"
 msgstr "Modificare viteza UART"
 
-#, fuzzy
 msgid "Checking..."
-msgstr "Verifica"
+msgstr "Verificare..."
 
 msgid "Please enter WiFi adapter IP address"
 msgstr "Va rugam introduceti adresa IP a adaptorului WiFi"
@@ -1794,13 +1770,11 @@ msgstr "Intrare"
 msgid "Output"
 msgstr "Iesire"
 
-#, fuzzy
 msgid "Protocol not supported"
-msgstr "EROARE - comanda nu este acceptata"
+msgstr "Protocol neacceptat"
 
-#, fuzzy
 msgid "Protocol not supported: "
-msgstr "EROARE - comanda nu este acceptata"
+msgstr "Protocol neacceptat: "
 
 msgid "XML file not found : "
 msgstr "Fisierul XML nu a fost gasit : "
@@ -1841,24 +1815,23 @@ msgstr "Cerere de buton nu a fost gasita : "
 msgid "Sending request :"
 msgstr "Trimite solicitare :"
 
-#, fuzzy
 msgid "Unknown request "
-msgstr "ECU Adresa functiei"
+msgstr "Cerere necunoscută "
 
 msgid "Command aborted "
-msgstr ""
+msgstr "Comandă anulată "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr ""
+msgstr "Eroare de valoare a acestui lucru poate necesita un gateway bypass."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Solicitare anulata (consultati intrarile cu parametri rosii): "
 
 msgid "Delay"
-msgstr ""
+msgstr "Întârziere"
 
 msgid "For your safety"
-msgstr ""
+msgstr "Pentru siguranța dumneavoastră"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
@@ -1867,12 +1840,11 @@ msgstr ""
 "<center>COMANDĂ BLOCATĂ</center>\n"
 "Activați modul expert pentru a debloca"
 
-#, fuzzy
 msgid "Writing parameter"
-msgstr "Baza de date zip"
+msgstr "Scriere parametru"
 
 msgid "Blocked writing parameter"
-msgstr ""
+msgstr "Parametru de scriere blocat"
 
 msgid "Invalid"
 msgstr "Invalid"
@@ -1884,7 +1856,7 @@ msgid "Cannot call request "
 msgstr "Nu se poate apela cererea "
 
 msgid "Update time"
-msgstr ""
+msgstr "Timp actualizare"
 
 msgid "Clearing DTC information"
 msgstr "Stergerea informatiilor DTC"
@@ -1900,18 +1872,14 @@ msgstr "<Center>Esti pe cale sa stergi codurile de diagnosticare</center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Sunteti sigur ca asta doriti.</center>"
 
-#, fuzzy
 msgid "Clear DTC failed"
-msgstr "Stergerea informatiilor DTC"
+msgstr "Ștergere DTC eșuată"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "Ștergere DTC efectuată cu succes"
 
-#, fuzzy
 msgid "No ReadDTC request for that ECU"
-msgstr ""
-"Nici o solicitare de stergere DTC pentru acest ECU, se va trimite 14FF00 "
-"implicit"
+msgstr "Nicio cerere ReadDTC pentru acest ECUimplicit"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Raspuns nevalid pentru comanda de citire DTC"
@@ -1923,7 +1891,7 @@ msgid "No DTC"
 msgstr "Fara DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Coduri de eroare de diagnosticare"
 
 msgid "Clear ALL DTC"
 msgstr "Stergeti TOT DTC"
@@ -1934,33 +1902,29 @@ msgstr "codurile de eroare ECU"
 msgid "Parsing screen "
 msgstr "Ecran de analiza "
 
-#, fuzzy
 msgid "found request in input "
-msgstr "Cerere de buton nu a fost gasita : "
+msgstr "cerere găsită în intrare "
 
 msgid "found in display "
-msgstr ""
+msgstr "găsit în afișaj "
 
-#, fuzzy
 msgid "found in button "
-msgstr "Adaugati butonul"
+msgstr "găsit în buton "
 
 msgid "found in presend "
-msgstr ""
+msgstr "găsit în pre-trimitere "
 
 msgid "found data in input "
-msgstr ""
+msgstr "date găsite în intrare "
 
 msgid "found data in display "
-msgstr ""
+msgstr "date găsite în afișaj "
 
 msgid "Waiting..."
 msgstr "Aşteptare..."
 
-#, fuzzy
 msgid "Frame length error: "
-msgstr "Cadru de eroare hex: "
+msgstr "Eroare lungime cadru: "
 
-#, fuzzy
 msgid "Frame hex error: "
-msgstr "Cadru de eroare hex: "
+msgstr "Eroare hex cadru: "

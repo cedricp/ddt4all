@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-05-05 17:52+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:48+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -287,9 +287,8 @@ msgstr ""
 "Nota: este erro não afeta a comunicação serial nem a funcionalidade do cabo "
 "de bypass."
 
-#, fuzzy
 msgid "Trying to open port "
-msgstr "Tentando abrir porta %s"
+msgstr "Tentando abrir porta "
 
 msgid "Port initialization failed"
 msgstr "Falha na inicialização da porta"
@@ -710,8 +709,7 @@ msgstr "Escrever VIN"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - INVÁLIDO</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - COMPRIMENTO INCORRETO</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -910,9 +908,8 @@ msgstr "Verificar valores"
 msgid "Waiting action"
 msgstr "Aguardando ação"
 
-#, fuzzy
 msgid "Reset all counters"
-msgstr "Resetar contadores"
+msgstr "Redefinir todos os contadores"
 
 msgid ""
 "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
@@ -985,15 +982,14 @@ msgid ""
 "input values"
 msgstr ""
 "<font color=green>Solicitação</font><font color=blue>'%s'</font> não possui "
-"valores de entrada ausentes</font>"
+"valores de entrada ausentes"
 
 #, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "<font color=red>Solicitação</font><font color=blue>'%s'</font> tem entradas "
-"faltando:"
+"faltando"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1921,10 +1917,10 @@ msgid "found data in display "
 msgstr "dados encontrados no display "
 
 msgid "Waiting..."
-msgstr "Esperando..."
+msgstr "Aguardando..."
 
 msgid "Frame length error: "
-msgstr "Erro no comprimento do quadro: "
+msgstr "Erro de comprimento de quadro: "
 
 msgid "Frame hex error: "
 msgstr "Erro hexadecimal de quadro: "

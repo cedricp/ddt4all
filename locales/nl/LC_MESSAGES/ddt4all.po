@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2026-04-10 00:04+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:47+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -474,9 +474,8 @@ msgstr "Kan bytes %s niet decoderen"
 msgid "Error in read(): %s"
 msgstr "Fout in read(): %s"
 
-#, fuzzy
 msgid "Attempting WiFi reconnection..."
-msgstr "Attempting connection..."
+msgstr "Poging WiFi herverbinding..."
 
 msgid "Port handler is None, cannot write"
 msgstr "Poort handler is None, kan niet schrijven"
@@ -582,15 +581,14 @@ msgstr "AB90 AIRBAG Reset"
 msgid "Airbag Tools"
 msgstr "Airbag Gereedschap"
 
-#, fuzzy
 msgid ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
 msgstr ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>DEZE PLUGIN ZAL "
-"AIRBAG CRASH DATA ONTGRENDELEN<br>GA WEG ALS U GEEN IDEE HEEFT WAT DIT "
-"BETEKENT</font>"
+"AIRBAG CRASH DATA ONTSLUILEN<br>GA WEG ALS U NIET WET WAT DIT BETEKENT</"
+"font>DIT BETEKENT</font>"
 
 msgid "Check ACU Virgin"
 msgstr "Controleer ACU Virgin"
@@ -617,13 +615,11 @@ msgstr "<font color='green'>GEEN CRASH GEDETECTEERD</font>"
 msgid "SDS stream: %s"
 msgstr "SDS stream: %s"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr "<font color='green'>CLEAR HIGH UITGEVOERD</font>"
+msgstr "<font color='green'>CLEAR UITGEVOERD</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr "<font color='red'>CLEAR HIGH MISLUKT</font>"
+msgstr "<font color='red'>CLEAR MISLUKT</font>"
 
 msgid "Megane/Scenic II card programming"
 msgstr "Megane/Scenic II kaart programmeren"
@@ -680,9 +676,8 @@ msgstr "<font color='green'>PIN CODE OK / UCH LEREN</font>"
 msgid "Modus/Clio III EPS Reset"
 msgstr "Modus/Clio III EPS Reset"
 
-#, fuzzy
 msgid "EPS Tools"
-msgstr "EVC Gereedschap"
+msgstr "EPS Gereedschap"
 
 msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
@@ -709,8 +704,7 @@ msgstr "VIN schrijven"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - ONGELDIG</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - FOUTE LENGTE</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -941,13 +935,11 @@ msgstr "<font color='green'>CLEAR V_Timer_DrivWEP_ON UITGEVOERD</font>"
 msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
 msgstr "<font color='red'>CLEAR V_Timer_DrivWEP_ON MISLUKT</font>"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR Low EXECUTED</font>"
-msgstr "<font color='green'>CLEAR HIGH UITGEVOERD</font>"
+msgstr "<font color='green'>CLEAR Low UITGEVOERD</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR Low FAILED</font>"
-msgstr "<font color='red'>CLEAR HIGH MISLUKT</font>"
+msgstr "<font color='red'>CLEAR Low MISLUKT</font>"
 
 msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
 msgstr "<font color='green'>CLEAR Medium UITGEVOERD</font>"
@@ -990,11 +982,10 @@ msgstr ""
 
 #, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "<font color=red>Aanvraag</font><font color=blue>'%s'</font> heeft "
-"ontbrekende invoer :"
+"ontbrekende invoer"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -1229,52 +1220,50 @@ msgstr "Ja, ik doneer"
 msgid "No, I don't"
 msgstr "Nee, bedankt"
 
-#, fuzzy
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"<center>Bedankt voor je contributie. Als er niets gebeurt ga dan naar : "
+"<center>Bedankt voor uw bijdrage. Als er niets gebeurt, ga dan naar : "
 "https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
 msgid "ECU Finder"
-msgstr "ECU naam"
+msgstr "ECU zoeker"
 
 msgid "Address :"
-msgstr ""
+msgstr "Adres :"
 
 msgid "ID frame :"
-msgstr ""
+msgstr "ID frame :"
 
 msgid "No vehicles available"
-msgstr ""
+msgstr "Geen voertuigen beschikbaar"
 
 msgid "ECU name"
 msgstr "ECU naam"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Protocol"
 msgstr "Protocol"
 
 msgid "Diag"
-msgstr ""
+msgstr "Diag"
 
 msgid "Projets"
 msgstr "Projecten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%d loaded ECUs in database."
-msgstr "eCU's in database geladen."
+msgstr "%d ECU's geladen in database."
 
 msgid "No database found"
-msgstr ""
+msgstr "Geen database gevonden"
 
 msgid "Check documentation"
-msgstr ""
+msgstr "Documentatie controleren"
 
 msgid "DDT4All Documentation"
-msgstr ""
+msgstr "DDT4All Documentatie"
 
 msgid "WebEngine not available."
 msgstr "WebEngine niet beschikbaar."
@@ -1286,25 +1275,26 @@ msgstr ""
 "PyQtWebEngine:"
 
 msgid "Visit the online documentation at:"
-msgstr ""
+msgstr "Bezoek de online documentatie op:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
+"Deze basis weergave zal nog steeds ECU documentatie tonen indien beschikbaar."
 
 msgid "Refresh rate (ms):"
 msgstr "Verversingstijd (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr ""
+msgstr "CAN timeout (ms) [0:AUTO] :"
 
 msgid "Documentation"
-msgstr ""
+msgstr "Documentatie"
 
 msgid "Screen"
 msgstr "Scherm"
 
 msgid "CAN Sniffer"
-msgstr ""
+msgstr "CAN Sniffer"
 
 msgid "Requests"
 msgstr "Aanvragen"
@@ -1318,24 +1308,23 @@ msgstr "Knoppen"
 msgid "Ecu parameters"
 msgstr "ECU parameters"
 
-#, fuzzy
 msgid "Screen Window"
-msgstr "Scherm"
+msgstr "Scherm venster"
 
 msgid "Screens"
 msgstr "Schermen"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Logs Venster"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "ECU Venster"
 
 msgid "Ecu List Window"
-msgstr ""
+msgstr "ECU Lijst Venster"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Werkbalk"
 
 msgid "Read DTC"
 msgstr "DTC Lezen"
@@ -1356,25 +1345,25 @@ msgid "Manual command"
 msgstr "Handmatig commando"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Handmatige aanvraag"
 
 msgid "Software flow control"
-msgstr ""
+msgstr "Software flow control"
 
 msgid "Zoom In"
-msgstr ""
+msgstr "Zoom In"
 
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zoom Out"
 
 msgid "UI Edit"
-msgstr ""
+msgstr "UI Bewerken"
 
 msgid "File"
 msgstr "Bestand"
 
 msgid "Open XML"
-msgstr ""
+msgstr "XML Openen"
 
 msgid "Identify ECU"
 msgstr "ECU identificeren"
@@ -1430,7 +1419,6 @@ msgstr "Hernoemen"
 msgid "Plugins"
 msgstr "Plugins"
 
-#, fuzzy
 msgid "Cannot load plugin "
 msgstr "Kan plugin niet laden "
 
@@ -1452,14 +1440,12 @@ msgstr "Over"
 msgid "About DDT4ALL"
 msgstr "Over DDT4ALL"
 
-#, fuzzy
 msgid " version:"
 msgstr " versie:"
 
 msgid "Created by:"
 msgstr "Gemaakt door:"
 
-#, fuzzy
 msgid "Options"
 msgstr "Opties"
 
@@ -1514,7 +1500,6 @@ msgstr "CAN scannen"
 msgid "Scanning KWP"
 msgstr "KWP scannen"
 
-#, fuzzy
 msgid "Scanning DoIP"
 msgstr "DoIP scannen"
 
@@ -1543,7 +1528,7 @@ msgid "Recorded "
 msgstr "Opgenomen "
 
 msgid " entries"
-msgstr "invoer"
+msgstr " invoer"
 
 msgid "No"
 msgstr "Nee"
@@ -1608,7 +1593,6 @@ msgstr "Donkere stijl"
 msgid "DoIP (Diagnostics over IP) Configuration"
 msgstr "DoIP (Diagnostiek via IP) Configuratie"
 
-#, fuzzy
 msgid "Device Preset : "
 msgstr "Apparaat voorkeur : "
 
@@ -1633,7 +1617,6 @@ msgstr "Generieke DoIP"
 msgid "DoIP Target IP : "
 msgstr "DoIP doel IP : "
 
-#, fuzzy
 msgid "DoIP Port : "
 msgstr "DoIP Poort : "
 
@@ -1649,9 +1632,8 @@ msgstr "Automatisch opnieuw verbinden bij verbindingsverlies"
 msgid "Change UART speed"
 msgstr "UART snelheid wijzigen"
 
-#, fuzzy
 msgid "Checking..."
-msgstr "Controleren"
+msgstr "Controleren..."
 
 msgid "Please enter WiFi adapter IP address"
 msgstr "Voer WiFi adapter IP adres in"
@@ -1783,11 +1765,9 @@ msgstr "Ingang"
 msgid "Output"
 msgstr "Uitgang"
 
-#, fuzzy
 msgid "Protocol not supported"
 msgstr "Protocol niet ondersteund"
 
-#, fuzzy
 msgid "Protocol not supported: "
 msgstr "Protocol niet ondersteund: "
 
@@ -1830,7 +1810,6 @@ msgstr "Knop aanvraag niet gevonden: "
 msgid "Sending request :"
 msgstr "Aanvraag verzenden:"
 
-#, fuzzy
 msgid "Unknown request "
 msgstr "Onbekend verzoek "
 
@@ -1856,24 +1835,23 @@ msgstr ""
 "<center>GEBLOKKEERDE OPDRACHT</center>\n"
 "Activeer expert-modus om te ontgrendelen"
 
-#, fuzzy
 msgid "Writing parameter"
-msgstr "ECU parameters"
+msgstr "Parameter schrijven"
 
 msgid "Blocked writing parameter"
-msgstr ""
+msgstr "Geblokkeerde schrijffunctie parameter"
 
 msgid "Invalid"
 msgstr "Ongeldig"
 
 msgid "ECU uses SDS "
-msgstr ""
+msgstr "ECU gebruikt SDS "
 
 msgid "Cannot call request "
 msgstr "Kan aanvraag niet uitvoeren "
 
 msgid "Update time"
-msgstr ""
+msgstr "Update tijd"
 
 msgid "Clearing DTC information"
 msgstr "DTC informatie opschonen"
@@ -1889,28 +1867,26 @@ msgstr ""
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Weet je zeker dat dit is wat je wilt?</center>"
 
-#, fuzzy
 msgid "Clear DTC failed"
-msgstr "DTC informatie opschonen"
+msgstr "DTC wissen mislukt"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "DTC wissen succesvolvoltooid"
 
-#, fuzzy
 msgid "No ReadDTC request for that ECU"
-msgstr "Geen ClearDTC voor die ECU, standaard 14FF00 wordt verstuurd"
+msgstr "Geen ReadDTC verzoek voor die ECU"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Ongeldig antwoord voor ReadDTC commando"
 
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "Lees DTC gaf een fout terug"
 
 msgid "No DTC"
 msgstr "Geen DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Diagnostische probleemcodes"
 
 msgid "Clear ALL DTC"
 msgstr "Alle DTC opruimen"
@@ -1921,31 +1897,29 @@ msgstr "ECU probleem codes"
 msgid "Parsing screen "
 msgstr "Scherm opstellen "
 
-#, fuzzy
 msgid "found request in input "
-msgstr "Knop aanvraag niet gevonden: "
+msgstr "verzoek gevonden in input "
 
 msgid "found in display "
-msgstr ""
+msgstr "gevonden in display "
 
-#, fuzzy
 msgid "found in button "
-msgstr "Knop toevoegen"
+msgstr "gevonden in knop "
 
 msgid "found in presend "
-msgstr ""
+msgstr "gevonden in presend "
 
 msgid "found data in input "
-msgstr ""
+msgstr "data gevonden in input "
 
 msgid "found data in display "
-msgstr ""
+msgstr "data gevonden in display "
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Wachten..."
 
 msgid "Frame length error: "
-msgstr ""
+msgstr "Frame lengte fout: "
 
 msgid "Frame hex error: "
-msgstr ""
+msgstr "Frame hex fout: "

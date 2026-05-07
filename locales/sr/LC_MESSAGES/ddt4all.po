@@ -7,14 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
-"PO-Revision-Date: 2024-01-01 00:00+0000\n"
-"Last-Translator: Automatically generated\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"PO-Revision-Date: 2026-05-07 11:49+0200\n"
+"Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "DoIP device connected successfully"
 msgstr "DoIP uređaj uspešno povezan"
@@ -332,7 +333,7 @@ msgstr "%s STN veza uspostavljena"
 
 #, python-format
 msgid "%s Version: "
-msgstr "Verzija %s"
+msgstr "Verzija %s "
 
 msgid ""
 "VGate adapter detected but STN verification failed, attempting fallback..."
@@ -604,9 +605,9 @@ msgstr "<font color='red'>UDES DETEKTOVAN</font>"
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>NEMA UDESA</font>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "SDS stream: %s"
-msgstr "SDS FA tok: %s"
+msgstr "SDS tok: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
 msgstr "<font color='green'>CLEAR IZVRŠEN</font>"
@@ -697,8 +698,7 @@ msgstr "Piši VIN"
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr "<font color='red'>VIN - NEVAŽEĆI</font>"
 
-#, fuzzy
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr "<font color='red'>VIN - LOŠA DUŽINA</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -969,17 +969,16 @@ msgid ""
 "input values"
 msgstr ""
 "<font color=green>Zahtev</font><font color=blue>'%s'</font> nema nedostajuće "
-"ulazne vrednosti</font>"
+"ulazne vrednosti"
 
 #, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 "<font color=red>Zahtev</font><font color=blue>'%s'</font> ima nedostajuće "
-"ulaze :"
+"ulaze"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
@@ -1210,52 +1209,50 @@ msgstr "Da, doprineću"
 msgid "No, I don't"
 msgstr "Ne, neću"
 
-#, fuzzy
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"<center>Hvala na vašem doprinosu. Ako se ništa ne desi molaim Vas idite na : "
+"<center>Hvala na vašem doprinosu. Ako se ništa ne desi molimo Vas idite na : "
 "https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
 msgid "ECU Finder"
-msgstr "ECU naziv"
+msgstr "ECU pronalazač"
 
 msgid "Address :"
-msgstr ""
+msgstr "Adresa :"
 
 msgid "ID frame :"
-msgstr ""
+msgstr "ID okvira :"
 
 msgid "No vehicles available"
-msgstr ""
+msgstr "Nema dostupnih vozila"
 
 msgid "ECU name"
 msgstr "ECU naziv"
 
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 msgid "Protocol"
 msgstr "Protokol"
 
 msgid "Diag"
-msgstr ""
+msgstr "Dijag"
 
 msgid "Projets"
 msgstr "Projekti"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%d loaded ECUs in database."
-msgstr "ucitane ECU jedinice u bazu podataka."
+msgstr "%d učitanih ECU jedinica u bazi podataka."
 
 msgid "No database found"
-msgstr ""
+msgstr "Baza podataka nije pronađena"
 
 msgid "Check documentation"
-msgstr ""
+msgstr "Proverite dokumentaciju"
 
 msgid "DDT4All Documentation"
-msgstr ""
+msgstr "DDT4All Dokumentacija"
 
 msgid "WebEngine not available."
 msgstr "WebEngine nije dostupan."
@@ -1267,25 +1264,27 @@ msgstr ""
 "PyQtWebEngine:"
 
 msgid "Visit the online documentation at:"
-msgstr ""
+msgstr "Posetite online dokumentaciju na:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
+"Ovaj osnovni prikaz će i dalje prikazivati ECU dokumentaciju kada je "
+"dostupna."
 
 msgid "Refresh rate (ms):"
 msgstr "Vreme osvezavanja (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr ""
+msgstr "CAN timeout (ms) [0:AUTO] :"
 
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentacija"
 
 msgid "Screen"
 msgstr "Prikaz"
 
 msgid "CAN Sniffer"
-msgstr ""
+msgstr "CAN Snifer"
 
 msgid "Requests"
 msgstr "Zahtevi"
@@ -1299,24 +1298,23 @@ msgstr "Dugmad"
 msgid "Ecu parameters"
 msgstr "ECU parametri"
 
-#, fuzzy
 msgid "Screen Window"
-msgstr "Prikaz"
+msgstr "Prozor ekrana"
 
 msgid "Screens"
 msgstr "Prikazi"
 
 msgid "Logs Window"
-msgstr ""
+msgstr "Prozor za dnevnike"
 
 msgid "Ecu Window"
-msgstr ""
+msgstr "ECU prozor"
 
 msgid "Ecu List Window"
-msgstr ""
+msgstr "Prozor sa listom ECU"
 
 msgid "ToolBar"
-msgstr ""
+msgstr "Traka sa alatkama"
 
 msgid "Read DTC"
 msgstr "Citaj DTC"
@@ -1337,28 +1335,28 @@ msgid "Manual command"
 msgstr "Rucna komanda"
 
 msgid "Manual request"
-msgstr ""
+msgstr "Ručni zahtev"
 
 msgid "Software flow control"
-msgstr ""
+msgstr "Kontrola toka softvera"
 
 msgid "Zoom In"
-msgstr ""
+msgstr "Uvećaj"
 
 msgid "Zoom Out"
-msgstr ""
+msgstr "Umanji"
 
 msgid "UI Edit"
-msgstr ""
+msgstr "UI uređivanje"
 
 msgid "File"
 msgstr "Fajl"
 
 msgid "Open XML"
-msgstr ""
+msgstr "Otvori XML"
 
 msgid "Identify ECU"
-msgstr ""
+msgstr "Identifikuj ECU"
 
 msgid "Create New ECU"
 msgstr "Kreiraj novi ECU"
@@ -1367,34 +1365,34 @@ msgid "Save current ECU"
 msgstr "Sacuvaj trenutni ECU"
 
 msgid "Save last record"
-msgstr ""
+msgstr "Sačuvaj poslednji zapis"
 
 msgid "Save ECU list"
 msgstr "Sacuvaj listu ECU"
 
 msgid "Zip database"
-msgstr ""
+msgstr "Zip bazu podataka"
 
 msgid "Exit"
-msgstr ""
+msgstr "Izlaz"
 
 msgid "View"
 msgstr "Приказ"
 
 msgid "CarList Order"
-msgstr ""
+msgstr "Redosled liste automobila"
 
 msgid "By Project Code"
-msgstr ""
+msgstr "Po kodu projekta"
 
 msgid "By Car Name"
-msgstr ""
+msgstr "Po imenu automobila"
 
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 msgid "Dark Theme"
-msgstr ""
+msgstr "Tamna tema"
 
 msgid "Light Theme"
 msgstr "Svetla tema"
@@ -1411,7 +1409,6 @@ msgstr "Promeni naziv"
 msgid "Plugins"
 msgstr "Plugin-i"
 
-#, fuzzy
 msgid "Cannot load plugin "
 msgstr "Nije moguće učitati plugin "
 
@@ -1433,14 +1430,12 @@ msgstr "O programu"
 msgid "About DDT4ALL"
 msgstr "O DDT4ALL-u"
 
-#, fuzzy
 msgid " version:"
 msgstr " verzija:"
 
 msgid "Created by:"
 msgstr "Kreirao:"
 
-#, fuzzy
 msgid "Options"
 msgstr "Opcije"
 
@@ -1495,7 +1490,6 @@ msgstr "Skeniranje CAN"
 msgid "Scanning KWP"
 msgstr "Skeniranje KWP"
 
-#, fuzzy
 msgid "Scanning DoIP"
 msgstr "Skeniranje DoIP"
 
@@ -1589,7 +1583,6 @@ msgstr "Tamni stil"
 msgid "DoIP (Diagnostics over IP) Configuration"
 msgstr "Konfiguracija DoIP (Dijagnostika preko IP)"
 
-#, fuzzy
 msgid "Device Preset : "
 msgstr "Podešavanje uređaja : "
 
@@ -1614,7 +1607,6 @@ msgstr "Generički DoIP"
 msgid "DoIP Target IP : "
 msgstr "DoIP ciljna IP : "
 
-#, fuzzy
 msgid "DoIP Port : "
 msgstr "DoIP port : "
 
@@ -1630,7 +1622,6 @@ msgstr "Automatsko ponovno povezivanje pri gubitku veze"
 msgid "Change UART speed"
 msgstr "Promena UART brzine"
 
-#, fuzzy
 msgid "Checking..."
 msgstr "Proveravanje..."
 
@@ -1763,13 +1754,11 @@ msgstr "Ulazni"
 msgid "Output"
 msgstr "Izlazni"
 
-#, fuzzy
 msgid "Protocol not supported"
-msgstr "Protokol nije podrzan"
+msgstr "Protokol nije podržan"
 
-#, fuzzy
 msgid "Protocol not supported: "
-msgstr "Protokol nije podrzan: "
+msgstr "Protokol nije podržan: "
 
 msgid "XML file not found : "
 msgstr "XML fajl nije pronadjen: "
@@ -1810,7 +1799,6 @@ msgstr "Zahtev dugmeta nije pronadjen: "
 msgid "Sending request :"
 msgstr "Slanje zahteva:"
 
-#, fuzzy
 msgid "Unknown request "
 msgstr "Nepoznat zahtev "
 
@@ -1866,28 +1854,26 @@ msgstr "<center>Ovim brisete dijagnosticke kodove gresaka<\\center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Da li ste sigurni da to zelite?</center>"
 
-#, fuzzy
 msgid "Clear DTC failed"
-msgstr "Brisanje DTC informacija"
+msgstr "Brisanje DTC neuspelo"
 
 msgid "Clear DTC successfully done"
-msgstr ""
+msgstr "Brisanje DTC uspešno završeno"
 
-#, fuzzy
 msgid "No ReadDTC request for that ECU"
-msgstr "Nema zahteva za brisanje DTC za taj ECU, poslace uobicajen 14FF00"
+msgstr "Nema zahteva za čitanje DTC za taj ECU"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Pogresan odziv za CitanjeDTC komandu"
 
 msgid "Read DTC returned an error"
-msgstr ""
+msgstr "Čitanje DTC vratilo grešku"
 
 msgid "No DTC"
 msgstr "Nema DTC"
 
 msgid "Diagnostic Trouble Codes"
-msgstr ""
+msgstr "Dijagnostički kodovi grešaka"
 
 msgid "Clear ALL DTC"
 msgstr "Obrisi SVE DTC"
@@ -1898,31 +1884,29 @@ msgstr "ECU kodovi gresaka"
 msgid "Parsing screen "
 msgstr "Čitati ekran "
 
-#, fuzzy
 msgid "found request in input "
-msgstr "Zahtev dugmeta nije pronadjen: "
+msgstr "zahtev pronađen na ulazu "
 
 msgid "found in display "
-msgstr ""
+msgstr "pronađeno u prikazu "
 
-#, fuzzy
 msgid "found in button "
-msgstr "Dodaj dugme"
+msgstr "pronađeno u dugmetu "
 
 msgid "found in presend "
-msgstr ""
+msgstr "pronađeno u slanju "
 
 msgid "found data in input "
-msgstr ""
+msgstr "podaci pronađeni u ulazu "
 
 msgid "found data in display "
-msgstr ""
+msgstr "podaci pronađeni u prikazu "
 
 msgid "Waiting..."
-msgstr ""
+msgstr "Čekanje..."
 
 msgid "Frame length error: "
-msgstr ""
+msgstr "Greška dužine okvira: "
 
 msgid "Frame hex error: "
-msgstr ""
+msgstr "Hex greška okvira: "

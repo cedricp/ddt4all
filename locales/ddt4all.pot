@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 01:09+0200\n"
+"POT-Creation-Date: 2026-05-07 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -673,7 +673,7 @@ msgstr ""
 msgid "<font color='red'>VIN - INVALID</font>"
 msgstr ""
 
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
 msgstr ""
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
@@ -896,7 +896,7 @@ msgid "<font color=green>Request</font><font color=blue>'%s'</font> has no missi
 msgstr ""
 
 #, python-format
-msgid "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs :"
+msgid "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
 
 #, python-format

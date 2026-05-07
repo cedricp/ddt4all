@@ -100,7 +100,7 @@ class ButtonData(widgets.QFrame):
             return
 
         options.main_window.logview.append(
-            _("<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs :") % requestname)
+            _("<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs") % requestname)
         for k, v in itemsfound.items():
             if not v:
                 options.main_window.logview.append(_("<font color=orange> - '%s'</font>") % k)
