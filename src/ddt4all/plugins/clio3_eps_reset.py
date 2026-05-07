@@ -92,7 +92,7 @@ class Virginizer(gui.QDialog):
             return
 
         if len(vin) != 17:
-            self.status_check.setText(_("<font color='res'>VIN - BAD LENGTH</font>"))
+            self.status_check.setText(_("<font color='red'>VIN - BAD LENGTH</font>"))
             return
 
         crc = calc_crc(vin).decode('hex')
