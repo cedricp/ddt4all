@@ -32,12 +32,12 @@ a8_xor_2 = [0x10, 0x20, 0x28, 0x10, 0x81, 0x88]
 def a8(isk_c):
     '''MC9S12DG256 (Megane 2, Scenic 2)'''
     apv = ''
-    isk = isk_c.replace(' ', '').decode('hex')
+    isk = bytes.fromhex(isk_c.replace(' ', ''))
     if len(isk) != 6:
         return None
     bit_i = ''
     for c in isk:
-        bit_i += bin(ord(c))[2:].zfill(8)
+        bit_i += bin(c)[2:].zfill(8)
 
     # if not (bit_i[ 4]!=bit_i[23] and bit_i[12]==bit_i[43] and
     #        bit_i[ 4]==bit_i[35] and bit_i[ 8]==bit_i[ 9] and bit_i[ 4]==bit_i[ 5]):
@@ -66,12 +66,12 @@ def a8(isk_c):
 def a8_2(isk_c):
     '''MC9S12DG256 (algo2)(Megane 2, Scenic 2)'''
     apv = ''
-    isk = isk_c.replace(' ', '').decode('hex')
+    isk = bytes.fromhex(isk_c.replace(' ', ''))
     if len(isk) != 6:
         return None
     bit_i = ''
     for c in isk:
-        bit_i += bin(ord(c))[2:].zfill(8)
+        bit_i += bin(c)[2:].zfill(8)
 
     base = ''
     for b in a8_xor_2:
@@ -179,14 +179,14 @@ class CardProg(gui.QDialog):
         self.tester_timer.start()
 
     def calculate_pin(self):
-        ISK = ''.join(str(ord(c)) for c in str(self.iskoutput.text()))
+        ISK = str(self.iskoutput.text())
         if len(ISK) == 12:
             if self.algocheck.checkState():
                 PIN = a8_2(ISK)
             else:
                 PIN = a8(ISK)
             if PIN is not None:
-                self.pininput.setText(PIN)
+                self.pininput.setText(PIN.replace(' ', ''))
                 self.iskoutput.setStyleSheet("color: green;")
                 return
 
@@ -229,7 +229,7 @@ class CardProg(gui.QDialog):
         self.check_num_key_learnt()
 
     def set_apv_from_input(self):
-        apv = ''.join(str(ord(c)) for c in str(self.pininput.text()))
+        apv = str(self.pininput.text()).replace(' ', '')
         if len(apv) != 12:
             return
         self.after_sale_request.send_request({u'Code APV': apv})
@@ -241,6 +241,9 @@ class CardProg(gui.QDialog):
 
     def check_apv_status(self):
         key_bits_status_values = self.key_bits_status.send_request({}, "61 06 21 21 20 00 00 00 08 00 00 80 03")
+
+        if key_bits_status_values is None:
+            return
 
         value_apv_ok = key_bits_status_values[u'VSC Code APV_Reconnu']
         value_apv_reaff = key_bits_status_values[u'VSC ModeAPV_ReaffArmé']
@@ -273,6 +276,9 @@ class CardProg(gui.QDialog):
         key_bytes_status_value = self.key_bytes_status.send_request({}, "61 08 00 00 00 00 00 00 0A 00 00 00 00 00 00 "
                                                                         "00 00 00 00 00 00 00 00 00 00 02 00 00 01 2C "
                                                                         "00 00 01 2C 00 00 2C 00 00 01 2C")
+
+        if key_bytes_status_value is None:
+            return
 
         num_key_learnt = key_bytes_status_value[u'VSC NbTotalDeBadgeAppris']
         current_key_ide = key_bytes_status_value[u'VSC Code_IDE']
