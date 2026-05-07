@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 11:42+0200\n"
+"POT-Creation-Date: 2026-05-07 12:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -285,16 +285,16 @@ msgstr ""
 msgid "No ELM interface on port"
 msgstr ""
 
-msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgid "OBDLINK Connection OK, attempting full speed UART switch"
 msgstr ""
 
-msgid "Failed to switch OBDLink to "
+msgid "Failed to switch OBDLINK to "
 msgstr ""
 
 msgid "OBDLINK Connection OK, using optimal settings"
 msgstr ""
 
-msgid "OBDLink STPX mode enabled for enhanced long command support"
+msgid "OBDLINK STPX mode enabled for enhanced long command support"
 msgstr ""
 
 msgid "Connection established successfully"

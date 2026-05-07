@@ -169,7 +169,7 @@ def get_available_ports():
             elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
                 device_desc = f"{desc} (DERLEK Compatible)"
             elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
-                device_desc = f"{desc} (OBDLink Compatible)"
+                device_desc = f"{desc} (OBDLINK Compatible)"
             # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
             elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
                 device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
@@ -452,59 +452,59 @@ class ELM:
         except Exception:
             maxspeed = 0
 
-        device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
-        text_switch_error = _("Failed to switch OBDLink to ") + str(maxspeed)
+        device_text_switch = _("OBDLINK Connection OK, attempting full speed UART switch")
+        text_switch_error = _("Failed to switch OBDLINK to ") + str(maxspeed)
         text_optional = _("OBDLINK Connection OK, using optimal settings")
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(device_text_switch.replace("OBDLink", "OBDLink"))
+            print(device_text_switch.replace("OBDLINK", "OBDLINK"))
             try:
-                self.raise_odb_speed(maxspeed, "OBDLink")
+                self.raise_odb_speed(maxspeed, "OBDLINK")
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "OBDLink"))
+                print(text_switch_error.replace("OBDLINK", "OBDLINK"))
         elif adapter_type == "OBDLINK":
-            print(text_optional.replace("OBDLink", "OBDLink"))
+            print(text_optional.replace("OBDLINK", "OBDLINK"))
             if not options.elm_failed:
-                # Enable STPX mode for OBDLink adapters
+                # Enable STPX mode for OBDLINK adapters
                 try:
                     self.enable_stpx_mode()
-                    print(_("OBDLink STPX mode enabled for enhanced long command support"))
+                    print(_("OBDLINK STPX mode enabled for enhanced long command support"))
                 except Exception as e:
-                    print(f"OBDLink STPX warning: {e}")
+                    print(f"OBDLINK STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(device_text_switch.replace("OBDLink", "ELM"))
+            print(device_text_switch.replace("OBDLINK", "ELM"))
             try:
                 self.raise_elm_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "ELM"))
+                print(text_switch_error.replace("OBDLINK", "ELM"))
         elif adapter_type == "STD_USB":
-            print(text_optional.replace("OBDLink", "ELM"))
+            print(text_optional.replace("OBDLINK", "ELM"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLink", "Vlinker"))
+            print(device_text_switch.replace("OBDLINK", "Vlinker"))
             try:
                 self.raise_elm_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "Vlinker"))
+                print(text_switch_error.replace("OBDLINK", "Vlinker"))
         elif adapter_type == "VLINKER":
-            print(text_optional.replace("OBDLink", "Vlinker"))
+            print(text_optional.replace("OBDLINK", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VGATE" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLink", "Vgate"))
+            print(device_text_switch.replace("OBDLINK", "Vgate"))
             try:
                 self.raise_vgate_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "VGate"))
+                print(text_switch_error.replace("OBDLINK", "VGate"))
         elif adapter_type == "VGATE":
             print(text_optional.replace("OBDLINK", "VGate"))
             if not options.elm_failed:
@@ -516,7 +516,7 @@ class ELM:
                     print(f"VGate STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
-            print(text_optional.replace("OBDLink", "ELS27"))
+            print(text_optional.replace("OBDLINK", "ELS27"))
             if not options.elm_failed:
                 # ELS27 V5 specific initialization - set CAN pins 12-13
                 try:
@@ -529,7 +529,7 @@ class ELM:
                     print(f"ELS27 V5 configuration warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
-            print(text_optional.replace("OBDLink", adapter_type))
+            print(text_optional.replace("OBDLINK", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
 
@@ -587,7 +587,7 @@ class ELM:
 
         dev = (device_name or "ELM").upper()
         try:
-            # STN / VGate / OBDLink style switching
+            # STN / VGate / OBDLINK style switching
             if dev in ("VGATE", "OBDLINK", "VLINKER", "STN"):
                 cmd = "ST SBR " + str(baudrate)
                 rsp = self.send_raw(cmd)
