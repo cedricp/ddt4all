@@ -594,6 +594,25 @@ class ELM:
     def detect_stn_features(self):
         """Detect STN/STPX features for compatible adapters"""
         try:
+            # Check adapter type and run appropriate detection
+            if hasattr(self, 'adapter_type'):
+                if self.adapter_type == "OBDLINK":
+                    # OBDLink-specific STN/STPX detection
+                    self._detect_obdlink_stn_features()
+                elif self.adapter_type == "VGATE":
+                    # VGate-specific STN detection
+                    self._detect_vgate_stn_features()
+            else:
+                # Fallback: try both detection methods
+                self._detect_obdlink_stn_features()
+                self._detect_vgate_stn_features()
+                
+        except Exception as e:
+            print(_("STN/STPX detection warning: %s") % e)
+
+    def _detect_obdlink_stn_features(self):
+        """Detect OBDLink STN/STPX capabilities"""
+        try:
             # Check OBDLink STN/STPX capabilities
             elm_rsp = self.cmd("STI")
             if elm_rsp and '?' not in elm_rsp and len(elm_rsp.split(" ")) == 2:
@@ -630,7 +649,12 @@ class ELM:
                             self.lf.flush()
                 except Exception:
                     print(_("Cannot determine STN version - using standard mode"))
-            
+        except Exception as e:
+            print(_("OBDLink STN/STPX detection warning: %s") % e)
+
+    def _detect_vgate_stn_features(self):
+        """Detect VGate STN protocol support"""
+        try:
             # Check for STN protocol support
             elm_rsp = self.cmd("STP 53")
             if '?' not in elm_rsp:
@@ -641,9 +665,8 @@ class ELM:
                     tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                     self.lf.write("# [" + tmstr + "] " + msg + "\n")
                     self.lf.flush()
-                
         except Exception as e:
-            print(f"STN/STPX detection warning: {e}")
+            print(_("VGate STN detection warning: %s") % e)
 
     def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
         # Compatibility wrapper: delegate to unified speed switch
