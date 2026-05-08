@@ -276,8 +276,9 @@ class EcuScanner:
         if not options.simulation_mode:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
-                # Initialize device with enhanced features
-                elm.DeviceManager.initialize_device(options.elm)
+                # Initialize device with enhanced features using selected adapter type
+                device_type = options.elm.adapter_type
+                elm.DeviceManager.initialize_device(options.elm, device_type)
             
             options.elm.init_can()
 
@@ -341,8 +342,9 @@ class EcuScanner:
         else:
             # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
-                # Initialize device with enhanced features
-                elm.DeviceManager.initialize_device(options.elm)
+                # Initialize device with enhanced features using selected adapter type
+                device_type = options.elm.adapter_type
+                elm.DeviceManager.initialize_device(options.elm, device_type)
 
             options.elm.init_iso()
 
