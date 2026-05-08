@@ -34,7 +34,7 @@ debug = 'DDTDEBUG' in os.environ
 cantimeout = 0
 refreshrate = 5
 mode_edit = False
-safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
+safe_commands = ['10','12','14','17','19','1A','21','22','23','3E']
 
 # DoIP Configuration
 doip_target_ip = "192.168.0.12"
@@ -47,7 +47,7 @@ doip_preset = "Custom"
 # STN/STPX Configuration
 opt_stpx_full = False  # Full STPX support detected
 opt_stn_basic = False  # Basic STN protocol support detected
-elm_uart_buffer_size = 0  # UART buffer size for STN-based adapters
+elm_uart_buffer_size = 255  # UART buffer size for STN-based adapters
 configuration = {
     "lang": None,
     "dark": False,

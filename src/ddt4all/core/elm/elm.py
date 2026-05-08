@@ -480,95 +480,63 @@ class ELM:
         device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
         text_switch_error = _("Failed to switch OBDLink to ") + str(maxspeed)
         text_optional = _("OBDLink Connection OK, using optimal settings")
-        if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(device_text_switch.replace("OBDLink", "OBDLink"))
-            try:
-                self.raise_odb_speed(maxspeed, "OBDLink")
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "OBDLink"))
-        elif adapter_type == "OBDLINK":
-            print(text_optional.replace("OBDLink", "OBDLink"))
+        if adapter_type == "OBDLINK":
+            print(text_optional)
+            if  maxspeed > 0 and not options.elm_failed and rate != 2000000:
+                try:
+                    self.raise_odb_speed(maxspeed, "OBDLink")
+                    print(device_text_switch)
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error)
             if not options.elm_failed:
                 # OBDLink newer models (SX+, EX) support STN/STPX
                 try:
                     self.detect_stn_features()
-                    if getattr(options, 'opt_stn_basic', False) or getattr(options, 'opt_stpx_full', False):
-                        # Activate STPX mode immediately when detected
-                        print(_("OBDLink STN/STPX support detected - activating immediately"))
-                        self.enable_stpx_mode()
-                        msg = _("OBDLink STN/STPX mode enabled for enhanced long command support")
-                        print(msg)
-                        # Log if available, otherwise set pending for later logging
-                        if hasattr(self, 'lf') and self.lf != 0:
-                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
-                            self.lf.flush()
-                        else:
-                            self.vgate_stpx_pending = True
-                    else:
-                        print(_("OBDLink connected - using standard ELM mode"))
                 except Exception as e:
                     print(_("STN/STPX detection warning: %s") % e)
-                
                 print(_("Connection established successfully"))
-        elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(device_text_switch.replace("OBDLink", "ELM"))
-            try:
-                self.raise_elm_speed(maxspeed)
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "ELM"))
         elif adapter_type == "STD_USB":
             print(text_optional.replace("OBDLink", "ELM"))
+            if rate != 115200 and maxspeed > 0:
+                try:
+                    self.raise_elm_speed(maxspeed)
+                    print(device_text_switch.replace("OBDLink", "ELM"))
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error.replace("OBDLink", "ELM"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
-        elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLink", "Vlinker"))
-            try:
-                self.raise_elm_speed(maxspeed)
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "Vlinker"))
         elif adapter_type == "VLINKER":
             print(text_optional.replace("OBDLink", "Vlinker"))
+            if  0 < maxspeed != rate:
+                try:
+                    self.raise_elm_speed(maxspeed)
+                    print(device_text_switch.replace("OBDLink", "Vlinker"))
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error.replace("OBDLink", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
-        elif adapter_type == "VGATE" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLink", "Vgate"))
-            try:
-                self.raise_vgate_speed(maxspeed)
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "VGate"))
         elif adapter_type == "VGATE":
             print(text_optional.replace("OBDLink", "VGate"))
+            if 0 < maxspeed != rate:
+                try:
+                    self.raise_vgate_speed(maxspeed)
+                    print(device_text_switch.replace("OBDLink", "Vgate"))
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error.replace("OBDLink", "VGate"))
             if not options.elm_failed:
                 # VGate requires STN/STPX detection like OBDLink
                 try:
                     self.detect_stn_features()
-                    if getattr(options, 'opt_stn_basic', False) or getattr(options, 'opt_stpx_full', False):
-                        # Activate STPX mode immediately when detected
-                        print(_("VGate STN/STPX support detected - activating immediately"))
-                        self.enable_stpx_mode()
-                        msg = _("VGate STN/STPX mode enabled for enhanced long command support")
-                        print(msg)
-                        # Log if available, otherwise set pending for later logging
-                        if hasattr(self, 'lf') and self.lf != 0:
-                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
-                            self.lf.flush()
-                        else:
-                            self.vgate_stpx_pending = True
-                    else:
-                        print(_("VGate connected - using standard ELM mode"))
                 except Exception as e:
                     print(_("STN/STPX detection warning: %s") % e)
-                
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
             print(text_optional.replace("OBDLink", "ELS27"))
@@ -602,11 +570,6 @@ class ELM:
                 elif self.adapter_type == "VGATE":
                     # VGate-specific STN detection
                     self._detect_vgate_stn_features()
-            else:
-                # Fallback: try both detection methods
-                self._detect_obdlink_stn_features()
-                self._detect_vgate_stn_features()
-                
         except Exception as e:
             print(_("STN/STPX detection warning: %s") % e)
 
