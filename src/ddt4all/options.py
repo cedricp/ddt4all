@@ -150,7 +150,10 @@ def load_configuration():
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
     except Exception as e:
-        print(_("Error loading configuration: %s") % e)
+        try:
+            print(_("Configuration file not found. Creating new configuration..."))
+        except NameError:
+            print("Configuration file not found. Creating new configuration...")
         create_new_config()
 
 
