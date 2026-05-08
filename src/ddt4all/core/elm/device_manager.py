@@ -186,11 +186,11 @@ class DeviceManager:
     def _swap_vgate_pins(elm_instance):
         """Swap pins for VGate adapters using STN protocol"""
         try:
-            # VGate specific pin swapping commands
+            # VLinker FS specific pin swapping with STN support
             pin_swap_commands = [
-                ("ST SBR 500000", "Set baudrate for pin swap"),
-                ("STP 53", "Enable CAN pin swapping"),
-                ("STPBR 500000", "Set pin swap baudrate")
+                ("ST SBR 3000000", "Set baudrate for 3,000,000"),
+                ("STP 53", "Enable Ford Media CAN switching"),
+                ("STPBR 3000000", "Set pin swap baudrate"),
             ]
             
             for cmd, desc in pin_swap_commands:
