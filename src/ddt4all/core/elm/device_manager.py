@@ -124,9 +124,8 @@ class DeviceManager:
             
             # Enable STN/STPX features
             if settings.get('stpx_support', False):
-                stpx_enabled = DeviceManager._enable_stpx_mode(elm_instance, device_type)
-                if stpx_enabled:
-                    print(_("STPX mode enabled for %s") % device_type)
+                DeviceManager._enable_stpx_mode(elm_instance)
+                print(_("STPX mode enabled for %s") % device_type)
             
             # Enable pin swapping if supported
             if settings.get('pin_swap', False):
@@ -140,7 +139,7 @@ class DeviceManager:
             return False
 
     @staticmethod
-    def _enable_stpx_mode(elm_instance, device_type):
+    def _enable_stpx_mode(elm_instance):
         """Enable STPX mode for enhanced long command support"""
         try:
             # STPX is a mode, not individual commands
@@ -322,10 +321,6 @@ class DeviceManager:
             # Auto-detect device type if not provided
             if not device_type:
                 device_type = DeviceManager.detect_device_type(elm_instance)
-            
-            # Use adapter_type from ELM instance if available (more accurate)
-            if hasattr(elm_instance, 'adapter_type') and elm_instance.adapter_type:
-                device_type = elm_instance.adapter_type.lower()
             
             # Get optimal settings
             settings = DeviceManager.get_optimal_settings(device_type)
