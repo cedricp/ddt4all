@@ -7,6 +7,7 @@ from ddt4all.ui.main_window.utils import (
 )
 
 import ddt4all.options as options
+global _
 _ = options.translator('ddt4all')
 
 def test_set_theme_style_does_not_crash(qapp):
