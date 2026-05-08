@@ -491,6 +491,27 @@ class ELM:
         elif adapter_type == "OBDLINK":
             print(text_optional.replace("OBDLink", "OBDLink"))
             if not options.elm_failed:
+                # OBDLink newer models (SX+, EX) support STN/STPX
+                try:
+                    self.detect_stn_features()
+                    if getattr(options, 'opt_stn_basic', False) or getattr(options, 'opt_stpx_full', False):
+                        # Activate STPX mode immediately when detected
+                        print(_("OBDLink STN/STPX support detected - activating immediately"))
+                        self.enable_stpx_mode()
+                        msg = _("OBDLink STN/STPX mode enabled for enhanced long command support")
+                        print(msg)
+                        # Log if available, otherwise set pending for later logging
+                        if hasattr(self, 'lf') and self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                            self.lf.flush()
+                        else:
+                            self.vgate_stpx_pending = True
+                    else:
+                        print(_("OBDLink connected - using standard ELM mode"))
+                except Exception as e:
+                    print(f"STN/STPX detection warning: {e}")
+                
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
             print(device_text_switch.replace("OBDLink", "ELM"))
