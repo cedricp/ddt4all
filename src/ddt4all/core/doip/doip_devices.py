@@ -38,11 +38,11 @@ class DoIPDevice:
             # Perform vehicle identification according to ISO 13400
             try:
                 vehicle_info = self.doip.vehicle_identification_request()
-                print(f"DoIP Vehicle identified: VIN={vehicle_info['vin']}, Address={vehicle_info['logical_address']}")
+                print(_("DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s") % {"vin": vehicle_info['vin'], "addr": vehicle_info['logical_address']})
                 self.target_address = vehicle_info['logical_address']
                 return True
             except Exception as e:
-                print(f"DoIP vehicle identification failed: {e}")
+                print(_("DoIP vehicle identification failed: %s") % e)
                 self.disconnect()
                 return False
         return False
@@ -61,14 +61,14 @@ class DoIPDevice:
         try:
             req_bytes = bytes.fromhex(req.replace(' ', ''))
         except ValueError as e:
-            raise DoIPProtocolError(_("Invalid hex request format: {}").format(e))
+            raise DoIPProtocolError(_("Invalid hex request format: %s") % e)
         
         # Send diagnostic message with addressing
         try:
             response = self.doip.send_diagnostic_message(req_bytes)
             return response
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP request failed: {}").format(e))
+            raise DoIPProtocolError(_("DoIP request failed: %s") % e)
     
     def start_session_can(self, start_session):
         """Start diagnostic session over DoIP according to ISO 13400"""
@@ -84,7 +84,7 @@ class DoIPDevice:
                 return True
             return False
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP session start failed: {}").format(e))
+            raise DoIPProtocolError(_("DoIP session start failed: %s") % e)
     
     def init_can(self):
         """Initialize CAN communication over DoIP"""
@@ -95,7 +95,7 @@ class DoIPDevice:
             # Start diagnostic session with extended addressing
             return self.start_session_can("10C0")
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP CAN initialization failed: {}").format(e))
+            raise DoIPProtocolError(_("DoIP CAN initialization failed: %s") % e)
             return False
     
     def set_can_addr(self, addr, ecu, canline=0):
@@ -135,24 +135,24 @@ class DoIPDevice:
         
         if is_electric_ecu:
             self.doip.extended_29bit = True
-            print(_("DoIP: Electric ECU detected - {}").format(addr))
+            print(_("DoIP: Electric ECU detected - %s") % addr)
             print(_("DoIP: Using extended addressing for Electric Vehicle Systems"))
             # Configure for 29-bit addressing if needed (newer vehicles)
             # Electric ECUs and EVC typically use 29-bit addressing
             if TXa > 0x7FF or RXa > 0x7FF:
                 self.doip.extended_29bit = True
-                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}").format(TXa, RXa))
+                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}") % (TXa, RXa))
             else:
                 self.doip.extended_29bit = False
-                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}").format(TXa, RXa))
+                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}") % (TXa, RXa))
         else:
             # Configure for 29-bit addressing if needed (newer vehicles)
             if TXa > 0x7FF or RXa > 0x7FF:
                 self.doip.extended_29bit = True
-                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}").format(TXa, RXa))
+                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}") % (TXa, RXa))
             else:
                 self.doip.extended_29bit = False
-                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}").format(TXa, RXa))
+                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}") % (TXa, RXa))
 
         self.doip.source_address = TXa
         self.doip.target_address = RXa

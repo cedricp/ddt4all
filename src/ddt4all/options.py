@@ -150,7 +150,7 @@ def load_configuration():
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
     except Exception as e:
-        print(f"Error loading configuration: {e}")
+        print(_("Error loading configuration: %s") % e)
         create_new_config()
 
 

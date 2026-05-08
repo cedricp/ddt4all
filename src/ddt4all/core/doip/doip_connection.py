@@ -34,10 +34,10 @@ class DoIPConnection:
             self.socket.settimeout(self.timeout)
             self.socket.connect((self.target_ip, self.target_port))
             self.connection_status = True
-            print(f"DoIP connected to {self.target_ip}:{self.target_port}")
+            print(_("DoIP connected to %(ip)s:%(port)s") % {"ip": self.target_ip, "port": self.target_port})
             return True
         except Exception as e:
-            print(f"DoIP connection failed: {e}")
+            print(_("DoIP connection failed: %s") % e)
             self.connection_status = False
             return False
     
@@ -117,9 +117,9 @@ class DoIPConnection:
                 else:
                     raise DoIPProtocolError(_("Insufficient vehicle identification data"))
             else:
-                raise DoIPProtocolError(_("Expected vehicle identification response, got: {}").format(message_type))
+                raise DoIPProtocolError(_("Expected vehicle identification response, got: %s") % message_type)
         except Exception as e:
-            raise DoIPProtocolError(_("Vehicle identification failed: {}").format(e))
+            raise DoIPProtocolError(_("Vehicle identification failed: %s") % e)
     
     def diagnostic_session_control(self, session_type):
         """Control diagnostic session according to ISO 13400"""
@@ -135,9 +135,9 @@ class DoIPConnection:
                 else:
                     raise DoIPProtocolError(_("Insufficient session control data"))
             else:
-                raise DoIPProtocolError(_("Expected diagnostic session control response, got: {}").format(message_type))
+                raise DoIPProtocolError(_("Expected diagnostic session control response, got: %s") % message_type)
         except Exception as e:
-            raise DoIPProtocolError(_("Diagnostic session control failed: {}").format(e))
+            raise DoIPProtocolError(_("Diagnostic session control failed: %s") % e)
     
     def send_diagnostic_message(self, req_bytes):
         """Send diagnostic message with addressing according to ISO 13400"""
@@ -162,9 +162,9 @@ class DoIPConnection:
                 else:
                     raise DoIPProtocolError(_("Insufficient diagnostic message data"))
             else:
-                raise DoIPProtocolError(_("Expected diagnostic message response, got: {}").format(message_type))
+                raise DoIPProtocolError(_("Expected diagnostic message response, got: %s") % message_type)
         except Exception as e:
-            raise DoIPProtocolError(_("DoIP request failed: {}").format(e))
+            raise DoIPProtocolError(_("DoIP request failed: %s") % e)
     
     def alive_check(self):
         """Perform alive check according to ISO 13400"""
@@ -179,7 +179,7 @@ class DoIPConnection:
                 else:
                     raise DoIPProtocolError(_("Insufficient alive check data"))
             else:
-                raise DoIPProtocolError(_("Expected alive check response, got: {}").format(message_type))
+                raise DoIPProtocolError(_("Expected alive check response, got: %s") % message_type)
         except Exception as e:
-            raise DoIPProtocolError(_("Alive check failed: {}").format(e))
+            raise DoIPProtocolError(_("Alive check failed: %s") % e)
 

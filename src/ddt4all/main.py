@@ -82,7 +82,7 @@ def main(argv=None) -> int:
                 f.write(f'#define __email__ "{version.__email__}"\n')
                 f.write(f'#define __status__ "{version.__status__}"')
         except (OSError, IOError) as e:
-            print(f"Warning: Could not write version.h: {e}")
+            print(_("Warning: Could not write version.h: %s") % e)
 
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
