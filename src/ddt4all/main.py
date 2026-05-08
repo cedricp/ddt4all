@@ -154,12 +154,6 @@ def main(argv=None) -> int:
             msgbox.exec_()
         else:
             nok = False
-            # Initialize device with enhanced features (STPX, pin swapping, etc.)
-            if options.elm and options.elm.connectionStatus:
-                print(_("Initializing device features..."))
-                elm.DeviceManager.initialize_device(options.elm)
-                # Mark as initialized to avoid re-initialization during scan
-                options.elm._device_initialized = True
 
     w = MainWidget(app, vehicles)
     options.main_window = w

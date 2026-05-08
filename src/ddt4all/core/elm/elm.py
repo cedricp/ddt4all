@@ -1,6 +1,6 @@
 '''module contains class for working with ELM327
    version: 160829
-   Borrowed code from PyRen (modified for this use)
+   Modified for enhanced STN/STPX support
 '''
 
 from datetime import datetime
@@ -12,6 +12,7 @@ from serial.tools import list_ports
 import socket
 import string
 import time
+import re
 
 from ddt4all.core.elm.constants import (
     cmdb,
@@ -169,7 +170,7 @@ def get_available_ports():
             elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
                 device_desc = f"{desc} (DERLEK Compatible)"
             elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
-                device_desc = f"{desc} (OBDLINK Compatible)"
+                device_desc = f"{desc} (OBDLink Compatible)"
             # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
             elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
                 device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
@@ -437,6 +438,30 @@ class ELM:
                 options.elm_failed = True
                 options.last_error = _("Port connection failed - port object is invalid")
                 continue
+            
+            # Activate VGate STPX mode after port and log are fully initialized
+            if hasattr(self, 'vgate_stpx_pending'):
+                if getattr(options, 'opt_stn_basic', False) or getattr(options, 'opt_stpx_full', False):
+                    self.enable_stpx_mode()
+                    msg = _("VGate STN/STPX mode enabled for enhanced long command support")
+                    print(msg)
+                    if self.lf != 0:
+                        tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                        self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                        self.lf.flush()
+                self.vgate_stpx_pending = False
+            else:
+                # Force activation check for VGate if STN support was detected
+                if getattr(options, 'opt_stn_basic', False) or getattr(options, 'opt_stpx_full', False):
+                    # Re-enable STPX mode to ensure commands are logged now that log file is available
+                    self.enable_stpx_mode()
+                    msg = _("VGate STN/STPX mode enabled for enhanced long command support")
+                    print(msg)
+                    if self.lf != 0:
+                        tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                        self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                        self.lf.flush()
+            
             if 'ELM' in res or 'OBDII' in res:
                 options.last_error = ""
                 options.elm_failed = False
@@ -452,71 +477,80 @@ class ELM:
         except Exception:
             maxspeed = 0
 
-        device_text_switch = _("OBDLINK Connection OK, attempting full speed UART switch")
-        text_switch_error = _("Failed to switch OBDLINK to ") + str(maxspeed)
-        text_optional = _("OBDLINK Connection OK, using optimal settings")
+        device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
+        text_switch_error = _("Failed to switch OBDLink to ") + str(maxspeed)
+        text_optional = _("OBDLink Connection OK, using optimal settings")
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(device_text_switch.replace("OBDLINK", "OBDLINK"))
+            print(device_text_switch.replace("OBDLink", "OBDLink"))
             try:
-                self.raise_odb_speed(maxspeed, "OBDLINK")
+                self.raise_odb_speed(maxspeed, "OBDLink")
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "OBDLINK"))
+                print(text_switch_error.replace("OBDLink", "OBDLink"))
         elif adapter_type == "OBDLINK":
-            print(text_optional.replace("OBDLINK", "OBDLINK"))
+            print(text_optional.replace("OBDLink", "OBDLink"))
             if not options.elm_failed:
-                # Enable STPX mode for OBDLINK adapters
-                try:
-                    self.enable_stpx_mode()
-                    print(_("OBDLINK STPX mode enabled for enhanced long command support"))
-                except Exception as e:
-                    print(f"OBDLINK STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(device_text_switch.replace("OBDLINK", "ELM"))
+            print(device_text_switch.replace("OBDLink", "ELM"))
             try:
                 self.raise_elm_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "ELM"))
+                print(text_switch_error.replace("OBDLink", "ELM"))
         elif adapter_type == "STD_USB":
-            print(text_optional.replace("OBDLINK", "ELM"))
+            print(text_optional.replace("OBDLink", "ELM"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLINK", "Vlinker"))
+            print(device_text_switch.replace("OBDLink", "Vlinker"))
             try:
                 self.raise_elm_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "Vlinker"))
+                print(text_switch_error.replace("OBDLink", "Vlinker"))
         elif adapter_type == "VLINKER":
-            print(text_optional.replace("OBDLINK", "Vlinker"))
+            print(text_optional.replace("OBDLink", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VGATE" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLINK", "Vgate"))
+            print(device_text_switch.replace("OBDLink", "Vgate"))
             try:
                 self.raise_vgate_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "VGate"))
+                print(text_switch_error.replace("OBDLink", "VGate"))
         elif adapter_type == "VGATE":
-            print(text_optional.replace("OBDLINK", "VGate"))
+            print(text_optional.replace("OBDLink", "VGate"))
             if not options.elm_failed:
-                # Enable STPX mode for VGate adapters
+                # VGate requires STN/STPX detection like OBDLink
                 try:
-                    self.enable_stpx_mode()
-                    print(_("VGate STPX mode enabled for enhanced long command support"))
+                    self.detect_stn_features()
+                    if getattr(options, 'opt_stn_basic', False) or getattr(options, 'opt_stpx_full', False):
+                        # Activate STPX mode immediately when detected
+                        print(_("VGate STN/STPX support detected - activating immediately"))
+                        self.enable_stpx_mode()
+                        msg = _("VGate STN/STPX mode enabled for enhanced long command support")
+                        print(msg)
+                        # Log if available, otherwise set pending for later logging
+                        if hasattr(self, 'lf') and self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                            self.lf.flush()
+                        else:
+                            self.vgate_stpx_pending = True
+                    else:
+                        print(_("VGate connected - using standard ELM mode"))
                 except Exception as e:
-                    print(f"VGate STPX warning: {e}")
+                    print(f"STN/STPX detection warning: {e}")
+                
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
-            print(text_optional.replace("OBDLINK", "ELS27"))
+            print(text_optional.replace("OBDLink", "ELS27"))
             if not options.elm_failed:
                 # ELS27 V5 specific initialization - set CAN pins 12-13
                 try:
@@ -532,6 +566,63 @@ class ELM:
             print(text_optional.replace("OBDLINK", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
+        # Add STN detection after successful connection
+        if not options.elm_failed and self.connectionStatus:
+            self.detect_stn_features()
+
+    def detect_stn_features(self):
+        """Detect STN/STPX features for compatible adapters"""
+        try:
+            # Check OBDLink STN/STPX capabilities
+            elm_rsp = self.cmd("STI")
+            if elm_rsp and '?' not in elm_rsp and len(elm_rsp.split(" ")) == 2:
+                odblink_meta = elm_rsp.split(" ")
+                ic_type = odblink_meta[0]
+                firmware_version = odblink_meta[1]
+                
+                # Set UART buffer size based on IC type
+                if ic_type.startswith("STN1"):
+                    options.elm_uart_buffer_size = 0x1ff
+                elif ic_type.startswith("STN2"):
+                    options.elm_uart_buffer_size = 0x3ff
+                
+                # Check for STPX support based on firmware version
+                try:
+                    firmware_version = firmware_version.split(".")
+                    version_number = int(''.join([re.sub(r'\D', '', version) for version in firmware_version]))
+                    stpx_introduced_in_version_number = 420  # STN1110 got STPX in v4.2.0
+                    if version_number >= stpx_introduced_in_version_number:
+                        options.opt_stpx_full = True
+                        msg = _("STPX support detected - enhanced features enabled")
+                        print(msg)
+                        if self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                            self.lf.flush()
+                        # Activate STPX mode immediately when detected
+                        self.enable_stpx_mode()
+                        msg2 = _("STPX mode activated - enhanced long command support enabled")
+                        print(msg2)
+                        if self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg2 + "\n")
+                            self.lf.flush()
+                except Exception:
+                    print(_("Cannot determine STN version - using standard mode"))
+            
+            # Check for STN protocol support
+            elm_rsp = self.cmd("STP 53")
+            if '?' not in elm_rsp:
+                options.opt_stn_basic = True
+                msg = _("STN protocol support detected")
+                print(msg)
+                if self.lf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                    self.lf.flush()
+                
+        except Exception as e:
+            print(f"STN/STPX detection warning: {e}")
 
     def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
         # Compatibility wrapper: delegate to unified speed switch
@@ -541,43 +632,128 @@ class ELM:
         # Compatibility wrapper: delegate to unified speed switch
         return self.raise_elm_speed(baudrate, device_name="VGATE")
 
-    def enable_stpx_mode(self):
-        """Enable STPX mode for enhanced long command support"""
+    def send_stn_command(self, command, enhanced=True):
+        """Send command using STN/STPX protocol"""
         try:
-            if not os.path.exists(get_logs_dir()):
-                os.mkdir(get_logs_dir())
-
-            if len(options.log) > 0:
-                self.lf = open(os.path.join(get_logs_dir(), "elm_" + options.log + ".txt"), "at", encoding="utf-8")
-                self.vf = open(os.path.join(get_logs_dir(), "ecu_" + options.log + ".txt"), "at", encoding="utf-8")
-                self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
-            
-            # STPX mode enables enhanced long command handling
-            # This is particularly useful for VGate and other STN-based adapters
-            
-            # Set enhanced timeout for long commands
-            self.send_raw("ST SFT 0")  # Disable flow control for better long command support
-            self.send_raw("ST WFF 1")  # Enable wait for first frame
-            self.send_raw("ST FC SH 80")  # Set flow control separator
-            
-            # Configure extended buffer for long commands
-            self.send_raw("ST BLM 1")  # Enable large message mode
-            self.send_raw("ST CSM 1")  # Enable checksum mode for reliability
-            
-            # Set optimal timing for STPX protocol
-            self.send_raw("ST P1 25")  # Set inter-frame gap
-            self.send_raw("ST P3 55")  # Set frame response time
-            
-            # Enable extended addressing if supported
-            self.send_raw("ST EA 1")  # Enable extended addressing
-            
-            # Set flag to indicate STPX is enabled
-            self.stpx_enabled = True
-            
-            print(_("STPX mode enabled for enhanced long command support"))
+            if enhanced and hasattr(self, 'stpx_enabled') and self.stpx_enabled:
+                # Use STPX protocol for enhanced communication
+                STPX = "STPX"
+                
+                # Check UART buffer size limitation
+                buffer_size = getattr(options, 'elm_uart_buffer_size', 255)
+                if len(f"{STPX} D:{command},R:1") > buffer_size:
+                    # Use large message mode for long commands
+                    stpx_cmd = f"{STPX} L:{str(int(len(command)/2))},R:1"
+                    frsp = self.send_raw(stpx_cmd)
+                    if "DATA>" not in frsp:
+                        return ""
+                    frsp = self.send_raw(command)
+                else:
+                    # Standard STPX command
+                    stpx_cmd = f"{STPX} D:{command},R:1"
+                    frsp = self.send_raw(stpx_cmd)
+                
+                # Process STPX response (remove echo)
+                responses = []
+                for s in frsp.split('\n'):
+                    if s.strip()[:4] == STPX:  # Remove STPX echo
+                        continue
+                    if s.strip():
+                        responses.append(s.strip())
+                
+                return '\n'.join(responses)
+            else:
+                # Standard ELM command
+                return self.send_raw(command)
         except Exception as e:
-            print(f"STPX mode enable warning: {e}")
-            # Don't raise exception - STPX is enhancement, not requirement
+            print(f"STN/STPX command error: {e}")
+            # Fallback to standard command
+            return self.send_raw(command)
+
+    def enable_stpx_mode(self):
+        """Enable STPX mode for STN-based adapters"""
+        try:
+            # Only enable STPX if STN-based adapter support is detected
+            if not getattr(options, 'opt_stpx_full', False) and not getattr(options, 'opt_stn_basic', False):
+                print(_("STPX enhanced mode not available - STN support not detected"))
+                self.stpx_enabled = False
+                return
+            
+            # Enhanced STPX configuration
+            if getattr(options, 'opt_stpx_full', False):
+                msg = _("Configuring STPX enhanced mode...")
+                print(msg)
+                if self.lf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                    self.lf.flush()
+                
+                # Set optimal buffer sizes for STN-based adapters
+                if getattr(options, 'elm_uart_buffer_size', None):
+                    self.send_raw(f"ST BRS {options.elm_uart_buffer_size}")
+                
+                # Configure STPX for maximum performance
+                stpx_commands = [
+                    "ST SFT 0",  # Disable flow control for long commands
+                    "ST WFF 1",  # Wait for first frame
+                    "ST FC SH 80",  # Flow control separator
+                    "ST P1 25",  # Inter-frame gap
+                    "ST P3 55",  # Frame response time
+                    "ST EA 1",   # Extended addressing
+                    "ST CSM 1"   # Checksum mode
+                ]
+                
+                for cmd in stpx_commands:
+                    self.send_raw(cmd)
+                    # Log each STPX command individually
+                    if hasattr(self, 'lf') and self.lf != 0:
+                        tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                        self.lf.write("# [" + tmstr + "] STPX Command: " + cmd + "\n")
+                        self.lf.flush()
+                
+                # Log STPX commands completion
+                if hasattr(self, 'lf') and self.lf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.lf.write("# [" + tmstr + "] STPX configuration commands sent\n")
+                    self.lf.flush()
+                else:
+                    # Alternative logging when main log is not available
+                    print("DEBUG: STPX commands sent but log not available - commands:")
+                    for cmd in stpx_commands:
+                        print(f"  {cmd}")
+                
+                self.stpx_enabled = True
+                msg = _("STPX mode successfully enabled")
+                print(msg)
+                if self.lf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                    self.lf.flush()
+                
+            elif getattr(options, 'opt_stn_basic', False):
+                print(_("Configuring STN protocol enhancements..."))
+                
+                # Basic STN enhancements
+                stn_commands = [
+                    "ST SFT 0",  # Disable flow control
+                    "ST WFF 1",  # Wait for first frame
+                    "ST P1 30",  # Slightly longer gap
+                    "ST P3 60"   # Longer response time
+                ]
+                
+                for cmd in stn_commands:
+                    self.send_raw(cmd)
+                    # Log each STN command individually
+                    if hasattr(self, 'lf') and self.lf != 0:
+                        tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                        self.lf.write("# [" + tmstr + "] STN Command: " + cmd + "\n")
+                        self.lf.flush()
+                
+                self.stpx_enabled = True
+                print(_("STN enhancements successfully enabled"))
+            
+        except Exception as e:
+            print(f"STPX/STN configuration warning: {e}")
             self.stpx_enabled = False
 
     def raise_elm_speed(self, baudrate, device_name="ELM"):
@@ -587,7 +763,7 @@ class ELM:
 
         dev = (device_name or "ELM").upper()
         try:
-            # STN / VGate / OBDLINK style switching
+            # STN / VGate / OBDLink style switching
             if dev in ("VGATE", "OBDLINK", "VLINKER", "STN"):
                 cmd = "ST SBR " + str(baudrate)
                 rsp = self.send_raw(cmd)
@@ -600,13 +776,10 @@ class ELM:
                     if "STN" in res:
                         print((_("%s STN connection established") % device_name))
                         print((_("%s Version: ") % device_name) + res)
-                        if dev == "VGATE":
-                            self.enable_stpx_mode()
                     else:
                         # Best-effort fallback for VGate
                         if dev == "VGATE":
                             print(_("VGate adapter detected but STN verification failed, attempting fallback..."))
-                            self.enable_stpx_mode()
                     return
                 else:
                     raise Exception(f"{device_name} speed switch failed: {rsp}")
@@ -1093,23 +1266,8 @@ class ELM:
         """Enhanced send_raw with STN/STPX support"""
         # Check if STN/STPX should be used
         if hasattr(self, 'stpx_enabled') and self.stpx_enabled and not command.upper().startswith(('AT', 'ST')):
-            # Use STPX D: protocol for enhanced adapters
-            if len(command) > 16:
-                # Use STPX L: for long commands first
-                length_cmd = f"STPX L:{str(int(len(command)/2))},R:1"
-                frsp = self.send_raw(length_cmd)
-                if "OK" in frsp:
-                    # Send actual data with STPX D:
-                    stpx_command = f"STPX D:{command},R:1"
-                    return self.send_raw(stpx_command)
-                else:
-                    # Fallback to standard STN if STPX L: fails
-                    stn_command = f"ST {command}"
-                    return self.send_raw(stn_command)
-            else:
-                # Use STPX D: for shorter commands
-                stpx_command = f"STPX D:{command},R:1"
-                return self.send_raw(stpx_command)
+            # Use STN protocol for enhanced adapters when enabled
+            return self.send_stn_command(command, enhanced=True)
         
         tb = time.time()  # start time
 

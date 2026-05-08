@@ -43,6 +43,11 @@ doip_timeout = 5
 doip_vehicle_announcement = True
 doip_auto_reconnect = False
 doip_preset = "Custom"
+
+# STN/STPX Configuration
+opt_stpx_full = False  # Full STPX support detected
+opt_stn_basic = False  # Basic STN protocol support detected
+elm_uart_buffer_size = 0  # UART buffer size for STN-based adapters
 configuration = {
     "lang": None,
     "dark": False,
