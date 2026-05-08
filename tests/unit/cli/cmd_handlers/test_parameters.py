@@ -5,7 +5,6 @@ from ddt4all.cli.cli_args_parser import build_parser
 from ddt4all.cli.cmd_handlers.parameters import cmd_parameters
 
 import ddt4all.options as options
-global _
 _ = options.translator('ddt4all')
 
 

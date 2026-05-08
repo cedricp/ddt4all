@@ -6,7 +6,6 @@ from ddt4all.cli.cmd_handlers.parameters import cmd_parameters
 from ddt4all.cli.cmd_handlers.usbdevice import cmd_usbdevice
 
 import ddt4all.options as options
-global _
 _ = options.translator('ddt4all')
 
 
