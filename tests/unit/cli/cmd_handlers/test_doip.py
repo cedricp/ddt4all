@@ -1,6 +1,10 @@
+import pytest
 import argparse
 
+from ddt4all.cli.cli_args_parser import build_parser
 from ddt4all.cli.cmd_handlers.doip import cmd_doip
+
+_ = None  # Initialize _ for tests
 
 
 def test_cmd_doip_success_flow(mocker, capsys):

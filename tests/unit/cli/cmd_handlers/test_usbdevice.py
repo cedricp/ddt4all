@@ -1,7 +1,11 @@
+import pytest
 import argparse
 from unittest.mock import call
 
+from ddt4all.cli.cli_args_parser import build_parser
 from ddt4all.cli.cmd_handlers.usbdevice import cmd_usbdevice
+
+_ = None  # Initialize _ for tests
 
 
 def test_cmd_usbdevice_calls_obd_device_methods_in_order(mocker, capsys):

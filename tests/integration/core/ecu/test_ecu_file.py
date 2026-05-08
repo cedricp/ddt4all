@@ -3,6 +3,8 @@ import json
 import ddt4all.options as options
 from ddt4all.core.ecu.ecu_file import EcuFile
 
+_ = options.translator('ddt4all')
+
 
 
 def test_ecu_file_loads_xml_and_exercises_main_paths(dummy_ecu_file):
