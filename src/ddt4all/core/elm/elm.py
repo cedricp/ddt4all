@@ -510,7 +510,7 @@ class ELM:
                     else:
                         print(_("OBDLink connected - using standard ELM mode"))
                 except Exception as e:
-                    print(f"STN/STPX detection warning: {e}")
+                    print(_("STN/STPX detection warning: %s") % e)
                 
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
@@ -567,7 +567,7 @@ class ELM:
                     else:
                         print(_("VGate connected - using standard ELM mode"))
                 except Exception as e:
-                    print(f"STN/STPX detection warning: {e}")
+                    print(_("STN/STPX detection warning: %s") % e)
                 
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
@@ -581,7 +581,7 @@ class ELM:
                     self.send_raw("ATSH81")  # Set header for CAN
                     print(_("ELS27 V5 CAN configuration complete"))
                 except Exception as e:
-                    print(f"ELS27 V5 configuration warning: {e}")
+                    print(_("ELS27 V5 configuration warning: %s") % e)
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
             print(text_optional.replace("OBDLINK", adapter_type))
@@ -775,7 +775,7 @@ class ELM:
                 # Standard ELM command
                 return self.send_raw(command)
         except Exception as e:
-            print(f"STN/STPX command error: {e}")
+            print(_("STN/STPX command error: %s") % e)
             # Fallback to standard command
             return self.send_raw(command)
 
@@ -829,7 +829,7 @@ class ELM:
                     # Alternative logging when main log is not available
                     print("DEBUG: STPX commands sent but log not available - commands:")
                     for cmd in stpx_commands:
-                        print(f"  {cmd}")
+                        print("  %s" % cmd)
                 
                 self.stpx_enabled = True
                 msg = _("STPX mode successfully enabled")
@@ -862,7 +862,7 @@ class ELM:
                 print(_("STN enhancements successfully enabled"))
             
         except Exception as e:
-            print(f"STPX/STN configuration warning: {e}")
+            print(_("STPX/STN configuration warning: %s") % e)
             self.stpx_enabled = False
 
     def raise_elm_speed(self, baudrate, device_name="ELM"):
