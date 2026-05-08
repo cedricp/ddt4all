@@ -626,11 +626,21 @@ class ELM:
                 elif ic_type.startswith("STN2"):
                     options.elm_uart_buffer_size = 0x3ff
                 
+                # Check for STP 53 protocol support
+                stp53_rsp = self.cmd("STP 53")
+                if '?' not in stp53_rsp:
+                    msg = _("STP 53 protocol support detected")
+                    print(msg)
+                    if self.lf != 0:
+                        tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                        self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                        self.lf.flush()
+                
                 # Check for STPX support based on firmware version
                 try:
                     firmware_version = firmware_version.split(".")
                     version_number = int(''.join([re.sub(r'\D', '', version) for version in firmware_version]))
-                    stpx_introduced_in_version_number = 420  # STN1110 got STPX in v4.2.0
+                    stpx_introduced_in_version_number = 420  # Version OBDlink EX STN2230 v5.12.4
                     if version_number >= stpx_introduced_in_version_number:
                         options.opt_stpx_full = True
                         msg = _("STPX support detected - enhanced features enabled")
@@ -653,20 +663,75 @@ class ELM:
             print(_("OBDLink STN/STPX detection warning: %s") % e)
 
     def _detect_vgate_stn_features(self):
-        """Detect VGate STN protocol support"""
+        """Detect VGate STN/STPX protocol support"""
         try:
-            # Check for STN protocol support
-            elm_rsp = self.cmd("STP 53")
-            if '?' not in elm_rsp:
+            # Check VGate STN/STPX capabilities
+            elm_rsp = self.cmd("STI")
+            if elm_rsp and '?' not in elm_rsp and len(elm_rsp.split(" ")) == 2:
+                vgate_meta = elm_rsp.split(" ")
+                ic_type = vgate_meta[0]
+                firmware_version = vgate_meta[1]
+                
+                # Set UART buffer size based on IC type
+                if ic_type.startswith("STN1"):
+                    options.elm_uart_buffer_size = 0x1ff
+                elif ic_type.startswith("STN2"):
+                    options.elm_uart_buffer_size = 0x3ff
+                
+                # Check for STP 53 protocol support (may not be supported on all VGate models)
+                stp53_rsp = self.cmd("STP 53")
+                if '?' not in stp53_rsp:
+                    msg = _("VGate STP 53 protocol support detected")
+                    print(msg)
+                    if self.lf != 0:
+                        tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                        self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                        self.lf.flush()
+                
+                # Check for STPX support based on firmware version
+                try:
+                    firmware_version = firmware_version.split(".")
+                    version_number = int(''.join([re.sub(r'\D', '', version) for version in firmware_version]))
+                    stpx_introduced_in_version_number = 420  # Version VGATE: STN1170 v4.3.2
+                    if version_number >= stpx_introduced_in_version_number:
+                        options.opt_stpx_full = True
+                        msg = _("VGate STPX support detected - enhanced features enabled")
+                        print(msg)
+                        if self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                            self.lf.flush()
+                        # Activate STPX mode immediately when detected
+                        self.enable_stpx_mode()
+                        msg2 = _("VGate STPX mode activated - enhanced long command support enabled")
+                        print(msg2)
+                        if self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg2 + "\n")
+                            self.lf.flush()
+                    else:
+                        # Fallback to basic STN for older firmware
+                        options.opt_stn_basic = True
+                        msg = _("VGate STN basic support detected - using enhanced mode")
+                        print(msg)
+                        if self.lf != 0:
+                            tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            self.lf.write("# [" + tmstr + "] " + msg + "\n")
+                            self.lf.flush()
+                except Exception:
+                    print(_("Cannot determine VGate STN version - using basic mode"))
+                    options.opt_stn_basic = True
+            else:
+                # Fallback: if STI fails, assume basic STN support
                 options.opt_stn_basic = True
-                msg = _("STN protocol support detected")
+                msg = _("VGate STN protocol support detected")
                 print(msg)
                 if self.lf != 0:
                     tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                     self.lf.write("# [" + tmstr + "] " + msg + "\n")
                     self.lf.flush()
         except Exception as e:
-            print(_("VGate STN detection warning: %s") % e)
+            print(_("VGate STN/STPX detection warning: %s") % e)
 
     def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
         # Compatibility wrapper: delegate to unified speed switch
