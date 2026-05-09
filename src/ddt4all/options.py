@@ -4,6 +4,8 @@ import gettext
 import json
 import locale
 import os
+import time
+import sys
 from pathlib import Path
 
 from ddt4all.file_manager import get_config_dir
@@ -16,6 +18,7 @@ port = ""
 promode = False
 elm = None
 log = "ddt"
+opt_caf = False
 opt_cfc0 = False
 opt_n1c = True
 log_all = False
@@ -47,7 +50,7 @@ doip_preset = "Custom"
 # STN/STPX Configuration
 opt_stpx_full = False  # Full STPX support detected
 opt_stn_basic = False  # Basic STN protocol support detected
-elm_uart_buffer_size = 255  # UART buffer size for STN-based adapters
+elm_uart_buffer_size = 0x1ff  # UART buffer size for STN-based adapters
 configuration = {
     "lang": None,
     "dark": False,
@@ -150,10 +153,7 @@ def load_configuration():
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
     except Exception as e:
-        try:
-            print(_("Configuration file not found. Creating new configuration..."))
-        except NameError:
-            print("Configuration file not found. Creating new configuration...")
+        print("Configuration file not found. Creating new configuration...")
         create_new_config()
 
 
@@ -258,3 +258,9 @@ def translator(domain):
     # Set up message catalog access
     t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext
+
+def dtt4all_time():
+    if (sys.version_info[0] * 100 + sys.version_info[1]) > 306:
+        return time.perf_counter_ns() / 1e9
+    else:
+        return time.time()
