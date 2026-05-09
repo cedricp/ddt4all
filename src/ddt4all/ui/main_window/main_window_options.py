@@ -360,6 +360,7 @@ class MainWindowOptions(widgets.QDialog):
         self.timer.start(2000)
         self.portcount = -1
         self.usb()
+        elm.detect_usb_device()  # must run on main thread before any PortScanWorker starts
         self.rescan_ports()
         self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
 

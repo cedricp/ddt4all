@@ -35,6 +35,49 @@ snat_ext = {}
 dnat = dnat_entries
 dnat_ext = {}
 
+# USB port info cached by detect_usb_device() which must run on the main thread.
+# libusb_init() (called by get_backend()) is not safe to call from a non-main thread
+# on macOS due to IOKit restrictions and causes a SIGBUS.
+_usb_port_cache = None      # (port_path, descriptor, "USB", "online") or None
+_usb_serial_cache = set()   # /dev paths claimed by USB detection, used to suppress duplicates
+
+
+def detect_usb_device():
+    """Detect USB OBD device and cache the result. MUST be called from the main thread."""
+    global _usb_port_cache, _usb_serial_cache
+    try:
+        import usb.backend.libusb1
+        backend = usb.backend.libusb1.get_backend()
+        if backend is None:
+            _usb_port_cache = None
+            return
+        usb_device = UsbCan()
+        if not usb_device.is_init():
+            _usb_port_cache = None
+            return
+        port_path = usb_device.descriptor
+        try:
+            vid = usb_device.device.idVendor
+            pid = usb_device.device.idProduct
+            for port_info in list_ports.comports():
+                if port_info.vid == vid and port_info.pid == pid:
+                    port_path = port_info.device
+                    _usb_serial_cache.add(port_path)
+                    break
+        except Exception:
+            pass
+        _usb_port_cache = (port_path, usb_device.descriptor, "USB", "online")
+        print(_("Found USB device:") + " %s" % usb_device.descriptor)
+    except ImportError:
+        _usb_port_cache = None
+    except Exception as e:
+        if not hasattr(detect_usb_device, '_error_shown'):
+            detect_usb_device._error_shown = True
+            print(_("USB device detection error:") + f" {e}")
+            print(_("Note: This error does not affect serial communication or bypass cable functionality."))
+        _usb_port_cache = None
+
+
 def clean_bytestring(value):
     # If is bytes -> decode
     # print(repr(value), type(value))
@@ -93,47 +136,12 @@ def get_available_ports():
     # Track serial ports already listed via USB detection to avoid duplicates
     usb_serial_ports = set()
 
-    # First check for USB devices using usbdevice.py (with error handling)
-    try:
-        # Check if pyusb is available before attempting USB device detection
-        import usb.core
-        import usb.util
-        import usb.legacy
-        import usb.backend.libusb1
-
-        # Test if USB backend is available before attempting device detection
-        backend = usb.backend.libusb1.get_backend()
-        if backend is None:
-            # No USB backend available - silently continue for bypass cable users
-            pass
-        else:
-            usb_device = UsbCan()
-            if usb_device.is_init():
-                # USB-serial adapters (FTDI, CP210x, CH340, PL2303, etc.) expose themselves
-                # as serial ports. Find the actual /dev path via VID/PID so serial.Serial()
-                # can open it; fall back to the human-readable descriptor only if not found.
-                port_path = usb_device.descriptor  # fallback
-                try:
-                    vid = usb_device.device.idVendor
-                    pid = usb_device.device.idProduct
-                    for port_info in list_ports.comports():
-                        if port_info.vid == vid and port_info.pid == pid:
-                            port_path = port_info.device
-                            usb_serial_ports.add(port_path)
-                            break
-                except Exception:
-                    pass
-                ports.append((port_path, usb_device.descriptor, "USB", "online"))
-                print(_("Found USB device:") + " %s" % usb_device.descriptor)
-    except ImportError:
-        # USB device detection not available - silently continue for bypass cable users
-        pass
-    except Exception as e:
-        # Only show USB device detection error once per session
-        if not hasattr(get_available_ports, '_usb_device_error_shown'):
-            get_available_ports._usb_device_error_shown = True
-            print(_("USB device detection error:") + f" {e}")
-            print(_("Note: This error does not affect serial communication or bypass cable functionality."))
+    # Use USB device previously detected on the main thread by detect_usb_device().
+    # libusb is not safe to call from background threads on macOS, so detection is
+    # deliberately deferred to the main-thread call and cached here.
+    if _usb_port_cache is not None:
+        ports.append(_usb_port_cache)
+        usb_serial_ports.add(_usb_port_cache[0])
     
     # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
     # DoIP devices - Use configured IP address instead of hardcoded values
@@ -168,7 +176,7 @@ def get_available_ports():
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
             # Skip ports already listed via USB device detection (avoid duplicates)
-            if port in usb_serial_ports:
+            if port in usb_serial_ports or port in _usb_serial_cache:
                 continue
 
             # Enhanced device identification for ELS27 and other adapters
