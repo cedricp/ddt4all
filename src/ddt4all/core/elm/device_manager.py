@@ -10,44 +10,34 @@ class DeviceManager:
         """Get optimal connection settings for specific device types"""
         settings = {
             'vlinker': {
-                'baudrate': 38400, 'timeout': 3, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': False
+                'baudrate': 38400, 'timeout': 3, 'rtscts': False, 'dsrdtr': False
             },
             'elm327': {
-                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': False
+                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False
             },
             'obdlink': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False,
-                'stn_support': True, 'stpx_support': True, 'pin_swap': True
+                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False
             },
             'obdlink_ex': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False,
-                'stn_support': True, 'stpx_support': True, 'pin_swap': True
+                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False
             },
             'els27': {
-                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13',
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False
             },
             'vgate': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': True, 'stpx_support': True, 'pin_swap': True
+                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False
             },
             'derlek_usb_diag2': {
-                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False
             },
             'derlek_usb_diag3': {
-                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False
             },
             'unknown': {
-                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': False
+                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False
             },
             'usbcan': {
-                'baudrate': 500000, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 500000, 'timeout': 2, 'rtscts': False, 'dsrdtr': False
             }
         }
         return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])

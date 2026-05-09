@@ -51,6 +51,7 @@ doip_preset = "Custom"
 opt_stpx_full = False  # Full STPX support detected
 opt_stn_basic = False  # Basic STN protocol support detected
 elm_uart_buffer_size = 0x1ff  # UART buffer size for STN-based adapters
+
 configuration = {
     "lang": None,
     "dark": False,
@@ -70,6 +71,7 @@ configuration = {
     "doip_auto_reconnect": False,
     "doip_preset": "Custom"
 }
+
 lang_list = {
     "English": "en_US",
     "German": "de",
@@ -189,7 +191,7 @@ def get_device_settings(device_type, port=None):
         'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False},
         'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
         'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
-        'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13'},  # ELS27 V5 with CAN on pins 12-13
+        'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False},  # ELS27 V5 with CAN on pins 12-13
         'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},
 
         'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
