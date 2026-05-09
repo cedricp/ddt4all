@@ -543,7 +543,7 @@ class MainWidget(widgets.QMainWindow):
                 self.eculistwidget.refreshVehicleList()
             
         except Exception as e:
-            print(f"Error updating menu bar: {e}")
+            print(_("Error updating menu bar: %s") % e)
             
     def toggle_theme(self):
         """Toggle theme between light and dark"""

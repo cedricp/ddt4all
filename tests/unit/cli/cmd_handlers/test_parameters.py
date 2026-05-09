@@ -1,6 +1,11 @@
+import pytest
 import argparse
 
+from ddt4all.cli.cli_args_parser import build_parser
 from ddt4all.cli.cmd_handlers.parameters import cmd_parameters
+
+import ddt4all.options as options
+_ = options.translator('ddt4all')
 
 
 def test_cmd_parameters_no_flags_calls_nothing(mocker):

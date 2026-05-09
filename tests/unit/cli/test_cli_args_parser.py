@@ -5,6 +5,9 @@ from ddt4all.cli.cmd_handlers.doip import cmd_doip
 from ddt4all.cli.cmd_handlers.parameters import cmd_parameters
 from ddt4all.cli.cmd_handlers.usbdevice import cmd_usbdevice
 
+import ddt4all.options as options
+_ = options.translator('ddt4all')
+
 
 def test_parse_without_subcommand():
     parser = build_parser()

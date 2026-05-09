@@ -35,9 +35,9 @@ def cmd_doip(args: argparse.Namespace) -> int:
         # Test diagnostic request
         try:
             response = doip_device.request("22 F1 90")  # Read VIN
-            print(_("DoIP response: {}").format(response))
+            print(_("DoIP response: %s") % response)
         except Exception as e:
-            print(_("DoIP request failed: {}").format(e))
+            print(_("DoIP request failed: %s") % e)
         
         # Test Electric ECU configurations
         electric_ecus = [
@@ -51,10 +51,10 @@ def cmd_doip(args: argparse.Namespace) -> int:
         ]
         
         for ecu_name, ecu_data in electric_ecus:
-            print("\n" + _("Testing Electric ECU: {}").format(ecu_name))
+            print("\n" + _("Testing Electric ECU: %s") % ecu_name)
             doip_device.set_can_addr(ecu_name, ecu_data)
             response = doip_device.request("22 F1 90")  # Read VIN
-            print(_("DoIP response: {}").format(response))
+            print(_("DoIP response: %s") % response)
         
         doip_device.disconnect()
     else:

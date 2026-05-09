@@ -4,6 +4,8 @@ import gettext
 import json
 import locale
 import os
+import time
+import sys
 from pathlib import Path
 
 from ddt4all.file_manager import get_config_dir
@@ -16,6 +18,7 @@ port = ""
 promode = False
 elm = None
 log = "ddt"
+opt_caf = False
 opt_cfc0 = False
 opt_n1c = True
 log_all = False
@@ -34,7 +37,7 @@ debug = 'DDTDEBUG' in os.environ
 cantimeout = 0
 refreshrate = 5
 mode_edit = False
-safe_commands = ["3E", "14", "21", "22", "17", "19", "10"]
+safe_commands = ['10','12','14','17','19','1A','21','22','23','3E']
 
 # DoIP Configuration
 doip_target_ip = "192.168.0.12"
@@ -43,6 +46,12 @@ doip_timeout = 5
 doip_vehicle_announcement = True
 doip_auto_reconnect = False
 doip_preset = "Custom"
+
+# STN/STPX Configuration
+opt_stpx_full = False  # Full STPX support detected
+opt_stn_basic = False  # Basic STN protocol support detected
+elm_uart_buffer_size = 0x1ff  # UART buffer size for STN-based adapters
+
 configuration = {
     "lang": None,
     "dark": False,
@@ -62,6 +71,7 @@ configuration = {
     "doip_auto_reconnect": False,
     "doip_preset": "Custom"
 }
+
 lang_list = {
     "English": "en_US",
     "German": "de",
@@ -145,7 +155,7 @@ def load_configuration():
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
     except Exception as e:
-        print(f"Error loading configuration: {e}")
+        print("Configuration file not found. Creating new configuration...")
         create_new_config()
 
 
@@ -181,7 +191,7 @@ def get_device_settings(device_type, port=None):
         'elm327': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False},
         'obdlink': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
         'obdlink_ex': {'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False},
-        'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13'},  # ELS27 V5 with CAN on pins 12-13
+        'els27': {'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False},  # ELS27 V5 with CAN on pins 12-13
         'vgate': {'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False},
 
         'unknown': {'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False}
@@ -250,3 +260,9 @@ def translator(domain):
     # Set up message catalog access
     t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
     return t.gettext
+
+def dtt4all_time():
+    if (sys.version_info[0] * 100 + sys.version_info[1]) > 306:
+        return time.perf_counter_ns() / 1e9
+    else:
+        return time.time()

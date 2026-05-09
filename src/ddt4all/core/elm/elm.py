@@ -1,6 +1,6 @@
 '''module contains class for working with ELM327
    version: 160829
-   Borrowed code from PyRen (modified for this use)
+   Modified for enhanced STN/STPX support
 '''
 
 from datetime import datetime
@@ -12,6 +12,7 @@ from serial.tools import list_ports
 import socket
 import string
 import time
+import re
 
 from ddt4all.core.elm.constants import (
     cmdb,
@@ -27,13 +28,14 @@ _ = options.translator('ddt4all')
 
 # SNAT/DNAT entries for CAN address mapping
 # Fixed: Using proper hex addresses instead of string values
-dnat_entries = {} #{"E7": "7E4", "E8": "644"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
-snat_entries = {} #{"E7": "7EC", "E8": "5C4"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
+dnat_entries = {}  # {"E7": "7E4", "E8": "644"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
+snat_entries = {}  # {"E7": "7EC", "E8": "5C4"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
 
 snat = snat_entries
 snat_ext = {}
 dnat = dnat_entries
 dnat_ext = {}
+
 
 def clean_bytestring(value):
     # If is bytes -> decode
@@ -90,7 +92,7 @@ def item_count(items):
 def get_available_ports():
     """Get available serial ports with optimized status checking"""
     ports = []
-    
+
     # First check for USB devices using usbdevice.py (with error handling)
     try:
         # Check if pyusb is available before attempting USB device detection
@@ -98,7 +100,7 @@ def get_available_ports():
         import usb.util
         import usb.legacy
         import usb.backend.libusb1
-        
+
         # Test if USB backend is available before attempting device detection
         backend = usb.backend.libusb1.get_backend()
         if backend is None:
@@ -119,16 +121,16 @@ def get_available_ports():
             get_available_ports._usb_device_error_shown = True
             print(_("USB device detection error:") + f" {e}")
             print(_("Note: This error does not affect serial communication or bypass cable functionality."))
-    
+
     # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
     # DoIP devices - Use configured IP address instead of hardcoded values
     doip_target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
     doip_target_port = getattr(options, 'doip_target_port', 13400)
-    
+
     doip_devices = [
         (doip_target_ip, f"DoIP Device - {doip_target_ip}:{doip_target_port}"),
     ]
-    
+
     # Only check DoIP status if not in simulation mode and not checking too frequently
     if not getattr(options, 'simulation_mode', False) and not hasattr(get_available_ports, '_last_check_time'):
         get_available_ports._last_check_time = time.time()
@@ -142,7 +144,7 @@ def get_available_ports():
         for ip, desc in doip_devices:
             port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", "offline")
             ports.append(port_entry)
-    
+
     # Then check for serial ports
     try:
         portlist = list_ports.comports()
@@ -169,7 +171,7 @@ def get_available_ports():
             elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
                 device_desc = f"{desc} (DERLEK Compatible)"
             elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
-                device_desc = f"{desc} (OBDLINK Compatible)"
+                device_desc = f"{desc} (OBDLink Compatible)"
             # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
             elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
                 device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
@@ -278,7 +280,7 @@ def reconnect_elm():
                 port, desc = port_info
                 hwid = ""
                 status = "unknown"
-                
+
             if port == options.port_name or desc == options.port_name:
                 print(f"Attempting reconnection to {port}")
                 try:
@@ -305,7 +307,7 @@ def reconnect_elm():
             port, desc = port_info
             hwid = ""
             status = "unknown"
-            
+
         device_key = DeviceManager.normalize_adapter_type(current_adapter)
         saved_settings = options.get_device_settings(device_key, port)
 
@@ -336,8 +338,6 @@ def errorval(val):
     return "Unregistered error"
 
 
-
-
 class ELM:
     '''ELM327 class'''
 
@@ -363,6 +363,7 @@ class ELM:
     canline = 0
 
     response_time = 0
+    screenRefreshTime = 0
 
     buff = ""
     currentprotocol = ""
@@ -420,10 +421,10 @@ class ELM:
             self.ATCFC0 = options.opt_cfc0
 
             # Purge unread data - only if port is valid
-            if (self.port is not None and 
-                hasattr(self.port, 'expect') and 
-                hasattr(self.port, 'connectionStatus') and 
-                self.port.connectionStatus):
+            if (self.port is not None and
+                    hasattr(self.port, 'expect') and
+                    hasattr(self.port, 'connectionStatus') and
+                    self.port.connectionStatus):
                 if getattr(self.port, "portType", 0) == 1:
                     try:
                         self.port.write(b"\r")
@@ -437,6 +438,39 @@ class ELM:
                 options.elm_failed = True
                 options.last_error = _("Port connection failed - port object is invalid")
                 continue
+
+            # check OBDLink
+            elm_rsp = self.cmd("STI")
+
+            # Verify STN response
+            res_version = elm_rsp.replace("\n", "").replace(">", "").replace("STI", "")
+            if "STN" in res_version:
+                print(_("STN connection established"))
+                print(_("Version: ") + res_version)
+            if elm_rsp and '?' not in elm_rsp and len(elm_rsp.split(" ")) == 2:
+                odblink_meta = elm_rsp.split(" ")
+                ic_type = odblink_meta[0]
+                firmware_version = odblink_meta[1]
+
+                if ic_type.startswith("STN1"):
+                    options.elm_uart_buffer_size = 0x1ff
+                elif ic_type.startswith("STN2"):
+                    options.elm_uart_buffer_size = 0x3ff
+
+                try:
+                    firmware_version = firmware_version.split(".")
+                    version_number = int(''.join([re.sub(r'\D', '', version) for version in firmware_version]))
+                    stpx_introduced_in_version_number = 420  # STN1110 got STPX last in version v4.2.0
+                    if version_number >= stpx_introduced_in_version_number:
+                        options.opt_stpx_full = True
+                except Exception as e:
+                    print(_("STPX/STN configuration warning: %s") % e)
+
+                # check STN
+                elm_rsp = self.cmd("STP 53")
+                if '?' not in elm_rsp:
+                    options.opt_stn_basic = True
+
             if 'ELM' in res or 'OBDII' in res:
                 options.last_error = ""
                 options.elm_failed = False
@@ -449,74 +483,62 @@ class ELM:
 
         try:
             maxspeed = int(maxspeed)
+            # if options.opt_stpx_full:
+            #    self.port.change_rate(maxspeed)  # 2000000
+            # elif self.port.portType == 0:
+            #    self.port.change_rate(230400)
         except Exception:
             maxspeed = 0
 
-        device_text_switch = _("OBDLINK Connection OK, attempting full speed UART switch")
-        text_switch_error = _("Failed to switch OBDLINK to ") + str(maxspeed)
-        text_optional = _("OBDLINK Connection OK, using optimal settings")
-        if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(device_text_switch.replace("OBDLINK", "OBDLINK"))
-            try:
-                self.raise_odb_speed(maxspeed, "OBDLINK")
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "OBDLINK"))
-        elif adapter_type == "OBDLINK":
-            print(text_optional.replace("OBDLINK", "OBDLINK"))
-            if not options.elm_failed:
-                # Enable STPX mode for OBDLINK adapters
+        device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
+        text_switch_error = _("Failed to switch OBDLink to ") + str(maxspeed)
+        text_optional = _("OBDLink Connection OK, using optimal settings")
+        if adapter_type == "OBDLINK":
+            print(text_optional)
+            if maxspeed > 0 and not options.elm_failed and rate != 2000000:
                 try:
-                    self.enable_stpx_mode()
-                    print(_("OBDLINK STPX mode enabled for enhanced long command support"))
-                except Exception as e:
-                    print(f"OBDLINK STPX warning: {e}")
-                print(_("Connection established successfully"))
-        elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(device_text_switch.replace("OBDLINK", "ELM"))
-            try:
-                self.raise_elm_speed(maxspeed)
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "ELM"))
+                    self.change_device_speed(maxspeed, "OBDLink")
+                    print(device_text_switch)
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error)
         elif adapter_type == "STD_USB":
-            print(text_optional.replace("OBDLINK", "ELM"))
-            if not options.elm_failed:
-                print(_("Connection established successfully"))
-        elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLINK", "Vlinker"))
-            try:
-                self.raise_elm_speed(maxspeed)
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "Vlinker"))
-        elif adapter_type == "VLINKER":
-            print(text_optional.replace("OBDLINK", "Vlinker"))
-            if not options.elm_failed:
-                print(_("Connection established successfully"))
-        elif adapter_type == "VGATE" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLINK", "Vgate"))
-            try:
-                self.raise_vgate_speed(maxspeed)
-            except Exception:
-                options.elm_failed = True
-                self.connectionStatus = False
-                print(text_switch_error.replace("OBDLINK", "VGate"))
-        elif adapter_type == "VGATE":
-            print(text_optional.replace("OBDLINK", "VGate"))
-            if not options.elm_failed:
-                # Enable STPX mode for VGate adapters
+            print(text_optional.replace("OBDLink", "ELM"))
+            if rate != 115200 and maxspeed > 0:
                 try:
-                    self.enable_stpx_mode()
-                    print(_("VGate STPX mode enabled for enhanced long command support"))
-                except Exception as e:
-                    print(f"VGate STPX warning: {e}")
+                    self.change_device_speed(maxspeed, "ELM")
+                    print(device_text_switch.replace("OBDLink", "ELM"))
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error.replace("OBDLink", "ELM"))
+            if not options.elm_failed:
                 print(_("Connection established successfully"))
+        elif adapter_type == "VLINKER":
+            print(text_optional.replace("OBDLink", "Vlinker"))
+            if 0 < maxspeed != rate:
+                try:
+                    self.change_device_speed(maxspeed, "Vlinker")
+                    print(device_text_switch.replace("OBDLink", "Vlinker"))
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error.replace("OBDLink", "Vlinker"))
+            if not options.elm_failed:
+                print(_("Connection established successfully"))
+        elif adapter_type == "VGATE":
+            print(text_optional.replace("OBDLink", "VGate"))
+            if 0 < maxspeed != rate:
+                try:
+                    self.change_device_speed(maxspeed, "VGate")
+                    print(device_text_switch.replace("OBDLink", "Vgate"))
+                except Exception:
+                    options.elm_failed = True
+                    self.connectionStatus = False
+                    print(text_switch_error.replace("OBDLink", "VGate"))
         elif adapter_type == "ELS27":
-            print(text_optional.replace("OBDLINK", "ELS27"))
+            print(text_optional.replace("OBDLink", "ELS27"))
             if not options.elm_failed:
                 # ELS27 V5 specific initialization - set CAN pins 12-13
                 try:
@@ -526,68 +548,21 @@ class ELM:
                     self.send_raw("ATSH81")  # Set header for CAN
                     print(_("ELS27 V5 CAN configuration complete"))
                 except Exception as e:
-                    print(f"ELS27 V5 configuration warning: {e}")
+                    print(_("ELS27 V5 configuration warning: %s") % e)
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
             print(text_optional.replace("OBDLINK", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
 
-    def raise_odb_speed(self, baudrate, device_name="OBDLINK"):
-        # Compatibility wrapper: delegate to unified speed switch
-        return self.raise_elm_speed(baudrate, device_name=device_name)
-
-    def raise_vgate_speed(self, baudrate):
-        # Compatibility wrapper: delegate to unified speed switch
-        return self.raise_elm_speed(baudrate, device_name="VGATE")
-
-    def enable_stpx_mode(self):
-        """Enable STPX mode for enhanced long command support"""
-        try:
-            if not os.path.exists(get_logs_dir()):
-                os.mkdir(get_logs_dir())
-
-            if len(options.log) > 0:
-                self.lf = open(os.path.join(get_logs_dir(), "elm_" + options.log + ".txt"), "at", encoding="utf-8")
-                self.vf = open(os.path.join(get_logs_dir(), "ecu_" + options.log + ".txt"), "at", encoding="utf-8")
-                self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
-            
-            # STPX mode enables enhanced long command handling
-            # This is particularly useful for VGate and other STN-based adapters
-            
-            # Set enhanced timeout for long commands
-            self.send_raw("ST SFT 0")  # Disable flow control for better long command support
-            self.send_raw("ST WFF 1")  # Enable wait for first frame
-            self.send_raw("ST FC SH 80")  # Set flow control separator
-            
-            # Configure extended buffer for long commands
-            self.send_raw("ST BLM 1")  # Enable large message mode
-            self.send_raw("ST CSM 1")  # Enable checksum mode for reliability
-            
-            # Set optimal timing for STPX protocol
-            self.send_raw("ST P1 25")  # Set inter-frame gap
-            self.send_raw("ST P3 55")  # Set frame response time
-            
-            # Enable extended addressing if supported
-            self.send_raw("ST EA 1")  # Enable extended addressing
-            
-            # Set flag to indicate STPX is enabled
-            self.stpx_enabled = True
-            
-            print(_("STPX mode enabled for enhanced long command support"))
-        except Exception as e:
-            print(f"STPX mode enable warning: {e}")
-            # Don't raise exception - STPX is enhancement, not requirement
-            self.stpx_enabled = False
-
-    def raise_elm_speed(self, baudrate, device_name="ELM"):
+    def change_device_speed(self, baudrate, device_name="ELM"):
         # Unified speed switch for ELM (ATBRD) and STN-based adapters (ST SBR)
         if self.port is None:
             raise Exception(_("Port is None - cannot switch speed"))
 
         dev = (device_name or "ELM").upper()
         try:
-            # STN / VGate / OBDLINK style switching
+            # STN / VGate / OBDLink style switching
             if dev in ("VGATE", "OBDLINK", "VLINKER", "STN"):
                 cmd = "ST SBR " + str(baudrate)
                 rsp = self.send_raw(cmd)
@@ -595,18 +570,6 @@ class ELM:
                     print((_("%s switched baudrate OK, changing UART speed now...") % device_name))
                     self.port.change_rate(baudrate)
                     time.sleep(0.5)
-                    # Verify STN response
-                    res = self.send_raw("STI").replace("\n", "").replace(">", "").replace("STI", "")
-                    if "STN" in res:
-                        print((_("%s STN connection established") % device_name))
-                        print((_("%s Version: ") % device_name) + res)
-                        if dev == "VGATE":
-                            self.enable_stpx_mode()
-                    else:
-                        # Best-effort fallback for VGate
-                        if dev == "VGATE":
-                            print(_("VGate adapter detected but STN verification failed, attempting fallback..."))
-                            self.enable_stpx_mode()
                     return
                 else:
                     raise Exception(f"{device_name} speed switch failed: {rsp}")
@@ -621,22 +584,16 @@ class ELM:
             elif baudrate == 500000:
                 atcmd = "ATBRD 8"
             else:
-                raise Exception(_("Unsupported baudrate for ELM: %s") % str(baudrate))
+                atcmd = "ATBRD 11" # 230400
 
             rsp = self.send_raw(atcmd)
             if "OK" in rsp:
-                print(_("ELM baudrate switched OK, changing UART speed now..."))
+                print(_("%s baudrate switched OK, changing UART speed now...") % device_name)
                 self.port.change_rate(baudrate)
                 time.sleep(0.5)
-                version = self.send_raw("ATI")
-                if "ELM" in version or "ELM327" in version:
-                    print(_("ELM full speed connection OK "))
-                    print(_("Version ") + version)
-                    return
-                else:
-                    raise Exception(_("ELM did not report version after speed switch"))
+                return
             else:
-                raise Exception((_("Your ELM does not support baudrate %s") % str(baudrate)))
+                raise Exception((_("Not supported baudrate %s") % str(baudrate)))
 
         except Exception:
             raise
@@ -776,28 +733,325 @@ class ELM:
         self.cmd("AT ST %s" % val)
 
     def send_cmd(self, command):
-        if "AT" in command.upper() or "ST" in command.upper() or self.currentprotocol != "can":
+
+        command = command.upper()
+
+        # deal with exceptions
+        # boudrate 38400 not enough to read full information about error
+
+        if not options.opt_stpx_full and len(command) == 6 and command[:4] == '1902':
+            command = '1902AF'
+
+        if command.upper()[:2] in ["AT", "ST"] or self.currentprotocol != "can":
             return self.send_raw(command)
+
         if self.ATCFC0:
             return self.send_can_cfc0(command)
         else:
-            rsp = self.send_can(command)
+            if options.opt_stpx_full:
+                if options.opt_caf:
+                    rsp = self.send_can_cfc_caf(command)
+                else:
+                    rsp = self.send_can_cfc(command)
+            else:
+                rsp = self.send_can(command)
+            if self.error_frame > 0 or self.error_bufferfull > 0:  # then fallback to cfc0
+                self.ATCFC0 = True
+                self.cmd("AT CFC0")
+                rsp = self.send_can_cfc0(command)
             return rsp
 
-    def send_can(self, command):
-        command = command.strip().replace(' ', '')
-
-        if len(command) % 2 != 0 or len(command) == 0:
+    # Can be used only with OBDLink based ELM
+    def send_can_cfc(self, command):
+        command = command.strip().replace(' ', '').upper()
+        init_command = command
+        if len(command) == 0:
+            return
+        if len(command) % 2 != 0:
             return "ODD ERROR"
         if not all(c in string.hexdigits for c in command):
             return "HEX ERROR"
 
         # do framing
         raw_command = []
-        cmd_len = int(len(command) / 2)
+        cmd_len = len(command) // 2
+        if cmd_len < 8:  # single frame
+            raw_command.append(("%0.2X" % cmd_len) + command)
+        else:
+            # first frame
+            raw_command.append("1" + ("%0.3X" % cmd_len)[-3:] + command[:12])
+            command = command[12:]
+            # consecutive frames
+            frame_number = 1
+            while len(command):
+                raw_command.append("2" + ("%X" % frame_number)[-1:] + command[:14])
+                frame_number = frame_number + 1
+                command = command[14:]
+
+        responses = []
+
+        # send frames
+        BS = 1  # Burst Size
+        ST = 0  # Frame Interval
+        Fc = 0  # Current frame
+        Fn = len(raw_command)  # Number of frames
+        frsp = ''
+
+        if raw_command[Fc].startswith('0') and init_command in list(self.l1_cache.keys()):
+            frsp = self.send_raw('STPX D:' + raw_command[Fc] + ',R:' + self.l1_cache[init_command])
+        elif raw_command[Fc].startswith('1'):
+            frsp = self.send_raw('STPX D:' + raw_command[Fc] + ',R:' + '1')
+        else:
+            frsp = self.send_raw('STPX D:' + raw_command[Fc])
+
+        while Fc < Fn:
+            tb = options.dtt4all_time()  # time of sending (ff)
+
+            if raw_command[Fc][:1] != '2':
+                Fc = Fc + 1
+
+            # analyse response
+            for s in frsp.split('\n'):
+                if s.strip()[:4] == "STPX":  # echo cancelation
+                    continue
+
+                s = s.strip().replace(' ', '')
+                if len(s) == 0:  # empty string
+                    continue
+
+                if all(c in string.hexdigits for c in s):  # some data
+                    if s[:1] == '3':  # FlowControl
+                        # extract Burst Size
+                        BS = s[2:4]
+                        if BS == '': BS = '03'
+                        BS = int(BS, 16)
+
+                        # extract Frame Interval
+                        ST = s[4:6]
+                        if ST == '': ST = 'EF'
+                        if ST[:1].upper() == 'F':
+                            ST = int(ST[1:2], 16) * 100
+                        else:
+                            ST = int(ST, 16)
+                            # print 'BS:',BS,'ST:',ST
+                        break  # go to sending consequent frames
+                    else:
+                        responses.append(s)
+                        continue
+
+            # sending consequent frames according to FlowControl
+            frames_left = (Fn - Fc)
+            cf = min({BS, frames_left})  # number of frames to send without response
+
+            while cf > 0:
+                burst_size_command = ''.join(raw_command[Fc: Fc + cf])
+                burst_size_command_last_frame = burst_size_command[len(''.join(raw_command[Fc: Fc + cf - 1])):]
+
+                if burst_size_command_last_frame == raw_command[-1]:
+                    if init_command in list(self.l1_cache.keys()):
+                        burst_size_request = 'STPX D:' + burst_size_command + ",R:" + self.l1_cache[init_command]
+                    else:
+                        burst_size_request = 'STPX D:' + burst_size_command
+                else:
+                    burst_size_request = 'STPX D:' + burst_size_command + ",R:1"
+
+                # Ensure time gap between frames according to FlowControl
+                tc = options.dtt4all_time()  # current time
+                self.screenRefreshTime += ST / 1000.
+                if (tc - tb) * 1000. < ST:
+                    target_time = options.dtt4all_time() + (ST / 1000. - (tc - tb))
+                    while options.dtt4all_time() < target_time:
+                        pass
+                tb = tc
+
+                frsp = self.send_raw(burst_size_request)
+                Fc = Fc + cf
+                cf = 0
+                if burst_size_command_last_frame == raw_command[-1]:
+                    for s in frsp.split('\n'):
+                        if s.strip()[:4] == "STPX":  # echo cancelation
+                            continue
+                        else:
+                            responses.append(s)
+                            continue
+
+        result = ""
+        noerrors = True
+        rspLen = 0
+        cFrame = 0  # frame counter
+        nBytes = 0  # number bytes in response
+        nFrames = 0  # numer frames in response
+
+        if len(responses) == 0:  # no data in response
+            return ""
+
+        if len(responses) > 1 and responses[0].startswith('037F') and responses[0][6:8] == '78':
+            responses = responses[1:]
+
+        if responses[0][:1] == '0':  # single frame (sf)
+            nBytes = int(responses[0][1:2], 16)
+            rspLen = nBytes
+            nFrames = 1
+            result = responses[0][2:2 + nBytes * 2]
+
+        elif responses[0][:1] == '1':  # first frame (ff)
+            nBytes = int(responses[0][1:4], 16)
+            rspLen = nBytes
+            nBytes = nBytes - 6  # we assume that it should be more then 7
+            nFrames = 1 + nBytes // 7 + bool(nBytes % 7)
+            cFrame = 1
+
+            result = responses[0][4:16]
+
+            while cFrame < nFrames:
+
+                # analyse response
+                nodataflag = False
+                for s in responses:
+
+                    if 'NO DATA' in s:
+                        nodataflag = True
+                        break
+
+                    s = s.strip().replace(' ', '')
+                    if len(s) == 0:  # empty string
+                        continue
+
+                    if all(c in string.hexdigits for c in s):  # some data
+                        # responses.append(s)
+                        if s[:1] == '2':  # consecutive frames (cf)
+                            tmp_fn = int(s[1:2], 16)
+                            if tmp_fn != (cFrame % 16):  # wrong response (frame lost)
+                                self.error_frame += 1
+                                noerrors = False
+                                continue
+                            cFrame += 1
+                            result += s[2:16]
+                        continue
+
+                if nodataflag:
+                    break
+
+        else:  # wrong response (first frame omitted)
+            self.error_frame += 1
+            noerrors = False
+
+        # Check for negative
+        if result[:2] == '7F': noerrors = False
+
+        # populate L1 cache
+        if noerrors and init_command[:2] in options.safe_commands:
+            self.l1_cache[init_command] = str(nFrames)
+
+        if noerrors and len(result) // 2 >= nBytes:
+            # trim padding
+            result = result[:rspLen * 2]
+            # split by bytes and return
+            result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
+            return result
+        else:
+            # check for negative response (repeat the same as in cmd())
+            # debug
+            # print "Size error: ", result
+            if result[:2] == '7F' and result[4:6] in list(negrsp.keys()):
+                if self.vf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.vf.write(
+                        tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + negrsp[
+                            result[4:6]] + "\n")
+                    self.vf.flush()
+                return "NR:" + result[4:6] + ':' + negrsp[result[4:6]]
+            else:
+                return "WRONG RESPONSE"
+
+    # Can be used only with OBDLink based ELM, wireless especially.
+    def send_can_cfc_caf(self, command):
+        if len(command) == 0:
+            return
+        if len(command) % 2 != 0:
+            return "ODD ERROR"
+        if not all(c in string.hexdigits for c in command):
+            return "HEX ERROR"
+
+        STPX = "STPX"
+        # Fix for limited UART Tx buffer size
+        # https://www.scantool.net/forum/index.php?topic=16631.0
+        frsp = ""
+        if len(f"{STPX} D:{command}") > options.elm_uart_buffer_size:
+            frsp = self.send_raw(f"{STPX} L:{str(int(len(command) / 2))},R:1")
+            if "DATA>" not in frsp:
+                return ""
+            frsp = self.send_raw(command)
+        else:
+            frsp = self.send_raw(f"{STPX} D:{command},R:1")
+
+        responses = []
+
+        for s in frsp.split('\n'):
+            if s.strip()[:4] == STPX:  # echo cancelation
+                continue
+
+            s = s.strip().replace(' ', '')
+            if len(s) == 0:  # empty string
+                continue
+
+            responses.append(s)
+
+        result = ""
+        noerrors = True
+
+        if len(responses) == 0:  # no data in response
+            return ""
+
+        nodataflag = False
+        for s in responses:
+
+            if 'NO DATA' in s:
+                nodataflag = True
+                break
+
+            if all(c in string.hexdigits for c in s):  # some data
+                result = s
+
+        # Check for negative
+        if result[:2] == '7F': noerrors = False
+
+        if noerrors:
+            # split by bytes and return
+            result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
+            return result
+        else:
+            # check for negative response (repeat the same as in cmd())
+            # debug
+            # print "Size error: ", result
+            if result[:2] == '7F' and result[4:6] in list(negrsp.keys()):
+                if self.vf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.vf.write(
+                        tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + negrsp[
+                            result[4:6]] + "\n")
+                    self.vf.flush()
+                return "NR:" + result[4:6] + ':' + negrsp[result[4:6]]
+            else:
+                return "WRONG RESPONSE"
+
+    def send_can(self, command):
+        command = command.strip().replace(' ', '').upper()
+        isCommandInCache = command in list(self.l1_cache.keys())
+
+        if len(command) == 0:
+            return
+        if len(command) % 2 != 0:
+            return "ODD ERROR"
+        if not all(c in string.hexdigits for c in command):
+            return "HEX ERROR"
+
+        # do framing
+        raw_command = []
+        cmd_len = int(len(command) // 2)
         if cmd_len < 8:  # single frame
             # check L1 cache here
-            if command in self.l1_cache.keys():
+            if isCommandInCache and int('0x' + self.l1_cache[command], 16) < 16:
                 raw_command.append(("%0.2X" % cmd_len) + command + self.l1_cache[command])
             else:
                 raw_command.append(("%0.2X" % cmd_len) + command)
@@ -807,7 +1061,7 @@ class ELM:
             command = command[12:]
             # consecutive frames
             frame_number = 1
-            while (len(command)):
+            while len(command):
                 raw_command.append("2" + ("%X" % frame_number)[-1:] + command[:14])
                 frame_number = frame_number + 1
                 command = command[14:]
@@ -830,20 +1084,21 @@ class ELM:
                         continue
                     responses.append(s)
 
-        # analyse response (2 phases)
+        # analise response (2 phase)
         result = ""
         noerrors = True
         cframe = 0  # frame counter
         nbytes = 0  # number bytes in response
-        nframes = 0
+        nframes = 0  # numer frames in response
 
         if len(responses) == 0:  # no data in response
             return ""
 
         if len(responses) > 1 and responses[0].startswith('037F') and responses[0][6:8] == '78':
             responses = responses[1:]
+            options.opt_n1c = True
 
-        if len(responses) == 1:  # single frame response
+        if len(responses) == 1:  # single freme response
             if responses[0][:1] == '0':
                 nbytes = int(responses[0][1:2], 16)
                 nframes = 1
@@ -854,7 +1109,7 @@ class ELM:
         else:  # multi frame response
             if responses[0][:1] == '1':  # first frame
                 nbytes = int(responses[0][1:4], 16)
-                nframes = nbytes / 7 + 1
+                nframes = nbytes // 7 + 1
                 cframe = 1
                 result = responses[0][4:16]
             else:  # wrong response (first frame omitted)
@@ -874,46 +1129,45 @@ class ELM:
                     self.error_frame += 1
                     noerrors = False
 
-        errorstr = "Unknown"
-        # check for negative response (repeat the same as in cmd())
-        if result[:2] == '7F':
-            noerrors = False
-            if result[4:6] in list(negrsp.keys()):
-                errorstr = errorval(result[4:6])
-            if self.vf != 0:
-                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
-                    self.vf.write(tmstr + ";" + dnat_ext[
-                        self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
-                elif self.currentaddress in dnat:
-                    self.vf.write(tmstr + ";" + dnat[
-                        self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
-                self.vf.flush()
+        # Check for negative
+        if result[:2] == '7F': noerrors = False
 
         # populate L1 cache
-        if noerrors and nframes < 16 and command[:1] == '2' and not options.opt_n1c:
-            self.l1_cache[command] = str(nframes)
+        if noerrors and command[:2] in options.safe_commands and not options.opt_n1c:
+            self.l1_cache[command] = str(hex(nframes))[2:].upper()
 
-        if len(result) / 2 >= nbytes and noerrors:
-            # Remove unnecessary bytes
-            result = result[0:nbytes * 2]
+        if len(result) // 2 >= nbytes and noerrors:
+            # trim padding
+            result = result[:nbytes * 2]
             # split by bytes and return
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE : " + errorstr + "(" + result + ")"
+            # check for negative response (repeat the same as in cmd())
+            if result[:2] == '7F' and result[4:6] in list(negrsp.keys()):
+                if self.vf != 0:
+                    # debug
+                    # print result
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.vf.write(
+                        tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + negrsp[
+                            result[4:6]] + "\n")
+                    self.vf.flush()
+                return "NR:" + result[4:6] + ':' + negrsp[result[4:6]]
+            else:
+                return "WRONG RESPONSE"
 
     def send_can_cfc0(self, command):
-        command = command.strip().replace(' ', '')
-
-        if len(command) % 2 != 0 or len(command) == 0:
+        command = command.strip().replace(' ', '').upper()
+        if len(command) == 0:
+            return
+        if len(command) % 2 != 0:
             return "ODD ERROR"
         if not all(c in string.hexdigits for c in command):
             return "HEX ERROR"
-
         # do framing
         raw_command = []
-        cmd_len = int(len(command) / 2)
+        cmd_len = len(command) // 2
         if cmd_len < 8:  # single frame
             raw_command.append(("%0.2X" % cmd_len) + command)
         else:
@@ -924,230 +1178,182 @@ class ELM:
             frame_number = 1
             while len(command):
                 raw_command.append("2" + ("%X" % frame_number)[-1:] + command[:14])
-                frame_number += 1
+                frame_number = frame_number + 1
                 command = command[14:]
-
         responses = []
-
         # send frames
         BS = 1  # Burst Size
         ST = 0  # Frame Interval
         Fc = 0  # Current frame
         Fn = len(raw_command)  # Number of frames
-
         if Fn > 1 or len(raw_command[0]) > 15:
-            if options.cantimeout > 0:
-                self.set_can_timeout(options.cantimeout)
-            else:
-                # set elm timeout to 300ms for first response
-                self.send_raw('AT ST 4B')
+            # set elm timeout to minimum among 3 values
+            #   1) 300ms constant
+            #   2) 2 * self.response_time in ms
+            #   3) 4.7s // (number of frames in cmd) (5s session timeout - 300ms safety gap - 16ms windows timer discrete)
+            min_tout = min(300, 2 * self.response_time * 1000, 4700. // len(raw_command) - 16)
+            if min_tout < 4:
+                min_tout = 4  # not less than 4ms
+            self.elmTimeout = hex(int(min_tout // 4))[2:].zfill(2)
+            self.send_raw('ATST' + self.elmTimeout)
+            self.send_raw('ATAT1')
 
         while Fc < Fn:
             # enable responses
+            frsp = ''
             if not self.ATR1:
                 frsp = self.send_raw('AT R1')
                 self.ATR1 = True
-
-            tb = time.time()  # time of sending (ff)
-
+            tb = options.dtt4all_time()  # time of sending (ff)
             if Fn > 1 and Fc == (Fn - 1):  # set elm timeout to maximum for last response on long command
-                # Enhanced STPX timeout handling for long commands
-                if hasattr(self, 'stpx_enabled') and self.stpx_enabled:
-                    # Use STPX-specific timeout for better long command performance
-                    self.send_raw('ST ST FF')  # STPX timeout command
-                else:
-                    # Standard ELM timeout
-                    self.send_raw('AT ST FF')
-                self.send_raw('AT AT 1')
-
+                self.send_raw('ATSTFF')
+                self.send_raw('ATAT1')
             if (Fc == 0 or Fc == (Fn - 1)) and len(
                     raw_command[Fc]) < 16:  # first or last frame in command and len<16 (bug in ELM)
-                # Enhanced frame handling for STPX adapters
-                if hasattr(self, 'stpx_enabled') and self.stpx_enabled:
-                    frsp = self.send_raw(raw_command[Fc] + '1')  # STPX enhanced single frame request
-                else:
-                    frsp = self.send_raw(raw_command[Fc] + '1')  # standard single frame request
+                frsp = self.send_raw(raw_command[Fc] + '1')  # we'll get only 1 frame: nr, fc, ff or sf
             else:
                 frsp = self.send_raw(raw_command[Fc])
-
             Fc = Fc + 1
-
             # analyse response
-            for s in frsp.split('\n'):
-                if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:  # echo cancelation
+            # first pass. We have to left only response data frames
+            s0 = []
+            for s in frsp.upper().split('\n'):
+                if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:  # echo cancellation
                     continue
-
                 s = s.strip().replace(' ', '')
                 if len(s) == 0:  # empty string
                     continue
-
                 if all(c in string.hexdigits for c in s):  # some data
-                    if s[:1] == '3':  # FlowControl
+                    s0.append(s)
 
-                        # extract Burst Size
-                        BS = s[2:4]
-                        BS = int(BS, 16)
-
-                        # extract Frame Interval
-                        ST = s[4:6]
-                        if ST[:1].upper() == 'F':
-                            ST = int(ST[1:2], 16) * 100
-                        else:
-                            ST = int(ST, 16)
-                        print('BS:', BS, 'ST:', ST)
-                        break  # go to sending consequent frames
+            # second pass. Now we may check if 7Fxx78 is a last or not
+            for s in s0:
+                if s[:1] == '3':  # FlowControl
+                    # extract Burst Size
+                    BS = s[2:4]
+                    if BS == '': BS = '03'
+                    BS = int(BS, 16)
+                    # extract Frame Interval
+                    ST = s[4:6]
+                    if ST == '': ST = 'EF'
+                    if ST[:1].upper() == 'F':
+                        ST = int(ST[1:2], 16) * 100
                     else:
-                        responses.append(s)
-                        continue
-
+                        ST = int(ST, 16)
+                        # print 'BS:',BS,'ST:',ST
+                    break  # go to sending consequent frames
+                elif len(responses) > 1 and responses[0].startswith('037F') and responses[0][6:8] == '78':
+                    responses = responses[1:]
+                else:
+                    responses.append(s)
+                    continue
             # sending consequent frames according to FlowControl
-
-            cf = min(BS - 1, (Fn - Fc) - 1)  # number of frames to send without response
-
+            cf = min({BS - 1, (Fn - Fc) - 1})  # number of frames to send without response
             # disable responses
             if cf > 0:
                 if self.ATR1:
-                    self.send_raw('AT R0')
+                    frsp = self.send_raw('AT R0')
                     self.ATR1 = False
-
             while cf > 0:
-                cf -= 1
-
+                cf = cf - 1
                 # Ensure time gap between frames according to FlowControl
-                tc = time.time()  # current time
+                tc = options.dtt4all_time()  # current time
                 if (tc - tb) * 1000. < ST:
                     time.sleep(ST / 1000. - (tc - tb))
                 tb = tc
-
-                self.send_raw(raw_command[Fc])
-                Fc += 1
-
+                frsp = self.send_raw(raw_command[Fc])
+                Fc = Fc + 1
         # now we are going to receive data. st or ff should be in responses[0]
         if len(responses) != 1:
-            return "WRONG RESPONSE MULTILINE CFC0"
-
+            # print "Something went wrong. len responces != 1"
+            return "WRONG RESPONSE"
         result = ""
-        noerrors = True
-        nbytes = 0  # number bytes in response
-
+        noErrors = True
+        rspLen = 0
+        cFrame = 0  # frame counter
+        nBytes = 0  # number bytes in response
+        nFrames = 0  # numer frames in response
         if responses[0][:1] == '0':  # single frame (sf)
-            nbytes = int(responses[0][1:2], 16)
-            result = responses[0][2:2 + nbytes * 2]
-
+            nBytes = int(responses[0][1:2], 16)
+            rspLen = nBytes
+            nFrames = 1
+            result = responses[0][2:2 + nBytes * 2]
         elif responses[0][:1] == '1':  # first frame (ff)
-            nbytes = int(responses[0][1:4], 16)
-            nframes = nbytes / 7 + 1
-            cframe = 1
+            nBytes = int(responses[0][1:4], 16)
+            rspLen = nBytes
+            nBytes = nBytes - 6  # we assume that it should be more than 7
+            nFrames = 1 + nBytes // 7 + bool(nBytes % 7)
+            cFrame = 1
             result = responses[0][4:16]
-
             # receiving consecutive frames
-            while len(responses) < nframes:
+            # while len (result) / 2 < nBytes:
+            while cFrame < nFrames:
                 # now we should send ff
-                sBS = hex(min(int(nframes) - len(responses), 0xf))[2:]
+                sBS = hex(min({nFrames - cFrame, 0x7}))[2:]
                 frsp = self.send_raw('300' + sBS + '00' + sBS)
-
-                # analyse response
+                nodataflag = False
                 for s in frsp.split('\n'):
-
-                    if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:
-                        # discard echo
+                    if s.strip()[:len(raw_command[Fc - 1])] == raw_command[Fc - 1]:  # echo cancellation
                         continue
-
+                    if 'NO DATA' in s:
+                        nodataflag = True
+                        break
                     s = s.strip().replace(' ', '')
-                    if len(s) == 0:
-                        # empty string
+                    if len(s) == 0:  # empty string
                         continue
-
                     if all(c in string.hexdigits for c in s):  # some data
                         responses.append(s)
                         if s[:1] == '2':  # consecutive frames (cf)
                             tmp_fn = int(s[1:2], 16)
-                            if tmp_fn != (cframe % 16):  # wrong response (frame lost)
+                            if tmp_fn != (cFrame % 16):  # wrong response (frame lost)
                                 self.error_frame += 1
-                                noerrors = False
+                                noErrors = False
                                 continue
-                            cframe += 1
+                            cFrame += 1
                             result += s[2:16]
                         continue
 
+                if nodataflag:
+                    break
         else:  # wrong response (first frame omitted)
             self.error_frame += 1
-            noerrors = False
-
-        errorstr = "Unknown"
-        # check for negative response (repeat the same as in cmd())
-        if result[:2] == '7F':
-            if result[6:8] in negrsp.keys():
-                errorstr = negrsp[result[4:6]]
-            noerrors = False
-
-        if len(result) / 2 >= nbytes and noerrors:
-            result = result[0:nbytes * 2]
-            # split by bytes and return
+            noErrors = False
+        if len(result) // 2 >= nBytes and noErrors and result[:2] != '7F':
+            result = result[:rspLen * 2]
             result = ' '.join(a + b for a, b in zip(result[::2], result[1::2]))
             return result
         else:
-            return "WRONG RESPONSE CFC0 " + errorstr
-
-    def send_raw(self, command, expect='>'):
-        """Enhanced send_raw with STN/STPX support"""
-        # Check if STN/STPX should be used
-        if hasattr(self, 'stpx_enabled') and self.stpx_enabled and not command.upper().startswith(('AT', 'ST')):
-            # Use STPX D: protocol for enhanced adapters
-            if len(command) > 16:
-                # Use STPX L: for long commands first
-                length_cmd = f"STPX L:{str(int(len(command)/2))},R:1"
-                frsp = self.send_raw(length_cmd)
-                if "OK" in frsp:
-                    # Send actual data with STPX D:
-                    stpx_command = f"STPX D:{command},R:1"
-                    return self.send_raw(stpx_command)
-                else:
-                    # Fallback to standard STN if STPX L: fails
-                    stn_command = f"ST {command}"
-                    return self.send_raw(stn_command)
+            if result[:2] == '7F' and result[4:6] in list(negrsp.keys()):
+                if self.vf != 0:
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.vf.write(
+                        tmstr + ";" + dnat[self.currentaddress] + ";" + command + ";" + result + ";" + negrsp[
+                            result[4:6]] + "\n")
+                    self.vf.flush()
+                return "NR:" + result[4:6] + ':' + negrsp[result[4:6]]
             else:
-                # Use STPX D: for shorter commands
-                stpx_command = f"STPX D:{command},R:1"
-                return self.send_raw(stpx_command)
-        
-        tb = time.time()  # start time
+                return "WRONG RESPONSE"
 
-        # Check if port is valid before proceeding
-        if self.port is None:
-            self.error_rx += 1
-            return "PORT ERROR: None port object"
-
+    def send_raw(self, command):
+        command = command.upper()
+        tb = options.dtt4all_time()  # start time
         # save command to log
         if self.lf != 0:
-            # tm = str(time.time())
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             self.lf.write("> [" + tmstr + "] Request: " + command + "\n")
             self.lf.flush()
-
         # send command
         if not options.simulation_mode:
-            try:
-                self.port.write(str(command + "\r").encode("utf-8"))  # send command
-            except Exception as e:
-                self.error_rx += 1
-                return f"PORT WRITE ERROR: {str(e)}"
-
-        # receive and parse response
+            self.port.write(str(command + "\r").encode("utf-8"))  # send command
+        # receive and parse responce
         while True:
-            tc = time.time()
+            tc = options.dtt4all_time()
             if options.simulation_mode:
                 break
-            try:
-                self.buff = self.port.expect(expect, self.portTimeout)
-            except Exception as e:
-                self.error_rx += 1
-                return f"PORT READ ERROR: {str(e)}"
-            if not self.port.connectionStatus:
-                break
-            tc = time.time()
+            self.buff = self.port.expect('>', self.portTimeout)
+            tc = options.dtt4all_time()
             if (tc - tb) > self.portTimeout and "TIMEOUT" not in self.buff:
-                self.buff += " TIMEOUT"
+                self.buff += "TIMEOUT"
             if "TIMEOUT" in self.buff:
                 self.error_timeout += 1
                 break
@@ -1157,7 +1363,6 @@ class ELM:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
                 self.lf.flush()
-
         # count errors
         if "?" in self.buff:
             self.error_question += 1
@@ -1169,18 +1374,18 @@ class ELM:
             self.error_rx += 1
         if "CAN ERROR" in self.buff:
             self.error_can += 1
-
-        self.response_time = ((self.response_time * 9) + (tc - tb)) / 10
-
-        # save response to log
+        roundtrip = tc - tb
+        self.screenRefreshTime += roundtrip
+        if command[0].isdigit() or command.startswith('STPX'):
+            self.response_time = ((self.response_time * 9) + roundtrip) / 10
+        # save responce to log
         if self.lf != 0:
-            self.lf.write("< [" + str(round(tc - tb, 3)) + "] Response: " + self.buff + "\n")
+            self.lf.write("< [" + str(round(roundtrip, 3)) + "] Response: " + self.buff + "\n")
             self.lf.flush()
-
         return self.buff
 
     def close_protocol(self):
-        self.cmd("atpc")
+        self.cmd("ATPC")
 
     def start_session_can(self, start_session):
         self.startSession = start_session
@@ -1235,25 +1440,32 @@ class ELM:
 
     def init_can(self):
         self.currentprotocol = "can"
-        self.currentaddress = ""
+        self.currentaddress = "7e0"  # init add not change this
         self.startSession = ""
         self.lastCMDtime = 0
         self.l1_cache = {}
-
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init CAN\n" + '#' * 60 + "\n")
             self.lf.flush()
-        # self.cmd("AT WS")
+        self.cmd("AT WS")
         self.cmd("AT E1")
         self.cmd("AT S0")
         self.cmd("AT H0")
         self.cmd("AT L0")
         self.cmd("AT AL")
         self.cmd("AT CAF0")
+
+        if options.opt_stpx_full and options.opt_caf and not self.ATCFC0:
+            self.cmd("AT CAF1")
+            self.cmd("STCSEGR 1")
+            self.cmd("STCSEGT 1")
+        else:
+            self.cmd("AT CAF0")
         if self.ATCFC0:
             self.cmd("AT CFC0")
-
+        else:
+            self.cmd("AT CFC1")
         self.lastCMDtime = 0
 
     def set_can_addr(self, addr, ecu, canline=0):

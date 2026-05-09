@@ -57,7 +57,7 @@ class OBDDevice:
                 self.device.set_vendor_request(0xFE, 0x13)  # Set CAN pin 13
                 print(_("ELS27 V5 CAN pin configuration complete"))
             except Exception as e:
-                print(f"ELS27 V5 configuration warning: {e}")
+                print(_("ELS27 V5 configuration warning: %s") % e)
 
     def clear_cache(self):
         ''' Clear L2 cache before screen update

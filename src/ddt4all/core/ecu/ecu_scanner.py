@@ -274,12 +274,11 @@ class EcuScanner:
     def scan(self, progress=None, label=None, vehiclefilter=None, canline=0):
         i = 0
         if not options.simulation_mode:
-            # Use integrated DeviceManager for enhanced features (only if not already initialized)
+            # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
-                if not hasattr(options.elm, '_device_initialized') or not options.elm._device_initialized:
-                    # Initialize device with enhanced features
-                    elm.DeviceManager.initialize_device(options.elm)
-                    options.elm._device_initialized = True
+                # Initialize device with enhanced features using selected adapter type
+                device_type = options.elm.adapter_type
+                elm.DeviceManager.initialize_device(options.elm, device_type)
             
             options.elm.init_can()
 
@@ -317,10 +316,10 @@ class EcuScanner:
             text = _("Scanning address: ")
             try:
                 # Try long name first
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
             except KeyError:
                 # If not, short name
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
             if not options.simulation_mode:
                 options.elm.init_can()
@@ -341,12 +340,11 @@ class EcuScanner:
                                                         "S2000_Atmo___SoftA3.json",
                                                         "KWP2000 FastInit MonoPoint", [], "7A")
         else:
-            # Use integrated DeviceManager for enhanced features (only if not already initialized)
+            # Use integrated DeviceManager for enhanced features
             if hasattr(options, 'elm') and options.elm:
-                if not hasattr(options.elm, '_device_initialized') or not options.elm._device_initialized:
-                    # Initialize device with enhanced features
-                    elm.DeviceManager.initialize_device(options.elm)
-                    options.elm._device_initialized = True
+                # Initialize device with enhanced features using selected adapter type
+                device_type = options.elm.adapter_type
+                elm.DeviceManager.initialize_device(options.elm, device_type)
 
             options.elm.init_iso()
 
@@ -376,10 +374,10 @@ class EcuScanner:
             text = _("Scanning address: ")
             try:
                 # Try long name first
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
             except KeyError:
                 # If not, short name
-                print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
             if not options.simulation_mode:
                 options.opt_si = True
@@ -427,11 +425,11 @@ class EcuScanner:
                         version = can_response[27:35]  # Version
                         self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
                     else:
-                        print(f"DoIP ECU response format unknown: {can_response}")
+                        print(_("DoIP ECU response format unknown: %s") % can_response)
                 except Exception as e:
-                    print(f"Error parsing DoIP response: {e}")
+                    print(_("Error parsing DoIP response: %s") % e)
             else:
-                print(f"DoIP ECU at {addr} responded with minimal data: {can_response}")
+                print(_("DoIP ECU at %(addr)s responded with minimal data: %(response)s") % {"addr": addr, "response": can_response})
         else:
             # Handle other protocols (CAN, KWP)                
             if len(can_response) > 20:
@@ -453,7 +451,7 @@ class EcuScanner:
                 target_port = getattr(options, 'doip_target_port', 13400)
                 timeout = getattr(options, 'doip_timeout', 5)
                 
-                print(f"Initializing DoIP connection to {target_ip}:{target_port} (timeout: {timeout}s)")
+                print(_("Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)") % {"ip": target_ip, "port": target_port, "timeout": timeout})
                 
                 # Create DoIP device independently (not through ELM)
                 doip_device = DoIPDevice(target_ip)
@@ -466,12 +464,12 @@ class EcuScanner:
                     print("DoIP connection failed, cannot scan DoIP ECUs")
                     return
                 else:
-                    print(f"DoIP connection established: {target_ip}:{target_port}")
+                    print(_("DoIP connection established: %(ip)s:%(port)s") % {"ip": target_ip, "port": target_port})
                     # Store the device for scanning use
                     self.current_doip_device = doip_device
                     
             except Exception as e:
-                print(f"DoIP initialization error: {e}")
+                print(_("DoIP initialization error: %s") % e)
                 return
 
         project_doip_addresses = []
@@ -489,7 +487,7 @@ class EcuScanner:
                 project_doip_addresses = self.ecu_database.available_addr_doip
 
         if len(project_doip_addresses) == 0:
-            print("No DoIP addresses available for scanning")
+            print(_("No DoIP addresses available for scanning"))
             return
 
         i = 0
@@ -511,17 +509,17 @@ class EcuScanner:
             if addr not in self.ecu_database.addr_group_mapping:
                 # Try to get name from projects.json DoIP data
                 if doip_addressing and addr in doip_addressing:
-                    print(f"{text + addr:<35} ECU: {doip_addressing[addr]}")
+                    print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": doip_addressing[addr]})
                 else:
-                    print(f"Warning: address {addr} is not mapped")
+                    print(_("Warning: address %(addr)s is not mapped") % {"addr": addr})
                     continue
             else:
                 # Use database mapping
                 try:
                     # Try long name first
-                    print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping_long[addr]}")
+                    print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
                 except:
-                    print(f"{text + addr:<35} ECU: {self.ecu_database.addr_group_mapping[addr]}")
+                    print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
             if not options.simulation_mode:
                 try:
@@ -543,32 +541,32 @@ class EcuScanner:
                                         # Parse real DoIP response from ECU
                                         self.check_ecu(can_response, label, addr, "DoIP")
                                     else:
-                                        print(f"No identification data from DoIP ECU at address {addr}")
+                                        print(_("No identification data from DoIP ECU at address %s") % addr)
                                 else:
-                                    print(f"Negative response from DoIP ECU at address {addr}")
+                                    print(_("Negative response from DoIP ECU at address %s") % addr)
                             else:
-                                print(f"Failed to start session with DoIP ECU at address {addr}")
+                                print(_("Failed to start session with DoIP ECU at address %s") % addr)
                         else:
-                            print(f"Failed to initialize DoIP communication with address {addr}")
+                            print(_("Failed to initialize DoIP communication with address %s") % addr)
                     else:
-                        print("DoIP device not available for scanning")
+                        print(_("DoIP device not available for scanning"))
                 except Exception as e:
-                    print(f"Error scanning DoIP address {addr}: {e}")
+                    print(_("Error during DoIP scan: %s") % str(e))
             else:
                 # Simulation mode - use real DDT database data
-                print(f"Simulation mode: DoIP address {addr} would be scanned")
+                print(_("Simulation mode: DoIP address %s would be scanned") % addr)
+                print(_("Simulation mode: DoIP address %s would be scanned") % addr)
                 # Don't provide fake data - let user know it's simulation
-                print(f"Would connect to DoIP ECU at address {addr} and read identification data")
+                print(_("Would connect to DoIP ECU at address %s and read identification data") % addr)
 
         if not options.simulation_mode:
             # Clean up DoIP connection
-            if hasattr(self, 'current_doip_device') and self.current_doip_device:
                 try:
                     # Close DoIP connection
                     if hasattr(self.current_doip_device, 'disconnect'):
                         self.current_doip_device.disconnect()
-                    print("DoIP connection closed")
+                    print(_("DoIP connection closed"))
                 except Exception as e:
-                    print(f"Error closing DoIP connection: {e}")
+                    print(_("Error closing DoIP connection: %s") % e)
                 finally:
                     self.current_doip_device = None
