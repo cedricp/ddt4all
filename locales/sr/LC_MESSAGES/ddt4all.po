@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 12:51+0200\n"
+"POT-Creation-Date: 2026-05-09 22:15+0200\n"
 "PO-Revision-Date: 2026-05-07 13:11+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -23,78 +23,94 @@ msgstr "DoIP uređaj uspešno povezan"
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr "DoIP CAN inicijalizovan sa podrškom za električni ECU"
 
-#, python-brace-format
-msgid "DoIP response: {}"
+#, fuzzy, python-format
+msgid "DoIP response: %s"
 msgstr "DoIP odgovor: {}"
 
-#, python-brace-format
-msgid "DoIP request failed: {}"
+#, fuzzy, python-format
+msgid "DoIP request failed: %s"
 msgstr "DoIP zahtev nije uspeo: {}"
 
-#, python-brace-format
-msgid "Testing Electric ECU: {}"
+#, fuzzy, python-format
+msgid "Testing Electric ECU: %s"
 msgstr "Testiranje električnog ECU: {}"
 
 msgid "Failed to connect to DoIP device"
 msgstr "Neuspela veza sa DoIP uređajem"
 
+#, python-format
+msgid "DoIP connected to %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP connection failed: %s"
+msgstr "Povezivanje nije uspelo: "
+
 msgid "Insufficient vehicle identification data"
 msgstr "Nedovoljni podaci za identifikaciju vozila"
 
-#, python-brace-format
-msgid "Expected vehicle identification response, got: {}"
+#, fuzzy, python-format
+msgid "Expected vehicle identification response, got: %s"
 msgstr "Očekivan odgovor identifikacije vozila, dobijeno: {}"
 
-#, python-brace-format
-msgid "Vehicle identification failed: {}"
+#, fuzzy, python-format
+msgid "Vehicle identification failed: %s"
 msgstr "Identifikacija vozila nije uspela: {}"
 
 msgid "Insufficient session control data"
 msgstr "Nedovoljni podaci za kontrolu sesije"
 
-#, python-brace-format
-msgid "Expected diagnostic session control response, got: {}"
+#, fuzzy, python-format
+msgid "Expected diagnostic session control response, got: %s"
 msgstr "Očekivan odgovor kontrole dijagnostičke sesije, dobijeno: {}"
 
-#, python-brace-format
-msgid "Diagnostic session control failed: {}"
+#, fuzzy, python-format
+msgid "Diagnostic session control failed: %s"
 msgstr "Kontrola dijagnostičke sesije nije uspela: {}"
 
 msgid "Insufficient diagnostic message data"
 msgstr "Nedovoljni podaci dijagnostičke poruke"
 
-#, python-brace-format
-msgid "Expected diagnostic message response, got: {}"
+#, fuzzy, python-format
+msgid "Expected diagnostic message response, got: %s"
 msgstr "Očekivan odgovor dijagnostičke poruke, Dobijeno: {}"
 
 msgid "Insufficient alive check data"
 msgstr "Nedovoljni podaci za proveru alive"
 
-#, python-brace-format
-msgid "Expected alive check response, got: {}"
+#, fuzzy, python-format
+msgid "Expected alive check response, got: %s"
 msgstr "Očekivan odgovor provere alive, Dobijeno: {}"
 
-#, python-brace-format
-msgid "Alive check failed: {}"
+#, fuzzy, python-format
+msgid "Alive check failed: %s"
 msgstr "Provera alive nije uspela: {}"
+
+#, python-format
+msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP vehicle identification failed: %s"
+msgstr "Identifikacija vozila nije uspela: {}"
 
 msgid "Not connected to DoIP device"
 msgstr "Nije povezano sa DoIP uređajem"
 
-#, python-brace-format
-msgid "Invalid hex request format: {}"
+#, fuzzy, python-format
+msgid "Invalid hex request format: %s"
 msgstr "Neispravan format hex zahteva: {}"
 
-#, python-brace-format
-msgid "DoIP session start failed: {}"
+#, fuzzy, python-format
+msgid "DoIP session start failed: %s"
 msgstr "Pokretanje DoIP sesije nije uspelo: {}"
 
-#, python-brace-format
-msgid "DoIP CAN initialization failed: {}"
+#, fuzzy, python-format
+msgid "DoIP CAN initialization failed: %s"
 msgstr "Inicijalizacija DoIP CAN nije uspela: {}"
 
-#, python-brace-format
-msgid "DoIP: Electric ECU detected - {}"
+#, fuzzy, python-format
+msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: Električni ECU otkriven - {}"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
@@ -176,93 +192,86 @@ msgstr "nije mapiran"
 msgid "Scanning address: "
 msgstr "Skeniranje adrese: "
 
+#, python-format
+msgid "%(text)s%(addr)s ECU: %(name)s"
+msgstr ""
+
+#, python-format
+msgid "DoIP ECU response format unknown: %s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error parsing DoIP response: %s"
+msgstr "DoIP odgovor: {}"
+
+#, python-format
+msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
+msgstr ""
+
+#, python-format
+msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP connection established: %(ip)s:%(port)s"
+msgstr "%s STN veza uspostavljena"
+
+#, fuzzy, python-format
+msgid "DoIP initialization error: %s"
+msgstr "Greška inicijalizacije uređaja: %s"
+
+msgid "No DoIP addresses available for scanning"
+msgstr ""
+
 msgid "Scanning DoIP address: "
 msgstr "Skeniranje DoIP adrese: "
 
 #, python-format
+msgid "Warning: address %(addr)s is not mapped"
+msgstr ""
+
+#, python-format
+msgid "No identification data from DoIP ECU at address %s"
+msgstr ""
+
+#, python-format
+msgid "Negative response from DoIP ECU at address %s"
+msgstr ""
+
+#, python-format
+msgid "Failed to start session with DoIP ECU at address %s"
+msgstr ""
+
+#, python-format
+msgid "Failed to initialize DoIP communication with address %s"
+msgstr ""
+
+msgid "DoIP device not available for scanning"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error during DoIP scan: %s"
+msgstr "Greška tokom testa veze: "
+
+#, python-format
+msgid "Simulation mode: DoIP address %s would be scanned"
+msgstr ""
+
+#, python-format
+msgid "Would connect to DoIP ECU at address %s and read identification data"
+msgstr ""
+
+#, fuzzy
+msgid "DoIP connection closed"
+msgstr "Povezivanje nije uspelo: "
+
+#, fuzzy, python-format
+msgid "Error closing DoIP connection: %s"
+msgstr "Greška tokom testa veze: "
+
+#, python-format
 msgid "Device detection error: %s"
 msgstr "Greška detekcije uređaja: %s"
-
-#, python-format
-msgid "STPX mode enabled for %s"
-msgstr "STPX režim omogućen za %s"
-
-#, python-format
-msgid "Pin swapping enabled for %s"
-msgstr "Zamena pinova omogućena za %s"
-
-#, python-format
-msgid "Enhanced features enable error: %s"
-msgstr "Greška omogućavanja proširenih funkcija: %s"
-
-msgid "STPX mode not supported by this adapter as native, trying fallback..."
-msgstr ""
-"STPX režim nije podržan od strane ovog adaptera kao nativni, pokušaj "
-"rezerve..."
-
-msgid "STPX mode enabled successfully"
-msgstr "STPX režim uspešno omogućen"
-
-#, python-format
-msgid "STPX mode enable error: %s"
-msgstr "Greška omogućavanja STPX režima: %s"
-
-#, python-format
-msgid "Pin swap error: %s"
-msgstr "Greška zamene pinova: %s"
-
-msgid "VGate pin swapping successful"
-msgstr "Zamena pinova VGate uspešna"
-
-msgid "VGate pin swapping failed, using fallback"
-msgstr "Zamena pinova VGate neuspela, korišćenje rezerve"
-
-#, python-format
-msgid "VGate pin swap error: %s"
-msgstr "Greška zamene pinova VGate: %s"
-
-msgid "OBDLink pin swapping completed"
-msgstr "Zamena pinova OBDLink završena"
-
-#, python-format
-msgid "OBDLink pin swap error: %s"
-msgstr "Greška zamene pinova OBDLink: %s"
-
-msgid "DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed"
-msgstr "DerleK USB-DIAG2 koristi vlasiti protokol - nisu potrebne AT komande"
-
-#, python-format
-msgid "DerleK USB-DIAG2 pin swap error: %s"
-msgstr "Greška zamene pinova DerleK USB-DIAG2: %s"
-
-msgid "DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed"
-msgstr "DerleK USB-DIAG3 koristi vlasiti protokol - nisu potrebne AT komande"
-
-#, python-format
-msgid "DerleK USB-DIAG3 pin swap error: %s"
-msgstr "Greška zamene pinova DerleK USB-DIAG3: %s"
-
-msgid "USB CAN pin swapping completed"
-msgstr "Zamena pinova USB CAN završena"
-
-#, python-format
-msgid "USB CAN pin swap error: %s"
-msgstr "Greška zamene pinova USB CAN: %s"
-
-msgid "ELS27 pin swapping completed"
-msgstr "Zamena pinova ELS27 završena"
-
-#, python-format
-msgid "ELS27 pin swap error: %s"
-msgstr "Greška zamene pinova ELS27: %s"
-
-#, python-format
-msgid "Device %s initialized successfully with enhanced features"
-msgstr "Uređaj %s uspešno inicijalizovan sa proširenim funkcijama"
-
-#, python-format
-msgid "Device %s initialized with basic features only"
-msgstr "Uređaj %s inicijalizovan samo sa osnovnim funkcijama"
 
 #, python-format
 msgid "Device initialization error: %s"
@@ -290,26 +299,35 @@ msgstr "Inicijalizacija porta nije uspela"
 msgid "Port connection failed - port object is invalid"
 msgstr "Povezivanje na port nije uspelo - objekt porta je nevažeći"
 
+#, fuzzy
+msgid "STN connection established"
+msgstr "%s STN veza uspostavljena"
+
+#, fuzzy
+msgid "Version: "
+msgstr "Verzija "
+
+#, python-format
+msgid "STPX/STN configuration warning: %s"
+msgstr ""
+
 msgid "No ELM interface on port"
 msgstr "Nema ELM interfejsa na portu"
 
-msgid "OBDLINK Connection OK, attempting full speed UART switch"
+#, fuzzy
+msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "OBDLINK veza OK, pokušaj prebacivanja na punu brzinu UART"
 
-msgid "Failed to switch OBDLINK to "
+#, fuzzy
+msgid "Failed to switch OBDLink to "
 msgstr "Neuspelo prebacivanje OBDLINK na "
 
-msgid "OBDLINK Connection OK, using optimal settings"
+#, fuzzy
+msgid "OBDLink Connection OK, using optimal settings"
 msgstr "OBDLINK veza OK, korišćenje optimalnih postavki"
-
-msgid "OBDLINK STPX mode enabled for enhanced long command support"
-msgstr "OBDLINK STPX režim omogućen za proširenu podršku dugih komandi"
 
 msgid "Connection established successfully"
 msgstr "Veza uspešno uspostavljena"
-
-msgid "VGate STPX mode enabled for enhanced long command support"
-msgstr "VGate STPX režim omogućen za proširenu podršku dugih komandi"
 
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
 msgstr "Konfigurisanje ELS27 V5 CAN pinova (12-13)"
@@ -317,8 +335,9 @@ msgstr "Konfigurisanje ELS27 V5 CAN pinova (12-13)"
 msgid "ELS27 V5 CAN configuration complete"
 msgstr "ELS27 V5 CAN konfiguracija završena"
 
-msgid "STPX mode enabled for enhanced long command support"
-msgstr "STPX režim omogućen za proširenu podršku dugih komandi"
+#, fuzzy, python-format
+msgid "ELS27 V5 configuration warning: %s"
+msgstr "ELS27 V5 CAN konfiguracija završena"
 
 msgid "Port is None - cannot switch speed"
 msgstr "Port je None - ne može se promeniti brzina"
@@ -327,38 +346,13 @@ msgstr "Port je None - ne može se promeniti brzina"
 msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr "%s je promenio baudrate uspešno, menjanje UART brzine sada..."
 
-#, python-format
-msgid "%s STN connection established"
-msgstr "%s STN veza uspostavljena"
-
-#, python-format
-msgid "%s Version: "
-msgstr "Verzija %s "
-
-msgid ""
-"VGate adapter detected but STN verification failed, attempting fallback..."
-msgstr ""
-"VGate adapter detektovan ali STN verifikacija nije uspela, pokušaj rezerve..."
-
-#, python-format
-msgid "Unsupported baudrate for ELM: %s"
-msgstr "Nepodržan baudrate za ELM: %s"
-
-msgid "ELM baudrate switched OK, changing UART speed now..."
+#, fuzzy, python-format
+msgid "%s baudrate switched OK, changing UART speed now..."
 msgstr "ELM baudrate uspešno promenjen, menjanje UART brzine sada..."
 
-msgid "ELM full speed connection OK "
-msgstr "ELM veza punom brzinom OK "
-
-msgid "Version "
-msgstr "Verzija "
-
-msgid "ELM did not report version after speed switch"
-msgstr "ELM nije prijavio verziju nakon promene brzine"
-
-#, python-format
-msgid "Your ELM does not support baudrate %s"
-msgstr "Vaš ELM ne podržava baudrate %s"
+#, fuzzy, python-format
+msgid "Not supported baudrate %s"
+msgstr "Nepodržan baudrate za ELM: %s"
 
 msgid "ELM reset..."
 msgstr "ELM resetovanje..."
@@ -438,17 +432,82 @@ msgstr "Korišćenje sačuvanih postavki za"
 msgid "Using optimal settings for"
 msgstr "Korišćenje optimalnih postavki za"
 
+#, python-format
+msgid "%(text)s %(type)s: %(settings)s"
+msgstr ""
+
+msgid "ELM327 doesn't support DoIP, falling back to serial mode"
+msgstr ""
+
 msgid "Serial port opened"
 msgstr "Serijski port otvoren"
 
-msgid "Error: "
-msgstr "Greška: "
+#, fuzzy, python-format
+msgid "Serial connection error: %s"
+msgstr "Greška povezivanja: "
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM nije povezan ili je pogresan COM port"
 
-msgid "Port closed"
+#, fuzzy, python-format
+msgid "Unexpected error: %s"
+msgstr "Greška zamene pinova: %s"
+
+#, python-format
+msgid "Bluetooth connection attempted: %s"
+msgstr ""
+
+#, python-format
+msgid "Serial connection established: %(port)s @ %(baud)s baud"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Bluetooth connection failed: %s"
+msgstr "Povezivanje nije uspelo: "
+
+#, python-format
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP connection failed: %(ip)s:%(port)s"
+msgstr "Povezivanje nije uspelo: "
+
+#, fuzzy, python-format
+msgid "DoIP initialization failed: %s"
+msgstr "Inicijalizacija DoIP CAN nije uspela: {}"
+
+#, fuzzy, python-format
+msgid "Port closed: %s"
 msgstr "Port je zatvoren"
+
+#, fuzzy, python-format
+msgid "Error closing port: %s"
+msgstr "Greška u read(): %s"
+
+#, fuzzy, python-format
+msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
+msgstr "Povezivanje sa uređajem na portu: "
+
+#, fuzzy, python-format
+msgid "WiFi connection established: %(ip)s:%(port)s"
+msgstr "%s STN veza uspostavljena"
+
+#, python-format
+msgid "WiFi connection timeout to %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "WiFi connection error: %s"
+msgstr "Greška povezivanja: "
+
+#, fuzzy, python-format
+msgid "Unexpected WiFi error: %s"
+msgstr "Greška povezivanja: "
+
+#, fuzzy, python-format
+msgid "WiFi recv: %s"
+msgstr "WiFi port: "
 
 #, python-format
 msgid "Serial error in read_byte: %s"
@@ -469,6 +528,9 @@ msgstr "Ne mogu se dekodirati bajtovi %s"
 msgid "Error in read(): %s"
 msgstr "Greška u read(): %s"
 
+msgid "WiFi connection - baudrate change not applicable"
+msgstr ""
+
 msgid "Attempting WiFi reconnection..."
 msgstr "Pokušaj WiFi ponovnog povezivanja..."
 
@@ -488,6 +550,18 @@ msgstr "Isteklo vreme"
 
 msgid "Checking port speed:"
 msgstr "Provera brzine porta:"
+
+msgid "WiFi connection - skipping baudrate check"
+msgstr ""
+
+msgid "Bluetooth connection - skipping baudrate check"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"%(label)s: %(speed)s"
+msgstr ""
 
 msgid "Start COM speed :"
 msgstr "Pocetna brzina COM porta:"
@@ -553,6 +627,10 @@ msgstr ""
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nije pronađen ili je nevažeći."
 
+#, fuzzy, python-format
+msgid "Warning: Could not write version.h: %s"
+msgstr "Upozorenje: Ne može se pročitati string deskriptor:"
+
 msgid "Using custom DDT database"
 msgstr "Korišćenje prilagođene DDT baze podataka"
 
@@ -565,9 +643,6 @@ msgstr "Inicijalizacija ELM sa brzinom %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nema ELM327 ili OBDLINK-SX uređaja na COM portu "
-
-msgid "Initializing device features..."
-msgstr "Inicijalizacija funkcija uređaja..."
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Resetovanje AIRBAG AB90"
@@ -1439,6 +1514,10 @@ msgstr "Kreirao:"
 msgid "Options"
 msgstr "Opcije"
 
+#, fuzzy, python-format
+msgid "Error updating menu bar: %s"
+msgstr "Greška u read(): %s"
+
 msgid "CAN Line 1 Auto"
 msgstr "CAN linija 1 Auto"
 
@@ -1673,6 +1752,10 @@ msgstr "Greška tokom testa veze: "
 msgid "Reset and Recheck"
 msgstr "Resetuj i proveri ponovo"
 
+#, fuzzy, python-format
+msgid "Error updating port list: %s"
+msgstr "Greška tokom testa veze: "
+
 msgid "57600"
 msgstr "57600"
 
@@ -1699,6 +1782,53 @@ msgstr "VGate iCar Pro izabran - Poboljšana STN/STPX podrška omogućena"
 
 msgid "Long command support and high-speed communication available"
 msgstr "Podrška za duge komande i komunikacija visoke brzine dostupna"
+
+#, python-format
+msgid "DoIP preset applied: %(name)s -> %(ip)s"
+msgstr ""
+
+#, python-format
+msgid "DoIP preset applied: %(name)s (IP unchanged)"
+msgstr ""
+
+#, python-format
+msgid "Error preparing DoIP update: %s"
+msgstr ""
+
+#, python-format
+msgid "Applied %s preset:"
+msgstr ""
+
+#, python-format
+msgid "  IP: %s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "  Port: %s"
+msgstr "Port: "
+
+#, python-format
+msgid "  Timeout: %ss"
+msgstr ""
+
+msgid "  Configuration saved and device list reloaded"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error in force DoIP update: %s"
+msgstr "Greška u read(): %s"
+
+#, fuzzy, python-format
+msgid "Error in delayed DoIP update: %s"
+msgstr "Greška u read(): %s"
+
+#, python-format
+msgid "DoIP device updated: %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error in targeted DoIP update: %s"
+msgstr "Greška u read(): %s"
 
 msgid "N/A"
 msgstr "N/A"
@@ -1871,6 +2001,13 @@ msgstr "Čitanje DTC vratilo grešku"
 
 msgid "No DTC"
 msgstr "Nema DTC"
+
+#, fuzzy
+msgid "Invalid DTC response: "
+msgstr "Loš ELM odgovor :"
+
+msgid "DTC parsing error - response: "
+msgstr ""
 
 msgid "Diagnostic Trouble Codes"
 msgstr "Dijagnostički kodovi grešaka"

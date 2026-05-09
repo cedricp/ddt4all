@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 12:51+0200\n"
+"POT-Creation-Date: 2026-05-09 22:15+0200\n"
 "PO-Revision-Date: 2026-05-07 13:09+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
@@ -24,78 +24,94 @@ msgstr "Dispositivo DoIP conectado com sucesso"
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr "DoIP CAN inicializado com suporte ECU elétrico"
 
-#, python-brace-format
-msgid "DoIP response: {}"
+#, fuzzy, python-format
+msgid "DoIP response: %s"
 msgstr "Resposta DoIP: {}"
 
-#, python-brace-format
-msgid "DoIP request failed: {}"
+#, fuzzy, python-format
+msgid "DoIP request failed: %s"
 msgstr "Pedido DoIP falhou: {}"
 
-#, python-brace-format
-msgid "Testing Electric ECU: {}"
+#, fuzzy, python-format
+msgid "Testing Electric ECU: %s"
 msgstr "Testando ECU elétrico: {}"
 
 msgid "Failed to connect to DoIP device"
 msgstr "Falha ao conectar ao dispositivo DoIP"
 
+#, python-format
+msgid "DoIP connected to %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP connection failed: %s"
+msgstr "Conexão falhou: "
+
 msgid "Insufficient vehicle identification data"
 msgstr "Dados insuficientes de identificação do veículo"
 
-#, python-brace-format
-msgid "Expected vehicle identification response, got: {}"
+#, fuzzy, python-format
+msgid "Expected vehicle identification response, got: %s"
 msgstr "Resposta de identificação do veículo esperada, obtido: {}"
 
-#, python-brace-format
-msgid "Vehicle identification failed: {}"
+#, fuzzy, python-format
+msgid "Vehicle identification failed: %s"
 msgstr "Identificação do veículo falhou: {}"
 
 msgid "Insufficient session control data"
 msgstr "Dados insuficientes de controle de sessão"
 
-#, python-brace-format
-msgid "Expected diagnostic session control response, got: {}"
+#, fuzzy, python-format
+msgid "Expected diagnostic session control response, got: %s"
 msgstr "Resposta esperada do controle da sessão de diagnóstico, obtida: {}"
 
-#, python-brace-format
-msgid "Diagnostic session control failed: {}"
+#, fuzzy, python-format
+msgid "Diagnostic session control failed: %s"
 msgstr "Falha no controle da sessão de diagnóstico: {}"
 
 msgid "Insufficient diagnostic message data"
 msgstr "Dados insuficientes da mensagem de diagnóstico"
 
-#, python-brace-format
-msgid "Expected diagnostic message response, got: {}"
+#, fuzzy, python-format
+msgid "Expected diagnostic message response, got: %s"
 msgstr "Resposta de mensagem de diagnóstico esperada, obtida: {}"
 
 msgid "Insufficient alive check data"
 msgstr "Dados insuficientes da verificação alive"
 
-#, python-brace-format
-msgid "Expected alive check response, got: {}"
+#, fuzzy, python-format
+msgid "Expected alive check response, got: %s"
 msgstr "Resposta de verificação alive esperada, obtida: {}"
 
-#, python-brace-format
-msgid "Alive check failed: {}"
+#, fuzzy, python-format
+msgid "Alive check failed: %s"
 msgstr "Verificação alive falhou: {}"
+
+#, python-format
+msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP vehicle identification failed: %s"
+msgstr "Identificação do veículo falhou: {}"
 
 msgid "Not connected to DoIP device"
 msgstr "Não conectado ao dispositivo DoIP"
 
-#, python-brace-format
-msgid "Invalid hex request format: {}"
+#, fuzzy, python-format
+msgid "Invalid hex request format: %s"
 msgstr "Formato de pedido hex inválido: {}"
 
-#, python-brace-format
-msgid "DoIP session start failed: {}"
+#, fuzzy, python-format
+msgid "DoIP session start failed: %s"
 msgstr "Início da sessão DoIP falhou: {}"
 
-#, python-brace-format
-msgid "DoIP CAN initialization failed: {}"
+#, fuzzy, python-format
+msgid "DoIP CAN initialization failed: %s"
 msgstr "Falha na inicialização do DoIP CAN: {}"
 
-#, python-brace-format
-msgid "DoIP: Electric ECU detected - {}"
+#, fuzzy, python-format
+msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: ECU elétrica detectada - {}"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
@@ -178,97 +194,86 @@ msgstr "não está mapeado"
 msgid "Scanning address: "
 msgstr "Endereço de verificação: "
 
+#, python-format
+msgid "%(text)s%(addr)s ECU: %(name)s"
+msgstr ""
+
+#, python-format
+msgid "DoIP ECU response format unknown: %s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error parsing DoIP response: %s"
+msgstr "Resposta DoIP: {}"
+
+#, python-format
+msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
+msgstr ""
+
+#, python-format
+msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP connection established: %(ip)s:%(port)s"
+msgstr "Conexão STN estabelecida com %s"
+
+#, fuzzy, python-format
+msgid "DoIP initialization error: %s"
+msgstr "Erro de inicialização do dispositivo: %s"
+
+msgid "No DoIP addresses available for scanning"
+msgstr ""
+
 msgid "Scanning DoIP address: "
 msgstr "Verificando endereço DoIP: "
 
 #, python-format
+msgid "Warning: address %(addr)s is not mapped"
+msgstr ""
+
+#, python-format
+msgid "No identification data from DoIP ECU at address %s"
+msgstr ""
+
+#, python-format
+msgid "Negative response from DoIP ECU at address %s"
+msgstr ""
+
+#, python-format
+msgid "Failed to start session with DoIP ECU at address %s"
+msgstr ""
+
+#, python-format
+msgid "Failed to initialize DoIP communication with address %s"
+msgstr ""
+
+msgid "DoIP device not available for scanning"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error during DoIP scan: %s"
+msgstr "Erro durante o teste de conexão: "
+
+#, python-format
+msgid "Simulation mode: DoIP address %s would be scanned"
+msgstr ""
+
+#, python-format
+msgid "Would connect to DoIP ECU at address %s and read identification data"
+msgstr ""
+
+#, fuzzy
+msgid "DoIP connection closed"
+msgstr "Conexão falhou: "
+
+#, fuzzy, python-format
+msgid "Error closing DoIP connection: %s"
+msgstr "Erro durante o teste de conexão: "
+
+#, python-format
 msgid "Device detection error: %s"
 msgstr "Erro de detecção do dispositivo: %s"
-
-#, python-format
-msgid "STPX mode enabled for %s"
-msgstr "Modo STPX ativado para %s"
-
-#, python-format
-msgid "Pin swapping enabled for %s"
-msgstr "Troca de pinos ativada para %s"
-
-#, python-format
-msgid "Enhanced features enable error: %s"
-msgstr "Erro ao ativar recursos avançados: %s"
-
-msgid "STPX mode not supported by this adapter as native, trying fallback..."
-msgstr ""
-"Modo STPX não suportado nativamente por este adaptador, tentando "
-"alternativa..."
-
-msgid "STPX mode enabled successfully"
-msgstr "Modo STPX ativado com sucesso"
-
-#, python-format
-msgid "STPX mode enable error: %s"
-msgstr "Erro ao ativar o modo STPX: %s"
-
-#, python-format
-msgid "Pin swap error: %s"
-msgstr "Erro na troca de pinos: %s"
-
-msgid "VGate pin swapping successful"
-msgstr "Troca de pinos VGate realizada com sucesso"
-
-msgid "VGate pin swapping failed, using fallback"
-msgstr "Falha na troca de pinos VGate, usando alternativa"
-
-#, python-format
-msgid "VGate pin swap error: %s"
-msgstr "Erro na troca de pinos VGate: %s"
-
-msgid "OBDLink pin swapping completed"
-msgstr "Troca de pinos OBDLink concluída"
-
-#, python-format
-msgid "OBDLink pin swap error: %s"
-msgstr "Erro na troca de pinos OBDLink: %s"
-
-msgid "DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed"
-msgstr ""
-"DerleK USB-DIAG2 usa protocolo proprietário – não são necessários comandos AT"
-
-#, python-format
-msgid "DerleK USB-DIAG2 pin swap error: %s"
-msgstr "Erro na troca de pinos DerleK USB-DIAG2: %s"
-
-msgid "DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed"
-msgstr ""
-"DerleK USB-DIAG3 usa protocolo proprietário – não são necessários comandos AT"
-
-#, python-format
-msgid "DerleK USB-DIAG3 pin swap error: %s"
-msgstr "Erro na troca de pinos DerleK USB-DIAG3: %s"
-
-msgid "USB CAN pin swapping completed"
-msgstr "Troca de pinos USB CAN concluída"
-
-#, python-format
-msgid "USB CAN pin swap error: %s"
-msgstr "Erro na troca de pinos USB CAN: %s"
-
-msgid "ELS27 pin swapping completed"
-msgstr "Troca de pinos ELS27 concluída"
-
-#, python-format
-msgid "ELS27 pin swap error: %s"
-msgstr "Erro na troca de pinos ELS27: %s"
-
-#, python-format
-msgid "Device %s initialized successfully with enhanced features"
-msgstr ""
-"O dispositivo %s foi inicializado com sucesso com funcionalidades melhoradas"
-
-#, python-format
-msgid "Device %s initialized with basic features only"
-msgstr ""
-"O dispositivo %s foi inicializado apenas com as funcionalidades básicas"
 
 #, python-format
 msgid "Device initialization error: %s"
@@ -296,26 +301,35 @@ msgstr "Falha na inicialização da porta"
 msgid "Port connection failed - port object is invalid"
 msgstr "Conexão com a porta falhou – objeto da porta é inválido"
 
+#, fuzzy
+msgid "STN connection established"
+msgstr "Conexão STN estabelecida com %s"
+
+#, fuzzy
+msgid "Version: "
+msgstr "Versão "
+
+#, python-format
+msgid "STPX/STN configuration warning: %s"
+msgstr ""
+
 msgid "No ELM interface on port"
 msgstr "Não há interface ELM nesta porta"
 
-msgid "OBDLINK Connection OK, attempting full speed UART switch"
+#, fuzzy
+msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr "Conexão OBDLINK OK, tentando switch UART de velocidade total"
 
-msgid "Failed to switch OBDLINK to "
+#, fuzzy
+msgid "Failed to switch OBDLink to "
 msgstr "Falha ao mudar OBDLINK para "
 
-msgid "OBDLINK Connection OK, using optimal settings"
+#, fuzzy
+msgid "OBDLink Connection OK, using optimal settings"
 msgstr "Conexão OBDLINK OK, usando configurações ótimas"
-
-msgid "OBDLINK STPX mode enabled for enhanced long command support"
-msgstr "Modo STPX do OBDLINK ativado para suporte aprimorado a comandos longos"
 
 msgid "Connection established successfully"
 msgstr "Conexão estabelecida com êxito"
-
-msgid "VGate STPX mode enabled for enhanced long command support"
-msgstr "Modo STPX do VGate ativado para suporte aprimorado a comandos longos"
 
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
 msgstr "Configurando pinos ELS27 V5 CAN (12-13)"
@@ -323,8 +337,9 @@ msgstr "Configurando pinos ELS27 V5 CAN (12-13)"
 msgid "ELS27 V5 CAN configuration complete"
 msgstr "Configuração ELS27 V5 CAN concluída"
 
-msgid "STPX mode enabled for enhanced long command support"
-msgstr "Modo STPX ativado para suporte aprimorado a comandos longos"
+#, fuzzy, python-format
+msgid "ELS27 V5 configuration warning: %s"
+msgstr "Configuração ELS27 V5 CAN concluída"
 
 msgid "Port is None - cannot switch speed"
 msgstr "Porta é None – não é possível alterar a velocidade"
@@ -333,40 +348,14 @@ msgstr "Porta é None – não é possível alterar a velocidade"
 msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr "%s mudou baudrate OK, mudando a velocidade do UART agora..."
 
-#, python-format
-msgid "%s STN connection established"
-msgstr "Conexão STN estabelecida com %s"
-
-#, python-format
-msgid "%s Version: "
-msgstr "Versão %s: "
-
-msgid ""
-"VGate adapter detected but STN verification failed, attempting fallback..."
-msgstr ""
-"Adaptador VGate detectado, mas a verificação STN falhou, tentando "
-"alternativa…"
-
-#, python-format
-msgid "Unsupported baudrate for ELM: %s"
-msgstr "Baudrate não suportada para o ELM: %s"
-
-msgid "ELM baudrate switched OK, changing UART speed now..."
+#, fuzzy, python-format
+msgid "%s baudrate switched OK, changing UART speed now..."
 msgstr ""
 "Taxa de transmissão do ELM ativada, alterando a velocidade do UART agora..."
 
-msgid "ELM full speed connection OK "
-msgstr "Conexão ELM de velocidade total OK "
-
-msgid "Version "
-msgstr "Versão "
-
-msgid "ELM did not report version after speed switch"
-msgstr "O ELM não informou a versão após a troca de velocidade"
-
-#, python-format
-msgid "Your ELM does not support baudrate %s"
-msgstr "O seu ELM não suporta baudrate %s"
+#, fuzzy, python-format
+msgid "Not supported baudrate %s"
+msgstr "Baudrate não suportada para o ELM: %s"
 
 msgid "ELM reset..."
 msgstr "Reinicialização do ELM..."
@@ -446,17 +435,82 @@ msgstr "Usando configurações salvas para"
 msgid "Using optimal settings for"
 msgstr "Usando configurações ótimas para"
 
+#, python-format
+msgid "%(text)s %(type)s: %(settings)s"
+msgstr ""
+
+msgid "ELM327 doesn't support DoIP, falling back to serial mode"
+msgstr ""
+
 msgid "Serial port opened"
 msgstr "Porta serial aberta"
 
-msgid "Error: "
-msgstr "Erro: "
+#, fuzzy, python-format
+msgid "Serial connection error: %s"
+msgstr "Erro de conexão: "
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM não conectado ou porta COM incorreta"
 
-msgid "Port closed"
+#, fuzzy, python-format
+msgid "Unexpected error: %s"
+msgstr "Erro na troca de pinos: %s"
+
+#, python-format
+msgid "Bluetooth connection attempted: %s"
+msgstr ""
+
+#, python-format
+msgid "Serial connection established: %(port)s @ %(baud)s baud"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Bluetooth connection failed: %s"
+msgstr "Conexão falhou: "
+
+#, python-format
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "DoIP connection failed: %(ip)s:%(port)s"
+msgstr "Conexão falhou: "
+
+#, fuzzy, python-format
+msgid "DoIP initialization failed: %s"
+msgstr "Falha na inicialização do DoIP CAN: {}"
+
+#, fuzzy, python-format
+msgid "Port closed: %s"
 msgstr "Porta fechada"
+
+#, fuzzy, python-format
+msgid "Error closing port: %s"
+msgstr "Erro em read(): %s"
+
+#, fuzzy, python-format
+msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
+msgstr "Conectando ao dispositivo na porta: "
+
+#, fuzzy, python-format
+msgid "WiFi connection established: %(ip)s:%(port)s"
+msgstr "Conexão STN estabelecida com %s"
+
+#, python-format
+msgid "WiFi connection timeout to %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "WiFi connection error: %s"
+msgstr "Erro de conexão: "
+
+#, fuzzy, python-format
+msgid "Unexpected WiFi error: %s"
+msgstr "Erro de conexão: "
+
+#, fuzzy, python-format
+msgid "WiFi recv: %s"
+msgstr "Porta Wi-Fi: "
 
 #, python-format
 msgid "Serial error in read_byte: %s"
@@ -477,6 +531,9 @@ msgstr "Não é possível decodificar bytes %s"
 msgid "Error in read(): %s"
 msgstr "Erro em read(): %s"
 
+msgid "WiFi connection - baudrate change not applicable"
+msgstr ""
+
 msgid "Attempting WiFi reconnection..."
 msgstr "Tentando reconexão WiFi..."
 
@@ -496,6 +553,18 @@ msgstr "TEMPO ESGOTADO"
 
 msgid "Checking port speed:"
 msgstr "Verificando velocidade da porta:"
+
+msgid "WiFi connection - skipping baudrate check"
+msgstr ""
+
+msgid "Bluetooth connection - skipping baudrate check"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"%(label)s: %(speed)s"
+msgstr ""
 
 msgid "Start COM speed :"
 msgstr "Velocidade inicial COM :"
@@ -563,6 +632,10 @@ msgstr ""
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json não encontrado ou inválido."
 
+#, fuzzy, python-format
+msgid "Warning: Could not write version.h: %s"
+msgstr "Aviso: Não foi possível ler descritor de string:"
+
 msgid "Using custom DDT database"
 msgstr "Usando banco de dados DDT personalizado"
 
@@ -575,9 +648,6 @@ msgstr "Inicializando ELM com velocidade %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nenhum ELM327 ou OBDLINK-SX detectado na porta COM "
-
-msgid "Initializing device features..."
-msgstr "Inicializando funcionalidades do dispositivo..."
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Reset AIRBAG AB90"
@@ -1451,6 +1521,10 @@ msgstr "Criado por:"
 msgid "Options"
 msgstr "Opções"
 
+#, fuzzy, python-format
+msgid "Error updating menu bar: %s"
+msgstr "Erro em read(): %s"
+
 msgid "CAN Line 1 Auto"
 msgstr "CAN Linha 1 Auto"
 
@@ -1685,6 +1759,10 @@ msgstr "Erro durante o teste de conexão: "
 msgid "Reset and Recheck"
 msgstr "Redefinir e verificar novamente"
 
+#, fuzzy, python-format
+msgid "Error updating port list: %s"
+msgstr "Erro durante o teste de conexão: "
+
 msgid "57600"
 msgstr "57600"
 
@@ -1711,6 +1789,53 @@ msgstr "VGate iCar Pro selecionado - Suporte aprimorado STN/STPX ativado"
 
 msgid "Long command support and high-speed communication available"
 msgstr "Suporte de comando longo e comunicação de alta velocidade disponíveis"
+
+#, python-format
+msgid "DoIP preset applied: %(name)s -> %(ip)s"
+msgstr ""
+
+#, python-format
+msgid "DoIP preset applied: %(name)s (IP unchanged)"
+msgstr ""
+
+#, python-format
+msgid "Error preparing DoIP update: %s"
+msgstr ""
+
+#, python-format
+msgid "Applied %s preset:"
+msgstr ""
+
+#, python-format
+msgid "  IP: %s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "  Port: %s"
+msgstr "Porta: "
+
+#, python-format
+msgid "  Timeout: %ss"
+msgstr ""
+
+msgid "  Configuration saved and device list reloaded"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error in force DoIP update: %s"
+msgstr "Erro em read(): %s"
+
+#, fuzzy, python-format
+msgid "Error in delayed DoIP update: %s"
+msgstr "Erro em read(): %s"
+
+#, python-format
+msgid "DoIP device updated: %(ip)s:%(port)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error in targeted DoIP update: %s"
+msgstr "Erro em read(): %s"
 
 msgid "N/A"
 msgstr "N / D"
@@ -1885,6 +2010,13 @@ msgstr "Ler DTC retornou um erro"
 
 msgid "No DTC"
 msgstr "Sem DTC"
+
+#, fuzzy
+msgid "Invalid DTC response: "
+msgstr "Resposta ruim do ELM:"
+
+msgid "DTC parsing error - response: "
+msgstr ""
 
 msgid "Diagnostic Trouble Codes"
 msgstr "Códigos de problemas de diagnóstico"
