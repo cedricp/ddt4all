@@ -763,7 +763,7 @@ class ParamWidget(widgets.QWidget):
         if not auto or options.log_all:
             self.logview.append(txt + command)
 
-        if elm_response.startswith('WRONG'):
+        if elm_response.startswith('WRONG') and (not auto or options.log_all):
             self.logview.append("<font color=red>" + _('Bad ELM response :') + "</font> " + elm_response)
 
         if not auto or options.log_all:

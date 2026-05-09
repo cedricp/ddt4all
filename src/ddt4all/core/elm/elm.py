@@ -93,13 +93,28 @@ def item_count(items):
 def get_available_ports():
     """Get available serial ports with optimized status checking"""
     ports = []
-    
+    # Track serial ports already listed via USB detection to avoid duplicates
+    usb_serial_ports = set()
+
     # First check for USB devices using usbdevice.py (with error handling)
     try:
         usb_device = UsbCan()
         if usb_device.is_init():
-            # Add USB device to ports list
-            ports.append((usb_device.descriptor, usb_device.descriptor, "USB", "online"))
+            # USB-serial adapters (FTDI, CP210x, CH340, PL2303, etc.) expose themselves
+            # as serial ports. Find the actual /dev path via VID/PID so serial.Serial()
+            # can open it; fall back to the human-readable descriptor only if not found.
+            port_path = usb_device.descriptor  # fallback
+            try:
+                vid = usb_device.device.idVendor
+                pid = usb_device.device.idProduct
+                for port_info in list_ports.comports():
+                    if port_info.vid == vid and port_info.pid == pid:
+                        port_path = port_info.device
+                        usb_serial_ports.add(port_path)
+                        break
+            except Exception:
+                pass
+            ports.append((port_path, usb_device.descriptor, "USB", "online"))
             print(_("Found USB device:") + " %s" % usb_device.descriptor)
     except ImportError as e:
         # Only show USB backend error once per session
@@ -145,6 +160,10 @@ def get_available_ports():
 
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
+            # Skip ports already listed via USB device detection (avoid duplicates)
+            if port in usb_serial_ports:
+                continue
+
             # Enhanced device identification for ELS27 and other adapters
             device_desc = desc
             desc_upper = desc.upper()
@@ -382,7 +401,10 @@ class ELM:
         self.adapter_type = adapter_type
         options.port_speed = rate
         self.stpx_enabled = False  # Initialize STPX mode flag
-        for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
+        # Build speed list: user's chosen rate first, then common fallbacks.
+        # dict.fromkeys preserves order and removes duplicates (e.g. when rate == 38400).
+        _speed_candidates = list(dict.fromkeys([int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]))
+        for speed in _speed_candidates:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
 
             if not options.simulation_mode:
@@ -435,6 +457,15 @@ class ELM:
                 options.elm_failed = False
                 self.connectionStatus = True
                 rate = speed
+                # Save settings only now that ELM communication is confirmed at this speed
+                device_key = DeviceManager.normalize_adapter_type(adapter_type)
+                confirmed_settings = {
+                    'baudrate': speed,
+                    'timeout': self.port.settings.get('timeout', 5),
+                    'rtscts': self.port.settings.get('rtscts', False),
+                    'dsrdtr': self.port.settings.get('dsrdtr', False),
+                }
+                options.save_device_settings(device_key, confirmed_settings, portName)
                 break
             else:
                 options.elm_failed = True
@@ -816,7 +847,7 @@ class ELM:
             frsp = self.send_raw(f)
             # analyse response (1 phase)
             for s in frsp.split('\n'):
-                if s.strip() == f:  # echo cancellation
+                if s.strip().replace(' ', '') == f:  # echo cancellation (space-insensitive)
                     continue
                 s = s.strip().replace(' ', '')
                 if len(s) == 0:  # empty string
@@ -844,7 +875,15 @@ class ELM:
                 nbytes = int(responses[0][1:2], 16)
                 nframes = 1
                 result = responses[0][2:2 + nbytes * 2]
+            elif responses[0][:1] == '1':
+                # Got a multi-frame first frame but no consecutive frames.
+                # Likely cause: AT CAF1 still active (AT SP reset it), or flow control failed.
+                print("send_can: received first frame only — AT CAF0 may have been reset by AT SP, or FC failed")
+                self.error_frame += 1
+                noerrors = False
             else:  # wrong response (not all frames received)
+                # Likely cause: AT CAF1 active — response lacks ISO-TP length prefix.
+                print(f"send_can: unexpected response byte 0x{responses[0][:2]} — check AT CAF0 is active")
                 self.error_frame += 1
                 noerrors = False
         else:  # multi frame response
@@ -1134,6 +1173,11 @@ class ELM:
                 break
             if command in self.buff:
                 break
+            # ELM prompt received — adapter is done responding even if echo was off
+            # (some VLinker/clone adapters reset echo state on atpc, so AT E1 response
+            # won't contain the command echo; looping again would block for portTimeout)
+            if expect in self.buff:
+                break
             elif self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
@@ -1260,7 +1304,17 @@ class ELM:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
             self.currentaddress = get_can_addr(TXa)
+        elif addr in dnat and addr in snat:
+            # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
+            TXa = dnat[addr]
+            RXa = snat[addr]
+            self.currentaddress = addr
+        elif addr in dnat_ext and addr in snat_ext:
+            TXa = dnat_ext[addr]
+            RXa = snat_ext[addr]
+            self.currentaddress = addr
         elif get_can_addr(addr) is not None and get_can_addr_snat(addr) is not None:
+            # addr is a CAN TX ID (dnat value); reverse-lookup to get key
             TXa = get_can_addr(addr)
             RXa = get_can_addr_snat(addr)
             self.currentaddress = TXa
@@ -1316,6 +1370,14 @@ class ELM:
                 self.cmd("STPBR 250000")
             elif canline == 5:
                 self.cmd("STPBR 125000")
+
+        # Re-apply formatting settings after AT SP, because some ELM327 clones
+        # (including VLinker FS) reset CAF/S/AL to defaults when the protocol changes.
+        # send_can adds ISO-TP length prefixes itself and needs CAF0 (off), S0 (no
+        # spaces for reliable echo cancellation), and AL (allow long messages).
+        self.cmd("AT CAF0")
+        self.cmd("AT S0")
+        self.cmd("AT AL")
 
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)

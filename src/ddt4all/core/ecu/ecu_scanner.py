@@ -278,8 +278,6 @@ class EcuScanner:
             if hasattr(options, 'elm') and options.elm:
                 # Initialize device with enhanced features
                 elm.DeviceManager.initialize_device(options.elm)
-            
-            options.elm.init_can()
 
         project_can_addresses = []
         if vehiclefilter:
