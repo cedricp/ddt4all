@@ -155,6 +155,9 @@ class EcuList(widgets.QWidget):
         self.list.sortByColumn(0, core.Qt.AscendingOrder)
         stored_ecus = {"Custom": []}
 
+        if self.ecuscan.getNumEcuDb() > 0:
+            stored_ecus = {}
+
         custom_files = glob.glob("./json/*.json.targets")
 
         for cs in custom_files:
@@ -165,7 +168,7 @@ class EcuList(widgets.QWidget):
             target = json.loads(jsoncontent)
 
             if not target:
-                grp = "Custom"
+                grp = "?"
                 projects_list = []
                 protocol = ''
             else:
@@ -173,7 +176,7 @@ class EcuList(widgets.QWidget):
                 protocol = target['protocol']
                 projects_list = target['projects']
                 if target['address'] not in self.ecu_map:
-                    grp = "Custom"
+                    grp = "?"
                 else:
                     grp = self.ecu_map[target['address']]
 

@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 readme = "README.md"
 license = {text = "GPL-3.0-or-later"}
 name = "ddt4all"
-version = "3.0.7.1"
+version = "3.0.8"
 description = "DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters."
 requires-python = ">=3.8"
 
@@ -22,7 +22,6 @@ dependencies = [
     "pywin32>=227; sys_platform == 'win32'",
 
     # Safe ranges to avoid breaking changes
-    "deep_translator>=1.11.4,<2.0.0",
     "polib>=1.2.0,<2.0.0",
 ]
 
@@ -32,6 +31,7 @@ dev = [
     "PyQt5-stubs>=5.15.0,<5.16.0",
 
     # pytest versions that still support Python 3.8
+    "coverage>=7.0.0,<=7.6.1",
     "pytest>=7.0.0,<8.0.0",
     "pytest-cov>=4.0.0,<5.0.0",
     "pytest-mock>=3.14.1",

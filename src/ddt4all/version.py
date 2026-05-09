@@ -18,11 +18,11 @@ __contributors__ = {
     "landswellsong": "Contributor",
     "krzeminskim": "Contributor",
     "Jodaille": "Contributor",
-    "TA1AUB": "Translator",
+    "TA1GI": "Translator",
     "walkman2021": "Translator"
 }
 __license__ = "GPL"
-__version__ = "3.0.7.1"
+__version__ = "3.0.8"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__status__ = "Kakapo - (Pre)"
+__status__ = "Tuatara"

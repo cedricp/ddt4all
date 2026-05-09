@@ -68,15 +68,18 @@ class OBDDevice:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
-            self.currentaddress = get_can_addr(TXa)
+            # self.currentaddress = get_can_addr(TXa) // TODO: https://github.com/cedricp/ddt4all/pull/1734
+            self.currentaddress = addr
         elif get_can_addr(addr) is not None and get_can_addr_snat(addr) is not None:
             TXa = get_can_addr(addr)
             RXa = get_can_addr_snat(addr)
-            self.currentaddress = TXa
+            # self.currentaddress = TXa // TODO: https://github.com/cedricp/ddt4all/pull/1734
+            self.currentaddress = addr
         elif get_can_addr_ext(addr) is not None and get_can_addr_snat_ext(addr) is not None:
             TXa = get_can_addr_ext(addr)
             RXa = get_can_addr_snat_ext(addr)
-            self.currentaddress = TXa
+            # self.currentaddress = TXa // TODO: https://github.com/cedricp/ddt4all/pull/1734
+            self.currentaddress = addr
         else:
             return
 

@@ -1,3 +1,7 @@
+from ... import options
+
+_ = options.translator('ddt4all')
+
 class DeviceManager:
     """Enhanced device manager for OBD-II adapters with optimal settings and STN/STPX support"""
 
@@ -103,7 +107,7 @@ class DeviceManager:
                 return 'unknown'
                 
         except Exception as e:
-            print(f"Device detection error: {e}")
+            print(_("Device detection error: %s") % e)
             return 'unknown'
 
     @staticmethod
@@ -120,22 +124,23 @@ class DeviceManager:
             
             # Enable STN/STPX features
             if settings.get('stpx_support', False):
-                DeviceManager._enable_stpx_mode(elm_instance)
-                print(f"STPX mode enabled for {device_type}")
+                stpx_enabled = DeviceManager._enable_stpx_mode(elm_instance, device_type)
+                if stpx_enabled:
+                    print(_("STPX mode enabled for %s") % device_type)
             
             # Enable pin swapping if supported
             if settings.get('pin_swap', False):
                 DeviceManager._auto_swap_pins(elm_instance, device_type)
-                print(f"Pin swapping enabled for {device_type}")
+                print(_("Pin swapping enabled for %s") % device_type)
             
             return True
             
         except Exception as e:
-            print(f"Enhanced features enable error: {e}")
+            print(_("Enhanced features enable error: %s") % e)
             return False
 
     @staticmethod
-    def _enable_stpx_mode(elm_instance):
+    def _enable_stpx_mode(elm_instance, device_type):
         """Enable STPX mode for enhanced long command support"""
         try:
             # STPX is a mode, not individual commands
@@ -145,14 +150,14 @@ class DeviceManager:
             # Try to enable STPX mode (if supported)
             response = elm_instance.cmd("STPX")
             if "?" in response:
-                print("STPX mode not supported by this adapter")
+                print(_("STPX mode not supported by this adapter as native, trying fallback..."))
                 return False
             
-            print("STPX mode enabled successfully")
+            print(_("STPX mode enabled successfully"))
             return True
             
         except Exception as e:
-            print(f"STPX mode enable error: {e}")
+            print(_("STPX mode enable error: %s") % e)
             return False
 
     @staticmethod
@@ -175,7 +180,7 @@ class DeviceManager:
                 return True  # No pin swap needed
                 
         except Exception as e:
-            print(f"Pin swap error: {e}")
+            print(_("Pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -198,14 +203,14 @@ class DeviceManager:
             # Verify pin swap worked
             test_response = elm_instance.cmd("0210C0")
             if "CAN ERROR" not in test_response:
-                print("VGate pin swapping successful")
+                print(_("VGate pin swapping successful"))
                 return True
             else:
-                print("VGate pin swapping failed, using fallback")
+                print(_("VGate pin swapping failed, using fallback"))
                 return False
                 
         except Exception as e:
-            print(f"VGate pin swap error: {e}")
+            print(_("VGate pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -224,11 +229,11 @@ class DeviceManager:
                     print(f"OBDLink pin swap command failed: {cmd} ({desc})")
                     return False
             
-            print("OBDLink pin swapping completed")
+            print(_("OBDLink pin swapping completed"))
             return True
             
         except Exception as e:
-            print(f"OBDLink pin swap error: {e}")
+            print(_("OBDLink pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -239,11 +244,11 @@ class DeviceManager:
             # Pin swapping is handled internally by the device
             # No AT commands needed for DERLEK devices
             
-            print("DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed")
+            print(_("DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed"))
             return True
             
         except Exception as e:
-            print(f"DerleK USB-DIAG2 pin swap error: {e}")
+            print(_("DerleK USB-DIAG2 pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -254,11 +259,11 @@ class DeviceManager:
             # Pin swapping is handled internally by the device
             # No AT commands needed for DERLEK devices
             
-            print("DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed")
+            print(_("DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed"))
             return True
             
         except Exception as e:
-            print(f"DerleK USB-DIAG3 pin swap error: {e}")
+            print(_("DerleK USB-DIAG3 pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -277,11 +282,11 @@ class DeviceManager:
                     print(f"USB CAN pin swap command failed: {cmd} ({desc})")
                     return False
             
-            print("USB CAN pin swapping completed")
+            print(_("USB CAN pin swapping completed"))
             return True
             
         except Exception as e:
-            print(f"USB CAN pin swap error: {e}")
+            print(_("USB CAN pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -300,11 +305,11 @@ class DeviceManager:
                     print(f"ELS27 pin swap command failed: {cmd} ({desc})")
                     return False
             
-            print("ELS27 pin swapping completed")
+            print(_("ELS27 pin swapping completed"))
             return True
             
         except Exception as e:
-            print(f"ELS27 pin swap error: {e}")
+            print(_("ELS27 pin swap error: %s") % e)
             return False
 
     @staticmethod
@@ -318,6 +323,10 @@ class DeviceManager:
             if not device_type:
                 device_type = DeviceManager.detect_device_type(elm_instance)
             
+            # Use adapter_type from ELM instance if available (more accurate)
+            if hasattr(elm_instance, 'adapter_type') and elm_instance.adapter_type:
+                device_type = elm_instance.adapter_type.lower()
+            
             # Get optimal settings
             settings = DeviceManager.get_optimal_settings(device_type)
             
@@ -325,12 +334,12 @@ class DeviceManager:
             success = DeviceManager.enable_enhanced_features(elm_instance, device_type)
             
             if success:
-                print(f"Device {device_type} initialized successfully with enhanced features")
+                print(_("Device %s initialized successfully with enhanced features") % device_type)
             else:
-                print(f"Device {device_type} initialized with basic features only")
+                print(_("Device %s initialized with basic features only") % device_type)
             
             return True
             
         except Exception as e:
-            print(f"Device initialization error: {e}")
+            print(_("Device initialization error: %s") % e)
             return False

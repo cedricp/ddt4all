@@ -27,16 +27,13 @@ _ = options.translator('ddt4all')
 
 # SNAT/DNAT entries for CAN address mapping
 # Fixed: Using proper hex addresses instead of string values
-dnat_entries = {"E7": "7E4", "E8": "644"}
-snat_entries = {"E7": "7EC", "E8": "5C4"}
+dnat_entries = {} #{"E7": "7E4", "E8": "644"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
+snat_entries = {} #{"E7": "7EC", "E8": "5C4"} # (SCRCM) Selective Catalytic Reduction Control Module | (SVS) Surround View System
 
 snat = snat_entries
 snat_ext = {}
 dnat = dnat_entries
 dnat_ext = {}
-
-
-
 
 def clean_bytestring(value):
     # If is bytes -> decode
@@ -98,35 +95,45 @@ def get_available_ports():
 
     # First check for USB devices using usbdevice.py (with error handling)
     try:
-        usb_device = UsbCan()
-        if usb_device.is_init():
-            # USB-serial adapters (FTDI, CP210x, CH340, PL2303, etc.) expose themselves
-            # as serial ports. Find the actual /dev path via VID/PID so serial.Serial()
-            # can open it; fall back to the human-readable descriptor only if not found.
-            port_path = usb_device.descriptor  # fallback
-            try:
-                vid = usb_device.device.idVendor
-                pid = usb_device.device.idProduct
-                for port_info in list_ports.comports():
-                    if port_info.vid == vid and port_info.pid == pid:
-                        port_path = port_info.device
-                        usb_serial_ports.add(port_path)
-                        break
-            except Exception:
-                pass
-            ports.append((port_path, usb_device.descriptor, "USB", "online"))
-            print(_("Found USB device:") + " %s" % usb_device.descriptor)
-    except ImportError as e:
-        # Only show USB backend error once per session
-        if not hasattr(get_available_ports, '_usb_error_shown'):
-            get_available_ports._usb_error_shown = True
-            print(f"USB backend not available: {e}")
-            print("Note: USB device detection requires pyusb library (pip install pyusb)")
+        # Check if pyusb is available before attempting USB device detection
+        import usb.core
+        import usb.util
+        import usb.legacy
+        import usb.backend.libusb1
+
+        # Test if USB backend is available before attempting device detection
+        backend = usb.backend.libusb1.get_backend()
+        if backend is None:
+            # No USB backend available - silently continue for bypass cable users
+            pass
+        else:
+            usb_device = UsbCan()
+            if usb_device.is_init():
+                # USB-serial adapters (FTDI, CP210x, CH340, PL2303, etc.) expose themselves
+                # as serial ports. Find the actual /dev path via VID/PID so serial.Serial()
+                # can open it; fall back to the human-readable descriptor only if not found.
+                port_path = usb_device.descriptor  # fallback
+                try:
+                    vid = usb_device.device.idVendor
+                    pid = usb_device.device.idProduct
+                    for port_info in list_ports.comports():
+                        if port_info.vid == vid and port_info.pid == pid:
+                            port_path = port_info.device
+                            usb_serial_ports.add(port_path)
+                            break
+                except Exception:
+                    pass
+                ports.append((port_path, usb_device.descriptor, "USB", "online"))
+                print(_("Found USB device:") + " %s" % usb_device.descriptor)
+    except ImportError:
+        # USB device detection not available - silently continue for bypass cable users
+        pass
     except Exception as e:
         # Only show USB device detection error once per session
         if not hasattr(get_available_ports, '_usb_device_error_shown'):
             get_available_ports._usb_device_error_shown = True
-            print(f"USB device detection error: {e}")
+            print(_("USB device detection error:") + f" {e}")
+            print(_("Note: This error does not affect serial communication or bypass cable functionality."))
     
     # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
     # DoIP devices - Use configured IP address instead of hardcoded values
@@ -181,7 +188,7 @@ def get_available_ports():
             elif any(keyword in desc_upper for keyword in ['DERLEK', 'DIAG2', 'DIAG3']):
                 device_desc = f"{desc} (DERLEK Compatible)"
             elif any(keyword in desc_upper for keyword in ['OBDLINK', 'SCANTOOL']):
-                device_desc = f"{desc} (OBDLink Compatible)"
+                device_desc = f"{desc} (OBDLINK Compatible)"
             # Detect common USB-to-serial chips used by ELS27 V5 and other adapters
             elif any(chip in desc_upper for chip in ['FTDI', 'FT232', 'FT231X']):
                 device_desc = f"{desc} (FTDI - Possible ELS27/ELM327)"
@@ -476,55 +483,61 @@ class ELM:
         except Exception:
             maxspeed = 0
 
-        device_text_switch = _("OBDLink Connection OK, attempting full speed UART switch")
-        text_switch_error = _("Failed to switch OBDLink to ") + str(maxspeed)
+        device_text_switch = _("OBDLINK Connection OK, attempting full speed UART switch")
+        text_switch_error = _("Failed to switch OBDLINK to ") + str(maxspeed)
         text_optional = _("OBDLINK Connection OK, using optimal settings")
         if adapter_type == "OBDLINK" and maxspeed > 0 and not options.elm_failed and rate != 2000000:
-            print(device_text_switch.replace("OBDLink", "OBDLink"))
+            print(device_text_switch.replace("OBDLINK", "OBDLINK"))
             try:
-                self.raise_odb_speed(maxspeed, "OBDLink")
+                self.raise_odb_speed(maxspeed, "OBDLINK")
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "OBDLink"))
+                print(text_switch_error.replace("OBDLINK", "OBDLINK"))
         elif adapter_type == "OBDLINK":
-            print(text_optional.replace("OBDLink", "OBDLink"))
+            print(text_optional.replace("OBDLINK", "OBDLINK"))
             if not options.elm_failed:
+                # Enable STPX mode for OBDLINK adapters
+                try:
+                    self.enable_stpx_mode()
+                    print(_("OBDLINK STPX mode enabled for enhanced long command support"))
+                except Exception as e:
+                    print(f"OBDLINK STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
-            print(device_text_switch.replace("OBDLink", "ELM"))
+            print(device_text_switch.replace("OBDLINK", "ELM"))
             try:
                 self.raise_elm_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "ELM"))
+                print(text_switch_error.replace("OBDLINK", "ELM"))
         elif adapter_type == "STD_USB":
-            print(text_optional.replace("OBDLink", "ELM"))
+            print(text_optional.replace("OBDLINK", "ELM"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VLINKER" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLink", "Vlinker"))
+            print(device_text_switch.replace("OBDLINK", "Vlinker"))
             try:
                 self.raise_elm_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "Vlinker"))
+                print(text_switch_error.replace("OBDLINK", "Vlinker"))
         elif adapter_type == "VLINKER":
-            print(text_optional.replace("OBDLink", "Vlinker"))
+            print(text_optional.replace("OBDLINK", "Vlinker"))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
         elif adapter_type == "VGATE" and 0 < maxspeed != rate:
-            print(device_text_switch.replace("OBDLink", "Vgate"))
+            print(device_text_switch.replace("OBDLINK", "Vgate"))
             try:
                 self.raise_vgate_speed(maxspeed)
             except Exception:
                 options.elm_failed = True
                 self.connectionStatus = False
-                print(text_switch_error.replace("OBDLink", "VGate"))
+                print(text_switch_error.replace("OBDLINK", "VGate"))
         elif adapter_type == "VGATE":
-            print(text_optional.replace("OBDLink", "VGate"))
+            print(text_optional.replace("OBDLINK", "VGate"))
             if not options.elm_failed:
                 # Enable STPX mode for VGate adapters
                 try:
@@ -534,7 +547,7 @@ class ELM:
                     print(f"VGate STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
-            print(text_optional.replace("OBDLink", "ELS27"))
+            print(text_optional.replace("OBDLINK", "ELS27"))
             if not options.elm_failed:
                 # ELS27 V5 specific initialization - set CAN pins 12-13
                 try:
@@ -547,7 +560,7 @@ class ELM:
                     print(f"ELS27 V5 configuration warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
-            print(text_optional.replace("OBDLink", adapter_type))
+            print(text_optional.replace("OBDLINK", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
 
@@ -559,25 +572,17 @@ class ELM:
         # Compatibility wrapper: delegate to unified speed switch
         return self.raise_elm_speed(baudrate, device_name="VGATE")
 
-    def send_stn_command(self, command, enhanced=True):
-        """Send command using STN protocol with enhanced features"""
-        try:
-            if enhanced and hasattr(self, 'stpx_enabled') and self.stpx_enabled:
-                # Use STPX enhanced protocol for better performance
-                # Add STN prefix for enhanced adapters
-                stn_command = f"ST {command}"
-                return self.send_raw(stn_command)
-            else:
-                # Standard command
-                return self.send_raw(command)
-        except Exception as e:
-            print(f"STN command error: {e}")
-            # Fallback to standard command
-            return self.send_raw(command)
-
     def enable_stpx_mode(self):
-        """Enable STPX mode for enhanced long command support on STN-based adapters"""
+        """Enable STPX mode for enhanced long command support"""
         try:
+            if not os.path.exists(get_logs_dir()):
+                os.mkdir(get_logs_dir())
+
+            if len(options.log) > 0:
+                self.lf = open(os.path.join(get_logs_dir(), "elm_" + options.log + ".txt"), "at", encoding="utf-8")
+                self.vf = open(os.path.join(get_logs_dir(), "ecu_" + options.log + ".txt"), "at", encoding="utf-8")
+                self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
+            
             # STPX mode enables enhanced long command handling
             # This is particularly useful for VGate and other STN-based adapters
             
@@ -601,7 +606,6 @@ class ELM:
             self.stpx_enabled = True
             
             print(_("STPX mode enabled for enhanced long command support"))
-            
         except Exception as e:
             print(f"STPX mode enable warning: {e}")
             # Don't raise exception - STPX is enhancement, not requirement
@@ -614,7 +618,7 @@ class ELM:
 
         dev = (device_name or "ELM").upper()
         try:
-            # STN / VGate / OBDLink style switching
+            # STN / VGate / OBDLINK style switching
             if dev in ("VGATE", "OBDLINK", "VLINKER", "STN"):
                 cmd = "ST SBR " + str(baudrate)
                 rsp = self.send_raw(cmd)
@@ -1128,8 +1132,23 @@ class ELM:
         """Enhanced send_raw with STN/STPX support"""
         # Check if STN/STPX should be used
         if hasattr(self, 'stpx_enabled') and self.stpx_enabled and not command.upper().startswith(('AT', 'ST')):
-            # Use STN protocol for enhanced adapters when enabled
-            return self.send_stn_command(command, enhanced=True)
+            # Use STPX D: protocol for enhanced adapters
+            if len(command) > 16:
+                # Use STPX L: for long commands first
+                length_cmd = f"STPX L:{str(int(len(command)/2))},R:1"
+                frsp = self.send_raw(length_cmd)
+                if "OK" in frsp:
+                    # Send actual data with STPX D:
+                    stpx_command = f"STPX D:{command},R:1"
+                    return self.send_raw(stpx_command)
+                else:
+                    # Fallback to standard STN if STPX L: fails
+                    stn_command = f"ST {command}"
+                    return self.send_raw(stn_command)
+            else:
+                # Use STPX D: for shorter commands
+                stpx_command = f"STPX D:{command},R:1"
+                return self.send_raw(stpx_command)
         
         tb = time.time()  # start time
 
@@ -1317,11 +1336,13 @@ class ELM:
             # addr is a CAN TX ID (dnat value); reverse-lookup to get key
             TXa = get_can_addr(addr)
             RXa = get_can_addr_snat(addr)
-            self.currentaddress = TXa
+            # self.currentaddress = TXa // TODO: https://github.com/cedricp/ddt4all/pull/1734
+            self.currentaddress = addr
         elif get_can_addr_ext(addr) is not None and get_can_addr_snat_ext(addr) is not None:
             TXa = get_can_addr_ext(addr)
             RXa = get_can_addr_snat_ext(addr)
-            self.currentaddress = TXa
+            # self.currentaddress = TXa // TODO: https://github.com/cedricp/ddt4all/pull/1734
+            self.currentaddress = addr
         else:
             return
 
@@ -1589,4 +1610,3 @@ def elm_checker(port, speed, adapter, logview, app):
     logview.append(
         _('Result: ') + str(good) + _(' succeeded from ') + str(total) + '\n' + _('ELM Max version:') + vers + '\n')
     return True
-

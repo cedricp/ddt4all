@@ -274,10 +274,12 @@ class EcuScanner:
     def scan(self, progress=None, label=None, vehiclefilter=None, canline=0):
         i = 0
         if not options.simulation_mode:
-            # Use integrated DeviceManager for enhanced features
+            # Use integrated DeviceManager for enhanced features (only if not already initialized)
             if hasattr(options, 'elm') and options.elm:
-                # Initialize device with enhanced features
-                elm.DeviceManager.initialize_device(options.elm)
+                if not hasattr(options.elm, '_device_initialized') or not options.elm._device_initialized:
+                    # Initialize device with enhanced features
+                    elm.DeviceManager.initialize_device(options.elm)
+                    options.elm._device_initialized = True
 
         project_can_addresses = []
         if vehiclefilter:
@@ -337,10 +339,12 @@ class EcuScanner:
                                                         "S2000_Atmo___SoftA3.json",
                                                         "KWP2000 FastInit MonoPoint", [], "7A")
         else:
-            # Use integrated DeviceManager for enhanced features
+            # Use integrated DeviceManager for enhanced features (only if not already initialized)
             if hasattr(options, 'elm') and options.elm:
-                # Initialize device with enhanced features
-                elm.DeviceManager.initialize_device(options.elm)
+                if not hasattr(options.elm, '_device_initialized') or not options.elm._device_initialized:
+                    # Initialize device with enhanced features
+                    elm.DeviceManager.initialize_device(options.elm)
+                    options.elm._device_initialized = True
 
             options.elm.init_iso()
 

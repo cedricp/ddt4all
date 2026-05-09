@@ -35,6 +35,18 @@ def zipConvertXML(dbfilename="ecu.zip"):
                 if ".gif" in file.lower():
                     imgs.append(os.path.join(dirpath, file))
 
+    folder_29 = []
+    if os.path.exists("./$29"):
+        for dirpath, dirs, files in os.walk("$29/"):
+            for file in files:
+                folder_29.append(os.path.join(dirpath, file))
+
+    folder_utt = []
+    if os.path.exists("./utt_certificates"):
+        for dirpath, dirs, files in os.walk("utt_certificates/"):
+            for file in files:
+                folder_utt.append(os.path.join(dirpath, file))
+
     if len(ecus_glob) == 0:
         print(_("Cannot zip database, no 'ecus' directory"))
         return
@@ -52,6 +64,10 @@ def zipConvertXML(dbfilename="ecu.zip"):
     with zipfile.ZipFile(zipoutput, mode='w', compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
         for img in imgs:
             zf.write(img)
+        for file_29 in folder_29:
+            zf.write(file_29)
+        for file_utt in folder_utt:
+            zf.write(file_utt)
         for target in ecus:
             filename = target.replace(".xml", ".json")
             if filename.startswith("ecus/"):
@@ -374,6 +390,8 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
     dictionary = {}
+    projects_list = []
+    projects_str = "<Projects>"
     dictionary["projects"] = {}
     dictionary["projects"]["All"] = {}
     dictionary["projects"]["All"]["DoIP"] = {}
@@ -426,8 +444,6 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
                 addressing = os.path.join("vehicles", "GenericAddressing.xml")
 
             project_name = "[%s] - %s %s" % (str(code).upper(), name, p_name)
-            # if project_name in  dictionary["projects"].keys():
-            #     project_name = "%s %s (%s)" % (name, p_name, str(code).upper())
 
             dictionary["projects"][project_name] = {}
             dictionary["projects"][project_name]["code"] = str(code).upper()
@@ -437,6 +453,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             dictionary["projects"][project_name]["dnat"] = dumpDNAT(addressing)
             dictionary["projects"][project_name]["dnat_ext"] = dumpDNAT_ext(addressing)
             print(f'{code:18} => {addressing:40} => OK')
+            projects_list.append(code)
 
     sd = sorted(dictionary["projects"].items())
     new_dict = {"projects": {}}
@@ -447,3 +464,7 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     f = open(os.path.join(get_dir("src"), "ddt4all", "resources", "projects.json"), "w", encoding="UTF-8")
     f.write(js)
     f.close()
+    for p in sorted(projects_list, key=str.casefold):
+        projects_str += f'<{p}/>'
+    projects_str += "</Projects>"
+    print(projects_str)

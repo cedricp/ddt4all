@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-11 21:32+0200\n"
-"PO-Revision-Date: 2026-04-10 00:05+0200\n"
+"POT-Creation-Date: 2026-05-07 12:51+0200\n"
+"PO-Revision-Date: 2026-05-07 13:11+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,123 +18,124 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#, fuzzy
 msgid "DoIP device connected successfully"
-msgstr "ELM327 оборудование определено успешно"
+msgstr "Устройство DoIP успешно подключено"
 
 msgid "DoIP CAN initialized with Electric ECU support"
-msgstr ""
+msgstr "DoIP CAN инициализирован с поддержкой электрического ЭБУ"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP response: {}"
-msgstr "Ответ ELM : "
+msgstr "Ответ DoIP: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP request failed: {}"
-msgstr "Запрос не назван"
+msgstr "Запрос DoIP не выполнен: {}"
 
 #, python-brace-format
 msgid "Testing Electric ECU: {}"
-msgstr ""
+msgstr "Тестирование электрического ЭБУ: {}"
 
 msgid "Failed to connect to DoIP device"
-msgstr ""
+msgstr "Не удалось подключиться к устройству DoIP"
 
 msgid "Insufficient vehicle identification data"
-msgstr ""
+msgstr "Недостаточные данные идентификации транспортного средства"
 
 #, python-brace-format
 msgid "Expected vehicle identification response, got: {}"
-msgstr ""
+msgstr "Ожидался ответ идентификации транспортного средства, получен: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Vehicle identification failed: {}"
-msgstr "Screen initialization"
+msgstr "Идентификация транспортного средства не выполнена: {}"
 
 msgid "Insufficient session control data"
-msgstr ""
+msgstr "Недостаточные данные управления сеансом"
 
 #, python-brace-format
 msgid "Expected diagnostic session control response, got: {}"
-msgstr ""
+msgstr "Ожидался ответ управления диагностическим сеансом, получен: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Diagnostic session control failed: {}"
-msgstr "Диагностическая сессия"
+msgstr "Управление диагностическим сеансом не выполнено: {}"
 
 msgid "Insufficient diagnostic message data"
-msgstr ""
+msgstr "Недостаточные данные диагностического сообщения"
 
 #, python-brace-format
 msgid "Expected diagnostic message response, got: {}"
-msgstr ""
+msgstr "Ожидался ответ диагностического сообщения, получен: {}"
 
 msgid "Insufficient alive check data"
-msgstr ""
+msgstr "Недостаточные данные проверки alive"
 
 #, python-brace-format
 msgid "Expected alive check response, got: {}"
-msgstr ""
+msgstr "Ожидался ответ проверки alive, получен: {}"
 
 #, python-brace-format
 msgid "Alive check failed: {}"
-msgstr ""
+msgstr "Проверка alive не выполнена: {}"
 
 msgid "Not connected to DoIP device"
-msgstr ""
+msgstr "Не подключено к устройству DoIP"
 
 #, python-brace-format
 msgid "Invalid hex request format: {}"
-msgstr ""
+msgstr "Неверный формат hex запроса: {}"
 
 #, python-brace-format
 msgid "DoIP session start failed: {}"
-msgstr ""
+msgstr "Запуск сеанса DoIP не выполнен: {}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "DoIP CAN initialization failed: {}"
-msgstr "Screen initialization"
+msgstr "Инициализация DoIP CAN не выполнена: {}"
 
 #, python-brace-format
 msgid "DoIP: Electric ECU detected - {}"
-msgstr ""
+msgstr "DoIP: Обнаружен электрический ЭБУ - {}"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr ""
+msgstr "DoIP: Использование расширенной адресации для систем электромобилей"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
 msgstr ""
+"DoIP: Использование 29-битной расширенной адресации - TX:0x{:04X}, "
+"RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
 msgstr ""
+"DoIP: Использование 11-битной стандартной адресации - TX:0x{:03X}, "
+"RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
-msgstr "Предупреждение, не удается получить подписанное значение для"
+msgstr "Предупреждение, не может получить значение со знаком для"
 
 msgid "Division by zero, please check data item: "
-msgstr "Деление на ноль, пожалуйста, проверьте элемент данных: "
+msgstr "Деление на ноль, пожалуйста проверьте элемент данных: "
 
 msgid "getHexValue >> abnormal remaining bytes "
-msgstr "getHexValue >> ненормальные оставшиеся байты"
+msgstr "getHexValue >> аномальные оставшиеся байты "
 
 msgid "Adding group "
 msgstr "Добавление группы "
 
 msgid "Unable to find eculist"
-msgstr "Не удалось найти список ЭБУ"
+msgstr "Не удалось найти eculist"
 
-#, fuzzy
 msgid "Cannot find file "
-msgstr "Не могу сформировать запрос "
+msgstr "Не удалось найти файл "
 
 msgid "Cannot load ECU file"
 msgstr "Не удается загрузить файл ЭБУ"
 
-#, fuzzy
 msgid "XML not found"
-msgstr "XML файл не найден : "
+msgstr "XML не найден"
 
 msgid "Cannot retrieve functionnal address of ECU"
 msgstr "Не удается получить функциональный адрес ЭБУ"
@@ -142,13 +143,11 @@ msgstr "Не удается получить функциональный адр
 msgid "Generated stream "
 msgstr "Сгенерированный поток "
 
-#, fuzzy
 msgid "Send request stream "
-msgstr "Байты запроса на отправку (HEX)"
+msgstr "Отправить поток запроса "
 
-#, fuzzy
 msgid "Received stream "
-msgstr "Получить байты"
+msgstr "Полученный поток "
 
 msgid "Request ECU Error"
 msgstr "Запросить ошибку ЭБУ"
@@ -171,109 +170,205 @@ msgstr "(не идеальное совпадение)"
 msgid "(no relevant ECU file found)"
 msgstr "(соответствующий файл ЭБУ не найден)"
 
-#, fuzzy
 msgid "Warning, address"
-msgstr "ECU Function address"
+msgstr "Предупреждение, адрес"
 
 msgid "is not mapped"
-msgstr ""
+msgstr "не отображен"
 
-#, fuzzy
 msgid "Scanning address: "
-msgstr "ECU Function address"
+msgstr "Сканирование адреса: "
 
-#, fuzzy
 msgid "Scanning DoIP address: "
-msgstr "ECU Function address"
+msgstr "Сканирование адреса DoIP: "
 
-#, fuzzy
+#, python-format
+msgid "Device detection error: %s"
+msgstr "Ошибка обнаружения устройства: %s"
+
+#, python-format
+msgid "STPX mode enabled for %s"
+msgstr "Режим STPX включен для %s"
+
+#, python-format
+msgid "Pin swapping enabled for %s"
+msgstr "Переключение контактов включено для %s"
+
+#, python-format
+msgid "Enhanced features enable error: %s"
+msgstr "Ошибка включения расширенных функций: %s"
+
+msgid "STPX mode not supported by this adapter as native, trying fallback..."
+msgstr ""
+"Режим STPX не поддерживается этим адаптером как нативный, попытка отката..."
+
+msgid "STPX mode enabled successfully"
+msgstr "Режим STPX успешно включен"
+
+#, python-format
+msgid "STPX mode enable error: %s"
+msgstr "Ошибка включения режима STPX: %s"
+
+#, python-format
+msgid "Pin swap error: %s"
+msgstr "Ошибка переключения контактов: %s"
+
+msgid "VGate pin swapping successful"
+msgstr "Переключение контактов VGate выполнено успешно"
+
+msgid "VGate pin swapping failed, using fallback"
+msgstr "Переключение контактов VGate не удалось, используется откат"
+
+#, python-format
+msgid "VGate pin swap error: %s"
+msgstr "Ошибка переключения контактов VGate: %s"
+
+msgid "OBDLink pin swapping completed"
+msgstr "Переключение контактов OBDLink завершено"
+
+#, python-format
+msgid "OBDLink pin swap error: %s"
+msgstr "Ошибка переключения контактов OBDLink: %s"
+
+msgid "DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed"
+msgstr ""
+"DerleK USB-DIAG2 использует проприетарный протокол - AT команды не требуются"
+
+#, python-format
+msgid "DerleK USB-DIAG2 pin swap error: %s"
+msgstr "Ошибка переключения контактов DerleK USB-DIAG2: %s"
+
+msgid "DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed"
+msgstr ""
+"DerleK USB-DIAG3 использует проприетарный протокол - AT команды не требуются"
+
+#, python-format
+msgid "DerleK USB-DIAG3 pin swap error: %s"
+msgstr "Ошибка переключения контактов DerleK USB-DIAG3: %s"
+
+msgid "USB CAN pin swapping completed"
+msgstr "Переключение контактов USB CAN завершено"
+
+#, python-format
+msgid "USB CAN pin swap error: %s"
+msgstr "Ошибка переключения контактов USB CAN: %s"
+
+msgid "ELS27 pin swapping completed"
+msgstr "Переключение контактов ELS27 завершено"
+
+#, python-format
+msgid "ELS27 pin swap error: %s"
+msgstr "Ошибка переключения контактов ELS27: %s"
+
+#, python-format
+msgid "Device %s initialized successfully with enhanced features"
+msgstr "Устройство %s успешно инициализировано с расширенными функциями"
+
+#, python-format
+msgid "Device %s initialized with basic features only"
+msgstr "Устройство %s инициализировано только с базовыми функциями"
+
+#, python-format
+msgid "Device initialization error: %s"
+msgstr "Ошибка инициализации устройства: %s"
+
 msgid "Found USB device:"
-msgstr "Найден USB-адаптер:"
+msgstr "USB устройство обнаружено:"
+
+msgid "USB device detection error:"
+msgstr "Ошибка обнаружения USB устройства:"
+
+msgid ""
+"Note: This error does not affect serial communication or bypass cable "
+"functionality."
+msgstr ""
+"Примечание: Эта ошибка не влияет на последовательную связь или "
+"функциональность обходного кабеля."
 
 msgid "Trying to open port "
 msgstr "Пытаемся открыть порт "
 
-#, fuzzy
 msgid "Port initialization failed"
-msgstr "Screen initialization"
+msgstr "Инициализация порта не удалась"
 
 msgid "Port connection failed - port object is invalid"
-msgstr ""
+msgstr "Подключение к порту не удалось - объект порра недействителен"
 
 msgid "No ELM interface on port"
 msgstr "ELM не обнаружен"
 
-msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr ""
+msgid "OBDLINK Connection OK, attempting full speed UART switch"
+msgstr "Подключение OBDLINK OK, попытка переключения UART на полную скорость"
 
-msgid "Failed to switch OBDLink to "
-msgstr ""
+msgid "Failed to switch OBDLINK to "
+msgstr "Не удалось переключить OBDLINK на "
 
 msgid "OBDLINK Connection OK, using optimal settings"
-msgstr ""
+msgstr "Подключение OBDLINK OK, использование оптимальных настроек"
 
-#, fuzzy
+msgid "OBDLINK STPX mode enabled for enhanced long command support"
+msgstr "Режим STPX OBDLINK включен для расширенной поддержки длинных команд"
+
 msgid "Connection established successfully"
-msgstr "Connection test successful!"
+msgstr "Соединение установлено успешно"
 
 msgid "VGate STPX mode enabled for enhanced long command support"
-msgstr ""
+msgstr "Режим STPX VGate включен для расширенной поддержки длинных команд"
 
 msgid "Configuring ELS27 V5 CAN pins (12-13)"
-msgstr ""
+msgstr "Настройка контактов CAN ELS27 V5 (12-13)"
 
 msgid "ELS27 V5 CAN configuration complete"
-msgstr ""
+msgstr "Конфигурация CAN ELS27 V5 завершена"
 
 msgid "STPX mode enabled for enhanced long command support"
-msgstr ""
+msgstr "Режим STPX включен для расширенной поддержки длинных команд"
 
 msgid "Port is None - cannot switch speed"
-msgstr "Порт отсутствует - не удается переключить скорость"
+msgstr "Порт равен None - нельзя переключить скорость"
 
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr "%s Смена скорости ОК, меняем скорость UART..."
+msgstr "%s переключил baudrate OK, изменение скорости UART сейчас..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s STN connection established"
-msgstr "Connection test failed"
+msgstr "%s соединение STN установлено"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s Version: "
-msgstr "Version"
+msgstr "%s Версия: "
 
 msgid ""
 "VGate adapter detected but STN verification failed, attempting fallback..."
-msgstr ""
+msgstr "Адаптер VGate обнаружен, но проверка STN не удалась, попытка отката..."
 
 #, python-format
 msgid "Unsupported baudrate for ELM: %s"
-msgstr ""
+msgstr "Неподдерживаемая скорость передачи для ELM: %s"
 
 msgid "ELM baudrate switched OK, changing UART speed now..."
 msgstr ""
+"Скорость передачи ELM переключена OK, изменение скорости UART сейчас..."
 
 msgid "ELM full speed connection OK "
-msgstr ""
+msgstr "Полная скорость соединения ELM OK "
 
-#, fuzzy
 msgid "Version "
-msgstr "Version"
+msgstr "Версия "
 
 msgid "ELM did not report version after speed switch"
-msgstr ""
+msgstr "ELM не сообщил версию после переключения скорости"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Your ELM does not support baudrate %s"
-msgstr "ОШИБКА - wifi не поддерживает изменение скорости порта"
+msgstr "Ваш ELM не поддерживает скорость передачи %s"
 
 msgid "ELM reset..."
-msgstr ""
+msgstr "Сброс ELM..."
 
-#, fuzzy
 msgid "Unknown address: "
-msgstr "ECU Function address"
+msgstr "Неизвестный адрес: "
 
 msgid "Using saved device settings"
 msgstr "Использование сохраненных настроек устройства"
@@ -288,34 +383,31 @@ msgid "Using baudrate: "
 msgstr "Использование скорости передачи в бодах: "
 
 msgid "Testing for ELS27 device..."
-msgstr "Тестирование ELS27 устройства..."
+msgstr "Тестирование устройства ELS27..."
 
-#, fuzzy
 msgid "ELS27 device detected: "
-msgstr "ELM327 device detected successfully"
+msgstr "Устройство ELS27 обнаружено: "
 
-#, fuzzy
 msgid "Using detected baud rate: "
-msgstr "Using baudrate: "
+msgstr "Использование обнаруженной скорости передачи: "
 
 msgid "Warning: No ELS27 response detected"
-msgstr "Предупреждение: ELS27 не отвечает"
+msgstr "Предупреждение: Ответ ELS27 не обнаружен"
 
-#, fuzzy
 msgid "Will attempt connection anyway..."
-msgstr "Попытка подключения..."
+msgstr "Все равно попытается установить соединение..."
 
 msgid "Connection failed: "
 msgstr "Соединение не удалось: "
 
 msgid "Testing basic connectivity..."
-msgstr "Базовый тест подключения..."
+msgstr "Тестирование базовой связности..."
 
 msgid "Warning: Device may not be ELM327 compatible"
 msgstr "Предупреждение: Устройство может быть не совместимо с ELM327"
 
 msgid "ELM327 device detected successfully"
-msgstr "ELM327 оборудование определено успешно"
+msgstr "Устройство ELM327 обнаружено успешно"
 
 msgid "Device version: "
 msgstr "Версия устройства: "
@@ -327,7 +419,7 @@ msgid "FAIL"
 msgstr "ОШИБКА"
 
 msgid "OK/TIMEOUT"
-msgstr "OK/TIMEOUT"
+msgstr "OK/ТАЙМАУТ"
 
 msgid "OK"
 msgstr "OK"
@@ -339,7 +431,7 @@ msgid "Result: "
 msgstr "Результат: "
 
 msgid " succeeded from "
-msgstr " успешных из "
+msgstr " успешно из "
 
 msgid "ELM Max version:"
 msgstr "Максимальная версия ELM:"
@@ -350,53 +442,50 @@ msgstr "Использование сохраненных настроек дл�
 msgid "Using optimal settings for"
 msgstr "Использование оптимальных настроек для"
 
-#, fuzzy
 msgid "Serial port opened"
-msgstr "Проверка скорости порта:"
+msgstr "Последовательный порт открыт"
 
 msgid "Error: "
-msgstr "Ошибка"
+msgstr "Ошибка: "
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM не подключен или неверный COM порт"
 
-#, fuzzy
 msgid "Port closed"
-msgstr "Скорость порта"
+msgstr "Порт закрыт"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
-msgstr ""
+msgstr "Ошибка последовательного порта в read_byte: %s"
 
 msgid "Connection to ELM was lost"
 msgstr "Связь с ELM потеряна"
 
 #, python-format
 msgid "*       Error: %s"
-msgstr ""
+msgstr "*       Ошибка: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Cannot decode bytes %s"
-msgstr "Не могу сформировать запрос "
+msgstr "Невозможно декодировать байты %s"
 
 #, python-format
 msgid "Error in read(): %s"
-msgstr ""
+msgstr "Ошибка при чтении: %s"
 
-#, fuzzy
 msgid "Attempting WiFi reconnection..."
-msgstr "Attempting connection..."
+msgstr "Попытка переподключения WiFi..."
 
 msgid "Port handler is None, cannot write"
-msgstr ""
+msgstr "Обработчик порра равен None, нельзя записать"
 
 #, python-format
 msgid "Serial write error: %s"
-msgstr ""
+msgstr "Ошибка записи последовательного порра: %s"
 
 #, python-format
 msgid "*       Write error: %s"
-msgstr ""
+msgstr "*       Ошибка записи: %s"
 
 msgid "TIMEOUT"
 msgstr "TIMEOUT"
@@ -411,20 +500,19 @@ msgid "ELM not responding"
 msgstr "ELM не отвечает"
 
 msgid "Cannot zip database, no 'ecus' directory"
-msgstr ""
+msgstr "Невозможно заархивировать базу данных, нет каталога 'ecus'"
 
-#, fuzzy
 msgid "Starting conversion"
-msgstr "Diag version"
+msgstr "Начало преобразования"
 
 msgid "Starting processing "
-msgstr ""
+msgstr "Начало обработки "
 
 msgid " to "
-msgstr ""
+msgstr " к "
 
 msgid "Skipping current file (cannot parse it)"
-msgstr ""
+msgstr "Пропуск текущего файла (невозможно разобрать)"
 
 msgid "Writing database"
 msgstr "Запись базы данных"
@@ -433,26 +521,40 @@ msgid "Writing archive"
 msgstr "Запись архива"
 
 msgid "Opening ECU Database..."
-msgstr ""
+msgstr "Открытие базы данных ЭБУ..."
 
 msgid "parts as: "
-msgstr ""
+msgstr "части как: "
 
 msgid " please review dumpVehicles def."
-msgstr ""
+msgstr " пожалуйста, проверьте dumpVehicles def."
 
 msgid "ELS27 V5 CAN pin configuration complete"
-msgstr ""
+msgstr "Конфигурация контактов CAN ELS27 V5 завершена"
 
 msgid "Found USB adapter:"
 msgstr "Найден USB-адаптер:"
 
+msgid "USB not available"
+msgstr "USB недоступен"
+
+msgid "USB Device"
+msgstr "USB устройство"
+
+msgid "Warning: Could not read string descriptor:"
+msgstr "Предупреждение: Не удалось прочитать строковый дескриптор:"
+
+msgid "USB OBD Device"
+msgstr "USB OBD устройство"
+
+msgid "Warning: Vendor request failed:"
+msgstr "Предупреждение: Запрос поставщика не выполнен:"
+
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
 "Предупреждение: PyQtWebEngine недоступен. Некоторые функции могут быть "
-"ограничены"
+"ограничены."
 
-#, fuzzy
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json не найден или не в порядке."
 
@@ -462,277 +564,319 @@ msgstr "Используем альтернативную базу DDT"
 msgid "No COM port selected"
 msgstr "Не выбран COM порт"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Initializing ELM with speed %i..."
 msgstr "Инициализация ELM на скорости %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "ELM327 или OBDLINK-SX не обнаружены на COM порту "
 
+msgid "Initializing device features..."
+msgstr "Инициализация функций устройства..."
+
 msgid "AB90 AIRBAG Reset"
-msgstr ""
+msgstr "Сброс AIRBAG AB90"
 
 msgid "Airbag Tools"
-msgstr ""
+msgstr "Инструменты Airbag"
 
 msgid ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL "
 "UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</"
 "font>"
 msgstr ""
+"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН "
+"РАЗБЛОКИРУЕТ ДАННЫЕ О СРАЖЕНИИ ПОДУШКИ БЕЗОПАСНОСТИ<br>УХОДИТЕ, ЕСЛИ НЕ "
+"ПРЕДСТАВЛЯЕТЕ, ЧТО ЭТО ЗНАЧИТ</font>VIRGINIZER<br><font color='red'>ЭТОТ "
+"ПЛАГИН РАЗБЛОКИРУЕТ ДАННЫЕ ОБ АВАРИИ ПОДУШКИ БЕЗОПАСНОСТИ<br>УХОДИТЕ, ЕСЛИ У "
+"ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>"
 
 msgid "Check ACU Virgin"
-msgstr ""
+msgstr "Проверить ACU Virgin"
 
 msgid "Waiting"
 msgstr "Ожидание"
 
 msgid "Virginize ACU"
-msgstr ""
+msgstr "Сделать ACU Virgin"
 
 msgid "Cannot connect to ECU"
 msgstr "Невозможно подключиться к ЭБУ"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='orange'>НЕОЖИДАЕМЫЙ ОТВЕТ</font>"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='red'>СБООБНАРУЖЕН</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr ""
+msgstr "<font color='green'>СБОЙ НЕ ОБНАРУЖЕН</font>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "SDS stream: %s"
-msgstr "Receive bytes"
+msgstr "Поток SDS: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr ""
+msgstr "<font color='green'>CLEAR ВЫПОЛНЕН</font>"
 
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr ""
+msgstr "<font color='red'>CLEAR НЕ УДАЛОСЬ</font>"
 
 msgid "Megane/Scenic II card programming"
-msgstr ""
+msgstr "Программирование карты Megane/Scenic II"
 
 msgid "Keys"
-msgstr ""
+msgstr "Ключи"
 
 msgid "ENTER AFTER SALE MODE"
-msgstr ""
+msgstr "ВВОД В РЕЖИМ ПОСЛЕ ПРОДАЖИ"
 
 msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
+"<font color='red'>ПРОГРАММИРОВАНИЕ КАРТЫ MEGANE II<br>ЭКСПЕРИМЕНТАЛЬНО : ЕЩЕ "
+"НЕ ТЕСТИРОВАНО</font>"
 
 msgid "LEARN"
-msgstr ""
+msgstr "ОБУЧЕНИЕ"
 
 msgid "VALIDATE"
-msgstr ""
+msgstr "ПРОВЕРИТЬ"
 
 msgid "CANCEL"
 msgstr "ОТМЕНА"
 
 msgid "Algo 2"
-msgstr ""
+msgstr "Algo 2"
 
 msgid "ISK"
-msgstr ""
+msgstr "ISK"
 
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 msgid "Num key learnt"
-msgstr ""
+msgstr "Количество изученных ключей"
 
 msgid "CARD IDE"
-msgstr ""
+msgstr "IDE КАРТЫ"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
+msgstr "Невозможно получить ISK, проверьте соединения и совместимость UCH"
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
-msgstr ""
+msgstr "<font color='red'>PIN-КОД НЕ РАСПОЗНАН</font>"
 
 msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>PIN-КОД OK / ОБУЧЕНИЕ КЛЮЧА</font>"
 
 msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
-msgstr ""
+msgstr "<font color='green'>PIN-КОД OK / ОБУЧЕНИЕ UCH</font>"
 
 msgid "Modus/Clio III EPS Reset"
-msgstr ""
+msgstr "Сброс EPS Modus/Clio III"
 
 msgid "EPS Tools"
-msgstr ""
+msgstr "Инструменты EPS"
 
 msgid ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET "
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Modus/Clio III EPS VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СБРОСИТ "
+"ДАННЫЕ IMMO EPS<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</"
+"font>EPS IMMO DATA<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПРЕДСТАВЛЕНИЯ, ЧТО ЭТО ЗНАЧИТ</"
+"font>"
 
 msgid "BLANK STATUS & VIN READ"
-msgstr ""
+msgstr "ПУСТОЙ СТАТУС И ЧТЕНИЕ VIN"
 
 msgid "Virginize EPS"
-msgstr ""
+msgstr "Сделать EPS Virgin"
 
 msgid "VIN - READ"
-msgstr ""
+msgstr "VIN - ЧТЕНИЕ"
 
 msgid "VIN - WRITE"
-msgstr ""
+msgstr "VIN - ЗАПИСЬ"
 
 msgid "Write VIN"
-msgstr ""
+msgstr "Записать VIN"
 
 msgid "<font color='red'>VIN - INVALID</font>"
-msgstr ""
+msgstr "<font color='red'>VIN - НЕДЕЙСТВИТЕЛЕН</font>"
 
-msgid "<font color='res'>VIN - BAD LENGTH</font>"
-msgstr ""
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
+msgstr "<font color='red'>VIN - НЕПРАВИЛЬНАЯ ДЛИНА</font>"
 
 msgid "<font color='orange'>VIN WRITE FAILED</font>"
-msgstr ""
+msgstr "<font color='orange'>ЗАПИСЬ VIN НЕ УДАЛАСЬ</font>"
 
 msgid "<font color='green'>VIN WRITE OK</font>"
-msgstr ""
+msgstr "<font color='green'>ЗАПИСЬ VIN OK</font>"
 
 msgid "<font color='green'>EPS virgin</font>"
-msgstr ""
+msgstr "<font color='green'>EPS virgin</font>"
 
 msgid "<font color='red'>EPS coded</font>"
-msgstr ""
+msgstr "<font color='red'>EPS закодирован</font>"
 
 #, python-format
 msgid "SdSC0 stream: %s"
-msgstr ""
+msgstr "Поток SdSC0: %s"
 
 msgid "Clio IV EPS Reset"
-msgstr ""
+msgstr "Сброс EPS Clio IV"
 
 msgid ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Clio IV EPS VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СБРОСИТ ДАННЫЕ IMMO "
+"EPS<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</"
+"font>DATA<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПРЕДСТАВЛЕНИЯ, ЧТО ЭТО ЗНАЧИТ</font>"
 
 msgid "Check EPS Virgin"
-msgstr ""
+msgstr "Проверить EPS Virgin"
 
 msgid "<font color='green'>EPS not operational</font>"
-msgstr ""
+msgstr "<font color='green'>EPS не работает</font>"
 
 msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
-msgstr ""
+msgstr "<font color='red'>НЕОЖИДАЕМЫЙ ОТВЕТ</font>"
 
 #, python-format
 msgid "SdSFA stream: %s"
-msgstr ""
+msgstr "Поток SdSFA: %s"
 
 msgid "Laguna II UCH Reset"
-msgstr ""
+msgstr "Сброс UCH Laguna II"
 
 msgid "UCH Tools"
-msgstr "UCH Tools"
+msgstr "Инструменты UCH"
 
 msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СТИРАЕТ ВАШ "
+"UCH<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>ЕСЛИ У ВАС "
+"НЕТ ПРЕДСТАВЛЕНИЯ, ЧТО ЭТО ЗНАЧИТ</font>"
 
 msgid "Check UCH Virgin"
-msgstr ""
+msgstr "Проверить UCH Virgin"
 
 msgid "Virginize UCH"
-msgstr ""
+msgstr "Сделать UCH Virgin"
 
 msgid "<font color='green'>UCH virgin</font>"
-msgstr ""
+msgstr "<font color='green'>UCH virgin</font>"
 
 msgid "<font color='red'>UCH coded</font>"
-msgstr ""
+msgstr "<font color='red'>UCH закодирован</font>"
 
 msgid "Laguna III UCH Reset"
-msgstr ""
+msgstr "Сброс UCH Laguna III"
 
 msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СТИРАЕТ ВАШ "
+"UCH<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>"
 
 msgid "Megane/Scenic II UCH Reset"
-msgstr ""
+msgstr "Сброс UCH Megane/Scenic II"
 
 msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE II UCH VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СТИРАЕТ ВАШ "
+"UCH<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>"
 
 msgid "Megane3 AIRBAG Reset"
-msgstr ""
+msgstr "Сброс AIRBAG Megane3"
 
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН "
+"РАЗБЛОКИРУЕТ ДАННЫЕ ОБ АВАРИИ ПОДУШКИ БЕЗОПАСНОСТИ<br>УХОДИТЕ, ЕСЛИ У ВАС "
+"НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "SDS FA stream: %s"
-msgstr "Receive bytes"
+msgstr "Поток SDS FA: %s"
 
 msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
-msgstr ""
+msgstr "Сброс EPS ZOE/FLENCE/Megane III/Scenic III"
 
 msgid ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS "
 "PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT "
 "MEANS</font>"
 msgstr ""
+"ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>ЭТОТ "
+"ПЛАГИН СБРОСИТ ДАННЫЕ IMMO EPS<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО "
+"ОЗНАЧАЕТ</font>ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font "
+"color='red'>ЭТОТ ПЛАГИН СБРОСИТ EPS IMMO DATA<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ "
+"ПРЕДСТАВЛЕНИЯ, ЧТО ЭТО ЗНАЧИТ</font>"
 
 msgid "Megane/Scenic III UCH Reset"
-msgstr ""
+msgstr "Сброс UCH Megane/Scenic III"
 
 msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"MEGANE III UCH VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СТИРАЕТ ВАШ "
+"UCH<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>MEGANE III "
+"UCH VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН СТИРАЕТ ВАШ UCH<br>УХОДИТЕ, "
+"ЕСЛИ У ВАС НЕТ ПРЕДСТАВЛЕНИЯ, ЧТО ЭТО ЗНАЧИТ</font>"
 
 msgid "RSAT4 AIRBAG Reset"
-msgstr ""
+msgstr "Сброс AIRBAG RSAT4"
 
 msgid ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH "
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
+"VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН РАЗБЛОКИРУЕТ ДАННЫЕ ОБ АВАРИИ "
+"ПОДУШКИ БЕЗОПАСНОСТИ<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</"
+"font>TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY "
+"ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН РАЗБЛОКИРУЕТ "
+"AIRBAG CRASH DATA<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПРЕДСТАВЛЕНИЯ, ЧТО ЭТО ЗНАЧИТ</"
+"font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
-msgstr ""
+msgstr "Поток SdSEX: %s"
 
 msgid "CRC calculator"
-msgstr ""
+msgstr "CRC калькулятор"
 
 msgid "VIN"
-msgstr ""
+msgstr "VIN"
 
 msgid "CRC Calculator"
-msgstr ""
+msgstr "CRC калькулятор"
 
 msgid "CRC CALCULATOR"
-msgstr ""
+msgstr "CRC КАЛЬКУЛЯТОР"
 
 msgid "Zoe water pump Reset"
-msgstr ""
+msgstr "Сброс водяной помпы Zoe"
 
-#, fuzzy
 msgid "EVC Tools"
-msgstr "UCH Tools"
+msgstr "Инструменты EVC"
 
 msgid "Water pump counters"
-msgstr "Счетчик водяной помпы"
+msgstr "Счетчики водяной помпы"
 
 msgid "Name"
 msgstr "Имя"
@@ -743,7 +887,6 @@ msgstr "Значения"
 msgid "Action"
 msgstr "Действия"
 
-#, fuzzy
 msgid "Low Speed"
 msgstr "Низкая скорость"
 
@@ -754,7 +897,7 @@ msgid "High Speed"
 msgstr "Высокая скорость"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr ""
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Сброс"
@@ -763,13 +906,17 @@ msgid ""
 "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
 "PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
+"Счетчики водяного насоса Zoe<br><font color='red'>ЭТОТ ПЛАГИН СТИРАЕТ "
+"СЧЕТЧИКИ ВОДЯНОГО НАСОСА<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПОНИМАНИЯ, ЧТО ЭТО "
+"ОЗНАЧАЕТ</font>Счетчики водяной помпы Zoe<br><font color='red'>ЭТОТ ПЛАГИН "
+"СТИРАЕТ СЧЕТЧИКИ ВОДЯНОЙ ПОМПЫ<br>УХОДИТЕ, ЕСЛИ У ВАС НЕТ ПРЕДСТАВЛЕНИЯ, ЧТО "
+"ЭТО ЗНАЧИТ</font>"
 
 msgid "Check values"
-msgstr "Проверьте значения"
+msgstr "Проверить значения"
 
-#, fuzzy
 msgid "Waiting action"
-msgstr "Diag version"
+msgstr "Ожидание действия"
 
 msgid "Reset all counters"
 msgstr "Сбросить все счетчики"
@@ -779,55 +926,55 @@ msgid ""
 "Stay START until <b>Remove card</b> message</li><li>Put P position</"
 "li><li>Keep key card inserted</li></ul>"
 msgstr ""
+"<h1>СОВЕТЫ</h1><ul><li>Вставьте ключевую КАРТУ</li><li>Установите позицию D</"
+"li><li>Нажмите/Удерживайте START пока не появится сообщение <b>Удалите "
+"карту</b></li><li>Установите позицию P</li><li>Держите ключевую карту "
+"вставленной</li></ul><h1>СОВЕТЫ</h1><ul><li>Вставьте ключ CARD</"
+"li><li>Установите позицию D</li><li>Нажмите/Удерживайте START до сообщения "
+"<b>Убрать карту</b></li><li>Установите позицию P</li><li>Держите ключ CARD "
+"вставленным</li></ul>"
 
-#, fuzzy
 msgid "<font color='green'>Values read</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr "<font color='green'>Значения прочитаны</font>"
 
-#, fuzzy
 msgid "Reading Low speed"
-msgstr "Низкая скорость чтения"
+msgstr "Чтение низкой скорости"
 
 msgid "Reading Middle speed"
-msgstr "Средняя скорость чтения"
+msgstr "Чтение средней скорости"
 
 msgid "Reading High speed"
-msgstr "Высокая скорость чтения"
+msgstr "Чтение высокой скорости"
 
 msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
-msgstr ""
+msgstr "<font color='green'>CLEAR V_Timer_DrivWEP_ON ВЫПОЛНЕН</font>"
 
 msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
-msgstr ""
+msgstr "<font color='red'>CLEAR V_Timer_DrivWEP_ON НЕ УДАЛОСЬ</font>"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR Low EXECUTED</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr "<font color='green'>CLEAR Low ВЫПОЛНЕН</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR Low FAILED</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr "<font color='red'>CLEAR Low НЕ УДАЛОСЬ</font>"
 
 msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
-msgstr ""
+msgstr "<font color='green'>CLEAR Medium ВЫПОЛНЕН</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR Medium FAILED</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr "<font color='red'>CLEAR Medium НЕ УДАЛОСЬ</font>"
 
-#, fuzzy
 msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr "<font color='green'>CLEAR HIGH ВЫПОЛНЕН</font>"
 
-#, fuzzy
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
-msgstr "<font color=orange> - '%s'</font>"
+msgstr "<font color='red'>CLEAR HIGH НЕ УДАЛОСЬ</font>"
 
 msgid "Add"
 msgstr "Добавить"
 
 msgid "Del"
-msgstr "Del"
+msgstr "Удалить"
 
 msgid "Refresh"
 msgstr "Обновить"
@@ -840,23 +987,22 @@ msgstr "Проверить"
 
 #, python-format
 msgid "Request %s not found"
-msgstr "Request %s not found"
+msgstr "Запрос %s не найден"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
 "input values"
 msgstr ""
-"<font color=green>Request <font color=blue>'%s'</font> has no missing input "
-"values</font>"
+"<font color=green>Запрос</font><font color=blue>'%s'</font> не имеет "
+"отсутствующих входных значений"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"<font color=red>Request</font><font color=blue>'%s'</font> has missing "
-"inputs :"
+"<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
-"<font color=red>Request <font color=blue>'%s'</font> has missing inputs :</"
-"font>"
+"<font color=red>Запрос</font><font color=blue>'%s'</font> имеет "
+"отсутствующие входы"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
@@ -869,25 +1015,25 @@ msgid "Screen initialization"
 msgstr "Инициализация экрана"
 
 msgid "Requests to send before screen drawing"
-msgstr "Requests to send before screen drawing"
+msgstr "Запросы для отправки перед отрисовкой экрана"
 
 msgid "Button name;Unique name"
-msgstr "Button name;Unique name"
+msgstr "Имя кнопки;Уникальное имя"
 
 msgid "New"
 msgstr "Новое"
 
 msgid "Duplicate selected"
-msgstr "Выбранный дубликат"
+msgstr "Дублировать выбранное"
 
 msgid "Remove selected"
-msgstr "Удалить выбранный"
+msgstr "Удалить выбранное"
 
 msgid "Reload"
 msgstr "Перезагрузить"
 
 msgid "Validate changes"
-msgstr "Проверка изменений"
+msgstr "Проверить изменения"
 
 msgid "Description"
 msgstr "Описание"
@@ -906,40 +1052,40 @@ msgstr "Hex"
 
 #, python-format
 msgid "Data is used by request %s"
-msgstr "Data is used by request %s"
+msgstr "Данные используются запросом %s"
 
 msgid "New data"
 msgstr "Новые данные"
 
 msgid "Replace me with request description"
-msgstr "Замените меня c описанием запроса"
+msgstr "Замените меня на описание запроса"
 
 msgid "Data name;Description"
-msgstr "Data name;Description"
+msgstr "Имя данных;Описание"
 
 msgid "Goto data"
 msgstr "Перейти к данным"
 
 msgid "Remove"
-msgstr "Удалять"
+msgstr "Удалить"
 
 msgid "Add to screen"
 msgstr "Добавить на экран"
 
 msgid "ECU Function address"
-msgstr "ECU Function address"
+msgstr "Адрес функции ЭБУ"
 
 msgid "ECU Protocol"
-msgstr "ЭБУ Протокол"
+msgstr "Протокол ЭБУ"
 
 msgid "Tool > Ecu ID (Hex)"
-msgstr "Tool > Ecu ID (Hex)"
+msgstr "Tool > ID ЭБУ (Hex)"
 
 msgid "Ecu > Tool ID (Hex)"
-msgstr "Ecu > Tool ID (Hex)"
+msgstr "ЭБУ > ID инструмента (Hex)"
 
 msgid "Coding"
-msgstr "Coding"
+msgstr "Кодирование"
 
 msgid "Big Endian"
 msgstr "Big Endian"
@@ -951,7 +1097,7 @@ msgid "ECU Auto identification"
 msgstr "Автоматическая идентификация ЭБУ"
 
 msgid "Diag version;Supplier;Soft;Version"
-msgstr "Diag version;Supplier;Soft;Version"
+msgstr "Версия диагностики;Поставщик;Программное обеспечение;Версия"
 
 msgid "Add new"
 msgstr "Добавить новый"
@@ -960,13 +1106,13 @@ msgid "Delete selected"
 msgstr "Удалить выбранный"
 
 msgid "Diag version"
-msgstr "Diag version"
+msgstr "Версия диагностики"
 
 msgid "Supplier"
 msgstr "Поставщик"
 
 msgid "Soft"
-msgstr "Soft"
+msgstr "Программное обеспечение"
 
 msgid "Version"
 msgstr "Версия"
@@ -1029,16 +1175,16 @@ msgid "Inherits globals"
 msgstr "Inherits globals"
 
 msgid "No SDS"
-msgstr ""
+msgstr "Нет SDS"
 
 msgid "Plant"
-msgstr ""
+msgstr "Завод"
 
 msgid "After Sale"
 msgstr "После продажи"
 
 msgid "Engineering"
-msgstr ""
+msgstr "Инженерия"
 
 msgid "Reload requests"
 msgstr "Переотправить запрос"
@@ -1053,7 +1199,7 @@ msgid "Receive bytes"
 msgstr "Получить байты"
 
 msgid "Request name;Bytes;Manual"
-msgstr ""
+msgstr "Имя запроса;Байты;Вручную"
 
 msgid "No request named"
 msgstr "Запрос не назван"
@@ -1065,10 +1211,10 @@ msgid "DataItem not found"
 msgstr "Элемент данных не найден"
 
 msgid "Cannot find data "
-msgstr "Не удается найти данные"
+msgstr "Не удается найти данные "
 
 msgid " vs "
-msgstr ""
+msgstr " vs "
 
 msgid "Cannot draw input "
 msgstr "Не могу сформировать запрос "
@@ -1080,8 +1226,10 @@ msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
-"<center>Эта программа бесплатна, но мне нужны деньги для покупки тестовых "
-"ЭБУ, развития её функциональности и надежности</center>"
+"<center>Это программное обеспечение бесплатное, но мне нужны деньги на "
+"покупку кабелей/ECU и сделать это приложение более надежным</"
+"center><center>Эта программа бесплатна, но мне нужны деньги для покупки "
+"тестовых ЭБУ, развития её функциональности и надежности</center>"
 
 msgid "Yes I contribute"
 msgstr "Да, Я заплачу"
@@ -1089,24 +1237,22 @@ msgstr "Да, Я заплачу"
 msgid "No, I don't"
 msgstr "Нет, не сейчас"
 
-#, fuzzy
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"<center>Спасибо за платеж, если не получилось, пожалуйста зайдите на : "
-"https://github.com/cedricp/ddt4all</center>"
+"<center>Спасибо за ваш вклад, если ничего не происходит, пожалуйста, "
+"перейдите на: https://github.com/cedricp/ddt4all</center>"
 
-#, fuzzy
 msgid "ECU Finder"
-msgstr "Название ЭБУ"
+msgstr "Поиск ЭБУ"
 
 msgid "Address :"
-msgstr ""
+msgstr "Адрес :"
 
 msgid "ID frame :"
-msgstr ""
+msgstr "ID кадра :"
 
 msgid "No vehicles available"
-msgstr ""
+msgstr "Нет доступных транспортных средств"
 
 msgid "ECU name"
 msgstr "Название ЭБУ"
@@ -1118,14 +1264,14 @@ msgid "Protocol"
 msgstr "Протокол"
 
 msgid "Diag"
-msgstr ""
+msgstr "Диаг"
 
 msgid "Projets"
 msgstr "Проекты"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%d loaded ECUs in database."
-msgstr "eCUs загружено."
+msgstr "%d ЭБУ загружено в базу данных."
 
 msgid "No database found"
 msgstr "База данных не найдена"
@@ -1133,29 +1279,30 @@ msgstr "База данных не найдена"
 msgid "Check documentation"
 msgstr "Проверьте документацию"
 
-#, fuzzy
 msgid "DDT4All Documentation"
-msgstr "Документация"
+msgstr "Документация DDT4All"
 
 msgid "WebEngine not available."
-msgstr ""
+msgstr "WebEngine недоступен."
 
 msgid ""
 "For full documentation with web browsing capability, install PyQtWebEngine:"
 msgstr ""
+"Для полной документации с возможностью веб-просмотра, установите "
+"PyQtWebEngine:"
 
-#, fuzzy
 msgid "Visit the online documentation at:"
-msgstr "Проверьте документацию"
+msgstr "Посетите онлайн документацию по адресу:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
+"Этот базовый вид все равно будет показывать документацию ЭБУ, когда доступно."
 
 msgid "Refresh rate (ms):"
 msgstr "Частота обновления (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr ""
+msgstr "Таймаут CAN (мс) [0:AUTO] :"
 
 msgid "Documentation"
 msgstr "Документация"
@@ -1178,9 +1325,8 @@ msgstr "Кнопки"
 msgid "Ecu parameters"
 msgstr "Параметры ЭБУ"
 
-#, fuzzy
 msgid "Screen Window"
-msgstr "Окно функций"
+msgstr "Окно экрана"
 
 msgid "Screens"
 msgstr "Экраны"
@@ -1261,10 +1407,10 @@ msgid "View"
 msgstr "Вид"
 
 msgid "CarList Order"
-msgstr ""
+msgstr "Порядок списка автомобилей"
 
 msgid "By Project Code"
-msgstr ""
+msgstr "По коду проекта"
 
 msgid "By Car Name"
 msgstr "По названию автомобиля"
@@ -1290,9 +1436,8 @@ msgstr "Переименовать"
 msgid "Plugins"
 msgstr "Плагины"
 
-#, fuzzy
 msgid "Cannot load plugin "
-msgstr "Не могу сформировать запрос "
+msgstr "Не удается загрузить плагин "
 
 msgid "Help"
 msgstr "Справка"
@@ -1312,43 +1457,41 @@ msgstr "О программе"
 msgid "About DDT4ALL"
 msgstr "О DDT4ALL"
 
-#, fuzzy
 msgid " version:"
-msgstr "Diag version"
+msgstr " версия:"
 
 msgid "Created by:"
 msgstr "Создано:"
 
-#, fuzzy
 msgid "Options"
-msgstr "Опции сканирования"
+msgstr "Опции"
 
 msgid "CAN Line 1 Auto"
-msgstr ""
+msgstr "CAN линия 1 Авто"
 
 msgid "CAN Line 1@500K"
-msgstr ""
+msgstr "CAN линия 1@500K"
 
 msgid "CAN Line 1@250K"
-msgstr ""
+msgstr "CAN линия 1@250K"
 
 msgid "CAN Line 2@500K"
-msgstr ""
+msgstr "CAN линия 2@500K"
 
 msgid "CAN Line 2@250K"
-msgstr ""
+msgstr "CAN линия 2@250K"
 
 msgid "CAN Line 2@125K"
-msgstr ""
+msgstr "CAN линия 2@125K"
 
 msgid "KWP2000"
-msgstr ""
+msgstr "KWP2000"
 
 msgid "ISO8"
-msgstr ""
+msgstr "ISO8"
 
 msgid "Save database (keep '.zip' extension)"
-msgstr "Сохранить базу данных (сохранять расширение '.zip')"
+msgstr "Сохранить базу данных (сохранить расширение '.zip')"
 
 msgid "Zipping XML database... (this can take a few minutes)"
 msgstr "Архивирование XML базы данных ... (это может занять несколько минут)"
@@ -1374,9 +1517,8 @@ msgstr "Сканирование CAN"
 msgid "Scanning KWP"
 msgstr "Сканирование KWP"
 
-#, fuzzy
 msgid "Scanning DoIP"
-msgstr "Сканирование KWP"
+msgstr "Сканирование DoIP"
 
 msgid "Scan options"
 msgstr "Опции сканирования"
@@ -1397,7 +1539,7 @@ msgid "Save ECU (keep '.json' extension)"
 msgstr "Создание нового ЭБУ (.json)"
 
 msgid "Save record (keep '.txt' extension)"
-msgstr "Сохранить список моих ЭБУ (.ecu)"
+msgstr "Сохранить запись (сохранить расширение '.txt')"
 
 msgid "Recorded "
 msgstr "Записано "
@@ -1412,31 +1554,31 @@ msgid "ELM port selection"
 msgstr "Выберите порт ELM"
 
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 msgid "WiFi"
-msgstr ""
+msgstr "WiFi"
 
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 msgid "OBDLINK SX/EX"
-msgstr ""
+msgstr "OBDLINK SX/EX"
 
 msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
-msgstr ""
+msgstr "ELS27/ELS27 V5 - Может появиться как устройство FTDI/CH340/CP210x"
 
 msgid "Vlinker FS/MC"
-msgstr ""
+msgstr "Vlinker FS/MC"
 
 msgid "DERLEK USB-DIAG2/3"
-msgstr ""
+msgstr "DERLEK USB-DIAG2/3"
 
 msgid "VGate (High-Speed)"
-msgstr ""
+msgstr "VGate (Высокая скорость)"
 
 msgid "DoIP (Diagnostics over IP)"
-msgstr ""
+msgstr "DoIP (Диагностика через IP)"
 
 msgid "Interface language"
 msgstr "Язык интерфейса"
@@ -1466,67 +1608,65 @@ msgid "Dark style"
 msgstr "Темный стиль"
 
 msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr ""
+msgstr "Конфигурация DoIP (Диагностика через IP)"
 
-#, fuzzy
 msgid "Device Preset : "
-msgstr "Версия устройства: "
+msgstr "Предустановка устройства : "
 
 msgid "Custom"
-msgstr ""
+msgstr "Пользовательский"
 
 msgid "Bosch MTS"
-msgstr ""
+msgstr "Bosch MTS"
 
 msgid "VXDIAG VCX Nano"
-msgstr ""
+msgstr "VXDIAG VCX Nano"
 
 msgid "VAG ODIS"
-msgstr ""
+msgstr "VAG ODIS"
 
 msgid "JLR DoIP VCI"
-msgstr ""
+msgstr "JLR DoIP VCI"
 
 msgid "Generic DoIP"
-msgstr ""
+msgstr "Обычный DoIP"
 
 msgid "DoIP Target IP : "
-msgstr ""
+msgstr "Целевой IP DoIP : "
 
-#, fuzzy
 msgid "DoIP Port : "
-msgstr "Порт: "
+msgstr "Порт DoIP : "
 
 msgid "DoIP Timeout (seconds) : "
-msgstr ""
+msgstr "Таймаут DoIP (секунды) : "
 
 msgid "Enable Vehicle Announcement Discovery"
-msgstr ""
+msgstr "Включить обнаружение объявлений транспортных средств"
 
 msgid "Auto-reconnect on connection loss"
-msgstr ""
+msgstr "Автоматическое переподключение при потере соединения"
 
 msgid "Change UART speed"
 msgstr "Изменить скорость UART"
 
-#, fuzzy
 msgid "Checking..."
-msgstr "Check"
+msgstr "Проверка..."
 
 msgid "Please enter WiFi adapter IP address"
-msgstr "Please enter WiFi adapter IP address"
+msgstr "Введите IP-адрес WiFi адаптера"
 
 msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
-msgstr "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr ""
+"Неверный формат WiFi. Используйте IP:PORT (например, 192.168.0.10:35000)"
 
 msgid "Please select a serial port"
-msgstr "Please select a serial port"
+msgstr "Выберите последовательный порт"
 
 msgid "Selected port is no longer available"
-msgstr "Selected port is no longer available"
+msgstr "Выбранный порт больше недоступен"
 
 msgid "Attempting connection..."
-msgstr "Пытаюсь установить соединение..."
+msgstr "Попытка подключения..."
 
 msgid "Port: "
 msgstr "Порт: "
@@ -1541,64 +1681,64 @@ msgid "Troubleshooting suggestions:"
 msgstr "Предложения по устранению неполадок:"
 
 msgid "1. Check device is properly connected"
-msgstr "1. Проверьте правильность подключения устройства"
+msgstr "1. Проверьте, правильно ли подключено устройство"
 
 msgid "2. Try different baud rates"
-msgstr "2. Попробуйте разные скорости передачи данных в бодах"
+msgstr "2. Попробуйте разные скорости передачи"
 
 msgid "3. Ensure device drivers are installed"
-msgstr "3. Убедитесь, что установлены драйверы устройств"
+msgstr "3. Убедитесь, что драйверы устройств установлены"
 
 msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Проверьте права доступа к портам (Linux/macOS)"
+msgstr "4. Проверьте права доступа к порту (Linux/macOS)"
 
 msgid "Connection test successful!"
-msgstr "Проверка подключения прошла успешно!"
+msgstr "Проверка подключения успешна!"
 
 msgid "Error during connection test: "
-msgstr "Ошибка при проверке подключения: "
+msgstr "Ошибка во время проверки подключения: "
 
 msgid "Reset and Recheck"
-msgstr "Сброс и повторная проверка"
+msgstr "Сбросить и перепроверить"
 
 msgid "57600"
-msgstr ""
+msgstr "57600"
 
 msgid "115200"
-msgstr ""
+msgstr "115200"
 
 msgid "230400"
-msgstr ""
+msgstr "230400"
 
 msgid "500000"
-msgstr ""
+msgstr "500000"
 
 msgid "1000000"
-msgstr ""
+msgstr "1000000"
 
 msgid "2000000"
-msgstr ""
+msgstr "2000000"
 
 msgid "38400"
-msgstr ""
+msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr ""
+msgstr "VGate iCar Pro выбрана - улучшенная поддержка STN/STPX включена"
 
 msgid "Long command support and high-speed communication available"
-msgstr ""
+msgstr "Поддержка длинных команд и высокоскоростная связь доступны"
 
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 msgid "DoIP (Diagnostics over IP) selected"
-msgstr ""
+msgstr "DoIP (Диагностика через IP) выбран"
 
 msgid "Ethernet-based diagnostic communication"
-msgstr ""
+msgstr "Диагностическая связь на основе Ethernet"
 
 msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
-msgstr ""
+msgstr "Совместимо с Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 
 msgid "You must check the recommandations"
 msgstr "Вы должны согласиться с условиями"
@@ -1607,7 +1747,7 @@ msgid "Please select a communication port"
 msgstr "Выберите нужный порт"
 
 msgid "ECU Command"
-msgstr "ЭБУ команды"
+msgstr "Команда ЭБУ"
 
 msgid "Err, cannot rename "
 msgstr "Ошибка, не могу переименовать "
@@ -1642,13 +1782,11 @@ msgstr "Поле ввода"
 msgid "Output"
 msgstr "Поле вывода"
 
-#, fuzzy
 msgid "Protocol not supported"
-msgstr "ОШИБКА - команда не поддерживается"
+msgstr "Протокол не поддерживается"
 
-#, fuzzy
 msgid "Protocol not supported: "
-msgstr "ОШИБКА - команда не поддерживается"
+msgstr "Протокол не поддерживается: "
 
 msgid "XML file not found : "
 msgstr "XML файл не найден : "
@@ -1689,15 +1827,14 @@ msgstr "Запрос кнопки не найден : "
 msgid "Sending request :"
 msgstr "Отправка запроса :"
 
-#, fuzzy
 msgid "Unknown request "
-msgstr "ECU Function address"
+msgstr "Неизвестный запрос "
 
 msgid "Command aborted "
 msgstr "Команда прервана "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr ""
+msgstr "Ошибка значения этого материала требует обходной шлюз возможно."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Запрос прерван (проверьте красные записи): "
@@ -1711,11 +1848,12 @@ msgstr "Для вашей безопасности"
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
 "Activate expert mode to unlock"
-msgstr "Активируйте режим эксперта для разблокировки"
+msgstr ""
+"<center>БЛОКИРОВАННАЯ КОМАНДА</center>\n"
+"Активируйте режим эксперта для разблокировки"
 
-#, fuzzy
 msgid "Writing parameter"
-msgstr "Параметры ЭБУ"
+msgstr "Запись параметра"
 
 msgid "Blocked writing parameter"
 msgstr "Заблокированный параметр записи"
@@ -1724,7 +1862,7 @@ msgid "Invalid"
 msgstr "Не считано"
 
 msgid "ECU uses SDS "
-msgstr "ЭБУ использующих SDS"
+msgstr "ЭБУ использующих SDS "
 
 msgid "Cannot call request "
 msgstr "Не могу сформировать запрос "
@@ -1744,16 +1882,14 @@ msgstr "<center>Ошибки DTC сейчас будут стерты</center>"
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Вы уверены?</center>"
 
-#, fuzzy
 msgid "Clear DTC failed"
-msgstr "Сброс ошибок DTC"
+msgstr "Сброс DTC не удался"
 
 msgid "Clear DTC successfully done"
 msgstr "Очистка DTC выполнена успешно"
 
-#, fuzzy
 msgid "No ReadDTC request for that ECU"
-msgstr "У ЭБУ нет запроса ClearDTC, буду посылать стандартный 14FF00"
+msgstr "Нет запроса ReadDTC для этого ЭБУ"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Неверный отклик на команду чтения ошибок"
@@ -1776,31 +1912,29 @@ msgstr "Считанные ошибки"
 msgid "Parsing screen "
 msgstr "Расшифровка "
 
-#, fuzzy
 msgid "found request in input "
-msgstr "Нет параметров для кнопки : "
+msgstr "запрос найден во входных данных "
 
 msgid "found in display "
 msgstr "найдено на дисплее "
 
-#, fuzzy
 msgid "found in button "
-msgstr "Добавить кнопку"
+msgstr "найдено в кнопке "
 
 msgid "found in presend "
-msgstr ""
+msgstr "найдено в предварительной отправке "
 
 msgid "found data in input "
-msgstr ""
+msgstr "данные найдены во вводе "
 
 msgid "found data in display "
-msgstr ""
+msgstr "данные найдены в отображении "
 
 msgid "Waiting..."
 msgstr "Ожидайте..."
 
 msgid "Frame length error: "
-msgstr ""
+msgstr "Ошибка длины кадра: "
 
 msgid "Frame hex error: "
-msgstr ""
+msgstr "Ошибка кадра hex: "
