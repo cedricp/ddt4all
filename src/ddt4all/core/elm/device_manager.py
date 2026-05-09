@@ -122,16 +122,13 @@ class DeviceManager:
             if not settings.get('stn_support', False):
                 return True  # No STN support needed
             
-            # Enable STN/STPX features
+            # Probe for STN/STPX support (detection only — does not enable STPX wrapping)
             if settings.get('stpx_support', False):
-                stpx_enabled = DeviceManager._enable_stpx_mode(elm_instance, device_type)
-                if stpx_enabled:
-                    print(_("STPX mode enabled for %s") % device_type)
+                DeviceManager._enable_stpx_mode(elm_instance, device_type)
             
             # Enable pin swapping if supported
             if settings.get('pin_swap', False):
                 DeviceManager._auto_swap_pins(elm_instance, device_type)
-                print(_("Pin swapping enabled for %s") % device_type)
             
             return True
             
@@ -150,14 +147,20 @@ class DeviceManager:
             # Try to enable STPX mode (if supported)
             response = elm_instance.cmd("STPX")
             if "?" in response:
-                print(_("STPX mode not supported by this adapter as native, trying fallback..."))
+                print(_("STPX not supported by this adapter"))
+                elm_instance.stpx_enabled = False
                 return False
-            
-            print(_("STPX mode enabled successfully"))
+
+            # Do not set stpx_enabled = True here. The STPX D: wrapping in send_raw()
+            # breaks non-STN adapters (VLinker, ELM327 clones) if the bare STPX command
+            # returns something other than "?" (e.g. "ERROR" or timeout). Detection
+            # confirms the adapter has some STPX awareness but does not enable wrapping.
+            print(_("STPX mode detected on adapter"))
             return True
-            
+
         except Exception as e:
             print(_("STPX mode enable error: %s") % e)
+            elm_instance.stpx_enabled = False
             return False
 
     @staticmethod
@@ -319,14 +322,11 @@ class DeviceManager:
             if not elm_instance:
                 return False
             
-            # Auto-detect device type if not provided
+            # Auto-detect device type from ATI response — more reliable than trusting
+            # the UI selection, which can be wrong (e.g. VLinker FS selected as VGATE).
             if not device_type:
                 device_type = DeviceManager.detect_device_type(elm_instance)
-            
-            # Use adapter_type from ELM instance if available (more accurate)
-            if hasattr(elm_instance, 'adapter_type') and elm_instance.adapter_type:
-                device_type = elm_instance.adapter_type.lower()
-            
+
             # Get optimal settings
             settings = DeviceManager.get_optimal_settings(device_type)
             

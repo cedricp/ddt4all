@@ -505,12 +505,6 @@ class ELM:
         elif adapter_type == "OBDLINK":
             print(text_optional.replace("OBDLINK", "OBDLINK"))
             if not options.elm_failed:
-                # Enable STPX mode for OBDLINK adapters
-                try:
-                    self.enable_stpx_mode()
-                    print(_("OBDLINK STPX mode enabled for enhanced long command support"))
-                except Exception as e:
-                    print(f"OBDLINK STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "STD_USB" and rate != 115200 and maxspeed > 0:
             print(device_text_switch.replace("OBDLINK", "ELM"))
@@ -547,12 +541,6 @@ class ELM:
         elif adapter_type == "VGATE":
             print(text_optional.replace("OBDLINK", "VGate"))
             if not options.elm_failed:
-                # Enable STPX mode for VGate adapters
-                try:
-                    self.enable_stpx_mode()
-                    print(_("VGate STPX mode enabled for enhanced long command support"))
-                except Exception as e:
-                    print(f"VGate STPX warning: {e}")
                 print(_("Connection established successfully"))
         elif adapter_type == "ELS27":
             print(text_optional.replace("OBDLINK", "ELS27"))
@@ -609,15 +597,13 @@ class ELM:
             
             # Enable extended addressing if supported
             self.send_raw("ST EA 1")  # Enable extended addressing
-            
-            # Set flag to indicate STPX is enabled
-            self.stpx_enabled = True
-            
+
+            # Do NOT set stpx_enabled here. Whether STPX D: protocol is actually
+            # supported is tested by DeviceManager._enable_stpx_mode() which sets
+            # the flag authoritatively after sending a real STPX command.
             print(_("STPX mode enabled for enhanced long command support"))
         except Exception as e:
             print(f"STPX mode enable warning: {e}")
-            # Don't raise exception - STPX is enhancement, not requirement
-            self.stpx_enabled = False
 
     def raise_elm_speed(self, baudrate, device_name="ELM"):
         # Unified speed switch for ELM (ATBRD) and STN-based adapters (ST SBR)
@@ -686,8 +672,9 @@ class ELM:
                 print(_("ELM reset..."))
             else:
                 print(_("ELM reset..."))
-            # Check if port exists and is valid before attempting reset
-            if hasattr(self, 'port') and self.port is not None and hasattr(self.port, 'write'):
+            # Check if port and its underlying serial handler are still open
+            if (hasattr(self, 'port') and self.port is not None
+                    and getattr(self.port, 'hdr', None) is not None):
                 self.port.write("ATZ\r".encode("utf-8"))
         except (AttributeError, OSError, TypeError):
             # Handle all possible errors during cleanup

@@ -274,12 +274,11 @@ class EcuScanner:
     def scan(self, progress=None, label=None, vehiclefilter=None, canline=0):
         i = 0
         if not options.simulation_mode:
-            # Use integrated DeviceManager for enhanced features (only if not already initialized)
             if hasattr(options, 'elm') and options.elm:
                 if not hasattr(options.elm, '_device_initialized') or not options.elm._device_initialized:
-                    # Initialize device with enhanced features
                     elm.DeviceManager.initialize_device(options.elm)
                     options.elm._device_initialized = True
+            options.elm.init_can()
 
         project_can_addresses = []
         if vehiclefilter:
