@@ -106,10 +106,10 @@ class ButtonRequest(widgets.QPushButton):
 
     @staticmethod
     def extract_image_from_zip(zip_file, image_name):
-        """Extrait une image du fichier ZIP et retourne les données en mémoire"""
+        """Extracts an image from ZIP file and returns data in memory"""
         with zipfile.ZipFile(zip_file, 'r') as zip_ref:
             if image_name in zip_ref.namelist():
-                # Lire l'image en mémoire et retourner les données
+                # Read image in memory and return data
                 return zip_ref.read(image_name)
             else:
                 return None

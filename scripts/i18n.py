@@ -35,7 +35,7 @@ WIN_CMD_LIMIT = 8000
 def which_or_fail(cmd):
     path = shutil.which(cmd)
     if not path:
-        raise RuntimeError(f"La commande requise '{cmd}' n'est pas trouvée dans le PATH. Installe gettext/tools.")
+        raise RuntimeError(f"Required command '{cmd}' not found in PATH. Install gettext/tools.")
     return path
 
 def run(cmd, dry_run=False, verbose=False, capture_output=False):
@@ -88,7 +88,7 @@ def pot_create(args):
     excludes = list(set(excludes + DEFAULT_EXCLUDES))
     pyfiles = gather_pyfiles(root, excludes)
     if not pyfiles:
-        print("[WARN] Aucun fichier .py trouvé.")
+        print("[WARN] No .py files found.")
         return 1
 
     ensure_dir(localedir, dry_run=args.dry_run, verbose=args.verbose)
@@ -108,7 +108,7 @@ def pot_create(args):
         filelist = make_temp_file_with_lines(pyfiles)
         cmd = [*xgettext_base, "-f", str(filelist)]
         if args.verbose:
-            print("[INFO] utilisation d'un fichier temporaire pour xgettext:", filelist)
+            print("[INFO] using temporary file for xgettext:", filelist)
         res = run([str(c) for c in cmd], dry_run=args.dry_run, verbose=args.verbose)
         if not args.dry_run:
             try:
@@ -120,9 +120,9 @@ def pot_create(args):
         res = run([str(c) for c in cmd], dry_run=args.dry_run, verbose=args.verbose)
 
     if isinstance(res, subprocess.CompletedProcess) and res.returncode != 0 or res == 1:
-        print("[ERR] xgettext a échoué.")
+        print("[ERR] xgettext failed.")
         return 2
-    print(f"[OK] {pot_path} généré ({len(pyfiles)} fichiers analysés)")
+    print(f"[OK] {pot_path} generated ({len(pyfiles)} files analyzed)")
     return 0
 
 def po_merge(args):
@@ -133,18 +133,18 @@ def po_merge(args):
     domain = args.domain
     pot_path = Path(args.pot).resolve() if args.pot else (localedir / f"{domain}.pot")
     if not pot_path.exists():
-        print(f"[ERR] .pot introuvable : {pot_path}")
+        print(f"[ERR] .pot not found: {pot_path}")
         return 3
 
     langs = [p.name for p in localedir.iterdir() if p.is_dir()]
     if not langs:
-        print("[WARN] Aucune langue trouvée dans", localedir)
+        print("[WARN] No language found in", localedir)
         return 0
 
     for lang in sorted(langs):
         po = localedir / lang / "LC_MESSAGES" / f"{domain}.po"
         if not po.exists():
-            print(f"[SKIP] {po} introuvable")
+            print(f"[SKIP] {po} not found")
             continue
 
         cmd_merge = [msgmerge, "--update", str(po), str(pot_path)]
@@ -172,14 +172,14 @@ def po_merge(args):
 
         cmd_stats = [msgfmt, "--statistics", "-c", "-o", os.devnull, str(po)]
         run(cmd_stats, dry_run=args.dry_run, verbose=args.verbose)
-        print(f"[OK] {po} mis à jour")
+        print(f"[OK] {po} updated")
 
     return 0
 
 def po_to_mo(args):
     """
-    Compile les .po en .mo uniquement dans generated/<lang>/LC_MESSAGES/<domain>.mo
-    (PAS de .mo à côté des .po)
+    Compile .po to .mo only in generated/<lang>/LC_MESSAGES/<domain>.mo
+    (NO .mo next to .po)
     """
     msgfmt = which_or_fail("msgfmt")
     localedir = Path(args.localedir).resolve()
@@ -188,13 +188,13 @@ def po_to_mo(args):
 
     langs = [p.name for p in localedir.iterdir() if p.is_dir()]
     if not langs:
-        print("[WARN] Aucune langue trouvée dans", localedir)
+        print("[WARN] No language found in", localedir)
         return 0
 
     for lang in sorted(langs):
         po = localedir / lang / "LC_MESSAGES" / f"{domain}.po"
         if not po.exists():
-            print(f"[SKIP] {po} introuvable")
+            print(f"[SKIP] {po} not found")
             continue
 
         target_mo = generated_root / lang / "LC_MESSAGES" / f"{domain}.mo"
@@ -208,18 +208,18 @@ def po_to_mo(args):
             or (isinstance(rc, int) and rc == 0)
         )
         if success:
-            print(f"[OK] {target_mo} généré")
+            print(f"[OK] {target_mo} generated")
         else:
-            print(f"[ERR] échec compilation {po}")
+            print(f"[ERR] compilation failed {po}")
 
     return 0
 
 def full_gen(args):
     """
-    Enchaîne toutes les étapes nécessaires pour générer les .mo dans generated:
+    Chain all steps needed to generate .mo in generated:
       1) pot-create
       2) po-merge
-      3) po-to-mo (vers generated)
+      3) po-to-mo (to generated)
     """
     r1 = pot_create(argparse.Namespace(
         root=args.root,
@@ -258,29 +258,29 @@ def main():
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     common = argparse.ArgumentParser(add_help=False)
-    common.add_argument("-d", "--localedir", default=DEFAULT_LOCALEDIR, help="répertoire des locales (default: locale)")
+    common.add_argument("-d", "--localedir", default=DEFAULT_LOCALEDIR, help="locale directory (default: locale)")
     common.add_argument("--domain", default=DEFAULT_DOMAIN, help=f"gettext domain (default: {DEFAULT_DOMAIN})")
     common.add_argument("--generated-dir", default=DEFAULT_GENERATEDDIR,
-                        help=f"répertoire cible des .mo (default: {DEFAULT_GENERATEDDIR})")
-    common.add_argument("--dry-run", action="store_true", help="ne rien exécuter; juste afficher les commandes")
-    common.add_argument("-v", "--verbose", action="store_true", help="mode verbeux")
+                        help=f"target directory for .mo (default: {DEFAULT_GENERATEDDIR})")
+    common.add_argument("--dry-run", action="store_true", help="do not execute; just show commands")
+    common.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
 
-    p1 = sub.add_parser("pot-create", parents=[common], help="génère <localedir>/<domain>.pot à partir des .py")
-    p1.add_argument("--root", default=DEFAULT_SCAN_ROOT, help="racine pour le scan des .py (def: src)")
-    p1.add_argument("--exclude", action="append", help="pattern ou sous-chemin à exclure (répéter pour plusieurs)")
-    p1.add_argument("--width", default=400, type=int, help="width option pour xgettext (default 400)")
+    p1 = sub.add_parser("pot-create", parents=[common], help="generates <localedir>/<domain>.pot from .py")
+    p1.add_argument("--root", default=DEFAULT_SCAN_ROOT, help="root for .py scan (def: src)")
+    p1.add_argument("--exclude", action="append", help="pattern or subpath to exclude (repeat for multiple)")
+    p1.add_argument("--width", default=400, type=int, help="width option for xgettext (default 400)")
 
     p2 = sub.add_parser("po-merge", parents=[common], help="merge .pot -> .po (msgmerge + msgattrib)")
-    p2.add_argument("--pot", help="chemin vers .pot (si omis: <localedir>/<domain>.pot)")
+    p2.add_argument("--pot", help="path to .pot (if omitted: <localedir>/<domain>.pot)")
 
-    p3 = sub.add_parser("po-to-mo", parents=[common], help="compile tous les .po en .mo (dans generated uniquement)")
-    p4 = sub.add_parser("po2mo", parents=[common], help="alias pour po-to-mo")
+    p3 = sub.add_parser("po-to-mo", parents=[common], help="compile all .po to .mo (in generated only)")
+    p4 = sub.add_parser("po2mo", parents=[common], help="alias for po-to-mo")
 
-    p5 = sub.add_parser("full-gen", parents=[common], help="pot-create + po-merge + po-to-mo (dans generated)")
-    p5.add_argument("--root", default=DEFAULT_SCAN_ROOT, help="racine pour le scan des .py (def: src)")
-    p5.add_argument("--exclude", action="append", help="pattern ou sous-chemin à exclure (répéter pour plusieurs)")
-    p5.add_argument("--width", default=400, type=int, help="width option pour xgettext (default 400)")
-    p5.add_argument("--pot", help="chemin vers .pot (si omis: <localedir>/<domain>.pot)")
+    p5 = sub.add_parser("full-gen", parents=[common], help="pot-create + po-merge + po-to-mo (in generated)")
+    p5.add_argument("--root", default=DEFAULT_SCAN_ROOT, help="root for .py scan (def: src)")
+    p5.add_argument("--exclude", action="append", help="pattern or subpath to exclude (repeat for multiple)")
+    p5.add_argument("--width", default=400, type=int, help="width option for xgettext (default 400)")
+    p5.add_argument("--pot", help="path to .pot (if omitted: <localedir>/<domain>.pot)")
 
     args = parser.parse_args()
     try:
@@ -296,7 +296,7 @@ def main():
             parser.print_help()
             sys.exit(1)
     except RuntimeError as e:
-        print("[ERREUR]", e)
+        print("[ERROR]", e)
         sys.exit(5)
 
 if __name__ == "__main__":
