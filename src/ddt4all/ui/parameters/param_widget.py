@@ -540,18 +540,18 @@ class ParamWidget(widgets.QWidget):
             return
 
         if self.main_protocol_status:
-            if self.ecurequestsparser.ecu_protocol == "CAN":
+            if self.ecurequestsparser.ecu_protocol.upper() == "CAN":
                 self.startDiagnosticSession()
                 txrx = "(Tx0x%s/Rx0x%s)@%iK" % (self.ecurequestsparser.ecu_send_id,
                                                 self.ecurequestsparser.ecu_recv_id,
                                                 self.ecurequestsparser.baudrate / 1000)
                 self.main_protocol_status.setText("CAN " + txrx)
-            elif self.ecurequestsparser.ecu_protocol == "KWP2000":
+            elif self.ecurequestsparser.ecu_protocol.upper() == "KWP2000":
                 self.startDiagnosticSession()
                 self.main_protocol_status.setText("KWP @ " + self.ecurequestsparser.funcaddr)
-            elif self.ecurequestsparser.ecu_protocol == "ISO8":
+            elif self.ecurequestsparser.ecu_protocol.upper() == "ISO8":
                 self.main_protocol_status.setText("ISO8 @ " + self.ecurequestsparser.funcaddr)
-            elif self.ecurequestsparser.ecu_protocol == "DoIP":
+            elif self.ecurequestsparser.ecu_protocol.upper() == "DOIP":
                 self.startDiagnosticSession()
                 self.main_protocol_status.setText("DoIP @ " + self.ecurequestsparser.funcaddr)
             else:

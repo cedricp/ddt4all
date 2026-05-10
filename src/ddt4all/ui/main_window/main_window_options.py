@@ -55,6 +55,7 @@ class MainWindowOptions(widgets.QDialog):
         self.ports = {}
         self.mode = 0
         self.securitycheck = False
+        self.CAN2 = False
         self.selectedportspeed = 38400
         self.adapter = "STD"
         self.raise_port_speed = _("No")
@@ -225,6 +226,15 @@ class MainWindowOptions(widgets.QDialog):
         safetychecklayout.addWidget(safetylabel)
         safetychecklayout.addStretch()
         layout.addLayout(safetychecklayout)
+
+        can2checklayout = widgets.QHBoxLayout()
+        self.safetyCAN2check = widgets.QCheckBox()
+        self.safetyCAN2check.setChecked(False)
+        can2label = widgets.QLabel(_("Enable CAN2"))
+        can2checklayout.addWidget(self.safetyCAN2check)
+        can2checklayout.addWidget(can2label)
+        can2checklayout.addStretch()
+        layout.addLayout(can2checklayout)
 
         darkstylelayout = widgets.QHBoxLayout()
         self.darklayoutcheck = widgets.QCheckBox()
@@ -1076,6 +1086,7 @@ class MainWindowOptions(widgets.QDialog):
         if self._scan_worker is not None and self._scan_worker.isRunning():
             self._scan_worker.wait()
         self.securitycheck = self.safetycheck.isChecked()
+        self.CAN2 = self.safetyCAN2check.isChecked()
         self.selectedportspeed = int(self.speedcombo.currentText())
         if not self.securitycheck:
             msgbox = widgets.QMessageBox()
@@ -1115,6 +1126,7 @@ class MainWindowOptions(widgets.QDialog):
         if self._scan_worker is not None and self._scan_worker.isRunning():
             self._scan_worker.wait()
         self.securitycheck = self.safetycheck.isChecked()
+        self.CAN2 = self.safetyCAN2check.isChecked()
         self.port = 'DUMMY'
         self.mode = 2
         options.report_data = False
