@@ -571,14 +571,6 @@ class ELM:
     def enable_stpx_mode(self):
         """Enable STPX mode for enhanced long command support"""
         try:
-            if not os.path.exists(get_logs_dir()):
-                os.mkdir(get_logs_dir())
-
-            if len(options.log) > 0:
-                self.lf = open(os.path.join(get_logs_dir(), "elm_" + options.log + ".txt"), "at", encoding="utf-8")
-                self.vf = open(os.path.join(get_logs_dir(), "ecu_" + options.log + ".txt"), "at", encoding="utf-8")
-                self.vf.write("# TimeStamp;Address;Command;Response;Error\n")
-            
             # STPX mode enables enhanced long command handling
             # This is particularly useful for VGate and other STN-based adapters
             
@@ -818,6 +810,8 @@ class ELM:
         if not all(c in string.hexdigits for c in command):
             return "HEX ERROR"
 
+        request_sid = command[:2].upper()  # save before framing loop modifies command
+
         # do framing
         raw_command = []
         cmd_len = int(len(command) / 2)
@@ -885,28 +879,79 @@ class ELM:
                 print(f"send_can: unexpected response byte 0x{responses[0][:2]} — check AT CAF0 is active")
                 self.error_frame += 1
                 noerrors = False
-        else:  # multi frame response
-            if responses[0][:1] == '1':  # first frame
+        else:  # multiple frames received
+            if responses[0][:1] == '0':
+                # All received frames are single-frames. This happens when the ECU
+                # continuously broadcasts on its TX CAN ID (e.g. UCH J84 on 0x765).
+                # Search for a frame whose payload matches the expected positive-response
+                # SID (request_sid + 0x40) or a UDS negative response (7F).
+                # Fall back to responses[0] if none found.
+                try:
+                    expected_pos = "%02X" % (int(request_sid, 16) + 0x40)
+                except ValueError:
+                    expected_pos = ""
+                diagnostic_frame = None
+                for resp in responses:
+                    if resp[:1] != '0':
+                        continue
+                    frame_len = int(resp[1:2], 16) if resp[1:2] else 0
+                    payload = resp[2:2 + frame_len * 2].upper()
+                    if (expected_pos and payload[:2] == expected_pos) or payload[:2] == '7F':
+                        diagnostic_frame = resp
+                        break
+                if diagnostic_frame is not None:
+                    nbytes = int(diagnostic_frame[1:2], 16)
+                    nframes = 1
+                    result = diagnostic_frame[2:2 + nbytes * 2]
+                else:
+                    # No single-frame match; check if broadcasts precede a multi-frame response
+                    first_frame_idx = next(
+                        (i for i, r in enumerate(responses) if r[:1] == '1'), None
+                    )
+                    if first_frame_idx is not None:
+                        ff = responses[first_frame_idx]
+                        nbytes = int(ff[1:4], 16)
+                        nframes = nbytes / 7 + 1
+                        cframe = 1
+                        result = ff[4:16]
+                        for fr in responses[first_frame_idx + 1:]:
+                            if fr[:1] == '2':
+                                tmp_fn = int(fr[1:2], 16)
+                                if tmp_fn != (cframe % 16):
+                                    self.error_frame += 1
+                                    noerrors = False
+                                    continue
+                                cframe += 1
+                                result += fr[2:16]
+                            else:
+                                self.error_frame += 1
+                                noerrors = False
+                    else:
+                        # Fall back: use first frame (broadcast data, no real response)
+                        nbytes = int(responses[0][1:2], 16)
+                        nframes = 1
+                        result = responses[0][2:2 + nbytes * 2]
+            elif responses[0][:1] == '1':  # first frame of a multi-frame message
                 nbytes = int(responses[0][1:4], 16)
                 nframes = nbytes / 7 + 1
                 cframe = 1
                 result = responses[0][4:16]
+
+                for fr in responses[1:]:
+                    if fr[:1] == '2':  # consecutive frames
+                        tmp_fn = int(fr[1:2], 16)
+                        if tmp_fn != (cframe % 16):  # wrong response (frame lost)
+                            self.error_frame += 1
+                            noerrors = False
+                            continue
+                        cframe += 1
+                        result += fr[2:16]
+                    else:  # wrong response
+                        self.error_frame += 1
+                        noerrors = False
             else:  # wrong response (first frame omitted)
                 self.error_frame += 1
                 noerrors = False
-
-            for fr in responses[1:]:
-                if fr[:1] == '2':  # consecutive frames
-                    tmp_fn = int(fr[1:2], 16)
-                    if tmp_fn != (cframe % 16):  # wrong response (frame lost)
-                        self.error_frame += 1
-                        noerrors = False
-                        continue
-                    cframe += 1
-                    result += fr[2:16]
-                else:  # wrong response
-                    self.error_frame += 1
-                    noerrors = False
 
         errorstr = "Unknown"
         # check for negative response (repeat the same as in cmd())
