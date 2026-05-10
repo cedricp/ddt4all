@@ -1,7 +1,7 @@
 ﻿#include "version.h"
 #define MyAppName       Str(__appname__)
 #define MyAppVersion    Str(__version__)
-#define MyAppStatus     Str(__status__) + "-x64"    
+#define MyAppStatus     StringChange(Str(__status__), " ", "-") + "-x64"    
 #define MyAppDir        MyAppName
 #define MyAppAuthor     Str(__author__)
 #define MyAppCompany    Str(__author__)

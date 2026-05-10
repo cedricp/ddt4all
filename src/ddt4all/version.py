@@ -22,7 +22,7 @@ __contributors__ = {
     "walkman2021": "Translator"
 }
 __license__ = "GPL"
-__version__ = "3.0.8"
+__version__ = "3.0.9"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__status__ = "Tuatara"
+__status__ = "Velvet Mantis"

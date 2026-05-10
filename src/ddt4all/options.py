@@ -19,6 +19,7 @@ promode = False
 elm = None
 log = "ddt"
 opt_caf = False
+opt_can2 = False
 opt_cfc0 = False
 opt_n1c = True
 log_all = False

@@ -236,7 +236,8 @@ class EcuFile:
         # Can
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         short_addr = None
-        if self.ecu_protocol == 'CAN':
+        # print("Connecting to ECU > " + self.ecu_protocol + " > " + ecuname )
+        if self.ecu_protocol.upper() == 'CAN':
             if not options.simulation_mode:
                 if len(self.ecu_send_id) == 8:
                     short_addr = elm.get_can_addr_ext(self.ecu_send_id)
@@ -246,31 +247,41 @@ class EcuFile:
                     print(
                         _("Cannot retrieve functionnal address of ECU") + " %s @ %s" % (self.ecuname, self.ecu_send_id))
                     return False
-            ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname)}
+            ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname), 'protocol': 'CAN'}
 
             if not options.simulation_mode:
-                if self.baudrate == 250000 or self.baudrate == 10400:
-                    ecu_conf['brp'] = "1"
+                # Next lines not more needed.
+                # if self.baudrate == 250000 or self.baudrate == 10400:
+                #    ecu_conf['brp'] = "1"
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf, canline)
 
         # KWP 2000 Handling
-        elif self.ecu_protocol == 'KWP2000':
+        elif self.ecu_protocol.upper() == 'KWP2000':
             ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'KWP2000'}
             options.opt_si = not self.fastinit
             if not options.simulation_mode:
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.funcaddr, ecu_conf)
 
+        # ISO handling
+        elif self.ecu_protocol.upper() == 'ISO':
+            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO'}
+            if not options.simulation_mode:
+                options.elm.init_iso()
+                options.elm.set_iso_addr(self.funcaddr, ecu_conf)
+
         # ISO8 handling
-        elif self.ecu_protocol == 'ISO8':
+        # //TODO: this need maybe some small fix in set_iso8_addr()
+        elif self.ecu_protocol.upper() == 'ISO8':
             ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO8'}
             if not options.simulation_mode:
                 options.elm.init_iso()
                 options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
 
         # DOIP handling
-        # elif self.ecu_protocol == 'DOIP':
+        # //TODO: this need implementation
+        # elif self.ecu_protocol.upper() == 'DOIP':
         #     ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'DOIP'}
         #     if not options.simulation_mode:
         #         options.elm.init()
@@ -304,11 +315,11 @@ class EcuFile:
         js['ecuname'] = self.ecuname
         js['obd'] = {}
         js['obd']['protocol'] = self.ecu_protocol
-        if self.ecu_protocol == "CAN":
+        if self.ecu_protocol.upper() == "CAN":
             js['obd']['send_id'] = self.ecu_send_id
             js['obd']['recv_id'] = self.ecu_recv_id
             js['obd']['baudrate'] = self.baudrate
-        if self.ecu_protocol == "KWP2000":
+        if self.ecu_protocol.upper() == "KWP2000":
             js['obd']['fastinit'] = self.fastinit
         js['obd']['funcaddr'] = self.funcaddr
         js['obd']['funcname'] = self.funcname
