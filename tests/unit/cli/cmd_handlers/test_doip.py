@@ -32,11 +32,11 @@ def test_cmd_doip_success_flow(mocker, capsys):
 
     mock_doip_device.request.assert_called_with("22 F1 90")
 
-    assert "DoIP device connected successfully" in captured.out
-    assert "DoIP CAN initialized with Electric ECU support" in captured.out
-    assert "Testing Electric ECU: EVC" in captured.out
-    assert "Testing Electric ECU: GWM" in captured.out
-    assert "DoIP response:" in captured.out
+    assert "Appareil DoIP connecté avec succès" in captured.out
+    assert "DoIP CAN initialisé avec prise en charge du calculateur électrique" in captured.out
+    assert "Test ECU électrique : EVC" in captured.out
+    assert "Test ECU électrique : GWM" in captured.out
+    assert "Réponse DoIP :" in captured.out
 
 
 def test_cmd_doip_connect_failure(mocker, capsys):
@@ -58,7 +58,7 @@ def test_cmd_doip_connect_failure(mocker, capsys):
     mock_doip_device.set_can_addr.assert_not_called()
     mock_doip_device.disconnect.assert_not_called()
 
-    assert "Failed to connect to DoIP device" in captured.out
+    assert "Échec de connexion à l'appareil DoIP" in captured.out
 
 
 def test_cmd_doip_first_request_failure_does_not_stop_ecu_loop(mocker, capsys):
@@ -92,6 +92,6 @@ def test_cmd_doip_first_request_failure_does_not_stop_ecu_loop(mocker, capsys):
     assert mock_doip_device.set_can_addr.call_count == 7
     assert mock_doip_device.request.call_count == 8
 
-    assert "DoIP request failed: boom" in captured.out
-    assert "Testing Electric ECU: EVC" in captured.out
-    assert "Testing Electric ECU: GWM" in captured.out
+    assert "Demande DoIP a échoué : boom" in captured.out
+    assert "Test ECU électrique : EVC" in captured.out
+    assert "Test ECU électrique : GWM" in captured.out
