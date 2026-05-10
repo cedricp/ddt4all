@@ -250,7 +250,7 @@ def test_ecu_file_connect_to_hardware(dummy_ecu_file, mocker):
             "idTx": "7E0",
             "idRx": "7E8",
             "ecuname": "b'TEST_ECU'",
-            "brp": "1",
+            "protocol": "CAN",
         },
         1,
     )
@@ -347,6 +347,7 @@ def test_ecu_file_connect_to_hardware_extended_can_uses_get_can_addr_ext(mocker,
             "idTx": ecu.ecu_send_id,
             "idRx": ecu.ecu_recv_id,
             "ecuname": "b'EXT_CAN_ECU'",
+            "protocol": "CAN",
         },
         2,
     )

@@ -123,6 +123,8 @@ def main(argv=None) -> int:
         if pc.mode == 0 or pcres == widgets.QDialog.Rejected:
             return 0
 
+        options.opt_can2 = pc.CAN2
+
         if pc.mode == 1:
             options.promode = False
             options.simulation_mode = False

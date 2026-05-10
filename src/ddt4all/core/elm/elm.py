@@ -624,7 +624,7 @@ class ELM:
             elif baudrate == 500000:
                 atcmd = "ATBRD 8"
             else:
-                atcmd = "ATBRD 11" # 230400
+                atcmd = "ATBRD 11"  # 230400
 
             rsp = self.send_raw(atcmd)
             if "OK" in rsp:
@@ -635,18 +635,14 @@ class ELM:
             else:
                 raise Exception((_("Not supported baudrate %s") % str(baudrate)))
 
-        except Exception:        
+        except Exception:
             raise Exception((_("Not supported baudrate %s") % str(baudrate)))
 
     def __del__(self):
         try:
-            if _ is not None:
-                print(_("ELM reset..."))
-            else:
-                print(_("ELM reset..."))
-            # Check if port and its underlying serial handler are still open
-            if (hasattr(self, 'port') and self.port is not None
-                    and getattr(self.port, 'hdr', None) is not None):
+            print(_("ELM reset..."))
+            # Check if port exists and is valid before attempting reset
+            if hasattr(self, 'port') and self.port is not None and hasattr(self.port, 'write'):
                 self.port.write("ATZ\r".encode("utf-8"))
         except (AttributeError, OSError, TypeError):
             # Handle all possible errors during cleanup
@@ -719,14 +715,14 @@ class ELM:
         return rsp
 
     def cmd(self, command, serviceDelay="0"):
-        tb = time.time()  # start time
+        command = command.upper()
+        tb = options.dtt4all_time()  # start time
 
         # Ensure time gap between commands
-        if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) \
-                and ("AT" not in command.upper() or "ST" not in command.upper()):
+        if ((tb - self.lastCMDtime) < (self.busLoad + self.srvsDelay)) and command.upper()[:2] not in ['AT', 'ST']:
             time.sleep(self.busLoad + self.srvsDelay - tb + self.lastCMDtime)
 
-        tb = time.time()  # renew start time
+        tb = options.dtt4all_time()  # renew start time
 
         # If we use wifi and there was more than keepAlive seconds of silence then reinit tcp
         if self.port is not None and (tb - self.lastCMDtime) > self.keepAlive:
@@ -747,11 +743,11 @@ class ELM:
 
                 # send keepalive
             self.send_cmd(self.startSession)
-            self.lastCMDtime = time.time()  # for not to get into infinite loop
+            self.lastCMDtime = options.dtt4all_time()  # for not to get into infinite loop
 
         # send command
         cmdrsp = self.send_cmd(command)
-        self.lastCMDtime = tc = time.time()
+        self.lastCMDtime = tc = options.dtt4all_time()
 
         # add srvsDelay to time gap before send next command
         self.srvsDelay = float(serviceDelay) / 1000.
@@ -764,6 +760,13 @@ class ELM:
                 if self.lf != 0:
                     self.lf.write("# [" + str(tc - tb) + "] rsp: " + line + ": " + negrsp[line[6:8]] + "\n")
                     self.lf.flush()
+                if self.vf != 0:
+                    tmp_addr = self.currentaddress
+                    if self.currentaddress in list(dnat.keys()):
+                        tmp_addr = dnat[self.currentaddress]
+                    tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                    self.vf.write(tmstr + ";" + tmp_addr + ";" + command + ";" + line + ";" + negrsp[line[6:8]] + "\n")
+                    self.vf.flush()
         return cmdrsp
 
     def set_can_timeout(self, value):
@@ -1518,7 +1521,7 @@ class ELM:
         if options.simulation_mode:
             return
 
-        # self.cmd('AT WS')
+        self.cmd('AT WS')
         self.cmd("AT E1")
         self.cmd("AT L0")
         self.cmd("AT H0")
@@ -1610,7 +1613,7 @@ class ELM:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
-            self.currentaddress = get_can_addr(TXa)
+            self.currentaddress = addr
         elif addr in dnat and addr in snat:
             # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
             TXa = dnat[addr]
@@ -1624,61 +1627,50 @@ class ELM:
             # addr is a CAN TX ID (dnat value); reverse-lookup to get key
             TXa = get_can_addr(addr)
             RXa = get_can_addr_snat(addr)
-            # self.currentaddress = TXa // TODO: https://github.com/cedricp/ddt4all/pull/1734
             self.currentaddress = addr
         elif get_can_addr_ext(addr) is not None and get_can_addr_snat_ext(addr) is not None:
             TXa = get_can_addr_ext(addr)
             RXa = get_can_addr_snat_ext(addr)
-            # self.currentaddress = TXa // TODO: https://github.com/cedricp/ddt4all/pull/1734
             self.currentaddress = addr
         else:
-            return
+            TXa = 'undefined'
+            RXa = 'undefined'
 
-        extended_can = False
         if len(RXa) == 8:
-            # Extended (29bits) addressing
-            extended_can = True
-
-        if extended_can:
             self.cmd("AT CP " + TXa[:2])
             self.cmd("AT SH " + TXa[2:])
         else:
             self.cmd("AT SH " + TXa)
 
-        self.cmd("AT CRA " + RXa)
         self.cmd("AT FC SH " + TXa)
         self.cmd("AT FC SD 30 00 00")  # status BS STmin
         self.cmd("AT FC SM 1")
+        self.cmd("AT ST FF")  # reset adaptive timing step 1
+        self.cmd("AT AT 0")  # r
+
+        # print("TESTE CANLINE > "  + str(canline))
+
         if canline == 0:
-            # TODO: Find a better way to detect baud rate, some XML files are wrong
-            if 0 and 'brp' in ecu.keys() and ecu['brp'] == "1":  # I suppose that brp=1 means 250kBps CAN
-                if extended_can:
-                    self.cmd("AT SP 9")
+            if 'brp' in list(ecu.keys()) and '1' in ecu['brp'] and '0' in ecu['brp']:  # double brp
+                if self.lf != 0:
+                    self.lf.write('#' * 60 + "\n#    Double BRP, try CAN250 and then CAN500\n" + '#' * 60 + "\n")
+                    self.lf.flush()
+                self.set_can_250(TXa)
+                tmprsp = self.send_raw("0210C0")  # send any command
+                if 'CAN ERROR' in tmprsp:  # not 250!
+                    ecu['brp'] = '0'  # brp = 0
+                    self.set_can_500(TXa)
+                else:  # 250!
+                    ecu['brp'] = '1'  # brp = 1
+            else:  # not double brp
+                if 'brp' in list(ecu.keys()) and '1' in ecu['brp']:
+                    self.set_can_250(TXa)
                 else:
-                    self.cmd("AT SP 8")
-            else:
-                if extended_can:
-                    self.cmd("AT SP 7")
-                else:
-                    self.cmd("AT SP 6")
+                    self.set_can_500(TXa)
         elif canline == 1:
-            if extended_can:
-                self.cmd("AT SP 7")
-            else:
-                self.cmd("AT SP 6")
+            self.set_can_500(TXa)
         elif canline == 2:
-            if extended_can:
-                self.cmd("AT SP 9")
-            else:
-                self.cmd("AT SP 8")
-        else:
-            self.cmd("STP 53")
-            if canline == 3:
-                self.cmd("STPBR 500000")
-            elif canline == 4:
-                self.cmd("STPBR 250000")
-            elif canline == 5:
-                self.cmd("STPBR 125000")
+            self.set_can_250(TXa)
 
         # Re-apply formatting settings after AT SP, because some ELM327 clones
         # (including VLinker FS) reset CAF/S/AL to defaults when the protocol changes.
@@ -1691,7 +1683,45 @@ class ELM:
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)
 
+        self.cmd("AT AT 1")  # reset adaptive timing step 3
+        self.cmd("AT CRA " + RXa)
+
+        if options.opt_stpx_full and options.opt_caf:
+            self.cmd("STCFCPA " + TXa + ", " + RXa)
+
         return TXa, RXa
+
+    def set_can_250(self, addr='ABC'):
+        if len(addr) == 3:
+            if options.opt_can2 and options.opt_stn_basic:
+                self.cmd("STP 53")
+                self.cmd("STPBR 250000")
+                tmprsp = self.send_raw("0210C0")
+                if not 'CAN ERROR' in tmprsp: return
+            self.cmd("AT SP 8")
+        else:
+            if options.opt_can2 and options.opt_stn_basic:
+                self.cmd("STP 54")
+                self.cmd("STPBR 250000")
+                tmprsp = self.send_raw("0210C0")
+                if not 'CAN ERROR' in tmprsp: return
+            self.cmd("AT SP 9")
+
+    def set_can_500(self, addr='ABC'):
+        if len(addr) == 3:
+            if options.opt_can2 and options.opt_stn_basic:  # for STN with FORD MS-CAN support and pinout changed by soldering
+                self.cmd("STP 53")
+                self.cmd("STPBR 500000")
+                tmprsp = self.send_raw("0210C0")  # send anything
+                if not 'CAN ERROR' in tmprsp: return
+            self.cmd("AT SP 6")
+        else:
+            if options.opt_can2 and options.opt_stn_basic:
+                self.cmd("STP 54")
+                self.cmd("STPBR 500000")
+                tmprsp = self.send_raw("0210C0")
+                if not 'CAN ERROR' in tmprsp: return
+            self.cmd("AT SP 7")
 
     def start_session_iso(self, start_session):
         self.startSession = start_session
@@ -1714,13 +1744,15 @@ class ELM:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
             self.lf.flush()
-        # self.cmd("AT WS")
+        self.cmd("AT WS")
         self.cmd("AT E1")
-        self.cmd("AT L0")
+        self.cmd("AT S1")
+        self.cmd("AT L1")
         self.cmd("AT D1")
-        self.cmd("AT H0")  # headers off
-        self.cmd("AT AL")  # Allow Long (>7 byte) messages
-        self.cmd("AT KW0")
+        # Others ...
+        # self.cmd("AT H0")  # headers off
+        # self.cmd("AT AL")  # Allow Long (>7 byte) messages
+        # self.cmd("AT KW0")
 
     def set_iso8_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
@@ -1742,6 +1774,7 @@ class ELM:
         self.cmd("AT SH 81 " + addr + " F1")  # set address
         self.cmd("AT SW 96")  # wakeup message period 3 seconds
         self.cmd("AT WM 81 " + addr + " F1 3E")  # set wakeup message
+        # self.cmd("at WM 82 "+addr+" F1 3E01")    #set wakeup message
         self.cmd("AT IB10")  # baud rate 10400
         self.cmd("AT ST FF")  # set timeout to 1 second
         self.cmd("AT SP 3")
@@ -1773,19 +1806,26 @@ class ELM:
         self.cmd("AT ST FF")  # set timeout to 1 second
         self.cmd("AT AT 0")  # disable adaptive timing
 
-        if options.opt_si:
+        if 'PRNA2000' in ecu.get('protocol', '').upper() or options.opt_si:
             self.cmd("AT SP 4")  # slow init mode 4
-            self.cmd("AT IIA " + addr)  # address for slow init
-            self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
+            if len(ecu.get('slowInit', '')) > 0:
+                self.cmd("AT IIA " + ecu['slowInit'])  # address for slow init
+            rsp = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
+            # rsp = self.cmd("81")
+            if 'ERROR' in rsp and len(ecu.get('fastInit', '')) > 0:
+                ecu['protocol'] = ''
+                if self.lf != 0:
+                    self.lf.write('### Try fast init\n')
+                    self.lf.flush()
 
+                    # if 'PRNA2000' not in ecu['protocol'].upper() :
         if 'OK' not in self.lastinitrsp:
             self.cmd("AT SP 5")  # fast init mode 5
             self.lastinitrsp = self.cmd("AT FI")  # perform fast init mode 5
-
-        if 'OK' not in self.lastinitrsp:
-            return False
+            # self.lastinitrsp = self.cmd("81")         #init bus
 
         self.cmd("AT AT 1")  # enable adaptive timing
+        self.cmd("81")  # start session
         return True
 
 
@@ -1821,9 +1861,9 @@ def elm_checker(port, speed, adapter, logview, app):
             if is_els27:
                 logview.append(_("ELS27 device detected: ") + response)
                 # Extract baud rate from response if found
-                if "at " in response and "baud" in response:
+                if "at " in response.lower() and "baud" in response.lower():
                     try:
-                        baud_str = response.split("at ")[1].split(" baud")[0]
+                        baud_str = response.lower().split("at ")[1].split(" baud")[0]
                         detected_baud = int(baud_str)
                         if detected_baud != speed:
                             logview.append(_("Using detected baud rate: ") + str(detected_baud))
@@ -1892,6 +1932,8 @@ def elm_checker(port, speed, adapter, logview, app):
 
                 logview.append("%5s %10s %s" % (cm[0], cm[2], chre))
                 app.processEvents()
+
+    options.elm.__del__()
 
     if pycom > 0:
         logview.append('<font color=red>' + _('Incompatible adapter on ARM core') + '</font> \n')
