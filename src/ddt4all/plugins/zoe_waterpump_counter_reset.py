@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # (c) 2025
-# Zoé EVC water pump counter reset values (low, medium, high speed + timer)
+# Zoe EVC water pump counter reset values (low, medium, high speed + timer)
 # cf error code: SYST ELEC A CONTROLLER
 
 import PyQt5.QtCore as core

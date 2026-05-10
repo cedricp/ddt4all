@@ -10,44 +10,34 @@ class DeviceManager:
         """Get optimal connection settings for specific device types"""
         settings = {
             'vlinker': {
-                'baudrate': 38400, 'timeout': 3, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': False
+                'baudrate': 38400, 'timeout': 3, 'rtscts': False, 'dsrdtr': False
             },
             'elm327': {
-                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': False
+                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False
             },
             'obdlink': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False,
-                'stn_support': True, 'stpx_support': True, 'pin_swap': True
+                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False
             },
             'obdlink_ex': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False,
-                'stn_support': True, 'stpx_support': True, 'pin_swap': True
+                'baudrate': 115200, 'timeout': 2, 'rtscts': True, 'dsrdtr': False
             },
             'els27': {
-                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False, 'can_pins': '12-13',
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False
             },
             'vgate': {
-                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': True, 'stpx_support': True, 'pin_swap': True
+                'baudrate': 115200, 'timeout': 2, 'rtscts': False, 'dsrdtr': False
             },
             'derlek_usb_diag2': {
-                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False
             },
             'derlek_usb_diag3': {
-                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 38400, 'timeout': 4, 'rtscts': False, 'dsrdtr': False
             },
             'unknown': {
-                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': False
+                'baudrate': 38400, 'timeout': 5, 'rtscts': False, 'dsrdtr': False
             },
             'usbcan': {
-                'baudrate': 500000, 'timeout': 2, 'rtscts': False, 'dsrdtr': False,
-                'stn_support': False, 'stpx_support': False, 'pin_swap': True
+                'baudrate': 500000, 'timeout': 2, 'rtscts': False, 'dsrdtr': False
             }
         }
         return settings.get(DeviceManager.normalize_adapter_type(device_type), settings['unknown'])
@@ -111,232 +101,18 @@ class DeviceManager:
             return 'unknown'
 
     @staticmethod
-    def enable_enhanced_features(elm_instance, device_type):
-        """Enable enhanced features based on device type"""
-        try:
-            if not elm_instance:
-                return False
-            
-            settings = DeviceManager.get_optimal_settings(device_type)
-            
-            if not settings.get('stn_support', False):
-                return True  # No STN support needed
-            
-            # Probe for STN/STPX support (detection only — does not enable STPX wrapping)
-            if settings.get('stpx_support', False):
-                DeviceManager._enable_stpx_mode(elm_instance, device_type)
-            
-            # Enable pin swapping if supported
-            if settings.get('pin_swap', False):
-                DeviceManager._auto_swap_pins(elm_instance, device_type)
-            
-            return True
-            
-        except Exception as e:
-            print(_("Enhanced features enable error: %s") % e)
-            return False
-
-    @staticmethod
-    def _enable_stpx_mode(elm_instance, device_type):
-        """Enable STPX mode for enhanced long command support"""
-        try:
-            # STPX is a mode, not individual commands
-            # Only OBDLink and VGate support STPX mode
-            # STPX is automatically enabled when adapter detects long commands
-            
-            # Try to enable STPX mode (if supported)
-            response = elm_instance.cmd("STPX")
-            if "?" in response:
-                print(_("STPX not supported by this adapter"))
-                elm_instance.stpx_enabled = False
-                return False
-
-            # Do not set stpx_enabled = True here. The STPX D: wrapping in send_raw()
-            # breaks non-STN adapters (VLinker, ELM327 clones) if the bare STPX command
-            # returns something other than "?" (e.g. "ERROR" or timeout). Detection
-            # confirms the adapter has some STPX awareness but does not enable wrapping.
-            print(_("STPX mode detected on adapter"))
-            return True
-
-        except Exception as e:
-            print(_("STPX mode enable error: %s") % e)
-            elm_instance.stpx_enabled = False
-            return False
-
-    @staticmethod
-    def _auto_swap_pins(elm_instance, device_type):
-        """Auto-swap pins based on device type"""
-        try:
-            if device_type == 'vgate':
-                return DeviceManager._swap_vgate_pins(elm_instance)
-            elif device_type == 'obdlink':
-                return DeviceManager._swap_obdlink_pins(elm_instance)
-            elif device_type == 'derlek_usb_diag2':
-                return DeviceManager._swap_derlek_diag2_pins(elm_instance)
-            elif device_type == 'derlek_usb_diag3':
-                return DeviceManager._swap_derlek_diag3_pins(elm_instance)
-            elif device_type == 'els27':
-                return DeviceManager._swap_els27_pins(elm_instance)
-            elif device_type == 'usbcan':
-                return DeviceManager._swap_usbcan_pins(elm_instance)
-            else:
-                return True  # No pin swap needed
-                
-        except Exception as e:
-            print(_("Pin swap error: %s") % e)
-            return False
-
-    @staticmethod
-    def _swap_vgate_pins(elm_instance):
-        """Swap pins for VGate adapters using STN protocol"""
-        try:
-            # VGate specific pin swapping commands
-            pin_swap_commands = [
-                ("ST SBR 500000", "Set baudrate for pin swap"),
-                ("STP 53", "Enable CAN pin swapping"),
-                ("STPBR 500000", "Set pin swap baudrate")
-            ]
-            
-            for cmd, desc in pin_swap_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"VGate pin swap command failed: {cmd} ({desc})")
-                    return False
-            
-            # Verify pin swap worked
-            test_response = elm_instance.cmd("0210C0")
-            if "CAN ERROR" not in test_response:
-                print(_("VGate pin swapping successful"))
-                return True
-            else:
-                print(_("VGate pin swapping failed, using fallback"))
-                return False
-                
-        except Exception as e:
-            print(_("VGate pin swap error: %s") % e)
-            return False
-
-    @staticmethod
-    def _swap_obdlink_pins(elm_instance):
-        """Swap pins for OBDLink adapters"""
-        try:
-            # OBDLink specific pin swapping
-            pin_swap_commands = [
-                ("AT BRD 23", "Set baudrate for 115200"),
-                ("AT SP 6", "Set CAN protocol")
-            ]
-            
-            for cmd, desc in pin_swap_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"OBDLink pin swap command failed: {cmd} ({desc})")
-                    return False
-            
-            print(_("OBDLink pin swapping completed"))
-            return True
-            
-        except Exception as e:
-            print(_("OBDLink pin swap error: %s") % e)
-            return False
-
-    @staticmethod
-    def _swap_derlek_diag2_pins(elm_instance):
-        """Swap pins for DerleK USB-DIAG2 adapters"""
-        try:
-            # DerleK USB-DIAG2 uses proprietary protocol, not AT commands
-            # Pin swapping is handled internally by the device
-            # No AT commands needed for DERLEK devices
-            
-            print(_("DerleK USB-DIAG2 uses proprietary protocol - no AT commands needed"))
-            return True
-            
-        except Exception as e:
-            print(_("DerleK USB-DIAG2 pin swap error: %s") % e)
-            return False
-
-    @staticmethod
-    def _swap_derlek_diag3_pins(elm_instance):
-        """Swap pins for DerleK USB-DIAG3 adapters"""
-        try:
-            # DerleK USB-DIAG3 uses proprietary protocol, not AT commands
-            # Pin swapping is handled internally by the device
-            # No AT commands needed for DERLEK devices
-            
-            print(_("DerleK USB-DIAG3 uses proprietary protocol - no AT commands needed"))
-            return True
-            
-        except Exception as e:
-            print(_("DerleK USB-DIAG3 pin swap error: %s") % e)
-            return False
-
-    @staticmethod
-    def _swap_usbcan_pins(elm_instance):
-        """Swap pins for USB CAN adapters"""
-        try:
-            # USB CAN specific pin swapping
-            pin_swap_commands = [
-                ("AT BRD 23", "Set baudrate for 115200"),
-                ("AT SP 6", "Set CAN protocol")
-            ]
-            
-            for cmd, desc in pin_swap_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"USB CAN pin swap command failed: {cmd} ({desc})")
-                    return False
-            
-            print(_("USB CAN pin swapping completed"))
-            return True
-            
-        except Exception as e:
-            print(_("USB CAN pin swap error: %s") % e)
-            return False
-
-    @staticmethod
-    def _swap_els27_pins(elm_instance):
-        """Swap pins for ELS27 adapters"""
-        try:
-            # ELS27 specific pin swapping
-            pin_swap_commands = [
-                ("AT SP 6", "Set CAN protocol"),
-                ("AT SH 81", "Set header for ELS27")
-            ]
-            
-            for cmd, desc in pin_swap_commands:
-                response = elm_instance.cmd(cmd)
-                if "?" in response:
-                    print(f"ELS27 pin swap command failed: {cmd} ({desc})")
-                    return False
-            
-            print(_("ELS27 pin swapping completed"))
-            return True
-            
-        except Exception as e:
-            print(_("ELS27 pin swap error: %s") % e)
-            return False
-
-    @staticmethod
     def initialize_device(elm_instance, device_type=None):
         """Complete device initialization with enhanced features"""
         try:
             if not elm_instance:
                 return False
             
-            # Auto-detect device type from ATI response — more reliable than trusting
-            # the UI selection, which can be wrong (e.g. VLinker FS selected as VGATE).
+            # Auto-detect device type if not provided
             if not device_type:
                 device_type = DeviceManager.detect_device_type(elm_instance)
-
+            
             # Get optimal settings
             settings = DeviceManager.get_optimal_settings(device_type)
-            
-            # Enable enhanced features
-            success = DeviceManager.enable_enhanced_features(elm_instance, device_type)
-            
-            if success:
-                print(_("Device %s initialized successfully with enhanced features") % device_type)
-            else:
-                print(_("Device %s initialized with basic features only") % device_type)
             
             return True
             

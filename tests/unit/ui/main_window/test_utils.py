@@ -6,6 +6,9 @@ from ddt4all.ui.main_window.utils import (
     set_socket_timeout,
 )
 
+import ddt4all.options as options
+_ = options.translator('ddt4all')
+
 def test_set_theme_style_does_not_crash(qapp):
     set_theme_style(qapp, Qt.Checked)  # dark
     set_theme_style(qapp, Qt.Unchecked)  # light

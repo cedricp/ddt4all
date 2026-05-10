@@ -82,7 +82,7 @@ def main(argv=None) -> int:
                 f.write(f'#define __email__ "{version.__email__}"\n')
                 f.write(f'#define __status__ "{version.__status__}"')
         except (OSError, IOError) as e:
-            print(f"Warning: Could not write version.h: {e}")
+            print(_("Warning: Could not write version.h: %s") % e)
 
     try:
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
@@ -154,12 +154,6 @@ def main(argv=None) -> int:
             msgbox.exec_()
         else:
             nok = False
-            # Initialize device with enhanced features (STPX, pin swapping, etc.)
-            if options.elm and options.elm.connectionStatus:
-                print(_("Initializing device features..."))
-                elm.DeviceManager.initialize_device(options.elm)
-                # Mark as initialized to avoid re-initialization during scan
-                options.elm._device_initialized = True
 
     w = MainWidget(app, vehicles)
     options.main_window = w

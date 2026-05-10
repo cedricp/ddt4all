@@ -70,8 +70,12 @@ class Port:
 
             if saved_settings and 'baudrate' in saved_settings:
                 self.settings = saved_settings
+                translate_arg = _("Using saved settings for")
+                print (("%(text)s %(type)s: %(settings)s") % {"text": translate_arg, "type": self.adapter_type, "settings": self.settings})
             else:
                 self.settings = DeviceManager.get_optimal_settings(self.adapter_type)
+                translate_arg = _("Using optimal settings for")
+                print(_("%(text)s %(type)s: %(settings)s") % {"text": translate_arg, "type": self.adapter_type, "settings": self.settings})
 
             # Use provided speed if specified, otherwise use setting
             if speed > 0:
@@ -91,7 +95,7 @@ class Port:
                             self.init_doip(ip, port_num)
                             return
                         else:
-                            print("ELM327 doesn't support DoIP, falling back to serial mode")
+                            print(_("ELM327 doesn't support DoIP, falling back to serial mode"))
                 except ValueError:
                     pass  # Not a valid port number, continue with serial
 
@@ -127,21 +131,21 @@ class Port:
             self.hdr.reset_output_buffer()
 
             translate_arg = _("Serial port opened")
-            print(f"{translate_arg}: {self.hdr}")
+            print("%s: %s" % (translate_arg, self.hdr))
             self.connectionStatus = True
             # Settings are saved by ELM.__init__ only after ELM communication is confirmed,
             # not here — opening the port at a speed doesn't mean the ELM responds at that speed.
 
         except serial.SerialException as e:
-            error_msg = f"Serial connection error: {e}"
-            print(_("Error: ") + error_msg)
+            error_msg = _("Serial connection error: %s") % e
+            print("Error: " + error_msg)
             print(_("ELM not connected or wrong COM port"), self.portName)
             options.last_error = error_msg
             options.elm_failed = True
             self.connectionStatus = False
         except Exception as e:
-            error_msg = f"Unexpected error: {e}"
-            print(_("Error: ") + error_msg)
+            error_msg = _("Unexpected error: %s") % e
+            print("Error: " + error_msg)
             options.last_error = error_msg
             options.elm_failed = True
             self.connectionStatus = False
@@ -152,31 +156,31 @@ class Port:
             # For now, treat Bluetooth as serial with special handling
             # Future enhancement: implement proper Bluetooth socket handling
             self.init_serial(38400)
-            print(f"Bluetooth connection attempted: {self.portName}")
+            print(_("Bluetooth connection attempted: %s") % self.portName)
             self.connectionStatus = True
-            print(f"Serial connection established: {self.portName} @ {self.settings['baudrate']} baud")
+            print(_("Serial connection established: %(port)s @ %(baud)s baud") % {"port": self.portName, "baud": self.settings['baudrate']})
 
         except Exception as e:
-            print(f"Bluetooth connection failed: {e}")
+            print(_("Bluetooth connection failed: %s") % e)
             options.elm_failed = True
             self.connectionStatus = False
 
     def init_doip(self, ip, port):
         """Initialize DoIP connection"""
         try:
-            print(f"Initializing DoIP connection to {ip}:{port}")
+            print(_("Initializing DoIP connection to %(ip)s:%(port)s") % {"ip": ip, "port": port})
             self.doip_device = doip.DoIPDevice(ip)
             
             if self.doip_device.connect():
                 self.connectionStatus = True
                 self.portType = 3  # DoIP connection type
-                print(f"DoIP connection established: {ip}:{port}")
+                print(_("DoIP connection established: %(ip)s:%(port)s") % {"ip": ip, "port": port})
             else:
-                print(f"DoIP connection failed: {ip}:{port}")
+                print(_("DoIP connection failed: %(ip)s:%(port)s") % {"ip": ip, "port": port})
                 self.connectionStatus = False
                 
         except Exception as e:
-            print(f"DoIP initialization failed: {e}")
+            print(_("DoIP initialization failed: %s") % e)
             self.connectionStatus = False
             options.elm_failed = True
 
@@ -191,10 +195,10 @@ class Port:
                         if hasattr(self.hdr, 'reset_output_buffer'):
                             self.hdr.reset_output_buffer()
                     self.hdr.close()
-                    print(_("Port closed"))
+                    print(_("Port closed: %s") % self.hdr)
                 self.connectionStatus = False
             except (AttributeError, OSError, Exception) as e:
-                print(f"Error closing port: {e}")
+                print(_("Error closing port: %s") % e)
             finally:
                 self.hdr = None
 
@@ -216,7 +220,7 @@ class Port:
             # Set connection timeout
             self.hdr.settimeout(10)  # 10 seconds for connection
 
-            print(f"Connecting to WiFi adapter at {self.ipaddr}:{self.tcpprt}")
+            print(_("Connecting to WiFi adapter at %(ip)s:%(port)s") % {"ip": self.ipaddr, "port": self.tcpprt})
             self.hdr.connect((self.ipaddr, self.tcpprt))
 
             # Configure socket timeout based on settings
@@ -228,23 +232,23 @@ class Port:
             self.connectionStatus = True
             self.tcp_needs_reconnect = False
             self.reconnect_attempts = 0
-            print(f"WiFi connection established: {self.ipaddr}:{self.tcpprt}")
+            print(_("WiFi connection established: %(ip)s:%(port)s") % {"ip": self.ipaddr, "port": self.tcpprt})
 
         except socket.timeout:
-            error_msg = f"WiFi connection timeout to {self.ipaddr}:{self.tcpprt}"
-            print(_("Error: ") + error_msg)
+            error_msg = _("WiFi connection timeout to %(ip)s:%(port)s") % {"ip": self.ipaddr, "port": self.tcpprt}
+            print("Error: " + error_msg)
             options.last_error = error_msg
             options.elm_failed = True
             self.connectionStatus = False
         except socket.error as e:
-            error_msg = f"WiFi connection error: {e}"
-            print(_("Error: ") + error_msg)
+            error_msg = _("WiFi connection error: %s") % e
+            print("Error: " + error_msg)
             options.last_error = error_msg
             options.elm_failed = True
             self.connectionStatus = False
         except Exception as e:
-            error_msg = f"Unexpected WiFi error: {e}"
-            print(_("Error: ") + error_msg)
+            error_msg = _("Unexpected WiFi error: %s") % e
+            print("Error: " + error_msg)
             options.last_error = error_msg
             options.elm_failed = True
             self.connectionStatus = False
@@ -258,12 +262,12 @@ class Port:
                     try:
                         byte = self.hdr.recv(1)
                         if options.debug:
-                            print(f"WiFi recv: {byte}")
+                            print(_("WiFi recv: %s") % byte)
                     except socket.timeout:
                         self.tcp_needs_reconnect = True
                         return None
                     except (socket.error, ConnectionResetError) as e:
-                        print(f"WiFi connection error: {e}")
+                        print(_("WiFi connection error: %s") % e)
                         self.tcp_needs_reconnect = True
                         return None
                 elif self.portType == 2:  # Bluetooth
@@ -319,7 +323,7 @@ class Port:
         if self.portType == 0:  # Serial/USB only
             self.hdr.baudrate = rate
         elif self.portType == 1:  # TCP/WiFi - no baudrate concept
-            print("WiFi connection - baudrate change not applicable")
+            print(_("WiFi connection - baudrate change not applicable"))
         else:  # Bluetooth
             if self.hdr and hasattr(self.hdr, 'baudrate'):
                 self.hdr.baudrate = rate
@@ -431,19 +435,20 @@ class Port:
         timeout = 2
 
         for s in [38400, 115200, 230400, 57600, 9600, 500000]:
-            print("\r\t\t\t\t\r" + _("Checking port speed:"), s, )
+            print(("\r\t\t\t\t\r%s") % _("Checking port speed:"))
+            print(s)
             sys.stdout.flush()
 
             if self.portType == 0:  # Serial/USB only
                 self.hdr.baudrate = s
             elif self.portType == 1:  # TCP/WiFi - no baudrate concept
-                print("WiFi connection - skipping baudrate check")
+                print(_("WiFi connection - skipping baudrate check"))
                 break
             else:  # Bluetooth
                 if self.hdr and hasattr(self.hdr, 'baudrate'):
                     self.hdr.baudrate = s
                 else:
-                    print("Bluetooth connection - skipping baudrate check")
+                    print(_("Bluetooth connection - skipping baudrate check"))
                     break
             
             # self.hdr.flushInput()
@@ -467,8 +472,8 @@ class Port:
                 self.buff += byte
                 tc = time.time()
                 if '>' in self.buff:
-                    options.port_speed = s
-                    print("\n" + _("Start COM speed :"), s)
+                    options.port_speed = s                   
+                    print("\n" + (_("Start COM speed: ") %  s))
                     if self.portType == 0:  # Serial/USB only
                         self.hdr.timeout = timeout
                     elif self.portType == 1:  # TCP/WiFi

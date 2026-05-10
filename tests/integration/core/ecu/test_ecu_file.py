@@ -1,6 +1,7 @@
 import json
 
 import ddt4all.options as options
+_ = options.translator('ddt4all')
 from ddt4all.core.ecu.ecu_file import EcuFile
 
 

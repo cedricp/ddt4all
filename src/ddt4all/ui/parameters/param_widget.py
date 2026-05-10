@@ -1356,7 +1356,19 @@ class ParamWidget(widgets.QWidget):
                 can_response += more_can_response[2:]
                 maxcount -= 1
 
-        numberofdtc = int('0x' + can_response[1], 16)
+        # Validate that can_response[1] is a valid hexadecimal value
+        try:
+            # Check if can_response[1] is a valid hex value
+            if len(can_response) < 2 or not all(c in '0123456789ABCDEFabcdef' for c in can_response[1]):
+                # Invalid hex response, treat as no DTC - return silently
+                response_data = can_response[1] if len(can_response) > 1 else 'insufficient data'
+                print(_("Invalid DTC response: ") + response_data)
+                return
+            numberofdtc = int('0x' + can_response[1], 16)
+        except (ValueError, IndexError):
+            # Invalid hexadecimal response or malformed data, treat as no DTC - return silently
+            print(_("DTC parsing error - response: ") + str(can_response))
+            return
         self.dtcdialog = widgets.QDialog(None)
         # Set window icon and title
         appIcon = gui.QIcon(PATH_PNG_ODB)

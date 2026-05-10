@@ -58,8 +58,8 @@ def generate_qrc(
         lines.append(f'  <qresource prefix="{g.prefix}">')
 
         for f in files:
-            file_rel = rel_posix(f, project_root)   # chemin réel pour compilation
-            alias = rel_posix(f, group_root)        # chemin exposé dans Qt (relatif au groupe)
+            file_rel = rel_posix(f, project_root)   # real path for compilation
+            alias = rel_posix(f, group_root)        # path exposed in Qt (relative to group)
 
             lines.append(f'    <file alias="{alias}">../{file_rel}</file>')
 

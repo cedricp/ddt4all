@@ -52,7 +52,7 @@ bluetooth = [
     # Linux / Windows
     "pybluez-updated>=0.31; sys_platform != 'darwin'",
 
-    # macOS fallback (opcional mas recomendado)
+    # macOS fallback (optional but recommended)
     "bleak>=0.20.0; sys_platform == 'darwin'",
 ]
 

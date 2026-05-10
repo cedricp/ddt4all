@@ -557,7 +557,7 @@ class MainWindowOptions(widgets.QDialog):
                     self.listview.setCurrentItem(self.listview.item(0))
 
         except Exception as e:
-            print(f"Error updating port list: {e}")
+            print(_("Error updating port list: %s") % e)
 
     def bt(self):
         self.adapter = "STD_BT"
@@ -945,18 +945,18 @@ class MainWindowOptions(widgets.QDialog):
                 if ip_changed:
                     # Use QTimer to delay the update and prevent crashes
                     core.QTimer.singleShot(300, self._force_doip_update)
-                    print(f"DoIP preset applied: {preset_name} -> {preset['ip']}")
+                    print(_("DoIP preset applied: %(name)s -> %(ip)s") % {"name": preset_name, "ip": preset['ip']})
                 else:
-                    print(f"DoIP preset applied: {preset_name} (IP unchanged)")
+                    print(_("DoIP preset applied: %(name)s (IP unchanged)") % {"name": preset_name})
             except Exception as e:
-                print(f"Error preparing DoIP update: {e}")
+                print(_("Error preparing DoIP update: %s") % e)
             
             # Log the preset application
-            self.logview.append(f"Applied {preset_name} preset:")
-            self.logview.append(f"  IP: {preset['ip']}")
-            self.logview.append(f"  Port: {preset['port']}")
-            self.logview.append(f"  Timeout: {preset['timeout']}s")
-            self.logview.append(f"  Configuration saved and device list reloaded")
+            self.logview.append(_("Applied %s preset:") % preset_name)
+            self.logview.append(_("  IP: %s") % preset['ip'])
+            self.logview.append(_("  Port: %s") % preset['port'])
+            self.logview.append(_("  Timeout: %ss") % preset['timeout'])
+            self.logview.append(_("  Configuration saved and device list reloaded"))
 
     def _force_doip_update(self):
         """Force DoIP update bypassing all problematic operations"""
@@ -979,7 +979,7 @@ class MainWindowOptions(widgets.QDialog):
             self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
             
         except Exception as e:
-            print(f"Error in force DoIP update: {e}")
+            print(_("Error in force DoIP update: %s") % e)
 
     def _delayed_doip_update(self):
         """Delayed DoIP device list update to prevent crashes"""
@@ -992,7 +992,7 @@ class MainWindowOptions(widgets.QDialog):
             self._force_doip_update()
                 
         except Exception as e:
-            print(f"Error in delayed DoIP update: {e}")
+            print(_("Error in delayed DoIP update: %s") % e)
             # Try force update as last resort
             try:
                 self._force_doip_update()
@@ -1026,10 +1026,10 @@ class MainWindowOptions(widgets.QDialog):
             item.setBackground(core.QColor(150, 50, 50))  # Dark red for offline
             self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
             
-            print(f"DoIP device updated: {doip_ip}:{doip_port}")
+            print(_("DoIP device updated: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
             
         except Exception as e:
-            print(f"Error in targeted DoIP update: {e}")
+            print(_("Error in targeted DoIP update: %s") % e)
             raise
 
     def doip(self):
