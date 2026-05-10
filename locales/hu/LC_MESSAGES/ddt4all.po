@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 22:15+0200\n"
+"POT-Creation-Date: 2026-05-10 04:51+0200\n"
 "PO-Revision-Date: 2026-05-07 13:06+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -15,6 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -24,95 +25,95 @@ msgstr "DoIP eszköz sikeresen csatlakoztatva"
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr "DoIP CAN inicializálva Elektromos ECU támogatással"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP response: %s"
-msgstr "DoIP válasz: {}"
+msgstr "DoIP válasz: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP request failed: %s"
-msgstr "DoIP kérés sikertelen: {}"
+msgstr "DoIP kérés sikertelen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Testing Electric ECU: %s"
-msgstr "Elektromos ECU tesztelése: {}"
+msgstr "Elektromos ECU tesztelése: %s"
 
 msgid "Failed to connect to DoIP device"
 msgstr "Nem sikerült csatlakozni a DoIP eszközhöz"
 
 #, python-format
 msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP csatlakozva ehhez: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %s"
-msgstr "Kapcsolat sikertelen: "
+msgstr "DoIP kapcsolat sikertelen: %s"
 
 msgid "Insufficient vehicle identification data"
 msgstr "Elégtelen jármű azonosítási adat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected vehicle identification response, got: %s"
-msgstr "Várt jármű azonosítási válasz, érkezett: {}"
+msgstr "Várt jármű azonosítási válasz, érkezett: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Vehicle identification failed: %s"
-msgstr "Jármű azonosítás sikertelen: {}"
+msgstr "Jármű azonosítás sikertelen: %s"
 
 msgid "Insufficient session control data"
 msgstr "Elégtelen munkamenet vezérlő adat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic session control response, got: %s"
-msgstr "Várt diagnosztikai munkamenet vezérlő válasz, érkezett: {}"
+msgstr "Várt diagnosztikai munkamenet vezérlő válasz, érkezett: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Diagnostic session control failed: %s"
-msgstr "Diagnózis munkamenet vezérlés sikertelen: {}"
+msgstr "Diagnosztikai munkamenet vezérlés sikertelen: %s"
 
 msgid "Insufficient diagnostic message data"
 msgstr "Elégtelen diagnosztikai üzenet adat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic message response, got: %s"
-msgstr "Várt diagnosztikai üzenet válasz, érkezett: {}"
+msgstr "Várt diagnosztikai üzenet válasz, érkezett: %s"
 
 msgid "Insufficient alive check data"
 msgstr "Elégtelen ellenőrzési adat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected alive check response, got: %s"
-msgstr "Várt ellenőrzési válasz, érkezett: {}"
+msgstr "Várt élő ellenőrzési válasz, érkezett: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Alive check failed: %s"
-msgstr "Ellenőrzés sikertelen: {}"
+msgstr "Élő ellenőrzés sikertelen: %s"
 
 #, python-format
 msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr ""
+msgstr "DoIP Jármű azonosítva: VIN=%(vin)s, Cím=%(addr)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP vehicle identification failed: %s"
-msgstr "Jármű azonosítás sikertelen: {}"
+msgstr "DoIP jármű azonosítás sikertelen: %s"
 
 msgid "Not connected to DoIP device"
 msgstr "Nincs csatlakozva a DoIP eszközhöz"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Invalid hex request format: %s"
-msgstr "Érvénytelen hex kérés formátum: {}"
+msgstr "Érvénytelen hex kérés formátum: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP session start failed: %s"
-msgstr "DoIP munkamenet indítása sikertelen: {}"
+msgstr "DoIP munkamenet indítása sikertelen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP CAN initialization failed: %s"
-msgstr "DoIP CAN inicializálás sikertelen: {}"
+msgstr "DoIP CAN inicializálás sikertelen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP: Elektromos ECU észlelve - {}"
+msgstr "DoIP: Elektromos ECU észlelve - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
 msgstr "DoIP: Kiterjesztett címzés használata Elektromos Jármű Rendszerekhez"
@@ -194,80 +195,83 @@ msgstr "Cím szkennelése: "
 
 #, python-format
 msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr ""
+msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
-msgstr ""
+msgstr "Ismeretlen DoIP ECU válasz formátum: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error parsing DoIP response: %s"
-msgstr "DoIP válasz: {}"
+msgstr "Hiba a DoIP válasz elemzésekor: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
 msgstr ""
+"DoIP ECU a(z) %(addr)s címen minimális adatokkal válaszolt: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
 msgstr ""
+"DoIP kapcsolat inicializálása ehhez: %(ip)s:%(port)s (időtúllépés: "
+"%(timeout)ss)"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
-msgstr "%s STN kapcsolat létrejött"
+msgstr "DoIP kapcsolat létrejött: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization error: %s"
-msgstr "Eszköz inicializálási hiba: %s"
+msgstr "DoIP inicializálási hiba: %s"
 
 msgid "No DoIP addresses available for scanning"
-msgstr ""
+msgstr "Nincsenek elérhető DoIP címek a szkenneléshez"
 
 msgid "Scanning DoIP address: "
 msgstr "DoIP cím szkennelése: "
 
 #, python-format
 msgid "Warning: address %(addr)s is not mapped"
-msgstr ""
+msgstr "Figyelmeztetés: a(z) %(addr)s cím nincs leképezve"
 
 #, python-format
 msgid "No identification data from DoIP ECU at address %s"
-msgstr ""
+msgstr "Nincs azonosítási adat a DoIP ECU-től a(z) %s címen"
 
 #, python-format
 msgid "Negative response from DoIP ECU at address %s"
-msgstr ""
+msgstr "Negatív válasz a DoIP ECU-tól a(z) %s címen"
 
 #, python-format
 msgid "Failed to start session with DoIP ECU at address %s"
-msgstr ""
+msgstr "Nem sikerült munkamenetet indítani a DoIP ECU-val a(z) %s címen"
 
 #, python-format
 msgid "Failed to initialize DoIP communication with address %s"
-msgstr ""
+msgstr "Failed to initialize DoIP communication with address %s"
 
 msgid "DoIP device not available for scanning"
-msgstr ""
+msgstr "DoIP eszköz nem érhető el szkenneléshez"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error during DoIP scan: %s"
-msgstr "Hiba a kapcsolat tesztelése során: "
+msgstr "Hiba a DoIP szkennelés során: %s"
 
 #, python-format
 msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr ""
+msgstr "Szimulációs mód: a(z) %s DoIP címet szkennelnék"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
 msgstr ""
+"Kapcsolódna a DoIP ECU-hez a(z) %s címen és olvasná az azonosítási adatokat"
 
-#, fuzzy
 msgid "DoIP connection closed"
-msgstr "Kapcsolat sikertelen: "
+msgstr "DoIP kapcsolat lezárva"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing DoIP connection: %s"
-msgstr "Hiba a kapcsolat tesztelése során: "
+msgstr "Hiba a DoIP kapcsolat lezárásakor: %s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -299,32 +303,27 @@ msgstr "Port inicializálás sikertelen"
 msgid "Port connection failed - port object is invalid"
 msgstr "Port csatlakozás sikertelen - port objektum érvénytelen"
 
-#, fuzzy
 msgid "STN connection established"
-msgstr "%s STN kapcsolat létrejött"
+msgstr "STN kapcsolat létrejött"
 
-#, fuzzy
 msgid "Version: "
-msgstr "Verzió "
+msgstr "Verzió: "
 
 #, python-format
 msgid "STPX/STN configuration warning: %s"
-msgstr ""
+msgstr "STPX/STN konfigurációs figyelmeztetés: %s"
 
 msgid "No ELM interface on port"
 msgstr "Nincs ELM interfész a porton"
 
-#, fuzzy
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr "OBDLINK kapcsolat OK, teljes sebességű UART váltás kísérlete"
+msgstr "OBDLink kapcsolat OK, teljes sebességű UART váltás kísérlete"
 
-#, fuzzy
 msgid "Failed to switch OBDLink to "
-msgstr "OBDLINK váltása sikertelen erre: "
+msgstr "OBDLink váltása sikertelen erre: "
 
-#, fuzzy
 msgid "OBDLink Connection OK, using optimal settings"
-msgstr "OBDLINK kapcsolat OK, optimális beállítások használata"
+msgstr "OBDLink kapcsolat OK, optimális beállítások használata"
 
 msgid "Connection established successfully"
 msgstr "Kapcsolat sikeresen létrejött"
@@ -335,9 +334,9 @@ msgstr "ELS27 V5 CAN pinek konfigurálása (12-13)"
 msgid "ELS27 V5 CAN configuration complete"
 msgstr "ELS27 V5 CAN konfiguráció kész"
 
-#, fuzzy, python-format
+#, python-format
 msgid "ELS27 V5 configuration warning: %s"
-msgstr "ELS27 V5 CAN konfiguráció kész"
+msgstr "ELS27 V5 konfigurációs figyelmeztetés: %s"
 
 msgid "Port is None - cannot switch speed"
 msgstr "Port értéke None - nem lehet váltani a sebességet"
@@ -346,13 +345,13 @@ msgstr "Port értéke None - nem lehet váltani a sebességet"
 msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr "%s baudrate váltás OK, UART sebesség váltása most..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "ELM baudrate váltás OK, UART sebesség váltása most..."
+msgstr "%s baudrate switched OK, changing UART speed now..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Not supported baudrate %s"
-msgstr "Nem támogatott baudrate ELM-hez: %s"
+msgstr "Nem támogatott baudrate %s"
 
 msgid "ELM reset..."
 msgstr "ELM reset..."
@@ -434,80 +433,80 @@ msgstr "Optimális beállítások használata ehhez"
 
 #, python-format
 msgid "%(text)s %(type)s: %(settings)s"
-msgstr ""
+msgstr "%(text)s %(type)s: %(settings)s"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
-msgstr ""
+msgstr "ELM327 nem támogatja a DoIP-et, visszatérés a soros módba"
 
 msgid "Serial port opened"
 msgstr "Soros port megnyitva"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Serial connection error: %s"
-msgstr "Kapcsolat hiba: "
+msgstr "Soros kapcsolat hiba: %s"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM nincs csatlakoztatva vagy rossz COM port"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected error: %s"
-msgstr "Pin csere hiba: %s"
+msgstr "Váratlan hiba: %s"
 
 #, python-format
 msgid "Bluetooth connection attempted: %s"
-msgstr ""
+msgstr "Bluetooth kapcsolat kísérlete: %s"
 
 #, python-format
 msgid "Serial connection established: %(port)s @ %(baud)s baud"
-msgstr ""
+msgstr "Soros kapcsolat létrejött: %(port)s @ %(baud)s baud"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Bluetooth connection failed: %s"
-msgstr "Kapcsolat sikertelen: "
+msgstr "Bluetooth kapcsolat sikertelen: %s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP kapcsolat inicializálása %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
-msgstr "Kapcsolat sikertelen: "
+msgstr "DoIP kapcsolat sikertelen: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization failed: %s"
-msgstr "DoIP CAN inicializálás sikertelen: {}"
+msgstr "DoIP inicializálás sikertelen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Port closed: %s"
-msgstr "Port lezárva"
+msgstr "Port lezárva: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing port: %s"
-msgstr "Hiba a read()-ben: %s"
+msgstr "Port lezárási hiba: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
-msgstr "Kapcsolódás az eszközhöz ezen a porton: "
+msgstr "Kapcsolódás WiFi adapterhez %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection established: %(ip)s:%(port)s"
-msgstr "%s STN kapcsolat létrejött"
+msgstr "WiFi kapcsolat létrejött: %(ip)s:%(port)s"
 
 #, python-format
 msgid "WiFi connection timeout to %(ip)s:%(port)s"
-msgstr ""
+msgstr "WiFi kapcsolat időtúllépés %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection error: %s"
-msgstr "Kapcsolat hiba: "
+msgstr "WiFi kapcsolat hiba: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected WiFi error: %s"
-msgstr "Kapcsolat hiba: "
+msgstr "Váratlan WiFi hiba: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi recv: %s"
-msgstr "WiFi port: "
+msgstr "WiFi recv: %s"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
@@ -529,7 +528,7 @@ msgid "Error in read(): %s"
 msgstr "Hiba a read()-ben: %s"
 
 msgid "WiFi connection - baudrate change not applicable"
-msgstr ""
+msgstr "WiFi kapcsolat - baudrate váltás nem alkalmazható"
 
 msgid "Attempting WiFi reconnection..."
 msgstr "WiFi újracsatlakozás kísérlete..."
@@ -552,18 +551,12 @@ msgid "Checking port speed:"
 msgstr "Port sebességének ellenőrzése:"
 
 msgid "WiFi connection - skipping baudrate check"
-msgstr ""
+msgstr "WiFi kapcsolat - baudrate ellenőrzés kihagyása"
 
 msgid "Bluetooth connection - skipping baudrate check"
-msgstr ""
+msgstr "Bluetooth kapcsolat - baudrate ellenőrzés kihagyása"
 
-#, python-format
-msgid ""
-"\n"
-"%(label)s: %(speed)s"
-msgstr ""
-
-msgid "Start COM speed :"
+msgid "Start COM speed: "
 msgstr "Kezdeti COM sebesség:"
 
 msgid "ELM not responding"
@@ -627,9 +620,9 @@ msgstr ""
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nem található vagy érvénytelen."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Could not write version.h: %s"
-msgstr "Figyelmeztetés: Nem lehet olvasni a string leírót:"
+msgstr "Figyelmeztetés: Nem lehet írni a version.h fájlt: %s"
 
 msgid "Using custom DDT database"
 msgstr "Egyedi DDT adatbázis használata"
@@ -802,8 +795,7 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>EZ A PLUGIN VISSZAÁLLÍTJA AZ EPS "
-"IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</"
-"font>ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "Check EPS Virgin"
 msgstr "EPS Virgin ellenőrzése"
@@ -829,8 +821,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>JÁT<br>TÁVOZZON EL, HA "
-"NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "Check UCH Virgin"
 msgstr "UCH Virgin ellenőrzése"
@@ -852,8 +843,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>JÁT<br>TÁVOZZON EL, HA "
-"NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH Reset"
@@ -863,8 +853,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>JÁT<br>TÁVOZZON EL, HA "
-"NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 AIRBAG Reset"
@@ -874,9 +863,7 @@ msgid ""
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>EZ A PLUGIN FELOLDJA AZ "
-"AIRBAG ÜTKÖZÉSI ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</"
-"font>FELOLDJA AZ AIRBAG ÜTKÖZÉSI ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, "
-"MIT JELENT EZ</font>"
+"AIRBAG ÜTKÖZÉSI ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 #, python-format
 msgid "SDS FA stream: %s"
@@ -892,9 +879,7 @@ msgid ""
 msgstr ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>EZ A "
 "PLUGIN VISSZAÁLLÍTJA AZ EPS IMMO ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT "
-"JELENT EZ</font>ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font "
-"color='red'>EZ A PLUGIN VISSZAÁLLÍTJA AZ EPS IMMO ADATOKAT<br>TÁVOZZON EL, "
-"HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JELENT EZ</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III UCH Reset"
@@ -904,9 +889,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRLI AZ ÖN UCH-"
-"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>MEGANE III UCH "
-"VIRGINIZER<br><font color='red'>EZ A PLUGIN TÖRÖLNI FOGJA AZ ÖN UCH-"
-"JÁT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"JÁT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 AIRBAG Reset"
@@ -918,10 +901,7 @@ msgid ""
 msgstr ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>EZ A PLUGIN FELOLDJA AZ AIRBAG ÜTKÖZÉSI "
-"ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>TWINGO III/ZOE/"
-"DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
-"VIRGINIZER<br><font color='red'>EZ A PLUGIN FELOLDJA AZ AIRBAG ÜTKÖZÉSI "
-"ADATOKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"ADATOKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
@@ -977,9 +957,7 @@ msgid ""
 "PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Zoe vízszivattyú számlálók<br><font color='red'>EZ A PLUGIN TÖRLI A "
-"VÍZSZIVATTYÚ SZÁMLÁLÓKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</"
-"font>Zoe vízpumpa számlálók<br><font color='red'>EZ A PLUGIN TÖRÖLNI FOGJA A "
-"VÍZPUMPA SZÁMLÁLÓKAT<br>TÁVOZZON EL, HA NINCS ÖTLETE, MIT JELENT EZ</font>"
+"VÍZSZIVATTYÚ SZÁMLÁLÓKAT<br>MENJ EL, HA NINCS ÖTLETED, MIT JELENT EZ</font>"
 
 msgid "Check values"
 msgstr "Értékek ellenőrzése"
@@ -998,11 +976,7 @@ msgstr ""
 "<h1>TIPPEK</h1><ul><li>Helyezze be a kulcs KÁRTYÁT</li><li>Helyezze D "
 "pozícióba</li><li>Nyomja meg/Tartsa nyomva a START gombot, amíg meg nem "
 "jelenik a <b>Kártya eltávolítása</b> üzenet</li><li>Helyezze P pozícióba</"
-"li><li>Tartsa behelyezve a kulcs kártyát</li></ul><h1>TIPPEK</"
-"h1><ul><li>Helyezze be a kulcs kártyát</li><li>Helyezze D pozícióba</"
-"li><li>Nyomja meg/Tartsa a START gombot amíg a <b>Kártya eltávolítása</b> "
-"üzenet meg nem jelenik</li><li>Helyezze P pozícióba</li><li>Tartsa a kulcs "
-"kártyát behelyezve</li></ul>"
+"li><li>Tartsa behelyezve a kulcs kártyát</li></ul>"
 
 msgid "<font color='green'>Values read</font>"
 msgstr "<font color='green'>Értékek beolvasva</font>"
@@ -1229,10 +1203,10 @@ msgid "Data length"
 msgstr "Adathossz"
 
 msgid "Shift byte count"
-msgstr "Shift bájtok száma"
+msgstr "Bájtok eltolása"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Adat neve;Kezdő bájt,Bit offszet;Bitek száma;Bájstsorrend"
+msgstr "Adat neve;Kezdő bájt,Bit offszet;Bitek száma;Bájtsorrend"
 
 msgid "Little"
 msgstr "Kicsi az elején"
@@ -1302,10 +1276,12 @@ msgid "Yes I contribute"
 msgstr "Igen, hozzájárulok"
 
 msgid "No, I don't"
-msgstr "Nem"
+msgstr "Nem, nem fogok"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr "Köszönjük a hozzájárulását, ha semmi nem történik, látogasson el ide"
+msgstr ""
+"Köszönjük a hozzájárulását, ha semmi sem történik, látogasson el ide: "
+"https://github.com/cedricp/ddt4all"
 
 msgid "ECU Finder"
 msgstr "ECU kereső"
@@ -1531,9 +1507,9 @@ msgstr "Készítette:"
 msgid "Options"
 msgstr "Beállítások"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating menu bar: %s"
-msgstr "Hiba a read()-ben: %s"
+msgstr "Menüsor frissítési hiba: %s"
 
 msgid "CAN Line 1 Auto"
 msgstr "CAN 1-es vonal Auto"
@@ -1772,9 +1748,9 @@ msgstr "Hiba a kapcsolat tesztelése során: "
 msgid "Reset and Recheck"
 msgstr "Visszaállítás és újraellenőrzés"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating port list: %s"
-msgstr "Hiba a kapcsolat tesztelése során: "
+msgstr "Portlista frissítési hiba: %s"
 
 msgid "57600"
 msgstr "57600"
@@ -1806,50 +1782,50 @@ msgstr "Hosszú parancs támogatás és nagy sebességű kommunikáció elérhet
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
-msgstr ""
+msgstr "DoIP beállítás alkalmazva: %(name)s -> %(ip)s"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s (IP unchanged)"
-msgstr ""
+msgstr "DoIP beállítás alkalmazva: %(name)s (IP változatlan)"
 
 #, python-format
 msgid "Error preparing DoIP update: %s"
-msgstr ""
+msgstr "Hiba a DoIP frissítés előkészítésében: %s"
 
 #, python-format
 msgid "Applied %s preset:"
-msgstr ""
+msgstr "%s beállítás alkalmazva:"
 
 #, python-format
 msgid "  IP: %s"
-msgstr ""
+msgstr "  IP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "  Port: %s"
-msgstr "Port: "
+msgstr "  Port: %s"
 
 #, python-format
 msgid "  Timeout: %ss"
-msgstr ""
+msgstr "  Időtúllépés: %ss"
 
 msgid "  Configuration saved and device list reloaded"
-msgstr ""
+msgstr "  Konfiguráció mentve és eszközlista újratöltve"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in force DoIP update: %s"
-msgstr "Hiba a read()-ben: %s"
+msgstr "Hiba a kényszerített DoIP frissítésben: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in delayed DoIP update: %s"
-msgstr "Hiba a read()-ben: %s"
+msgstr "Hiba a késleltetett DoIP frissítésben: %s"
 
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP eszköz frissítve: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in targeted DoIP update: %s"
-msgstr "Hiba a read()-ben: %s"
+msgstr "Hiba a célzott DoIP frissítésben: %s"
 
 msgid "N/A"
 msgstr "N/A"
@@ -2014,7 +1990,7 @@ msgid "Clear DTC successfully done"
 msgstr "DTC törlése sikeresen megtörtént"
 
 msgid "No ReadDTC request for that ECU"
-msgstr "Nincs ReadDTC kérés ehhez az ECU-hozküldése"
+msgstr "Nincs ReadDTC kérés ehhez az ECU-hoz"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Érvénytelen válasz a ReadDTC parancsra"
@@ -2025,12 +2001,11 @@ msgstr "A Read DTC hibát adott vissza"
 msgid "No DTC"
 msgstr "Nincs DTC"
 
-#, fuzzy
 msgid "Invalid DTC response: "
-msgstr "Rossz ELM válasz :"
+msgstr "Érvénytelen DTC válasz: "
 
 msgid "DTC parsing error - response: "
-msgstr ""
+msgstr "DTC elemzési hiba - válasz: "
 
 msgid "Diagnostic Trouble Codes"
 msgstr "Diagnosztikai hibakódok"

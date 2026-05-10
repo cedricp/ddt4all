@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 22:15+0200\n"
-"PO-Revision-Date: 2026-05-07 13:04+0200\n"
+"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"PO-Revision-Date: 2026-05-10 03:47+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -23,95 +23,95 @@ msgstr "Zařízení DoIP úspěšně připojeno"
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr "DoIP CAN inicializováno s podporou elektrického ECU"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP response: %s"
-msgstr "Odpověď DoIP: {}"
+msgstr "Odpověď DoIP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP request failed: %s"
-msgstr "Požadavek DoIP selhal: {}"
+msgstr "Požadavek DoIP selhal: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Testing Electric ECU: %s"
-msgstr "Testování elektrického ECU: {}"
+msgstr "Testování elektrického ECU: %s"
 
 msgid "Failed to connect to DoIP device"
 msgstr "Nepodařilo se připojit k zařízení DoIP"
 
 #, python-format
 msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP připojeno k %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %s"
-msgstr "Připojení se nezdařilo: "
+msgstr "Připojení DoIP selhalo: %s"
 
 msgid "Insufficient vehicle identification data"
 msgstr "Nedostatečná data pro identifikaci vozidla"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected vehicle identification response, got: %s"
-msgstr "Očekávána odpověď identifikace vozidla, obdrženo: {}"
+msgstr "Očekávána odpověď identifikace vozidla, obdrženo: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Vehicle identification failed: %s"
-msgstr "Identifikace vozidla selhala: {}"
+msgstr "Identifikace vozidla selhala: %s"
 
 msgid "Insufficient session control data"
 msgstr "Nedostatečná data pro řízení relace"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic session control response, got: %s"
-msgstr "Očekávána odpověď řízení diagnostické relace, obdrženo: {}"
+msgstr "Očekávána odpověď řízení diagnostické relace, obdrženo: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Diagnostic session control failed: %s"
-msgstr "Řízení diagnostické relace selhalo: {}"
+msgstr "Řízení diagnostické relace selhalo: %s"
 
 msgid "Insufficient diagnostic message data"
 msgstr "Nedostatečná data diagnostické zprávy"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic message response, got: %s"
-msgstr "Očekávána odpověď diagnostické zprávy, obdrženo: {}"
+msgstr "Očekávána odpověď diagnostické zprávy, obdrženo: %s"
 
 msgid "Insufficient alive check data"
 msgstr "Nedostatečná data pro kontrolu alive"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected alive check response, got: %s"
-msgstr "Očekávána odpověď kontroly alive, obdrženo: {}"
+msgstr "Očekávána odpověď kontroly alive, obdrženo: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Alive check failed: %s"
-msgstr "Kontrola alive selhala: {}"
+msgstr "Kontrola alive selhala: %s"
 
 #, python-format
 msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr ""
+msgstr "Vozidlo DoIP identifikováno: VIN=%(vin)s, Adresa=%(addr)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP vehicle identification failed: %s"
-msgstr "Identifikace vozidla selhala: {}"
+msgstr "Identifikace vozidla DoIP selhala: %s"
 
 msgid "Not connected to DoIP device"
 msgstr "Nepřipojeno k zařízení DoIP"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Invalid hex request format: %s"
-msgstr "Neplatný formát hex požadavku: {}"
+msgstr "Neplatný formát hex požadavku: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP session start failed: %s"
-msgstr "Spuštění relace DoIP selhalo: {}"
+msgstr "Spuštění relace DoIP selhalo: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP CAN initialization failed: %s"
-msgstr "Inicializace DoIP CAN selhala: {}"
+msgstr "Inicializace DoIP CAN selhala: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP: Detekován elektrický ECU - {}"
+msgstr "DoIP: Detekován elektrický ECU - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
 msgstr "DoIP: Použití rozšířeného adresování pro systémy elektrických vozidel"
@@ -178,7 +178,7 @@ msgid "Found ECU"
 msgstr "Nalezeno ECU"
 
 msgid "(not perfect match)"
-msgstr "(není to dokonalá shoda)"
+msgstr "(není dokonalá shoda)"
 
 msgid "(no relevant ECU file found)"
 msgstr "(nebyl nalezen žádný relevantní soubor ECU)"
@@ -194,80 +194,80 @@ msgstr "Skenování adresy: "
 
 #, python-format
 msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr ""
+msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
-msgstr ""
+msgstr "Neznámý formát odpovědi ECU DoIP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error parsing DoIP response: %s"
-msgstr "Odpověď DoIP: {}"
+msgstr "Chyba při analýze odpovědi DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
 msgstr ""
+"ECU DoIP na adrese %(addr)s odpovědělo s minimálními daty: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
+msgstr "Inicializace připojení DoIP k %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
-msgstr "%s STN spojení navázáno"
+msgstr "Připojení DoIP navázáno: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization error: %s"
-msgstr "Chyba inicializace zařízení: %s"
+msgstr "Chyba inicializace DoIP: %s"
 
 msgid "No DoIP addresses available for scanning"
-msgstr ""
+msgstr "Žádné adresy DoIP nejsou k dispozici pro skenování"
 
 msgid "Scanning DoIP address: "
 msgstr "Skenování DoIP adresy: "
 
 #, python-format
 msgid "Warning: address %(addr)s is not mapped"
-msgstr ""
+msgstr "Varování: adresa %(addr)s není mapována"
 
 #, python-format
 msgid "No identification data from DoIP ECU at address %s"
-msgstr ""
+msgstr "Žádná identifikační data z ECU DoIP na adrese %s"
 
 #, python-format
 msgid "Negative response from DoIP ECU at address %s"
-msgstr ""
+msgstr "Negativní odpověď z ECU DoIP na adrese %s"
 
 #, python-format
 msgid "Failed to start session with DoIP ECU at address %s"
-msgstr ""
+msgstr "Nepodařilo se spustit relaci s ECU DoIP na adrese %s"
 
 #, python-format
 msgid "Failed to initialize DoIP communication with address %s"
-msgstr ""
+msgstr "Nepodařilo se inicializovat komunikaci DoIP s adresou %s"
 
 msgid "DoIP device not available for scanning"
-msgstr ""
+msgstr "Zařízení DoIP není k dispozici pro skenování"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error during DoIP scan: %s"
-msgstr "Chyba během testu připojení: "
+msgstr "Chyba během skenování DoIP: %s"
 
 #, python-format
 msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr ""
+msgstr "Simulační režim: adresa DoIP %s by byla skenována"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
+msgstr "Připojilo by se k ECU DoIP na adrese %s a přečetlo identifikační data"
 
-#, fuzzy
 msgid "DoIP connection closed"
-msgstr "Připojení se nezdařilo: "
+msgstr "Připojení DoIP uzavřeno"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing DoIP connection: %s"
-msgstr "Chyba během testu připojení: "
+msgstr "Chyba při uzavírání připojení DoIP: %s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -299,32 +299,27 @@ msgstr "Inicializace portu selhala"
 msgid "Port connection failed - port object is invalid"
 msgstr "Připojení k portu selhalo - objekt portu je neplatný"
 
-#, fuzzy
 msgid "STN connection established"
-msgstr "%s STN spojení navázáno"
+msgstr "Spojení STN navázáno"
 
-#, fuzzy
 msgid "Version: "
-msgstr "Verze "
+msgstr "Verze: "
 
 #, python-format
 msgid "STPX/STN configuration warning: %s"
-msgstr ""
+msgstr "Varování konfigurace STPX/STN: %s"
 
 msgid "No ELM interface on port"
 msgstr "Na portu není žádné rozhraní ELM"
 
-#, fuzzy
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr "Připojení OBDLINK v pořádku, pokus o přepnutí UART na plnou rychlost"
+msgstr "Připojení OBDLink v pořádku, pokus o přepnutí UART na plnou rychlost"
 
-#, fuzzy
 msgid "Failed to switch OBDLink to "
-msgstr "Nepodařilo se přepnout OBDLINK na "
+msgstr "Nepodařilo se přepnout OBDLink na "
 
-#, fuzzy
 msgid "OBDLink Connection OK, using optimal settings"
-msgstr "Připojení OBDLINK OK, používá se optimální nastavení"
+msgstr "Připojení OBDLink OK, používá se optimální nastavení"
 
 msgid "Connection established successfully"
 msgstr "Spojení úspěšně navázáno"
@@ -335,9 +330,9 @@ msgstr "Konfigurace pinů CAN ELS27 V5 (12-13)"
 msgid "ELS27 V5 CAN configuration complete"
 msgstr "Konfigurace ELS27 V5 CAN dokončena"
 
-#, fuzzy, python-format
+#, python-format
 msgid "ELS27 V5 configuration warning: %s"
-msgstr "Konfigurace ELS27 V5 CAN dokončena"
+msgstr "Varování konfigurace ELS27 V5: %s"
 
 msgid "Port is None - cannot switch speed"
 msgstr "Port je None - nelze přepnout rychlost"
@@ -345,16 +340,18 @@ msgstr "Port je None - nelze přepnout rychlost"
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr ""
-"%s přepnul přenosovou rychlost v pořádku, nyní se mění rychlost UARTu..."
+"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
+"UART..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
 msgstr ""
-"Přenosová rychlost ELM se přepnula v pořádku, nyní se mění rychlost UARTu..."
+"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
+"UART..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Not supported baudrate %s"
-msgstr "Váš ELM nepodporuje přenosovou rychlost %s"
+msgstr "Nepodporovaná přenosová rychlost %s"
 
 msgid "ELM reset..."
 msgstr "Resetování ELM..."
@@ -423,7 +420,7 @@ msgid "Result: "
 msgstr "Výsledek: "
 
 msgid " succeeded from "
-msgstr " podařilo z "
+msgstr " úspěšně z "
 
 msgid "ELM Max version:"
 msgstr "Maximální verze ELM:"
@@ -436,80 +433,80 @@ msgstr "Použití optimálního nastavení pro"
 
 #, python-format
 msgid "%(text)s %(type)s: %(settings)s"
-msgstr ""
+msgstr "%(text)s %(type)s: %(settings)s"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
-msgstr ""
+msgstr "ELM327 nepodporuje DoIP, návrat k sériovému režimu"
 
 msgid "Serial port opened"
 msgstr "Otevřen sériový port"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Serial connection error: %s"
-msgstr "Chyba připojení: "
+msgstr "Chyba sériového připojení: %s"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM není připojen nebo má špatný COM port"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected error: %s"
-msgstr "Chyba při prohození pinů: %s"
+msgstr "Neočekávaná chyba: %s"
 
 #, python-format
 msgid "Bluetooth connection attempted: %s"
-msgstr ""
+msgstr "Pokus o připojení Bluetooth: %s"
 
 #, python-format
 msgid "Serial connection established: %(port)s @ %(baud)s baud"
-msgstr ""
+msgstr "Sériové spojení navázáno: %(port)s @ %(baud)s baud"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Bluetooth connection failed: %s"
-msgstr "Připojení se nezdařilo: "
+msgstr "Připojení Bluetooth selhalo: %s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr ""
+msgstr "Inicializace připojení DoIP k %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
-msgstr "Připojení se nezdařilo: "
+msgstr "Připojení DoIP selhalo: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization failed: %s"
-msgstr "Inicializace DoIP CAN selhala: {}"
+msgstr "Chyba inicializace DoIP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Port closed: %s"
-msgstr "Port uzavřen"
+msgstr "Port uzavřen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing port: %s"
-msgstr "Chyba při čtení(): %s"
+msgstr "Chyba při uzavírání portu: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
-msgstr "Připojení k zařízení na portu: "
+msgstr "Připojení k WiFi adaptéru na %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection established: %(ip)s:%(port)s"
-msgstr "%s STN spojení navázáno"
+msgstr "WiFi spojení navázáno: %(ip)s:%(port)s"
 
 #, python-format
 msgid "WiFi connection timeout to %(ip)s:%(port)s"
-msgstr ""
+msgstr "Časový limit připojení WiFi k %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection error: %s"
-msgstr "Chyba připojení: "
+msgstr "Chyba připojení WiFi: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected WiFi error: %s"
-msgstr "Chyba připojení: "
+msgstr "Neočekávaná chyba WiFi: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi recv: %s"
-msgstr "WiFi port: "
+msgstr "WiFi recv: %s"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
@@ -531,7 +528,7 @@ msgid "Error in read(): %s"
 msgstr "Chyba při čtení(): %s"
 
 msgid "WiFi connection - baudrate change not applicable"
-msgstr ""
+msgstr "Připojení WiFi - změna rychlosti přenosu dat neaplikovatelná"
 
 msgid "Attempting WiFi reconnection..."
 msgstr "Pokus o opětovné připojení k Wi-Fi..."
@@ -554,18 +551,12 @@ msgid "Checking port speed:"
 msgstr "Kontrola rychlosti portu:"
 
 msgid "WiFi connection - skipping baudrate check"
-msgstr ""
+msgstr "Připojení WiFi - přeskakuje kontrolu rychlosti přenosu dat"
 
 msgid "Bluetooth connection - skipping baudrate check"
-msgstr ""
+msgstr "Připojení Bluetooth - přeskakuje kontrolu rychlosti přenosu dat"
 
-#, python-format
-msgid ""
-"\n"
-"%(label)s: %(speed)s"
-msgstr ""
-
-msgid "Start COM speed :"
+msgid "Start COM speed: "
 msgstr "Počáteční rychlost COM :"
 
 msgid "ELM not responding"
@@ -624,14 +615,14 @@ msgstr "Varování: Požadavek dodavatele selhal:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
 msgstr ""
-"Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezené."
+"Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezeny."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nenalezeno nebo neplatné."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Could not write version.h: %s"
-msgstr "Varování: Nelze přečíst popisovač řetězce:"
+msgstr "Varování: Nelze zapsat version.h: %s"
 
 msgid "Using custom DDT database"
 msgstr "Použití vlastní databáze DDT"
@@ -755,8 +746,7 @@ msgid ""
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>TENTO PLUGIN RESETUJE "
-"DATA IMMO EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>EPS<br>POKUD "
-"NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ZRUŠTE HO</font>"
+"DATA IMMO EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZRUŠTE HO</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "PRÁZDNÉ STAVY A ČTENÍ VIN"
@@ -803,8 +793,7 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>TENTO PLUGIN RESETUJE DATA IMMO "
-"EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>NEMÁTE TUŠENÍ, CO TO "
-"ZNAMENÁ, ZRUŠTE HO</font>"
+"EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZRUŠTE HO</font>"
 
 msgid "Check EPS Virgin"
 msgstr "Zkontrolujte EPS Virgin"
@@ -830,8 +819,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>NEMÁTE TUŠENÍ, CO TO "
-"ZNAMENÁ</font>"
+"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZMIZÍ</font>"
 
 msgid "Check UCH Virgin"
 msgstr "Zkontrolujte UCH Virgin"
@@ -853,8 +841,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>NEMÁTE TUŠENÍ, CO TO "
-"ZNAMENÁ</font>"
+"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZMIZÍ</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Reset UCH Megane/Scenic II"
@@ -873,10 +860,9 @@ msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMČE "
-"DATA O NÁRAZU AIRBAGU<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</"
-"font>ODEMKNE ÚDAJE O NEHODÁCH AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, "
-"ODEJDĚTE HO</font>"
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMKNE "
+"ÚDAJE O NEHODÁCH AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE HO</"
+"font>"
 
 #, python-format
 msgid "SDS FA stream: %s"
@@ -891,9 +877,8 @@ msgid ""
 "MEANS</font>"
 msgstr ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>TENTO "
-"PLUGIN RESETUJE DATA IMMO EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</"
-"font>color='red'>TENTO PLUGIN RESETUJE DATA IMMO EPS<br>POKUD NEMÁTE TUŠENÍ, "
-"CO TO ZNAMENÁ, ZRUŠTE HO</font>"
+"PLUGIN RESETUJE DATA IMMO EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, "
+"ZRUŠTE HO</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Reset UCH Megane/Scenic III"
@@ -903,9 +888,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>MEGANE III UCH "
-"VIRGINIZER<br><font color='red'>TENTO PLUGIN VYMAŽE VAŠE UCH<br>ZMIZÍ, POKUD "
-"NEMÁTE TUŠENÍ, CO TO ZNAMENÁ</font>"
+"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZMIZÍ</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "Reset AIRBAG RSAT4"
@@ -916,11 +899,8 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
-"VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMKNE DATA O NÁRAZU "
-"AIRBAGU<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>TWINGO III/ZOE/"
-"DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMKNE ÚDAJE O NEHODÁCH "
-"AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ZRUŠTE TO</font>"
+"AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE HO</font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
@@ -975,9 +955,7 @@ msgid ""
 "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
 "PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Čítače vodního čerpadla Zoe<br><font color='red'>TENTO PLUGIN SMAŽE ČÍTAČE "
-"VODNÍHO ČERPADLA<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>Zoe "
-"počítadla vodní pumpy<br><font color='red'>TENTO PLUGIN VYMAŽE POČÍTADLA "
+"Zoe počítadla vodní pumpy<br><font color='red'>TENTO PLUGIN VYMAŽE POČÍTADLA "
 "VODNÍ PUMPY<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ZRUŠTE TO</font>"
 
 msgid "Check values"
@@ -994,13 +972,10 @@ msgid ""
 "Stay START until <b>Remove card</b> message</li><li>Put P position</"
 "li><li>Keep key card inserted</li></ul>"
 msgstr ""
-"<h1>TIPY</h1><ul><li>Vložte klíčovou kartu</li><li>Postavte na pozici D</"
-"li><li>Stiskněte/Držte START dokud se neobjeví zpráva <b>Odeberte kartu</b></"
+"<h1>TIPY</h1><ul><li>Vložte klíčovou KARTU</li><li>Postavte na pozici D</"
+"li><li>Stiskněte/Držte START dokud se Neobjeví zpráva <b>Odeberte kartu</b></"
 "li><li>Postavte na pozici P</li><li>Ponechte klíčovou kartu vloženou</li></"
-"ul><h1>TIPY</h1><ul><li>Vložte klíčovou KARTU</li><li>Umístěte do polohy D</"
-"li><li>Stiskněte/podržte tlačítko START, dokud se neobjeví zpráva <b>Vyjměte "
-"kartu</b></li><li>Umístěte do polohy P</li><li>Nechte klíčovou kartu "
-"vloženou</li></ul>"
+"ul>"
 
 msgid "<font color='green'>Values read</font>"
 msgstr "<font color='green'>Hodnoty přečteny</font>"
@@ -1039,19 +1014,19 @@ msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>VYMAZÁNÍ VYSOKÉ HODNOTY SE NEDOŠLO</font>"
 
 msgid "Add"
-msgstr "Add"
+msgstr "Přidat"
 
 msgid "Del"
-msgstr "Del"
+msgstr "Smazat"
 
 msgid "Refresh"
-msgstr "Refresh"
+msgstr "Obnovit"
 
 msgid "Move up"
 msgstr "Posuňte se nahoru"
 
 msgid "Check"
-msgstr "Check"
+msgstr "Zkontrolovat"
 
 #, python-format
 msgid "Request %s not found"
@@ -1088,34 +1063,34 @@ msgid "Button name;Unique name"
 msgstr "Název tlačítka; Jedinečný název"
 
 msgid "New"
-msgstr "New"
+msgstr "Nový"
 
 msgid "Duplicate selected"
-msgstr "Vybrán duplikát"
+msgstr "Duplikovat vybrané"
 
 msgid "Remove selected"
-msgstr "Remove selected"
+msgstr "Odstranit vybrané"
 
 msgid "Reload"
-msgstr "Reload"
+msgstr "Znovu načíst"
 
 msgid "Validate changes"
 msgstr "Potvrďte změny"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Popis"
 
 msgid "Data type"
-msgstr "Data type"
+msgstr "Datový typ"
 
 msgid "Numeric"
-msgstr "Numeric"
+msgstr "Číselný"
 
 msgid "Numeric items"
 msgstr "Číselné položky"
 
 msgid "Hex"
-msgstr "Hex"
+msgstr "Hexadecimální"
 
 #, python-format
 msgid "Data is used by request %s"
@@ -1167,10 +1142,10 @@ msgid "Diag version;Supplier;Soft;Version"
 msgstr "Verze diagnostiky; Dodavatel; Software; Verze"
 
 msgid "Add new"
-msgstr "Add new"
+msgstr "Přidat nový"
 
 msgid "Delete selected"
-msgstr "Delete selected"
+msgstr "Smazat vybrané"
 
 msgid "Diag version"
 msgstr "Diag verze"
@@ -1185,19 +1160,19 @@ msgid "Version"
 msgstr "Verze"
 
 msgid "Number of bits"
-msgstr "Number of bits"
+msgstr "Počet bitů"
 
 msgid "Signed"
-msgstr "Signed"
+msgstr "Podepsaný"
 
 msgid "Add item"
 msgstr "Přidat položku"
 
 msgid "Del item"
-msgstr "Del položku"
+msgstr "Smazat položku"
 
 msgid "New item"
-msgstr "New item"
+msgstr "Nová položka"
 
 msgid "Value;Text"
 msgstr "Hodnota;Text"
@@ -1206,7 +1181,7 @@ msgid "Number of bit"
 msgstr "Počet bitů"
 
 msgid "Unit"
-msgstr "Unit"
+msgstr "Jednotka"
 
 msgid "Format"
 msgstr "Formát"
@@ -1224,19 +1199,19 @@ msgid "Receive bytes (HEX)"
 msgstr "Přijaté bajty (HEX)"
 
 msgid "Data length"
-msgstr "Data length"
+msgstr "Délka dat"
 
 msgid "Shift byte count"
 msgstr "Počet bajtů posunu"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Název dat; Počáteční bajt; Bitový offset; Počet bitů; Endianess"
+msgstr "Název dat;Počáteční bajt;Bitový posun;Počet bitů;Endianita"
 
 msgid "Little"
-msgstr "Málo"
+msgstr "Malý"
 
 msgid "Big"
-msgstr "Big"
+msgstr "Velký"
 
 msgid "Inherits globals"
 msgstr "Dědí globální proměnné"
@@ -1245,19 +1220,19 @@ msgid "No SDS"
 msgstr "Bez SDS"
 
 msgid "Plant"
-msgstr "Plant"
+msgstr "Závod"
 
 msgid "After Sale"
 msgstr "Po prodeji"
 
 msgid "Engineering"
-msgstr "Engineering"
+msgstr "Inženýrství"
 
 msgid "Reload requests"
 msgstr "Znovu načíst požadavky"
 
 msgid "Add request"
-msgstr "Add request"
+msgstr "Přidat požadavek"
 
 msgid "Send bytes"
 msgstr "Odeslat bajty"
@@ -1287,15 +1262,14 @@ msgid "Cannot draw input "
 msgstr "Nelze nakreslit vstup "
 
 msgid "No Value"
-msgstr "No Value"
+msgstr "Žádná hodnota"
 
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
 "<center>Tento software je zdarma, ale potřebuji peníze na nákup kabelů/ECU a "
-"zajištění spolehlivosti této aplikace</center>zvýšit spolehlivost této "
-"aplikace</center>"
+"zajištění spolehlivosti této aplikace</center>"
 
 msgid "Yes I contribute"
 msgstr "Ano, přispívám"
@@ -1307,10 +1281,10 @@ msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr "Děkujeme za váš příspěvek. Pokud se nic neděje, přejděte prosím na"
 
 msgid "ECU Finder"
-msgstr "Nalezena ECU"
+msgstr "Název ECU"
 
 msgid "Address :"
-msgstr "Neznámá adresa:"
+msgstr "Adresa :"
 
 msgid "ID frame :"
 msgstr "ID rám:"
@@ -1319,13 +1293,13 @@ msgid "No vehicles available"
 msgstr "Nejsou k dispozici žádná vozidla"
 
 msgid "ECU name"
-msgstr "Nalezena ECU"
+msgstr "Název ECU"
 
 msgid "ID"
 msgstr "ID"
 
 msgid "Protocol"
-msgstr "Protocol"
+msgstr "Protokol"
 
 msgid "Diag"
 msgstr "Diag"
@@ -1385,10 +1359,10 @@ msgid "Data"
 msgstr "Data"
 
 msgid "Buttons"
-msgstr "Buttons"
+msgstr "Tlačítka"
 
 msgid "Ecu parameters"
-msgstr "Identifikovaná řídicí jednotka motoru (ECU)"
+msgstr "Identifikovat ECU"
 
 msgid "Screen Window"
 msgstr "Okno obrazovky"
@@ -1397,19 +1371,19 @@ msgid "Screens"
 msgstr "Obrazovky"
 
 msgid "Logs Window"
-msgstr "Okno protokolů"
+msgstr "Okno ECU"
 
 msgid "Ecu Window"
-msgstr "Okno protokolů"
+msgstr "Okno ECU"
 
 msgid "Ecu List Window"
-msgstr "Okno Window"
+msgstr "Okno seznamu ECU"
 
 msgid "ToolBar"
 msgstr "Panel nástrojů"
 
 msgid "Read DTC"
-msgstr "Přečtěte si kód DTC"
+msgstr "Přečíst DTC"
 
 msgid "Full log"
 msgstr "Celý protokol"
@@ -1418,7 +1392,7 @@ msgid "Expert mode (enable writing)"
 msgstr "Expertní režim (povolit psaní)"
 
 msgid "Auto refresh"
-msgstr "Auto refresh"
+msgstr "Automatické obnovení"
 
 msgid "Refresh (one shot)"
 msgstr "Obnovení (jednorázové)"
@@ -1433,22 +1407,22 @@ msgid "Software flow control"
 msgstr "Softwarové řízení toku"
 
 msgid "Zoom In"
-msgstr "Zoom In"
+msgstr "Přiblížit"
 
 msgid "Zoom Out"
-msgstr "Zoom Out"
+msgstr "Oddálit"
 
 msgid "UI Edit"
-msgstr "Upravit uživatelské rozhraní"
+msgstr "Upravit UI"
 
 msgid "File"
 msgstr "Soubor"
 
 msgid "Open XML"
-msgstr "Otevřete XML"
+msgstr "Otevřít XML"
 
 msgid "Identify ECU"
-msgstr "Identifikovaná řídicí jednotka motoru (ECU)"
+msgstr "Identifikovat ECU"
 
 msgid "Create New ECU"
 msgstr "Vytvořit novou ECU"
@@ -1466,13 +1440,13 @@ msgid "Zip database"
 msgstr "Zip databáze"
 
 msgid "Exit"
-msgstr "Exit"
+msgstr "Konec"
 
 msgid "View"
 msgstr "Zobrazit"
 
 msgid "CarList Order"
-msgstr "Objednávka CarList"
+msgstr "Řazení CarList"
 
 msgid "By Project Code"
 msgstr "Podle kódu projektu"
@@ -1499,13 +1473,13 @@ msgid "Rename"
 msgstr "Přejmenovat"
 
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Zásuvné moduly"
 
 msgid "Cannot load plugin "
 msgstr "Nelze načíst plugin "
 
 msgid "Help"
-msgstr "Pomoc"
+msgstr "Nápověda"
 
 msgid "Web Wiki"
 msgstr "Web Wiki"
@@ -1517,7 +1491,7 @@ msgid "Get Git update"
 msgstr "Aktualizovat čas"
 
 msgid "About"
-msgstr "O"
+msgstr "O aplikaci"
 
 msgid "About DDT4ALL"
 msgstr "O DDT4ALL"
@@ -1531,9 +1505,9 @@ msgstr "Vytvořil:"
 msgid "Options"
 msgstr "Možnosti"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating menu bar: %s"
-msgstr "Chyba při čtení(): %s"
+msgstr "Chyba aktualizace menu lišty: %s"
 
 msgid "CAN Line 1 Auto"
 msgstr "CAN linka 1 Auto"
@@ -1662,7 +1636,7 @@ msgid "Edition mode"
 msgstr "REŽIM EDICE"
 
 msgid "ELM benchmark"
-msgstr "Resetování ELM"
+msgstr "Resetovat ELM"
 
 msgid "Close"
 msgstr "Zavřít"
@@ -1769,9 +1743,9 @@ msgstr "Chyba během testu připojení: "
 msgid "Reset and Recheck"
 msgstr "Resetovat a znovu zkontrolovat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating port list: %s"
-msgstr "Chyba během testu připojení: "
+msgstr "Chyba aktualizace seznamu portů: %s"
 
 msgid "57600"
 msgstr "57600"
@@ -1802,50 +1776,50 @@ msgstr "Podpora dlouhých příkazů a vysokorychlostní komunikace k dispozici"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
-msgstr ""
+msgstr "Přednastavení DoIP aplikováno: %(name)s -> %(ip)s"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s (IP unchanged)"
-msgstr ""
+msgstr "Přednastavení DoIP aplikováno: %(name)s (IP nezměněno)"
 
 #, python-format
 msgid "Error preparing DoIP update: %s"
-msgstr ""
+msgstr "Chyba při přípravě aktualizace DoIP: %s"
 
 #, python-format
 msgid "Applied %s preset:"
-msgstr ""
+msgstr "Aplikováno %s přednastavení:"
 
 #, python-format
 msgid "  IP: %s"
-msgstr ""
+msgstr "  IP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "  Port: %s"
-msgstr "Port: "
+msgstr "  Port: %s"
 
 #, python-format
 msgid "  Timeout: %ss"
-msgstr ""
+msgstr "  Časový limit: %ss"
 
 msgid "  Configuration saved and device list reloaded"
-msgstr ""
+msgstr "  Konfigurace uložena a seznam zařízení znovu načten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in force DoIP update: %s"
-msgstr "Chyba při čtení(): %s"
+msgstr "Chyba v vynucené aktualizaci DoIP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in delayed DoIP update: %s"
-msgstr "Chyba při čtení(): %s"
+msgstr "Chyba v odložené aktualizaci DoIP: %s"
 
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
-msgstr ""
+msgstr "Zařízení DoIP aktualizováno: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in targeted DoIP update: %s"
-msgstr "Chyba při čtení(): %s"
+msgstr "Chyba v cílené aktualizaci DoIP: %s"
 
 msgid "N/A"
 msgstr "N/A"
@@ -1879,7 +1853,7 @@ msgid "Enter label name"
 msgstr "Zadejte nový název"
 
 msgid "Add button"
-msgstr "Add request"
+msgstr "Přidat požadavek"
 
 msgid "Add label"
 msgstr "Přidat položku"
@@ -1891,13 +1865,13 @@ msgid "Change color"
 msgstr "Změnit barvu"
 
 msgid "Remove element"
-msgstr "Remove selected"
+msgstr "Odstranit vybrané"
 
 msgid "Diagnotic session"
 msgstr "Diagnostické sezení"
 
 msgid "Input"
-msgstr "Input"
+msgstr "Vstup"
 
 msgid "Output"
 msgstr "Výstup"
@@ -1960,10 +1934,10 @@ msgid "Request aborted (look at red paramters entries): "
 msgstr "Požadavek přerušen (podívejte se na červené položky parametrů): "
 
 msgid "Delay"
-msgstr "Delay"
+msgstr "Zpoždění"
 
 msgid "For your safety"
-msgstr "For your safety"
+msgstr "Pro vaši bezpečnost"
 
 msgid ""
 "<center>BLOCKED COMMAND</center>\n"
@@ -1979,7 +1953,7 @@ msgid "Blocked writing parameter"
 msgstr "Blokovaný parametr zápisu"
 
 msgid "Invalid"
-msgstr "Invalid"
+msgstr "Neplatný"
 
 msgid "ECU uses SDS "
 msgstr "ECU používá SDS "
@@ -2022,15 +1996,14 @@ msgstr "Kód DTC čtení vrátil chybu"
 msgid "No DTC"
 msgstr "Žádný kód DTC"
 
-#, fuzzy
 msgid "Invalid DTC response: "
-msgstr "Špatná odpověď ELM:"
+msgstr "Neplatná odpověď DTC: "
 
 msgid "DTC parsing error - response: "
-msgstr ""
+msgstr "Chyba analýzy DTC - odpověď: "
 
 msgid "Diagnostic Trouble Codes"
-msgstr "Diagnostic Trouble Codes"
+msgstr "Chybové kódy diagnostiky"
 
 msgid "Clear ALL DTC"
 msgstr "Vymažte VŠECHNY DTC"
@@ -2039,7 +2012,7 @@ msgid "ECU trouble codes"
 msgstr "Chybové kódy ECU"
 
 msgid "Parsing screen "
-msgstr "Obrazovka analýzy "
+msgstr "Zpracovávám obrazovku "
 
 msgid "found request in input "
 msgstr "nalezený požadavek ve vstupu "
@@ -2060,10 +2033,10 @@ msgid "found data in display "
 msgstr "data nalezena v displeji "
 
 msgid "Waiting..."
-msgstr "Čekání..."
+msgstr "Čekám..."
 
 msgid "Frame length error: "
-msgstr "Chyba délky rámu: "
+msgstr "Chyba délky snímku: "
 
 msgid "Frame hex error: "
-msgstr "Chyba hex rámce: "
+msgstr "Chyba hex snímku: "

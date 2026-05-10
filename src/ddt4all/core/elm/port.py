@@ -473,8 +473,8 @@ class Port:
                 self.buff += byte
                 tc = time.time()
                 if '>' in self.buff:
-                    options.port_speed = s
-                    print(_("\n%(label)s: %(speed)s") % {"label": _("Start COM speed :"), "speed": s})
+                    options.port_speed = s                   
+                    print("\n" + (_("Start COM speed: ") %  s))
                     if self.portType == 0:  # Serial/USB only
                         self.hdr.timeout = timeout
                     elif self.portType == 1:  # TCP/WiFi

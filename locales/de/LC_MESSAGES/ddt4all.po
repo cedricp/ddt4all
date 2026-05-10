@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 22:15+0200\n"
+"POT-Creation-Date: 2026-05-10 04:51+0200\n"
 "PO-Revision-Date: 2026-05-07 13:04+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -15,6 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -24,95 +25,95 @@ msgstr "DoIP-Gerät erfolgreich verbunden"
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr "DoIP CAN mit ECU-Elektrik-Unterstützung initialisiert"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP response: %s"
-msgstr "DoIP-Antwort: {}"
+msgstr "DoIP-Antwort: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP request failed: %s"
-msgstr "DoIP-Anfrage fehlgeschlagen: {}"
+msgstr "DoIP-Anfrage fehlgeschlagen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Testing Electric ECU: %s"
-msgstr "Teste ECU-Elektrik: {}"
+msgstr "Teste ECU-Elektrik: %s"
 
 msgid "Failed to connect to DoIP device"
 msgstr "Verbindung zum DoIP-Gerät fehlgeschlagen"
 
 #, python-format
 msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP verbunden mit %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %s"
-msgstr "Verbindung fehlgeschlagen: "
+msgstr "DoIP-Verbindung fehlgeschlagen: %s"
 
 msgid "Insufficient vehicle identification data"
 msgstr "Unzureichende Fahrzeug-Identifikationsdaten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected vehicle identification response, got: %s"
-msgstr "Fahrzeug-Identifikationsantwort erwartet, erhalten: {}"
+msgstr "Fahrzeug-Identifikationsantwort erwartet, erhalten: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Vehicle identification failed: %s"
-msgstr "Fahrzeug-Identifikation fehlgeschlagen: {}"
+msgstr "Fahrzeug-Identifikation fehlgeschlagen: %s"
 
 msgid "Insufficient session control data"
 msgstr "Unzureichende Sitzungssteuerungsdaten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic session control response, got: %s"
-msgstr "Diagnosesitzungssteuerungsantwort erwartet, erhalten: {}"
+msgstr "Diagnosesitzungssteuerungsantwort erwartet, erhalten: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Diagnostic session control failed: %s"
-msgstr "Diagnosesitzungssteuerung fehlgeschlagen: {}"
+msgstr "Diagnosesitzungssteuerung fehlgeschlagen: %s"
 
 msgid "Insufficient diagnostic message data"
 msgstr "Unzureichende Diagnosenachrichtendaten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic message response, got: %s"
-msgstr "Diagnosenachrichtenantwort erwartet, erhalten: {}"
+msgstr "Diagnosenachrichtenantwort erwartet, erhalten: %s"
 
 msgid "Insufficient alive check data"
 msgstr "Unzureichende Alive-Prüfungsdaten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected alive check response, got: %s"
-msgstr "Alive-Prüfungsantwort erwartet, erhalten: {}"
+msgstr "Alive-Prüfungsantwort erwartet, erhalten: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Alive check failed: %s"
-msgstr "Alive-Prüfung fehlgeschlagen: {}"
+msgstr "Alive-Prüfung fehlgeschlagen: %s"
 
 #, python-format
 msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr ""
+msgstr "DoIP Fahrzeug identifiziert: VIN=%(vin)s, Adresse=%(addr)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP vehicle identification failed: %s"
-msgstr "Fahrzeug-Identifikation fehlgeschlagen: {}"
+msgstr "DoIP Fahrzeug-Identifikation fehlgeschlagen: %s"
 
 msgid "Not connected to DoIP device"
 msgstr "Nicht mit DoIP-Gerät verbunden"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Invalid hex request format: %s"
-msgstr "Ungültiges Hex-Anfrageformat: {}"
+msgstr "Ungültiges Hex-Anfrageformat: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP session start failed: %s"
-msgstr "DoIP-Sitzungsstart fehlgeschlagen: {}"
+msgstr "DoIP-Sitzungsstart fehlgeschlagen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP CAN initialization failed: %s"
-msgstr "DoIP CAN-Initialisierung fehlgeschlagen: {}"
+msgstr "DoIP CAN-Initialisierung fehlgeschlagen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP: ECU-Elektrik erkannt - {}"
+msgstr "DoIP: ECU-Elektrik erkannt - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
 msgstr "DoIP: Erweiterte Adressierung für Elektrofahrzeugsysteme verwenden"
@@ -194,80 +195,81 @@ msgstr "Scanne Adresse: "
 
 #, python-format
 msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr ""
+msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
-msgstr ""
+msgstr "DoIP ECU-Antwortformat unbekannt: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error parsing DoIP response: %s"
-msgstr "DoIP-Antwort: {}"
+msgstr "Fehler beim Parsen der DoIP-Antwort: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
+msgstr "DoIP ECU bei %(addr)s antwortete mit minimalen Daten: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
 msgstr ""
+"DoIP-Verbindung zu %(ip)s:%(port)s wird initialisiert (Timeout: %(timeout)ss)"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
-msgstr "%s STN-Verbindung hergestellt"
+msgstr "DoIP-Verbindung hergestellt: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization error: %s"
-msgstr "Geräteinitialisierungsfehler: %s"
+msgstr "DoIP-Initialisierungsfehler: %s"
 
 msgid "No DoIP addresses available for scanning"
-msgstr ""
+msgstr "Keine DoIP-Adressen für Scanning verfügbar"
 
 msgid "Scanning DoIP address: "
 msgstr "Scanne DoIP Adresse: "
 
 #, python-format
 msgid "Warning: address %(addr)s is not mapped"
-msgstr ""
+msgstr "Warnung: Adresse %(addr)s ist nicht zugeordnet"
 
 #, python-format
 msgid "No identification data from DoIP ECU at address %s"
-msgstr ""
+msgstr "Keine Identifikationsdaten von DoIP ECU an Adresse %s"
 
 #, python-format
 msgid "Negative response from DoIP ECU at address %s"
-msgstr ""
+msgstr "Negative Antwort von DoIP ECU an Adresse %s"
 
 #, python-format
 msgid "Failed to start session with DoIP ECU at address %s"
-msgstr ""
+msgstr "Sitzungsstart mit DoIP ECU an Adresse %s fehlgeschlagen"
 
 #, python-format
 msgid "Failed to initialize DoIP communication with address %s"
-msgstr ""
+msgstr "DoIP-Kommunikationsinitialisierung mit Adresse %s fehlgeschlagen"
 
 msgid "DoIP device not available for scanning"
-msgstr ""
+msgstr "DoIP-Gerät nicht für Scanning verfügbar"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error during DoIP scan: %s"
-msgstr "Fehler beim Verbindungstest: "
+msgstr "Fehler während DoIP-Scan: %s"
 
 #, python-format
 msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr ""
+msgstr "Simulationsmodus: DoIP-Adresse %s würde gescannt werden"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
 msgstr ""
+"Würde mit DoIP ECU an Adresse %s verbinden und Identifikationsdaten lesen"
 
-#, fuzzy
 msgid "DoIP connection closed"
-msgstr "Verbindung fehlgeschlagen: "
+msgstr "DoIP-Verbindung geschlossen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing DoIP connection: %s"
-msgstr "Fehler beim Verbindungstest: "
+msgstr "Fehler beim Schließen der DoIP-Verbindung: %s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -299,33 +301,28 @@ msgstr "Port-Initialisierung fehlgeschlagen"
 msgid "Port connection failed - port object is invalid"
 msgstr "Portverbindung fehlgeschlagen - Port-Objekt ist ungültig"
 
-#, fuzzy
 msgid "STN connection established"
-msgstr "%s STN-Verbindung hergestellt"
+msgstr "STN-Verbindung hergestellt"
 
-#, fuzzy
 msgid "Version: "
-msgstr "Version "
+msgstr "Version: "
 
 #, python-format
 msgid "STPX/STN configuration warning: %s"
-msgstr ""
+msgstr "STPX/STN-Konfigurationswarnung: %s"
 
 msgid "No ELM interface on port"
 msgstr "Kein ELM angeschlossen"
 
-#, fuzzy
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr ""
-"OBDLINK Verbindung OK, versuche UART-Umschaltung auf volle Geschwindigkeit"
+"OBDLink-Verbindung OK, versuche UART-Umschaltung auf volle Geschwindigkeit"
 
-#, fuzzy
 msgid "Failed to switch OBDLink to "
-msgstr "Umschaltung von OBDLINK fehlgeschlagen zu "
+msgstr "Umschaltung von OBDLink fehlgeschlagen zu volle Geschwindigkeit"
 
-#, fuzzy
 msgid "OBDLink Connection OK, using optimal settings"
-msgstr "OBDLINK Verbindung OK, verwende optimale Einstellungen"
+msgstr "OBDLink-Verbindung OK, verwende optimale Einstellungen"
 
 msgid "Connection established successfully"
 msgstr "Verbindung erfolgreich hergestellt"
@@ -336,9 +333,9 @@ msgstr "Konfiguriere ELS27 V5 CAN-Pins (12-13)"
 msgid "ELS27 V5 CAN configuration complete"
 msgstr "ELS27 V5 CAN-Konfiguration abgeschlossen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "ELS27 V5 configuration warning: %s"
-msgstr "ELS27 V5 CAN-Konfiguration abgeschlossen"
+msgstr "ELS27 V5 Konfigurationswarnung: %s"
 
 msgid "Port is None - cannot switch speed"
 msgstr "Port ist None - Geschwindigkeit kann nicht umgeschaltet werden"
@@ -348,14 +345,14 @@ msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr ""
 "%s Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
 msgstr ""
-"ELM Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
+"%s Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Not supported baudrate %s"
-msgstr "Nicht unterstützte Baudrate für ELM: %s"
+msgstr "Nicht unterstützte Baudrate %s"
 
 msgid "ELM reset..."
 msgstr "ELM zurücksetzen..."
@@ -437,80 +434,80 @@ msgstr "Optimale Einstellungen verwenden für"
 
 #, python-format
 msgid "%(text)s %(type)s: %(settings)s"
-msgstr ""
+msgstr "%(text)s %(type)s: %(settings)s"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
-msgstr ""
+msgstr "ELM327 unterstützt kein DoIP, falle auf seriellen Modus zurück"
 
 msgid "Serial port opened"
 msgstr "Serieller Anschluss geöffnet"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Serial connection error: %s"
-msgstr "Verbindungsfehler: "
+msgstr "Serieller Verbindungsfehler: %s"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM nicht angeschlossen oder falscher Anschluss"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected error: %s"
-msgstr "Pin-Tausch Fehler: %s"
+msgstr "Unerwarteter Fehler: %s"
 
 #, python-format
 msgid "Bluetooth connection attempted: %s"
-msgstr ""
+msgstr "Bluetooth-Verbindung versucht: %s"
 
 #, python-format
 msgid "Serial connection established: %(port)s @ %(baud)s baud"
-msgstr ""
+msgstr "Serielle Verbindung hergestellt: %(port)s @ %(baud)s baud"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Bluetooth connection failed: %s"
-msgstr "Verbindung fehlgeschlagen: "
+msgstr "Bluetooth-Verbindung fehlgeschlagen: %s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP-Verbindung zu %(ip)s:%(port)s wird initialisiert"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
-msgstr "Verbindung fehlgeschlagen: "
+msgstr "DoIP-Verbindung fehlgeschlagen: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization failed: %s"
-msgstr "DoIP CAN-Initialisierung fehlgeschlagen: {}"
+msgstr "DoIP-Initialisierung fehlgeschlagen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Port closed: %s"
-msgstr "Port geschlossen"
+msgstr "Port geschlossen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing port: %s"
-msgstr "Fehler in read(): %s"
+msgstr "Fehler beim Schließen des Ports: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
-msgstr "Verbindung zum Gerät an Port: "
+msgstr "Verbindung mit WiFi-Adapter bei %(ip)s:%(port)s wird hergestellt"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection established: %(ip)s:%(port)s"
-msgstr "%s STN-Verbindung hergestellt"
+msgstr "WiFi-Verbindung hergestellt: %(ip)s:%(port)s"
 
 #, python-format
 msgid "WiFi connection timeout to %(ip)s:%(port)s"
-msgstr ""
+msgstr "WiFi-Verbindung-Timeout zu %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection error: %s"
-msgstr "Verbindungsfehler: "
+msgstr "WiFi-Verbindungsfehler: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected WiFi error: %s"
-msgstr "Verbindungsfehler: "
+msgstr "Unerwarteter WiFi-Fehler: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi recv: %s"
-msgstr "WiFi Anschluss: "
+msgstr "WiFi empfangen: %s"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
@@ -532,7 +529,7 @@ msgid "Error in read(): %s"
 msgstr "Fehler in read(): %s"
 
 msgid "WiFi connection - baudrate change not applicable"
-msgstr ""
+msgstr "WiFi-Verbindung - Baudrate-Änderung nicht anwendbar"
 
 msgid "Attempting WiFi reconnection..."
 msgstr "Versuche WiFi-Wiederverbindung..."
@@ -555,18 +552,12 @@ msgid "Checking port speed:"
 msgstr "Test der Baudrate:"
 
 msgid "WiFi connection - skipping baudrate check"
-msgstr ""
+msgstr "WiFi-Verbindung - Baudrate-Prüfung überspringen"
 
 msgid "Bluetooth connection - skipping baudrate check"
-msgstr ""
+msgstr "Bluetooth-Verbindung - Baudrate-Prüfung überspringen"
 
-#, python-format
-msgid ""
-"\n"
-"%(label)s: %(speed)s"
-msgstr ""
-
-msgid "Start COM speed :"
+msgid "Start COM speed: "
 msgstr "Starten mit Baudrate:"
 
 msgid "ELM not responding"
@@ -631,9 +622,9 @@ msgstr ""
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nicht gefunden oder ungültig."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Could not write version.h: %s"
-msgstr "Warnung: String-Deskriptor konnte nicht gelesen werden:"
+msgstr "Warnung: version.h konnte nicht geschrieben werden: %s"
 
 msgid "Using custom DDT database"
 msgstr "Verwendung einer benutzerdefinierten Datenbank"
@@ -759,8 +750,7 @@ msgid ""
 msgstr ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>DIESES PLUGIN SETZT EPS "
 "IMMO-DATEN ZURÜCK<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>PLUGIN SETZT EPS-IMMO-DATEN ZURÜCK<br>GEHEN SIE WEG, WENN SIE "
-"KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
+"BEDEUTET</font>"
 
 msgid "BLANK STATUS & VIN READ"
 msgstr "BLANK STATUS & VIN LESEN"
@@ -808,8 +798,7 @@ msgid ""
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>DIESES PLUGIN SETZT EPS IMMO-"
 "DATEN ZURÜCK<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>SETZT EPS-IMMO-DATEN ZURÜCK<br>GEHEN SIE WEG, WENN SIE KEINE "
-"AHNUNG HABEN, WAS DAS BEDEUTET</font>"
+"BEDEUTET</font>"
 
 msgid "Check EPS Virgin"
 msgstr "EPS Virgin prüfen"
@@ -835,9 +824,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>DIESES PLUGIN LÖSCHT IHR "
-"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</"
-"font>UCH LÖSCHEN<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>"
+"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
 
 msgid "Check UCH Virgin"
 msgstr "UCH Virgin prüfen"
@@ -859,9 +846,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>DIESES PLUGIN LÖSCHT IHR "
-"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</"
-"font>UCH LÖSCHEN<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>"
+"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Megane/Scenic II UCH Reset"
@@ -871,9 +856,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>DIESES PLUGIN LÖSCHT IHR "
-"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</"
-"font>UCH LÖSCHEN<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>"
+"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Megane3 AIRBAG Reset"
@@ -884,8 +867,7 @@ msgid ""
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>DIESES PLUGIN ENTSPERRT "
 "AIRBAG-ABSTURZDATEN<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>PLUGIN WIRD AIRBAG-ABSTURZDATEN FREISCHALTEN<br>GEHEN SIE "
-"WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
+"BEDEUTET</font>"
 
 #, python-format
 msgid "SDS FA stream: %s"
@@ -901,9 +883,7 @@ msgid ""
 msgstr ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>DIESES "
 "PLUGIN SETZT EPS IMMO-DATEN ZURÜCK<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG "
-"HABEN, WAS DAS BEDEUTET</font>VIRGINIZER<br><font color='red'>DIESER PLUGIN "
-"SETZT EPS-IMMO-DATEN ZURÜCK<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, "
-"WAS DAS BEDEUTET</font>"
+"HABEN, WAS DAS BEDEUTET</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Megane/Scenic III UCH Reset"
@@ -913,9 +893,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>DIESES PLUGIN LÖSCHT IHR "
-"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</"
-"font>UCH LÖSCHEN<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>"
+"UCH<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "RSAT4 AIRBAG Reset"
@@ -928,10 +906,7 @@ msgstr ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>DIESES PLUGIN ENTSPERRT AIRBAG-"
 "ABSTURZDATEN<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>BEDEUTET</font>TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/"
-"CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>DIESER PLUGIN "
-"WIRD AIRBAG-ABSTURZDATEN FREISCHALTEN<br>GEHEN SIE WEG, WENN SIE KEINE "
-"AHNUNG HABEN, WAS DAS BEDEUTET</font>"
+"BEDEUTET</font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
@@ -986,10 +961,9 @@ msgid ""
 "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
 "PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Zoe Wasserpumpenzähler<br><font color='red'>DIESES PLUGIN LÖSCHT "
-"WASSERPUMPENZÄHLER<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
-"BEDEUTET</font>WIRD WASSERPUMPENZÄHLER LÖSCHEN<br>GEHEN SIE WEG, WENN SIE "
-"KEINE AHNUNG HABEN, WAS DAS BEDEUTET</font>"
+"Zoe Wasserpumpenzähler<br><font color='red'>DIESES PLUGIN LÖSCHT WASSER-"
+"PUMPENZÄHLER<br>GEHEN SIE WEG, WENN SIE KEINE AHNUNG HABEN, WAS DAS "
+"BEDEUTET</font>"
 
 msgid "Check values"
 msgstr "Werte prüfen"
@@ -1005,12 +979,9 @@ msgid ""
 "Stay START until <b>Remove card</b> message</li><li>Put P position</"
 "li><li>Keep key card inserted</li></ul>"
 msgstr ""
-"<h1>TIPPS</h1><ul><li>Schlüsselkarte einstecken</li><li>D-Position wählen</"
-"li><li>START drücken/halten bis <b>Karte entfernen</b> Nachricht erscheint</"
-"li><li>P-Position wählen</li><li>Schlüsselkarte eingesteckt lassen</li></"
-"ul>ul><h1>TIPPS</h1><ul><li>Schlüsselkarte einstecken</li><li>D-Position "
-"einlegen</li><li>START drücken/halten bis <b>Karte entfernen</b>-Nachricht</"
-"li><li>P-Position einlegen</li><li>Schlüsselkarte eingelegt lassen</li></ul>"
+"<h1>TIPPS</h1><ul><li>Karten-Schlüssel einlegen</li><li>D-Position einlegen</"
+"li><li>START gedrückt halten bis <b>Karte entfernen</b>-Meldung</li><li>P-"
+"Position einlegen</li><li>Karten-Schlüssel eingelegt lassen</li></ul>"
 
 msgid "<font color='green'>Values read</font>"
 msgstr "<font color='green'>Werte gelesen</font>"
@@ -1049,10 +1020,10 @@ msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>CLEAR HIGH FEHLGESCHLAGEN</font>"
 
 msgid "Add"
-msgstr "Hinzufuegen"
+msgstr "Hinzufügen"
 
 msgid "Del"
-msgstr "Loeschen"
+msgstr "Löschen"
 
 msgid "Refresh"
 msgstr "Aktualisieren"
@@ -1111,7 +1082,7 @@ msgid "Reload"
 msgstr "Neu laden"
 
 msgid "Validate changes"
-msgstr "Aendern bestaetigen"
+msgstr "Änderungen bestätigen"
 
 msgid "Description"
 msgstr "Beschreibung"
@@ -1148,7 +1119,7 @@ msgid "Remove"
 msgstr "Entfernen"
 
 msgid "Add to screen"
-msgstr "Zum Bildschirm hinzufuegen"
+msgstr "Zum Bildschirm hinzufügen"
 
 msgid "ECU Function address"
 msgstr "ECU Funktionsadresse"
@@ -1178,10 +1149,10 @@ msgid "Diag version;Supplier;Soft;Version"
 msgstr "Diag-Version;Lieferant;Software;Version"
 
 msgid "Add new"
-msgstr "Neu hinzufuegen"
+msgstr "Neu hinzufügen"
 
 msgid "Delete selected"
-msgstr "Ausgewaehlte loeschen"
+msgstr "Ausgewählte löschen"
 
 msgid "Diag version"
 msgstr "Diag-Version"
@@ -1298,26 +1269,25 @@ msgid "Cannot draw input "
 msgstr "Plug-In laden fehlgeschlagen "
 
 msgid "No Value"
-msgstr "Werte"
+msgstr "Kein Wert"
 
 msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
 "<center>Diese Software ist kostenlos, aber ich brauche Geld für Kabel/ECUs "
-"und um diese Anwendung zuverlässiger zu machen</center>und diese Anwendung "
-"zuverlaessiger zu machen</center>"
+"und um diese Anwendung zuverlässiger zu machen</center>"
 
 msgid "Yes I contribute"
-msgstr "Ja, ich unterstuetze das Projekt"
+msgstr "Ja, ich unterstütze das Projekt"
 
 msgid "No, I don't"
-msgstr "Nein, ich moechte nicht"
+msgstr "Nein, ich möchte nicht"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"<center>Vielen Dank für Ihren Beitrag, wenn nichts passiert, bitte gehen Sie "
-"zu: https://github.com/cedricp/ddt4all</center>"
+"Vielen Dank für Ihren Beitrag, wenn nichts passiert, bitte gehen Sie zu: "
+"https://github.com/cedricp/ddt4all"
 
 msgid "ECU Finder"
 msgstr "ECU-Sucher"
@@ -1348,7 +1318,7 @@ msgstr "Projekte"
 
 #, python-format
 msgid "%d loaded ECUs in database."
-msgstr "%d ECUs in Datenbank geladen."
+msgstr "%d ECUs in der Datenbank geladen."
 
 msgid "No database found"
 msgstr "Keine Datenbank gefunden"
@@ -1357,7 +1327,7 @@ msgid "Check documentation"
 msgstr "Dokumentation prüfen"
 
 msgid "DDT4All Documentation"
-msgstr "DDT4All Dokumentation"
+msgstr "DDT4All-Dokumentation"
 
 msgid "WebEngine not available."
 msgstr "WebEngine nicht verfügbar."
@@ -1366,14 +1336,15 @@ msgid ""
 "For full documentation with web browsing capability, install PyQtWebEngine:"
 msgstr ""
 "Für vollständige Dokumentation mit Web-Browsing-Fähigkeit, installieren Sie "
-"PyQtWebEngine:PyQtWebEngine:"
+"PyQtWebEngine:"
 
 msgid "Visit the online documentation at:"
 msgstr "Besuchen Sie die Online-Dokumentation unter:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
-"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn verfügbar."
+"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn "
+"verfügbar.verfügbar."
 
 msgid "Refresh rate (ms):"
 msgstr "Aktualisierungsrate (ms):"
@@ -1543,9 +1514,9 @@ msgstr "Erstellt von:"
 msgid "Options"
 msgstr "Optionen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating menu bar: %s"
-msgstr "Fehler in read(): %s"
+msgstr "Fehler beim Aktualisieren der Menüleiste: %s"
 
 msgid "CAN Line 1 Auto"
 msgstr "CAN Leitung 1 Auto"
@@ -1784,9 +1755,9 @@ msgstr "Fehler beim Verbindungstest: "
 msgid "Reset and Recheck"
 msgstr "Zurücksetzen und erneut prüfen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating port list: %s"
-msgstr "Fehler beim Verbindungstest: "
+msgstr "Fehler beim Aktualisieren der Portliste: %s"
 
 msgid "57600"
 msgstr "57600"
@@ -1819,50 +1790,50 @@ msgstr ""
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
-msgstr ""
+msgstr "DoIP-Voreinstellung angewendet: %(name)s -> %(ip)s"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s (IP unchanged)"
-msgstr ""
+msgstr "DoIP-Voreinstellung angewendet: %(name)s (IP unverändert)"
 
 #, python-format
 msgid "Error preparing DoIP update: %s"
-msgstr ""
+msgstr "Fehler bei der Vorbereitung des DoIP-Updates: %s"
 
 #, python-format
 msgid "Applied %s preset:"
-msgstr ""
+msgstr "%s Voreinstellung angewendet:"
 
 #, python-format
 msgid "  IP: %s"
-msgstr ""
+msgstr "  IP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "  Port: %s"
-msgstr "Port: "
+msgstr "  Port: %s"
 
 #, python-format
 msgid "  Timeout: %ss"
-msgstr ""
+msgstr "  Timeout: %ss"
 
 msgid "  Configuration saved and device list reloaded"
-msgstr ""
+msgstr "  Konfiguration gespeichert und Geräteliste neu geladen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in force DoIP update: %s"
-msgstr "Fehler in read(): %s"
+msgstr "Fehler bei erzwungenem DoIP-Update: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in delayed DoIP update: %s"
-msgstr "Fehler in read(): %s"
+msgstr "Fehler bei verzögertem DoIP-Update: %s"
 
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP-Gerät aktualisiert: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in targeted DoIP update: %s"
-msgstr "Fehler in read(): %s"
+msgstr "Fehler bei gezieltem DoIP-Update: %s"
 
 msgid "N/A"
 msgstr "N/A"
@@ -1877,10 +1848,10 @@ msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 msgstr "Kompatibel mit Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 
 msgid "You must check the recommandations"
-msgstr ";-) Du musst das Lesen der Warnung bestaetigen"
+msgstr ";-) Sie müssen das Lesen der Warnung bestätigen"
 
 msgid "Please select a communication port"
-msgstr "Bitte waehle einen Anschluss aus"
+msgstr "Bitte wählen Sie einen Anschluss aus"
 
 msgid "ECU Command"
 msgstr "ECU-Befehl"
@@ -1890,17 +1861,17 @@ msgstr "Fehler, kann nicht umbenennen "
 
 msgid "To be able to edit your screen, first export it in JSON format"
 msgstr ""
-"Um den Bildschirm bearbeiten zu koennen, exportiere ihn zuerst in das JSON-"
+"Um Ihren Bildschirm bearbeiten zu können, exportieren Sie ihn zuerst im JSON-"
 "Format"
 
 msgid "Enter label name"
 msgstr "Schriftfeldname eingeben"
 
 msgid "Add button"
-msgstr "Schaltflaeche hinzufuegen"
+msgstr "Schaltfläche hinzufügen"
 
 msgid "Add label"
-msgstr "Schriftfeld hinzufuegen"
+msgstr "Schriftfeld hinzufügen"
 
 msgid "Rename label"
 msgstr "Schriftfeld umbenennen"
@@ -1960,7 +1931,7 @@ msgid "ELM response : "
 msgstr "ELM antwortet: "
 
 msgid "Button request not found : "
-msgstr "Schaltflaeche nicht gefunden: "
+msgstr "Schaltfläche nicht gefunden: "
 
 msgid "Sending request :"
 msgstr "Anfrage senden:"
@@ -1998,30 +1969,28 @@ msgid "Blocked writing parameter"
 msgstr "Parameter schreiben blockiert"
 
 msgid "Invalid"
-msgstr "Ungueltig"
+msgstr "Ungültig"
 
 msgid "ECU uses SDS "
 msgstr "ECU verwendet SDS "
 
 msgid "Cannot call request "
-msgstr "Anfrage nicht moeglich "
+msgstr "Anfrage nicht möglich "
 
 msgid "Update time"
 msgstr "Zeit aktualisieren"
 
 msgid "Clearing DTC information"
-msgstr "DTC-Informationen loeschen"
+msgstr "DTC-Informationen löschen"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr ""
-"Keine Anfrage zum Fehler loeschen fuer dieses ECU, versuche 14FF00 manuell "
-"zu senden"
+msgstr "Kein ClearDTC für diese ECU, sende Standard 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<center>Du bist dabei die Fehlercode zu loeschen</center>"
+msgstr "<center>Sie sind dabei die Fehlercodes zu löschen</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
-msgstr "<center>Bist du sicher das zu tun?</center>"
+msgstr "<center>Sind Sie sicher, dass Sie das tun möchten?</center>"
 
 msgid "Clear DTC failed"
 msgstr "DTC-Löschen fehlgeschlagen"
@@ -2030,10 +1999,10 @@ msgid "Clear DTC successfully done"
 msgstr "DTC erfolgreich gelöscht"
 
 msgid "No ReadDTC request for that ECU"
-msgstr "Keine ReadDTC-Anfrage für dieses ECUzu senden"
+msgstr "Keine ReadDTC-Anfrage für dieses ECU"
 
 msgid "Invalid response for ReadDTC command"
-msgstr "Ungueltige Antwort des DTC Befehl"
+msgstr "Ungültige Antwort des DTC-Befehls"
 
 msgid "Read DTC returned an error"
 msgstr "DTC Lesen gab einen Fehler zurück"
@@ -2041,24 +2010,23 @@ msgstr "DTC Lesen gab einen Fehler zurück"
 msgid "No DTC"
 msgstr "Kein DTC"
 
-#, fuzzy
 msgid "Invalid DTC response: "
-msgstr "Schlechte ELM Antwort :"
+msgstr "Ungültige DTC-Antwort: "
 
 msgid "DTC parsing error - response: "
-msgstr ""
+msgstr "DTC-Parsingfehler - Antwort: "
 
 msgid "Diagnostic Trouble Codes"
 msgstr "Diagnose-Fehlercodes"
 
 msgid "Clear ALL DTC"
-msgstr "Alle Fehler loeschen"
+msgstr "Alle Fehler löschen"
 
 msgid "ECU trouble codes"
-msgstr "ECU Fehlercode"
+msgstr "ECU-Fehlercodes"
 
 msgid "Parsing screen "
-msgstr "Bildschirm lesen "
+msgstr "Bildschirm verarbeiten "
 
 msgid "found request in input "
 msgstr "Anfrage in Eingabe gefunden "
@@ -2079,7 +2047,7 @@ msgid "found data in display "
 msgstr "Daten in Anzeige gefunden "
 
 msgid "Waiting..."
-msgstr "Warten..."
+msgstr "Warte..."
 
 msgid "Frame length error: "
 msgstr "Fehler bei Rahmenlänge: "

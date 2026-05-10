@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 22:15+0200\n"
-"PO-Revision-Date: 2026-05-07 13:07+0200\n"
+"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -25,95 +25,95 @@ msgstr "DoIP-apparaat succesvol verbonden"
 msgid "DoIP CAN initialized with Electric ECU support"
 msgstr "DoIP CAN geïnitialiseerd met elektrische ECU-ondersteuning"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP response: %s"
-msgstr "DoIP antwoord: {}"
+msgstr "DoIP antwoord: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP request failed: %s"
-msgstr "DoIP verzoek mislukt: {}"
+msgstr "DoIP verzoek mislukt: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Testing Electric ECU: %s"
-msgstr "Elektrische ECU testen: {}"
+msgstr "Elektrische ECU testen: %s"
 
 msgid "Failed to connect to DoIP device"
 msgstr "Verbinding met DoIP-apparaat mislukt"
 
 #, python-format
 msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP verbonden met %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %s"
-msgstr "Verbinding mislukt: "
+msgstr "DoIP verbinding mislukt: %s"
 
 msgid "Insufficient vehicle identification data"
 msgstr "Onvoldoende voertuigidentificatiegegevens"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected vehicle identification response, got: %s"
-msgstr "Verwacht voertuigidentificatieantwoord, gekregen: {}"
+msgstr "Verwacht voertuigidentificatieantwoord, gekregen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Vehicle identification failed: %s"
-msgstr "Voertuigidentificatie mislukt: {}"
+msgstr "Voertuigidentificatie mislukt: %s"
 
 msgid "Insufficient session control data"
 msgstr "Onvoldoende sessiecontrolegegevens"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic session control response, got: %s"
-msgstr "Verwacht diagnostische sessiecontroloantwoord, gekregen: {}"
+msgstr "Verwacht diagnostische sessie controle antwoord, gekregen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Diagnostic session control failed: %s"
-msgstr "Diagnostische sessiecontrole mislukt: {}"
+msgstr "Diagnostische sessie controle mislukt: %s"
 
 msgid "Insufficient diagnostic message data"
 msgstr "Onvoldoende diagnostische berichtgegevens"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected diagnostic message response, got: %s"
-msgstr "Verwacht diagnostisch berichtantwoord, gekregen: {}"
+msgstr "Verwacht diagnostisch bericht antwoord, gekregen: %s"
 
 msgid "Insufficient alive check data"
 msgstr "Onvoldoende alive controlegegevens"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Expected alive check response, got: %s"
-msgstr "Verwacht alive controloantwoord, gekregen: {}"
+msgstr "Verwacht alive check antwoord, gekregen: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Alive check failed: %s"
-msgstr "Alive controle mislukt: {}"
+msgstr "Alive check mislukt: %s"
 
 #, python-format
 msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr ""
+msgstr "DoIP Voertuig geïdentificeerd: VIN=%(vin)s, Adres=%(addr)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP vehicle identification failed: %s"
-msgstr "Voertuigidentificatie mislukt: {}"
+msgstr "DoIP voertuigidentificatie mislukt: %s"
 
 msgid "Not connected to DoIP device"
 msgstr "Niet verbonden met DoIP-apparaat"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Invalid hex request format: %s"
-msgstr "Ongeldig hex verzoekformaat: {}"
+msgstr "Ongeldig hex verzoek formaat: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP session start failed: %s"
-msgstr "DoIP sessie start mislukt: {}"
+msgstr "DoIP sessie start mislukt: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP CAN initialization failed: %s"
-msgstr "DoIP CAN initialisatie mislukt: {}"
+msgstr "DoIP CAN initialisatie mislukt: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP: Elektrische ECU gedetecteerd - {}"
+msgstr "DoIP: Elektrische ECU gedetecteerd - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
 msgstr ""
@@ -197,80 +197,81 @@ msgstr "Adres scannen: "
 
 #, python-format
 msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr ""
+msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
-msgstr ""
+msgstr "Onbekend DoIP ECU antwoord formaat: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error parsing DoIP response: %s"
-msgstr "DoIP antwoord: {}"
+msgstr "Fout bij parsen DoIP antwoord: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
 msgstr ""
+"DoIP ECU op adres %(addr)s reageerde met minimale gegevens: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
 msgstr ""
+"DoIP verbinding initialiseren naar %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
-msgstr "%s STN verbinding tot stand gebracht"
+msgstr "DoIP verbinding tot stand gebracht: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization error: %s"
-msgstr "Apparaat initialisatiefout: %s"
+msgstr "DoIP initialisatiefout: %s"
 
 msgid "No DoIP addresses available for scanning"
-msgstr ""
+msgstr "Geen DoIP adressen beschikbaar voor scannen"
 
 msgid "Scanning DoIP address: "
 msgstr "DoIP adres scannen: "
 
 #, python-format
 msgid "Warning: address %(addr)s is not mapped"
-msgstr ""
+msgstr "Waarschuwing: adres %(addr)s is niet in kaart gebracht"
 
 #, python-format
 msgid "No identification data from DoIP ECU at address %s"
-msgstr ""
+msgstr "Geen identificatiegegevens van DoIP ECU op adres %s"
 
 #, python-format
 msgid "Negative response from DoIP ECU at address %s"
-msgstr ""
+msgstr "Negatieve reactie van DoIP ECU op adres %s"
 
 #, python-format
 msgid "Failed to start session with DoIP ECU at address %s"
-msgstr ""
+msgstr "Sessie starten met DoIP ECU op adres %s mislukt"
 
 #, python-format
 msgid "Failed to initialize DoIP communication with address %s"
-msgstr ""
+msgstr "DoIP communicatie initialiseren met adres %s mislukt"
 
 msgid "DoIP device not available for scanning"
-msgstr ""
+msgstr "DoIP apparaat niet beschikbaar voor scannen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error during DoIP scan: %s"
-msgstr "Fout tijdens verbindingstest: "
+msgstr "Fout tijdens DoIP scan: %s"
 
 #, python-format
 msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr ""
+msgstr "Simulatiemodus: DoIP adres %s zou worden gescand"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
+msgstr "Zou verbinden met DoIP ECU op adres %s en identificatiegegevens lezen"
 
-#, fuzzy
 msgid "DoIP connection closed"
-msgstr "Verbinding mislukt: "
+msgstr "DoIP verbinding gesloten"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing DoIP connection: %s"
-msgstr "Fout tijdens verbindingstest: "
+msgstr "Fout bij sluiten DoIP verbinding: %s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -302,32 +303,27 @@ msgstr "Poort initialisatie mislukt"
 msgid "Port connection failed - port object is invalid"
 msgstr "Poortverbinding mislukt - poortobject is ongeldig"
 
-#, fuzzy
 msgid "STN connection established"
-msgstr "%s STN verbinding tot stand gebracht"
+msgstr "STN verbinding tot stand gebracht"
 
-#, fuzzy
 msgid "Version: "
-msgstr "Versie "
+msgstr "Versie: "
 
 #, python-format
 msgid "STPX/STN configuration warning: %s"
-msgstr ""
+msgstr "STPX/STN configuratie waarschuwing: %s"
 
 msgid "No ELM interface on port"
 msgstr "Geen ELM interface aangesloten"
 
-#, fuzzy
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr "OBDLINK verbinding OK, volledige snelheid UART schakeling proberen"
+msgstr "OBDLink verbinding OK, poging tot volledige snelheid UART schakelaar"
 
-#, fuzzy
 msgid "Failed to switch OBDLink to "
 msgstr "OBDLINK schakelen naar mislukt: "
 
-#, fuzzy
 msgid "OBDLink Connection OK, using optimal settings"
-msgstr "OBDLINK verbinding OK, optimale instellingen gebruiken"
+msgstr "OBDLink verbinding OK, optimale instellingen gebruiken"
 
 msgid "Connection established successfully"
 msgstr "Verbinding succesvol tot stand gebracht"
@@ -338,9 +334,9 @@ msgstr "ELS27 V5 CAN pinnen configureren (12-13)"
 msgid "ELS27 V5 CAN configuration complete"
 msgstr "ELS27 V5 CAN configuratie voltooid"
 
-#, fuzzy, python-format
+#, python-format
 msgid "ELS27 V5 configuration warning: %s"
-msgstr "ELS27 V5 CAN configuratie voltooid"
+msgstr "ELS27 V5 configuratie waarschuwing: %s"
 
 msgid "Port is None - cannot switch speed"
 msgstr "Poort is None - kan snelheid niet wisselen"
@@ -349,13 +345,13 @@ msgstr "Poort is None - kan snelheid niet wisselen"
 msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr "%s baudrate wisseling OK, UART snelheid nu veranderen..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "ELM baudrate wisseling OK, UART snelheid nu veranderen..."
+msgstr "%s ELM baudrate wisseling OK, UART snelheid nu veranderen..."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Not supported baudrate %s"
-msgstr "Niet-ondersteunde baudrate voor ELM: %s"
+msgstr "Niet-ondersteunde baudrate %s"
 
 msgid "ELM reset..."
 msgstr "ELM reset..."
@@ -437,80 +433,80 @@ msgstr "Optimale instellingen gebruiken voor"
 
 #, python-format
 msgid "%(text)s %(type)s: %(settings)s"
-msgstr ""
+msgstr "%(text)s %(type)s: %(settings)s"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
-msgstr ""
+msgstr "ELM327 ondersteunt DoIP niet, terugvallen op seriële modus"
 
 msgid "Serial port opened"
 msgstr "Seriële poort geopend"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Serial connection error: %s"
-msgstr "Verbindingsfout: "
+msgstr "Seriële verbindingsfout: %s"
 
 msgid "ELM not connected or wrong COM port"
 msgstr "ELM niet verbonden of verkeerde COM poort"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected error: %s"
-msgstr "Pin wisselfout: %s"
+msgstr "Onverwachte fout: %s"
 
 #, python-format
 msgid "Bluetooth connection attempted: %s"
-msgstr ""
+msgstr "Bluetooth verbinding geprobeerd: %s"
 
 #, python-format
 msgid "Serial connection established: %(port)s @ %(baud)s baud"
-msgstr ""
+msgstr "Seriële verbinding tot stand gebracht: %(port)s @ %(baud)s baud"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Bluetooth connection failed: %s"
-msgstr "Verbinding mislukt: "
+msgstr "Bluetooth verbinding mislukt: %s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP verbinding initialiseren naar %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
-msgstr "Verbinding mislukt: "
+msgstr "DoIP verbinding mislukt: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP initialization failed: %s"
-msgstr "DoIP CAN initialisatie mislukt: {}"
+msgstr "DoIP initialisatie mislukt: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Port closed: %s"
-msgstr "Poort gesloten"
+msgstr "Poort gesloten: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error closing port: %s"
-msgstr "Fout in read(): %s"
+msgstr "Fout bij sluiten poort: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
-msgstr "Verbinden met apparaat op poort: "
+msgstr "Verbinden met WiFi adapter op %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection established: %(ip)s:%(port)s"
-msgstr "%s STN verbinding tot stand gebracht"
+msgstr "WiFi verbinding tot stand gebracht: %(ip)s:%(port)s"
 
 #, python-format
 msgid "WiFi connection timeout to %(ip)s:%(port)s"
-msgstr ""
+msgstr "WiFi verbinding timeout naar %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi connection error: %s"
-msgstr "Verbindingsfout: "
+msgstr "WiFi verbindingsfout: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Unexpected WiFi error: %s"
-msgstr "Verbindingsfout: "
+msgstr "Onverwachte WiFi fout: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "WiFi recv: %s"
-msgstr "Wi-fi poort: "
+msgstr "WiFi recv: %s"
 
 #, python-format
 msgid "Serial error in read_byte: %s"
@@ -532,7 +528,7 @@ msgid "Error in read(): %s"
 msgstr "Fout in read(): %s"
 
 msgid "WiFi connection - baudrate change not applicable"
-msgstr ""
+msgstr "WiFi verbinding - baudrate wijziging niet van toepassing"
 
 msgid "Attempting WiFi reconnection..."
 msgstr "Poging WiFi herverbinding..."
@@ -555,19 +551,13 @@ msgid "Checking port speed:"
 msgstr "Controleer poort snelheid:"
 
 msgid "WiFi connection - skipping baudrate check"
-msgstr ""
+msgstr "WiFi verbinding - baudrate controle overslaan"
 
 msgid "Bluetooth connection - skipping baudrate check"
-msgstr ""
+msgstr "Bluetooth verbinding - baudrate controle overslaan"
 
-#, python-format
-msgid ""
-"\n"
-"%(label)s: %(speed)s"
-msgstr ""
-
-msgid "Start COM speed :"
-msgstr "Start COM snelheid:"
+msgid "Start COM speed: "
+msgstr "Start-COM-snelheid: "
 
 msgid "ELM not responding"
 msgstr "ELM reageert niet"
@@ -631,9 +621,9 @@ msgstr ""
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json niet gevonden of ongeldig."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Could not write version.h: %s"
-msgstr "Waarschuwing: Kon string descriptor niet lezen:"
+msgstr "Waarschuwing: Kon version.h niet schrijven: %s"
 
 msgid "Using custom DDT database"
 msgstr "Aangepaste DDT database gebruiken"
@@ -660,8 +650,8 @@ msgid ""
 "font>"
 msgstr ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>DEZE PLUGIN ZAL "
-"AIRBAG CRASH DATA ONTSLUILEN<br>GA WEG ALS U NIET WET WAT DIT BETEKENT</"
-"font>DIT BETEKENT</font>"
+"AIRBAG CRASH DATA ONTSLUILEN<br>GA WEG ALS U NIET WEET WAT DIT BETEKENT</"
+"font>"
 
 msgid "Check ACU Virgin"
 msgstr "Controleer ACU Virgin"
@@ -673,7 +663,7 @@ msgid "Virginize ACU"
 msgstr "ACU Virgin maken"
 
 msgid "Cannot connect to ECU"
-msgstr "Kan niet verbinden met ECU"
+msgstr "Er kan geen verbinding worden gemaakt met de ECU"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='orange'>ONVERWACHT ANTWOORD</font>"
@@ -872,8 +862,7 @@ msgid ""
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>DEZE PLUGIN ZAL AIRBAG "
-"CRASH DATA ONTGRENDELEN<br>GA WEG ALS U GEEN IDEE HEEFT WAT DIT BETEKENT</"
-"font>"
+"CRASH DATA ONTGRENDELEN<br>GA WEG ALS U NIET WEET WAT DIT BETEKENT</font>"
 
 #, python-format
 msgid "SDS FA stream: %s"
@@ -911,7 +900,7 @@ msgid ""
 msgstr ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>DEZE PLUGIN ZAL AIRBAG CRASH DATA "
-"ONTGRENDELEN<br>GA WEG ALS U GEEN IDEE HEEFT WAT DIT BETEKENT</font>"
+"ONTGRENDELEN<br>GA WEG ALS U NIET WEET WAT DIT BETEKENT</font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
@@ -984,11 +973,8 @@ msgid ""
 "li><li>Keep key card inserted</li></ul>"
 msgstr ""
 "<h1>TIPS</h1><ul><li>Voeg sleutelkaart in</li><li>Zet in D-positie</"
-"li><li>Druk/Houd START ingedrukt tot <b>Verwijder kaart</b> bericht "
-"verschijnt</li><li>Zet in P-positie</li><li>Houd sleutelkaart ingevoegd</"
-"li></ul><h1>TIPS</h1><ul><li>Voer kaart CARD in</li><li>Zet D positie</"
-"li><li>Druk op/Houd START vast tot <b>Kaart verwijderen</b> bericht</"
-"li><li>Zet P positie</li><li>Houd kaart CARD ingevoerd</li></ul>"
+"li><li>Druk/Houd START ingedrukt tot <b>Verwijder kaart</b> bericht</"
+"li><li>Zet in P-positie</li><li>Houd sleutelkaart ingevoegd</li></ul>"
 
 msgid "<font color='green'>Values read</font>"
 msgstr "<font color='green'>Waarden gelezen</font>"
@@ -1283,9 +1269,7 @@ msgid ""
 "this application more reliable</center>"
 msgstr ""
 "<center>Deze software is gratis, maar ik heb geld nodig om kabels/ECU's te "
-"kopen en deze applicatie betrouwbaarder te maken</center>applicatie "
-"betrouwbaarder te maken</center><center>Deze software is gratis, maar er is "
-"geld nodig voor kabels/ECU's om de applicatie te verbeteren</center>"
+"kopen en deze applicatie betrouwbaarder te maken</center>"
 
 msgid "Yes I contribute"
 msgstr "Ja, ik doneer"
@@ -1295,8 +1279,8 @@ msgstr "Nee, bedankt"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"<center>Bedankt voor uw bijdrage. Als er niets gebeurt, ga dan naar : "
-"https://github.com/cedricp/ddt4all</center>"
+"Bedankt voor uw bijdrage. Als er niets gebeurt, ga dan naar: https://"
+"github.com/cedricp/ddt4all"
 
 msgid "ECU Finder"
 msgstr "ECU zoeker"
@@ -1403,7 +1387,7 @@ msgid "Read DTC"
 msgstr "DTC Lezen"
 
 msgid "Full log"
-msgstr "Volledige log"
+msgstr "Volledige logboek"
 
 msgid "Expert mode (enable writing)"
 msgstr "Expert modus (staat wijzigen toe)"
@@ -1522,9 +1506,9 @@ msgstr "Gemaakt door:"
 msgid "Options"
 msgstr "Opties"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating menu bar: %s"
-msgstr "Fout in read(): %s"
+msgstr "Fout bij updaten menubalk: %s"
 
 msgid "CAN Line 1 Auto"
 msgstr "CAN lijn 1 Auto"
@@ -1760,9 +1744,9 @@ msgstr "Fout tijdens verbindingstest: "
 msgid "Reset and Recheck"
 msgstr "Resetten en opnieuw controleren"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error updating port list: %s"
-msgstr "Fout tijdens verbindingstest: "
+msgstr "Fout bij updaten poortlijst: %s"
 
 msgid "57600"
 msgstr "57600"
@@ -1794,50 +1778,50 @@ msgstr "Lange commando ondersteuning en hoge snelheid communicatie beschikbaar"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
-msgstr ""
+msgstr "DoIP preset toegepast: %(name)s -> %(ip)s"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s (IP unchanged)"
-msgstr ""
+msgstr "DoIP preset toegepast: %(name)s (IP ongewijzigd)"
 
 #, python-format
 msgid "Error preparing DoIP update: %s"
-msgstr ""
+msgstr "Fout bij voorbereiden DoIP update: %s"
 
 #, python-format
 msgid "Applied %s preset:"
-msgstr ""
+msgstr "%s preset toegepast:"
 
 #, python-format
 msgid "  IP: %s"
-msgstr ""
+msgstr "  IP: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "  Port: %s"
-msgstr "Poort: "
+msgstr "  Poort: %s"
 
 #, python-format
 msgid "  Timeout: %ss"
-msgstr ""
+msgstr "  Timeout: %ss"
 
 msgid "  Configuration saved and device list reloaded"
-msgstr ""
+msgstr "  Configuratie opgeslagen en apparaatlijst herladen"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in force DoIP update: %s"
-msgstr "Fout in read(): %s"
+msgstr "Fout in geforceerde DoIP update: %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in delayed DoIP update: %s"
-msgstr "Fout in read(): %s"
+msgstr "Fout in uitgestelde DoIP update: %s"
 
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
-msgstr ""
+msgstr "DoIP apparaat bijgewerkt: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error in targeted DoIP update: %s"
-msgstr "Fout in read(): %s"
+msgstr "Fout in gerichte DoIP update: %s"
 
 msgid "N/A"
 msgstr "N/A"
@@ -2013,12 +1997,11 @@ msgstr "Lees DTC gaf een fout terug"
 msgid "No DTC"
 msgstr "Geen DTC"
 
-#, fuzzy
 msgid "Invalid DTC response: "
-msgstr "Slechte ELM respons :"
+msgstr "Ongeldige DTC respons: "
 
 msgid "DTC parsing error - response: "
-msgstr ""
+msgstr "DTC parse fout - respons: "
 
 msgid "Diagnostic Trouble Codes"
 msgstr "Diagnostische probleemcodes"

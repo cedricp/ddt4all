@@ -595,8 +595,8 @@ class ELM:
             else:
                 raise Exception((_("Not supported baudrate %s") % str(baudrate)))
 
-        except Exception:
-            raise
+        except Exception:        
+            raise Exception((_("Not supported baudrate %s") % str(baudrate)))
 
     def __del__(self):
         try:
