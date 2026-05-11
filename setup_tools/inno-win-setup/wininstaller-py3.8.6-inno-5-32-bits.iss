@@ -69,14 +69,31 @@ Type: filesandordirs; Name: "{group}"
 Type: filesandordirs; Name: "{app}"
 
 [Run]
-Filename: "{app}\win32_deps\VC_redist.x86.exe"; Tasks: microsoft_runtimes
 Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; Parameters: "-m ddt4all"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser; Description: "{cm:OpenAfterInstall}"
 
 [Code]
+procedure InstallMSRuntimes;
+var
+  ResultCode: Integer;
+begin
+  Exec(
+    ExpandConstant('{app}\win32_deps\VC_redist.x86.exe'),
+    '',
+    '',
+    SW_SHOWNORMAL,
+    ewWaitUntilTerminated,
+    ResultCode
+  );
+end;
+
 procedure AfterMyProgInstall;
   var
   ResultCode: Integer;
 begin
+  { Install Microsoft runtimes before runs python }
+  if IsTaskSelected('microsoft_runtimes') then
+    InstallMSRuntimes;
+
   Exec(
     ExpandConstant('{app}\{#PYTHON_FOLDER}\python.exe'),
     '-m pip install -e ".[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check',
