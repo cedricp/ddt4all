@@ -7,6 +7,7 @@ import sys
 import threading
 import time
 
+from ddt4all.cli.cmd_handlers import doip
 from ddt4all.core.elm.device_manager import DeviceManager
 import ddt4all.options as options
 
