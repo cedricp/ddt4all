@@ -454,7 +454,7 @@ class EcuScanner:
                 print(_("Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)") % {"ip": target_ip, "port": target_port, "timeout": timeout})
                 
                 # Create DoIP device independently (not through ELM)
-                doip_device = DoIPDevice(target_ip)
+                doip_device = DoIPDevice(target_ip, target_port)
                 
                 # Set timeout if supported
                 if hasattr(doip_device, 'timeout'):
