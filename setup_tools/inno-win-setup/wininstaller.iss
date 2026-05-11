@@ -10,6 +10,7 @@
 #define MyAppReadmeMd   "https://github.com/cedricp/ddt4all/blob/master/README.md"
 #define MyCopyright     Str(__copyright__) + " - " + MyAppAuthor
 #define APP_ID          "{3E70988F-0D77-4639-800D-2CD9DB2617B1}"
+#define PYTHON_FOLDER   "Python313-x64"
 
 [Setup]
 AppName={#MyAppName}
@@ -55,7 +56,7 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
-Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\Python313-x64"; Flags: ignoreversion recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
+Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\{#PYTHON_FOLDER}"; Flags: ignoreversion recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
 Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full
 Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
 Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
@@ -72,7 +73,7 @@ Type: filesandordirs; Name: "{group}"
 Type: filesandordirs; Name: "{app}"
 
 [Run]
-Filename: "{app}\Python313-x64\python.exe"; Parameters: "-m ddt4all"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser; Description: "{cm:OpenAfterInstall}"
+Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; Parameters: "-m ddt4all"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser; Description: "{cm:OpenAfterInstall}"
 
 [Code]
 procedure AfterMyProgInstall;
@@ -80,7 +81,7 @@ procedure AfterMyProgInstall;
   ResultCode: Integer;
 begin
   Exec(
-    ExpandConstant('{app}\Python313-x64\python.exe'),
+    ExpandConstant('{app}\{#PYTHON_FOLDER}\python.exe'),
     '-m pip install -e ".[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check',
     ExpandConstant('{app}'),
     SW_SHOWNORMAL,
@@ -100,11 +101,11 @@ Name: "{app}\vehicles"; Permissions: users-full
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkedonce
 
 [Icons]
-Name: "{app}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#MyAppName} Diagnostic Tool"
-Name: "{group}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{app}\{#MyAppName}"; Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{group}\{cm:UninstallProgram}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#MyAppName} Diagnostic Tool"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
 Name: "{group}\{#MyAppName}-Fix"; Filename: "{cmd}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "/C ""{app}\fixModX64.bat"" -p"; Comment: "{#MyAppName} Diagnostic Tool Fix"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
 en.OpenAfterInstall=Open {#MyAppName} after installation
@@ -130,6 +131,18 @@ ptbr.AfterMyProgInstall=Considere instalar um banco de dados em %n%n
 pt.AfterMyProgInstall=Considere instalar um banco de dados em %n%n
 ru.AfterMyProgInstall=Рассмотрите возможность установки базы данных в %n%n
 tr.AfterMyProgInstall=Veritabanını şuraya yüklemeyi unutmayın %n%n
+;------------------------------------------------------------------------------
+en.UninstallProgram=Uninstall {#MyAppName}
+de.UninstallProgram={#MyAppName} deinstallieren
+fr.UninstallProgram=Désinstaller {#MyAppName}
+es.UninstallProgram=Desinstalar {#MyAppName}
+it.UninstallProgram=Disinstalla {#MyAppName}
+nl.UninstallProgram={#MyAppName} verwijderen
+pl.UninstallProgram=Odinstaluj {#MyAppName}
+ptbr.UninstallProgram=Desinstalar o {#MyAppName}
+pt.UninstallProgram=Desinstalar o {#MyAppName}
+ru.UninstallProgram=Удалить {#MyAppName}
+tr.UninstallProgram={#MyAppName} kaldır
 
 [Languages]
 Name: "en";   MessagesFile: "compiler:\Default.isl"
