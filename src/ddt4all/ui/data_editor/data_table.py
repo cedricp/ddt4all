@@ -4,6 +4,8 @@ import PyQt5.QtWidgets as widgets
 
 import ddt4all.options as options
 
+_ = options.translator('ddt4all')
+
 class DataTable(widgets.QTableWidget):
     gotoitem = core.pyqtSignal(object)
     removeitem = core.pyqtSignal(object)
