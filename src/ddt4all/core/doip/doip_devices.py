@@ -18,8 +18,8 @@ class DoIPDevice:
     ISO 13400 compliant devices.
     """
     
-    def __init__(self, target_ip="192.168.0.12"):
-        self.doip = DoIPConnection(target_ip)
+    def __init__(self, target_ip="192.168.0.12", target_port=13400):
+        self.doip = DoIPConnection(target_ip, target_port)
         self.connectionStatus = False
         self.currentaddress = 0x00
         self.startSession = ""
