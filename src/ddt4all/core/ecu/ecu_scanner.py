@@ -555,7 +555,6 @@ class EcuScanner:
             else:
                 # Simulation mode - use real DDT database data
                 print(_("Simulation mode: DoIP address %s would be scanned") % addr)
-                print(_("Simulation mode: DoIP address %s would be scanned") % addr)
                 # Don't provide fake data - let user know it's simulation
                 print(_("Would connect to DoIP ECU at address %s and read identification data") % addr)
 
