@@ -60,7 +60,8 @@ Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion cr
 Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
 Source: "..\..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
 Source: "..\..\README.md"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
-Source: "..\..\license.txt"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full; AfterInstall: AfterMyProgInstall
+Source: "..\..\license.txt"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full
+Source: "fixModX64.bat"; DestDir: "{app}"; Flags: ignoreversion; Permissions: users-full; AfterInstall: AfterMyProgInstall
 
 [InstallDelete]
 Type: filesandordirs; Name: "{group}"
@@ -79,15 +80,13 @@ procedure AfterMyProgInstall;
   ResultCode: Integer;
 begin
   Exec(
-    ExpandConstant('{cmd}'),
-    '/c cd /d "' + ExpandConstant('{app}') + '" && "' +
-    ExpandConstant('{app}\Python313-x64\python.exe') +
-    '" -m pip install -e .[dev,can,network,bluetooth] --no-warn-script-location --disable-pip-version-check', //debug & pause',
-    '',
+    ExpandConstant('{app}\Python313-x64\python.exe'),
+    '-m pip install -e ".[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check',
+    ExpandConstant('{app}'),
     SW_SHOWNORMAL,
     ewWaitUntilTerminated,
     ResultCode
-  ); 
+  );
   MsgBox(ExpandConstant('{cm:AfterMyProgInstall} {app}'), mbInformation, MB_OK);
 end;
 
@@ -104,6 +103,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "{app}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#MyAppName} Diagnostic Tool"
 Name: "{group}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
+Name: "{group}\{#MyAppName}-Fix"; Filename: "{cmd}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "/C ""{app}\fixModX64.bat"" -p"; Comment: "{#MyAppName} Diagnostic Tool Fix"
 Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\Python313-x64\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
