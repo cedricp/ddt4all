@@ -1,12 +1,7 @@
 import array
 
-from ddt4all.core.elm.elm import (
-    get_can_addr,
-    get_can_addr_ext,
-    get_can_addr_snat,
-    get_can_addr_snat_ext,
-)
 from ddt4all.core.usbdevice.usb_can import UsbCan
+import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
 
 _ = options.translator('ddt4all')
@@ -69,13 +64,22 @@ class OBDDevice:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
             self.currentaddress = addr
-        elif get_can_addr(addr) is not None and get_can_addr_snat(addr) is not None:
-            TXa = get_can_addr(addr)
-            RXa = get_can_addr_snat(addr)
+        elif addr in elm.dnat and addr in elm.snat:
+            # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
+            TXa = elm.dnat[addr]
+            RXa = elm.snat[addr]
             self.currentaddress = addr
-        elif get_can_addr_ext(addr) is not None and get_can_addr_snat_ext(addr) is not None:
-            TXa = get_can_addr_ext(addr)
-            RXa = get_can_addr_snat_ext(addr)
+        elif addr in elm.dnat_ext and addr in elm.snat_ext:
+            TXa = elm.dnat_ext[addr]
+            RXa = elm.snat_ext[addr]
+            self.currentaddress = addr
+        elif elm.get_can_addr(addr) is not None and elm.get_can_addr_snat(addr) is not None:
+            TXa = elm.get_can_addr(addr)
+            RXa = elm.get_can_addr_snat(addr)
+            self.currentaddress = addr
+        elif elm.get_can_addr_ext(addr) is not None and elm.get_can_addr_snat_ext(addr) is not None:
+            TXa = elm.get_can_addr_ext(addr)
+            RXa = elm.get_can_addr_snat_ext(addr)
             self.currentaddress = addr
         else:
             TXa = 'undefined'

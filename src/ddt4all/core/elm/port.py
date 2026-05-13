@@ -8,6 +8,7 @@ import threading
 import time
 
 from ddt4all.core.elm.device_manager import DeviceManager
+import ddt4all.core.doip.doip_devices as doip_devices
 import ddt4all.options as options
 
 _ = options.translator('ddt4all')
@@ -174,9 +175,7 @@ class Port:
         """Initialize DoIP connection"""
         try:
             print(_("Initializing DoIP connection to %(ip)s:%(port)s") % {"ip": ip, "port": port})
-            # Import DoIP device locally to avoid circular import
-            from ddt4all.core.doip.doip_devices import DoIPDevice
-            self.doip_device = DoIPDevice(ip, port)
+            self.doip_device = doip_devices.DoIPDevice(ip, port)
             
             if self.doip_device.connect():
                 self.connectionStatus = True
