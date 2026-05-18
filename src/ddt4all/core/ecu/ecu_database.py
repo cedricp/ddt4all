@@ -39,7 +39,7 @@ class EcuDatabase:
         jsonecu_files = glob.glob("./json/*.json.targets")
         for jsonecu_file in jsonecu_files:
             self.numecu += 1
-            json_file = open(jsonecu_file, "r")
+            json_file = open(jsonecu_file)
             json_data = json_file.read()
             json_file.close()
             ecus_dict = json.loads(json_data)
@@ -69,16 +69,15 @@ class EcuDatabase:
                     print(_("Adding group "), addr, ecu_dict['group'])
                     self.addr_group_mapping[str(addr)] = ecu_dict['group']
 
-                ecu_ident = EcuIdent(diagversion, ecu_dict['supplier_code'],
-                                      ecu_dict['soft_version'], ecu_dict['version'],
-                                      name, ecu_dict['group'], href, ecu_dict['protocol'],
-                                      ecu_dict['projects'], addr)
+                ecu_ident = EcuIdent(
+                    diagversion, ecu_dict['supplier_code'],
+                    ecu_dict['soft_version'], ecu_dict['version'],
+                    name, ecu_dict['group'], href, ecu_dict['protocol'],
+                    ecu_dict['projects'], addr,
+                )
 
                 for proj in ecu_dict['projects']:
-                    projname = proj[0:3].upper()
-                    if projname not in self.vehiclemap:
-                        self.vehiclemap[projname] = []
-                    self.vehiclemap[projname].append((ecu_dict['protocol'], addr))
+                    self.addVehicleMapEntry(proj, ecu_dict['protocol'], addr)
 
                 self.targets.append(ecu_ident)
 
@@ -108,23 +107,24 @@ class EcuDatabase:
                     self.addr_group_mapping[ecuaddress] = targetv['group']
 
                 if len(targetv['autoidents']) == 0:
-                    ecu_ident = EcuIdent("", "", "", "", ecuname, ecugroup, href, ecuprotocol,
-                                          ecuprojects, ecuaddress, True)
+                    ecu_ident = EcuIdent(
+                        "", "", "", "", ecuname, ecugroup, href, ecuprotocol,
+                        ecuprojects, ecuaddress, True,
+                    )
                     self.targets.append(ecu_ident)
                 else:
                     for target in targetv['autoidents']:
-                        ecu_ident = EcuIdent(target['diagnostic_version'], target['supplier_code'],
-                                              target['soft_version'], target['version'],
-                                              ecuname, ecugroup, href, ecuprotocol,
-                                              ecuprojects, ecuaddress, True)
+                        ecu_ident = EcuIdent(
+                            target['diagnostic_version'], target['supplier_code'],
+                            target['soft_version'], target['version'],
+                            ecuname, ecugroup, href, ecuprotocol,
+                            ecuprojects, ecuaddress, True,
+                        )
 
                         self.targets.append(ecu_ident)
 
                 for proj in ecuprojects:
-                    projname = proj[0:3].upper()
-                    if projname not in self.vehiclemap:
-                        self.vehiclemap[projname] = []
-                    self.vehiclemap[projname].append((ecuprotocol, ecuaddress))
+                    self.addVehicleMapEntry(proj, ecuprotocol, ecuaddress)
 
                 self.targets.append(ecu_ident)
 
@@ -169,27 +169,43 @@ class EcuDatabase:
                     projects = []
                     if projectselems:
                         for c in projectselems[0].childNodes:
-                            projects.append(c.nodeName)
+                            if c.nodeType == c.ELEMENT_NODE:
+                                projects.append(c.nodeName)
                     for autoident in autoidents:
                         if len(autoident.getElementsByTagName("AutoIdent")) == 0:
-                            ecu_ident = EcuIdent("00", "??????", "0000", "0000", name, group, href, protocol,
-                                                  projects, address)
+                            ecu_ident = EcuIdent(
+                                "00", "??????", "0000", "0000", name, group,
+                                href, protocol, projects, address,
+                            )
                             self.targets.append(ecu_ident)
                         for ai in autoident.getElementsByTagName("AutoIdent"):
                             diagversion = ai.getAttribute("DiagVersion")
                             supplier = ai.getAttribute("Supplier")
                             soft = ai.getAttribute("Soft")
                             version = ai.getAttribute("Version")
-                            ecu_ident = EcuIdent(diagversion, supplier, soft, version, name, group, href, protocol,
-                                                  projects, address)
+                            ecu_ident = EcuIdent(
+                                diagversion, supplier, soft, version, name,
+                                group, href, protocol, projects, address,
+                            )
                             self.targets.append(ecu_ident)
 
                     if projectselems:
                         for project in projectselems[0].childNodes:
-                            projname = project.nodeName[0:3].upper()
-                            if projname not in self.vehiclemap:
-                                self.vehiclemap[projname] = []
-                            self.vehiclemap[projname].append((ecu_ident.protocol, address))
+                            if project.nodeType == project.ELEMENT_NODE:
+                                self.addVehicleMapEntry(
+                                    project.nodeName, ecu_ident.protocol, address
+                                )
+
+    def addVehicleMapEntry(self, project, protocol, addr):
+        project = str(project).upper()
+        if not project:
+            return
+
+        entry = (protocol, addr)
+        if project not in self.vehiclemap:
+            self.vehiclemap[project] = []
+        if entry not in self.vehiclemap[project]:
+            self.vehiclemap[project].append(entry)
 
     def getTarget(self, name):
         for t in self.targets:
