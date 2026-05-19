@@ -6,6 +6,8 @@ __contributors__ = {
     "Furtif": "Collaborator",
     "jyte": "Contributor",
     "bovirus": "Contributor",
+    "not-jan": "Contributor",
+    "joeyave": "Contributor",
     "josefe17": "Contributor",
     "shrlnm": "Contributor",
     "jneuhauser": "Contributor",
@@ -22,7 +24,7 @@ __contributors__ = {
     "walkman2021": "Translator"
 }
 __license__ = "GPL"
-__version__ = "3.0.9"
+__version__ = "3.1.0"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__status__ = "Velvet Mantis"
+__status__ = "Obsidian Lynx"
