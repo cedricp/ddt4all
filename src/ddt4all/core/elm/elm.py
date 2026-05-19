@@ -1091,6 +1091,14 @@ class ELM:
             return "ODD ERROR"
         if not all(c in string.hexdigits for c in command):
             return "HEX ERROR"
+        
+        '''
+        captures the SID from the command prior to framing in ELM CAN/UDS communication
+          - defined in send_can/send_can_cfc as request_sid = command[:2].upper()
+          - used to locate positive responses (SID + 0x40) or 7F negatives
+          - referenced during framing and response parsing in CAN logic
+        '''
+        request_sid = command[:2].upper()  # save before framing loop modifies command
 
         # do framing
         raw_command = []
@@ -1152,12 +1160,12 @@ class ELM:
             elif responses[0][:1] == '1':
                 # Got a multi-frame first frame but no consecutive frames.
                 # Likely cause: AT CAF1 still active (AT SP reset it), or flow control failed.
-                print("send_can: received first frame only — AT CAF0 may have been reset by AT SP, or FC failed")
+                print(_("send_can: received first frame only — AT CAF0 may have been reset by AT SP, or FC failed"))
                 self.error_frame += 1
                 noerrors = False
             else:  # wrong response (not all frames received)
                 # Likely cause: AT CAF1 active — response lacks ISO-TP length prefix.
-                print(f"send_can: unexpected response byte 0x{responses[0][:2]} — check AT CAF0 is active")
+                print(_("send_can: unexpected response byte %s — check AT CAF0 is active") % f'0x{responses[0][:2]}')
                 self.error_frame += 1
                 noerrors = False
         else:  # multiple frames received
@@ -1480,7 +1488,7 @@ class ELM:
             # ELM prompt received — adapter is done responding even if echo was off
             # (some VLinker/clone adapters reset echo state on atpc, so AT E1 response
             # won't contain the command echo; looping again would block for portTimeout)
-            if expect in self.buff:
+            if '>' in self.buff:
                 break
             elif self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
