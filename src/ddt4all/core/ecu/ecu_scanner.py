@@ -64,6 +64,14 @@ class EcuScanner:
 
         self.check_ecu(can_response, label, addr, "CAN")
 
+        # Return ECU to default session so it stops broadcasting and doesn't
+        # corrupt the next diagnostic connection (e.g. opening a screen after scan).
+        if not options.simulation_mode:
+            try:
+                options.elm.cmd('1081')
+            except Exception:
+                pass
+
     def identify_from_frame(self, addr, can_response):
         self.check_ecu(can_response, None, addr, "CAN")
 
@@ -155,6 +163,13 @@ class EcuScanner:
 
             options.main_window.logview.append(line)
 
+    def _close_uds_session(self):
+        """Send ECU back to default session after scanning (prevents broadcast bleed)."""
+        try:
+            options.elm.cmd('1001')
+        except Exception:
+            pass
+
     def identify_new(self, addr, label):
         diagversion = ""
         supplier = ""
@@ -167,6 +182,7 @@ class EcuScanner:
             if not options.elm.start_session_can('1003'):
                 # Bad response of SDS, no need check old method (10C0)
                 return False
+            # From here the ECU has a 1003 session open; close it before returning.
 
         if options.simulation_mode:
             # Give scanner something to eat...
@@ -185,6 +201,7 @@ class EcuScanner:
         else:
             can_response = options.elm.request(req='22F1A0', positive='', cache=False)
             if 'WRONG' in can_response:
+                self._close_uds_session()
                 return False
         diagversion = can_response.replace(' ', '')[6:8]
 
@@ -212,6 +229,7 @@ class EcuScanner:
         else:
             can_response = options.elm.request(req='22F18A', positive='', cache=False)
             if 'WRONG' in can_response:
+                self._close_uds_session()
                 return False
         supplier = bytes.fromhex(can_response.replace(' ', '')[6:132]).decode("utf8", "ignore")
 
@@ -237,6 +255,7 @@ class EcuScanner:
         else:
             can_response = options.elm.request(req='22F194', positive='', cache=False)
             if 'WRONG' in can_response:
+                self._close_uds_session()
                 return False
 
         soft = bytes.fromhex(can_response.replace(' ', '')[6:38]).decode("utf8", "ignore")
@@ -260,15 +279,18 @@ class EcuScanner:
         else:
             can_response = options.elm.request(req='22F195', positive='', cache=False)
             if 'WRONG' in can_response:
+                self._close_uds_session()
                 return False
 
         # Remove unwanted non-ascii FF from string
         soft_version = bytes.fromhex(can_response.replace(' ', '')[6:38]).decode("utf8", "ignore")
         if diagversion == "":
+            self._close_uds_session()
             return False
 
         self.check_ecu2(diagversion, supplier, soft, soft_version, label, addr, "CAN")
-        # New method succeded, return the good news
+        # Close the 1003 session before moving to the next ECU
+        self._close_uds_session()
         return True
 
     def scan(self, progress=None, label=None, vehiclefilter=None, canline=0):
@@ -279,7 +301,7 @@ class EcuScanner:
                 # Initialize device with enhanced features using selected adapter type
                 device_type = options.elm.adapter_type
                 elm.DeviceManager.initialize_device(options.elm, device_type)
-            
+
             options.elm.init_can()
 
         project_can_addresses = []

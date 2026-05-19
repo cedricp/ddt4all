@@ -28,6 +28,8 @@ import ddt4all.options as options
 _ = options.translator('ddt4all')
 
 class UsbCan:
+    _descriptor_warning_shown = False
+
     def __init__(self):
         self.device = None
         self.descriptor = ""
@@ -175,7 +177,9 @@ class UsbCan:
                 return _("USB Device")
         except Exception as e:
             # Fallback for devices with limited descriptor support
-            print(_("Warning: Could not read string descriptor:") + f" {e}")
+            if not UsbCan._descriptor_warning_shown:
+                UsbCan._descriptor_warning_shown = True
+                print(_("Warning: Could not read string descriptor:") + f" {e}")
             return _("USB OBD Device")
 
     def get_vendor_request(self, vendor_id):

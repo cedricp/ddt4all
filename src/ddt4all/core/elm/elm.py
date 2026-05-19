@@ -36,6 +36,49 @@ snat_ext = {}
 dnat = dnat_entries
 dnat_ext = {}
 
+# USB port info cached by detect_usb_device() which must run on the main thread.
+# libusb_init() (called by get_backend()) is not safe to call from a non-main thread
+# on macOS due to IOKit restrictions and causes a SIGBUS.
+_usb_port_cache = None      # (port_path, descriptor, "USB", "online") or None
+_usb_serial_cache = set()   # /dev paths claimed by USB detection, used to suppress duplicates
+
+
+def detect_usb_device():
+    """Detect USB OBD device and cache the result. MUST be called from the main thread."""
+    global _usb_port_cache, _usb_serial_cache
+    try:
+        import usb.backend.libusb1
+        backend = usb.backend.libusb1.get_backend()
+        if backend is None:
+            _usb_port_cache = None
+            return
+        usb_device = UsbCan()
+        if not usb_device.is_init():
+            _usb_port_cache = None
+            return
+        port_path = usb_device.descriptor
+        try:
+            vid = usb_device.device.idVendor
+            pid = usb_device.device.idProduct
+            for port_info in list_ports.comports():
+                if port_info.vid == vid and port_info.pid == pid:
+                    port_path = port_info.device
+                    _usb_serial_cache.add(port_path)
+                    break
+        except Exception:
+            pass
+        _usb_port_cache = (port_path, usb_device.descriptor, "USB", "online")
+        print(_("Found USB device:") + " %s" % usb_device.descriptor)
+    except ImportError:
+        _usb_port_cache = None
+    except Exception as e:
+        if not hasattr(detect_usb_device, '_error_shown'):
+            detect_usb_device._error_shown = True
+            print(_("USB device detection error:") + f" {e}")
+            print(_("Note: This error does not affect serial communication or bypass cable functionality."))
+        _usb_port_cache = None
+
+
 
 def clean_bytestring(value):
     # If is bytes -> decode
@@ -92,35 +135,16 @@ def item_count(items):
 def get_available_ports():
     """Get available serial ports with optimized status checking"""
     ports = []
+    # Track serial ports already listed via USB detection to avoid duplicates
+    usb_serial_ports = set()
 
-    # First check for USB devices using usbdevice.py (with error handling)
-    try:
-        # Check if pyusb is available before attempting USB device detection
-        import usb.core
-        import usb.util
-        import usb.legacy
-        import usb.backend.libusb1
+    # Use USB device previously detected on the main thread by detect_usb_device().
+    # libusb is not safe to call from background threads on macOS, so detection is
+    # deliberately deferred to the main-thread call and cached here.
+    if _usb_port_cache is not None:
+        ports.append(_usb_port_cache)
+        usb_serial_ports.add(_usb_port_cache[0])
 
-        # Test if USB backend is available before attempting device detection
-        backend = usb.backend.libusb1.get_backend()
-        if backend is None:
-            # No USB backend available - silently continue for bypass cable users
-            pass
-        else:
-            usb_device = UsbCan()
-            if usb_device.is_init():
-                # Add USB device to ports list
-                ports.append((usb_device.descriptor, usb_device.descriptor, "USB", "online"))
-                print(_("Found USB device:") + " %s" % usb_device.descriptor)
-    except ImportError:
-        # USB device detection not available - silently continue for bypass cable users
-        pass
-    except Exception as e:
-        # Only show USB device detection error once per session
-        if not hasattr(get_available_ports, '_usb_device_error_shown'):
-            get_available_ports._usb_device_error_shown = True
-            print(_("USB device detection error:") + f" {e}")
-            print(_("Note: This error does not affect serial communication or bypass cable functionality."))
 
     # Check for DoIP devices with optimized connectivity checking (only for DoIP-capable devices)
     # DoIP devices - Use configured IP address instead of hardcoded values
@@ -154,6 +178,10 @@ def get_available_ports():
 
         iterator = sorted(list(portlist))
         for port, desc, hwid in iterator:
+            # Skip ports already listed via USB device detection (avoid duplicates)
+            if port in usb_serial_ports or port in _usb_serial_cache:
+                continue
+
             # Enhanced device identification for ELS27 and other adapters
             device_desc = desc
             desc_upper = desc.upper()
@@ -390,7 +418,10 @@ class ELM:
         self.adapter_type = adapter_type
         options.port_speed = rate
         self.stpx_enabled = False  # Initialize STPX mode flag
-        for speed in [int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]:
+        # Build speed list: user's chosen rate first, then common fallbacks.
+        # dict.fromkeys preserves order and removes duplicates (e.g. when rate == 38400).
+        _speed_candidates = list(dict.fromkeys([int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]))
+        for speed in _speed_candidates:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
 
             if not options.simulation_mode:
@@ -476,6 +507,15 @@ class ELM:
                 options.elm_failed = False
                 self.connectionStatus = True
                 rate = speed
+                # Save settings only now that ELM communication is confirmed at this speed
+                device_key = DeviceManager.normalize_adapter_type(adapter_type)
+                confirmed_settings = {
+                    'baudrate': speed,
+                    'timeout': self.port.settings.get('timeout', 5),
+                    'rtscts': self.port.settings.get('rtscts', False),
+                    'dsrdtr': self.port.settings.get('dsrdtr', False),
+                }
+                options.save_device_settings(device_key, confirmed_settings, portName)
                 break
             else:
                 options.elm_failed = True
@@ -776,6 +816,8 @@ class ELM:
         if not all(c in string.hexdigits for c in command):
             return "HEX ERROR"
 
+        request_sid = command[:2].upper()  # save before framing loop modifies command
+
         # do framing
         raw_command = []
         cmd_len = len(command) // 2
@@ -1049,6 +1091,14 @@ class ELM:
             return "ODD ERROR"
         if not all(c in string.hexdigits for c in command):
             return "HEX ERROR"
+        
+        '''
+        captures the SID from the command prior to framing in ELM CAN/UDS communication
+          - defined in send_can/send_can_cfc as request_sid = command[:2].upper()
+          - used to locate positive responses (SID + 0x40) or 7F negatives
+          - referenced during framing and response parsing in CAN logic
+        '''
+        request_sid = command[:2].upper()  # save before framing loop modifies command
 
         # do framing
         raw_command = []
@@ -1078,7 +1128,7 @@ class ELM:
             frsp = self.send_raw(f)
             # analyse response (1 phase)
             for s in frsp.split('\n'):
-                if s.strip() == f:  # echo cancellation
+                if s.strip().replace(' ', '') == f:  # echo cancellation (space-insensitive)
                     continue
                 s = s.strip().replace(' ', '')
                 if len(s) == 0:  # empty string
@@ -1107,34 +1157,106 @@ class ELM:
                 nbytes = int(responses[0][1:2], 16)
                 nframes = 1
                 result = responses[0][2:2 + nbytes * 2]
-            else:  # wrong response (not all frames received)
+            elif responses[0][:1] == '1':
+                # Got a multi-frame first frame but no consecutive frames.
+                # Likely cause: AT CAF1 still active (AT SP reset it), or flow control failed.
+                print(_("send_can: received first frame only — AT CAF0 may have been reset by AT SP, or FC failed"))
                 self.error_frame += 1
                 noerrors = False
-        else:  # multi frame response
-            if responses[0][:1] == '1':  # first frame
+            else:  # wrong response (not all frames received)
+                # Likely cause: AT CAF1 active — response lacks ISO-TP length prefix.
+                print(_("send_can: unexpected response byte %s — check AT CAF0 is active") % f'0x{responses[0][:2]}')
+                self.error_frame += 1
+                noerrors = False
+        else:  # multiple frames received
+            if responses[0][:1] == '0':
+                # All received frames are single-frames. This happens when the ECU
+                # continuously broadcasts on its TX CAN ID (e.g. UCH J84 on 0x765).
+                # Search for a frame whose payload matches the expected positive-response
+                # SID (request_sid + 0x40) or a UDS negative response (7F).
+                # Fall back to responses[0] if none found.
+                try:
+                    expected_pos = "%02X" % (int(request_sid, 16) + 0x40)
+                except ValueError:
+                    expected_pos = ""
+                diagnostic_frame = None
+                for resp in responses:
+                    if resp[:1] != '0':
+                        continue
+                    frame_len = int(resp[1:2], 16) if resp[1:2] else 0
+                    payload = resp[2:2 + frame_len * 2].upper()
+                    if (expected_pos and payload[:2] == expected_pos) or payload[:2] == '7F':
+                        diagnostic_frame = resp
+                        break
+                if diagnostic_frame is not None:
+                    nbytes = int(diagnostic_frame[1:2], 16)
+                    nframes = 1
+                    result = diagnostic_frame[2:2 + nbytes * 2]
+                else:
+                    # No single-frame match; check if broadcasts precede a multi-frame response
+                    first_frame_idx = next(
+                        (i for i, r in enumerate(responses) if r[:1] == '1'), None
+                    )
+                    if first_frame_idx is not None:
+                        ff = responses[first_frame_idx]
+                        nbytes = int(ff[1:4], 16)
+                        nframes = nbytes / 7 + 1
+                        cframe = 1
+                        result = ff[4:16]
+                        for fr in responses[first_frame_idx + 1:]:
+                            if fr[:1] == '2':
+                                tmp_fn = int(fr[1:2], 16)
+                                if tmp_fn != (cframe % 16):
+                                    self.error_frame += 1
+                                    noerrors = False
+                                    continue
+                                cframe += 1
+                                result += fr[2:16]
+                            else:
+                                self.error_frame += 1
+                                noerrors = False
+                    else:
+                        # Fall back: use first frame (broadcast data, no real response)
+                        nbytes = int(responses[0][1:2], 16)
+                        nframes = 1
+                        result = responses[0][2:2 + nbytes * 2]
+            elif responses[0][:1] == '1':  # first frame of a multi-frame message
                 nbytes = int(responses[0][1:4], 16)
                 nframes = nbytes // 7 + 1
                 cframe = 1
                 result = responses[0][4:16]
+
+                for fr in responses[1:]:
+                    if fr[:1] == '2':  # consecutive frames
+                        tmp_fn = int(fr[1:2], 16)
+                        if tmp_fn != (cframe % 16):  # wrong response (frame lost)
+                            self.error_frame += 1
+                            noerrors = False
+                            continue
+                        cframe += 1
+                        result += fr[2:16]
+                    else:  # wrong response
+                        self.error_frame += 1
+                        noerrors = False
             else:  # wrong response (first frame omitted)
                 self.error_frame += 1
                 noerrors = False
 
-            for fr in responses[1:]:
-                if fr[:1] == '2':  # consecutive frames
-                    tmp_fn = int(fr[1:2], 16)
-                    if tmp_fn != (cframe % 16):  # wrong response (frame lost)
-                        self.error_frame += 1
-                        noerrors = False
-                        continue
-                    cframe += 1
-                    result += fr[2:16]
-                else:  # wrong response
-                    self.error_frame += 1
-                    noerrors = False
-
-        # Check for negative
-        if result[:2] == '7F': noerrors = False
+        errorstr = "Unknown"
+        # check for negative response (repeat the same as in cmd())
+        if result[:2] == '7F':
+            noerrors = False
+            if result[4:6] in list(negrsp.keys()):
+                errorstr = errorval(result[4:6])
+            if self.vf != 0:
+                tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
+                    self.vf.write(tmstr + ";" + dnat_ext[
+                        self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
+                elif self.currentaddress in dnat:
+                    self.vf.write(tmstr + ";" + dnat[
+                        self.currentaddress] + ";" + command + ";" + result + ";" + errorstr + "\n")
+                self.vf.flush()
 
         # populate L1 cache
         if noerrors and command[:2] in options.safe_commands and not options.opt_n1c:
@@ -1363,6 +1485,11 @@ class ELM:
                 break
             if command in self.buff:
                 break
+            # ELM prompt received — adapter is done responding even if echo was off
+            # (some VLinker/clone adapters reset echo state on atpc, so AT E1 response
+            # won't contain the command echo; looping again would block for portTimeout)
+            if '>' in self.buff:
+                break
             elif self.lf != 0:
                 tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 self.lf.write("< [" + tmstr + "] Response: " + self.buff + "\n<shifted> Request: " + command + "\n")
@@ -1495,7 +1622,17 @@ class ELM:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
             self.currentaddress = addr
+        elif addr in dnat and addr in snat:
+            # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
+            TXa = dnat[addr]
+            RXa = snat[addr]
+            self.currentaddress = addr
+        elif addr in dnat_ext and addr in snat_ext:
+            TXa = dnat_ext[addr]
+            RXa = snat_ext[addr]
+            self.currentaddress = addr
         elif get_can_addr(addr) is not None and get_can_addr_snat(addr) is not None:
+            # addr is a CAN TX ID (dnat value); reverse-lookup to get key
             TXa = get_can_addr(addr)
             RXa = get_can_addr_snat(addr)
             self.currentaddress = addr
@@ -1542,6 +1679,14 @@ class ELM:
             self.set_can_500(TXa)
         elif canline == 2:
             self.set_can_250(TXa)
+
+        # Re-apply formatting settings after AT SP, because some ELM327 clones
+        # (including VLinker FS) reset CAF/S/AL to defaults when the protocol changes.
+        # send_can adds ISO-TP length prefixes itself and needs CAF0 (off), S0 (no
+        # spaces for reliable echo cancellation), and AL (allow long messages).
+        self.cmd("AT CAF0")
+        self.cmd("AT S0")
+        self.cmd("AT AL")
 
         if options.cantimeout > 0:
             self.set_can_timeout(options.cantimeout)

@@ -82,6 +82,9 @@ class Port:
             if speed > 0:
                 self.settings['baudrate'] = speed
 
+            translate_arg = _("Using settings for")
+            print(f"{translate_arg} {self.adapter_type}: {self.settings}")
+
             # Check if this is a DoIP connection (only for non-ELM327 devices)
             if ":" in self.portName and self.portName.count(":") == 1:
                 ip, port = self.portName.split(":")
@@ -131,16 +134,8 @@ class Port:
             translate_arg = _("Serial port opened")
             print("%s: %s" % (translate_arg, self.hdr))
             self.connectionStatus = True
-
-            # Save successful connection settings
-            if self.connectionStatus:
-                connection_settings = {
-                    'baudrate': serial_params['baudrate'],
-                    'timeout': serial_params['timeout'],
-                    'rtscts': serial_params['rtscts'],
-                    'dsrdtr': serial_params['dsrdtr']
-                }
-                options.save_device_settings(device_key, connection_settings, self.portName)
+            # Settings are saved by ELM.__init__ only after ELM communication is confirmed,
+            # not here — opening the port at a speed doesn't mean the ELM responds at that speed.
 
         except serial.SerialException as e:
             error_msg = _("Serial connection error: %s") % e
@@ -418,18 +413,22 @@ class Port:
                     if not rlist:
                         continue
                 byte = self.read()
+                # Yield briefly when the serial buffer is empty so we don't
+                # pin a CPU core with a tight busy-loop (avoids macOS spinning ball)
+                if not byte:
+                    time.sleep(0.001)
             else:
                 byte = '>'
-    
+
             if byte == '\r':
                 byte = '\n'
-    
+
             if byte:
                 self.buff += byte
-    
+
             if pattern in self.buff:
                 return self.buff
-    
+
             if time.time() > deadline:
                 return self.buff + _("TIMEOUT")
     def check_elm(self):
