@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"POT-Creation-Date: 2026-05-19 20:37+0200\n"
 "PO-Revision-Date: 2026-05-07 13:07+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -364,6 +364,19 @@ msgstr "Resetowanie ELMa..."
 msgid "Unknown address: "
 msgstr "Nieznany adres: "
 
+msgid ""
+"send_can: received first frame only — AT CAF0 may have been reset by AT SP, "
+"or FC failed"
+msgstr ""
+"send_can: odebrano tylko pierwszą ramkę — AT CAF0 mógł zostać zresetowany "
+"przez AT SP lub FC nie powiódł się"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr ""
+"send_can: nieoczekiwany bajt odpowiedzi %s — sprawdź, czy AT CAF0 jest "
+"aktywny"
+
 msgid "Using saved device settings"
 msgstr "Używanie zapisanych ustawień urządzenia"
 
@@ -436,9 +449,8 @@ msgstr "Używanie zapisanych ustawień dla"
 msgid "Using optimal settings for"
 msgstr "Używanie optymalnych ustawień dla"
 
-#, python-format
-msgid "%(text)s %(type)s: %(settings)s"
-msgstr "%(text)s %(type)s: %(settings)s"
+msgid "Using settings for"
+msgstr "Używanie ustawień dla"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
 msgstr "ELM327 nie obsługuje DoIP, powrót do trybu szeregowego"
@@ -1655,6 +1667,9 @@ msgstr "Port WiFi : "
 msgid "I'm aware that I can harm my car if badly used"
 msgstr ""
 "Jestem świadomy, że mogę uszkodzić pojazd tym programem jeżeli źle go użyję"
+
+msgid "Enable CAN2"
+msgstr "Włącz CAN2"
 
 msgid "Dark style"
 msgstr "Tryb ciemny"

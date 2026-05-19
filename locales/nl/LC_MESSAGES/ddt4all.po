@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"POT-Creation-Date: 2026-05-19 20:37+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -359,6 +359,17 @@ msgstr "ELM reset..."
 msgid "Unknown address: "
 msgstr "Onbekend adres: "
 
+msgid ""
+"send_can: received first frame only — AT CAF0 may have been reset by AT SP, "
+"or FC failed"
+msgstr ""
+"send_can: alleen eerste frame ontvangen — AT CAF0 kan zijn gereset door AT "
+"SP of FC is mislukt"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr "send_can: onverwacht reactie-byte %s — controleer of AT CAF0 actief is"
+
 msgid "Using saved device settings"
 msgstr "Opgeslagen apparaatinstellingen gebruiken"
 
@@ -431,9 +442,8 @@ msgstr "Opgeslagen instellingen gebruiken voor"
 msgid "Using optimal settings for"
 msgstr "Optimale instellingen gebruiken voor"
 
-#, python-format
-msgid "%(text)s %(type)s: %(settings)s"
-msgstr "%(text)s %(type)s: %(settings)s"
+msgid "Using settings for"
+msgstr "Instellingen gebruiken voor"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
 msgstr "ELM327 ondersteunt DoIP niet, terugvallen op seriële modus"
@@ -1647,6 +1657,9 @@ msgstr "Wi-fi poort: "
 
 msgid "I'm aware that I can harm my car if badly used"
 msgstr "Ik snap dat ik de auto beschadig bij verkeerd gebruik"
+
+msgid "Enable CAN2"
+msgstr "CAN2 inschakelen"
 
 msgid "Dark style"
 msgstr "Donkere stijl"

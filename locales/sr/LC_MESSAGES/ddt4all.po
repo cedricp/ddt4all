@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"POT-Creation-Date: 2026-05-19 20:37+0200\n"
 "PO-Revision-Date: 2026-05-10 06:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -358,6 +358,18 @@ msgstr "ELM resetovanje..."
 msgid "Unknown address: "
 msgstr "Nepoznata adresa: "
 
+msgid ""
+"send_can: received first frame only — AT CAF0 may have been reset by AT SP, "
+"or FC failed"
+msgstr ""
+"send_can: primljen samo prvi okvir — AT CAF0 je mogao biti resetovan "
+"naredbom AT SP ili FC nije uspeo"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr ""
+"send_can: neočekivani bajt odgovora %s — proverite da li je AT CAF0 aktivan"
+
 msgid "Using saved device settings"
 msgstr "Korišćenje sačuvanih postavki uređaja"
 
@@ -430,9 +442,8 @@ msgstr "Korišćenje sačuvanih postavki za"
 msgid "Using optimal settings for"
 msgstr "Korišćenje optimalnih postavki za"
 
-#, python-format
-msgid "%(text)s %(type)s: %(settings)s"
-msgstr "%(text)s %(type)s: %(settings)s"
+msgid "Using settings for"
+msgstr "Korišćenje postavki za"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
 msgstr "ELM327 ne podržava DoIP, povratak na serijski režim"
@@ -556,7 +567,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Bluetooth veza - preskakanje provere baudrate"
 
 msgid "Start COM speed: "
-msgstr "Почетна COM брзина: "
+msgstr "Početna COM brzina: "
 
 msgid "ELM not responding"
 msgstr "ELM se ne odaziva"
@@ -855,12 +866,11 @@ msgstr ""
 msgid "Megane3 AIRBAG Reset"
 msgstr "Resetovanje AIRBAG Megane3"
 
-#, fuzzy
 msgid ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK "
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>OVAJ PLUGIN ĆE "
+"Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>OVAJ PLUGIN ĆE "
 "OTKLJUČATI PODATKE O UDARU AIRBAGA<br>IDITE AKO NEMATE POJMA ŠTA OVO ZNAČI</"
 "font>"
 
@@ -883,13 +893,12 @@ msgstr ""
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Reset UCH Megane/Scenic III"
 
-#, fuzzy
 msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA II UCH VIRGINIZER<br><font color='red'>OVAJ PLUGIN ĆE OBRIŠATI VAŠ "
-"UCH<br>IDITE AKO NEMATE POJMA ŠTA ŠTA OZNNAČI</font>"
+"MEGANE III UCH VIRGINIZER<br><font color='red'>OVAJ PLUGIN ĆE OBRIŠATI VAŠ "
+"UCH<br>IDITE AKO NEMATE POJMA ŠTA OVO ZNAČI</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "Resetovanje AIRBAG RSAT4"
@@ -1651,6 +1660,9 @@ msgstr "WiFi port: "
 msgid "I'm aware that I can harm my car if badly used"
 msgstr "Upozoren sam da mogu oštetiti moje vozilo ako pogrešno koristim"
 
+msgid "Enable CAN2"
+msgstr "Omogući CAN2"
+
 msgid "Dark style"
 msgstr "Tamni stil"
 
@@ -1973,22 +1985,17 @@ msgstr "Brisanje DTC informacija"
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Nema zahteva za brisanje DTC za taj ECU, poslace uobicajen 14FF00"
 
-#, fuzzy
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr ""
-"<center>Ovim brisete dijagnosticke kodove gresaka</center>\n"
-"Aktivirajte ekspertni režim za otključavanje"
+msgstr "<center>Ovim brišete dijagnostičke kodove grešaka</center>"
 
-#, fuzzy
 msgid "<center>Ae you sure this is what you want.</center>"
-msgstr "Da li ste sigurni da to zelite?"
+msgstr "<center>Da li ste sigurni da to želite.</center>"
 
 msgid "Clear DTC failed"
 msgstr "Brisanje DTC neuspelo"
 
-#, fuzzy
 msgid "Clear DTC successfully done"
-msgstr "Brisanje DTC neuspelo"
+msgstr "Brisanje DTC uspešno završeno"
 
 msgid "No ReadDTC request for that ECU"
 msgstr "Nema zahteva za čitanje DTC za taj ECU"

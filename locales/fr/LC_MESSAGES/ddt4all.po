@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"POT-Creation-Date: 2026-05-19 20:37+0200\n"
 "PO-Revision-Date: 2026-05-07 13:06+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -363,6 +363,18 @@ msgstr "Réinitialisation ELM..."
 msgid "Unknown address: "
 msgstr "Adresse inconnue: "
 
+msgid ""
+"send_can: received first frame only — AT CAF0 may have been reset by AT SP, "
+"or FC failed"
+msgstr ""
+"send_can: reçu uniquement la première trame — AT CAF0 a peut-être été "
+"réinitialisé par AT SP ou FC a échoué"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr ""
+"send_can: octet de réponse inattendu %s — vérifiez que AT CAF0 est actif"
+
 msgid "Using saved device settings"
 msgstr "Utilisation des paramètres de périphérique sauvegardés"
 
@@ -435,9 +447,8 @@ msgstr "Utilisation des paramètres enregistrés pour"
 msgid "Using optimal settings for"
 msgstr "Utilisation des paramètres optimaux pour"
 
-#, python-format
-msgid "%(text)s %(type)s: %(settings)s"
-msgstr "%(text)s %(type)s: %(settings)s"
+msgid "Using settings for"
+msgstr "Paramètres utilisés pour"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
 msgstr "ELM327 ne supporte pas DoIP, retour au mode série"
@@ -1660,6 +1671,9 @@ msgstr "Port Wi-Fi: "
 
 msgid "I'm aware that I can harm my car if badly used"
 msgstr "Je suis conscient que je peux endommager ma voiture si mal utilisé"
+
+msgid "Enable CAN2"
+msgstr "Activer CAN2"
 
 msgid "Dark style"
 msgstr "Style sombre"

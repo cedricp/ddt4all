@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"POT-Creation-Date: 2026-05-19 20:37+0200\n"
 "PO-Revision-Date: 2026-05-07 13:06+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -248,7 +248,7 @@ msgstr "Nem sikerült munkamenetet indítani a DoIP ECU-val a(z) %s címen"
 
 #, python-format
 msgid "Failed to initialize DoIP communication with address %s"
-msgstr "Failed to initialize DoIP communication with address %s"
+msgstr "Nem sikerült inicializálni a DoIP kommunikációt a(z) %s címmel"
 
 msgid "DoIP device not available for scanning"
 msgstr "DoIP eszköz nem érhető el szkenneléshez"
@@ -347,7 +347,7 @@ msgstr "%s baudrate váltás OK, UART sebesség váltása most..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate váltás OK, UART sebesség váltása most..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -358,6 +358,18 @@ msgstr "ELM reset..."
 
 msgid "Unknown address: "
 msgstr "Ismeretlen cím: "
+
+msgid ""
+"send_can: received first frame only — AT CAF0 may have been reset by AT SP, "
+"or FC failed"
+msgstr ""
+"send_can: csak az első keret érkezett meg — az AT CAF0 visszaállhatott az AT "
+"SP által, vagy az FC sikertelen volt"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr ""
+"send_can: váratlan válasz bájt %s — ellenőrizze, hogy az AT CAF0 aktív-e"
 
 msgid "Using saved device settings"
 msgstr "Mentett eszközbeállítások használata"
@@ -431,9 +443,8 @@ msgstr "Mentett beállítások használata ehhez"
 msgid "Using optimal settings for"
 msgstr "Optimális beállítások használata ehhez"
 
-#, python-format
-msgid "%(text)s %(type)s: %(settings)s"
-msgstr "%(text)s %(type)s: %(settings)s"
+msgid "Using settings for"
+msgstr "Beállítások használata ehhez"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
 msgstr "ELM327 nem támogatja a DoIP-et, visszatérés a soros módba"
@@ -1649,6 +1660,9 @@ msgstr "WiFi port: "
 msgid "I'm aware that I can harm my car if badly used"
 msgstr ""
 "Tisztában vagyok vele, hogy a helytelen használat kárt tehet a járművemben"
+
+msgid "Enable CAN2"
+msgstr "CAN2 engedélyezése"
 
 msgid "Dark style"
 msgstr "Sötét stílus"

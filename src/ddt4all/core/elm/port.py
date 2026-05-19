@@ -76,7 +76,7 @@ class Port:
             else:
                 self.settings = DeviceManager.get_optimal_settings(self.adapter_type)
                 translate_arg = _("Using optimal settings for")
-                print(_("%(text)s %(type)s: %(settings)s") % {"text": translate_arg, "type": self.adapter_type, "settings": self.settings})
+                print(("%(text)s %(type)s: %(settings)s") % {"text": translate_arg, "type": self.adapter_type, "settings": self.settings})
 
             # Use provided speed if specified, otherwise use setting
             if speed > 0:

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-10 04:51+0200\n"
+"POT-Creation-Date: 2026-05-19 20:37+0200\n"
 "PO-Revision-Date: 2026-05-07 13:09+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -355,6 +355,18 @@ msgstr "Resetare ELM..."
 msgid "Unknown address: "
 msgstr "Adresă necunoscută: "
 
+msgid ""
+"send_can: received first frame only — AT CAF0 may have been reset by AT SP, "
+"or FC failed"
+msgstr ""
+"send_can: primit doar primul cadru — AT CAF0 poate fi fost resetat de AT SP "
+"sau FC a eșuat"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr ""
+"send_can: octet de răspuns neașteptat %s — verificați dacă AT CAF0 este activ"
+
 msgid "Using saved device settings"
 msgstr "Utilizare setări dispozitiv salvate"
 
@@ -427,9 +439,8 @@ msgstr "Utilizare setări salvate pentru"
 msgid "Using optimal settings for"
 msgstr "Utilizare setări optime pentru"
 
-#, python-format
-msgid "%(text)s %(type)s: %(settings)s"
-msgstr "%(text)s %(type)s: %(settings)s"
+msgid "Using settings for"
+msgstr "Utilizare setări pentru"
 
 msgid "ELM327 doesn't support DoIP, falling back to serial mode"
 msgstr "ELM327 nu suportă DoIP, revenire la modul serial"
@@ -1644,6 +1655,9 @@ msgstr "Port WiFi : "
 
 msgid "I'm aware that I can harm my car if badly used"
 msgstr "Sunt constient ca imi pot strica masina daca este folosita prost"
+
+msgid "Enable CAN2"
+msgstr "Activați CAN2"
 
 msgid "Dark style"
 msgstr "Stil intunecat"
