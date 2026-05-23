@@ -1621,16 +1621,13 @@ class ELM:
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
-            self.currentaddress = addr
         elif addr in dnat and addr in snat:
             # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
             TXa = dnat[addr]
             RXa = snat[addr]
-            self.currentaddress = addr
         elif addr in dnat_ext and addr in snat_ext:
             TXa = dnat_ext[addr]
             RXa = snat_ext[addr]
-            self.currentaddress = addr
         elif get_can_addr(addr) is not None and get_can_addr_snat(addr) is not None:
             # addr is a CAN TX ID (dnat value); reverse-lookup to get key
             TXa = get_can_addr(addr)
@@ -1639,7 +1636,6 @@ class ELM:
         elif get_can_addr_ext(addr) is not None and get_can_addr_snat_ext(addr) is not None:
             TXa = get_can_addr_ext(addr)
             RXa = get_can_addr_snat_ext(addr)
-            self.currentaddress = addr
         else:
             TXa = 'undefined'
             RXa = 'undefined'

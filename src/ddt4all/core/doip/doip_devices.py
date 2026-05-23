@@ -100,28 +100,23 @@ class DoIPDevice:
         Electric vehicles use various addressing schemes including 29-bit, extended addressing,
         and special protocols for high-voltage systems.
         """
-
+        self.currentaddress = addr
         if 'idTx' in ecu and 'idRx' in ecu:
             TXa = ecu['idTx']
             RXa = ecu['idRx']
-            self.currentaddress = addr
         elif addr in elm.dnat and addr in elm.snat:
             # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
             TXa = elm.dnat[addr]
             RXa = elm.snat[addr]
-            self.currentaddress = addr
         elif addr in elm.dnat_ext and addr in elm.snat_ext:
             TXa = elm.dnat_ext[addr]
             RXa = elm.snat_ext[addr]
-            self.currentaddress = addr
         elif elm.get_can_addr(addr) is not None and elm.get_can_addr_snat(addr) is not None:
             TXa = elm.get_can_addr(addr)
             RXa = elm.get_can_addr_snat(addr)
-            self.currentaddress = addr
         elif elm.get_can_addr_ext(addr) is not None and elm.get_can_addr_snat_ext(addr) is not None:
             TXa = elm.get_can_addr_ext(addr)
             RXa = elm.get_can_addr_snat_ext(addr)
-            self.currentaddress = addr
         else:
             TXa = 'undefined'
             RXa = 'undefined'
