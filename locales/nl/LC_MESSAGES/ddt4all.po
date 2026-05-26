@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 22:58+0200\n"
+"POT-Creation-Date: 2026-05-26 23:58+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1657,6 +1657,9 @@ msgstr "CAN2 inschakelen"
 msgid "Dark style"
 msgstr "Donkere stijl"
 
+msgid "WiFi Socket-TimeOut"
+msgstr ""
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Diagnostiek via IP) Configuratie (Experimenteel)"
 
@@ -1701,6 +1704,21 @@ msgstr "DoIP-scan inschakelen"
 
 msgid "Change UART speed"
 msgstr "UART snelheid wijzigen"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "DoIP apparaat toegevoegd aan lijst: %(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Fout bij toevoegen DoIP apparaat aan lijst: %s"
+
+msgid "DoIP device removed from list"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "Fout bij parsen DoIP antwoord: %s"
 
 msgid "Checking..."
 msgstr "Controleren..."
@@ -1827,6 +1845,9 @@ msgstr "Fout in uitgestelde DoIP update: %s"
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP apparaat bijgewerkt: %(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr ""
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"
