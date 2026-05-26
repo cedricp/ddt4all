@@ -10,6 +10,11 @@ from pathlib import Path
 
 from ddt4all.file_manager import get_config_dir
 
+_current_translation = gettext.NullTranslations()
+
+def _dynamic_gettext(message):
+    return _current_translation.gettext(message)
+
 
 simulation_mode = False
 port_speed = 38400
@@ -266,8 +271,9 @@ def translator(domain, lang=None):
     # Use provided language or configuration language
     target_lang = lang if lang else configuration.get("lang", "en_US")
     # Set up message catalog access with specific language
-    t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
-    return t.gettext
+    global _current_translation
+    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
+    return _dynamic_gettext
 
 def dtt4all_time():
     if (sys.version_info[0] * 100 + sys.version_info[1]) > 306:
