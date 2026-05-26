@@ -122,6 +122,10 @@ def main(argv=None) -> int:
 
         if pc.mode == 0 or pcres == widgets.QDialog.Rejected:
             return 0
+        # Mode 3: Language change - reload dialog without exiting
+        if pc.mode == 3:
+            pc = MainWindowOptions(app)
+            continue
 
         options.opt_can2 = pc.CAN2
 

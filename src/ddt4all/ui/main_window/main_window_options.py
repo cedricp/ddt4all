@@ -59,6 +59,7 @@ class MainWindowOptions(widgets.QDialog):
         self.selectedportspeed = 38400
         self.adapter = "STD"
         self.raise_port_speed = _("No")
+        self.app = app  # Store app reference for reload
         super(MainWindowOptions, self).__init__(None)
         # Set window icon and title
         appIcon = gui.QIcon(ICON_OBD)
@@ -208,7 +209,6 @@ class MainWindowOptions(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
-        button_save = widgets.QPushButton(_("Close"))
 
         self.elmchk = button_elm_chk
 
@@ -366,7 +366,6 @@ class MainWindowOptions(widgets.QDialog):
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
-        button_layout.addWidget(button_save)
         button_layout.addWidget(button_elm_chk)
         layout.addLayout(button_layout)
 
@@ -376,7 +375,6 @@ class MainWindowOptions(widgets.QDialog):
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
-        button_save.clicked.connect(self.save_config)
         button_elm_chk.clicked.connect(self.check_elm)
 
         self._scan_worker = None
@@ -415,21 +413,22 @@ class MainWindowOptions(widgets.QDialog):
             # Update configuration
             options.configuration["lang"] = lang_code
 
-            # Update environment variable
+            # Update environment variable BEFORE saving
             os.environ['LANG'] = lang_code
 
             # Save configuration
             options.save_config()
 
-            # Reinitialize the global translator with new language
-            global _
-            _ = options.translator('ddt4all')
+            # Force reload configuration to apply new language
+            options.load_configuration()
 
-            # Close current window and return to main flow
-            # This will allow the main application to recreate everything with new language
-            self.mode = 0  # Set mode to 0 to trigger restart in main loop
-            self.done(True)
-            exit(0)
+            # Reinitialize the global translator with new language BEFORE reload
+            global _
+            _ = options.translator('ddt4all', lang_code)
+
+            # Close dialog to trigger reload in main loop
+            self.mode = 3  # Set mode to 3 to trigger language reload
+            self.accept()
 
     def update_doip_scan_realtime(self, checked):
         """Update DoIP scan configuration in real-time when checkbox changes"""

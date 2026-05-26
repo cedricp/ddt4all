@@ -261,10 +261,12 @@ def set_carlist_sort_mode(mode):
     save_config()
 
 
-def translator(domain):
+def translator(domain, lang=None):
     load_configuration()
-    # Set up message catalog access
-    t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
+    # Use provided language or configuration language
+    target_lang = lang if lang else configuration.get("lang", "en_US")
+    # Set up message catalog access with specific language
+    t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
     return t.gettext
 
 def dtt4all_time():
