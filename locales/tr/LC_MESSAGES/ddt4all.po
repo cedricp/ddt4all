@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 22:58+0200\n"
+"POT-Creation-Date: 2026-05-26 23:58+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -1657,6 +1657,9 @@ msgstr "CAN2'yi etkinleştir"
 msgid "Dark style"
 msgstr "Karanlık mod"
 
+msgid "WiFi Socket-TimeOut"
+msgstr ""
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (IP Üzerinden Tanı) Yapılandırması (Deneysel)"
 
@@ -1701,6 +1704,21 @@ msgstr "DoIP taramasını etkinleştir"
 
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
+
+#, fuzzy, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "DoIP cihazı güncellendi: %(ip)s:%(port)s"
+
+#, fuzzy, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Port listesi güncelleme hatası: %s"
+
+msgid "DoIP device removed from list"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "DoIP yanıtı ayrıştırma hatası: %s"
 
 msgid "Checking..."
 msgstr "Kontrol ediliyor..."
@@ -1826,6 +1844,9 @@ msgstr "Gecikmeli DoIP güncelleme hatası: %s"
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP cihazı güncellendi: %(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr ""
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

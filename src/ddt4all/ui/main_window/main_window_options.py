@@ -254,7 +254,7 @@ class MainWindowOptions(widgets.QDialog):
         self.socket_timeoutcheck = widgets.QCheckBox()
         self.socket_timeoutcheck.setChecked(options.socket_timeout)
         self.socket_timeoutcheck.stateChanged.connect(set_socket_timeout)
-        socket_timeoutlabel = widgets.QLabel("WiFi Socket-TimeOut")
+        socket_timeoutlabel = widgets.QLabel(_("WiFi Socket-TimeOut"))
         socket_timeoutlayout.addWidget(self.socket_timeoutcheck)
         socket_timeoutlayout.addWidget(socket_timeoutlabel)
         socket_timeoutlayout.addStretch()

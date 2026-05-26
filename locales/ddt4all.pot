@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 22:58+0200\n"
+"POT-Creation-Date: 2026-05-26 23:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1563,6 +1563,9 @@ msgstr ""
 msgid "Dark style"
 msgstr ""
 
+msgid "WiFi Socket-TimeOut"
+msgstr ""
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr ""
 
@@ -1606,6 +1609,21 @@ msgid "Enable DoIP Scan"
 msgstr ""
 
 msgid "Change UART speed"
+msgstr ""
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr ""
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr ""
+
+msgid "DoIP device removed from list"
+msgstr ""
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
 msgstr ""
 
 msgid "Checking..."
@@ -1731,6 +1749,9 @@ msgstr ""
 
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
+msgstr ""
+
+msgid "DoIP device removed from list (scan disabled)"
 msgstr ""
 
 #, python-format
