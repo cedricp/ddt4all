@@ -156,6 +156,8 @@ class MainWindowOptions(widgets.QDialog):
         self.doipbutton.setFixedWidth(64)
         self.doipbutton.setCheckable(True)
         self.doipbutton.setToolTip(_("DoIP (Diagnostics over IP)"))
+        # Hide DoIP button if scan is disabled
+        self.doipbutton.setVisible(options.configuration.get('doip_scan', True))
         medialayout.addWidget(self.doipbutton)
 
         layout.addLayout(medialayout)
@@ -260,7 +262,7 @@ class MainWindowOptions(widgets.QDialog):
 
         # DoIP configuration section
         doip_grouplayout = widgets.QVBoxLayout()
-        doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration"))
+        doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration (Experimental)"))
         doip_groupbox.setLayout(doip_grouplayout)
         
         # DoIP Preset Configuration
@@ -336,6 +338,19 @@ class MainWindowOptions(widgets.QDialog):
         doip_reconnectlayout.addWidget(doip_reconnectlabel)
         doip_reconnectlayout.addStretch()
         doip_grouplayout.addLayout(doip_reconnectlayout)
+        
+        # DoIP Scan Enable
+        doip_scanlayout = widgets.QHBoxLayout()
+        self.doip_scancheck = widgets.QCheckBox()
+        self.doip_scancheck.setChecked(options.configuration.get('doip_scan', True))
+        self.doip_scancheck.stateChanged.connect(
+            lambda checked: self.update_doip_scan_realtime(checked)
+        )
+        doip_scanlabel = widgets.QLabel(_("Enable DoIP Scan"))
+        doip_scanlayout.addWidget(self.doip_scancheck)
+        doip_scanlayout.addWidget(doip_scanlabel)
+        doip_scanlayout.addStretch()
+        doip_grouplayout.addLayout(doip_scanlayout)
 
         layout.addWidget(doip_groupbox)
 
@@ -380,19 +395,13 @@ class MainWindowOptions(widgets.QDialog):
         options.configuration["socket_timeout"] = options.socket_timeout
 
         # Save DoIP configuration
-        options.doip_target_ip = self.doip_ipinput.text()
-        options.doip_target_port = self.doip_portinput.value()
-        options.doip_timeout = self.doip_timeoutinput.value()
-        options.doip_vehicle_announcement = self.doip_announcecheck.isChecked()
-        options.doip_auto_reconnect = self.doip_reconnectcheck.isChecked()
-        options.doip_preset = self.doip_presetcombo.currentText()
-
-        options.configuration["doip_target_ip"] = options.doip_target_ip
-        options.configuration["doip_target_port"] = options.doip_target_port
-        options.configuration["doip_timeout"] = options.doip_timeout
-        options.configuration["doip_vehicle_announcement"] = options.doip_vehicle_announcement
-        options.configuration["doip_auto_reconnect"] = options.doip_auto_reconnect
-        options.configuration["doip_preset"] = options.doip_preset
+        options.configuration["doip_target_ip"] = self.doip_ipinput.text()
+        options.configuration["doip_target_port"] = self.doip_portinput.value()
+        options.configuration["doip_timeout"] = self.doip_timeoutinput.value()
+        options.configuration["doip_vehicle_announcement"] = self.doip_announcecheck.isChecked()
+        options.configuration["doip_auto_reconnect"] = self.doip_reconnectcheck.isChecked()
+        options.configuration["doip_preset"] = self.doip_presetcombo.currentText()
+        options.configuration["doip_scan"] = self.doip_scancheck.isChecked()
 
         options.save_config()
         self.close()  # Just close dialog, don't exit app
@@ -421,6 +430,13 @@ class MainWindowOptions(widgets.QDialog):
             self.mode = 0  # Set mode to 0 to trigger restart in main loop
             self.done(True)
             exit(0)
+
+    def update_doip_scan_realtime(self, checked):
+        """Update DoIP scan configuration in real-time when checkbox changes"""
+        # Update the configuration dictionary immediately
+        options.configuration["doip_scan"] = bool(checked)
+        # Save to config.json immediately
+        options.save_config()
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""

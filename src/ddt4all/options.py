@@ -47,6 +47,7 @@ doip_timeout = 5
 doip_vehicle_announcement = True
 doip_auto_reconnect = False
 doip_preset = "Custom"
+doip_scan = True  # Enable DoIP scanning
 
 # STN/STPX Configuration
 opt_stpx_full = False  # Full STPX support detected
@@ -70,7 +71,8 @@ configuration = {
     "doip_timeout": 5,
     "doip_vehicle_announcement": True,
     "doip_auto_reconnect": False,
-    "doip_preset": "Custom"
+    "doip_preset": "Custom",
+    "doip_scan": False
 }
 
 lang_list = {
@@ -113,6 +115,7 @@ def create_new_config():
     configuration["preferred_device_order"] = ["vlinker", "vgate", "derlek_usb_diag2", "derlek_usb_diag3", "obdlink", "obdlink_ex", "els27", "elm327"]
     configuration["enable_device_validation"] = True
     configuration["carlist_sort_mode"] = "code"
+    configuration["doip_scan"] = False
     save_config()
 
 
@@ -138,13 +141,14 @@ def load_configuration():
         configuration["carlist_sort_mode"] = config.get("carlist_sort_mode", "code")
         
         # Load DoIP configuration
-        global doip_target_ip, doip_target_port, doip_timeout, doip_vehicle_announcement, doip_auto_reconnect, doip_preset
+        global doip_target_ip, doip_target_port, doip_timeout, doip_vehicle_announcement, doip_auto_reconnect, doip_preset, doip_scan
         doip_target_ip = config.get("doip_target_ip", "192.168.0.12")
         doip_target_port = config.get("doip_target_port", 13400)
         doip_timeout = config.get("doip_timeout", 5)
         doip_vehicle_announcement = config.get("doip_vehicle_announcement", True)
         doip_auto_reconnect = config.get("doip_auto_reconnect", False)
         doip_preset = config.get("doip_preset", "Custom")
+        doip_scan = config.get("doip_scan", False)
         
         configuration["doip_target_ip"] = doip_target_ip
         configuration["doip_target_port"] = doip_target_port
@@ -152,6 +156,7 @@ def load_configuration():
         configuration["doip_vehicle_announcement"] = doip_vehicle_announcement
         configuration["doip_auto_reconnect"] = doip_auto_reconnect
         configuration["doip_preset"] = doip_preset
+        configuration["doip_scan"] = doip_scan
         
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
