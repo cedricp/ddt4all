@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 20:29+0200\n"
+"POT-Creation-Date: 2026-05-26 22:58+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1651,9 +1651,6 @@ msgstr "Modo de edición"
 
 msgid "ELM benchmark"
 msgstr "Prueba ELM"
-
-msgid "Close"
-msgstr "Cerrar"
 
 msgid "WiFi port : "
 msgstr "Puerto WiFi: "
