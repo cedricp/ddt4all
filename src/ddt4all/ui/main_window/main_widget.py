@@ -759,8 +759,9 @@ class MainWidget(widgets.QMainWindow):
         self.ecu_scan.scan(self.progressstatus, self.infostatus, project)
         self.logview.append(_("Scanning KWP") + " -> " + project)
         self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus, project)
-        self.logview.append(_("Scanning DoIP") + " -> " + project)
-        self.ecu_scan.scan_doip(self.progressstatus, self.infostatus, project)
+        if options.configuration.get('doip_scan', True):
+            self.logview.append(_("Scanning DoIP") + " -> " + project)
+            self.ecu_scan.scan_doip(self.progressstatus, self.infostatus, project)
 
         for ecu in self.ecu_scan.ecus.keys():
             self.ecunamemap[ecu] = self.ecu_scan.ecus[ecu].name
@@ -796,7 +797,9 @@ class MainWidget(widgets.QMainWindow):
 
         msgBox.addButton(canbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(kwpbutton, widgets.QMessageBox.ActionRole)
-        msgBox.addButton(doipbutton, widgets.QMessageBox.ActionRole)
+        # Only add DoIP button if DoIP scan is enabled
+        if options.configuration.get('doip_scan', True):
+            msgBox.addButton(doipbutton, widgets.QMessageBox.ActionRole)
         msgBox.addButton(cancelbutton, widgets.QMessageBox.NoRole)
         msgBox.exec_()
 
@@ -826,7 +829,7 @@ class MainWidget(widgets.QMainWindow):
             self.ecu_scan.scan(self.progressstatus, self.infostatus, None, self.canlinecombo.currentIndex())
         if scankwp:
             self.ecu_scan.scan_kwp(self.progressstatus, self.infostatus)
-        if scandoip:
+        if scandoip and options.configuration.get('doip_scan', True):
             self.ecu_scan.scan_doip(self.progressstatus, self.infostatus)
 
         self.treeview_ecu.clear()

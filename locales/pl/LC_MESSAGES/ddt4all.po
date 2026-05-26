@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-26 20:29+0200\n"
 "PO-Revision-Date: 2026-05-07 13:07+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -197,10 +197,6 @@ msgstr "nie jest zmapowany"
 
 msgid "Scanning address: "
 msgstr "Skanowanie adresu: "
-
-#, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
@@ -1674,7 +1670,8 @@ msgstr "Włącz CAN2"
 msgid "Dark style"
 msgstr "Tryb ciemny"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
+#, fuzzy
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfiguracja DoIP (Diagnostyka przez IP)"
 
 msgid "Device Preset : "
@@ -1712,6 +1709,9 @@ msgstr "Włącz wykrywanie ogłoszeń pojazdów"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatyczne ponowne łączenie przy utracie połączenia"
+
+msgid "Enable DoIP Scan"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr "Zmień prędkość UART"
