@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-26 19:27+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -1664,7 +1664,8 @@ msgstr "CAN2'yi etkinleştir"
 msgid "Dark style"
 msgstr "Karanlık mod"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
+#, fuzzy
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (IP Üzerine Tanılama) Yapılandırması"
 
 msgid "Device Preset : "
@@ -1702,6 +1703,9 @@ msgstr "Araç Duyurusu Keşfini Etkinleştir"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Bağlantı kesildiğinde otomatik yeniden bağlan"
+
+msgid "Enable DoIP Scan"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-26 19:27+0200\n"
 "PO-Revision-Date: 2026-05-07 13:11+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1671,7 +1671,8 @@ msgstr "Включить CAN2"
 msgid "Dark style"
 msgstr "Темный стиль"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
+#, fuzzy
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Конфигурация DoIP (Диагностика через IP)"
 
 msgid "Device Preset : "
@@ -1709,6 +1710,9 @@ msgstr "Включить обнаружение объявлений транс�
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Автоматическое переподключение при потере соединения"
+
+msgid "Enable DoIP Scan"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr "Изменить скорость UART"

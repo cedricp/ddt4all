@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-26 19:27+0200\n"
 "PO-Revision-Date: 2026-05-07 13:06+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1667,7 +1667,8 @@ msgstr "CAN2 engedélyezése"
 msgid "Dark style"
 msgstr "Sötét stílus"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
+#, fuzzy
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Diagnosztika IP-n keresztül) konfiguráció"
 
 msgid "Device Preset : "
@@ -1705,6 +1706,9 @@ msgstr "Jármű bejelentés felfedezésének engedélyezése"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatikus újracsatlakozás kapcsolatvesztés esetén"
+
+msgid "Enable DoIP Scan"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr "UART sebesség módosítása"

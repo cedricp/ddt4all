@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-26 19:27+0200\n"
 "PO-Revision-Date: 2026-05-07 13:06+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -1678,7 +1678,8 @@ msgstr "Activer CAN2"
 msgid "Dark style"
 msgstr "Style sombre"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
+#, fuzzy
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Configuration DoIP (Diagnostic sur IP)"
 
 msgid "Device Preset : "
@@ -1716,6 +1717,9 @@ msgstr "Activer la découverte des annonces de véhicules"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Reconnexion automatique en cas de perte de connexion"
+
+msgid "Enable DoIP Scan"
+msgstr ""
 
 msgid "Change UART speed"
 msgstr "Changer la vitesse de l'UART"
