@@ -150,24 +150,27 @@ def get_available_ports():
     # DoIP devices - Use configured IP address instead of hardcoded values
     doip_target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
     doip_target_port = getattr(options, 'doip_target_port', 13400)
+    doip_scan_enabled = options.configuration.get('doip_scan', True)
 
-    doip_devices = [
-        (doip_target_ip, f"DoIP Device - {doip_target_ip}:{doip_target_port}"),
-    ]
+    # Only add DoIP devices if scan is enabled
+    if doip_scan_enabled:
+        doip_devices = [
+            (doip_target_ip, f"DoIP Device - {doip_target_ip}:{doip_target_port}"),
+        ]
 
-    # Only check DoIP status if not in simulation mode and not checking too frequently
-    if not getattr(options, 'simulation_mode', False) and not hasattr(get_available_ports, '_last_check_time'):
-        get_available_ports._last_check_time = time.time()
-        for ip, desc in doip_devices:
-            status = check_doip_status(ip, doip_target_port, timeout=0.5)  # Use configured port
-            port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", status)
-            ports.append(port_entry)
-            print(f"DoIP device {status}: {desc} at {ip}")
-    else:
-        # Use cached status or assume offline
-        for ip, desc in doip_devices:
-            port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", "offline")
-            ports.append(port_entry)
+        # Only check DoIP status if not in simulation mode and not checking too frequently
+        if not getattr(options, 'simulation_mode', False) and not hasattr(get_available_ports, '_last_check_time'):
+            get_available_ports._last_check_time = time.time()
+            for ip, desc in doip_devices:
+                status = check_doip_status(ip, doip_target_port, timeout=0.5)  # Use configured port
+                port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", status)
+                ports.append(port_entry)
+                print(f"DoIP device {status}: {desc} at {ip}")
+        else:
+            # Use cached status or assume offline
+            for ip, desc in doip_devices:
+                port_entry = (f"{ip}:{doip_target_port}", desc, "DoIP", "offline")
+                ports.append(port_entry)
 
     # Then check for serial ports
     try:

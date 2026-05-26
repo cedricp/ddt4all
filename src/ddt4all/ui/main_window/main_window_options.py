@@ -436,6 +436,65 @@ class MainWindowOptions(widgets.QDialog):
         options.configuration["doip_scan"] = bool(checked)
         # Save to config.json immediately
         options.save_config()
+        
+        # Update DoIP button visibility
+        self.doipbutton.setVisible(bool(checked))
+        
+        # Update device list based on scan status
+        if checked:
+            # Add DoIP device to list
+            self._add_doip_device_to_list()
+        else:
+            # Remove DoIP device from list
+            self._remove_doip_device_from_list()
+
+    def _add_doip_device_to_list(self):
+        """Add DoIP device to the device list"""
+        try:
+            # Get current DoIP configuration
+            doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            doip_port = getattr(options, 'doip_target_port', 13400)
+            
+            # Check if DoIP device already exists in list
+            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+            for i in range(self.listview.count()):
+                item = self.listview.item(i)
+                if item.text() == itemname:
+                    return  # Already exists, don't add duplicate
+            
+            # Add DoIP device to list
+            item = widgets.QListWidgetItem(self.listview)
+            item.setText(itemname)
+            item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            
+            print(_("DoIP device added to list: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
+        except Exception as e:
+            print(_("Error adding DoIP device to list: %s") % e)
+
+    def _remove_doip_device_from_list(self):
+        """Remove DoIP device from the device list"""
+        try:
+            # Find and remove all DoIP devices
+            items_to_remove = []
+            for i in range(self.listview.count()):
+                item = self.listview.item(i)
+                item_text = item.text()
+                if 'DoIP Device' in item_text:
+                    items_to_remove.append(item)
+            
+            # Remove DoIP devices
+            for item in items_to_remove:
+                row = self.listview.row(item)
+                itemname = item.text()
+                if itemname in self.ports:
+                    del self.ports[itemname]
+                self.listview.takeItem(row)
+            
+            if items_to_remove:
+                print(_("DoIP device removed from list"))
+        except Exception as e:
+            print(_("Error removing DoIP device from list: %s") % e)
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
@@ -989,19 +1048,20 @@ class MainWindowOptions(widgets.QDialog):
             # Get current DoIP configuration
             doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
             doip_port = getattr(options, 'doip_target_port', 13400)
+            doip_scan_enabled = options.configuration.get('doip_scan', True)
             
             # Clear the device list completely - no rescan_ports()
             self.listview.clear()
             self.ports = {}
             self.portcount = 0
             
-            # Add only DoIP device - no COM port scanning
-
-            item = widgets.QListWidgetItem(self.listview)
-            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
-            item.setText(itemname)
-            item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
-            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            # Add DoIP device only if scan is enabled
+            if doip_scan_enabled:
+                item = widgets.QListWidgetItem(self.listview)
+                itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+                item.setText(itemname)
+                item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+                self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
             
         except Exception as e:
             print(_("Error in force DoIP update: %s") % e)
@@ -1030,6 +1090,7 @@ class MainWindowOptions(widgets.QDialog):
             # Get current DoIP configuration
             doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
             doip_port = getattr(options, 'doip_target_port', 13400)
+            doip_scan_enabled = options.configuration.get('doip_scan', True)
             
             # Find and remove existing DoIP device
             items_to_remove = []
@@ -1042,16 +1103,21 @@ class MainWindowOptions(widgets.QDialog):
             # Remove old DoIP devices
             for item in items_to_remove:
                 row = self.listview.row(item)
+                itemname = item.text()
+                if itemname in self.ports:
+                    del self.ports[itemname]
                 self.listview.takeItem(row)
                 
-            # Add new DoIP device
-            item = widgets.QListWidgetItem(self.listview)
-            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
-            item.setText(itemname)
-            item.setBackground(core.QColor(150, 50, 50))  # Dark red for offline
-            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
-            
-            print(_("DoIP device updated: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
+            # Add new DoIP device only if scan is enabled
+            if doip_scan_enabled:
+                item = widgets.QListWidgetItem(self.listview)
+                itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+                item.setText(itemname)
+                item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+                self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+                print(_("DoIP device updated: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
+            else:
+                print(_("DoIP device removed from list (scan disabled)"))
             
         except Exception as e:
             print(_("Error in targeted DoIP update: %s") % e)
