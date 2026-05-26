@@ -1667,9 +1667,8 @@ msgstr "Включить CAN2"
 msgid "Dark style"
 msgstr "Темный стиль"
 
-#, fuzzy
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "Конфигурация DoIP (Диагностика через IP)"
+msgstr "Конфигурация DoIP (Диагностика по IP) (Экспериментально)"
 
 msgid "Device Preset : "
 msgstr "Предустановка устройства : "
@@ -1708,7 +1707,7 @@ msgid "Auto-reconnect on connection loss"
 msgstr "Автоматическое переподключение при потере соединения"
 
 msgid "Enable DoIP Scan"
-msgstr ""
+msgstr "Включить сканирование DoIP"
 
 msgid "Change UART speed"
 msgstr "Изменить скорость UART"

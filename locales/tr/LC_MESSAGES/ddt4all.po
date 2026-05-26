@@ -1660,9 +1660,8 @@ msgstr "CAN2'yi etkinleştir"
 msgid "Dark style"
 msgstr "Karanlık mod"
 
-#, fuzzy
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "DoIP (IP Üzerine Tanılama) Yapılandırması"
+msgstr "DoIP (IP Üzerinden Tanı) Yapılandırması (Deneysel)"
 
 msgid "Device Preset : "
 msgstr "Cihaz Önayarı : "
@@ -1701,7 +1700,7 @@ msgid "Auto-reconnect on connection loss"
 msgstr "Bağlantı kesildiğinde otomatik yeniden bağlan"
 
 msgid "Enable DoIP Scan"
-msgstr ""
+msgstr "DoIP taramasını etkinleştir"
 
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"

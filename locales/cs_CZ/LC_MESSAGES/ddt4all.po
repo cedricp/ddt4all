@@ -1660,9 +1660,8 @@ msgstr "Povolit CAN2"
 msgid "Dark style"
 msgstr "Tmavý styl"
 
-#, fuzzy
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "Konfigurace DoIP (Diagnostika přes IP)"
+msgstr "Konfigurace DoIP (Diagnostika přes IP) (Experimentální)"
 
 msgid "Device Preset : "
 msgstr "Předvolba zařízení : "
@@ -1701,7 +1700,7 @@ msgid "Auto-reconnect on connection loss"
 msgstr "Automatické znovupřipojení při ztrátě spojení"
 
 msgid "Enable DoIP Scan"
-msgstr ""
+msgstr "Povolit skenování DoIP"
 
 msgid "Change UART speed"
 msgstr "Změňte rychlost UART"

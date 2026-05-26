@@ -1658,9 +1658,8 @@ msgstr "Activați CAN2"
 msgid "Dark style"
 msgstr "Stil intunecat"
 
-#, fuzzy
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "Configurare DoIP (Diagnosticare prin IP)"
+msgstr "Configurare DoIP (Diagnostică prin IP) (Experimental)"
 
 msgid "Device Preset : "
 msgstr "Presetare dispozitiv : "
@@ -1699,7 +1698,7 @@ msgid "Auto-reconnect on connection loss"
 msgstr "Reconectare automata la pierderea conexiunii"
 
 msgid "Enable DoIP Scan"
-msgstr ""
+msgstr "Activați scanarea DoIP"
 
 msgid "Change UART speed"
 msgstr "Modificare viteza UART"

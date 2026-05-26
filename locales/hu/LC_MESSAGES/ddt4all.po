@@ -1663,9 +1663,8 @@ msgstr "CAN2 engedélyezése"
 msgid "Dark style"
 msgstr "Sötét stílus"
 
-#, fuzzy
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "DoIP (Diagnosztika IP-n keresztül) konfiguráció"
+msgstr "DoIP (Diagnosztika IP-n keresztül) Konfiguráció (Kísérleti)"
 
 msgid "Device Preset : "
 msgstr "Eszköz beállítás : "
@@ -1704,7 +1703,7 @@ msgid "Auto-reconnect on connection loss"
 msgstr "Automatikus újracsatlakozás kapcsolatvesztés esetén"
 
 msgid "Enable DoIP Scan"
-msgstr ""
+msgstr "DoIP szkennelés engedélyezése"
 
 msgid "Change UART speed"
 msgstr "UART sebesség módosítása"

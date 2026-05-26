@@ -1664,9 +1664,8 @@ msgstr "Abilita CAN2"
 msgid "Dark style"
 msgstr "Stile scuro"
 
-#, fuzzy
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "Configurazione DoIP (Diagnostica su IP)"
+msgstr "Configurazione DoIP (Diagnostica su IP) (Sperimentale)"
 
 msgid "Device Preset : "
 msgstr "Impostazioni dispositivo : "
@@ -1705,7 +1704,7 @@ msgid "Auto-reconnect on connection loss"
 msgstr "Riconnessione automatica in caso di perdita connessione"
 
 msgid "Enable DoIP Scan"
-msgstr ""
+msgstr "Abilita scansione DoIP"
 
 msgid "Change UART speed"
 msgstr "Modifica la velocità UART"
