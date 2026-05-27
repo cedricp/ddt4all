@@ -56,6 +56,7 @@ UsedUserAreasWarning=no
 AppId={{#APP_ID}
 
 [Files]
+Source: "win32_deps\VC_redist.x64.exe"; DestDir: "{app}\win32_deps"; Flags: ignoreversion; Permissions: users-full
 Source: "\DDT4ALL-Dist-Versions\Python313\*"; DestDir: "{app}\{#PYTHON_FOLDER}"; Flags: ignoreversion recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
 Source: "..\..\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full
 Source: "..\..\src\*"; DestDir: "{app}\src"; Flags: ignoreversion createallsubdirs recursesubdirs; Permissions: users-full; Excludes: "*.pyc"
@@ -76,10 +77,28 @@ Type: filesandordirs; Name: "{app}"
 Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; Parameters: "-m ddt4all"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser; Description: "{cm:OpenAfterInstall}"
 
 [Code]
+procedure InstallMSRuntimes;
+var
+  ResultCode: Integer;
+begin
+  Exec(
+    ExpandConstant('{app}\win32_deps\VC_redist.x64.exe'),
+    '',
+    '',
+    SW_SHOWNORMAL,
+    ewWaitUntilTerminated,
+    ResultCode
+  );
+end;
+
 procedure AfterMyProgInstall;
   var
   ResultCode: Integer;
 begin
+  { Install Microsoft runtimes before runs python }
+  if IsTaskSelected('microsoft_runtimes') then
+    InstallMSRuntimes;
+
   Exec(
     ExpandConstant('{app}\{#PYTHON_FOLDER}\python.exe'),
     '-m pip install -e ".[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check',
@@ -98,7 +117,8 @@ Name: "{app}\json"; Permissions: users-full
 Name: "{app}\vehicles"; Permissions: users-full
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkedonce
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkedonce 
+Name: "microsoft_runtimes"; Description: "{cm:MSruntimes}"; GroupDescription: "Microsoft Visual C++ Redistributable"; Flags: checkedonce
 
 [Icons]
 Name: "{app}\{#MyAppName}"; Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"
@@ -108,6 +128,18 @@ Name: "{group}\{#MyAppName}-Fix"; Filename: "{cmd}"; WorkingDir: "{app}"; IconFi
 Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#PYTHON_FOLDER}\python.exe"; WorkingDir: "{app}"; IconFilename: "{app}\resources\icons\obd.ico"; Parameters: "-m ddt4all"; Comment: "{#MyAppName} Diagnostic Tool"; Tasks: desktopicon
 
 [CustomMessages]
+en.MSruntimes=Install Microsoft Visual C++ Redistributable runtimes files
+de.MSruntimes=Installieren Sie Microsoft Visual C++ Redistributable-Laufzeitdateien
+fr.MSruntimes=Installer les fichiers d'exécution redistribuables Microsoft Visual C++
+es.MSruntimes=Instalar archivos de tiempo de ejecución redistribuibles de Microsoft Visual C++
+it.MSruntimes=Installa i file runtime ridistribuibili di Microsoft Visual C++
+nl.MSruntimes=Installeer Microsoft Visual C++ Redistributable runtimes-bestanden
+pl.MSruntimes=Zainstaluj pliki środowiska wykonawczego redystrybucyjnego Microsoft Visual C++
+ptbr.MSruntimes=Instalar arquivos de tempo de execução redistribuíveis do Microsoft Visual C++
+pt.MSruntimes=Instalar arquivos de tempo de execução redistribuíveis do Microsoft Visual C++
+ru.MSruntimes=Установите распространяемые файлы среды выполнения Microsoft Visual C++.
+tr.MSruntimes=Microsoft Visual C++ Yeniden Dağıtılabilir çalışma zamanı dosyalarını yükleyin
+; -----------------------------------------------------------------------------
 en.OpenAfterInstall=Open {#MyAppName} after installation
 de.OpenAfterInstall={#MyAppName} nach Abschluss der Installation öffnen
 fr.OpenAfterInstall=Ouvrir {#MyAppName} après l'installation
