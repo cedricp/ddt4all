@@ -166,6 +166,7 @@ class Port:
             options.elm_failed = True
             self.connectionStatus = False
 
+    # TODO: Review DoIP initialization entry point from ELM port.
     def init_doip(self, ip, port):
         """Initialize DoIP connection"""
         try:

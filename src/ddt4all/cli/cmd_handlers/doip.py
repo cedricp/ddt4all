@@ -21,6 +21,7 @@ import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
+# TODO: Review DoIP CLI handler flow and test coverage.
 def cmd_doip(args: argparse.Namespace) -> int:
     # Test DoIP implementation with Electric ECU support
     doip_device = DoIPDevice()

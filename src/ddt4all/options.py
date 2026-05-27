@@ -45,6 +45,7 @@ refreshrate = 5
 mode_edit = False
 safe_commands = ['10','12','14','17','19','1A','21','22','23','3E']
 
+# TODO: Review DoIP configuration defaults and runtime flags.
 # DoIP Configuration
 doip_target_ip = "192.168.0.12"
 doip_target_port = 13400
