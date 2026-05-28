@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:07+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1292,9 +1292,7 @@ msgid "No, I don't"
 msgstr "Nie, nie chce"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Dziękujemy za Twój wkład, jeśli nic się nie stanie, proszę przejdź na: "
-"https://github.com/cedricp/ddt4all"
+msgstr "Dziękujemy za Twój wkład, jeśli nic się nie stanie, przejdź do"
 
 msgid "ECU Finder"
 msgstr "Wyszukiwarka ECU"
@@ -1668,7 +1666,7 @@ msgid "Dark style"
 msgstr "Tryb ciemny"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Limit czasu gniazda WiFi"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfiguracja DoIP (Diagnostyka przez IP) (Eksperymentalna)"
@@ -1715,20 +1713,20 @@ msgstr "Włącz skanowanie DoIP"
 msgid "Change UART speed"
 msgstr "Zmień prędkość UART"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "Urządzenie DoIP zaktualizowane: %(ip)s:%(port)s"
+msgstr "Urządzenie DoIP dodano do listy: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Błąd podczas aktualizacji listy portów: %s"
+msgstr "Błąd dodawania urządzenia DoIP do listy: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "Urządzenie DoIP usunięte z listy"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Błąd podczas analizy odpowiedzi DoIP: %s"
+msgstr "Błąd usuwania urządzenia DoIP z listy: %s"
 
 msgid "Checking..."
 msgstr "Sprawdzanie..."
@@ -1785,27 +1783,6 @@ msgstr "Resetuj i sprawdź ponownie"
 msgid "Error updating port list: %s"
 msgstr "Błąd podczas aktualizacji listy portów: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro wybrany - Włączona obsługa rozszerzona STN/STPX"
 
@@ -1856,7 +1833,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Urządzenie DoIP zaktualizowane: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Urządzenie DoIP usunięte z listy (skanowanie wyłączone)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

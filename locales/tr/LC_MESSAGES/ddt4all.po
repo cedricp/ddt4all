@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -340,7 +340,7 @@ msgstr "%s baud hızı değişimi tamam, UART hızı şimdi değiştiriliyor..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate değiştirildi OK, UART hızı şimdi değiştiriliyor..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -1285,8 +1285,7 @@ msgstr "Hayır, yapmam"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"Katkılarınız için teşekkür ederiz, hiçbir şey olmamışsa lütfen şu adrese "
-"gidin: https://github.com/cedricp/ddt4all"
+"Katkılarınız için teşekkürler, eğer hiçbir şey olmazsa lütfen şuraya gidin"
 
 msgid "ECU Finder"
 msgstr "ECU Bulucu"
@@ -1658,7 +1657,7 @@ msgid "Dark style"
 msgstr "Karanlık mod"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "WiFi socket zaman aşımı"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (IP Üzerinden Tanı) Yapılandırması (Deneysel)"
@@ -1705,20 +1704,20 @@ msgstr "DoIP taramasını etkinleştir"
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "DoIP cihazı güncellendi: %(ip)s:%(port)s"
+msgstr "DoIP cihazı listeye eklendi: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Port listesi güncelleme hatası: %s"
+msgstr "DoIP cihazını listeye eklerken hata oluştu: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "DoIP cihazı listeden kaldırıldı"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "DoIP yanıtı ayrıştırma hatası: %s"
+msgstr "DoIP cihazını listeden kaldırırken hata oluştu: %s"
 
 msgid "Checking..."
 msgstr "Kontrol ediliyor..."
@@ -1775,27 +1774,6 @@ msgstr "Sıfırla ve Yeniden Kontrol Et"
 msgid "Error updating port list: %s"
 msgstr "Port listesi güncelleme hatası: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro seçildi - Gelişmiş STN/STPX desteği etkin"
 
@@ -1846,7 +1824,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP cihazı güncellendi: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "DoIP cihazı listeden kaldırıldı (tarama devre dışı)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

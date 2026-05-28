@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:11+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -346,7 +346,7 @@ msgstr "%s переключил baudrate OK, изменение скорости
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate переключен OK, меняю скорость UART сейчас..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -1291,9 +1291,7 @@ msgid "No, I don't"
 msgstr "Нет, не сейчас"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Спасибо за ваш вклад, если ничего не происходит, пожалуйста, перейдите к: "
-"https://github.com/cedricp/ddt4all"
+msgstr "Спасибо за ваш вклад, если ничего не происходит, перейдите на"
 
 msgid "ECU Finder"
 msgstr "Поиск ЭБУ"
@@ -1782,27 +1780,6 @@ msgstr "Сбросить и перепроверить"
 #, python-format
 msgid "Error updating port list: %s"
 msgstr "Ошибка обновления списка портов: %s"
-
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro выбрана - улучшенная поддержка STN/STPX включена"

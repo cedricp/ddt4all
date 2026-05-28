@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 03:47+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -1658,7 +1658,7 @@ msgid "Dark style"
 msgstr "Tmavý styl"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Časový limit WiFi socketu"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfigurace DoIP (Diagnostika přes IP) (Experimentální)"
@@ -1705,20 +1705,20 @@ msgstr "Povolit skenování DoIP"
 msgid "Change UART speed"
 msgstr "Změňte rychlost UART"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "Zařízení DoIP aktualizováno: %(ip)s:%(port)s"
+msgstr "Zařízení DoIP přidáno do seznamu: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Chyba aktualizace seznamu portů: %s"
+msgstr "Chyba při přidávání zařízení DoIP do seznamu: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "Zařízení DoIP odstraněno ze seznamu"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Chyba při analýze odpovědi DoIP: %s"
+msgstr "Chyba při odebírání zařízení DoIP ze seznamu: %s"
 
 msgid "Checking..."
 msgstr "Kontroluji..."
@@ -1775,27 +1775,6 @@ msgstr "Resetovat a znovu zkontrolovat"
 msgid "Error updating port list: %s"
 msgstr "Chyba aktualizace seznamu portů: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "Vybráno VGate iCar Pro – povolena rozšířená podpora STN/STPX"
 
@@ -1846,7 +1825,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Zařízení DoIP aktualizováno: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Zařízení DoIP odstraněno ze seznamu (skenování zakázáno)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

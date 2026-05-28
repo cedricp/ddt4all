@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:04+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1293,8 +1293,7 @@ msgstr "Nein, ich möchte nicht"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"Vielen Dank für Ihren Beitrag, wenn nichts passiert, bitte gehen Sie zu: "
-"https://github.com/cedricp/ddt4all"
+"Vielen Dank für Ihren Beitrag, wenn nichts passiert, gehen Sie bitte zu"
 
 msgid "ECU Finder"
 msgstr "ECU-Sucher"
@@ -1350,8 +1349,7 @@ msgstr "Besuchen Sie die Online-Dokumentation unter:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
-"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn "
-"verfügbar.verfügbar."
+"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn verfügbar."
 
 msgid "Refresh rate (ms):"
 msgstr "Aktualisierungsrate (ms):"
@@ -1787,27 +1785,6 @@ msgstr "Zurücksetzen und erneut prüfen"
 msgid "Error updating port list: %s"
 msgstr "Fehler beim Aktualisieren der Portliste: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr ""
 "VGate iCar Pro ausgewählt - Erweiterte STN/STPX-Unterstützung aktiviert"
@@ -1879,7 +1856,7 @@ msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 msgstr "Kompatibel mit Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 
 msgid "You must check the recommandations"
-msgstr ";-) Sie müssen das Lesen der Warnung bestätigen"
+msgstr "Sie müssen die Empfehlungen überprüfen"
 
 msgid "Please select a communication port"
 msgstr "Bitte wählen Sie einen Anschluss aus"

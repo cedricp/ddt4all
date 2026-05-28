@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 06:30+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1660,7 +1660,7 @@ msgid "Dark style"
 msgstr "Темний стиль"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Таймаут сокета WiFi"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Конфігурація DoIP (Діагностика через IP) (Експериментально)"
@@ -1707,20 +1707,20 @@ msgstr "Увімкнути сканування DoIP"
 msgid "Change UART speed"
 msgstr "Змінити швидкість UART"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "Пристрій DoIP оновлено: %(ip)s:%(port)s"
+msgstr "Пристрій DoIP додано до списку: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Помилка оновлення списку портів: %s"
+msgstr "Помилка додавання пристрою DoIP до списку: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "Пристрій DoIP видалено зі списку"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Помилка розбору відповіді DoIP: %s"
+msgstr "Помилка видалення пристрою DoIP зі списку: %s"
 
 msgid "Checking..."
 msgstr "Перевірка..."
@@ -1778,27 +1778,6 @@ msgstr "Скинути та перевірити знову"
 msgid "Error updating port list: %s"
 msgstr "Помилка оновлення списку портів: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro обраний - Увімкнена розширена підтримка STN/STPX"
 
@@ -1849,7 +1828,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Пристрій DoIP оновлено: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Пристрій DoIP видалено зі списку (сканування вимкнено)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

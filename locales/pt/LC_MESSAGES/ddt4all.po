@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:09+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
@@ -343,7 +343,7 @@ msgstr "%s mudou baudrate OK, mudando a velocidade do UART agora..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate comutado OK, mudando velocidade UART agora..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -1780,27 +1780,6 @@ msgstr "Redefinir e verificar novamente"
 #, python-format
 msgid "Error updating port list: %s"
 msgstr "Erro ao atualizar lista de portas: %s"
-
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500.000"
-
-msgid "1000000"
-msgstr "1.000.000"
-
-msgid "2000000"
-msgstr "2.000.000"
-
-msgid "38400"
-msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro selecionado - Suporte aprimorado STN/STPX ativado"

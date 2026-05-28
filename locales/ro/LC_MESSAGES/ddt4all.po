@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:09+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -339,7 +339,7 @@ msgstr "%s a comutat cu succes baudrate, schimbare viteza UART acum..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate comutat OK, schimb viteza UART acum..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -1656,7 +1656,7 @@ msgid "Dark style"
 msgstr "Stil intunecat"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Timeout socket WiFi"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Configurare DoIP (Diagnostică prin IP) (Experimental)"
@@ -1703,20 +1703,20 @@ msgstr "Activați scanarea DoIP"
 msgid "Change UART speed"
 msgstr "Modificare viteza UART"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "Dispozitiv DoIP actualizat: %(ip)s:%(port)s"
+msgstr "Dispozitiv DoIP adăugat la listă: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Eroare la actualizarea listei de porturi: %s"
+msgstr "Eroare la adăugarea dispozitivului DoIP în listă: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "Dispozitiv DoIP eliminat din listă"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Eroare la parsarea răspunsului DoIP: %s"
+msgstr "Eroare la eliminarea dispozitivului DoIP din listă: %s"
 
 msgid "Checking..."
 msgstr "Verificare..."
@@ -1773,27 +1773,6 @@ msgstr "Resetare si reverificare"
 msgid "Error updating port list: %s"
 msgstr "Eroare la actualizarea listei de porturi: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro selectat - Suport STN/STPX imbunatatit activat"
 
@@ -1844,7 +1823,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Dispozitiv DoIP actualizat: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Dispozitiv DoIP eliminat din listă (scanare dezactivată)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"
