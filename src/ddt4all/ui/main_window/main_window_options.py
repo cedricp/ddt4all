@@ -708,11 +708,11 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "STD_USB"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("57600"))
-        self.obdlinkspeedcombo.addItem(_("115200"))
-        self.obdlinkspeedcombo.addItem(_("230400"))
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
         # This mode seems to not be supported by all adapters
-        self.obdlinkspeedcombo.addItem(_("500000"))
+        self.obdlinkspeedcombo.addItem("500000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -744,9 +744,9 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "OBDLINK"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("500000"))
-        self.obdlinkspeedcombo.addItem(_("1000000"))
-        self.obdlinkspeedcombo.addItem(_("2000000"))
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")
+        self.obdlinkspeedcombo.addItem("2000000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -804,8 +804,8 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "VLINKER"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("57600"))
-        self.obdlinkspeedcombo.addItem(_("115200"))  # Vlinker can handle moderate speeds
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")  # Vlinker can handle moderate speeds
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -838,8 +838,8 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "DERLEK"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("38400"))
-        self.obdlinkspeedcombo.addItem(_("115200"))  # DERLEK can handle high speeds (optional)
+        self.obdlinkspeedcombo.addItem("38400")
+        self.obdlinkspeedcombo.addItem("115200")  # DERLEK can handle high speeds (optional)
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -866,8 +866,8 @@ class MainWindowOptions(widgets.QDialog):
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
-        self.obdlinkspeedcombo.addItem(_("500000"))
-        self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")  # VGate can handle very high speeds
         
         # Display STPX support information
         self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
@@ -905,10 +905,10 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "VGATE"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("115200"))
-        self.obdlinkspeedcombo.addItem(_("230400"))
-        self.obdlinkspeedcombo.addItem(_("500000"))
-        self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")  # VGate can handle very high speeds
         
         # Display STPX support information
         self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
