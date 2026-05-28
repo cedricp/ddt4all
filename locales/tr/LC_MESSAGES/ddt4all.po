@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -115,11 +115,13 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: Elektrikli ECU algılandı - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP: Elektrikli Araç Sistemleri için genişletilmiş adresleme kullanılıyor"
+msgstr ""
+"DoIP: Elektrikli Araç Sistemleri için genişletilmiş adresleme kullanılıyor"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: 29-bit genişletilmiş adresleme kullanıyor - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: 29-bit genişletilmiş adresleme kullanıyor - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
@@ -201,11 +203,13 @@ msgstr "DoIP yanıtı ayrıştırma hatası: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "%(addr)s adresindeki DoIP ECU minimal veriyle yanıt verdi: %(response)s"
+msgstr ""
+"%(addr)s adresindeki DoIP ECU minimal veriyle yanıt verdi: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor (timeout: %(timeout)ss)"
+msgstr ""
+"%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -336,7 +340,7 @@ msgstr "%s baud hızı değişimi tamam, UART hızı şimdi değiştiriliyor..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate değiştirildi OK, UART hızı şimdi değiştiriliyor..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -357,7 +361,9 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: beklenmeyen yanıt baytı %s — AT CAF0'ın aktif olup olmadığını kontrol edin"
+msgstr ""
+"send_can: beklenmeyen yanıt baytı %s — AT CAF0'ın aktif olup olmadığını "
+"kontrol edin"
 
 msgid "Using saved device settings"
 msgstr "Kayıtlı cihaz ayarları kullanılıyor"
@@ -1204,7 +1210,8 @@ msgid "Shift byte count"
 msgstr "Bayt sayısını değiştir"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
+msgstr ""
+"Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
 
 msgid "Little"
 msgstr "Küçük"
@@ -1277,7 +1284,8 @@ msgid "No, I don't"
 msgstr "Hayır, yapmam"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr "Katkılarınız için teşekkürler, eğer hiçbir şey olmazsa lütfen şuraya gidin"
+msgstr ""
+"Katkılarınız için teşekkürler, eğer hiçbir şey olmazsa lütfen şuraya gidin"
 
 msgid "ECU Finder"
 msgstr "ECU Bulucu"
@@ -1320,7 +1328,9 @@ msgid "DDT4All Documentation"
 msgstr "DDT4All Belgeleri"
 
 msgid "WebEngine not available."
-msgstr "WebEngine mevcut değil. Tam dokümantasyon için web tarama yeteneği için PyQtWebEngine kurun:"
+msgstr ""
+"WebEngine mevcut değil. Tam dokümantasyon için web tarama yeteneği için "
+"PyQtWebEngine kurun:"
 
 msgid ""
 "For full documentation with web browsing capability, install PyQtWebEngine:"
@@ -1330,7 +1340,8 @@ msgid "Visit the online documentation at:"
 msgstr "Çevrimiçi belgeleri ziyaret edin:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Bu temel görünüm, mevcut olduğunda ECU belgelerini göstermeye devam edecek."
+msgstr ""
+"Bu temel görünüm, mevcut olduğunda ECU belgelerini göstermeye devam edecek."
 
 msgid "Refresh rate (ms):"
 msgstr "Yenileme hızı (ms):"
@@ -1646,7 +1657,7 @@ msgid "Dark style"
 msgstr "Karanlık mod"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "WiFi socket zaman aşımı"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (IP Üzerinden Tanı) Yapılandırması (Deneysel)"
@@ -1762,27 +1773,6 @@ msgstr "Sıfırla ve Yeniden Kontrol Et"
 #, python-format
 msgid "Error updating port list: %s"
 msgstr "Port listesi güncelleme hatası: %s"
-
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro seçildi - Gelişmiş STN/STPX desteği etkin"

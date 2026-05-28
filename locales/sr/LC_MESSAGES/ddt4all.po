@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 06:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -120,11 +120,13 @@ msgstr "DoIP: Korišćenje proširenog adresiranja za sisteme električnih vozil
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: Korišćenje 29-bitnog proširenog adresiranja - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: Korišćenje 29-bitnog proširenog adresiranja - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: Korišćenje 11-bitnog standardnog adresiranja - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: Korišćenje 11-bitnog standardnog adresiranja - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Upozorenje, ne može se dobiti vrednost sa znakom za"
@@ -202,7 +204,8 @@ msgstr "Greška u analizi DoIP odgovora: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "DoIP ECU na adresi %(addr)s je odgovorio sa minimalnim podacima: %(response)s"
+msgstr ""
+"DoIP ECU na adresi %(addr)s je odgovorio sa minimalnim podacima: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
@@ -255,7 +258,8 @@ msgstr "Režim simulacije: DoIP adresa %s bi bila skenirana"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "Povezao bi se sa DoIP ECU na adresi %s i pročitaj podatke identifikacije"
+msgstr ""
+"Povezao bi se sa DoIP ECU na adresi %s i pročitaj podatke identifikacije"
 
 msgid "DoIP connection closed"
 msgstr "DoIP veza zatvorena"
@@ -338,7 +342,7 @@ msgstr "%s je promenio baudrate uspešno, menjanje UART brzine sada..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate prebačen OK, menjam UART brzinu sada..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -359,7 +363,8 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: neočekivani bajt odgovora %s — proverite da li je AT CAF0 aktivan"
+msgstr ""
+"send_can: neočekivani bajt odgovora %s — proverite da li je AT CAF0 aktivan"
 
 msgid "Using saved device settings"
 msgstr "Korišćenje sačuvanih postavki uređaja"
@@ -615,7 +620,8 @@ msgid "Warning: Vendor request failed:"
 msgstr "Upozorenje: Zahtev prodavca nije uspeo:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Upozorenje: PyQtWebEngine nije dostupan. Neke funkcije mogu biti ograničene."
+msgstr ""
+"Upozorenje: PyQtWebEngine nije dostupan. Neke funkcije mogu biti ograničene."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nije pronađen ili je nevažeći."
@@ -1334,7 +1340,9 @@ msgid "Visit the online documentation at:"
 msgstr "Posetite online dokumentaciju na:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Ovaj osnovni prikaz će i dalje prikazivati ECU dokumentaciju kada je dostupna."
+msgstr ""
+"Ovaj osnovni prikaz će i dalje prikazivati ECU dokumentaciju kada je "
+"dostupna."
 
 msgid "Refresh rate (ms):"
 msgstr "Vreme osvezavanja (ms):"
@@ -1650,7 +1658,7 @@ msgid "Dark style"
 msgstr "Tamni stil"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Timeout WiFi soketa"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Dijagnostika preko IP) Konfiguracija (Eksperimentalno)"
@@ -1766,27 +1774,6 @@ msgstr "Resetuj i proveri ponovo"
 #, python-format
 msgid "Error updating port list: %s"
 msgstr "Greška ažuriranja liste portova: %s"
-
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro izabran - Poboljšana STN/STPX podrška omogućena"

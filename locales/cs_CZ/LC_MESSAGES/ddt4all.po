@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 03:47+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -118,11 +118,13 @@ msgstr "DoIP: Použití rozšířeného adresování pro systémy elektrických 
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: Použití 29-bitového rozšířeného adresování - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: Použití 29-bitového rozšířeného adresování - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: Použití 11-bitového standardního adresování - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: Použití 11-bitového standardního adresování - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Varování, nelze získat podepsanou hodnotu pro"
@@ -200,7 +202,8 @@ msgstr "Chyba při analýze odpovědi DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "ECU DoIP na adrese %(addr)s odpovědělo s minimálními daty: %(response)s"
+msgstr ""
+"ECU DoIP na adrese %(addr)s odpovědělo s minimálními daty: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
@@ -332,11 +335,15 @@ msgstr "Port je None - nelze přepnout rychlost"
 
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr "%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost UART..."
+msgstr ""
+"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
+"UART..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost UART..."
+msgstr ""
+"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
+"UART..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -357,7 +364,8 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: neočekávaný bajt odpovědi %s — zkontrolujte, zda je AT CAF0 aktivní"
+msgstr ""
+"send_can: neočekávaný bajt odpovědi %s — zkontrolujte, zda je AT CAF0 aktivní"
 
 msgid "Using saved device settings"
 msgstr "Použití uložených nastavení zařízení"
@@ -613,7 +621,8 @@ msgid "Warning: Vendor request failed:"
 msgstr "Varování: Požadavek dodavatele selhal:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezeny."
+msgstr ""
+"Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezeny."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nenalezeno nebo neplatné."
@@ -1766,27 +1775,6 @@ msgstr "Resetovat a znovu zkontrolovat"
 msgid "Error updating port list: %s"
 msgstr "Chyba aktualizace seznamu portů: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "Vybráno VGate iCar Pro – povolena rozšířená podpora STN/STPX"
 
@@ -1868,7 +1856,8 @@ msgid "Err, cannot rename "
 msgstr "Chyba, nelze přejmenovat "
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "Abyste mohli upravovat obrazovku, nejprve ji exportujte do formátu JSON"
+msgstr ""
+"Abyste mohli upravovat obrazovku, nejprve ji exportujte do formátu JSON"
 
 msgid "Enter label name"
 msgstr "Zadejte nový název"

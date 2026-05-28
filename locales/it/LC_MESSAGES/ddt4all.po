@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:07+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: bovirus@gmail.com\n"
@@ -120,11 +120,13 @@ msgstr "DoIP: Utilizzo indirizzamento esteso per Sistemi Veicoli Elettrici"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: Utilizzo indirizzamento esteso a 29-bit - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: Utilizzo indirizzamento esteso a 29-bit - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: Utilizzo indirizzamento standard a 11-bit - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: Utilizzo indirizzamento standard a 11-bit - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Attenzione, impossibile ottenere valore con segno per"
@@ -202,11 +204,14 @@ msgstr "Errore nell'analizzare la risposta DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "ECU DoIP all'indirizzo %(addr)s ha risposto con dati minimi: %(response)s"
+msgstr ""
+"ECU DoIP all'indirizzo %(addr)s ha risposto con dati minimi: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "Inizializzazione connessione DoIP a %(ip)s:%(port)s (timeout: %(timeout)s secondi)"
+msgstr ""
+"Inizializzazione connessione DoIP a %(ip)s:%(port)s (timeout: %(timeout)s "
+"secondi)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -255,7 +260,9 @@ msgstr "Modalità simulazione: l'indirizzo DoIP %s verrebbe scansionato"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "Si connetterebbe all'ECU DoIP all'indirizzo %s e leggerebbe i dati di identificazione"
+msgstr ""
+"Si connetterebbe all'ECU DoIP all'indirizzo %s e leggerebbe i dati di "
+"identificazione"
 
 msgid "DoIP connection closed"
 msgstr "Connessione DoIP chiusa"
@@ -359,7 +366,8 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: byte di risposta imprevisto %s — verificare che AT CAF0 sia attivo"
+msgstr ""
+"send_can: byte di risposta imprevisto %s — verificare che AT CAF0 sia attivo"
 
 msgid "Using saved device settings"
 msgstr "Utilizzo impostazioni dispositivo salvate"
@@ -615,7 +623,9 @@ msgid "Warning: Vendor request failed:"
 msgstr "Attenzione: Richiesta vendor fallita:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Attenzione: PyQtWebEngine non disponibile. Alcune funzionalità potrebbero essere limitate."
+msgstr ""
+"Attenzione: PyQtWebEngine non disponibile. Alcune funzionalità potrebbero "
+"essere limitate."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json non trovato o non valido."
@@ -1333,7 +1343,8 @@ msgid "Visit the online documentation at:"
 msgstr "Visita la documentazione online all'indirizzo:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Questa vista base mostrerà comunque la documentazione ECU quando disponibile."
+msgstr ""
+"Questa vista base mostrerà comunque la documentazione ECU quando disponibile."
 
 msgid "Refresh rate (ms):"
 msgstr "Tempo aggiornamento (ms)"
@@ -1766,27 +1777,6 @@ msgstr "Reimposta e Ricontrolla"
 msgid "Error updating port list: %s"
 msgstr "Errore aggiornamento lista porte: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro selezionato - Supporto STN/STPX avanzato abilitato"
 
@@ -1989,7 +1979,8 @@ msgid "Clearing DTC information"
 msgstr "Azzeramento informazioni DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Nessuna richiesta ClearDTC per questa ECU. Verrà inviato predefinito (14FF00)"
+msgstr ""
+"Nessuna richiesta ClearDTC per questa ECU. Verrà inviato predefinito (14FF00)"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Stai azzerando i codici diagnostici guasti</center>"

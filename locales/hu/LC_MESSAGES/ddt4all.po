@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:06+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -120,7 +120,8 @@ msgstr "DoIP: Kiterjesztett címzés használata Elektromos Jármű Rendszerekhe
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: 29-bites kiterjesztett címzés használata - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: 29-bites kiterjesztett címzés használata - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
@@ -202,11 +203,14 @@ msgstr "Hiba a DoIP válasz elemzésekor: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "DoIP ECU a(z) %(addr)s címen minimális adatokkal válaszolt: %(response)s"
+msgstr ""
+"DoIP ECU a(z) %(addr)s címen minimális adatokkal válaszolt: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "DoIP kapcsolat inicializálása ehhez: %(ip)s:%(port)s (időtúllépés: %(timeout)ss)"
+msgstr ""
+"DoIP kapcsolat inicializálása ehhez: %(ip)s:%(port)s (időtúllépés: "
+"%(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -255,7 +259,8 @@ msgstr "Szimulációs mód: a(z) %s DoIP címet szkennelnék"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "Kapcsolódna a DoIP ECU-hez a(z) %s címen és olvasná az azonosítási adatokat"
+msgstr ""
+"Kapcsolódna a DoIP ECU-hez a(z) %s címen és olvasná az azonosítási adatokat"
 
 msgid "DoIP connection closed"
 msgstr "DoIP kapcsolat lezárva"
@@ -338,7 +343,7 @@ msgstr "%s baudrate váltás OK, UART sebesség váltása most..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate váltás OK, UART sebesség váltása most..."
+msgstr "%s baudrate átváltva OK, UART sebesség változtatása most..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -359,7 +364,8 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: váratlan válasz bájt %s — ellenőrizze, hogy az AT CAF0 aktív-e"
+msgstr ""
+"send_can: váratlan válasz bájt %s — ellenőrizze, hogy az AT CAF0 aktív-e"
 
 msgid "Using saved device settings"
 msgstr "Mentett eszközbeállítások használata"
@@ -615,7 +621,8 @@ msgid "Warning: Vendor request failed:"
 msgstr "Figyelmeztetés: Vendor kérés sikertelen:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Figyelmeztetés: PyQtWebEngine nem elérhető. Néhány funkció korlátozott lehet."
+msgstr ""
+"Figyelmeztetés: PyQtWebEngine nem elérhető. Néhány funkció korlátozott lehet."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nem található vagy érvénytelen."
@@ -724,7 +731,9 @@ msgid "CARD IDE"
 msgstr "KÁRTYA IDE"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr "Nem lehet lekérni az ISK-t, ellenőrizze a kapcsolatokat és UCH kompatibilitást"
+msgstr ""
+"Nem lehet lekérni az ISK-t, ellenőrizze a kapcsolatokat és UCH "
+"kompatibilitást"
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
 msgstr "<font color='red'>PIN KÓD NEM ISMERHETŐ FEL</font>"
@@ -1332,7 +1341,8 @@ msgid "Visit the online documentation at:"
 msgstr "Látogasson el az online dokumentációhoz:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Ez az alap nézet továbbra is megjeleníti az ECU dokumentációt, ha elérhető."
+msgstr ""
+"Ez az alap nézet továbbra is megjeleníti az ECU dokumentációt, ha elérhető."
 
 msgid "Refresh rate (ms):"
 msgstr "Frissítés (ms):"
@@ -1649,7 +1659,7 @@ msgid "Dark style"
 msgstr "Sötét stílus"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "WiFi socket időtúllépés"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Diagnosztika IP-n keresztül) Konfiguráció (Kísérleti)"
@@ -1768,29 +1778,9 @@ msgstr "Visszaállítás és újraellenőrzés"
 msgid "Error updating port list: %s"
 msgstr "Portlista frissítési hiba: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr "VGate iCar Pro kiválasztva - Kibővített STN/STPX támogatás engedélyezve"
+msgstr ""
+"VGate iCar Pro kiválasztva - Kibővített STN/STPX támogatás engedélyezve"
 
 msgid "Long command support and high-speed communication available"
 msgstr "Hosszú parancs támogatás és nagy sebességű kommunikáció elérhető"
@@ -1991,7 +1981,9 @@ msgid "Clearing DTC information"
 msgstr "DTC információk törlése"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Nem létezik ClearDTC parancs ehhez az ECU-hoz, az alapértelmezett 14FF00 küldése"
+msgstr ""
+"Nem létezik ClearDTC parancs ehhez az ECU-hoz, az alapértelmezett 14FF00 "
+"küldése"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Törölni fogod a diagnosztikai hibakódokat</center>"

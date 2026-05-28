@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:07+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -117,15 +117,20 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: Wykryto elektryczne ECU - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP: Używanie rozszerzonego adresowania dla Systemów Pojazdów Elektrycznych"
+msgstr ""
+"DoIP: Używanie rozszerzonego adresowania dla Systemów Pojazdów Elektrycznych"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: Używanie 29-bitowego rozszerzonego adresowania - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: Używanie 29-bitowego rozszerzonego adresowania - TX:0x{:04X}, "
+"RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: Używanie 11-bitowego standardowego adresowania - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: Używanie 11-bitowego standardowego adresowania - TX:0x{:03X}, "
+"RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Ostrzeżenie, nie można uzyskać wartości ze znakiem dla"
@@ -203,11 +208,13 @@ msgstr "Błąd podczas analizy odpowiedzi DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "ECU DoIP pod adresem %(addr)s odpowiedział z minimalnymi danymi: %(response)s"
+msgstr ""
+"ECU DoIP pod adresem %(addr)s odpowiedział z minimalnymi danymi: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "Inicjalizacja połączenia DoIP z %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr ""
+"Inicjalizacja połączenia DoIP z %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -256,7 +263,8 @@ msgstr "Tryb symulacji: adres DoIP %s zostałby zeskanowany"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "Połączono by z ECU DoIP pod adresem %s i odczytano dane identyfikacyjne"
+msgstr ""
+"Połączono by z ECU DoIP pod adresem %s i odczytano dane identyfikacyjne"
 
 msgid "DoIP connection closed"
 msgstr "Połączenie DoIP zamknięte"
@@ -361,7 +369,9 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: nieoczekiwany bajt odpowiedzi %s — sprawdź, czy AT CAF0 jest aktywny"
+msgstr ""
+"send_can: nieoczekiwany bajt odpowiedzi %s — sprawdź, czy AT CAF0 jest "
+"aktywny"
 
 msgid "Using saved device settings"
 msgstr "Używanie zapisanych ustawień urządzenia"
@@ -617,7 +627,9 @@ msgid "Warning: Vendor request failed:"
 msgstr "Ostrzeżenie: Żądanie dostawcy nie powiodło się:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Ostrzeżenie: PyQtWebEngine niedostępny. Niektóre funkcje mogą być ograniczone."
+msgstr ""
+"Ostrzeżenie: PyQtWebEngine niedostępny. Niektóre funkcje mogą być "
+"ograniczone."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nie znaleziony lub niepoprawny."
@@ -1206,7 +1218,8 @@ msgid "Shift byte count"
 msgstr "Liczba przesuniętych bajtów"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nazwa danych;Bit startowy;Przesunięcie bitu;Liczba bitów;Kolejność bajtów"
+msgstr ""
+"Nazwa danych;Bit startowy;Przesunięcie bitu;Liczba bitów;Kolejność bajtów"
 
 msgid "Little"
 msgstr "Mały"
@@ -1334,7 +1347,9 @@ msgid "Visit the online documentation at:"
 msgstr "Odwiedź dokumentację online pod adresem:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Ten podstawowy widok będzie nadal wyświetlał dokumentację ECU, jeśli dostępna."
+msgstr ""
+"Ten podstawowy widok będzie nadal wyświetlał dokumentację ECU, jeśli "
+"dostępna."
 
 msgid "Refresh rate (ms):"
 msgstr "Prędkość odświeżania (ms):"
@@ -1651,7 +1666,7 @@ msgid "Dark style"
 msgstr "Tryb ciemny"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Limit czasu gniazda WiFi"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfiguracja DoIP (Diagnostyka przez IP) (Eksperymentalna)"
@@ -1767,27 +1782,6 @@ msgstr "Resetuj i sprawdź ponownie"
 #, python-format
 msgid "Error updating port list: %s"
 msgstr "Błąd podczas aktualizacji listy portów: %s"
-
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro wybrany - Włączona obsługa rozszerzona STN/STPX"
@@ -1991,7 +1985,9 @@ msgid "Clearing DTC information"
 msgstr "Czyszczenie informacji DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Brak wyraźnej komendy ClearDTC dla tego ECU, to spowoduje wyslanie domyślnego numeru 14FF00"
+msgstr ""
+"Brak wyraźnej komendy ClearDTC dla tego ECU, to spowoduje wyslanie "
+"domyślnego numeru 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Zaraz wyczyścić diagnostyczne kody błędów</center>"

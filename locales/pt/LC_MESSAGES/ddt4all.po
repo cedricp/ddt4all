@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-07 13:09+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
@@ -116,15 +116,18 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: ECU elétrica detectada - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP: Usando endereçamento estendido para Sistemas de Veículos Elétricos"
+msgstr ""
+"DoIP: Usando endereçamento estendido para Sistemas de Veículos Elétricos"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: Usando endereçamento estendido de 29-bit - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: Usando endereçamento estendido de 29-bit - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: Usando endereçamento padrão de 11 bits - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: Usando endereçamento padrão de 11 bits - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Aviso, não é possível obter valor com sinal para"
@@ -202,11 +205,13 @@ msgstr "Erro ao analisar resposta DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "ECU DoIP no endereço %(addr)s respondeu com dados mínimos: %(response)s"
+msgstr ""
+"ECU DoIP no endereço %(addr)s respondeu com dados mínimos: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "Inicializando conexão DoIP para %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr ""
+"Inicializando conexão DoIP para %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -338,7 +343,7 @@ msgstr "%s mudou baudrate OK, mudando a velocidade do UART agora..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate comutado OK, mudando velocidade UART agora..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -359,7 +364,8 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: byte de resposta inesperado %s — verifique se AT CAF0 está ativo"
+msgstr ""
+"send_can: byte de resposta inesperado %s — verifique se AT CAF0 está ativo"
 
 msgid "Using saved device settings"
 msgstr "Usando configurações salvas do dispositivo"
@@ -616,7 +622,9 @@ msgid "Warning: Vendor request failed:"
 msgstr "Aviso: Falha na solicitação do fornecedor:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Aviso: PyQtWebEngine não disponível. Algumas funcionalidades podem ser limitadas."
+msgstr ""
+"Aviso: PyQtWebEngine não disponível. Algumas funcionalidades podem ser "
+"limitadas."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json não encontrado ou inválido."
@@ -1209,7 +1217,8 @@ msgid "Shift byte count"
 msgstr "Contagem de bytes de deslocamento"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nome dos dados;Byte inicial;Deslocamento de bits;Contagem de bits;Endianess"
+msgstr ""
+"Nome dos dados;Byte inicial;Deslocamento de bits;Contagem de bits;Endianess"
 
 msgid "Little"
 msgstr "Pequeno"
@@ -1337,7 +1346,9 @@ msgid "Visit the online documentation at:"
 msgstr "Visite a documentação on-line em:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Esta visualização básica ainda mostrará a documentação da ECU quando disponível."
+msgstr ""
+"Esta visualização básica ainda mostrará a documentação da ECU quando "
+"disponível."
 
 msgid "Refresh rate (ms):"
 msgstr "Taxa de atualização (ms):"
@@ -1770,27 +1781,6 @@ msgstr "Redefinir e verificar novamente"
 msgid "Error updating port list: %s"
 msgstr "Erro ao atualizar lista de portas: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500.000"
-
-msgid "1000000"
-msgstr "1.000.000"
-
-msgid "2000000"
-msgstr "2.000.000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro selecionado - Suporte aprimorado STN/STPX ativado"
 
@@ -1996,7 +1986,9 @@ msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Nenhuma solicitação ClearDTC para essa ECU enviará o padrão 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<center>Você está prestes a limpar códigos de problemas de diagnóstico</center>"
+msgstr ""
+"<center>Você está prestes a limpar códigos de problemas de diagnóstico</"
+"center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Tem certeza que é isso que você quer.</center>"

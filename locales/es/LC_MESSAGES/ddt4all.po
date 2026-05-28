@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -64,7 +64,8 @@ msgstr "Datos de control de sesión insuficientes"
 
 #, python-format
 msgid "Expected diagnostic session control response, got: %s"
-msgstr "Se esperaba respuesta de control de sesión de diagnóstico, se obtuvo: %s"
+msgstr ""
+"Se esperaba respuesta de control de sesión de diagnóstico, se obtuvo: %s"
 
 #, python-format
 msgid "Diagnostic session control failed: %s"
@@ -116,15 +117,18 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: ECU eléctrico detectado - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP: Usando direccionamiento extendido para Sistemas de Vehículos Eléctricos"
+msgstr ""
+"DoIP: Usando direccionamiento extendido para Sistemas de Vehículos Eléctricos"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: Usando direccionamiento extendido de 29-bit - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: Usando direccionamiento extendido de 29-bit - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: Usando direccionamiento estándar de 11-bit - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: Usando direccionamiento estándar de 11-bit - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Advertencia, no se puede obtener valor con signo para"
@@ -255,7 +259,8 @@ msgstr "Modo simulación: dirección DoIP %s sería escaneada"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "Se conectaría a ECU DoIP en dirección %s y leería datos de identificación"
+msgstr ""
+"Se conectaría a ECU DoIP en dirección %s y leería datos de identificación"
 
 msgid "DoIP connection closed"
 msgstr "Conexión DoIP cerrada"
@@ -359,7 +364,8 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr "send_can: byte de respuesta inesperado %s — verifique que AT CAF0 esté activo"
+msgstr ""
+"send_can: byte de respuesta inesperado %s — verifique que AT CAF0 esté activo"
 
 msgid "Using saved device settings"
 msgstr "Usando configuraciones guardadas del dispositivo"
@@ -615,7 +621,9 @@ msgid "Warning: Vendor request failed:"
 msgstr "Advertencia: Petición de proveedor falló:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Advertencia: PyQtWebEngine no disponible. Algunas funciones pueden estar limitadas."
+msgstr ""
+"Advertencia: PyQtWebEngine no disponible. Algunas funciones pueden estar "
+"limitadas."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json no encontrado o inválido."
@@ -635,7 +643,8 @@ msgid "Initializing ELM with speed %i..."
 msgstr "Inicializando ELM con velocidad %i..."
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "No se ha detectado ningún dispositivo ELM327 ni OBDLINK-SX en el puerto COM "
+msgstr ""
+"No se ha detectado ningún dispositivo ELM327 ni OBDLINK-SX en el puerto COM "
 
 msgid "AB90 AIRBAG Reset"
 msgstr "Reinicio AIRBAG AB90"
@@ -1207,7 +1216,8 @@ msgid "Shift byte count"
 msgstr "Contador de bytes desplazados"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr "Nombre de datos;Byte de inicio;Desplazamiento de bit;Número de bits;Endianess"
+msgstr ""
+"Nombre de datos;Byte de inicio;Desplazamiento de bit;Número de bits;Endianess"
 
 msgid "Little"
 msgstr "Pequeño"
@@ -1335,7 +1345,8 @@ msgid "Visit the online documentation at:"
 msgstr "Visitar la documentación en línea en:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Esta vista básica aún mostrará documentación ECU cuando esté disponible."
+msgstr ""
+"Esta vista básica aún mostrará documentación ECU cuando esté disponible."
 
 msgid "Refresh rate (ms):"
 msgstr "Tasa de actualización (ms):"
@@ -1768,27 +1779,6 @@ msgstr "Reiniciar y volver a verificar"
 msgid "Error updating port list: %s"
 msgstr "Error actualizando lista de puertos: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro seleccionado - Soporte STN/STPX mejorado habilitado"
 
@@ -1991,7 +1981,8 @@ msgid "Clearing DTC information"
 msgstr "Limpiando información DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "No hay peticiones ClearDTC para esta ECU, se enviará por defecto 14FF00"
+msgstr ""
+"No hay peticiones ClearDTC para esta ECU, se enviará por defecto 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr ""

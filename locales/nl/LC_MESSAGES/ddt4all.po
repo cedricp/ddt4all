@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 23:58+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -116,15 +116,18 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: Elektrische ECU gedetecteerd - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP: Uitgebreide adressering gebruiken voor Elektrische Voertuigsystemen"
+msgstr ""
+"DoIP: Uitgebreide adressering gebruiken voor Elektrische Voertuigsystemen"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP: 29-bit uitgebreide adressering gebruiken - TX:0x{:04X}, RX:0x{:04X}"
+msgstr ""
+"DoIP: 29-bit uitgebreide adressering gebruiken - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: 11-bit standaard adressering gebruiken - TX:0x{:03X}, RX:0x{:03X}"
+msgstr ""
+"DoIP: 11-bit standaard adressering gebruiken - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Waarschuwing, kan geen waarde met teken krijgen voor"
@@ -202,11 +205,13 @@ msgstr "Fout bij parsen DoIP antwoord: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "DoIP ECU op adres %(addr)s reageerde met minimale gegevens: %(response)s"
+msgstr ""
+"DoIP ECU op adres %(addr)s reageerde met minimale gegevens: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "DoIP verbinding initialiseren naar %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr ""
+"DoIP verbinding initialiseren naar %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -615,7 +620,9 @@ msgid "Warning: Vendor request failed:"
 msgstr "Waarschuwing: Verzoek van leverancier mislukt:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr "Waarschuwing: PyQtWebEngine niet beschikbaar. Sommige functies kunnen beperkt zijn."
+msgstr ""
+"Waarschuwing: PyQtWebEngine niet beschikbaar. Sommige functies kunnen "
+"beperkt zijn."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json niet gevonden of ongeldig."
@@ -1332,7 +1339,8 @@ msgid "Visit the online documentation at:"
 msgstr "Bezoek de online documentatie op:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr "Deze basis weergave zal nog steeds ECU documentatie tonen indien beschikbaar."
+msgstr ""
+"Deze basis weergave zal nog steeds ECU documentatie tonen indien beschikbaar."
 
 msgid "Refresh rate (ms):"
 msgstr "Verversingstijd (ms):"
@@ -1648,7 +1656,7 @@ msgid "Dark style"
 msgstr "Donkere stijl"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "WiFi socket time-out"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Diagnostiek via IP) Configuratie (Experimenteel)"
@@ -1765,29 +1773,9 @@ msgstr "Resetten en opnieuw controleren"
 msgid "Error updating port list: %s"
 msgstr "Fout bij updaten poortlijst: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr "VGate iCar Pro geselecteerd - Verbeterde STN/STPX ondersteuning ingeschakeld"
+msgstr ""
+"VGate iCar Pro geselecteerd - Verbeterde STN/STPX ondersteuning ingeschakeld"
 
 msgid "Long command support and high-speed communication available"
 msgstr "Lange commando ondersteuning en hoge snelheid communicatie beschikbaar"
@@ -1991,7 +1979,9 @@ msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Geen ClearDTC voor die ECU, standaard 14FF00 wordt verstuurd"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<center>Je staat op het punt om diagnostische probleemcodes te verwijderen</center>"
+msgstr ""
+"<center>Je staat op het punt om diagnostische probleemcodes te verwijderen</"
+"center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Weet je zeker dat dit is wat je wilt?</center>"
