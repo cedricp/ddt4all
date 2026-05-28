@@ -120,8 +120,7 @@ msgstr "DoIP: Erweiterte Adressierung für Elektrofahrzeugsysteme verwenden"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: Verwende 29-Bit-erweiterte Adressierung - TX:0x{:04X}, RX:0x{:04X}"
+msgstr "DoIP: Verwende 29-Bit-erweiterte Adressierung - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
@@ -207,8 +206,7 @@ msgstr "DoIP ECU bei %(addr)s antwortete mit minimalen Daten: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"DoIP-Verbindung zu %(ip)s:%(port)s wird initialisiert (Timeout: %(timeout)ss)"
+msgstr "DoIP-Verbindung zu %(ip)s:%(port)s wird initialisiert (Timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -257,8 +255,7 @@ msgstr "Simulationsmodus: DoIP-Adresse %s würde gescannt werden"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
-"Würde mit DoIP ECU an Adresse %s verbinden und Identifikationsdaten lesen"
+msgstr "Würde mit DoIP ECU an Adresse %s verbinden und Identifikationsdaten lesen"
 
 msgid "DoIP connection closed"
 msgstr "DoIP-Verbindung geschlossen"
@@ -311,8 +308,7 @@ msgid "No ELM interface on port"
 msgstr "Kein ELM angeschlossen"
 
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr ""
-"OBDLink-Verbindung OK, versuche UART-Umschaltung auf volle Geschwindigkeit"
+msgstr "OBDLink-Verbindung OK, versuche UART-Umschaltung auf volle Geschwindigkeit"
 
 msgid "Failed to switch OBDLink to "
 msgstr "Umschaltung von OBDLink fehlgeschlagen zu volle Geschwindigkeit"
@@ -338,13 +334,11 @@ msgstr "Port ist None - Geschwindigkeit kann nicht umgeschaltet werden"
 
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr ""
-"%s Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
+msgstr "%s Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr ""
-"%s Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
+msgstr "%s Baudrate erfolgreich umgeschaltet, ändere UART-Geschwindigkeit jetzt..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -365,8 +359,7 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr ""
-"send_can: unerwartetes Antwort-Byte %s — prüfen Sie, ob AT CAF0 aktiv ist"
+msgstr "send_can: unerwartetes Antwort-Byte %s — prüfen Sie, ob AT CAF0 aktiv ist"
 
 msgid "Using saved device settings"
 msgstr "Gespeicherte Geräteeinstellungen verwenden"
@@ -622,9 +615,7 @@ msgid "Warning: Vendor request failed:"
 msgstr "Warnung: Hersteller-Anfrage fehlgeschlagen:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Warnung: PyQtWebEngine nicht verfügbar. Einige Funktionen können "
-"eingeschränkt sein."
+msgstr "Warnung: PyQtWebEngine nicht verfügbar. Einige Funktionen können eingeschränkt sein."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nicht gefunden oder ungültig."
@@ -733,8 +724,7 @@ msgid "CARD IDE"
 msgstr "KARTEN-IDE"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
-"ISK kann nicht abgerufen werden, Verbindungen und UCH-Kompatibilität prüfen"
+msgstr "ISK kann nicht abgerufen werden, Verbindungen und UCH-Kompatibilität prüfen"
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
 msgstr "<font color='red'>PIN CODE NICHT ANERKANNT</font>"
@@ -1292,9 +1282,7 @@ msgid "No, I don't"
 msgstr "Nein, ich möchte nicht"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Vielen Dank für Ihren Beitrag, wenn nichts passiert, bitte gehen Sie zu: "
-"https://github.com/cedricp/ddt4all"
+msgstr "Vielen Dank für Ihren Beitrag, wenn nichts passiert, gehen Sie bitte zu"
 
 msgid "ECU Finder"
 msgstr "ECU-Sucher"
@@ -1349,9 +1337,7 @@ msgid "Visit the online documentation at:"
 msgstr "Besuchen Sie die Online-Dokumentation unter:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn "
-"verfügbar.verfügbar."
+msgstr "Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn verfügbar."
 
 msgid "Refresh rate (ms):"
 msgstr "Aktualisierungsrate (ms):"
@@ -1809,12 +1795,10 @@ msgid "38400"
 msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr ""
-"VGate iCar Pro ausgewählt - Erweiterte STN/STPX-Unterstützung aktiviert"
+msgstr "VGate iCar Pro ausgewählt - Erweiterte STN/STPX-Unterstützung aktiviert"
 
 msgid "Long command support and high-speed communication available"
-msgstr ""
-"Lange Befehlsunterstützung und Hochgeschwindigkeitskommunikation verfügbar"
+msgstr "Lange Befehlsunterstützung und Hochgeschwindigkeitskommunikation verfügbar"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
@@ -1879,7 +1863,7 @@ msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 msgstr "Kompatibel mit Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 
 msgid "You must check the recommandations"
-msgstr ";-) Sie müssen das Lesen der Warnung bestätigen"
+msgstr "Sie müssen die Empfehlungen überprüfen"
 
 msgid "Please select a communication port"
 msgstr "Bitte wählen Sie einen Anschluss aus"
@@ -1891,9 +1875,7 @@ msgid "Err, cannot rename "
 msgstr "Fehler, kann nicht umbenennen "
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr ""
-"Um Ihren Bildschirm bearbeiten zu können, exportieren Sie ihn zuerst im JSON-"
-"Format"
+msgstr "Um Ihren Bildschirm bearbeiten zu können, exportieren Sie ihn zuerst im JSON-Format"
 
 msgid "Enter label name"
 msgstr "Schriftfeldname eingeben"
@@ -1974,8 +1956,7 @@ msgid "Command aborted "
 msgstr "Befehl abgebrochen "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr ""
-"Wertefehler dieser Sachen benötigt möglicherweise einen Bypass-Gateway."
+msgstr "Wertefehler dieser Sachen benötigt möglicherweise einen Bypass-Gateway."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Anfrage abgebrochen (siehe rote Parametereinträge): "

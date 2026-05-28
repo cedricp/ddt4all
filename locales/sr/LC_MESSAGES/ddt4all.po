@@ -120,13 +120,11 @@ msgstr "DoIP: Korišćenje proširenog adresiranja za sisteme električnih vozil
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: Korišćenje 29-bitnog proširenog adresiranja - TX:0x{:04X}, RX:0x{:04X}"
+msgstr "DoIP: Korišćenje 29-bitnog proširenog adresiranja - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
-"DoIP: Korišćenje 11-bitnog standardnog adresiranja - TX:0x{:03X}, RX:0x{:03X}"
+msgstr "DoIP: Korišćenje 11-bitnog standardnog adresiranja - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Upozorenje, ne može se dobiti vrednost sa znakom za"
@@ -204,8 +202,7 @@ msgstr "Greška u analizi DoIP odgovora: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"DoIP ECU na adresi %(addr)s je odgovorio sa minimalnim podacima: %(response)s"
+msgstr "DoIP ECU na adresi %(addr)s je odgovorio sa minimalnim podacima: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
@@ -258,8 +255,7 @@ msgstr "Režim simulacije: DoIP adresa %s bi bila skenirana"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
-"Povezao bi se sa DoIP ECU na adresi %s i pročitaj podatke identifikacije"
+msgstr "Povezao bi se sa DoIP ECU na adresi %s i pročitaj podatke identifikacije"
 
 msgid "DoIP connection closed"
 msgstr "DoIP veza zatvorena"
@@ -363,8 +359,7 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr ""
-"send_can: neočekivani bajt odgovora %s — proverite da li je AT CAF0 aktivan"
+msgstr "send_can: neočekivani bajt odgovora %s — proverite da li je AT CAF0 aktivan"
 
 msgid "Using saved device settings"
 msgstr "Korišćenje sačuvanih postavki uređaja"
@@ -620,8 +615,7 @@ msgid "Warning: Vendor request failed:"
 msgstr "Upozorenje: Zahtev prodavca nije uspeo:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Upozorenje: PyQtWebEngine nije dostupan. Neke funkcije mogu biti ograničene."
+msgstr "Upozorenje: PyQtWebEngine nije dostupan. Neke funkcije mogu biti ograničene."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nije pronađen ili je nevažeći."
@@ -1285,9 +1279,7 @@ msgid "No, I don't"
 msgstr "Ne, neću"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Hvala na vašem doprinosu. Ako se ništa ne desi, molimo Vas idite na: https://"
-"github.com/cedricp/ddt4all"
+msgstr "Hvala na vašem doprinosu, ako se ništa ne dogodi, molimo idite na"
 
 msgid "ECU Finder"
 msgstr "ECU pronalazač"
@@ -1342,9 +1334,7 @@ msgid "Visit the online documentation at:"
 msgstr "Posetite online dokumentaciju na:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Ovaj osnovni prikaz će i dalje prikazivati ECU dokumentaciju kada je "
-"dostupna."
+msgstr "Ovaj osnovni prikaz će i dalje prikazivati ECU dokumentaciju kada je dostupna."
 
 msgid "Refresh rate (ms):"
 msgstr "Vreme osvezavanja (ms):"
@@ -1707,20 +1697,20 @@ msgstr "Omogući DoIP skeniranje"
 msgid "Change UART speed"
 msgstr "Promena UART brzine"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "DoIP uređaj ažuriran: %(ip)s:%(port)s"
+msgstr "DoIP uređaj dodat na listu: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Greška ažuriranja liste portova: %s"
+msgstr "Greška pri dodavanju DoIP uređaja na listu: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "DoIP uređaj uklonjen sa liste"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Greška u analizi DoIP odgovora: %s"
+msgstr "Greška pri uklanjanju DoIP uređaja sa liste: %s"
 
 msgid "Checking..."
 msgstr "Proveravanje..."
@@ -1848,7 +1838,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP uređaj ažuriran: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "DoIP uređaj uklonjen sa liste (skeniranje onemogućeno)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

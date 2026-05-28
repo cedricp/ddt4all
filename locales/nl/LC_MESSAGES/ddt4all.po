@@ -116,18 +116,15 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: Elektrische ECU gedetecteerd - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr ""
-"DoIP: Uitgebreide adressering gebruiken voor Elektrische Voertuigsystemen"
+msgstr "DoIP: Uitgebreide adressering gebruiken voor Elektrische Voertuigsystemen"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: 29-bit uitgebreide adressering gebruiken - TX:0x{:04X}, RX:0x{:04X}"
+msgstr "DoIP: 29-bit uitgebreide adressering gebruiken - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
-"DoIP: 11-bit standaard adressering gebruiken - TX:0x{:03X}, RX:0x{:03X}"
+msgstr "DoIP: 11-bit standaard adressering gebruiken - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Waarschuwing, kan geen waarde met teken krijgen voor"
@@ -205,13 +202,11 @@ msgstr "Fout bij parsen DoIP antwoord: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"DoIP ECU op adres %(addr)s reageerde met minimale gegevens: %(response)s"
+msgstr "DoIP ECU op adres %(addr)s reageerde met minimale gegevens: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"DoIP verbinding initialiseren naar %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr "DoIP verbinding initialiseren naar %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -620,9 +615,7 @@ msgid "Warning: Vendor request failed:"
 msgstr "Waarschuwing: Verzoek van leverancier mislukt:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Waarschuwing: PyQtWebEngine niet beschikbaar. Sommige functies kunnen "
-"beperkt zijn."
+msgstr "Waarschuwing: PyQtWebEngine niet beschikbaar. Sommige functies kunnen beperkt zijn."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json niet gevonden of ongeldig."
@@ -1284,9 +1277,7 @@ msgid "No, I don't"
 msgstr "Nee, bedankt"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Bedankt voor uw bijdrage. Als er niets gebeurt, ga dan naar: https://"
-"github.com/cedricp/ddt4all"
+msgstr "Bedankt voor uw bijdrage, als er niets gebeurt, ga dan naar"
 
 msgid "ECU Finder"
 msgstr "ECU zoeker"
@@ -1341,8 +1332,7 @@ msgid "Visit the online documentation at:"
 msgstr "Bezoek de online documentatie op:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Deze basis weergave zal nog steeds ECU documentatie tonen indien beschikbaar."
+msgstr "Deze basis weergave zal nog steeds ECU documentatie tonen indien beschikbaar."
 
 msgid "Refresh rate (ms):"
 msgstr "Verversingstijd (ms):"
@@ -1714,11 +1704,11 @@ msgid "Error adding DoIP device to list: %s"
 msgstr "Fout bij toevoegen DoIP apparaat aan lijst: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "DoIP-apparaat verwijderd uit de lijst"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Fout bij parsen DoIP antwoord: %s"
+msgstr "Fout bij verwijderen van het DoIP-apparaat uit de lijst: %s"
 
 msgid "Checking..."
 msgstr "Controleren..."
@@ -1797,8 +1787,7 @@ msgid "38400"
 msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr ""
-"VGate iCar Pro geselecteerd - Verbeterde STN/STPX ondersteuning ingeschakeld"
+msgstr "VGate iCar Pro geselecteerd - Verbeterde STN/STPX ondersteuning ingeschakeld"
 
 msgid "Long command support and high-speed communication available"
 msgstr "Lange commando ondersteuning en hoge snelheid communicatie beschikbaar"
@@ -1847,7 +1836,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP apparaat bijgewerkt: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "DoIP apparaat verwijderd uit lijst (scan uitgeschakeld)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"
@@ -2002,9 +1991,7 @@ msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Geen ClearDTC voor die ECU, standaard 14FF00 wordt verstuurd"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr ""
-"<center>Je staat op het punt om diagnostische probleemcodes te verwijderen</"
-"center>"
+msgstr "<center>Je staat op het punt om diagnostische probleemcodes te verwijderen</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Weet je zeker dat dit is wat je wilt?</center>"

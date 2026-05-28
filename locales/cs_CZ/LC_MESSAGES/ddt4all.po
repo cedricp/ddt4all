@@ -118,13 +118,11 @@ msgstr "DoIP: Použití rozšířeného adresování pro systémy elektrických 
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: Použití 29-bitového rozšířeného adresování - TX:0x{:04X}, RX:0x{:04X}"
+msgstr "DoIP: Použití 29-bitového rozšířeného adresování - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
-"DoIP: Použití 11-bitového standardního adresování - TX:0x{:03X}, RX:0x{:03X}"
+msgstr "DoIP: Použití 11-bitového standardního adresování - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Varování, nelze získat podepsanou hodnotu pro"
@@ -202,8 +200,7 @@ msgstr "Chyba při analýze odpovědi DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"ECU DoIP na adrese %(addr)s odpovědělo s minimálními daty: %(response)s"
+msgstr "ECU DoIP na adrese %(addr)s odpovědělo s minimálními daty: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
@@ -335,15 +332,11 @@ msgstr "Port je None - nelze přepnout rychlost"
 
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr ""
-"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
-"UART..."
+msgstr "%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost UART..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr ""
-"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
-"UART..."
+msgstr "%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost UART..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -364,8 +357,7 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr ""
-"send_can: neočekávaný bajt odpovědi %s — zkontrolujte, zda je AT CAF0 aktivní"
+msgstr "send_can: neočekávaný bajt odpovědi %s — zkontrolujte, zda je AT CAF0 aktivní"
 
 msgid "Using saved device settings"
 msgstr "Použití uložených nastavení zařízení"
@@ -621,8 +613,7 @@ msgid "Warning: Vendor request failed:"
 msgstr "Varování: Požadavek dodavatele selhal:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezeny."
+msgstr "Varování: PyQtWebEngine není k dispozici. Některé funkce mohou být omezeny."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nenalezeno nebo neplatné."
@@ -1658,7 +1649,7 @@ msgid "Dark style"
 msgstr "Tmavý styl"
 
 msgid "WiFi Socket-TimeOut"
-msgstr ""
+msgstr "Časový limit WiFi socketu"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfigurace DoIP (Diagnostika přes IP) (Experimentální)"
@@ -1705,20 +1696,20 @@ msgstr "Povolit skenování DoIP"
 msgid "Change UART speed"
 msgstr "Změňte rychlost UART"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "Zařízení DoIP aktualizováno: %(ip)s:%(port)s"
+msgstr "Zařízení DoIP přidáno do seznamu: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Chyba aktualizace seznamu portů: %s"
+msgstr "Chyba při přidávání zařízení DoIP do seznamu: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "Zařízení DoIP odstraněno ze seznamu"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Chyba při analýze odpovědi DoIP: %s"
+msgstr "Chyba při odebírání zařízení DoIP ze seznamu: %s"
 
 msgid "Checking..."
 msgstr "Kontroluji..."
@@ -1846,7 +1837,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Zařízení DoIP aktualizováno: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Zařízení DoIP odstraněno ze seznamu (skenování zakázáno)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"
@@ -1877,8 +1868,7 @@ msgid "Err, cannot rename "
 msgstr "Chyba, nelze přejmenovat "
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr ""
-"Abyste mohli upravovat obrazovku, nejprve ji exportujte do formátu JSON"
+msgstr "Abyste mohli upravovat obrazovku, nejprve ji exportujte do formátu JSON"
 
 msgid "Enter label name"
 msgstr "Zadejte nový název"

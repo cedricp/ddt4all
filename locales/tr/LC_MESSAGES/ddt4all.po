@@ -115,13 +115,11 @@ msgid "DoIP: Electric ECU detected - %s"
 msgstr "DoIP: Elektrikli ECU algılandı - %s"
 
 msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr ""
-"DoIP: Elektrikli Araç Sistemleri için genişletilmiş adresleme kullanılıyor"
+msgstr "DoIP: Elektrikli Araç Sistemleri için genişletilmiş adresleme kullanılıyor"
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: 29-bit genişletilmiş adresleme kullanıyor - TX:0x{:04X}, RX:0x{:04X}"
+msgstr "DoIP: 29-bit genişletilmiş adresleme kullanıyor - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
@@ -203,13 +201,11 @@ msgstr "DoIP yanıtı ayrıştırma hatası: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"%(addr)s adresindeki DoIP ECU minimal veriyle yanıt verdi: %(response)s"
+msgstr "%(addr)s adresindeki DoIP ECU minimal veriyle yanıt verdi: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor (timeout: %(timeout)ss)"
+msgstr "%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -361,9 +357,7 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr ""
-"send_can: beklenmeyen yanıt baytı %s — AT CAF0'ın aktif olup olmadığını "
-"kontrol edin"
+msgstr "send_can: beklenmeyen yanıt baytı %s — AT CAF0'ın aktif olup olmadığını kontrol edin"
 
 msgid "Using saved device settings"
 msgstr "Kayıtlı cihaz ayarları kullanılıyor"
@@ -1210,8 +1204,7 @@ msgid "Shift byte count"
 msgstr "Bayt sayısını değiştir"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr ""
-"Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
+msgstr "Veri adı;Başlangıç baytı;Bit ofseti;Bit sayısı;Endianness(byte sıralama yönü)"
 
 msgid "Little"
 msgstr "Küçük"
@@ -1284,9 +1277,7 @@ msgid "No, I don't"
 msgstr "Hayır, yapmam"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Katkılarınız için teşekkür ederiz, hiçbir şey olmamışsa lütfen şu adrese "
-"gidin: https://github.com/cedricp/ddt4all"
+msgstr "Katkılarınız için teşekkürler, eğer hiçbir şey olmazsa lütfen şuraya gidin"
 
 msgid "ECU Finder"
 msgstr "ECU Bulucu"
@@ -1329,9 +1320,7 @@ msgid "DDT4All Documentation"
 msgstr "DDT4All Belgeleri"
 
 msgid "WebEngine not available."
-msgstr ""
-"WebEngine mevcut değil. Tam dokümantasyon için web tarama yeteneği için "
-"PyQtWebEngine kurun:"
+msgstr "WebEngine mevcut değil. Tam dokümantasyon için web tarama yeteneği için PyQtWebEngine kurun:"
 
 msgid ""
 "For full documentation with web browsing capability, install PyQtWebEngine:"
@@ -1341,8 +1330,7 @@ msgid "Visit the online documentation at:"
 msgstr "Çevrimiçi belgeleri ziyaret edin:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Bu temel görünüm, mevcut olduğunda ECU belgelerini göstermeye devam edecek."
+msgstr "Bu temel görünüm, mevcut olduğunda ECU belgelerini göstermeye devam edecek."
 
 msgid "Refresh rate (ms):"
 msgstr "Yenileme hızı (ms):"
@@ -1705,20 +1693,20 @@ msgstr "DoIP taramasını etkinleştir"
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "DoIP cihazı güncellendi: %(ip)s:%(port)s"
+msgstr "DoIP cihazı listeye eklendi: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Port listesi güncelleme hatası: %s"
+msgstr "DoIP cihazını listeye eklerken hata oluştu: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "DoIP cihazı listeden kaldırıldı"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "DoIP yanıtı ayrıştırma hatası: %s"
+msgstr "DoIP cihazını listeden kaldırırken hata oluştu: %s"
 
 msgid "Checking..."
 msgstr "Kontrol ediliyor..."
@@ -1846,7 +1834,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP cihazı güncellendi: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "DoIP cihazı listeden kaldırıldı (tarama devre dışı)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

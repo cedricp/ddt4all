@@ -255,8 +255,7 @@ msgstr "Mod simulare: adresa DoIP %s ar fi scanată"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
-"S-ar conecta la ECU DoIP la adresa %s și ar citi datele de identificare"
+msgstr "S-ar conecta la ECU DoIP la adresa %s și ar citi datele de identificare"
 
 msgid "DoIP connection closed"
 msgstr "Conexiune DoIP închisă"
@@ -360,8 +359,7 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr ""
-"send_can: octet de răspuns neașteptat %s — verificați dacă AT CAF0 este activ"
+msgstr "send_can: octet de răspuns neașteptat %s — verificați dacă AT CAF0 este activ"
 
 msgid "Using saved device settings"
 msgstr "Utilizare setări dispozitiv salvate"
@@ -617,9 +615,7 @@ msgid "Warning: Vendor request failed:"
 msgstr "Avertisment: Cererea furnizorului a eșuat:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Avertisment: PyQtWebEngine nu este disponibil. Unele funcționalități pot fi "
-"limitate."
+msgstr "Avertisment: PyQtWebEngine nu este disponibil. Unele funcționalități pot fi limitate."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json nu a fost găsit sau este invalid."
@@ -1281,9 +1277,7 @@ msgid "No, I don't"
 msgstr "Nu, nu vreu"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Vă mulțumesc pentru contribuția dumneavoastră, dacă nu se întâmplă nimic, vă "
-"rugăm mergeți la"
+msgstr "Vă mulțumesc pentru contribuția dumneavoastră, dacă nu se întâmplă nimic, vă rugăm mergeți la"
 
 msgid "ECU Finder"
 msgstr "Căutător ECU"
@@ -1338,9 +1332,7 @@ msgid "Visit the online documentation at:"
 msgstr "Vizitează documentația online la:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Această vizualizare de bază va afișa în continuare documentația ECU atunci "
-"când este disponibilă."
+msgstr "Această vizualizare de bază va afișa în continuare documentația ECU atunci când este disponibilă."
 
 msgid "Refresh rate (ms):"
 msgstr "Rata de actualizare (ms):"
@@ -1703,20 +1695,20 @@ msgstr "Activați scanarea DoIP"
 msgid "Change UART speed"
 msgstr "Modificare viteza UART"
 
-#, fuzzy, python-format
+#, python-format
 msgid "DoIP device added to list: %(ip)s:%(port)s"
-msgstr "Dispozitiv DoIP actualizat: %(ip)s:%(port)s"
+msgstr "Dispozitiv DoIP adăugat la listă: %(ip)s:%(port)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error adding DoIP device to list: %s"
-msgstr "Eroare la actualizarea listei de porturi: %s"
+msgstr "Eroare la adăugarea dispozitivului DoIP în listă: %s"
 
 msgid "DoIP device removed from list"
-msgstr ""
+msgstr "Dispozitiv DoIP eliminat din listă"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Error removing DoIP device from list: %s"
-msgstr "Eroare la parsarea răspunsului DoIP: %s"
+msgstr "Eroare la eliminarea dispozitivului DoIP din listă: %s"
 
 msgid "Checking..."
 msgstr "Verificare..."
@@ -1844,7 +1836,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Dispozitiv DoIP actualizat: %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Dispozitiv DoIP eliminat din listă (scanare dezactivată)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"
@@ -1996,9 +1988,7 @@ msgid "Clearing DTC information"
 msgstr "Stergerea informatiilor DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr ""
-"Nici o solicitare de stergere DTC pentru acest ECU, se va trimite 14FF00 "
-"implicit"
+msgstr "Nici o solicitare de stergere DTC pentru acest ECU, se va trimite 14FF00 implicit"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<Center>Esti pe cale sa stergi codurile de diagnosticare</center>"

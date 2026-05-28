@@ -91,8 +91,7 @@ msgstr "Проверка alive не выполнена: %s"
 
 #, python-format
 msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr ""
-"Транспортное средство DoIP идентифицировано: VIN=%(vin)s, Адрес=%(addr)s"
+msgstr "Транспортное средство DoIP идентифицировано: VIN=%(vin)s, Адрес=%(addr)s"
 
 #, python-format
 msgid "DoIP vehicle identification failed: %s"
@@ -122,15 +121,11 @@ msgstr "DoIP: Использование расширенной адресаци
 
 #, python-brace-format
 msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: Использование 29-битной расширенной адресации - TX:0x{:04X}, "
-"RX:0x{:04X}"
+msgstr "DoIP: Использование 29-битной расширенной адресации - TX:0x{:04X}, RX:0x{:04X}"
 
 #, python-brace-format
 msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
-"DoIP: Использование 11-битной стандартной адресации - TX:0x{:03X}, "
-"RX:0x{:03X}"
+msgstr "DoIP: Использование 11-битной стандартной адресации - TX:0x{:03X}, RX:0x{:03X}"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Предупреждение, не может получить значение со знаком для"
@@ -208,13 +203,11 @@ msgstr "Ошибка разбора ответа DoIP: %s"
 
 #, python-format
 msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"ЭБУ DoIP по адресу %(addr)s ответил с минимальными данными: %(response)s"
+msgstr "ЭБУ DoIP по адресу %(addr)s ответил с минимальными данными: %(response)s"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"Инициализация подключения DoIP к %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr "Инициализация подключения DoIP к %(ip)s:%(port)s (timeout: %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -623,9 +616,7 @@ msgid "Warning: Vendor request failed:"
 msgstr "Предупреждение: Запрос поставщика не выполнен:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Предупреждение: PyQtWebEngine недоступен. Некоторые функции могут быть "
-"ограничены."
+msgstr "Предупреждение: PyQtWebEngine недоступен. Некоторые функции могут быть ограничены."
 
 msgid "resources/projects.json not found or invalid."
 msgstr "resources/projects.json не найден или не в порядке."
@@ -1291,9 +1282,7 @@ msgid "No, I don't"
 msgstr "Нет, не сейчас"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Спасибо за ваш вклад, если ничего не происходит, пожалуйста, перейдите к: "
-"https://github.com/cedricp/ddt4all"
+msgstr "Спасибо за ваш вклад, если ничего не происходит, перейдите на"
 
 msgid "ECU Finder"
 msgstr "Поиск ЭБУ"
@@ -1348,8 +1337,7 @@ msgid "Visit the online documentation at:"
 msgstr "Посетите онлайн документацию по адресу:"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Этот базовый вид все равно будет показывать документацию ЭБУ, когда доступно."
+msgstr "Этот базовый вид все равно будет показывать документацию ЭБУ, когда доступно."
 
 msgid "Refresh rate (ms):"
 msgstr "Частота обновления (ms):"

@@ -204,9 +204,7 @@ msgstr "ECU DoIP à %(addr)s a répondu avec des données minimales : %(response
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"Initialisation de la connexion DoIP à %(ip)s:%(port)s (délai d'attente : "
-"%(timeout)ss)"
+msgstr "Initialisation de la connexion DoIP à %(ip)s:%(port)s (délai d'attente : %(timeout)ss)"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
@@ -255,9 +253,7 @@ msgstr "Mode simulation : l'adresse DoIP %s serait scannée"
 
 #, python-format
 msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
-"Se connecterait à l'ECU DoIP à l'adresse %s et lirait les données "
-"d'identification"
+msgstr "Se connecterait à l'ECU DoIP à l'adresse %s et lirait les données d'identification"
 
 msgid "DoIP connection closed"
 msgstr "Connexion DoIP fermée"
@@ -336,8 +332,7 @@ msgstr "Port est None - impossible de changer la vitesse"
 
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
-msgstr ""
-"%s a basculé le baudrate OK, changement de la vitesse UART maintenant..."
+msgstr "%s a basculé le baudrate OK, changement de la vitesse UART maintenant..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
@@ -362,8 +357,7 @@ msgstr ""
 
 #, python-format
 msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
-msgstr ""
-"send_can: octet de réponse inattendu %s — vérifiez que AT CAF0 est actif"
+msgstr "send_can: octet de réponse inattendu %s — vérifiez que AT CAF0 est actif"
 
 msgid "Using saved device settings"
 msgstr "Utilisation des paramètres de périphérique sauvegardés"
@@ -619,13 +613,10 @@ msgid "Warning: Vendor request failed:"
 msgstr "Avertissement : la requête du fournisseur a échoué:"
 
 msgid "Warning: PyQtWebEngine not available. Some features may be limited."
-msgstr ""
-"Attention : PyQtWebEngine n'est pas disponible. Certaines fonctionnalités "
-"peuvent être limitées."
+msgstr "Attention : PyQtWebEngine n'est pas disponible. Certaines fonctionnalités peuvent être limitées."
 
 msgid "resources/projects.json not found or invalid."
-msgstr ""
-"Le fichier resources/projects.json est introuvable ou n'est pas valide."
+msgstr "Le fichier resources/projects.json est introuvable ou n'est pas valide."
 
 #, python-format
 msgid "Warning: Could not write version.h: %s"
@@ -731,8 +722,7 @@ msgid "CARD IDE"
 msgstr "ID DE CARTE"
 
 msgid "Cannot get ISK, check connections and UCH compatibility"
-msgstr ""
-"Impossible d'obtenir l'ISK, vérifier les connexions et la compatibilité UCH"
+msgstr "Impossible d'obtenir l'ISK, vérifier les connexions et la compatibilité UCH"
 
 msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
 msgstr "<font color='red'>CODE PIN NON RECONNU</font>"
@@ -1216,8 +1206,7 @@ msgid "Shift byte count"
 msgstr "Décaler le nombre d'octets"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
-msgstr ""
-"Nom des données;Octet de démarrage;Décalage de bits;Nombre de bits;Endianess"
+msgstr "Nom des données;Octet de démarrage;Décalage de bits;Nombre de bits;Endianess"
 
 msgid "Little"
 msgstr "Petit"
@@ -1290,9 +1279,7 @@ msgid "No, I don't"
 msgstr "Non, je ne le fais pas"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Merci pour votre contribution, si rien ne se passe, rendez-vous sur https://"
-"github.com/cedricp/ddt4all"
+msgstr "Merci pour votre contribution, si rien ne se passe, allez à"
 
 msgid "ECU Finder"
 msgstr "Recherche d'ECU"
@@ -1347,9 +1334,7 @@ msgid "Visit the online documentation at:"
 msgstr "Consultez la documentation en ligne à l'adresse :"
 
 msgid "This basic view will still show ECU documentation when available."
-msgstr ""
-"Cette vue de base affichera toujours la documentation de l'ECU lorsqu'elle "
-"sera disponible."
+msgstr "Cette vue de base affichera toujours la documentation de l'ECU lorsqu'elle sera disponible."
 
 msgid "Refresh rate (ms):"
 msgstr "Taux de rafraîchissement (ms) :"
@@ -1806,13 +1791,10 @@ msgid "38400"
 msgstr "38400"
 
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
-msgstr ""
-"VGate iCar Pro sélectionné - Prise en charge améliorée STN/STPX activée"
+msgstr "VGate iCar Pro sélectionné - Prise en charge améliorée STN/STPX activée"
 
 msgid "Long command support and high-speed communication available"
-msgstr ""
-"Prise en charge des commandes longues et communication à grande vitesse "
-"disponible"
+msgstr "Prise en charge des commandes longues et communication à grande vitesse disponible"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
@@ -1858,7 +1840,7 @@ msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Périphérique DoIP mis à jour : %(ip)s:%(port)s"
 
 msgid "DoIP device removed from list (scan disabled)"
-msgstr ""
+msgstr "Périphérique DoIP supprimé de la liste (scan désactivé)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"
@@ -1970,9 +1952,7 @@ msgid "Command aborted "
 msgstr "Commande abandonnée "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr ""
-"Erreur de valeur de cet élément - peut nécessiter une passerelle de "
-"contournement."
+msgstr "Erreur de valeur de cet élément - peut nécessiter une passerelle de contournement."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Requête abandonnée (vérifiez les paramètres en rouge): "
@@ -2015,8 +1995,7 @@ msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "Pas de requête d'effacement DTC pour cet ECU, envoie par défaut 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr ""
-"<center>Vous êtes sur le point d'effacer les codes de diagnostic</center>"
+msgstr "<center>Vous êtes sur le point d'effacer les codes de diagnostic</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Êtes-vous sûr que c'est ce que vous voulez.</center>"
