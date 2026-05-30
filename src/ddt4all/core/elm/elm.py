@@ -647,6 +647,7 @@ class ELM:
             # Check if port exists and is valid before attempting reset
             if hasattr(self, 'port') and self.port is not None and hasattr(self.port, 'write'):
                 self.port.write("ATZ\r".encode("utf-8"))
+                self.port.close()
         except (AttributeError, OSError, TypeError):
             # Handle all possible errors during cleanup
             pass
@@ -1892,7 +1893,7 @@ def elm_checker(port, speed, adapter, logview, app):
         # Test basic connectivity
         logview.append(_("Testing basic connectivity..."))
         test_response = options.elm.send_raw("ATZ")  # Reset command
-        if not test_response or "ELM" not in test_response:
+        if not test_response or "ELM" not in test_response.upper():
             logview.append(_("Warning: Device may not be ELM327 compatible"))
         else:
             logview.append(_("ELM327 device detected successfully"))
@@ -1911,33 +1912,39 @@ def elm_checker(port, speed, adapter, logview, app):
         cm = st.split(';')
 
         if len(cm) > 1:
-            if 'C' not in cm[1].upper():
+            cmd0 = cm[0].strip()
+            cmd1 = cm[1].upper().strip()
+            cmd2 = cm[2].upper().strip()
+
+            if 'C' not in cmd1:
                 continue
 
-            if len(cm[2].strip()):
+            if len(cmd2) > 1:
+                rslt = options.elm.send_raw(cmd2)
+                resp = rslt.upper().strip()
 
-                res = options.elm.send_raw(cm[2])
-
-                if 'H' in cm[1].upper():
+                if 'H' in cmd1:
                     continue
+
                 total += 1
-                print(cm[2] + " " + res.strip())
-                if '?' in res:
+                # Debug log
+                print(cmd2 + " " + resp)
+
+                if '?' in resp:
                     chre = '<font color=red>[' + _('FAIL') + ']</font>'
-                    if 'P' in cm[1].upper():
+                    if 'P' in cmd1:
                         pycom += 1
                 # Timeout is not an error
-                elif 'TIMEOUT' in res:
+                elif 'TIMEOUT' in resp:
                     chre = '<font color=green>[' + _('OK/TIMEOUT') + ']</font>'
                     good += 1
-                    vers = cm[0]
-
+                    vers = cmd0
                 else:
                     chre = '<font color=green>[' + _('OK') + ']</font>'
                     good += 1
-                    vers = cm[0]
+                    vers = cmd0
 
-                logview.append("%5s %10s %s" % (cm[0], cm[2], chre))
+                logview.append("%5s %10s %s" % (cmd0, cmd2, chre))
                 app.processEvents()
 
     options.elm.__del__()

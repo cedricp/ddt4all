@@ -58,11 +58,10 @@ def set_theme_style(app, onoff):
 
 def set_socket_timeout(onoff):
     if (onoff):
-        options.socket_timeout = True
+        options.configuration["socket_timeout"] = True
     else:
-        options.socket_timeout = False
+        options.configuration["socket_timeout"] = False
 
-    options.configuration["socket_timeout"] = options.socket_timeout
     options.save_config()
 
 

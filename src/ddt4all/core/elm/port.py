@@ -432,6 +432,7 @@ class Port:
 
             if time.time() > deadline:
                 return self.buff + _("TIMEOUT")
+
     def check_elm(self):
 
         timeout = 2
