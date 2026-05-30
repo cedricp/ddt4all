@@ -424,6 +424,7 @@ class ELM:
         # Build speed list: user's chosen rate first, then common fallbacks.
         # dict.fromkeys preserves order and removes duplicates (e.g. when rate == 38400).
         _speed_candidates = list(dict.fromkeys([int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]))
+
         for speed in _speed_candidates:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
 
@@ -434,10 +435,12 @@ class ELM:
                     options.elm_failed = True
                     options.last_error = _("Port initialization failed")
                     self.connectionStatus = False
+                    self.__del__()
                     continue
 
             if options.elm_failed:
                 self.connectionStatus = False
+                self.__del__()
                 # Try one other speed ...
                 continue
 
@@ -471,6 +474,7 @@ class ELM:
             else:
                 options.elm_failed = True
                 options.last_error = _("Port connection failed - port object is invalid")
+                self.__del__()
                 continue
 
             # check OBDLink
@@ -478,6 +482,8 @@ class ELM:
 
             # Verify STN response
             res_version = elm_rsp.replace("\n", "").replace(">", "").replace("STI", "")
+            stn_detected = "STN" in res_version.upper()
+            elm_detected = "ELM" in res.upper() or "OBDII" in res.upper()
             if "STN" in res_version:
                 print(_("STN connection established"))
                 print(_("Version: ") + res_version)
@@ -505,7 +511,7 @@ class ELM:
                 if '?' not in elm_rsp:
                     options.opt_stn_basic = True
 
-            if 'ELM' in res or 'OBDII' in res:
+            if elm_detected or stn_detected:
                 options.last_error = ""
                 options.elm_failed = False
                 self.connectionStatus = True
@@ -523,7 +529,7 @@ class ELM:
             else:
                 options.elm_failed = True
                 options.last_error = _("No ELM interface on port") + " %s" % portName
-
+                self.__del__()
         try:
             maxspeed = int(maxspeed)
             # if options.opt_stpx_full:
