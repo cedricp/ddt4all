@@ -147,17 +147,17 @@ class EcuData:
         js = {}
         if self.bitscount != 8:
             js['bitscount'] = self.bitscount
-        if not self.scaled:
+        if self.scaled:
             js['scaled'] = self.scaled
-        if not self.signed:
+        if self.signed:
             js['signed'] = self.signed
-        if not self.byte:
+        if self.byte:
             js['byte'] = self.byte
-        if not self.binary:
+        if self.binary:
             js['binary'] = self.binary
         if self.bytescount != 1:
             js['bytescount'] = self.bytescount
-        if not self.bytesascii:
+        if self.bytesascii:
             js['bytesascii'] = self.bytesascii
         if self.step != 1:
             js['step'] = self.step
