@@ -452,7 +452,9 @@ class MainWindowOptions(widgets.QDialog):
         else:
             # Remove DoIP device from list
             self._remove_doip_device_from_list()
-        self.adjustSize()
+        # Close dialog to trigger reload in main loop
+        self.mode = 3  # Set mode to 3 to trigger DoIP reload
+        self.accept()
 
     def _add_doip_device_to_list(self):
         """Add DoIP device to the device list"""
