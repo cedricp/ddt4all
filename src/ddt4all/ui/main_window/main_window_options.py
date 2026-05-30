@@ -71,6 +71,7 @@ class MainWindowOptions(widgets.QDialog):
         label.setAlignment(core.Qt.AlignHCenter | core.Qt.AlignVCenter)
         donationwidget = DonationWidget()
         self.setLayout(layout)
+        self.adjustSize()
 
         self.listview = widgets.QListWidget(self)
 
@@ -252,7 +253,7 @@ class MainWindowOptions(widgets.QDialog):
 
         socket_timeoutlayout = widgets.QHBoxLayout()
         self.socket_timeoutcheck = widgets.QCheckBox()
-        self.socket_timeoutcheck.setChecked(options.socket_timeout)
+        self.socket_timeoutcheck.setChecked(options.configuration.get('socket_timeout', False))
         self.socket_timeoutcheck.stateChanged.connect(set_socket_timeout)
         socket_timeoutlabel = widgets.QLabel(_("WiFi Socket-TimeOut"))
         socket_timeoutlayout.addWidget(self.socket_timeoutcheck)
@@ -260,10 +261,23 @@ class MainWindowOptions(widgets.QDialog):
         socket_timeoutlayout.addStretch()
         layout.addLayout(socket_timeoutlayout)
 
+        # DoIP Scan Enable
+        doip_scanlayout = widgets.QHBoxLayout()
+        self.doip_scancheck = widgets.QCheckBox()
+        self.doip_scancheck.setChecked(options.configuration.get('doip_scan', True))
+        self.doip_scancheck.stateChanged.connect(
+            lambda checked: self.update_doip_scan_realtime(checked)
+        )
+        doip_scanlabel = widgets.QLabel(_("Enable DoIP Scan"))
+        doip_scanlayout.addWidget(self.doip_scancheck)
+        doip_scanlayout.addWidget(doip_scanlabel)
+        doip_scanlayout.addStretch()
+        layout.addLayout(doip_scanlayout)
+
         # DoIP configuration section
         doip_grouplayout = widgets.QVBoxLayout()
-        doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration (Experimental)"))
-        doip_groupbox.setLayout(doip_grouplayout)
+        self.doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration (Experimental)"))
+        self.doip_groupbox.setLayout(doip_grouplayout)
         
         # DoIP Preset Configuration
         doip_presetlayout = widgets.QHBoxLayout()
@@ -339,20 +353,9 @@ class MainWindowOptions(widgets.QDialog):
         doip_reconnectlayout.addStretch()
         doip_grouplayout.addLayout(doip_reconnectlayout)
         
-        # DoIP Scan Enable
-        doip_scanlayout = widgets.QHBoxLayout()
-        self.doip_scancheck = widgets.QCheckBox()
-        self.doip_scancheck.setChecked(options.configuration.get('doip_scan', True))
-        self.doip_scancheck.stateChanged.connect(
-            lambda checked: self.update_doip_scan_realtime(checked)
-        )
-        doip_scanlabel = widgets.QLabel(_("Enable DoIP Scan"))
-        doip_scanlayout.addWidget(self.doip_scancheck)
-        doip_scanlayout.addWidget(doip_scanlabel)
-        doip_scanlayout.addStretch()
-        doip_grouplayout.addLayout(doip_scanlayout)
 
-        layout.addWidget(doip_groupbox)
+        layout.addWidget(self.doip_groupbox)
+        self.doip_groupbox.setVisible(bool(options.configuration.get('doip_scan', False)))
 
         obdlinkspeedlayout = widgets.QHBoxLayout()
         self.obdlinkspeedcombo = widgets.QComboBox()
@@ -439,6 +442,8 @@ class MainWindowOptions(widgets.QDialog):
         
         # Update DoIP button visibility
         self.doipbutton.setVisible(bool(checked))
+
+        self.doip_groupbox.setVisible(bool(checked))
         
         # Update device list based on scan status
         if checked:
@@ -447,6 +452,7 @@ class MainWindowOptions(widgets.QDialog):
         else:
             # Remove DoIP device from list
             self._remove_doip_device_from_list()
+        self.adjustSize()
 
     def _add_doip_device_to_list(self):
         """Add DoIP device to the device list"""
