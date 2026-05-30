@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-28 19:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,10 +188,6 @@ msgid "is not mapped"
 msgstr ""
 
 msgid "Scanning address: "
-msgstr ""
-
-#, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
 msgstr ""
 
 #, python-format
@@ -1555,9 +1551,6 @@ msgstr ""
 msgid "ELM benchmark"
 msgstr ""
 
-msgid "Close"
-msgstr ""
-
 msgid "WiFi port : "
 msgstr ""
 
@@ -1570,7 +1563,10 @@ msgstr ""
 msgid "Dark style"
 msgstr ""
 
-msgid "DoIP (Diagnostics over IP) Configuration"
+msgid "WiFi Socket-TimeOut"
+msgstr ""
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr ""
 
 msgid "Device Preset : "
@@ -1609,7 +1605,25 @@ msgstr ""
 msgid "Auto-reconnect on connection loss"
 msgstr ""
 
+msgid "Enable DoIP Scan"
+msgstr ""
+
 msgid "Change UART speed"
+msgstr ""
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr ""
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr ""
+
+msgid "DoIP device removed from list"
+msgstr ""
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
 msgstr ""
 
 msgid "Checking..."
@@ -1667,27 +1681,6 @@ msgstr ""
 msgid "Error updating port list: %s"
 msgstr ""
 
-msgid "57600"
-msgstr ""
-
-msgid "115200"
-msgstr ""
-
-msgid "230400"
-msgstr ""
-
-msgid "500000"
-msgstr ""
-
-msgid "1000000"
-msgstr ""
-
-msgid "2000000"
-msgstr ""
-
-msgid "38400"
-msgstr ""
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr ""
 
@@ -1735,6 +1728,9 @@ msgstr ""
 
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
+msgstr ""
+
+msgid "DoIP device removed from list (scan disabled)"
 msgstr ""
 
 #, python-format

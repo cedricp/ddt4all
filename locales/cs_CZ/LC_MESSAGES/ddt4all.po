@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
-"PO-Revision-Date: 2026-05-10 03:47+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -191,10 +191,6 @@ msgstr "není zmapováno"
 
 msgid "Scanning address: "
 msgstr "Skenování adresy: "
-
-#, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
@@ -568,7 +564,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Připojení Bluetooth - přeskakuje kontrolu rychlosti přenosu dat"
 
 msgid "Start COM speed: "
-msgstr "Počáteční rychlost COM :"
+msgstr "Počáteční rychlost COM : "
 
 msgid "ELM not responding"
 msgstr "ELM neodpovídá"
@@ -1649,9 +1645,6 @@ msgstr "REŽIM EDICE"
 msgid "ELM benchmark"
 msgstr "Resetovat ELM"
 
-msgid "Close"
-msgstr "Zavřít"
-
 msgid "WiFi port : "
 msgstr "WiFi port: "
 
@@ -1664,8 +1657,11 @@ msgstr "Povolit CAN2"
 msgid "Dark style"
 msgstr "Tmavý styl"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr "Konfigurace DoIP (Diagnostika přes IP)"
+msgid "WiFi Socket-TimeOut"
+msgstr "Časový limit WiFi socketu"
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
+msgstr "Konfigurace DoIP (Diagnostika přes IP) (Experimentální)"
 
 msgid "Device Preset : "
 msgstr "Předvolba zařízení : "
@@ -1703,8 +1699,26 @@ msgstr "Povolit objevování oznámení vozidla"
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatické znovupřipojení při ztrátě spojení"
 
+msgid "Enable DoIP Scan"
+msgstr "Povolit skenování DoIP"
+
 msgid "Change UART speed"
 msgstr "Změňte rychlost UART"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "Zařízení DoIP přidáno do seznamu: %(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Chyba při přidávání zařízení DoIP do seznamu: %s"
+
+msgid "DoIP device removed from list"
+msgstr "Zařízení DoIP odstraněno ze seznamu"
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "Chyba při odebírání zařízení DoIP ze seznamu: %s"
 
 msgid "Checking..."
 msgstr "Kontroluji..."
@@ -1761,27 +1775,6 @@ msgstr "Resetovat a znovu zkontrolovat"
 msgid "Error updating port list: %s"
 msgstr "Chyba aktualizace seznamu portů: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "Vybráno VGate iCar Pro – povolena rozšířená podpora STN/STPX"
 
@@ -1830,6 +1823,9 @@ msgstr "Chyba v odložené aktualizaci DoIP: %s"
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Zařízení DoIP aktualizováno: %(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr "Zařízení DoIP odstraněno ze seznamu (skenování zakázáno)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

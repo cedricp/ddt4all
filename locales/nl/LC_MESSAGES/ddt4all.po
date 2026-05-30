@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -194,10 +194,6 @@ msgstr "is niet in kaart gebracht"
 
 msgid "Scanning address: "
 msgstr "Adres scannen: "
-
-#, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
@@ -1288,9 +1284,7 @@ msgid "No, I don't"
 msgstr "Nee, bedankt"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Bedankt voor uw bijdrage. Als er niets gebeurt, ga dan naar: https://"
-"github.com/cedricp/ddt4all"
+msgstr "Bedankt voor uw bijdrage, als er niets gebeurt, ga dan naar"
 
 msgid "ECU Finder"
 msgstr "ECU zoeker"
@@ -1649,9 +1643,6 @@ msgstr "Editie modus"
 msgid "ELM benchmark"
 msgstr "ELM Test"
 
-msgid "Close"
-msgstr "Sluiten"
-
 msgid "WiFi port : "
 msgstr "Wi-fi poort: "
 
@@ -1664,8 +1655,11 @@ msgstr "CAN2 inschakelen"
 msgid "Dark style"
 msgstr "Donkere stijl"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr "DoIP (Diagnostiek via IP) Configuratie"
+msgid "WiFi Socket-TimeOut"
+msgstr "WiFi socket time-out"
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
+msgstr "DoIP (Diagnostiek via IP) Configuratie (Experimenteel)"
 
 msgid "Device Preset : "
 msgstr "Apparaat voorkeur : "
@@ -1703,8 +1697,26 @@ msgstr "Voertuig aankondiging ontdekking inschakelen"
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatisch opnieuw verbinden bij verbindingsverlies"
 
+msgid "Enable DoIP Scan"
+msgstr "DoIP-scan inschakelen"
+
 msgid "Change UART speed"
 msgstr "UART snelheid wijzigen"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "DoIP apparaat toegevoegd aan lijst: %(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Fout bij toevoegen DoIP apparaat aan lijst: %s"
+
+msgid "DoIP device removed from list"
+msgstr "DoIP-apparaat verwijderd uit de lijst"
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "Fout bij verwijderen van het DoIP-apparaat uit de lijst: %s"
 
 msgid "Checking..."
 msgstr "Controleren..."
@@ -1761,27 +1773,6 @@ msgstr "Resetten en opnieuw controleren"
 msgid "Error updating port list: %s"
 msgstr "Fout bij updaten poortlijst: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr ""
 "VGate iCar Pro geselecteerd - Verbeterde STN/STPX ondersteuning ingeschakeld"
@@ -1831,6 +1822,9 @@ msgstr "Fout in uitgestelde DoIP update: %s"
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP apparaat bijgewerkt: %(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr "DoIP apparaat verwijderd uit lijst (scan uitgeschakeld)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

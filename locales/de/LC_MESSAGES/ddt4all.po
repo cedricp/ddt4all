@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
-"PO-Revision-Date: 2026-05-07 13:04+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"PO-Revision-Date: 2026-05-28 19:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
-"Language: de_DE\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -194,10 +194,6 @@ msgid "Scanning address: "
 msgstr "Scanne Adresse: "
 
 #, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr "%(text)s%(addr)s ECU: %(name)s"
-
-#, python-format
 msgid "DoIP ECU response format unknown: %s"
 msgstr "DoIP ECU-Antwortformat unbekannt: %s"
 
@@ -319,7 +315,7 @@ msgstr ""
 "OBDLink-Verbindung OK, versuche UART-Umschaltung auf volle Geschwindigkeit"
 
 msgid "Failed to switch OBDLink to "
-msgstr "Umschaltung von OBDLink fehlgeschlagen zu volle Geschwindigkeit"
+msgstr "Umschaltung von OBDLink fehlgeschlagen zu volle Geschwindigkeit "
 
 msgid "OBDLink Connection OK, using optimal settings"
 msgstr "OBDLink-Verbindung OK, verwende optimale Einstellungen"
@@ -569,7 +565,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Bluetooth-Verbindung - Baudrate-Prüfung überspringen"
 
 msgid "Start COM speed: "
-msgstr "Starten mit Baudrate:"
+msgstr "Starten mit Baudrate: "
 
 msgid "ELM not responding"
 msgstr "ELM antwortet nicht"
@@ -1297,8 +1293,7 @@ msgstr "Nein, ich möchte nicht"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"Vielen Dank für Ihren Beitrag, wenn nichts passiert, bitte gehen Sie zu: "
-"https://github.com/cedricp/ddt4all"
+"Vielen Dank für Ihren Beitrag, wenn nichts passiert, gehen Sie bitte zu"
 
 msgid "ECU Finder"
 msgstr "ECU-Sucher"
@@ -1354,8 +1349,7 @@ msgstr "Besuchen Sie die Online-Dokumentation unter:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
-"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn "
-"verfügbar.verfügbar."
+"Diese Grundansicht zeigt weiterhin ECU-Dokumentation an, wenn verfügbar."
 
 msgid "Refresh rate (ms):"
 msgstr "Aktualisierungsrate (ms):"
@@ -1660,9 +1654,6 @@ msgstr "Dateieditor"
 msgid "ELM benchmark"
 msgstr "ELM testen"
 
-msgid "Close"
-msgstr "Schließen"
-
 msgid "WiFi port : "
 msgstr "WiFi Anschluss: "
 
@@ -1675,8 +1666,11 @@ msgstr "CAN2 aktivieren"
 msgid "Dark style"
 msgstr "Dunkler Modus"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr "DoIP (Diagnose über IP) Konfiguration"
+msgid "WiFi Socket-TimeOut"
+msgstr "WiFi Socket-Timeout"
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
+msgstr "DoIP (Diagnose über IP) Konfiguration (Experimentell)"
 
 msgid "Device Preset : "
 msgstr "Geräte-Voreinstellung : "
@@ -1714,8 +1708,26 @@ msgstr "Fahrzeug-Ankündigungs-Erkennung aktivieren"
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatische Neuverbindung bei Verbindungsverlust"
 
+msgid "Enable DoIP Scan"
+msgstr "DoIP-Scan aktivieren"
+
 msgid "Change UART speed"
 msgstr "UART-Geschwindigkeit ändern"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "DoIP-Gerät zur Liste hinzugefügt: %(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Fehler beim Hinzufügen des DoIP-Geräts zur Liste: %s"
+
+msgid "DoIP device removed from list"
+msgstr "DoIP-Gerät aus Liste entfernt"
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "Fehler beim Entfernen des DoIP-Geräts aus der Liste: %s"
 
 msgid "Checking..."
 msgstr "Überprüfe..."
@@ -1773,27 +1785,6 @@ msgstr "Zurücksetzen und erneut prüfen"
 msgid "Error updating port list: %s"
 msgstr "Fehler beim Aktualisieren der Portliste: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr ""
 "VGate iCar Pro ausgewählt - Erweiterte STN/STPX-Unterstützung aktiviert"
@@ -1845,6 +1836,9 @@ msgstr "Fehler bei verzögertem DoIP-Update: %s"
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "DoIP-Gerät aktualisiert: %(ip)s:%(port)s"
 
+msgid "DoIP device removed from list (scan disabled)"
+msgstr "DoIP-Gerät aus Liste entfernt (Scan deaktiviert)"
+
 #, python-format
 msgid "Error in targeted DoIP update: %s"
 msgstr "Fehler bei gezieltem DoIP-Update: %s"
@@ -1862,7 +1856,7 @@ msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 msgstr "Kompatibel mit Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
 
 msgid "You must check the recommandations"
-msgstr ";-) Sie müssen das Lesen der Warnung bestätigen"
+msgstr "Sie müssen die Empfehlungen überprüfen"
 
 msgid "Please select a communication port"
 msgstr "Bitte wählen Sie einen Anschluss aus"

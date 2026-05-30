@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
-"PO-Revision-Date: 2026-05-07 13:09+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -196,10 +196,6 @@ msgid "Scanning address: "
 msgstr "Endereço de verificação: "
 
 #, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr "%(text)s%(addr)s ECU: %(name)s"
-
-#, python-format
 msgid "DoIP ECU response format unknown: %s"
 msgstr "Formato de resposta ECU DoIP desconhecido: %s"
 
@@ -347,7 +343,7 @@ msgstr "%s mudou baudrate OK, mudando a velocidade do UART agora..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
-msgstr "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s baudrate comutado OK, mudando velocidade UART agora..."
 
 #, python-format
 msgid "Not supported baudrate %s"
@@ -568,7 +564,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Conexão Bluetooth - ignorando verificação de baudrate"
 
 msgid "Start COM speed: "
-msgstr "Velocidade inicial COM :"
+msgstr "Velocidade inicial COM : "
 
 msgid "ELM not responding"
 msgstr "ELM não respondendo"
@@ -1655,9 +1651,6 @@ msgstr "Modo de edição"
 msgid "ELM benchmark"
 msgstr "Referência ELM"
 
-msgid "Close"
-msgstr "Fechar"
-
 msgid "WiFi port : "
 msgstr "Porta Wi-Fi: "
 
@@ -1670,8 +1663,11 @@ msgstr "Habilitar CAN2"
 msgid "Dark style"
 msgstr "Estilo escuro"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr "Configuração DoIP (Diagnóstico sobre IP)"
+msgid "WiFi Socket-TimeOut"
+msgstr "Tempo limite do soquete WiFi"
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
+msgstr "Configuração DoIP (Diagnóstico por IP) (Experimental)"
 
 msgid "Device Preset : "
 msgstr "Predefinição do dispositivo: "
@@ -1709,8 +1705,26 @@ msgstr "Ativar descoberta de anúncio de veículo"
 msgid "Auto-reconnect on connection loss"
 msgstr "Reconectar automaticamente em caso de perda de conexão"
 
+msgid "Enable DoIP Scan"
+msgstr "Ativar varredura DoIP"
+
 msgid "Change UART speed"
 msgstr "Alterar a velocidade UART"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "Dispositivo DoIP adicionado à lista: %(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Erro ao adicionar dispositivo DoIP à lista: %s"
+
+msgid "DoIP device removed from list"
+msgstr "Dispositivo DoIP removido da lista"
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "Erro ao remover dispositivo DoIP da lista: %s"
 
 msgid "Checking..."
 msgstr "Verificando..."
@@ -1767,27 +1781,6 @@ msgstr "Redefinir e verificar novamente"
 msgid "Error updating port list: %s"
 msgstr "Erro ao atualizar lista de portas: %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500.000"
-
-msgid "1000000"
-msgstr "1.000.000"
-
-msgid "2000000"
-msgstr "2.000.000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro selecionado - Suporte aprimorado STN/STPX ativado"
 
@@ -1836,6 +1829,9 @@ msgstr "Erro na atualização retardada DoIP: %s"
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Dispositivo DoIP atualizado: %(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr "Dispositivo DoIP removido da lista (varredura desativada)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

@@ -1,5 +1,6 @@
 from enum import Enum
 
+# TODO: Review DoIP message type enum values and ISO 13400 mapping.
 class DoIPMessageType(Enum):
     """DoIP Message Types according to ISO 13400"""
     VEHICLE_IDENTIFICATION_REQUEST = 0x0001

@@ -49,6 +49,7 @@ def load_this():
         with open(BASE_DIR / "resources" / "projects.json", "r", encoding="UTF-8") as f:
             vehicles_loc = json.loads(f.read())
         ecu_db.addressing = vehicles_loc["projects"]["All"]["addressing"]
+        # TODO: Review DoIP addressing mapping loaded from projects.json.
         ecu_db.doip_addressing = vehicles_loc["projects"]["All"]["DoIP"]
         elm.snat = vehicles_loc["projects"]["All"]["snat"]
         elm.snat_ext = vehicles_loc["projects"]["All"]["snat_ext"]
@@ -122,6 +123,10 @@ def main(argv=None) -> int:
 
         if pc.mode == 0 or pcres == widgets.QDialog.Rejected:
             return 0
+        # Mode 3: Language change - reload dialog without exiting
+        if pc.mode == 3:
+            pc = MainWindowOptions(app)
+            continue
 
         options.opt_can2 = pc.CAN2
 

@@ -5,6 +5,7 @@ from ddt4all.cli.helpers import (
     ArgumentSpec,
     CommandSpec
 )
+# TODO: Review DOIP CLI command registration and help description.
 from ddt4all.cli.cmd_handlers.doip import cmd_doip
 from ddt4all.cli.cmd_handlers.parameters import cmd_parameters
 from ddt4all.cli.cmd_handlers.usbdevice import cmd_usbdevice

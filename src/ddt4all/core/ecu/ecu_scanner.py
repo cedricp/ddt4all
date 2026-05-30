@@ -338,10 +338,10 @@ class EcuScanner:
             text = _("Scanning address: ")
             try:
                 # Try long name first
-                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
+                print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
             except KeyError:
                 # If not, short name
-                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
+                print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
             if not options.simulation_mode:
                 options.elm.init_can()
@@ -396,10 +396,10 @@ class EcuScanner:
             text = _("Scanning address: ")
             try:
                 # Try long name first
-                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
+                print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
             except KeyError:
                 # If not, short name
-                print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
+                print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
             if not options.simulation_mode:
                 options.opt_si = True
@@ -531,7 +531,7 @@ class EcuScanner:
             if addr not in self.ecu_database.addr_group_mapping:
                 # Try to get name from projects.json DoIP data
                 if doip_addressing and addr in doip_addressing:
-                    print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": doip_addressing[addr]})
+                    print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": doip_addressing[addr]})
                 else:
                     print(_("Warning: address %(addr)s is not mapped") % {"addr": addr})
                     continue
@@ -539,9 +539,9 @@ class EcuScanner:
                 # Use database mapping
                 try:
                     # Try long name first
-                    print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
+                    print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
                 except:
-                    print(_("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
+                    print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
             if not options.simulation_mode:
                 try:

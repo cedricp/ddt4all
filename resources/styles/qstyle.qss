@@ -11,8 +11,12 @@ QWidget:item:hover {
   color: #000000;
 }
 QWidget:item:selected {
-  background-color: #cce7ff;
-  color: #000000;
+  background-color: #0078d4;
+  color: #ffffff;
+}
+QAbstractItemView:selected {
+  background-color: #0078d4;
+  color: #ffffff;
 }
 QMenuBar::item:selected {
   border: 1px solid;

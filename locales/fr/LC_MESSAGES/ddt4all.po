@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 20:37+0200\n"
-"PO-Revision-Date: 2026-05-07 13:06+0200\n"
+"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -194,10 +194,6 @@ msgstr "n'est pas mappé"
 
 msgid "Scanning address: "
 msgstr "Adresse d'analyse: "
-
-#, python-format
-msgid "%(text)s%(addr)s ECU: %(name)s"
-msgstr "%(text)s%(addr)s ECU: %(name)s"
 
 #, python-format
 msgid "DoIP ECU response format unknown: %s"
@@ -572,7 +568,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Connexion Bluetooth - vérification du baudrate ignorée"
 
 msgid "Start COM speed: "
-msgstr "Démarrer la vitesse COM :"
+msgstr "Démarrer la vitesse COM : "
 
 msgid "ELM not responding"
 msgstr "ELM ne répond pas"
@@ -1300,9 +1296,7 @@ msgid "No, I don't"
 msgstr "Non, je ne le fais pas"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
-msgstr ""
-"Merci pour votre contribution, si rien ne se passe, rendez-vous sur https://"
-"github.com/cedricp/ddt4all"
+msgstr "Merci pour votre contribution, si rien ne se passe, allez à"
 
 msgid "ECU Finder"
 msgstr "Recherche d'ECU"
@@ -1663,9 +1657,6 @@ msgstr "Mode édition"
 msgid "ELM benchmark"
 msgstr "Référence ELM"
 
-msgid "Close"
-msgstr "Fermer"
-
 msgid "WiFi port : "
 msgstr "Port Wi-Fi: "
 
@@ -1678,8 +1669,11 @@ msgstr "Activer CAN2"
 msgid "Dark style"
 msgstr "Style sombre"
 
-msgid "DoIP (Diagnostics over IP) Configuration"
-msgstr "Configuration DoIP (Diagnostic sur IP)"
+msgid "WiFi Socket-TimeOut"
+msgstr "Timeout socket WiFi"
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
+msgstr "Configuration DoIP (Diagnostic sur IP) (Expérimental)"
 
 msgid "Device Preset : "
 msgstr "Préréglage de l'appareil: "
@@ -1717,8 +1711,26 @@ msgstr "Activer la découverte des annonces de véhicules"
 msgid "Auto-reconnect on connection loss"
 msgstr "Reconnexion automatique en cas de perte de connexion"
 
+msgid "Enable DoIP Scan"
+msgstr "Activer le scan DoIP"
+
 msgid "Change UART speed"
 msgstr "Changer la vitesse de l'UART"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "Appareil DoIP ajouté à la liste : %(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "Erreur lors de l'ajout de l'appareil DoIP à la liste : %s"
+
+msgid "DoIP device removed from list"
+msgstr "Périphérique DoIP supprimé de la liste"
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "Erreur lors du retrait de l'appareil DoIP de la liste : %s"
 
 msgid "Checking..."
 msgstr "Vérification..."
@@ -1776,27 +1788,6 @@ msgstr "Réinitialiser et revérifier"
 msgid "Error updating port list: %s"
 msgstr "Erreur lors de la mise à jour de la liste des ports : %s"
 
-msgid "57600"
-msgstr "57600"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "230400"
-msgstr "230400"
-
-msgid "500000"
-msgstr "500000"
-
-msgid "1000000"
-msgstr "1000000"
-
-msgid "2000000"
-msgstr "2000000"
-
-msgid "38400"
-msgstr "38400"
-
 msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr ""
 "VGate iCar Pro sélectionné - Prise en charge améliorée STN/STPX activée"
@@ -1848,6 +1839,9 @@ msgstr "Erreur lors de la mise à jour retardée DoIP : %s"
 #, python-format
 msgid "DoIP device updated: %(ip)s:%(port)s"
 msgstr "Périphérique DoIP mis à jour : %(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr "Périphérique DoIP supprimé de la liste (scan désactivé)"
 
 #, python-format
 msgid "Error in targeted DoIP update: %s"

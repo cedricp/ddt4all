@@ -10,6 +10,11 @@ from pathlib import Path
 
 from ddt4all.file_manager import get_config_dir
 
+_current_translation = gettext.NullTranslations()
+
+def _dynamic_gettext(message):
+    return _current_translation.gettext(message)
+
 
 simulation_mode = False
 port_speed = 38400
@@ -40,6 +45,7 @@ refreshrate = 5
 mode_edit = False
 safe_commands = ['10','12','14','17','19','1A','21','22','23','3E']
 
+# TODO: Review DoIP configuration defaults and runtime flags.
 # DoIP Configuration
 doip_target_ip = "192.168.0.12"
 doip_target_port = 13400
@@ -47,6 +53,7 @@ doip_timeout = 5
 doip_vehicle_announcement = True
 doip_auto_reconnect = False
 doip_preset = "Custom"
+doip_scan = True  # Enable DoIP scanning
 
 # STN/STPX Configuration
 opt_stpx_full = False  # Full STPX support detected
@@ -70,7 +77,8 @@ configuration = {
     "doip_timeout": 5,
     "doip_vehicle_announcement": True,
     "doip_auto_reconnect": False,
-    "doip_preset": "Custom"
+    "doip_preset": "Custom",
+    "doip_scan": False
 }
 
 lang_list = {
@@ -113,6 +121,7 @@ def create_new_config():
     configuration["preferred_device_order"] = ["vlinker", "vgate", "derlek_usb_diag2", "derlek_usb_diag3", "obdlink", "obdlink_ex", "els27", "elm327"]
     configuration["enable_device_validation"] = True
     configuration["carlist_sort_mode"] = "code"
+    configuration["doip_scan"] = False
     save_config()
 
 
@@ -138,13 +147,14 @@ def load_configuration():
         configuration["carlist_sort_mode"] = config.get("carlist_sort_mode", "code")
         
         # Load DoIP configuration
-        global doip_target_ip, doip_target_port, doip_timeout, doip_vehicle_announcement, doip_auto_reconnect, doip_preset
+        global doip_target_ip, doip_target_port, doip_timeout, doip_vehicle_announcement, doip_auto_reconnect, doip_preset, doip_scan
         doip_target_ip = config.get("doip_target_ip", "192.168.0.12")
         doip_target_port = config.get("doip_target_port", 13400)
         doip_timeout = config.get("doip_timeout", 5)
         doip_vehicle_announcement = config.get("doip_vehicle_announcement", True)
         doip_auto_reconnect = config.get("doip_auto_reconnect", False)
         doip_preset = config.get("doip_preset", "Custom")
+        doip_scan = config.get("doip_scan", False)
         
         configuration["doip_target_ip"] = doip_target_ip
         configuration["doip_target_port"] = doip_target_port
@@ -152,6 +162,7 @@ def load_configuration():
         configuration["doip_vehicle_announcement"] = doip_vehicle_announcement
         configuration["doip_auto_reconnect"] = doip_auto_reconnect
         configuration["doip_preset"] = doip_preset
+        configuration["doip_scan"] = doip_scan
         
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
@@ -256,11 +267,14 @@ def set_carlist_sort_mode(mode):
     save_config()
 
 
-def translator(domain):
+def translator(domain, lang=None):
     load_configuration()
-    # Set up message catalog access
-    t = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), fallback=True)  # not ok in python 3.11.x, codeset="utf-8")
-    return t.gettext
+    # Use provided language or configuration language
+    target_lang = lang if lang else configuration.get("lang", "en_US")
+    # Set up message catalog access with specific language
+    global _current_translation
+    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
+    return _dynamic_gettext
 
 def dtt4all_time():
     if (sys.version_info[0] * 100 + sys.version_info[1]) > 306:

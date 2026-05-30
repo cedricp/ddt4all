@@ -7,6 +7,7 @@ import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
+# TODO: Review DoIP connection handler implementation.
 class DoIPConnection:
     """DoIP Connection Handler for Ethernet-based diagnostic interfaces
     
@@ -17,6 +18,7 @@ class DoIPConnection:
     modern ECU architectures requiring high-speed Ethernet diagnostics.
     """
     
+    # TODO: Review DoIP connection initialization defaults.
     def __init__(self, target_ip="192.168.0.12", target_port=13400):
         self.target_ip = target_ip
         self.target_port = target_port
@@ -27,6 +29,7 @@ class DoIPConnection:
         self.timeout = 4.0  # Default timeout in seconds
         self.extended_29bit = True  # Support for 29-bit CAN identifiers
         
+    # TODO: Review DoIP connect behavior and timeout handling.
     def connect(self):
         """Establish DoIP connection"""
         try:
@@ -41,6 +44,7 @@ class DoIPConnection:
             self.connection_status = False
             return False
     
+    # TODO: Review DoIP disconnect cleanup logic.
     def disconnect(self):
         """Close DoIP connection"""
         if self.socket:
@@ -53,6 +57,7 @@ class DoIPConnection:
         self.connection_status = False
         print("DoIP connection closed")
     
+    # TODO: Review DoIP message framing and header construction.
     def send_message(self, message_type, payload=b''):
         """Send DoIP message"""
         if not self.connection_status or not self.socket:
@@ -66,6 +71,7 @@ class DoIPConnection:
         message = header + payload
         self.socket.send(message)
         
+    # TODO: Review DoIP receive path and payload validation.
     def receive_message(self):
         """Receive DoIP message"""
         if not self.connection_status or not self.socket:
@@ -93,6 +99,7 @@ class DoIPConnection:
         
         return DoIPMessageType(message_type), payload
     
+    # TODO: Review DoIP vehicle identification request parsing.
     def vehicle_identification_request(self):
         """Send vehicle identification request according to ISO 13400"""
         self.send_message(DoIPMessageType.VEHICLE_IDENTIFICATION_REQUEST)
@@ -121,6 +128,7 @@ class DoIPConnection:
         except Exception as e:
             raise DoIPProtocolError(_("Vehicle identification failed: %s") % e)
     
+    # TODO: Review DoIP diagnostic session control flow.
     def diagnostic_session_control(self, session_type):
         """Control diagnostic session according to ISO 13400"""
         payload = struct.pack('>H', session_type)
@@ -139,6 +147,7 @@ class DoIPConnection:
         except Exception as e:
             raise DoIPProtocolError(_("Diagnostic session control failed: %s") % e)
     
+    # TODO: Review DoIP diagnostic message send/receive implementation.
     def send_diagnostic_message(self, req_bytes):
         """Send diagnostic message with addressing according to ISO 13400"""
         # Add source and target addresses (4 bytes total)
@@ -166,6 +175,7 @@ class DoIPConnection:
         except Exception as e:
             raise DoIPProtocolError(_("DoIP request failed: %s") % e)
     
+    # TODO: Review DoIP alive check handling and response validation.
     def alive_check(self):
         """Perform alive check according to ISO 13400"""
         self.send_message(DoIPMessageType.ALIVE_CHECK_REQUEST)

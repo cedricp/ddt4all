@@ -59,6 +59,7 @@ class MainWindowOptions(widgets.QDialog):
         self.selectedportspeed = 38400
         self.adapter = "STD"
         self.raise_port_speed = _("No")
+        self.app = app  # Store app reference for reload
         super(MainWindowOptions, self).__init__(None)
         # Set window icon and title
         appIcon = gui.QIcon(ICON_OBD)
@@ -156,6 +157,8 @@ class MainWindowOptions(widgets.QDialog):
         self.doipbutton.setFixedWidth(64)
         self.doipbutton.setCheckable(True)
         self.doipbutton.setToolTip(_("DoIP (Diagnostics over IP)"))
+        # Hide DoIP button if scan is disabled
+        self.doipbutton.setVisible(options.configuration.get('doip_scan', True))
         medialayout.addWidget(self.doipbutton)
 
         layout.addLayout(medialayout)
@@ -206,7 +209,6 @@ class MainWindowOptions(widgets.QDialog):
         button_con = widgets.QPushButton(_("Connected mode"))
         button_dmo = widgets.QPushButton(_("Edition mode"))
         button_elm_chk = widgets.QPushButton(_("ELM benchmark"))
-        button_save = widgets.QPushButton(_("Close"))
 
         self.elmchk = button_elm_chk
 
@@ -252,7 +254,7 @@ class MainWindowOptions(widgets.QDialog):
         self.socket_timeoutcheck = widgets.QCheckBox()
         self.socket_timeoutcheck.setChecked(options.socket_timeout)
         self.socket_timeoutcheck.stateChanged.connect(set_socket_timeout)
-        socket_timeoutlabel = widgets.QLabel("WiFi Socket-TimeOut")
+        socket_timeoutlabel = widgets.QLabel(_("WiFi Socket-TimeOut"))
         socket_timeoutlayout.addWidget(self.socket_timeoutcheck)
         socket_timeoutlayout.addWidget(socket_timeoutlabel)
         socket_timeoutlayout.addStretch()
@@ -260,7 +262,7 @@ class MainWindowOptions(widgets.QDialog):
 
         # DoIP configuration section
         doip_grouplayout = widgets.QVBoxLayout()
-        doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration"))
+        doip_groupbox = widgets.QGroupBox(_("DoIP (Diagnostics over IP) Configuration (Experimental)"))
         doip_groupbox.setLayout(doip_grouplayout)
         
         # DoIP Preset Configuration
@@ -336,6 +338,19 @@ class MainWindowOptions(widgets.QDialog):
         doip_reconnectlayout.addWidget(doip_reconnectlabel)
         doip_reconnectlayout.addStretch()
         doip_grouplayout.addLayout(doip_reconnectlayout)
+        
+        # DoIP Scan Enable
+        doip_scanlayout = widgets.QHBoxLayout()
+        self.doip_scancheck = widgets.QCheckBox()
+        self.doip_scancheck.setChecked(options.configuration.get('doip_scan', True))
+        self.doip_scancheck.stateChanged.connect(
+            lambda checked: self.update_doip_scan_realtime(checked)
+        )
+        doip_scanlabel = widgets.QLabel(_("Enable DoIP Scan"))
+        doip_scanlayout.addWidget(self.doip_scancheck)
+        doip_scanlayout.addWidget(doip_scanlabel)
+        doip_scanlayout.addStretch()
+        doip_grouplayout.addLayout(doip_scanlayout)
 
         layout.addWidget(doip_groupbox)
 
@@ -351,7 +366,6 @@ class MainWindowOptions(widgets.QDialog):
 
         button_layout.addWidget(button_con)
         button_layout.addWidget(button_dmo)
-        button_layout.addWidget(button_save)
         button_layout.addWidget(button_elm_chk)
         layout.addLayout(button_layout)
 
@@ -361,7 +375,6 @@ class MainWindowOptions(widgets.QDialog):
 
         button_con.clicked.connect(self.connectedMode)
         button_dmo.clicked.connect(self.demoMode)
-        button_save.clicked.connect(self.save_config)
         button_elm_chk.clicked.connect(self.check_elm)
 
         self._scan_worker = None
@@ -380,19 +393,13 @@ class MainWindowOptions(widgets.QDialog):
         options.configuration["socket_timeout"] = options.socket_timeout
 
         # Save DoIP configuration
-        options.doip_target_ip = self.doip_ipinput.text()
-        options.doip_target_port = self.doip_portinput.value()
-        options.doip_timeout = self.doip_timeoutinput.value()
-        options.doip_vehicle_announcement = self.doip_announcecheck.isChecked()
-        options.doip_auto_reconnect = self.doip_reconnectcheck.isChecked()
-        options.doip_preset = self.doip_presetcombo.currentText()
-
-        options.configuration["doip_target_ip"] = options.doip_target_ip
-        options.configuration["doip_target_port"] = options.doip_target_port
-        options.configuration["doip_timeout"] = options.doip_timeout
-        options.configuration["doip_vehicle_announcement"] = options.doip_vehicle_announcement
-        options.configuration["doip_auto_reconnect"] = options.doip_auto_reconnect
-        options.configuration["doip_preset"] = options.doip_preset
+        options.configuration["doip_target_ip"] = self.doip_ipinput.text()
+        options.configuration["doip_target_port"] = self.doip_portinput.value()
+        options.configuration["doip_timeout"] = self.doip_timeoutinput.value()
+        options.configuration["doip_vehicle_announcement"] = self.doip_announcecheck.isChecked()
+        options.configuration["doip_auto_reconnect"] = self.doip_reconnectcheck.isChecked()
+        options.configuration["doip_preset"] = self.doip_presetcombo.currentText()
+        options.configuration["doip_scan"] = self.doip_scancheck.isChecked()
 
         options.save_config()
         self.close()  # Just close dialog, don't exit app
@@ -406,21 +413,88 @@ class MainWindowOptions(widgets.QDialog):
             # Update configuration
             options.configuration["lang"] = lang_code
 
-            # Update environment variable
+            # Update environment variable BEFORE saving
             os.environ['LANG'] = lang_code
 
             # Save configuration
             options.save_config()
 
-            # Reinitialize the global translator with new language
-            global _
-            _ = options.translator('ddt4all')
+            # Force reload configuration to apply new language
+            options.load_configuration()
 
-            # Close current window and return to main flow
-            # This will allow the main application to recreate everything with new language
-            self.mode = 0  # Set mode to 0 to trigger restart in main loop
-            self.done(True)
-            exit(0)
+            # Reinitialize the global translator with new language BEFORE reload
+            global _
+            _ = options.translator('ddt4all', lang_code)
+
+            # Close dialog to trigger reload in main loop
+            self.mode = 3  # Set mode to 3 to trigger language reload
+            self.accept()
+
+    def update_doip_scan_realtime(self, checked):
+        """Update DoIP scan configuration in real-time when checkbox changes"""
+        # Update the configuration dictionary immediately
+        options.configuration["doip_scan"] = bool(checked)
+        # Save to config.json immediately
+        options.save_config()
+        
+        # Update DoIP button visibility
+        self.doipbutton.setVisible(bool(checked))
+        
+        # Update device list based on scan status
+        if checked:
+            # Add DoIP device to list
+            self._add_doip_device_to_list()
+        else:
+            # Remove DoIP device from list
+            self._remove_doip_device_from_list()
+
+    def _add_doip_device_to_list(self):
+        """Add DoIP device to the device list"""
+        try:
+            # Get current DoIP configuration
+            doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
+            doip_port = getattr(options, 'doip_target_port', 13400)
+            
+            # Check if DoIP device already exists in list
+            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+            for i in range(self.listview.count()):
+                item = self.listview.item(i)
+                if item.text() == itemname:
+                    return  # Already exists, don't add duplicate
+            
+            # Add DoIP device to list
+            item = widgets.QListWidgetItem(self.listview)
+            item.setText(itemname)
+            item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            
+            print(_("DoIP device added to list: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
+        except Exception as e:
+            print(_("Error adding DoIP device to list: %s") % e)
+
+    def _remove_doip_device_from_list(self):
+        """Remove DoIP device from the device list"""
+        try:
+            # Find and remove all DoIP devices
+            items_to_remove = []
+            for i in range(self.listview.count()):
+                item = self.listview.item(i)
+                item_text = item.text()
+                if 'DoIP Device' in item_text:
+                    items_to_remove.append(item)
+            
+            # Remove DoIP devices
+            for item in items_to_remove:
+                row = self.listview.row(item)
+                itemname = item.text()
+                if itemname in self.ports:
+                    del self.ports[itemname]
+                self.listview.takeItem(row)
+            
+            if items_to_remove:
+                print(_("DoIP device removed from list"))
+        except Exception as e:
+            print(_("Error removing DoIP device from list: %s") % e)
 
     def check_elm(self):
         """Enhanced ELM connection checker with better error handling"""
@@ -634,11 +708,11 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "STD_USB"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("57600"))
-        self.obdlinkspeedcombo.addItem(_("115200"))
-        self.obdlinkspeedcombo.addItem(_("230400"))
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
         # This mode seems to not be supported by all adapters
-        self.obdlinkspeedcombo.addItem(_("500000"))
+        self.obdlinkspeedcombo.addItem("500000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -670,9 +744,9 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "OBDLINK"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("500000"))
-        self.obdlinkspeedcombo.addItem(_("1000000"))
-        self.obdlinkspeedcombo.addItem(_("2000000"))
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")
+        self.obdlinkspeedcombo.addItem("2000000")
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -730,8 +804,8 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "VLINKER"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("57600"))
-        self.obdlinkspeedcombo.addItem(_("115200"))  # Vlinker can handle moderate speeds
+        self.obdlinkspeedcombo.addItem("57600")
+        self.obdlinkspeedcombo.addItem("115200")  # Vlinker can handle moderate speeds
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -764,8 +838,8 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "DERLEK"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("38400"))
-        self.obdlinkspeedcombo.addItem(_("115200"))  # DERLEK can handle high speeds (optional)
+        self.obdlinkspeedcombo.addItem("38400")
+        self.obdlinkspeedcombo.addItem("115200")  # DERLEK can handle high speeds (optional)
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
         self.usbbutton.blockSignals(True)
@@ -792,8 +866,8 @@ class MainWindowOptions(widgets.QDialog):
         self.usbbutton.blockSignals(False)
         self.obdlinkbutton.blockSignals(False)
         self.elsbutton.blockSignals(False)
-        self.obdlinkspeedcombo.addItem(_("500000"))
-        self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")  # VGate can handle very high speeds
         
         # Display STPX support information
         self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
@@ -831,10 +905,10 @@ class MainWindowOptions(widgets.QDialog):
         self.adapter = "VGATE"
         self.obdlinkspeedcombo.clear()
         self.obdlinkspeedcombo.addItem(_("No"))
-        self.obdlinkspeedcombo.addItem(_("115200"))
-        self.obdlinkspeedcombo.addItem(_("230400"))
-        self.obdlinkspeedcombo.addItem(_("500000"))
-        self.obdlinkspeedcombo.addItem(_("1000000"))  # VGate can handle very high speeds
+        self.obdlinkspeedcombo.addItem("115200")
+        self.obdlinkspeedcombo.addItem("230400")
+        self.obdlinkspeedcombo.addItem("500000")
+        self.obdlinkspeedcombo.addItem("1000000")  # VGate can handle very high speeds
         
         # Display STPX support information
         self.logview.append(_("VGate iCar Pro selected - Enhanced STN/STPX support enabled"))
@@ -974,19 +1048,20 @@ class MainWindowOptions(widgets.QDialog):
             # Get current DoIP configuration
             doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
             doip_port = getattr(options, 'doip_target_port', 13400)
+            doip_scan_enabled = options.configuration.get('doip_scan', True)
             
             # Clear the device list completely - no rescan_ports()
             self.listview.clear()
             self.ports = {}
             self.portcount = 0
             
-            # Add only DoIP device - no COM port scanning
-
-            item = widgets.QListWidgetItem(self.listview)
-            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
-            item.setText(itemname)
-            item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
-            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+            # Add DoIP device only if scan is enabled
+            if doip_scan_enabled:
+                item = widgets.QListWidgetItem(self.listview)
+                itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+                item.setText(itemname)
+                item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+                self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
             
         except Exception as e:
             print(_("Error in force DoIP update: %s") % e)
@@ -1015,6 +1090,7 @@ class MainWindowOptions(widgets.QDialog):
             # Get current DoIP configuration
             doip_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
             doip_port = getattr(options, 'doip_target_port', 13400)
+            doip_scan_enabled = options.configuration.get('doip_scan', True)
             
             # Find and remove existing DoIP device
             items_to_remove = []
@@ -1027,16 +1103,21 @@ class MainWindowOptions(widgets.QDialog):
             # Remove old DoIP devices
             for item in items_to_remove:
                 row = self.listview.row(item)
+                itemname = item.text()
+                if itemname in self.ports:
+                    del self.ports[itemname]
                 self.listview.takeItem(row)
                 
-            # Add new DoIP device
-            item = widgets.QListWidgetItem(self.listview)
-            itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
-            item.setText(itemname)
-            item.setBackground(core.QColor(150, 50, 50))  # Dark red for offline
-            self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
-            
-            print(_("DoIP device updated: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
+            # Add new DoIP device only if scan is enabled
+            if doip_scan_enabled:
+                item = widgets.QListWidgetItem(self.listview)
+                itemname = f"{doip_ip}:{doip_port}[DoIP Device - {doip_ip}:{doip_port}]"
+                item.setText(itemname)
+                item.setBackground(gui.QColor(150, 50, 50))  # Dark red for offline
+                self.ports[itemname] = (f"{doip_ip}:{doip_port}", f"DoIP Device - {doip_ip}:{doip_port}", "", "offline")
+                print(_("DoIP device updated: %(ip)s:%(port)s") % {"ip": doip_ip, "port": doip_port})
+            else:
+                print(_("DoIP device removed from list (scan disabled)"))
             
         except Exception as e:
             print(_("Error in targeted DoIP update: %s") % e)

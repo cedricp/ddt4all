@@ -5,6 +5,7 @@ import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
+# TODO: Review DoIP device interface implementation.
 class DoIPDevice:
     """DoIP Device Interface for Ethernet-based diagnostic tools
     
@@ -13,6 +14,7 @@ class DoIPDevice:
     ISO 13400 compliant devices.
     """
     
+    # TODO: Review DoIP device initialization defaults and options usage.
     def __init__(self, target_ip="192.168.0.12", target_port=13400):
         self.doip = DoIPConnection(target_ip, target_port)
         self.connectionStatus = False
@@ -26,6 +28,7 @@ class DoIPDevice:
         self.timeout = self.settings.get('timeout', 4.0)
         self.doip.timeout = self.timeout
     
+    # TODO: Review DoIPDevice connect logic and ISO 13400 vehicle identification.
     def connect(self):
         """Establish DoIP connection with vehicle identification"""
         if self.doip.connect():
@@ -42,11 +45,13 @@ class DoIPDevice:
                 return False
         return False
     
+    # TODO: Review DoIPDevice disconnect cleanup.
     def disconnect(self):
         """Close DoIP connection gracefully"""
         self.doip.disconnect()
         self.connectionStatus = False
     
+    # TODO: Review DoIP request conversion and error handling.
     def request(self, req, positive='', cache=True, serviceDelay="0"):
         """Send diagnostic request over DoIP with proper error handling"""
         if not self.connectionStatus:
@@ -65,6 +70,7 @@ class DoIPDevice:
         except Exception as e:
             raise DoIPProtocolError(_("DoIP request failed: %s") % e)
     
+    # TODO: Review DoIP session start flow and response validation.
     def start_session_can(self, start_session):
         """Start diagnostic session over DoIP according to ISO 13400"""
         if not self.connectionStatus:
@@ -81,6 +87,7 @@ class DoIPDevice:
         except Exception as e:
             raise DoIPProtocolError(_("DoIP session start failed: %s") % e)
     
+    # TODO: Review DoIP CAN initialization path.
     def init_can(self):
         """Initialize CAN communication over DoIP"""
         if not self.connectionStatus:
@@ -93,6 +100,7 @@ class DoIPDevice:
             raise DoIPProtocolError(_("DoIP CAN initialization failed: %s") % e)
             return False
     
+    # TODO: Review DoIP CAN addressing logic for electric ECUs and standard ECUs.
     def set_can_addr(self, addr, ecu, canline=0):
         """Set CAN addressing for DoIP communication with Electric ECU support
         
