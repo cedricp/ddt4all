@@ -421,6 +421,14 @@ class ELM:
         # Build speed list: user's chosen rate first, then common fallbacks.
         # dict.fromkeys preserves order and removes duplicates (e.g. when rate == 38400).
         _speed_candidates = list(dict.fromkeys([int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]))
+
+        def close_current_port():
+            if self.port is not None and hasattr(self.port, 'close'):
+                try:
+                    self.port.close()
+                except Exception:
+                    pass
+
         for speed in _speed_candidates:
             print(_("Trying to open port ") + "%s @ %i" % (portName, speed))
 
@@ -431,10 +439,12 @@ class ELM:
                     options.elm_failed = True
                     options.last_error = _("Port initialization failed")
                     self.connectionStatus = False
+                    close_current_port()
                     continue
 
             if options.elm_failed:
                 self.connectionStatus = False
+                close_current_port()
                 # Try one other speed ...
                 continue
 
@@ -468,6 +478,7 @@ class ELM:
             else:
                 options.elm_failed = True
                 options.last_error = _("Port connection failed - port object is invalid")
+                close_current_port()
                 continue
 
             # check OBDLink
@@ -475,6 +486,8 @@ class ELM:
 
             # Verify STN response
             res_version = elm_rsp.replace("\n", "").replace(">", "").replace("STI", "")
+            stn_detected = "STN" in res_version
+            elm_detected = "ELM" in res or "OBDII" in res
             if "STN" in res_version:
                 print(_("STN connection established"))
                 print(_("Version: ") + res_version)
@@ -502,7 +515,7 @@ class ELM:
                 if '?' not in elm_rsp:
                     options.opt_stn_basic = True
 
-            if 'ELM' in res or 'OBDII' in res:
+            if elm_detected or stn_detected:
                 options.last_error = ""
                 options.elm_failed = False
                 self.connectionStatus = True
@@ -520,6 +533,7 @@ class ELM:
             else:
                 options.elm_failed = True
                 options.last_error = _("No ELM interface on port") + " %s" % portName
+                close_current_port()
 
         try:
             maxspeed = int(maxspeed)
