@@ -41,7 +41,7 @@ class DataItem:
             js['firstbyte'] = self.firstbyte
         if self.bitoffset != 0:
             js['bitoffset'] = self.bitoffset
-        if not self.ref:
+        if self.ref:
             js['ref'] = self.ref
         if self.endian != '':
             js['endian'] = self.endian
