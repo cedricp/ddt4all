@@ -102,13 +102,11 @@ def test_ecu_file_loads_xml_and_exercises_main_paths(dummy_ecu_file):
             "sendbyte_dataitems": {
                 "VIN": {
                     "firstbyte": 1,
-                    "ref": False,
                 }
             },
             "receivebyte_dataitems": {
                 "VIN": {
                     "firstbyte": 1,
-                    "ref": False,
                 }
             },
         }
@@ -211,13 +209,11 @@ def test_ecu_file_dump_json(dummy_ecu_file):
             "sendbyte_dataitems": {
                 "VIN": {
                     "firstbyte": 1,
-                    "ref": False,
                 }
             },
             "receivebyte_dataitems": {
                 "VIN": {
                     "firstbyte": 1,
-                    "ref": False,
                 }
             },
         }
