@@ -750,6 +750,21 @@ class MainWidget(widgets.QMainWindow):
         if self.paramview:
             self.paramview.setCanTimeout()
 
+    def restore_last_ecu(self):
+        """Restore last opened ECU if available in the current list"""
+        last_ecu = options.get_last_opened_ecu()
+        if last_ecu:
+            # Check if the ECU is in the current treeview_ecu list
+            for i in range(self.treeview_ecu.count()):
+                item_text = self.treeview_ecu.item(i).text()
+                if item_text == last_ecu or last_ecu in item_text:
+                    # Found the ECU, select it
+                    self.treeview_ecu.setCurrentRow(i)
+                    # Trigger the changeECU function
+                    index = self.treeview_ecu.model().index(i, 0)
+                    self.changeECU(index)
+                    break
+
     def scan_project(self, project):
         if project == "ALL":
             self.scan()
@@ -779,6 +794,9 @@ class MainWidget(widgets.QMainWindow):
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
+        
+        # Try to restore last opened ECU after scan is complete
+        self.restore_last_ecu()
 
     def scan(self):
         msgBox = widgets.QMessageBox()
@@ -854,6 +872,9 @@ class MainWidget(widgets.QMainWindow):
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
+        
+        # Try to restore last opened ECU after scan is complete
+        self.restore_last_ecu()
 
     def setConnected(self, on):
         if options.simulation_mode:
@@ -948,6 +969,9 @@ class MainWidget(widgets.QMainWindow):
         vehicle_file = "vehicles/" + name + ".ecu"
         jsonfile = open(vehicle_file, "r")
         eculist = json.loads(jsonfile.read())
+        
+        # Save last opened ECU
+        options.set_last_opened_ecu(name)
         jsonfile.close()
 
         self.treeview_ecu.clear()
@@ -959,6 +983,9 @@ class MainWidget(widgets.QMainWindow):
             item = widgets.QListWidgetItem(ecu[0])
             self.ecunamemap[ecu[0]] = ecu[1]
             self.treeview_ecu.addItem(item)
+        
+        # Try to restore last opened ECU after loading ECU file
+        self.restore_last_ecu()
 
     def readDtc(self):
         if self.paramview:
@@ -1081,6 +1108,9 @@ class MainWidget(widgets.QMainWindow):
             if ecu_file == self.paramview.ddtfile:
                 return
         self.set_param_file(ecu_file, ecu_addr, ecu_name, isxml)
+        
+        # Save last opened ECU
+        options.set_last_opened_ecu(ecu_name)
 
     def set_param_file(self, ecu_file, ecu_addr, ecu_name, isxml):
         self.diagaction.setEnabled(True)

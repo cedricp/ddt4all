@@ -78,7 +78,9 @@ configuration = {
     "doip_vehicle_announcement": True,
     "doip_auto_reconnect": False,
     "doip_preset": "Custom",
-    "doip_scan": False
+    "doip_scan": False,
+    "last_selected_vehicle": None,
+    "last_opened_ecu": None
 }
 
 lang_list = {
@@ -122,6 +124,8 @@ def create_new_config():
     configuration["enable_device_validation"] = True
     configuration["carlist_sort_mode"] = "code"
     configuration["doip_scan"] = False
+    configuration["last_selected_vehicle"] = None
+    configuration["last_opened_ecu"] = None
     save_config()
 
 
@@ -162,6 +166,10 @@ def load_configuration():
         configuration["doip_auto_reconnect"] = doip_auto_reconnect
         configuration["doip_preset"] = doip_preset
         configuration["doip_scan"] = doip_scan
+        
+        # Load last selected vehicle and ECU
+        configuration["last_selected_vehicle"] = config.get("last_selected_vehicle", None)
+        configuration["last_opened_ecu"] = config.get("last_opened_ecu", None)
         
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
@@ -263,6 +271,28 @@ def get_carlist_sort_mode():
 def set_carlist_sort_mode(mode):
     """Set carlist sort mode and save configuration"""
     configuration["carlist_sort_mode"] = mode
+    save_config()
+
+
+def get_last_selected_vehicle():
+    """Get last selected vehicle from configuration"""
+    return configuration.get("last_selected_vehicle", None)
+
+
+def set_last_selected_vehicle(vehicle):
+    """Set last selected vehicle and save configuration"""
+    configuration["last_selected_vehicle"] = vehicle
+    save_config()
+
+
+def get_last_opened_ecu():
+    """Get last opened ECU from configuration"""
+    return configuration.get("last_opened_ecu", None)
+
+
+def set_last_opened_ecu(ecu):
+    """Set last opened ECU and save configuration"""
+    configuration["last_opened_ecu"] = ecu
     save_config()
 
 

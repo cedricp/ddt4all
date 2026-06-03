@@ -51,6 +51,9 @@ class EcuList(widgets.QWidget):
         self.ecuscan = ecuscan  # Store reference to ecuscan
         self.list.doubleClicked.connect(self.ecuSel)
         self.init()
+        
+        # Schedule auto-filter and auto-select of last ECU after initialization is complete
+        core.QTimer.singleShot(100, self.auto_restore_state)
 
     def populateVehicleCombo(self):
         """Populate vehicle combo box based on current sorting mode"""
@@ -99,6 +102,18 @@ class EcuList(widgets.QWidget):
         
         # Enable combo box only if we have vehicles
         self.vehicle_combo.setEnabled(True)
+        
+        # Restore last selected vehicle if available
+        last_vehicle = options.get_last_selected_vehicle()
+        if last_vehicle:
+            index = self.vehicle_combo.findData(last_vehicle)
+            if index >= 0:
+                self.vehicle_combo.setCurrentIndex(index)
+            else:
+                # Try to find by text if data not found
+                index = self.vehicle_combo.findText(last_vehicle)
+                if index >= 0:
+                    self.vehicle_combo.setCurrentIndex(index)
 
     def refreshVehicleList(self):
         """Refresh the vehicle combo box when sorting mode changes"""
@@ -246,6 +261,9 @@ class EcuList(widgets.QWidget):
         if project_key == _("No vehicles available"):
             return
         
+        # Save last selected vehicle
+        options.set_last_selected_vehicle(project_key)
+        
         project = str(self.vehicles["projects"][project_key]["code"])
         ecudb.addressing = self.vehicles["projects"][project_key]["addressing"]
         elm.snat = self.vehicles["projects"][project_key]["snat"]
@@ -287,3 +305,41 @@ class EcuList(widgets.QWidget):
             if name not in options.main_window.ecunamemap:
                 options.main_window.ecunamemap[name] = selected
                 self.treeview_ecu.addItem(name)
+                # Try to restore last opened ECU after adding ECU to list
+                if options.main_window:
+                    options.main_window.restore_last_ecu()
+    
+    def auto_restore_state(self):
+        """Auto-filter and auto-select the last opened ECU after initialization"""
+        # Filter the ECU list for the selected vehicle
+        last_vehicle = options.get_last_selected_vehicle()
+        if last_vehicle:
+            try:
+                self.filterProject()
+            except Exception as e:
+                print(f"Error filtering project: {e}")
+        
+        # Auto-select the last opened ECU
+        last_ecu = options.get_last_opened_ecu()
+        if not last_ecu:
+            return
+        
+        # Extract ECU name from formatted name like "[ Audio ] ULC_gen4_v1.4"
+        ecu_name = last_ecu
+        if " ] " in last_ecu:
+            ecu_name = last_ecu.split(" ] ", 1)[1]
+        
+        # Search for the ECU in the ecu list tree
+        root = self.list.invisibleRootItem()
+        root_items = [root.child(i) for i in range(root.childCount())]
+        
+        for root_item in root_items:
+            items = [root_item.child(i) for i in range(root_item.childCount())]
+            for item in items:
+                item_text = item.text(0)
+                # Check if the ECU name matches
+                if item_text == ecu_name or item_text == last_ecu:
+                    # Found the ECU, select it
+                    index = self.list.indexFromItem(item)
+                    self.ecuSel(index)
+                    return
