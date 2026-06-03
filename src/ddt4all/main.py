@@ -81,7 +81,7 @@ def main(argv=None) -> int:
                 f.write(f'#define __copyright__ "{version.__copyright__}"\n')
                 f.write(f'#define __version__ "{version.__version__}"\n')
                 f.write(f'#define __email__ "{version.__email__}"\n')
-                f.write(f'#define __status__ "{version.__status__}"')
+                f.write(f'#define __status__ "{version.__codename__}"')
         except (OSError, IOError) as e:
             print(_("Warning: Could not write version.h: %s") % e)
 

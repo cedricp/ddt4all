@@ -74,7 +74,7 @@ class MainWidget(widgets.QMainWindow):
         self.plugins = {}
         self.carlist_sort_mode = "code"  # Default sorting by project code
         options.main_window = self  # Set reference for language switching
-        self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
+        self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__codename__)
         self.ecu_scan = EcuScanner()
         self.ecu_scan.qapp = app
         options.socket_timeout = False

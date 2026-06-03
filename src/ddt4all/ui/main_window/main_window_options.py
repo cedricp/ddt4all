@@ -388,7 +388,7 @@ class MainWindowOptions(widgets.QDialog):
         self.usb()
         elm.detect_usb_device()  # must run on main thread before any PortScanWorker starts
         self.rescan_ports()
-        self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__status__)
+        self.setWindowTitle(version.__appname__ + " - Version: " + version.__version__ + " - Build status: " + version.__codename__)
 
     def save_config(self):
         # Save configuration (language is already saved by real-time switching)
