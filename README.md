@@ -7,7 +7,7 @@
 
 DDT4All is a comprehensive tool to create your own ECU parameters screens and connect to a CAN network with various OBD-II interfaces including ELM327, Vlinker FS, VGate, ObdLink SX, and ELS27 adapters.
 
-**Current Version**: v3.1.0 (Obsidian Lynx) - Production-ready with enhanced device support, STN/STPX protocols, and comprehensive translation system.
+**Current Version**: v3.1.1 (Aureate Leviathan) - Production-ready with enhanced device support, STN/STPX protocols, and comprehensive translation system.
 
 ## 🚀 **Recent Major Improvements**
 
@@ -19,7 +19,7 @@ DDT4All is a comprehensive tool to create your own ECU parameters screens and co
 - **Cross-Platform**: Optimized for Windows, Linux, and macOS with platform-specific configurations
 - **USB CAN Support**: Added support for specialized USB CAN adapters with fallback handling
 
-### 🌟 **Enhanced Device Manager with STN/STPX Support (v3.1.0)**
+### 🌟 **Enhanced Device Manager with STN/STPX Support (v3.1.1)**
 - **Intelligent Device Detection**: Automatic adapter identification via `ATI` command
 - **Enhanced DeviceManager**: Centralized configuration with STN/STPX support
 - **VGate STN Protocol**: Full STN implementation with automatic pin swapping

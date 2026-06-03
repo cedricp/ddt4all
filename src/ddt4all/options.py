@@ -127,7 +127,6 @@ def create_new_config():
 
 def load_configuration():
     try:
-
         f = open(get_config_dir() / "config.json", "r", encoding="UTF-8")
         config = json.loads(f.read())
         # load config as multiplatform (mac fix macOs load conf)
@@ -166,7 +165,7 @@ def load_configuration():
         
         os.environ['LANG'] = str(configuration["lang"])
         f.close()
-    except Exception as e:
+    except Exception:
         print("Configuration file not found. Creating new configuration...")
         create_new_config()
 
