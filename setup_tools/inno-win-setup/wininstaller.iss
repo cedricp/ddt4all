@@ -1,7 +1,7 @@
 ﻿#include "version.h"
 #define MyAppName       Str(__appname__)
 #define MyAppVersion    Str(__version__)
-#define MyAppStatus     StringChange(Str(__status__), " ", "-") + "-x64"    
+#define MyAppCodeName   StringChange(Str(__codename__), " ", "-") + "-x64"
 #define MyAppDir        MyAppName
 #define MyAppAuthor     Str(__author__)
 #define MyAppCompany    Str(__author__)
@@ -15,7 +15,7 @@
 [Setup]
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-AppVerName={#MyAppName} {#MyAppVersion} {#MyAppStatus}
+AppVerName={#MyAppName} {#MyAppVersion} {#MyAppCodeName}
 AppPublisherURL={#MyAppSupportURL}
 AppSupportURL={#MyAppSupportURL}
 AppUpdatesURL={#MyAppSupportURL}
@@ -37,7 +37,7 @@ InternalCompressLevel=ultra
 DefaultDirName={commonpf}\{#MyAppDir}
 DefaultGroupName={#MyAppName}
 SetupIconFile=..\..\resources\icons\obd.ico
-OutputBaseFilename={#MyAppName}-Windows-Installer-v{#MyAppVersion}_{#MyAppStatus}
+OutputBaseFilename={#MyAppName}-Windows-Installer-v{#MyAppVersion}_{#MyAppCodeName}
 UsePreviousPrivileges=True
 VersionInfoCompany={#MyAppCompany}
 VersionInfoTextVersion={#MyAppVersion}
