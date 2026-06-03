@@ -332,8 +332,6 @@ class MainWidget(widgets.QMainWindow):
 
         diagmenu = menu.addMenu(_("File"))
         xmlopenaction = diagmenu.addAction(_("Open XML"))
-        identecu = diagmenu.addAction(_("Identify ECU"))
-        newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
         diagmenu.addSeparator()
         saverecordaction = diagmenu.addAction(_("Save last record"))
@@ -342,12 +340,7 @@ class MainWidget(widgets.QMainWindow):
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
         saverecordaction.triggered.connect(self.saveRecord)
-        newecuction.triggered.connect(self.newEcu)
         xmlopenaction.triggered.connect(self.openxml)
-        identecu.triggered.connect(self.identEcu)
-        diagmenu.addSeparator()
-        zipdbaction = diagmenu.addAction(_("Zip database"))
-        zipdbaction.triggered.connect(self.zipdb)
         diagmenu.addSeparator()
         closeAllThis = diagmenu.addAction(_("Exit"))
         closeAllThis.triggered.connect(self.exit_all)
@@ -356,6 +349,21 @@ class MainWidget(widgets.QMainWindow):
         for ecuf in ecu_files:
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
+
+        # Tools menu
+        tools_menu = menu.addMenu(_("Tools"))
+        identecu = tools_menu.addAction(_("Identify ECU"))
+        identecu.triggered.connect(self.identEcu)
+        newecuction = tools_menu.addAction(_("Create New ECU"))
+        newecuction.triggered.connect(self.newEcu)
+        tools_menu.addSeparator()
+        # Only show Zip database if ecu.zip doesn't exist (XML database)
+        if not os.path.exists("ecu.zip"):
+            zipdbaction = tools_menu.addAction(_("Zip database"))
+            zipdbaction.triggered.connect(self.zipdb)
+        tools_menu.addSeparator()
+        clearhistoryaction = tools_menu.addAction(_("Clear history"))
+        clearhistoryaction.triggered.connect(self.clearHistory)
 
         self.screenmenu = menu.addMenu(_("Screens"))
 
@@ -495,6 +503,15 @@ class MainWidget(widgets.QMainWindow):
         self.carlist_order_by_code.setChecked(False)
         # Refresh the vehicle combo box
         self.eculistwidget.refreshVehicleList()
+
+    def clearHistory(self):
+        """Clear last selected vehicle and last opened ECU history"""
+        options.clear_history()
+        msgbox = widgets.QMessageBox()
+        msgbox.setWindowTitle(_("History cleared"))
+        msgbox.setText(_("Last selected vehicle and ECU history has been cleared."))
+        msgbox.setIcon(widgets.QMessageBox.Information)
+        msgbox.exec_()
 
     def wiki_about(self):
         url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)

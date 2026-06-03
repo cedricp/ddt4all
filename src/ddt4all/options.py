@@ -296,6 +296,13 @@ def set_last_opened_ecu(ecu):
     save_config()
 
 
+def clear_history():
+    """Clear last selected vehicle and last opened ECU from configuration"""
+    configuration["last_selected_vehicle"] = None
+    configuration["last_opened_ecu"] = None
+    save_config()
+
+
 def translator(domain, lang=None):
     load_configuration()
     # Use provided language or configuration language
