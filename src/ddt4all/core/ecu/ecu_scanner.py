@@ -467,7 +467,7 @@ class EcuScanner:
     def scan_doip(self, progress=None, label=None, vehiclefilter=None):
         """Scan for DoIP ECUs using ISO 13400 protocol"""
         if not options.configuration.get('doip_scan', False):
-            return 
+            return
         if not options.simulation_mode:
             # Initialize DoIP connection with target IP from options
             try:
