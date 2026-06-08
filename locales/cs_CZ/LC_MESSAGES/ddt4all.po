@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -1428,12 +1428,6 @@ msgstr "Soubor"
 msgid "Open XML"
 msgstr "Otevřít XML"
 
-msgid "Identify ECU"
-msgstr "Identifikovat ECU"
-
-msgid "Create New ECU"
-msgstr "Vytvořit novou ECU"
-
 msgid "Save current ECU"
 msgstr "Uložit aktuální ECU"
 
@@ -1443,11 +1437,26 @@ msgstr "Uložit poslední záznam"
 msgid "Save ECU list"
 msgstr "Uložit seznam ECU"
 
+msgid "Exit"
+msgstr "Konec"
+
+msgid "Tools"
+msgstr "Nástroje"
+
+msgid "Identify ECU"
+msgstr "Identifikovat ECU"
+
+msgid "Create New ECU"
+msgstr "Vytvořit novou ECU"
+
 msgid "Zip database"
 msgstr "Zip databáze"
 
-msgid "Exit"
-msgstr "Konec"
+msgid "Clear history"
+msgstr "Vymazat historii"
+
+msgid "Reset Configuration"
+msgstr "Resetovat konfiguraci"
 
 msgid "View"
 msgstr "Zobrazit"
@@ -1508,6 +1517,18 @@ msgstr " verze:"
 
 msgid "Created by:"
 msgstr "Vytvořil:"
+
+msgid "History cleared"
+msgstr "Historie vymazána"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "Historie posledního vybraného vozidla a ECU byla vymazána."
+
+msgid "Configuration cleared"
+msgstr "Konfigurace vymazána"
+
+msgid "Configuration has been cleared."
+msgstr "Konfigurace byla vymazána."
 
 msgid "Options"
 msgstr "Možnosti"
@@ -1660,6 +1681,9 @@ msgstr "Tmavý styl"
 msgid "WiFi Socket-TimeOut"
 msgstr "Časový limit WiFi socketu"
 
+msgid "Enable DoIP Scan"
+msgstr "Povolit skenování DoIP"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfigurace DoIP (Diagnostika přes IP) (Experimentální)"
 
@@ -1698,9 +1722,6 @@ msgstr "Povolit objevování oznámení vozidla"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatické znovupřipojení při ztrátě spojení"
-
-msgid "Enable DoIP Scan"
-msgstr "Povolit skenování DoIP"
 
 msgid "Change UART speed"
 msgstr "Změňte rychlost UART"

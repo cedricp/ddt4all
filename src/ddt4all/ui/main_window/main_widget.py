@@ -364,6 +364,9 @@ class MainWidget(widgets.QMainWindow):
         tools_menu.addSeparator()
         clearhistoryaction = tools_menu.addAction(_("Clear history"))
         clearhistoryaction.triggered.connect(self.clearHistory)
+        tools_menu.addSeparator()
+        resetconfigaction = tools_menu.addAction(_("Reset Configuration"))
+        resetconfigaction.triggered.connect(self.resetConfig)
 
         self.screenmenu = menu.addMenu(_("Screens"))
 
@@ -508,8 +511,21 @@ class MainWidget(widgets.QMainWindow):
         """Clear last selected vehicle and last opened ECU history"""
         options.clear_history()
         msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon(ICON_OBD)
+        msgbox.setWindowIcon(appIcon)
         msgbox.setWindowTitle(_("History cleared"))
         msgbox.setText(_("Last selected vehicle and ECU history has been cleared."))
+        msgbox.setIcon(widgets.QMessageBox.Information)
+        msgbox.exec_()
+
+    def resetConfig(self):
+        """Reset config"""
+        options.create_new_config()
+        msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon(ICON_OBD)
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle(_("Configuration cleared"))
+        msgbox.setText(_("Configuration has been cleared."))
         msgbox.setIcon(widgets.QMessageBox.Information)
         msgbox.exec_()
 

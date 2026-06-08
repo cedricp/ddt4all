@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -1426,12 +1426,6 @@ msgstr "Fisier"
 msgid "Open XML"
 msgstr "Deschideti XML-ul"
 
-msgid "Identify ECU"
-msgstr "Identificati ECU"
-
-msgid "Create New ECU"
-msgstr "Creati un nou ECU"
-
 msgid "Save current ECU"
 msgstr "Salvati ECU curent"
 
@@ -1441,11 +1435,26 @@ msgstr "Salvati ultimul inregistrare"
 msgid "Save ECU list"
 msgstr "Salvati lista ECU"
 
+msgid "Exit"
+msgstr "Iesire"
+
+msgid "Tools"
+msgstr "Instrumente"
+
+msgid "Identify ECU"
+msgstr "Identificati ECU"
+
+msgid "Create New ECU"
+msgstr "Creati un nou ECU"
+
 msgid "Zip database"
 msgstr "Baza de date zip"
 
-msgid "Exit"
-msgstr "Iesire"
+msgid "Clear history"
+msgstr "Șterge istoricul"
+
+msgid "Reset Configuration"
+msgstr "Resetează configurația"
 
 msgid "View"
 msgstr "Vizualizare"
@@ -1506,6 +1515,18 @@ msgstr " versiune:"
 
 msgid "Created by:"
 msgstr "Creat de:"
+
+msgid "History cleared"
+msgstr "Istoricul a fost șters"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "Istoricul ultimului vehicul și ECU selectate a fost șters."
+
+msgid "Configuration cleared"
+msgstr "Configurație ștearsă"
+
+msgid "Configuration has been cleared."
+msgstr "Configurația a fost ștearsă."
 
 msgid "Options"
 msgstr "Opțiuni"
@@ -1658,6 +1679,9 @@ msgstr "Stil intunecat"
 msgid "WiFi Socket-TimeOut"
 msgstr "Timeout socket WiFi"
 
+msgid "Enable DoIP Scan"
+msgstr "Activați scanarea DoIP"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Configurare DoIP (Diagnostică prin IP) (Experimental)"
 
@@ -1696,9 +1720,6 @@ msgstr "Activare Descoperire Anunt Vehicul"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Reconectare automata la pierderea conexiunii"
-
-msgid "Enable DoIP Scan"
-msgstr "Activați scanarea DoIP"
 
 msgid "Change UART speed"
 msgstr "Modificare viteza UART"

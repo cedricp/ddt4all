@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -1439,12 +1439,6 @@ msgstr "Fichier"
 msgid "Open XML"
 msgstr "Ouvrir XML"
 
-msgid "Identify ECU"
-msgstr "Identifier l'ECU"
-
-msgid "Create New ECU"
-msgstr "Créer un nouvel ECU"
-
 msgid "Save current ECU"
 msgstr "Enregistrer l'ECU actuel"
 
@@ -1454,11 +1448,26 @@ msgstr "Enregistrer le dernier enregistrement"
 msgid "Save ECU list"
 msgstr "Enregistrer la liste des ECUs"
 
+msgid "Exit"
+msgstr "Sortie"
+
+msgid "Tools"
+msgstr "Outils"
+
+msgid "Identify ECU"
+msgstr "Identifier l'ECU"
+
+msgid "Create New ECU"
+msgstr "Créer un nouvel ECU"
+
 msgid "Zip database"
 msgstr "Base de données Zip"
 
-msgid "Exit"
-msgstr "Sortie"
+msgid "Clear history"
+msgstr "Effacer l'historique"
+
+msgid "Reset Configuration"
+msgstr "Réinitialiser la configuration"
 
 msgid "View"
 msgstr "Voir"
@@ -1519,6 +1528,18 @@ msgstr " version:"
 
 msgid "Created by:"
 msgstr "Créé par :"
+
+msgid "History cleared"
+msgstr "Historique effacé"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "L'historique du dernier véhicule et ECU sélectionnés a été effacé."
+
+msgid "Configuration cleared"
+msgstr "Configuration effacée"
+
+msgid "Configuration has been cleared."
+msgstr "La configuration a été effacée."
 
 msgid "Options"
 msgstr "Options"
@@ -1672,6 +1693,9 @@ msgstr "Style sombre"
 msgid "WiFi Socket-TimeOut"
 msgstr "Timeout socket WiFi"
 
+msgid "Enable DoIP Scan"
+msgstr "Activer le scan DoIP"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Configuration DoIP (Diagnostic sur IP) (Expérimental)"
 
@@ -1710,9 +1734,6 @@ msgstr "Activer la découverte des annonces de véhicules"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Reconnexion automatique en cas de perte de connexion"
-
-msgid "Enable DoIP Scan"
-msgstr "Activer le scan DoIP"
 
 msgid "Change UART speed"
 msgstr "Changer la vitesse de l'UART"

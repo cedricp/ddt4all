@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1426,12 +1426,6 @@ msgstr "Bestand"
 msgid "Open XML"
 msgstr "XML Openen"
 
-msgid "Identify ECU"
-msgstr "ECU identificeren"
-
-msgid "Create New ECU"
-msgstr "Maak nieuwe ECU"
-
 msgid "Save current ECU"
 msgstr "Huidige ECU opslaan"
 
@@ -1441,11 +1435,26 @@ msgstr "Laatste record opslaan"
 msgid "Save ECU list"
 msgstr "ECU lijst opslaan"
 
+msgid "Exit"
+msgstr "Afsluiten"
+
+msgid "Tools"
+msgstr "Hulpmiddelen"
+
+msgid "Identify ECU"
+msgstr "ECU identificeren"
+
+msgid "Create New ECU"
+msgstr "Maak nieuwe ECU"
+
 msgid "Zip database"
 msgstr "Database zippen"
 
-msgid "Exit"
-msgstr "Afsluiten"
+msgid "Clear history"
+msgstr "Geschiedenis wissen"
+
+msgid "Reset Configuration"
+msgstr "Configuratie opnieuw instellen"
 
 msgid "View"
 msgstr "Weergave"
@@ -1506,6 +1515,19 @@ msgstr " versie:"
 
 msgid "Created by:"
 msgstr "Gemaakt door:"
+
+msgid "History cleared"
+msgstr "Geschiedenis gewist"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr ""
+"De geschiedenis van het laatst geselecteerde voertuig en de ECU is gewist."
+
+msgid "Configuration cleared"
+msgstr "Configuratie gewist"
+
+msgid "Configuration has been cleared."
+msgstr "De configuratie is gewist."
 
 msgid "Options"
 msgstr "Opties"
@@ -1658,6 +1680,9 @@ msgstr "Donkere stijl"
 msgid "WiFi Socket-TimeOut"
 msgstr "WiFi socket time-out"
 
+msgid "Enable DoIP Scan"
+msgstr "DoIP-scan inschakelen"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Diagnostiek via IP) Configuratie (Experimenteel)"
 
@@ -1696,9 +1721,6 @@ msgstr "Voertuig aankondiging ontdekking inschakelen"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatisch opnieuw verbinden bij verbindingsverlies"
-
-msgid "Enable DoIP Scan"
-msgstr "DoIP-scan inschakelen"
 
 msgid "Change UART speed"
 msgstr "UART snelheid wijzigen"
