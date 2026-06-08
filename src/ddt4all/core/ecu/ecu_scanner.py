@@ -433,7 +433,7 @@ class EcuScanner:
             version = can_response[54:59].replace(' ', '')
             self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
 
-        elif protocol.upper() == "DOIP":
+        elif protocol.upper() == "DOIP" and options.configuration.get('doip_scan', False):
             # Handle DoIP protocol responses (different format)
             if len(can_response) > 20:
                 # DoIP responses have different structure
@@ -466,6 +466,8 @@ class EcuScanner:
 
     def scan_doip(self, progress=None, label=None, vehiclefilter=None):
         """Scan for DoIP ECUs using ISO 13400 protocol"""
+        if not options.configuration.get('doip_scan', False):
+            return 
         if not options.simulation_mode:
             # Initialize DoIP connection with target IP from options
             try:
