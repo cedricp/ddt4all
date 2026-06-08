@@ -1,4 +1,5 @@
-﻿#include "version.h"
+﻿;This requires Inno Setup 6.2.2.
+#include "version.h"
 #define MyAppName       Str(__appname__)
 #define MyAppVersion    Str(__version__)
 #define MyAppCodeName   StringChange(Str(__codename__), " ", "-") + "-x64"

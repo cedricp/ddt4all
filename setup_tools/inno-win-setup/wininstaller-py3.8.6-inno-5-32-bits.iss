@@ -1,4 +1,4 @@
-﻿;--------------------- This requires Inno Setup 5 for compatibilities, an python 3.8.6 - Windows 7 32/64 bits for autonomous modes.
+﻿;--------------------- This requires Inno Setup 5.6.1(u) for compatibilities, an python 3.8.6 - Windows 7 32/64 bits for autonomous modes.
 #include "version.h"
 #define MyAppName       Str(__appname__) 
 #define MyAppVersion    Str(__version__)
