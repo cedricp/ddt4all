@@ -359,10 +359,10 @@ class MainWidget(widgets.QMainWindow):
         if not os.path.exists("ecu.zip"):
             zipdbaction = tools_menu.addAction(_("Zip database"))
             zipdbaction.triggered.connect(self.zipdb)
-        clearhistoryaction = tools_menu.addAction(_("Clear history"))
+        clearhistoryaction = tools_menu.addAction(_("Clear DDT4ALL History"))
         clearhistoryaction.triggered.connect(self.clearHistory)
         tools_menu.addSeparator()
-        resetconfigaction = tools_menu.addAction(_("Reset Configuration"))
+        resetconfigaction = tools_menu.addAction(_("Reset DDT4ALL Settings"))
         resetconfigaction.triggered.connect(self.resetConfig)
 
         self.screenmenu = menu.addMenu(_("Screens"))
@@ -526,8 +526,8 @@ class MainWidget(widgets.QMainWindow):
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon(ICON_OBD)
         msgbox.setWindowIcon(appIcon)
-        msgbox.setWindowTitle(_("Configuration cleared"))
-        msgbox.setText(_("Configuration has been cleared."))
+        msgbox.setWindowTitle(_("Configuration Reset"))
+        msgbox.setText(_("The configuration has been reset."))
         msgbox.setIcon(widgets.QMessageBox.Information)
         msgbox.exec_()
 
