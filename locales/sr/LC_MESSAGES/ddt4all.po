@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: 2026-05-10 06:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -1452,11 +1452,11 @@ msgstr "Kreiraj novi ECU"
 msgid "Zip database"
 msgstr "Zip bazu podataka"
 
-msgid "Clear history"
-msgstr "Obriši istoriju"
+msgid "Clear DDT4ALL History"
+msgstr "Obriši istoriju DDT4ALL"
 
-msgid "Reset Configuration"
-msgstr "Resetuj konfiguraciju"
+msgid "Reset DDT4ALL Settings"
+msgstr "Resetuj podešavanja DDT4ALL"
 
 msgid "View"
 msgstr "Приказ"
@@ -1478,6 +1478,9 @@ msgstr "Tamna tema"
 
 msgid "Light Theme"
 msgstr "Svetla tema"
+
+msgid "Panels"
+msgstr ""
 
 msgid "New Category"
 msgstr "Nova kategorija"
@@ -1524,10 +1527,10 @@ msgstr "Istorija obrisana"
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "Istorija poslednjeg izabranog vozila i ECU je obrisana."
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr "Konfiguracija obrisana"
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr "Konfiguracija je obrisana."
 
 msgid "Options"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1358,10 +1358,10 @@ msgstr ""
 msgid "Zip database"
 msgstr ""
 
-msgid "Clear history"
+msgid "Clear DDT4ALL History"
 msgstr ""
 
-msgid "Reset Configuration"
+msgid "Reset DDT4ALL Settings"
 msgstr ""
 
 msgid "View"
@@ -1383,6 +1383,9 @@ msgid "Dark Theme"
 msgstr ""
 
 msgid "Light Theme"
+msgstr ""
+
+msgid "Panels"
 msgstr ""
 
 msgid "New Category"
@@ -1430,10 +1433,10 @@ msgstr ""
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr ""
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr ""
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr ""
 
 msgid "Options"

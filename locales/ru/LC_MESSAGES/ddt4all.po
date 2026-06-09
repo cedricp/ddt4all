@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1457,11 +1457,11 @@ msgstr "Создать новый ЭБУ"
 msgid "Zip database"
 msgstr "Сжатие базы данных"
 
-msgid "Clear history"
-msgstr "Очистить историю"
+msgid "Clear DDT4ALL History"
+msgstr "Очистить историю DDT4ALL"
 
-msgid "Reset Configuration"
-msgstr "Сбросить конфигурацию"
+msgid "Reset DDT4ALL Settings"
+msgstr "Сбросить настройки DDT4ALL"
 
 msgid "View"
 msgstr "Вид"
@@ -1483,6 +1483,9 @@ msgstr "Темная тема"
 
 msgid "Light Theme"
 msgstr "Светлая тема"
+
+msgid "Panels"
+msgstr ""
 
 msgid "New Category"
 msgstr "Новая категория"
@@ -1529,10 +1532,10 @@ msgstr "История очищена"
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "История последнего выбранного автомобиля и ECU была очищена."
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr "Конфигурация очищена"
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr "Конфигурация была очищена."
 
 msgid "Options"

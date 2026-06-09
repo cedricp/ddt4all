@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: 2026-05-28 19:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1452,11 +1452,11 @@ msgstr "Új ECU létrehozása"
 msgid "Zip database"
 msgstr "Adatbázis tömörítése"
 
-msgid "Clear history"
-msgstr "Előzmények törlése"
+msgid "Clear DDT4ALL History"
+msgstr "DDT4ALL előzményeinek törlése"
 
-msgid "Reset Configuration"
-msgstr "Konfiguráció visszaállítása"
+msgid "Reset DDT4ALL Settings"
+msgstr "DDT4ALL beállításainak visszaállítása"
 
 msgid "View"
 msgstr "Nézet"
@@ -1478,6 +1478,9 @@ msgstr "Sötét téma"
 
 msgid "Light Theme"
 msgstr "Világos téma"
+
+msgid "Panels"
+msgstr ""
 
 msgid "New Category"
 msgstr "Új kategória"
@@ -1524,10 +1527,10 @@ msgstr "Előzmények törölve"
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "Az utoljára kiválasztott jármű és ECU előzményei törölve lettek."
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr "Konfiguráció törölve"
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr "A konfiguráció törölve lett."
 
 msgid "Options"

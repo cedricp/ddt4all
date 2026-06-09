@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -1451,11 +1451,11 @@ msgstr "Yeni ECU Oluştur"
 msgid "Zip database"
 msgstr "Veritabanını sıkıştır"
 
-msgid "Clear history"
-msgstr "Geçmişi temizle"
+msgid "Clear DDT4ALL History"
+msgstr "DDT4ALL Geçmişini Temizle"
 
-msgid "Reset Configuration"
-msgstr "Yapılandırmayı sıfırla"
+msgid "Reset DDT4ALL Settings"
+msgstr "DDT4ALL Ayarlarını Sıfırla"
 
 msgid "View"
 msgstr "Görünüm"
@@ -1477,6 +1477,9 @@ msgstr "Karanlık Tema"
 
 msgid "Light Theme"
 msgstr "Açık Tema"
+
+msgid "Panels"
+msgstr ""
 
 msgid "New Category"
 msgstr "Yeni kategori"
@@ -1523,10 +1526,10 @@ msgstr "Geçmiş temizlendi"
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "En son seçilen araç ve ECU geçmişi temizlendi."
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr "Yapılandırma temizlendi"
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr "Yapılandırma temizlendi."
 
 msgid "Options"

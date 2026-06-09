@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -1450,11 +1450,11 @@ msgstr "Creati un nou ECU"
 msgid "Zip database"
 msgstr "Baza de date zip"
 
-msgid "Clear history"
-msgstr "Șterge istoricul"
+msgid "Clear DDT4ALL History"
+msgstr "Șterge istoricul DDT4ALL"
 
-msgid "Reset Configuration"
-msgstr "Resetează configurația"
+msgid "Reset DDT4ALL Settings"
+msgstr "Resetează setările DDT4ALL"
 
 msgid "View"
 msgstr "Vizualizare"
@@ -1476,6 +1476,9 @@ msgstr "Temă întunecată"
 
 msgid "Light Theme"
 msgstr "Tema deschisa"
+
+msgid "Panels"
+msgstr ""
 
 msgid "New Category"
 msgstr "Categorie noua"
@@ -1522,10 +1525,10 @@ msgstr "Istoricul a fost șters"
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "Istoricul ultimului vehicul și ECU selectate a fost șters."
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr "Configurație ștearsă"
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr "Configurația a fost ștearsă."
 
 msgid "Options"

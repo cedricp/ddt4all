@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:27+0200\n"
+"POT-Creation-Date: 2026-06-09 06:26+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Portuguese\n"
@@ -1458,11 +1458,11 @@ msgstr "Criar nova ECU"
 msgid "Zip database"
 msgstr "Banco de dados zip"
 
-msgid "Clear history"
-msgstr "Limpar histórico"
+msgid "Clear DDT4ALL History"
+msgstr "Limpar o histórico do DDT4ALL"
 
-msgid "Reset Configuration"
-msgstr "Redefinir configuração"
+msgid "Reset DDT4ALL Settings"
+msgstr "Repor definições do DDT4ALL"
 
 msgid "View"
 msgstr "Visualizar"
@@ -1484,6 +1484,9 @@ msgstr "Tema escuro"
 
 msgid "Light Theme"
 msgstr "Tema claro"
+
+msgid "Panels"
+msgstr ""
 
 msgid "New Category"
 msgstr "Nova categoria"
@@ -1530,10 +1533,10 @@ msgstr "Histórico limpo"
 msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "O histórico do veículo e ECU selecionados por último foi limpo."
 
-msgid "Configuration cleared"
+msgid "Configuration Reset"
 msgstr "Configuração limpa"
 
-msgid "Configuration has been cleared."
+msgid "The configuration has been reset."
 msgstr "A configuração foi limpa."
 
 msgid "Options"

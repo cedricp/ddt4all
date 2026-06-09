@@ -39,8 +39,8 @@ class EcuParamEditor(widgets.QFrame):
         self.toolecuidbox = HexSpinBox()
         self.ecutoolidbox = HexSpinBox()
         self.codingcombo = widgets.QComboBox()
-        self.codingcombo.addItem(_("Big Endian"))
-        self.codingcombo.addItem(_("Little Endian"))
+        self.codingcombo.addItem("Big Endian")
+        self.codingcombo.addItem("Little Endian")
         gridlayout.addWidget(self.toolecuidbox, 1, 1)
         gridlayout.addWidget(self.ecutoolidbox, 2, 1)
         gridlayout.addWidget(self.codingcombo, 3, 1)
@@ -59,7 +59,7 @@ class EcuParamEditor(widgets.QFrame):
         layoutv.addWidget(autoident_label)
         layoutv.addWidget(self.identtable)
 
-        headerstrings = _("Diag version;Supplier;Soft;Version").split(";")
+        headerstrings = "Diag version;Supplier;Soft;Version".split(";")
         self.identtable.setHorizontalHeaderLabels(headerstrings)
 
         inputayout = widgets.QHBoxLayout()
@@ -69,16 +69,16 @@ class EcuParamEditor(widgets.QFrame):
         self.inputversion = HexLineEdit(4, False)
         self.addbutton = widgets.QPushButton(_("Add new"))
         self.delbutton = widgets.QPushButton(_("Delete selected"))
-        inputayout.addWidget(widgets.QLabel(_("Diag version")))
+        inputayout.addWidget(widgets.QLabel("Diag version"))
         inputayout.addWidget(self.inputdiag)
 
-        inputayout.addWidget(widgets.QLabel(_("Supplier")))
+        inputayout.addWidget(widgets.QLabel("Supplier"))
         inputayout.addWidget(self.inputsupplier)
 
-        inputayout.addWidget(widgets.QLabel(_("Soft")))
+        inputayout.addWidget(widgets.QLabel("Soft"))
         inputayout.addWidget(self.inputsoft)
 
-        inputayout.addWidget(widgets.QLabel(_("Version")))
+        inputayout.addWidget(widgets.QLabel("Version"))
         inputayout.addWidget(self.inputversion)
 
         inputayout.addWidget(self.addbutton)
