@@ -234,6 +234,7 @@ class MainWidget(widgets.QMainWindow):
         self.addDockWidget(core.Qt.BottomDockWidgetArea, self.treedock_logs)
 
         self.toolbar = self.addToolBar(_("ToolBar"))
+        self.toolbar.setContextMenuPolicy(core.Qt.PreventContextMenu)
 
         self.diagaction = widgets.QAction(gui.QIcon(ICON_DTC), _("Read DTC"), self)
         self.diagaction.triggered.connect(self.readDtc)
@@ -369,13 +370,11 @@ class MainWidget(widgets.QMainWindow):
         # View menu
         view_menu = menu.addMenu(_("View"))
         carlist_order_menu = view_menu.addMenu(_("CarList Order"))
-        
         self.carlist_order_by_code = widgets.QAction(_("By Project Code"), carlist_order_menu)
         self.carlist_order_by_code.setCheckable(True)
         self.carlist_order_by_code.setChecked(options.get_carlist_sort_mode() == "code")
         self.carlist_order_by_code.triggered.connect(self.setCarListOrderCode)
         carlist_order_menu.addAction(self.carlist_order_by_code)
-        
         self.carlist_order_by_name = widgets.QAction(_("By Car Name"), carlist_order_menu)
         self.carlist_order_by_name.setCheckable(True)
         self.carlist_order_by_name.setChecked(options.get_carlist_sort_mode() == "name")
@@ -389,11 +388,20 @@ class MainWidget(widgets.QMainWindow):
 
         # Theme menu (moved under View menu) with explicit Dark/Light selection
         theme_menu = view_menu.addMenu(_("Theme"))
-
         theme_dark_action = widgets.QAction(_("Dark Theme"), theme_menu)
         theme_dark_action.setCheckable(True)
         theme_light_action = widgets.QAction(_("Light Theme"), theme_menu)
         theme_light_action.setCheckable(True)
+
+        show_menu = view_menu.addMenu(_("Panels"))
+        show_menu.addAction(self.treedock_widget.toggleViewAction())
+        show_menu.addAction(self.treedock_logs.toggleViewAction())
+        show_menu.addAction(self.treedock_ecu.toggleViewAction())
+        show_menu.addAction(self.treeview_eculist.toggleViewAction())
+
+        view_menu.addSeparator()
+
+        view_menu.addAction(self.toolbar.toggleViewAction())
 
         # Group theme actions so only one can be active
         theme_action_group = widgets.QActionGroup(self)
