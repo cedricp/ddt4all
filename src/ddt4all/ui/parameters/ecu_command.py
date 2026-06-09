@@ -31,19 +31,19 @@ class EcuCommand(widgets.QDialog):
 
         self.rcv_table.setColumnCount(2)
         self.rcv_table.verticalHeader().hide()
-        layout.addWidget(widgets.QLabel("Start diagnostic session"))
+        layout.addWidget(widgets.QLabel(_("Start diagnostic session")))
         layout.addWidget(self.sds_combo)
-        layout.addWidget(widgets.QLabel("Request"))
+        layout.addWidget(widgets.QLabel(_("Request")))
         layout.addWidget(self.req_combo)
-        layout.addWidget(widgets.QLabel("Data to send"))
+        layout.addWidget(widgets.QLabel(_("Data to send")))
         layout.addWidget(self.com_table)
-        layout.addWidget(widgets.QLabel("Computed ISOTP Frame"))
+        layout.addWidget(widgets.QLabel(_("Computed ISOTP Frame")))
         layout.addWidget(self.isotp_frame_edit)
-        checkbutton = widgets.QPushButton("Compute frame")
+        checkbutton = widgets.QPushButton(_("Compute frame"))
         layout.addWidget(checkbutton)
-        layout.addWidget(widgets.QLabel("Data received"))
+        layout.addWidget(widgets.QLabel(_("Data received")))
         layout.addWidget(self.rcv_table)
-        button = widgets.QPushButton("Execute")
+        button = widgets.QPushButton(_("Execute"))
         layout.addWidget(button)
         button.clicked.connect(self.execute)
         self.setLayout(layout)
@@ -62,9 +62,7 @@ class EcuCommand(widgets.QDialog):
         for k, v in self.sds.items():
             self.sds_combo.addItem(k)
 
-        text = "<center>This feature is experimental</center>\n"
-        text += "<center>Use it at your own risk</center>\n"
-        text += "<center>and if you know exactely what you do</center>\n"
+        text = _("<center>This feature is experimental</center>\n<center>Use it at your own risk</center>\n<center>and if you know exactely what you do</center>\n")
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon(PATH_PNG_ODB)
         msgbox.setWindowIcon(appIcon)

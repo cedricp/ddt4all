@@ -460,7 +460,10 @@ class ParamWidget(widgets.QWidget):
 
     def hexeditor(self):
         self.dialogbox = widgets.QWidget()
-        wlayout = widgets.QVBoxLayout()
+        wlayout = widgets.QVBoxLayout()   
+        appIcon = gui.QIcon(PATH_PNG_ODB)
+        self.dialogbox.setWindowIcon(appIcon)
+        self.dialogbox.setWindowTitle(version.__appname__)
         diaglabel = widgets.QLabel(_("Diagnotic session"))
         inputlabel = widgets.QLabel(_("Input"))
         outputlabel = widgets.QLabel(_("Output"))
