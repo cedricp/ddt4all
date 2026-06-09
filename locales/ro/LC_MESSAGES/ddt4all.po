@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -1132,35 +1132,14 @@ msgstr "Ecu > Instrument ID (Hex)"
 msgid "Coding"
 msgstr "Codificare"
 
-msgid "Big Endian"
-msgstr "Mare Endian"
-
-msgid "Little Endian"
-msgstr "Mic Endian"
-
 msgid "ECU Auto identification"
 msgstr "ECU Identificare automata"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Versiune Diag;Furnizor;Soft;Versiune"
 
 msgid "Add new"
 msgstr "Adauga nou"
 
 msgid "Delete selected"
 msgstr "Sterge selectia"
-
-msgid "Diag version"
-msgstr "Versiune Diag"
-
-msgid "Supplier"
-msgstr "Furnizor"
-
-msgid "Soft"
-msgstr "Soft"
-
-msgid "Version"
-msgstr "Versiune"
 
 msgid "Number of bits"
 msgstr "Numar de biti"
@@ -1231,6 +1210,9 @@ msgstr "Dupa vanzare"
 msgid "Engineering"
 msgstr "Inginerie"
 
+msgid "Supplier"
+msgstr "Furnizor"
+
 msgid "Reload requests"
 msgstr "Reincarcare cereri"
 
@@ -1296,21 +1278,6 @@ msgstr "ID cadru :"
 
 msgid "No vehicles available"
 msgstr "Nu sunt vehicule disponibile"
-
-msgid "ECU name"
-msgstr "ECU nume"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Protocol"
-msgstr "Protocol"
-
-msgid "Diag"
-msgstr "Diag"
-
-msgid "Projets"
-msgstr "Proiecte"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1478,7 +1445,7 @@ msgid "Light Theme"
 msgstr "Tema deschisa"
 
 msgid "Panels"
-msgstr ""
+msgstr "Panouri"
 
 msgid "New Category"
 msgstr "Categorie noua"

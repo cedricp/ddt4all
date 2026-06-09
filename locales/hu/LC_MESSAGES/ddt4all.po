@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-28 19:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1137,35 +1137,14 @@ msgstr "Ecu > Eszköz ID (Hex)"
 msgid "Coding"
 msgstr "Kódolás"
 
-msgid "Big Endian"
-msgstr "Nagy az elején"
-
-msgid "Little Endian"
-msgstr "Kicsi az elején"
-
 msgid "ECU Auto identification"
 msgstr "ECU automatikus azonosítás"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Diag verzió;Gyártó;Szoft;Verzió"
 
 msgid "Add new"
 msgstr "Új hozzáadása"
 
 msgid "Delete selected"
 msgstr "Kijelöltek törlése"
-
-msgid "Diag version"
-msgstr "Diag verzió"
-
-msgid "Supplier"
-msgstr "Gyártó"
-
-msgid "Soft"
-msgstr "Szoft"
-
-msgid "Version"
-msgstr "Verzió"
 
 msgid "Number of bits"
 msgstr "Bitek száma"
@@ -1236,6 +1215,9 @@ msgstr "Értékesítés utáni"
 msgid "Engineering"
 msgstr "Mérnöki"
 
+msgid "Supplier"
+msgstr "Gyártó"
+
 msgid "Reload requests"
 msgstr "Parancsok újratöltése"
 
@@ -1299,21 +1281,6 @@ msgstr "ID keret :"
 
 msgid "No vehicles available"
 msgstr "Nincs elérhető jármű"
-
-msgid "ECU name"
-msgstr "ECU neve"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Protocol"
-msgstr "Protokoll"
-
-msgid "Diag"
-msgstr "Diag"
-
-msgid "Projets"
-msgstr "Projektek"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1480,7 +1447,7 @@ msgid "Light Theme"
 msgstr "Világos téma"
 
 msgid "Panels"
-msgstr ""
+msgstr "Panelek"
 
 msgid "New Category"
 msgstr "Új kategória"

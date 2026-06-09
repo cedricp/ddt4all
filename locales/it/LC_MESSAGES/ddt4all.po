@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: bovirus@gmail.com\n"
@@ -1139,35 +1139,14 @@ msgstr "ECU > ID strumento (HEX)"
 msgid "Coding"
 msgstr "Codifica"
 
-msgid "Big Endian"
-msgstr "Big Endian"
-
-msgid "Little Endian"
-msgstr "Little Endian"
-
 msgid "ECU Auto identification"
 msgstr "Identificazione automatica ECU"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Versione Diag;Fornitore;Software;Versione"
 
 msgid "Add new"
 msgstr "Aggiungi nuovo"
 
 msgid "Delete selected"
 msgstr "Elimina selezionati"
-
-msgid "Diag version"
-msgstr "Versione diagnostica"
-
-msgid "Supplier"
-msgstr "Fornitore"
-
-msgid "Soft"
-msgstr "Software"
-
-msgid "Version"
-msgstr "Versione"
 
 msgid "Number of bits"
 msgstr "Numero bit"
@@ -1238,6 +1217,9 @@ msgstr "Post acquisto"
 msgid "Engineering"
 msgstr "Ingegneria"
 
+msgid "Supplier"
+msgstr "Fornitore"
+
 msgid "Reload requests"
 msgstr "Ricarica richieste"
 
@@ -1301,21 +1283,6 @@ msgstr "ID frame :"
 
 msgid "No vehicles available"
 msgstr "Nessun veicolo disponibile"
-
-msgid "ECU name"
-msgstr "Nome ECU"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Protocol"
-msgstr "Protocollo"
-
-msgid "Diag"
-msgstr "Diag"
-
-msgid "Projets"
-msgstr "Progetti"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1482,7 +1449,7 @@ msgid "Light Theme"
 msgstr "Tema chiaro"
 
 msgid "Panels"
-msgstr ""
+msgstr "Pannelli"
 
 msgid "New Category"
 msgstr "Nuova categoria"

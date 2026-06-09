@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -1136,35 +1136,14 @@ msgstr "Řídicí jednotka > ID nástroje (hex)"
 msgid "Coding"
 msgstr "Kódování"
 
-msgid "Big Endian"
-msgstr "Big Endian"
-
-msgid "Little Endian"
-msgstr "Malý Endian"
-
 msgid "ECU Auto identification"
 msgstr "Automatická identifikace ECU"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Verze diagnostiky; Dodavatel; Software; Verze"
 
 msgid "Add new"
 msgstr "Přidat nový"
 
 msgid "Delete selected"
 msgstr "Smazat vybrané"
-
-msgid "Diag version"
-msgstr "Diag verze"
-
-msgid "Supplier"
-msgstr "Dodavatel"
-
-msgid "Soft"
-msgstr "Soft"
-
-msgid "Version"
-msgstr "Verze"
 
 msgid "Number of bits"
 msgstr "Počet bitů"
@@ -1235,6 +1214,9 @@ msgstr "Po prodeji"
 msgid "Engineering"
 msgstr "Inženýrství"
 
+msgid "Supplier"
+msgstr "Dodavatel"
+
 msgid "Reload requests"
 msgstr "Znovu načíst požadavky"
 
@@ -1298,21 +1280,6 @@ msgstr "ID rám:"
 
 msgid "No vehicles available"
 msgstr "Nejsou k dispozici žádná vozidla"
-
-msgid "ECU name"
-msgstr "Název ECU"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Protocol"
-msgstr "Protokol"
-
-msgid "Diag"
-msgstr "Diag"
-
-msgid "Projets"
-msgstr "Projekty"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1480,7 +1447,7 @@ msgid "Light Theme"
 msgstr "Světlé téma"
 
 msgid "Panels"
-msgstr ""
+msgstr "Panely"
 
 msgid "New Category"
 msgstr "Nová kategorie"

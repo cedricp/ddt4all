@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -1134,35 +1134,14 @@ msgstr "Ecu > Araç Kimliği (Hex)"
 msgid "Coding"
 msgstr "Kodlama"
 
-msgid "Big Endian"
-msgstr "Big Endian(önemli byte solda)"
-
-msgid "Little Endian"
-msgstr "Little Endian (önemli byte sağda)"
-
 msgid "ECU Auto identification"
 msgstr "ECU Otomatik kimlik"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Tanılama sürümü;Tedarikçi;Yazılım;Sürüm"
 
 msgid "Add new"
 msgstr "Yeni Ekle"
 
 msgid "Delete selected"
 msgstr "Seçilenleri Sil"
-
-msgid "Diag version"
-msgstr "Tanılama sürümü"
-
-msgid "Supplier"
-msgstr "Tedarikçi"
-
-msgid "Soft"
-msgstr "Yazılım"
-
-msgid "Version"
-msgstr "Sürüm"
 
 msgid "Number of bits"
 msgstr "Bit sayısı"
@@ -1234,6 +1213,9 @@ msgstr "Satış Sonrası"
 msgid "Engineering"
 msgstr "Mühendislik"
 
+msgid "Supplier"
+msgstr "Tedarikçi"
+
 msgid "Reload requests"
 msgstr "İstekleri yeniden yükle"
 
@@ -1298,21 +1280,6 @@ msgstr "ID çerçeve :"
 
 msgid "No vehicles available"
 msgstr "Araç bulunamadı"
-
-msgid "ECU name"
-msgstr "ECU Adı"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Protocol"
-msgstr "Protokol"
-
-msgid "Diag"
-msgstr "Tanılama"
-
-msgid "Projets"
-msgstr "Projeler"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1479,7 +1446,7 @@ msgid "Light Theme"
 msgstr "Açık Tema"
 
 msgid "Panels"
-msgstr ""
+msgstr "Paneller"
 
 msgid "New Category"
 msgstr "Yeni kategori"

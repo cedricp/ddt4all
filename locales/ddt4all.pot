@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1051,34 +1051,13 @@ msgstr ""
 msgid "Coding"
 msgstr ""
 
-msgid "Big Endian"
-msgstr ""
-
-msgid "Little Endian"
-msgstr ""
-
 msgid "ECU Auto identification"
-msgstr ""
-
-msgid "Diag version;Supplier;Soft;Version"
 msgstr ""
 
 msgid "Add new"
 msgstr ""
 
 msgid "Delete selected"
-msgstr ""
-
-msgid "Diag version"
-msgstr ""
-
-msgid "Supplier"
-msgstr ""
-
-msgid "Soft"
-msgstr ""
-
-msgid "Version"
 msgstr ""
 
 msgid "Number of bits"
@@ -1150,6 +1129,9 @@ msgstr ""
 msgid "Engineering"
 msgstr ""
 
+msgid "Supplier"
+msgstr ""
+
 msgid "Reload requests"
 msgstr ""
 
@@ -1208,21 +1190,6 @@ msgid "ID frame :"
 msgstr ""
 
 msgid "No vehicles available"
-msgstr ""
-
-msgid "ECU name"
-msgstr ""
-
-msgid "ID"
-msgstr ""
-
-msgid "Protocol"
-msgstr ""
-
-msgid "Diag"
-msgstr ""
-
-msgid "Projets"
 msgstr ""
 
 #, python-format

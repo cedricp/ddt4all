@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1142,35 +1142,14 @@ msgstr "ЭБУ > ID инструмента (Hex)"
 msgid "Coding"
 msgstr "Кодирование"
 
-msgid "Big Endian"
-msgstr "Big Endian"
-
-msgid "Little Endian"
-msgstr "Little Endian"
-
 msgid "ECU Auto identification"
 msgstr "Автоматическая идентификация ЭБУ"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Версия диагностики;Поставщик;Программное обеспечение;Версия"
 
 msgid "Add new"
 msgstr "Добавить новый"
 
 msgid "Delete selected"
 msgstr "Удалить выбранный"
-
-msgid "Diag version"
-msgstr "Версия диагностики"
-
-msgid "Supplier"
-msgstr "Поставщик"
-
-msgid "Soft"
-msgstr "Программное обеспечение"
-
-msgid "Version"
-msgstr "Версия"
 
 msgid "Number of bits"
 msgstr "Количество битов"
@@ -1241,6 +1220,9 @@ msgstr "После продажи"
 msgid "Engineering"
 msgstr "Инженерия"
 
+msgid "Supplier"
+msgstr "Поставщик"
+
 msgid "Reload requests"
 msgstr "Переотправить запрос"
 
@@ -1304,21 +1286,6 @@ msgstr "ID кадра :"
 
 msgid "No vehicles available"
 msgstr "Нет доступных транспортных средств"
-
-msgid "ECU name"
-msgstr "Название ЭБУ"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Protocol"
-msgstr "Протокол"
-
-msgid "Diag"
-msgstr "Диаг"
-
-msgid "Projets"
-msgstr "Проекты"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1485,7 +1452,7 @@ msgid "Light Theme"
 msgstr "Светлая тема"
 
 msgid "Panels"
-msgstr ""
+msgstr "Панели"
 
 msgid "New Category"
 msgstr "Новая категория"

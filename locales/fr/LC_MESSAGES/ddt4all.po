@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 06:26+0200\n"
+"POT-Creation-Date: 2026-06-09 07:09+0200\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -1146,35 +1146,14 @@ msgstr "Ecu > ID de l'outil (Hex)"
 msgid "Coding"
 msgstr "Codage"
 
-msgid "Big Endian"
-msgstr "Big Endian"
-
-msgid "Little Endian"
-msgstr "Little Endian"
-
 msgid "ECU Auto identification"
 msgstr "Identification automatique du calculateur"
-
-msgid "Diag version;Supplier;Soft;Version"
-msgstr "Version Diag ; Fournisseur ; Soft ; Version"
 
 msgid "Add new"
 msgstr "Ajouter un nouveau"
 
 msgid "Delete selected"
 msgstr "Supprimer la sélection"
-
-msgid "Diag version"
-msgstr "Version de diagnostic"
-
-msgid "Supplier"
-msgstr "Fournisseur"
-
-msgid "Soft"
-msgstr "Soft"
-
-msgid "Version"
-msgstr "Version"
 
 msgid "Number of bits"
 msgstr "Nombre de bits"
@@ -1246,6 +1225,9 @@ msgstr "Après-vente"
 msgid "Engineering"
 msgstr "Ingénierie"
 
+msgid "Supplier"
+msgstr "Fournisseur"
+
 msgid "Reload requests"
 msgstr "Demandes de rechargement"
 
@@ -1309,21 +1291,6 @@ msgstr "Cadre d'identification :"
 
 msgid "No vehicles available"
 msgstr "Aucun véhicule disponible"
-
-msgid "ECU name"
-msgstr "Nom du calculateur"
-
-msgid "ID"
-msgstr "IDENTIFIANT"
-
-msgid "Protocol"
-msgstr "Protocole"
-
-msgid "Diag"
-msgstr "Diag"
-
-msgid "Projets"
-msgstr "Projets"
 
 #, python-format
 msgid "%d loaded ECUs in database."
@@ -1491,7 +1458,7 @@ msgid "Light Theme"
 msgstr "Thème clair"
 
 msgid "Panels"
-msgstr ""
+msgstr "Panneaux"
 
 msgid "New Category"
 msgstr "Nouvelle catégorie"
