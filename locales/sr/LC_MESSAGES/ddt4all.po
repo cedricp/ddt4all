@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-10 06:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -1428,12 +1428,6 @@ msgstr "Fajl"
 msgid "Open XML"
 msgstr "Otvori XML"
 
-msgid "Identify ECU"
-msgstr "Identifikuj ECU"
-
-msgid "Create New ECU"
-msgstr "Kreiraj novi ECU"
-
 msgid "Save current ECU"
 msgstr "Sacuvaj trenutni ECU"
 
@@ -1443,11 +1437,26 @@ msgstr "Sačuvaj poslednji zapis"
 msgid "Save ECU list"
 msgstr "Sacuvaj listu ECU"
 
+msgid "Exit"
+msgstr "Izlaz"
+
+msgid "Tools"
+msgstr "Alati"
+
+msgid "Identify ECU"
+msgstr "Identifikuj ECU"
+
+msgid "Create New ECU"
+msgstr "Kreiraj novi ECU"
+
 msgid "Zip database"
 msgstr "Zip bazu podataka"
 
-msgid "Exit"
-msgstr "Izlaz"
+msgid "Clear history"
+msgstr "Obriši istoriju"
+
+msgid "Reset Configuration"
+msgstr "Resetuj konfiguraciju"
 
 msgid "View"
 msgstr "Приказ"
@@ -1508,6 +1517,18 @@ msgstr " verzija:"
 
 msgid "Created by:"
 msgstr "Kreirao:"
+
+msgid "History cleared"
+msgstr "Istorija obrisana"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "Istorija poslednjeg izabranog vozila i ECU je obrisana."
+
+msgid "Configuration cleared"
+msgstr "Konfiguracija obrisana"
+
+msgid "Configuration has been cleared."
+msgstr "Konfiguracija je obrisana."
 
 msgid "Options"
 msgstr "Opcije"
@@ -1660,6 +1681,9 @@ msgstr "Tamni stil"
 msgid "WiFi Socket-TimeOut"
 msgstr "Timeout WiFi soketa"
 
+msgid "Enable DoIP Scan"
+msgstr "Omogući DoIP skeniranje"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Dijagnostika preko IP) Konfiguracija (Eksperimentalno)"
 
@@ -1698,9 +1722,6 @@ msgstr "Omogući otkrivanje najave vozila"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatsko ponovno povezivanje pri gubitku veze"
-
-msgid "Enable DoIP Scan"
-msgstr "Omogući DoIP skeniranje"
 
 msgid "Change UART speed"
 msgstr "Promena UART brzine"

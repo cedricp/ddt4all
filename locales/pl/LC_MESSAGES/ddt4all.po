@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1435,12 +1435,6 @@ msgstr "Plik"
 msgid "Open XML"
 msgstr "Otwórz XML"
 
-msgid "Identify ECU"
-msgstr "Zidentyfikuj ECU"
-
-msgid "Create New ECU"
-msgstr "Stworz nowy ECU"
-
 msgid "Save current ECU"
 msgstr "Zapisz aktualny ECU"
 
@@ -1450,11 +1444,26 @@ msgstr "Zapisz ostatni rekord"
 msgid "Save ECU list"
 msgstr "Zapisz listę ECU"
 
+msgid "Exit"
+msgstr "Wyjście"
+
+msgid "Tools"
+msgstr "Narzędzia"
+
+msgid "Identify ECU"
+msgstr "Zidentyfikuj ECU"
+
+msgid "Create New ECU"
+msgstr "Stworz nowy ECU"
+
 msgid "Zip database"
 msgstr "Zipuj bazę danych"
 
-msgid "Exit"
-msgstr "Wyjście"
+msgid "Clear history"
+msgstr "Wyczyść historię"
+
+msgid "Reset Configuration"
+msgstr "Zresetuj konfigurację"
 
 msgid "View"
 msgstr "Widok"
@@ -1515,6 +1524,18 @@ msgstr " wersja:"
 
 msgid "Created by:"
 msgstr "Stworzone przez:"
+
+msgid "History cleared"
+msgstr "Historia wyczyszczona"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "Historia ostatnio wybranego pojazdu i ECU została wyczyszczona."
+
+msgid "Configuration cleared"
+msgstr "Konfiguracja wyczyszczona"
+
+msgid "Configuration has been cleared."
+msgstr "Konfiguracja została wyczyszczona."
 
 msgid "Options"
 msgstr "Opcje"
@@ -1668,6 +1689,9 @@ msgstr "Tryb ciemny"
 msgid "WiFi Socket-TimeOut"
 msgstr "Limit czasu gniazda WiFi"
 
+msgid "Enable DoIP Scan"
+msgstr "Włącz skanowanie DoIP"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfiguracja DoIP (Diagnostyka przez IP) (Eksperymentalna)"
 
@@ -1706,9 +1730,6 @@ msgstr "Włącz wykrywanie ogłoszeń pojazdów"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatyczne ponowne łączenie przy utracie połączenia"
-
-msgid "Enable DoIP Scan"
-msgstr "Włącz skanowanie DoIP"
 
 msgid "Change UART speed"
 msgstr "Zmień prędkość UART"

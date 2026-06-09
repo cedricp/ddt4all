@@ -332,22 +332,13 @@ class MainWidget(widgets.QMainWindow):
 
         diagmenu = menu.addMenu(_("File"))
         xmlopenaction = diagmenu.addAction(_("Open XML"))
-        identecu = diagmenu.addAction(_("Identify ECU"))
-        newecuction = diagmenu.addAction(_("Create New ECU"))
         saveecuaction = diagmenu.addAction(_("Save current ECU"))
-        diagmenu.addSeparator()
         saverecordaction = diagmenu.addAction(_("Save last record"))
-        diagmenu.addSeparator()
         savevehicleaction = diagmenu.addAction(_("Save ECU list"))
         savevehicleaction.triggered.connect(self.saveEcus)
         saveecuaction.triggered.connect(self.saveEcu)
         saverecordaction.triggered.connect(self.saveRecord)
-        newecuction.triggered.connect(self.newEcu)
         xmlopenaction.triggered.connect(self.openxml)
-        identecu.triggered.connect(self.identEcu)
-        diagmenu.addSeparator()
-        zipdbaction = diagmenu.addAction(_("Zip database"))
-        zipdbaction.triggered.connect(self.zipdb)
         diagmenu.addSeparator()
         closeAllThis = diagmenu.addAction(_("Exit"))
         closeAllThis.triggered.connect(self.exit_all)
@@ -356,6 +347,22 @@ class MainWidget(widgets.QMainWindow):
         for ecuf in ecu_files:
             ecuaction = diagmenu.addAction(ecuf)
             ecuaction.triggered.connect(lambda state, a=ecuf: self.loadEcu(a))
+
+        # Tools menu
+        tools_menu = menu.addMenu(_("Tools"))
+        identecu = tools_menu.addAction(_("Identify ECU"))
+        identecu.triggered.connect(self.identEcu)
+        newecuction = tools_menu.addAction(_("Create New ECU"))
+        newecuction.triggered.connect(self.newEcu)
+        # Only show Zip database if ecu.zip doesn't exist (XML database)
+        if not os.path.exists("ecu.zip"):
+            zipdbaction = tools_menu.addAction(_("Zip database"))
+            zipdbaction.triggered.connect(self.zipdb)
+        clearhistoryaction = tools_menu.addAction(_("Clear history"))
+        clearhistoryaction.triggered.connect(self.clearHistory)
+        tools_menu.addSeparator()
+        resetconfigaction = tools_menu.addAction(_("Reset Configuration"))
+        resetconfigaction.triggered.connect(self.resetConfig)
 
         self.screenmenu = menu.addMenu(_("Screens"))
 
@@ -448,13 +455,11 @@ class MainWidget(widgets.QMainWindow):
         help_menu = menu.addMenu(_("Help"))
         wiki_about = help_menu.addAction(_("Web Wiki"))
         wiki_about.triggered.connect(self.wiki_about)
-        help_menu.addSeparator()
         devs = help_menu.addMenu(_("About Developers"))
         about_cedric = devs.addAction("Cedric PAILLE")
         about_cedric.triggered.connect(self.about_cedric)
         about_furtif = devs.addAction("--=FurtiF™=--")
         about_furtif.triggered.connect(self.about_furtif)
-        help_menu.addSeparator()
         githubupdate = help_menu.addAction(_("Get Git update"))
         githubupdate.triggered.connect(self.git_update)
         help_menu.addSeparator()
@@ -495,6 +500,28 @@ class MainWidget(widgets.QMainWindow):
         self.carlist_order_by_code.setChecked(False)
         # Refresh the vehicle combo box
         self.eculistwidget.refreshVehicleList()
+
+    def clearHistory(self):
+        """Clear last selected vehicle and last opened ECU history"""
+        options.clear_history()
+        msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon(ICON_OBD)
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle(_("History cleared"))
+        msgbox.setText(_("Last selected vehicle and ECU history has been cleared."))
+        msgbox.setIcon(widgets.QMessageBox.Information)
+        msgbox.exec_()
+
+    def resetConfig(self):
+        """Reset config"""
+        options.create_new_config()
+        msgbox = widgets.QMessageBox()
+        appIcon = gui.QIcon(ICON_OBD)
+        msgbox.setWindowIcon(appIcon)
+        msgbox.setWindowTitle(_("Configuration cleared"))
+        msgbox.setText(_("Configuration has been cleared."))
+        msgbox.setIcon(widgets.QMessageBox.Information)
+        msgbox.exec_()
 
     def wiki_about(self):
         url = core.QUrl("https://github.com/cedricp/ddt4all/wiki", core.QUrl.TolerantMode)
@@ -750,6 +777,21 @@ class MainWidget(widgets.QMainWindow):
         if self.paramview:
             self.paramview.setCanTimeout()
 
+    def restore_last_ecu(self):
+        """Restore last opened ECU if available in the current list"""
+        last_ecu = options.get_last_opened_ecu()
+        if last_ecu:
+            # Check if the ECU is in the current treeview_ecu list
+            for i in range(self.treeview_ecu.count()):
+                item_text = self.treeview_ecu.item(i).text()
+                if item_text == last_ecu or last_ecu in item_text:
+                    # Found the ECU, select it
+                    self.treeview_ecu.setCurrentRow(i)
+                    # Trigger the changeECU function
+                    index = self.treeview_ecu.model().index(i, 0)
+                    self.changeECU(index)
+                    break
+
     def scan_project(self, project):
         if project == "ALL":
             self.scan()
@@ -779,6 +821,9 @@ class MainWidget(widgets.QMainWindow):
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
+        
+        # Try to restore last opened ECU after scan is complete
+        self.restore_last_ecu()
 
     def scan(self):
         msgBox = widgets.QMessageBox()
@@ -854,6 +899,9 @@ class MainWidget(widgets.QMainWindow):
             self.treeview_ecu.addItem(item)
 
         self.progressstatus.setValue(0)
+        
+        # Try to restore last opened ECU after scan is complete
+        self.restore_last_ecu()
 
     def setConnected(self, on):
         if options.simulation_mode:
@@ -948,6 +996,9 @@ class MainWidget(widgets.QMainWindow):
         vehicle_file = "vehicles/" + name + ".ecu"
         jsonfile = open(vehicle_file, "r")
         eculist = json.loads(jsonfile.read())
+        
+        # Save last opened ECU
+        options.set_last_opened_ecu(name)
         jsonfile.close()
 
         self.treeview_ecu.clear()
@@ -959,6 +1010,9 @@ class MainWidget(widgets.QMainWindow):
             item = widgets.QListWidgetItem(ecu[0])
             self.ecunamemap[ecu[0]] = ecu[1]
             self.treeview_ecu.addItem(item)
+        
+        # Try to restore last opened ECU after loading ECU file
+        self.restore_last_ecu()
 
     def readDtc(self):
         if self.paramview:
@@ -1081,6 +1135,9 @@ class MainWidget(widgets.QMainWindow):
             if ecu_file == self.paramview.ddtfile:
                 return
         self.set_param_file(ecu_file, ecu_addr, ecu_name, isxml)
+        
+        # Save last opened ECU
+        options.set_last_opened_ecu(ecu_name)
 
     def set_param_file(self, ecu_file, ecu_addr, ecu_name, isxml):
         self.diagaction.setEnabled(True)

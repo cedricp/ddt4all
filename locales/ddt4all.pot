@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:08+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1334,12 +1334,6 @@ msgstr ""
 msgid "Open XML"
 msgstr ""
 
-msgid "Identify ECU"
-msgstr ""
-
-msgid "Create New ECU"
-msgstr ""
-
 msgid "Save current ECU"
 msgstr ""
 
@@ -1349,10 +1343,25 @@ msgstr ""
 msgid "Save ECU list"
 msgstr ""
 
+msgid "Exit"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Identify ECU"
+msgstr ""
+
+msgid "Create New ECU"
+msgstr ""
+
 msgid "Zip database"
 msgstr ""
 
-msgid "Exit"
+msgid "Clear history"
+msgstr ""
+
+msgid "Reset Configuration"
 msgstr ""
 
 msgid "View"
@@ -1413,6 +1422,18 @@ msgid " version:"
 msgstr ""
 
 msgid "Created by:"
+msgstr ""
+
+msgid "History cleared"
+msgstr ""
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr ""
+
+msgid "Configuration cleared"
+msgstr ""
+
+msgid "Configuration has been cleared."
 msgstr ""
 
 msgid "Options"
@@ -1566,6 +1587,9 @@ msgstr ""
 msgid "WiFi Socket-TimeOut"
 msgstr ""
 
+msgid "Enable DoIP Scan"
+msgstr ""
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr ""
 
@@ -1603,9 +1627,6 @@ msgid "Enable Vehicle Announcement Discovery"
 msgstr ""
 
 msgid "Auto-reconnect on connection loss"
-msgstr ""
-
-msgid "Enable DoIP Scan"
 msgstr ""
 
 msgid "Change UART speed"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 19:05+0200\n"
+"POT-Creation-Date: 2026-06-08 19:27+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -1427,12 +1427,6 @@ msgstr "Dosya"
 msgid "Open XML"
 msgstr "XML aç"
 
-msgid "Identify ECU"
-msgstr "ECU tanımla"
-
-msgid "Create New ECU"
-msgstr "Yeni ECU Oluştur"
-
 msgid "Save current ECU"
 msgstr "Mevcut ECU'yu kaydet"
 
@@ -1442,11 +1436,26 @@ msgstr "Son kaydı kaydet"
 msgid "Save ECU list"
 msgstr "ECU listesini kaydet"
 
+msgid "Exit"
+msgstr "Çıkış"
+
+msgid "Tools"
+msgstr "Araçlar"
+
+msgid "Identify ECU"
+msgstr "ECU tanımla"
+
+msgid "Create New ECU"
+msgstr "Yeni ECU Oluştur"
+
 msgid "Zip database"
 msgstr "Veritabanını sıkıştır"
 
-msgid "Exit"
-msgstr "Çıkış"
+msgid "Clear history"
+msgstr "Geçmişi temizle"
+
+msgid "Reset Configuration"
+msgstr "Yapılandırmayı sıfırla"
 
 msgid "View"
 msgstr "Görünüm"
@@ -1507,6 +1516,18 @@ msgstr " sürüm:"
 
 msgid "Created by:"
 msgstr "Oluşturan:"
+
+msgid "History cleared"
+msgstr "Geçmiş temizlendi"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "En son seçilen araç ve ECU geçmişi temizlendi."
+
+msgid "Configuration cleared"
+msgstr "Yapılandırma temizlendi"
+
+msgid "Configuration has been cleared."
+msgstr "Yapılandırma temizlendi."
 
 msgid "Options"
 msgstr "Seçenekler"
@@ -1659,6 +1680,9 @@ msgstr "Karanlık mod"
 msgid "WiFi Socket-TimeOut"
 msgstr "WiFi socket zaman aşımı"
 
+msgid "Enable DoIP Scan"
+msgstr "DoIP taramasını etkinleştir"
+
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (IP Üzerinden Tanı) Yapılandırması (Deneysel)"
 
@@ -1697,9 +1721,6 @@ msgstr "Araç Duyurusu Keşfini Etkinleştir"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Bağlantı kesildiğinde otomatik yeniden bağlan"
-
-msgid "Enable DoIP Scan"
-msgstr "DoIP taramasını etkinleştir"
 
 msgid "Change UART speed"
 msgstr "UART hızını değiştir"
