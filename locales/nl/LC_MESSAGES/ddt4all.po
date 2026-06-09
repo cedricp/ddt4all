@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:09+0200\n"
+"POT-Creation-Date: 2026-06-09 07:56+0200\n"
 "PO-Revision-Date: 2026-05-10 06:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1842,6 +1842,36 @@ msgstr "Selecteer aub een communicatiepoort"
 
 msgid "ECU Command"
 msgstr "ECU Commando"
+
+msgid "Start diagnostic session"
+msgstr "Diagnostische sessie"
+
+msgid "Request"
+msgstr "Aanvragen"
+
+msgid "Data to send"
+msgstr "Datatype"
+
+msgid "Computed ISOTP Frame"
+msgstr "Berekende ISOTP-frame"
+
+msgid "Compute frame"
+msgstr "Frame berekenen"
+
+msgid "Data received"
+msgstr "Data ontvangen"
+
+msgid "Execute"
+msgstr "Uitvoeren"
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
+msgstr ""
+"<center>Deze functie is experimenteel</center>\n"
+"<center>Gebruik op eigen risico</center>\n"
+"<center>en als u precies weet wat u doet</center>\n"
 
 msgid "Err, cannot rename "
 msgstr "Fout, kan niet hernoemen "

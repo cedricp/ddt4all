@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:09+0200\n"
+"POT-Creation-Date: 2026-06-09 08:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1747,6 +1747,33 @@ msgid "Please select a communication port"
 msgstr ""
 
 msgid "ECU Command"
+msgstr ""
+
+msgid "Start diagnostic session"
+msgstr ""
+
+msgid "Request"
+msgstr ""
+
+msgid "Data to send"
+msgstr ""
+
+msgid "Computed ISOTP Frame"
+msgstr ""
+
+msgid "Compute frame"
+msgstr ""
+
+msgid "Data received"
+msgstr ""
+
+msgid "Execute"
+msgstr ""
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
 msgstr ""
 
 msgid "Err, cannot rename "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:09+0200\n"
+"POT-Creation-Date: 2026-06-09 07:56+0200\n"
 "PO-Revision-Date: 2026-05-10 06:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -1842,6 +1842,36 @@ msgstr "Molim izaberite port za komunikaciju"
 
 msgid "ECU Command"
 msgstr "ECU komanda"
+
+msgid "Start diagnostic session"
+msgstr "Dijagnosticka sesija"
+
+msgid "Request"
+msgstr "Zahtevi"
+
+msgid "Data to send"
+msgstr "Vrsta podataka"
+
+msgid "Computed ISOTP Frame"
+msgstr "Izračunati ISOTP okvir"
+
+msgid "Compute frame"
+msgstr "Izračunaj okvir"
+
+msgid "Data received"
+msgstr "Podaci primljeni"
+
+msgid "Execute"
+msgstr "Izvrši"
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
+msgstr ""
+"<center>Ova funkcija je eksperimentalna</center>\n"
+"<center>Koristite na sopstveni rizik</center>\n"
+"<center>i ako tačno znate šta radite</center>\n"
 
 msgid "Err, cannot rename "
 msgstr "Greška, ne može se preimenovati "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:09+0200\n"
+"POT-Creation-Date: 2026-06-09 07:56+0200\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -1842,6 +1842,36 @@ msgstr "Vyberte prosím komunikační port"
 
 msgid "ECU Command"
 msgstr "Příkaz ECU"
+
+msgid "Start diagnostic session"
+msgstr "Diagnostické sezení"
+
+msgid "Request"
+msgstr "Znovu načíst požadavky"
+
+msgid "Data to send"
+msgstr "Datový typ"
+
+msgid "Computed ISOTP Frame"
+msgstr "Vypočítaný ISOTP rámec"
+
+msgid "Compute frame"
+msgstr "Vypočítat rámec"
+
+msgid "Data received"
+msgstr "Data přijata"
+
+msgid "Execute"
+msgstr "Spustit"
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
+msgstr ""
+"<center>Tato funkce je experimentální</center>\n"
+"<center>Používejte ji na vlastní nebezpečí</center>\n"
+"<center>a pokud přesně víte, co děláte</center>\n"
 
 msgid "Err, cannot rename "
 msgstr "Chyba, nelze přejmenovat "

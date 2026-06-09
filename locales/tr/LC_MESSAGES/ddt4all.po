@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:09+0200\n"
+"POT-Creation-Date: 2026-06-09 07:56+0200\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -1841,6 +1841,36 @@ msgstr "Lütfen bir bağlantı noktası (port) seçin"
 
 msgid "ECU Command"
 msgstr "ECU Komutu"
+
+msgid "Start diagnostic session"
+msgstr "Tanılama oturumu"
+
+msgid "Request"
+msgstr "İstekler"
+
+msgid "Data to send"
+msgstr "Veri Türü"
+
+msgid "Computed ISOTP Frame"
+msgstr "Hesaplanmış ISOTP Çerçevesi"
+
+msgid "Compute frame"
+msgstr "Çerçeve hesapla"
+
+msgid "Data received"
+msgstr "Veri alındı"
+
+msgid "Execute"
+msgstr "Yürüt"
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
+msgstr ""
+"<center>Bu özellik deneyseldir</center>\n"
+"<center>Kendi sorumluluğunuzda kullanın</center>\n"
+"<center>ve tam olarak ne yaptığınızı biliyorsanız</center>\n"
 
 msgid "Err, cannot rename "
 msgstr "Hata, yeniden adlandıramıyorum "

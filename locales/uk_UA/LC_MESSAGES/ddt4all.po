@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:09+0200\n"
+"POT-Creation-Date: 2026-06-09 07:56+0200\n"
 "PO-Revision-Date: 2026-05-10 06:30+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -1845,6 +1845,36 @@ msgstr "Виберіть прорт для звязку"
 
 msgid "ECU Command"
 msgstr "Команда ЕБУ"
+
+msgid "Start diagnostic session"
+msgstr "Діагностична сесія"
+
+msgid "Request"
+msgstr "Запити"
+
+msgid "Data to send"
+msgstr "Тип даних"
+
+msgid "Computed ISOTP Frame"
+msgstr "Обчислений кадр ISOTP"
+
+msgid "Compute frame"
+msgstr "Обчислити кадр"
+
+msgid "Data received"
+msgstr "Дані отримано"
+
+msgid "Execute"
+msgstr "Виконати"
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
+msgstr ""
+"<center>Ця функція є експериментальною</center>\n"
+"<center>Використовуйте на власний ризик</center>\n"
+"<center>і якщо ви точно знаєте, що робите</center>\n"
 
 msgid "Err, cannot rename "
 msgstr "Помилка, невдалося перейменувати "
