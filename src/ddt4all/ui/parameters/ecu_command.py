@@ -98,8 +98,10 @@ class EcuCommand(widgets.QDialog):
                 data_to_stream[reqkey] = ""
             else:
                 data_to_stream[reqkey] = curtext
-
-        stream_to_send = " ".join(self.current_request.build_data_stream(data_to_stream))
+        try:
+            stream_to_send = " ".join(self.current_request.build_data_stream(data_to_stream))
+        except Exception as e:
+            return "Missing input data"
         return stream_to_send
 
     def execute(self):
