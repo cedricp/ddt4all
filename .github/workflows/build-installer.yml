@@ -1,0 +1,110 @@
+name: Build Windows Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]+.[0-9]+.[0-9]+*'
+  release:
+    types: [published]
+
+jobs:
+  build-x64:
+    name: Build x64 Installer
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Inno Setup 6.2.2
+        run: choco install innosetup --version 6.2.2 --confirm --no-progress --allow-downgrade --force
+        shell: pwsh
+
+      - name: Prepare Python 3.13
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $drive = (Get-Item $env:GITHUB_WORKSPACE).PSDrive.Root
+          $dist = "$drive\DDT4ALL-Dist-Versions\Python313"
+          New-Item -ItemType Directory -Force -Path $dist | Out-Null
+          # Use setup-python installed Python, install deps, then copy whole install
+          $pythonSrc = (Get-Command python).Source.Replace('\python.exe','')
+          # Install project deps first
+          pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+          # Copy Python install to dist dir
+          Copy-Item -Path "$pythonSrc\*" -Destination $dist -Recurse -Force
+          Write-Host "Python copied from $pythonSrc to $dist"
+          & "$dist\python.exe" -c "import ddt4all; print('ddt4all OK')"
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $iscc) { $iscc = Get-ChildItem -Path "${env:ProgramFiles}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName }
+          Write-Host "Using ISCC: $iscc"
+          & $iscc "setup_tools\inno-win-setup\wininstaller.iss"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-x64
+          path: setup_tools/inno-win-setup/Output/*.exe
+          if-no-files-found: error
+
+      - name: Upload to Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: setup_tools/inno-win-setup/Output/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-x86:
+    name: Build x86 Installer
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Inno Setup 5
+        run: choco install innosetup --version 5.6.1 --confirm --no-progress --allow-downgrade --force
+        shell: pwsh
+
+      - name: Prepare Python 3.8
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $drive = (Get-Item $env:GITHUB_WORKSPACE).PSDrive.Root
+          $dist = "$drive\DDT4ALL-Dist-Versions\Python38-32"
+          New-Item -ItemType Directory -Force -Path $dist | Out-Null
+          # Use setup-python installed Python, install deps, then copy whole install
+          $pythonSrc = (Get-Command python).Source.Replace('\python.exe','')
+          # Install project deps first
+          pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+          # Copy Python install to dist dir
+          Copy-Item -Path "$pythonSrc\*" -Destination $dist -Recurse -Force
+          Write-Host "Python copied from $pythonSrc to $dist"
+          & "$dist\python.exe" -c "import ddt4all; print('ddt4all OK')"
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $iscc) { $iscc = Get-ChildItem -Path "${env:ProgramFiles}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName }
+          Write-Host "Using ISCC: $iscc"
+          & $iscc "setup_tools\inno-win-setup\wininstaller-py3.8.6-inno-5-32-bits.iss"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-x86
+          path: setup_tools/inno-win-setup/Output/*.exe
+          if-no-files-found: error
+
+      - name: Upload to Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: setup_tools/inno-win-setup/Output/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
