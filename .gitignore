@@ -42,7 +42,6 @@ __pycache__/
 /setup.cfg
 /setup_tools/inno-win-setup/Output/
 /**/config.json
-/setup_tools/inno-win-setup/version.h
 /setup_tools/mac-os/build/
 /setup_tools/mac-os/dist/
 /.pytest_cache/
