@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-x64:
-    name: Build x64 Installer
+    name: Windows Build x64 Installer
     runs-on: windows-latest
 
     steps:
@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-x86:
-    name: Build x86 Installer
+    name: Windows Build x86 Installer
     runs-on: windows-latest
 
     steps:
