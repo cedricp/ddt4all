@@ -298,7 +298,7 @@ def clear_history():
     save_config()
 
 
-def translator(domain, lang=lang_list["Default"]):
+def translator(domain, lang=None):
     load_configuration()
     # Use provided language or configuration language
     target_lang = lang if lang else configuration.get("lang", lang_list["Default"])
