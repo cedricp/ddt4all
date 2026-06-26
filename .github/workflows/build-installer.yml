@@ -16,6 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Python 3.13 x64
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: 'x64'
+
       - name: Install Inno Setup 6.2.2
         run: choco install innosetup --version 6.2.2 --confirm --no-progress --allow-downgrade --force
         shell: pwsh
@@ -65,6 +71,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Python 3.8 x86
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          architecture: 'x86'
 
       - name: Install Inno Setup 5
         run: choco install innosetup --version 5.6.1 --confirm --no-progress --allow-downgrade --force
