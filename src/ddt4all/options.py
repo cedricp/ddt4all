@@ -6,6 +6,7 @@ import locale
 import os
 import time
 import sys
+from gettext import GNUTranslations
 from pathlib import Path
 
 from ddt4all.file_manager import get_config_dir
@@ -61,6 +62,7 @@ opt_stn_basic = False  # Basic STN protocol support detected
 elm_uart_buffer_size = 0x1ff  # UART buffer size for STN-based adapters
 
 lang_list = {
+    "Default":"en_US",
     "English": "en_US",
     "German": "de",
     "Spanish": "es",
@@ -79,7 +81,7 @@ lang_list = {
 }
 
 configuration = {
-    "lang": lang_list["English"],
+    "lang": lang_list["Default"],
     "dark": False,
     "socket_timeout": False,
     "device_settings": {},
@@ -188,7 +190,7 @@ def get_last_error():
 
 def get_translator_lang():
     # default translation if err set to en_US
-    loc_lang = lang_list["English"]
+    loc_lang = lang_list["Default"]
     try:
         lang, enc = locale.getdefaultlocale()
         loc_lang = lang
@@ -304,10 +306,10 @@ def clear_history():
     save_config()
 
 
-def translator(domain, lang=lang_list["English"]):
+def translator(domain, lang=lang_list["Default"]):
     load_configuration()
     # Use provided language or configuration language
-    target_lang = lang if lang else configuration.get("lang", lang_list["English"])
+    target_lang = lang if lang else configuration.get("lang", lang_list["Default"])
     # Set up message catalog access with specific language
     global _current_translation
     _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
