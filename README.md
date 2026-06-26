@@ -89,6 +89,9 @@ pip install -e ".[bluetooth]"   # Bluetooth support (Linux/Windows)
 
 # Install all optional dependencies
 pip install -e ".[dev,can,network,bluetooth]"
+
+# Run this
+python -m ddt4all
 ```
 
 #### **Core Requirements (Essential):**
