@@ -14,7 +14,7 @@ def is_run_from_src():
 
 def get_dir(dir_name):
     if is_run_from_src():
-        path =  BASE_DIR / ".." / ".." / dir_name
+        path =  Path(BASE_DIR / ".." / ".." / dir_name)
     else:
         path = Path(dir_name)
 
