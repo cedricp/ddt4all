@@ -6,7 +6,6 @@ import locale
 import os
 import time
 import sys
-from gettext import GNUTranslations
 from pathlib import Path
 
 from ddt4all.file_manager import get_config_dir
