@@ -67,7 +67,7 @@ class LabelWidget(widgets.QLabel):
                 # Ensure the path is a string and the file exists
                 if isinstance(imgname, str) and os.path.exists(imgname):
                     self.img = gui.QMovie(imgname)
-            if self.img.isValid():
+            elif self.img.isValid():
                 self.setMovie(self.img)
                 self.img.start()
             else:
@@ -115,7 +115,7 @@ class LabelWidget(widgets.QLabel):
                 # Ensure the path is a string and the file exists
                 if isinstance(imgname, str) and os.path.exists(imgname):
                     self.img = gui.QMovie(imgname)
-            if self.img.isValid():
+            elif self.img.isValid():
                 self.setMovie(self.img)
                 self.img.start()
             else:
