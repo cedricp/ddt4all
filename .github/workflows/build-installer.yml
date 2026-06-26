@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Inno Setup 6
-        run: choco install innosetup --confirm --no-progress
+      - name: Install Inno Setup 6.2.2
+        run: choco install innosetup --version 6.2.2 --confirm --no-progress --allow-downgrade --force
         shell: pwsh
 
       - name: Prepare Python 3.13
