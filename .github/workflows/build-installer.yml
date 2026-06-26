@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Inno Setup 6
-        run: choco install innosetup --version 6.2.2 --confirm --no-progress
+        run: choco install innosetup --confirm --no-progress
         shell: pwsh
 
       - name: Prepare Python 3.13 embeddable
@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Inno Setup 5
-        run: choco install innosetup --version 5.6.1 --confirm --no-progress --allow-downgrade
+        run: choco install innosetup --version 5.6.1 --confirm --no-progress --allow-downgrade --force
         shell: pwsh
 
       - name: Prepare Python 3.8 embeddable
@@ -78,7 +78,8 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
           Expand-Archive -Path $zip -DestinationPath $dist -Force
           Get-ChildItem $dist -Filter "*.pth" | Rename-Item -NewName { $_.Name + ".bak" }
-          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
+          # Python 3.8 precisa do URL antigo do get-pip
+          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/pip/3.8/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
           & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
           & "$dist\python.exe" -m pip install --upgrade pip --no-warn-script-location --disable-pip-version-check
           & "$dist\python.exe" -m pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
