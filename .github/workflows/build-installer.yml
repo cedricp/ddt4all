@@ -24,7 +24,8 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $dist = "C:\DDT4ALL-Dist-Versions\Python313"
+          $drive = (Get-Item $env:GITHUB_WORKSPACE).PSDrive.Root
+          $dist = "$drive\DDT4ALL-Dist-Versions\Python313"
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
           # Use setup-python installed Python, install deps, then copy whole install
           $pythonSrc = (Get-Command python).Source.Replace('\python.exe','')
@@ -73,7 +74,8 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $dist = "C:\DDT4ALL-Dist-Versions\Python38-32"
+          $drive = (Get-Item $env:GITHUB_WORKSPACE).PSDrive.Root
+          $dist = "$drive\DDT4ALL-Dist-Versions\Python38-32"
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
           # Use setup-python installed Python, install deps, then copy whole install
           $pythonSrc = (Get-Command python).Source.Replace('\python.exe','')
