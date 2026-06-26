@@ -1,0 +1,104 @@
+name: Build Windows Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]+.[0-9]+.[0-9]+*'
+  release:
+    types: [published]
+
+jobs:
+  build-x64:
+    name: Build x64 Installer
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Inno Setup 6
+        run: choco install innosetup --version 6.2.2 --confirm --no-progress
+        shell: pwsh
+
+      - name: Prepare Python 3.13 embeddable
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $url = "https://www.python.org/ftp/python/3.13.3/python-3.13.3-embed-amd64.zip"
+          $zip = "$env:TEMP\python313.zip"
+          $dist = "C:\DDT4ALL-Dist-Versions\Python313"
+          New-Item -ItemType Directory -Force -Path $dist | Out-Null
+          Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+          Expand-Archive -Path $zip -DestinationPath $dist -Force
+          Get-ChildItem $dist -Filter "*.pth" | Rename-Item -NewName { $_.Name + ".bak" }
+          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
+          & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
+          & "$dist\python.exe" -m pip install --upgrade pip --no-warn-script-location --disable-pip-version-check
+          & "$dist\python.exe" -m pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "setup_tools\inno-win-setup\wininstaller.iss"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-x64
+          path: setup_tools/inno-win-setup/Output/*.exe
+          if-no-files-found: error
+
+      - name: Upload to Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: setup_tools/inno-win-setup/Output/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-x86:
+    name: Build x86 Installer
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Inno Setup 5
+        run: choco install innosetup --version 5.6.1 --confirm --no-progress --allow-downgrade
+        shell: pwsh
+
+      - name: Prepare Python 3.8 embeddable
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $url = "https://www.python.org/ftp/python/3.8.10/python-3.8.10-embed-win32.zip"
+          $zip = "$env:TEMP\python38.zip"
+          $dist = "C:\DDT4ALL-Dist-Versions\Python38-32"
+          New-Item -ItemType Directory -Force -Path $dist | Out-Null
+          Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+          Expand-Archive -Path $zip -DestinationPath $dist -Force
+          Get-ChildItem $dist -Filter "*.pth" | Rename-Item -NewName { $_.Name + ".bak" }
+          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
+          & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
+          & "$dist\python.exe" -m pip install --upgrade pip --no-warn-script-location --disable-pip-version-check
+          & "$dist\python.exe" -m pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 5\ISCC.exe" "setup_tools\inno-win-setup\wininstaller-py3.8.6-inno-5-32-bits.iss"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-x86
+          path: setup_tools/inno-win-setup/Output/*.exe
+          if-no-files-found: error
+
+      - name: Upload to Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: setup_tools/inno-win-setup/Output/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
