@@ -188,7 +188,7 @@ def get_last_error():
 
 def get_translator_lang():
     # default translation if err set to en_US
-    loc_lang = "en_US"
+    loc_lang = lang_list["English"]
     try:
         lang, enc = locale.getdefaultlocale()
         loc_lang = lang
@@ -304,7 +304,7 @@ def clear_history():
     save_config()
 
 
-def translator(domain, lang=None):
+def translator(domain, lang=lang_list["English"]):
     load_configuration()
     # Use provided language or configuration language
     target_lang = lang if lang else configuration.get("lang", "en_US")
