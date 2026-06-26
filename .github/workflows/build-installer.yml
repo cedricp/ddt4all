@@ -38,7 +38,10 @@ jobs:
       - name: Build installer
         shell: pwsh
         run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "setup_tools\inno-win-setup\wininstaller.iss"
+          $iscc = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $iscc) { $iscc = Get-ChildItem -Path "${env:ProgramFiles}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName }
+          Write-Host "Using ISCC: $iscc"
+          & $iscc "setup_tools\inno-win-setup\wininstaller.iss"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -84,7 +87,10 @@ jobs:
       - name: Build installer
         shell: pwsh
         run: |
-          & "C:\Program Files (x86)\Inno Setup 5\ISCC.exe" "setup_tools\inno-win-setup\wininstaller-py3.8.6-inno-5-32-bits.iss"
+          $iscc = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $iscc) { $iscc = Get-ChildItem -Path "${env:ProgramFiles}\Inno Setup *" -Filter ISCC.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName }
+          Write-Host "Using ISCC: $iscc"
+          & $iscc "setup_tools\inno-win-setup\wininstaller-py3.8.6-inno-5-32-bits.iss"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
