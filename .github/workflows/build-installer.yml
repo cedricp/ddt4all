@@ -30,7 +30,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
           Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
           Expand-Archive -Path $zip -DestinationPath $dist -Force
-          Get-ChildItem $dist -Filter "*.pth" | Rename-Item -NewName { $_.Name + ".bak" }
+          # Ativar "import site" no ._pth para permitir pip encontrar pacotes
+          Get-ChildItem $dist -Filter "*.pth" | ForEach-Object {
+            (Get-Content $_.FullName) -replace "^#(import site)", '$1' | Set-Content $_.FullName
+          }
           Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
           & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
           & "$dist\python.exe" -m pip install --upgrade pip --no-warn-script-location --disable-pip-version-check
@@ -77,7 +80,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
           Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
           Expand-Archive -Path $zip -DestinationPath $dist -Force
-          Get-ChildItem $dist -Filter "*.pth" | Rename-Item -NewName { $_.Name + ".bak" }
+          # Ativar "import site" no ._pth para permitir pip encontrar pacotes
+          Get-ChildItem $dist -Filter "*.pth" | ForEach-Object {
+            (Get-Content $_.FullName) -replace "^#(import site)", '$1' | Set-Content $_.FullName
+          }
           # Python 3.8 precisa do URL antigo do get-pip
           Invoke-WebRequest -Uri "https://bootstrap.pypa.io/pip/3.8/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
           & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
