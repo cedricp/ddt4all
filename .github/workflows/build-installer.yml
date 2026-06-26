@@ -20,24 +20,20 @@ jobs:
         run: choco install innosetup --confirm --no-progress
         shell: pwsh
 
-      - name: Prepare Python 3.13 embeddable
+      - name: Prepare Python 3.13
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $url = "https://www.python.org/ftp/python/3.13.3/python-3.13.3-embed-amd64.zip"
-          $zip = "$env:TEMP\python313.zip"
           $dist = "C:\DDT4ALL-Dist-Versions\Python313"
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
-          Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
-          Expand-Archive -Path $zip -DestinationPath $dist -Force
-          # Ativar "import site" no ._pth para permitir pip encontrar pacotes
-          Get-ChildItem $dist -Filter "*.pth" | ForEach-Object {
-            (Get-Content $_.FullName) -replace "^#(import site)", '$1' | Set-Content $_.FullName
-          }
-          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
-          & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
-          & "$dist\python.exe" -m pip install --upgrade pip --no-warn-script-location --disable-pip-version-check
-          & "$dist\python.exe" -m pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+          # Use setup-python installed Python, install deps, then copy whole install
+          $pythonSrc = (Get-Command python).Source.Replace('\python.exe','')
+          # Install project deps first
+          pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+          # Copy Python install to dist dir
+          Copy-Item -Path "$pythonSrc\*" -Destination $dist -Recurse -Force
+          Write-Host "Python copied from $pythonSrc to $dist"
+          & "$dist\python.exe" -c "import ddt4all; print('ddt4all OK')"
 
       - name: Build installer
         shell: pwsh
@@ -70,25 +66,20 @@ jobs:
         run: choco install innosetup --version 5.6.1 --confirm --no-progress --allow-downgrade --force
         shell: pwsh
 
-      - name: Prepare Python 3.8 embeddable
+      - name: Prepare Python 3.8
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $url = "https://www.python.org/ftp/python/3.8.10/python-3.8.10-embed-win32.zip"
-          $zip = "$env:TEMP\python38.zip"
           $dist = "C:\DDT4ALL-Dist-Versions\Python38-32"
           New-Item -ItemType Directory -Force -Path $dist | Out-Null
-          Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
-          Expand-Archive -Path $zip -DestinationPath $dist -Force
-          # Ativar "import site" no ._pth para permitir pip encontrar pacotes
-          Get-ChildItem $dist -Filter "*.pth" | ForEach-Object {
-            (Get-Content $_.FullName) -replace "^#(import site)", '$1' | Set-Content $_.FullName
-          }
-          # Python 3.8 precisa do URL antigo do get-pip
-          Invoke-WebRequest -Uri "https://bootstrap.pypa.io/pip/3.8/get-pip.py" -OutFile "$dist\get-pip.py" -UseBasicParsing
-          & "$dist\python.exe" "$dist\get-pip.py" --no-warn-script-location
-          & "$dist\python.exe" -m pip install --upgrade pip --no-warn-script-location --disable-pip-version-check
-          & "$dist\python.exe" -m pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+          # Use setup-python installed Python, install deps, then copy whole install
+          $pythonSrc = (Get-Command python).Source.Replace('\python.exe','')
+          # Install project deps first
+          pip install -e "$env:GITHUB_WORKSPACE[dev,can,network,bluetooth]" --no-warn-script-location --disable-pip-version-check
+          # Copy Python install to dist dir
+          Copy-Item -Path "$pythonSrc\*" -Destination $dist -Recurse -Force
+          Write-Host "Python copied from $pythonSrc to $dist"
+          & "$dist\python.exe" -c "import ddt4all; print('ddt4all OK')"
 
       - name: Build installer
         shell: pwsh
