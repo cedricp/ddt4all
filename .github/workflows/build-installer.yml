@@ -75,7 +75,7 @@ jobs:
       - name: Setup Python 3.8 x86
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.8.6"
           architecture: 'x86'
 
       - name: Install Inno Setup 5
