@@ -307,7 +307,7 @@ def clear_history():
 def translator(domain, lang=lang_list["English"]):
     load_configuration()
     # Use provided language or configuration language
-    target_lang = lang if lang else configuration.get("lang", "en_US")
+    target_lang = lang if lang else configuration.get("lang", lang_list["English"])
     # Set up message catalog access with specific language
     global _current_translation
     _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
