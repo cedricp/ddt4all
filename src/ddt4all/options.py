@@ -60,8 +60,26 @@ opt_stpx_full = False  # Full STPX support detected
 opt_stn_basic = False  # Basic STN protocol support detected
 elm_uart_buffer_size = 0x1ff  # UART buffer size for STN-based adapters
 
+lang_list = {
+    "English": "en_US",
+    "German": "de",
+    "Spanish": "es",
+    "French": "fr",
+    "Hungarian": "hu",
+    "Italian": "it",
+    "Dutch": "nl",
+    "Polish": "pl",
+    "Portuguese": "pt",
+    "Romanian": "ro",
+    "Russian": "ru",
+    "Serbian": "sr",
+    "Czech":"cs_CZ",
+    "Turkish": "tr",
+    "Ukrainian": "uk_UA"
+}
+
 configuration = {
-    "lang": None,
+    "lang": lang_list["English"],
     "dark": False,
     "socket_timeout": False,
     "device_settings": {},
@@ -83,23 +101,6 @@ configuration = {
     "last_opened_ecu": None
 }
 
-lang_list = {
-    "English": "en_US",
-    "German": "de",
-    "Spanish": "es",
-    "French": "fr",
-    "Hungarian": "hu",
-    "Italian": "it",
-    "Dutch": "nl",
-    "Polish": "pl",
-    "Portuguese": "pt",
-    "Romanian": "ro",
-    "Russian": "ru",
-    "Serbian": "sr",
-    "Czech":"cs_CZ",
-    "Turkish": "tr",
-    "Ukrainian": "uk_UA"
-}
 
 BASE_DIR = Path(__file__).resolve().parent
 
