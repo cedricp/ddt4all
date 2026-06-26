@@ -134,7 +134,7 @@ def load_configuration():
         f = open(get_config_dir() / "config.json", "r", encoding="UTF-8")
         config = json.loads(f.read())
         # load config as multiplatform (mac fix macOs load conf)
-        configuration["lang"] = config.get("lang", get_translator_lang())
+        configuration["lang"] = config.get("lang") or get_translator_lang()  # get default lang if value in config is not set or None
         configuration["dark"] = config.get("dark", False)
         configuration["socket_timeout"] = config.get("socket_timeout", False)
         
@@ -190,11 +190,15 @@ def get_translator_lang():
     loc_lang = "en_US"
     try:
         lang, enc = locale.getdefaultlocale()
-        loc_lang = lang
+        if lang:
+            # set value only if lang is detected
+            loc_lang = lang
     except Exception:
         try:
             lang, enc = locale.getlocale()
-            loc_lang = lang
+            if lang:
+                # set value only if lang is detected
+                loc_lang = lang
         except Exception:
             pass
     return loc_lang
@@ -306,11 +310,12 @@ def clear_history():
 def translator(domain, lang=None):
     load_configuration()
     # Use provided language or configuration language
-    target_lang = lang if lang else configuration.get("lang", "en_US")
+    target_lang = lang if lang else (configuration.get("lang") or "en_US")
     # Set up message catalog access with specific language
     global _current_translation
     _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
     return _dynamic_gettext
+
 
 def dtt4all_time():
     if (sys.version_info[0] * 100 + sys.version_info[1]) > 306:
