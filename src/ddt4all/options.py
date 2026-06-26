@@ -311,7 +311,7 @@ def translator(domain, lang=lang_list["Default"]):
     target_lang = lang if lang else configuration.get("lang", lang_list["Default"])
     # Set up message catalog access with specific language
     global _current_translation
-    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
+    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[str(target_lang)], fallback=True)
     return _dynamic_gettext
 
 def dtt4all_time():
