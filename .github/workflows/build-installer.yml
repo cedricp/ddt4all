@@ -19,7 +19,7 @@ jobs:
       - name: Setup Python 3.13 x64
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.13.2"
           architecture: 'x64'
 
       - name: Install Inno Setup 6.2.2
