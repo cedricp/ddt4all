@@ -188,19 +188,12 @@ def get_last_error():
 
 
 def get_translator_lang():
-    # default translation if err set to en_US
-    loc_lang = lang_list["Default"]
+    """Return the system locale language or the configured default."""
     try:
-        lang, enc = locale.getdefaultlocale()
-        loc_lang = lang
-    except Exception:
-        try:
-            lang, enc = locale.getlocale()
-            loc_lang = lang
-        except Exception:
-            pass
-    return loc_lang
-
+        locale.setlocale(locale.LC_CTYPE, "")
+        return locale.getlocale()[0] or lang_list["Default"]
+    except (locale.Error, ValueError):
+        return lang_list["Default"]
 
 def get_device_settings(device_type, port=None):
     """Get device-specific settings with fallback to defaults"""
