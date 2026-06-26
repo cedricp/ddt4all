@@ -301,11 +301,12 @@ def clear_history():
 def translator(domain, lang=None):
     load_configuration()
     # Use provided language or configuration language
-    target_lang = lang if lang else configuration.get("lang", lang_list["Default"])
+    target_lang = lang if lang else (configuration.get("lang") or lang_list["Default"])
     # Set up message catalog access with specific language
     global _current_translation
-    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[str(target_lang)], fallback=True)
+    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[target_lang], fallback=True)
     return _dynamic_gettext
+
 
 def dtt4all_time():
     if (sys.version_info[0] * 100 + sys.version_info[1]) > 306:
