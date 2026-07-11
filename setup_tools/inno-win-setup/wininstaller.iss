@@ -2,7 +2,7 @@
 #include "version.h"
 #define MyAppName       Str(__appname__) 
 #define MyAppVersion    Str(__version__)
-#define MyAppCodeName   StringChange(Str(__codename__), " ", "-") + "-XP"
+#define MyAppCodeName   StringChange(Str(__codename__), " ", "-")
 #define MyAppDir        MyAppName
 #define MyAppAuthor     Str(__author__)
 #define MyAppCompany    Str(__author__)
