@@ -1147,7 +1147,7 @@ def set_dark_style(onoff):
         stylefile = core.QFile("qstyle.qss")
         stylefile.open(core.QFile.ReadOnly)
 
-	StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
+        StyleSheet = core.QString(core.QLatin1String(stylefile.readAll()))
     else:
         StyleSheet = ""
 
