@@ -344,6 +344,32 @@ sudo apt-get install --reinstall libxcb-xinerama0
 python -m ddt4all
 ```
 
+### **macOS Installation Notes**
+If you are on macOS and `pip install -e .` fails with an editable install error, upgrade packaging tools first:
+
+```bash
+python3 -m pip install --upgrade pip setuptools wheel
+python3 -m pip install -e .
+```
+
+If DDT4All starts with:
+`resources/projects.json not found or invalid`
+
+reinstall from the repository root so package data is available:
+
+```bash
+cd ddt4all
+python3 -m pip install --force-reinstall -e .
+```
+
+Quick launch commands on macOS:
+
+```bash
+ddt4all
+# or
+python3 -m ddt4all
+```
+
 ---
 
 ## 🚀 **Quick Launch**

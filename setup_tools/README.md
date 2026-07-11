@@ -97,6 +97,9 @@ cd ddt4all
 python3 -m venv ./venv
 source ./venv/bin/activate
 
+# Upgrade packaging tools (recommended on macOS)
+python3 -m pip install --upgrade pip setuptools wheel
+
 # Install dependencies including PyInstaller
 pip install -e ".[dev]"
 pip install pyinstaller
@@ -245,9 +248,14 @@ The build systems automatically sync version information from:
 
 ### macOS Build Issues
 - **PyInstaller fails**: Check for missing hidden imports
+- **Editable install fails**: Upgrade tooling, then retry:
+  `python3 -m pip install --upgrade pip setuptools wheel`
 - **Code signing errors**: Ensure proper certificates installed
 - **Universal binary issues**: Build on both architectures or use universal tools
 - **Notarization failures**: Check entitlements and signing identity
+- **`resources/projects.json not found or invalid` at startup**:
+  Reinstall from repository root so package data is present:
+  `python3 -m pip install --force-reinstall -e .`
 
 ### Linux Build Issues
 - **Missing system dependencies**: Install development headers

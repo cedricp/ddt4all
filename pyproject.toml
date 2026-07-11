@@ -79,6 +79,12 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+ddt4all = [
+    "resources/*.json",
+    "generated/locales/*/LC_MESSAGES/*.mo",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests/integration", "tests/unit", "tests/smoke"]
 addopts = "-q"
