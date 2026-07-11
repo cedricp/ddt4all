@@ -1,0 +1,7 @@
+#define __appname__ "DDT4ALL"
+#define __author__ "Cedric PAILLE"
+#define __copyright__ "Copyright ©2016-2026"
+#define __version__ "1.0.3"
+#define __email__ "cedricpaille@gmail.com"
+#define __codename__ "Windows-XP"
+#define __status__ "dev"

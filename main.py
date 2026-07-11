@@ -24,14 +24,37 @@ import traceback
 import tempfile, errno
 import codecs
 
+__appname__ = "DDT4ALL"
 __author__ = "Cedric PAILLE"
-__copyright__ = "Copyright 2016-2018"
+__copyright__ = "Copyright ©2016-2026"
 __credits__ = []
+__contributors__ = {
+    "Furtif": "Collaborator",
+    "jyte": "Contributor",
+    "bovirus": "Contributor",
+    "not-jan": "Contributor",
+    "joeyave": "Contributor",
+    "josefe17": "Contributor",
+    "shrlnm": "Contributor",
+    "jneuhauser": "Contributor",
+    "gobo-ws": "Contributor",
+    "Dante383": "Contributor",
+    "jan-stanek": "Contributor",
+    "mrechte": "Contributor",
+    "frederic34": "Contributor",
+    "memleketim05": "Contributor",
+    "landswellsong": "Contributor",
+    "krzeminskim": "Contributor",
+    "Jodaille": "Contributor",
+    "TA1GI": "Translator",
+    "walkman2021": "Translator"
+}
 __license__ = "GPL"
-__version__ = "1.0.0"
+__version__ = "1.0.3"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__status__ = "Beta"
+__codename__ = "Windows-XP"
+__status__ = "dev"
 
 _ = options.translator('ddt4all')
 app = None
@@ -1455,6 +1478,20 @@ class portChooser(widgets.QDialog):
 
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
+    
+    # For InnoSetup version.h auto generator
+    if os.path.isdir('setup_tools/inno-win-setup'):
+        try:
+            with open("setup_tools/inno-win-setup/version.h", "w") as f:
+                f.write('#define __appname__ "%s"\n' % __appname__)
+                f.write('#define __author__ "%s"\n' % __author__)
+                f.write('#define __copyright__ "%s"\n' % __copyright__)
+                f.write('#define __version__ "%s"\n' % __version__)
+                f.write('#define __email__ "%s"\n' % __email__)
+                f.write('#define __codename__ "%s"\n' % __codename__)
+                f.write('#define __status__ "%s"' % __status__)
+        except (OSError, IOError) as e:
+            print(_("Warning: Could not write version.h: %s") % e)
 
     options.simultation_mode = True
     app = widgets.QApplication(sys.argv)

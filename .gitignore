@@ -1,5 +1,7 @@
 /.idea/
 *.pyc
 /logs/
-*.zip
+/*.zip
 /vehicles/
+/.vscode/
+/setup_tools/inno-win-setup/Output/
