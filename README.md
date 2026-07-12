@@ -590,6 +590,7 @@ ddt4all/
 | README.md              # Project documentation
 | license.txt            # GPL-3.0 license
 | src/                   # Source code directory
+|   |-- README.md        # Source code documentation
 |   |-- ddt4all/         # Main package
 |       |-- main.py      # Main application entry point
 |       |-- version.py   # Version and contributor information
