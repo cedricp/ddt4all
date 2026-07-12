@@ -387,6 +387,9 @@ def convertXML():
 
 
 def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
+    if not os.path.exists(file):
+        print("%s not found" % file)
+        exit(1)
     xdom = xml.dom.minidom.parse(file)
     xdoc = xdom.documentElement
     dictionary = {}
