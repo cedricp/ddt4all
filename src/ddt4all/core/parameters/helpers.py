@@ -424,7 +424,6 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
                             dictionary["projects"]["All"]["DoIP"][add_doip] = name_doip
             code = project.getAttribute(u"code")
             p_name = project.getAttribute(u"name")
-            addressing = os.path.join("vehicles", "GenericAddressing.xml")
             parts = []
             try:
                 parts = str(project.getElementsByTagName(u"addressing")[0].childNodes[0].nodeValue).split('/')
