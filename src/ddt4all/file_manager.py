@@ -16,7 +16,11 @@ def is_run_from_src():
 
 
 def _legacy_exists():
-    return Path("config.json").exists() or Path("json").exists()
+    return (
+        Path("config.json").exists()
+        or Path("json").exists()
+        or Path("ecus/eculist.xml").exists()
+    )
 
 
 def get_dir(dir_name):
@@ -37,7 +41,11 @@ def get_json_dir():
 
 
 def get_logs_dir():
-    return get_dir("logs")
+    if is_run_from_src():
+        return (BASE_DIR / "../.." / "logs").resolve()
+    if _legacy_exists():
+        return Path("logs").resolve()
+    return Path(_dirs.user_log_dir)
 
 
 def get_vehicles_dir():
