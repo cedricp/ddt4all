@@ -34,16 +34,14 @@ fi
 # --- stdlib + venv site-packages ---
 # D'abord copier le site-packages du venv (contient PyQt5, pyserial, etc.)
 cp -r "$PYTHON_STDLIB/site-packages" "$APPDIR/usr/lib/python${PYTHON_VER}/"
-# Puis la stdlib système (encodings, os.py, etc.) sans écraser site-packages
-SYS_STDLIB="$(python3 -c "import os; print(os.path.dirname(os.__file__))")"
-if [ -d "$SYS_STDLIB" ] && [ "$(readlink -f "$SYS_STDLIB")" != "$(readlink -f "$PYTHON_STDLIB")" ]; then
-  for item in "$SYS_STDLIB"/*; do
-    bn="$(basename "$item")"
-    if [ "$bn" != "site-packages" ]; then
-      cp -r "$item" "$APPDIR/usr/lib/python${PYTHON_VER}/" 2>/dev/null || true
-    fi
-  done
-fi
+# Puis la stdlib système (encodings, os.py, etc.) depuis l'interpréteur courant
+STDLIB="$(python3 -c "import os; print(os.path.dirname(os.__file__))")"
+for item in "$STDLIB"/*; do
+  bn="$(basename "$item")"
+  if [ "$bn" != "site-packages" ] && [ "$bn" != "__pycache__" ]; then
+    cp -rn "$item" "$APPDIR/usr/lib/python${PYTHON_VER}/" 2>/dev/null || true
+  fi
+done
 
 # --- Installer ddt4all (écrase l'édition éditable du venv) ---
 pip install --upgrade --no-deps --force-reinstall --target "$APPDIR/usr/lib/python${PYTHON_VER}/site-packages" .
