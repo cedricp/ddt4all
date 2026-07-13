@@ -107,8 +107,10 @@ BASE_DIR = Path(__file__).resolve().parent
 
 def save_config():
     # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
+    config_path = get_config_dir() / "config.json"
+    config_path.parent.mkdir(parents=True, exist_ok=True)
     js = json.dumps(configuration, ensure_ascii=False, indent=True)
-    f = open(str(get_config_dir() / "config.json"), "w", encoding="UTF-8")
+    f = open(str(config_path), "w", encoding="UTF-8")
     f.write(js)
     f.close()
 
