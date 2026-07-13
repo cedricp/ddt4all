@@ -5,6 +5,7 @@
 
 from datetime import datetime
 import glob
+from pathlib import Path
 import os
 import platform
 import serial
@@ -446,8 +447,7 @@ class ELM:
 
             options.port_speed = speed
 
-            if not os.path.exists(get_logs_dir()):
-                os.mkdir(get_logs_dir())
+            Path(get_logs_dir()).mkdir(parents=True, exist_ok=True)
 
             if len(options.log) > 0:
                 self.lf = open(os.path.join(get_logs_dir(), "elm_" + options.log + ".txt"), "at", encoding="utf-8")
