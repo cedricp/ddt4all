@@ -51,3 +51,4 @@ __pycache__/
 coverage.xml
 /scripts/resources.qrc
 *.po~
+ddt4all-*.AppImage
