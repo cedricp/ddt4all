@@ -14,6 +14,7 @@ from ddt4all.file_manager import (
     get_config_dir,
     get_json_dir,
     get_logs_dir,
+    get_projects_path,
 )
 import ddt4all.generated.resources_rc  # noqa: F401
 import ddt4all.options as options
@@ -46,7 +47,7 @@ if sys.platform[:3] == "lin":
 
 def load_this():
     try:
-        with open(BASE_DIR / "resources" / "projects.json", "r", encoding="UTF-8") as f:
+        with open(get_projects_path(), "r", encoding="UTF-8") as f:
             vehicles_loc = json.loads(f.read())
         ecu_db.addressing = vehicles_loc["projects"]["All"]["addressing"]
         # TODO: Review DoIP addressing mapping loaded from projects.json.
@@ -112,10 +113,8 @@ def main(argv=None) -> int:
     if os.path.exists(options.ecus_dir + '/eculist.xml'):
         print(_("Using custom DDT database"))
 
-    if not os.path.exists(get_json_dir()):
-        os.mkdir(get_json_dir())
-    if not os.path.exists(get_logs_dir()):
-        os.mkdir(get_logs_dir())
+    Path(get_json_dir()).mkdir(parents=True, exist_ok=True)
+    Path(get_logs_dir()).mkdir(parents=True, exist_ok=True)
 
     pc = MainWindowOptions(app)
     nok = True

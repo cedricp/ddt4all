@@ -63,8 +63,7 @@ class MainWidget(widgets.QMainWindow):
         super(MainWidget, self).__init__(parent)
         self.setIcon()
         if not options.simulation_mode:
-            if not os.path.exists(get_logs_dir()):
-                os.mkdir(get_logs_dir())
+            Path(get_logs_dir()).mkdir(parents=True, exist_ok=True)
             self.screenlogfile = open(os.path.join(get_logs_dir() / "screens.txt"), "at", encoding="utf-8")
         else:
             self.screenlogfile = None
