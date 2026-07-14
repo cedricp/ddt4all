@@ -100,6 +100,9 @@ export PYTHONHOME="\$APPDIR/usr"
 export PYTHONPATH="\$APPDIR/usr/lib/python${PYTHON_VER}/site-packages"
 export QT_QPA_PLATFORM=xcb
 export QT_PLUGIN_PATH="\$APPDIR/usr/plugins"
+export QTWEBENGINEPROCESS_PATH="\$APPDIR/usr/libexec/QtWebEngineProcess"
+export QTWEBENGINE_RESOURCES_PATH="\$APPDIR/usr/resources"
+export QTWEBENGINE_LOCALES_PATH="\$APPDIR/usr/translations/qtwebengine_locales"
 export QTWEBENGINE_CHROMIUM_FLAGS="--disk-cache-dir=\$HOME/.cache/ddt4all"
 exec "\$APPDIR/usr/bin/python3" -m ddt4all "\$@"
 APPRUN
@@ -165,31 +168,85 @@ if [ ! -x "$LDA" ]; then
   LDA="$TOOLSDIR/linuxdeploy-${LINUXDEPLOY_ARCH}.AppImage"
 fi
 
-# NOTE: on n'utilise volontairement PAS --plugin qt ici.
-# Ce plugin cherche une installation Qt système via qmake, ce qui n'a pas de
-# sens pour nous : PyQt5 (installé via pip) embarque déjà son propre Qt5
-# complet (libs + plugins) dans le wheel. Le plugin s'est aussi révélé
-# fragile en environnement Docker/i386 (échec d'exécution de l'AppImage
-# brut, absence de FUSE). On laisse donc linuxdeploy faire uniquement son
-# travail de base : scanner les dépendances ELF (ldd) des binaires déjà
-# présents dans l'AppDir et les bundler. Les plugins Qt sont copiés
-# manuellement juste après, depuis le wheel PyQt5.
-LD_LIBRARY_PATH="" "$LDA" --appdir "$APPDIR" 2>&1 || {
+# NOTE: on n'utilise volontairement PAS --plugin qt ici (voir historique du
+# commit). On laisse linuxdeploy faire son travail de base : scanner les
+# dépendances ELF des binaires/libs qu'on lui indique et les bundler avec
+# rpath correct. Tout le reste (localisation des libs/plugins/ressources
+# Qt5) est fait manuellement ci-dessous via QLibraryInfo, qui fonctionne
+# aussi bien que Qt5 vienne d'un wheel pip auto-suffisant (x86_64) ou d'une
+# installation système via apt (i386, python3-pyqt5) — contrairement à un
+# chemin en dur vers site-packages/PyQt5/Qt5, qui ne marche que pour le cas
+# pip.
+echo "=== Localisation de Qt5 via PyQt5 (QLibraryInfo) ==="
+QT_PATHS="$("$PYTHON_BIN" - <<'PYEOF'
+from PyQt5.QtCore import QLibraryInfo
+get = getattr(QLibraryInfo, "path", None) or QLibraryInfo.location
+mapping = {
+    "LibrariesPath": "QT_LIBRARIES_PATH",
+    "PluginsPath": "QT_PLUGINS_PATH",
+    "DataPath": "QT_DATA_PATH",
+    "TranslationsPath": "QT_TRANSLATIONS_PATH",
+    "LibraryExecutablesPath": "QT_LIBEXEC_PATH",
+}
+for name, var in mapping.items():
+    try:
+        val = get(getattr(QLibraryInfo, name))
+    except Exception:
+        val = ""
+    print(f'{var}="{val}"')
+PYEOF
+)"
+echo "$QT_PATHS"
+eval "$QT_PATHS"
+
+mkdir -p "$APPDIR/usr/lib" "$APPDIR/usr/plugins" "$APPDIR/usr/resources" "$APPDIR/usr/translations" "$APPDIR/usr/libexec"
+
+# --- Libs Qt5 (libQt5Core.so etc.) ---
+LIBDEPLOY_ARGS=()
+if [ -n "$QT_LIBRARIES_PATH" ] && [ -d "$QT_LIBRARIES_PATH" ]; then
+  for lib in "$QT_LIBRARIES_PATH"/libQt5*.so*; do
+    [ -e "$lib" ] || continue
+    cp -an "$lib" "$APPDIR/usr/lib/" 2>/dev/null || true
+    LIBDEPLOY_ARGS+=(--library "$lib")
+  done
+  echo "Libs Qt5 trouvées dans $QT_LIBRARIES_PATH (${#LIBDEPLOY_ARGS[@]} fichiers)"
+else
+  echo "WARNING: QT_LIBRARIES_PATH introuvable ('$QT_LIBRARIES_PATH')"
+fi
+
+# linuxdeploy scanne récursivement les dépendances de chaque lib passée en
+# --library (et de tout ce qui est déjà dans usr/bin, usr/lib) et corrige
+# les rpath en conséquence.
+LD_LIBRARY_PATH="" "$LDA" --appdir "$APPDIR" "${LIBDEPLOY_ARGS[@]}" 2>&1 || {
   echo "WARNING: linuxdeploy a échoué mais on continue"
 }
 
-# --- Garantir la présence des plugins Qt attendus par AppRun ---
-# Copie systématique depuis le wheel PyQt5 (qui embarque son propre Qt5),
-# vers l'emplacement pointé par QT_PLUGIN_PATH dans AppRun.
-PYQT5_PLUGINS="$APPDIR/usr/lib/python${PYTHON_VER}/site-packages/PyQt5/Qt5/plugins"
-DEST_PLUGINS="$APPDIR/usr/plugins"
-
-if [ -d "$PYQT5_PLUGINS" ]; then
-  echo "=== Copie des plugins Qt depuis PyQt5 vers usr/plugins ==="
-  mkdir -p "$DEST_PLUGINS"
-  cp -r "$PYQT5_PLUGINS"/* "$DEST_PLUGINS/"
+# --- Plugins Qt5 (platforms/, imageformats/, sqldrivers/, etc.) ---
+if [ -n "$QT_PLUGINS_PATH" ] && [ -d "$QT_PLUGINS_PATH" ]; then
+  cp -r "$QT_PLUGINS_PATH"/* "$APPDIR/usr/plugins/" 2>/dev/null || true
+  echo "Plugins Qt5 copiés depuis $QT_PLUGINS_PATH"
 else
-  echo "WARNING: dossier plugins PyQt5 introuvable ($PYQT5_PLUGINS), l'AppImage risque de ne pas démarrer"
+  echo "WARNING: QT_PLUGINS_PATH introuvable ('$QT_PLUGINS_PATH'), l'AppImage risque de ne pas démarrer"
+fi
+
+# --- Ressources QtWebEngine (icudtl.dat, *.pak) ---
+if [ -n "$QT_DATA_PATH" ] && [ -d "$QT_DATA_PATH/resources" ]; then
+  cp -r "$QT_DATA_PATH/resources"/* "$APPDIR/usr/resources/" 2>/dev/null || true
+  echo "Ressources QtWebEngine copiées depuis $QT_DATA_PATH/resources"
+fi
+
+# --- Traductions / locales QtWebEngine ---
+if [ -n "$QT_TRANSLATIONS_PATH" ] && [ -d "$QT_TRANSLATIONS_PATH" ]; then
+  cp -r "$QT_TRANSLATIONS_PATH"/* "$APPDIR/usr/translations/" 2>/dev/null || true
+fi
+
+# --- Binaire helper QtWebEngineProcess (obligatoire pour QtWebEngine) ---
+if [ -n "$QT_LIBEXEC_PATH" ] && [ -d "$QT_LIBEXEC_PATH" ]; then
+  for exe in "$QT_LIBEXEC_PATH"/QtWebEngineProcess*; do
+    [ -e "$exe" ] || continue
+    cp -a "$exe" "$APPDIR/usr/libexec/"
+    echo "QtWebEngineProcess copié depuis $exe"
+  done
 fi
 
 # --- Créer l'AppImage ---
