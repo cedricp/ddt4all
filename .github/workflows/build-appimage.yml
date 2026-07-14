@@ -8,42 +8,87 @@ on:
   release:
     types: [published]
 
+
 jobs:
-  appimage:
-    name: Linux AppImage
+  build:
+
     runs-on: ubuntu-24.04
+
+    strategy:
+      matrix:
+        arch:
+          - x86_64
+          - i386
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.13
+      - name: Set up QEMU
+        if: matrix.arch == 'i386'
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Python (x86_64)
+        if: matrix.arch == 'x86_64'
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
           cache: "pip"
 
-      - name: Install system deps
+      - name: Install system deps (x86_64)
+        if: matrix.arch == 'x86_64'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
+            file \
             libxcb-xinerama0 \
             libgl1 \
             libfuse2 \
-            libbluetooth-dev
+            libbluetooth-dev \
+            libnss3 \
+            libxcomposite1 \
+            libxrandr2 \
+            libxdamage1 \
+            libxfixes3 \
+            libxkbcommon0 \
+            libcups2t64 \
+            libdrm2 \
+            libgbm1 \
+            libasound2t64
 
-      - name: Install Python deps
+      - name: Install Python deps (x86_64)
+        if: matrix.arch == 'x86_64'
         run: |
           pip install --upgrade pip
           pip install -e ".[can,network,bluetooth]"
 
-      - name: Build AppImage
+      - name: Build AppImage (x86_64)
+        if: matrix.arch == 'x86_64'
         run: |
-          bash setup_tools/appimage/build.sh "${GITHUB_REF_NAME}"
+          bash setup_tools/appimage/build.sh "${GITHUB_REF_NAME}" "x86_64"
+
+      - name: Build i386
+        if: matrix.arch == 'i386'
+        run: |
+          docker run --rm \
+            --platform linux/386 \
+            -v "${{ github.workspace }}:/src" \
+            -w /src \
+            -e GITHUB_REF_NAME="${{ github.ref_name }}" \
+            i386/debian:bullseye \
+            bash -c "
+              apt-get update &&
+              apt-get install -y python3 python3-pip wget file libxcb-xinerama0 libgl1 libfuse2 python3-pyqt5 python3-pyqt5.qtwebengine libbluetooth-dev \
+                libnss3 libxcomposite1 libxrandr2 libxdamage1 libxfixes3 libxkbcommon0 libcups2 libdrm2 libgbm1 libasound2 &&
+              pip install --upgrade pip &&
+              pip install pyserial==3.5 pyusb==1.2.1 crcmod==1.7 'polib>=1.2.0,<2.0.0' 'platformdirs>=3.0.0,<4.0.0' 'python-can>=4.0.0,<5.0.0' 'obd>=0.7.1,<1.0.0' 'requests>=2.28.0,<3.0.0' 'websockets>=10.0,<12.0.0' 'pybluez-updated>=0.31' &&
+              pip install --no-deps -e '.[can,network,bluetooth]' &&
+              bash setup_tools/appimage/build.sh '${GITHUB_REF_NAME}' i386
+            "
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ddt4all-x86_64.AppImage
+          name: ddt4all-${{ matrix.arch }}.AppImage
           path: ddt4all-*.AppImage
           if-no-files-found: error
 
