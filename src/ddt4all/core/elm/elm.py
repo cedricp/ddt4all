@@ -422,6 +422,9 @@ class ELM:
         self.adapter_type = adapter_type
         options.port_speed = rate
         self.stpx_enabled = False  # Initialize STPX mode flag
+        # PIC cable: never inherit STN capabilities from an earlier adapter.
+        options.opt_stn_basic = False
+        options.opt_stpx_full = False
         # Build speed list: user's chosen rate first, then common fallbacks.
         # dict.fromkeys preserves order and removes duplicates (e.g. when rate == 38400).
         _speed_candidates = list(dict.fromkeys([int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]))
@@ -477,39 +480,53 @@ class ELM:
                 self.__del__()
                 continue
 
-            # check OBDLink
-            elm_rsp = self.cmd("STI")
+            # PIC_ELM_ATI_DETECTION_FIX: identify generic ELM adapters with ATI, not only ATZ.
+            # Some PIC18F25K80 firmware echoes ATZ without returning its banner.
+            previous_probe_timeout = self.portTimeout
+            try:
+                self.portTimeout = 2.0 if speed == int(rate) else 0.75
+                ati_rsp = self.send_raw("ATI")
+                identity = (clean_bytestring(res) + "\n" + clean_bytestring(ati_rsp)).upper()
+                if "ELM" not in identity and "OBDII" not in identity:
+                    at1_rsp = self.send_raw("AT@1")
+                    identity += "\n" + clean_bytestring(at1_rsp).upper()
+            finally:
+                self.portTimeout = previous_probe_timeout
 
-            # Verify STN response
-            res_version = elm_rsp.replace("\n", "").replace(">", "").replace("STI", "")
-            stn_detected = "STN" in res_version.upper()
-            elm_detected = "ELM" in res.upper() or "OBDII" in res.upper()
-            if "STN" in res_version:
+            elm_detected = "ELM" in identity or "OBDII" in identity
+            stn_detected = False
+            res_version = ""
+
+            # STI and STP are STN extensions. Do not probe them on STD_USB PIC cables.
+            stn_adapter_types = {"OBDLINK", "OBDLINK_EX", "VLINKER", "VGATE", "STN"}
+            if elm_detected and str(adapter_type).upper() in stn_adapter_types:
+                elm_rsp = self.cmd("STI")
+                res_version = clean_bytestring(elm_rsp).replace("\r", "").replace("\n", " ")
+                res_version = res_version.replace(">", " ").replace("STI", " ").strip()
+                stn_detected = re.search(r"\bSTN\d+\b", res_version, re.IGNORECASE) is not None
+
+            if stn_detected:
+                options.opt_stn_basic = True
                 print(_("STN connection established"))
                 print(_("Version: ") + res_version)
-            if elm_rsp and '?' not in elm_rsp and len(elm_rsp.split(" ")) == 2:
-                odblink_meta = elm_rsp.split(" ")
-                ic_type = odblink_meta[0]
-                firmware_version = odblink_meta[1]
+                odblink_meta = res_version.split()
+                if len(odblink_meta) >= 2:
+                    ic_type = odblink_meta[0]
+                    firmware_version = odblink_meta[1]
 
-                if ic_type.startswith("STN1"):
-                    options.elm_uart_buffer_size = 0x1ff
-                elif ic_type.startswith("STN2"):
-                    options.elm_uart_buffer_size = 0x3ff
+                    if ic_type.startswith("STN1"):
+                        options.elm_uart_buffer_size = 0x1ff
+                    elif ic_type.startswith("STN2"):
+                        options.elm_uart_buffer_size = 0x3ff
 
-                try:
-                    firmware_version = firmware_version.split(".")
-                    version_number = int(''.join([re.sub(r'\D', '', version) for version in firmware_version]))
-                    stpx_introduced_in_version_number = 420  # STN1110 got STPX last in version v4.2.0
-                    if version_number >= stpx_introduced_in_version_number:
-                        options.opt_stpx_full = True
-                except Exception as e:
-                    print(_("STPX/STN configuration warning: %s") % e)
-
-                # check STN
-                elm_rsp = self.cmd("STP 53")
-                if '?' not in elm_rsp:
-                    options.opt_stn_basic = True
+                    try:
+                        version_parts = firmware_version.split(".")
+                        version_number = int("".join(re.sub(r"\D", "", part) for part in version_parts))
+                                                                                                      
+                        if version_number >= 420:
+                            options.opt_stpx_full = True
+                    except Exception as e:
+                        print(_("STPX/STN configuration warning: %s") % e)
 
             if elm_detected or stn_detected:
                 options.last_error = ""
