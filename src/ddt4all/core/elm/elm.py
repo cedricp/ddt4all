@@ -422,9 +422,6 @@ class ELM:
         self.adapter_type = adapter_type
         options.port_speed = rate
         self.stpx_enabled = False  # Initialize STPX mode flag
-        # PIC cable: never inherit STN capabilities from an earlier adapter.
-        options.opt_stn_basic = False
-        options.opt_stpx_full = False
         # Build speed list: user's chosen rate first, then common fallbacks.
         # dict.fromkeys preserves order and removes duplicates (e.g. when rate == 38400).
         _speed_candidates = list(dict.fromkeys([int(rate), 38400, 115200, 230400, 57600, 9600, 500000, 1000000, 2000000]))
