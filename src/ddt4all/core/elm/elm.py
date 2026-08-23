@@ -502,8 +502,10 @@ class ELM:
                 res_version = res_version.replace(">", " ").replace("STI", " ").strip()
                 stn_detected = re.search(r"\bSTN\d+\b", res_version, re.IGNORECASE) is not None
 
-            if stn_detected:
-                options.opt_stn_basic = True
+            if stn_detected:# check STN
+                elm_stp_53 = self.cmd("STP 53")
+                if '?' not in elm_stp_53:
+                   options.opt_stn_basic = True
                 print(_("STN connection established"))
                 print(_("Version: ") + res_version)
                 odblink_meta = res_version.split()
