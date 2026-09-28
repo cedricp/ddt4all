@@ -411,7 +411,7 @@ class EcuScanner:
                                                  'protocol': "KWP2000"}):
                     continue
                 options.elm.start_session_iso('10C0')
-                can_response = options.elm.request(req='2180', positive='61', cache=True)
+                can_response = options.elm.request(req='2180', positive='61', cache=False)
             else:
                 # Send some data collected during my tests
                 if addr == "02":
