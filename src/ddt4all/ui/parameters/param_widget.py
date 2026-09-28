@@ -685,7 +685,8 @@ class ParamWidget(widgets.QWidget):
         self.initELM()
 
         reqk = self.ecurequestsparser.requests.keys()
-        if self.ecurequestsparser.ecu_protocol == 'CAN':
+        # KWP2000 (K-line) sessions time out after ~5 s idle too, so keep them alive as well
+        if self.ecurequestsparser.ecu_protocol in ('CAN', 'KWP2000'):
             self.tester_presend_command = '3E'
             for k in reqk:
                 if "tester" in k.lower() and "present" in k.lower():
