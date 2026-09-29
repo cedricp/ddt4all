@@ -203,10 +203,10 @@ class EcuScanner:
             if 'WRONG' in can_response:
                 self._close_uds_session()
                 return False
-        diagversion = str(int(can_response.replace(' ', '')[6:8], 16))
 
         # Check supplier ident
         if options.simulation_mode:
+            diagversion = can_response.replace(' ', '')[6:8]
             # Give scanner something to eat...
             if addr == '26':
                 can_response = "62 F1 8A 43 4F 4E 54 49 4E 45 4E 54 41 4C 20 41 55 54 4F 4D 4F 54 49 56 45 20 20 20 20 " \
@@ -227,6 +227,7 @@ class EcuScanner:
                                "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20" \
                                "20 20 20 20 20 20 20 20 20 20 20 20 20"
         else:
+            diagversion = str(int(can_response.replace(' ', '')[6:8], 16))
             can_response = options.elm.request(req='22F18A', positive='', cache=False)
             if 'WRONG' in can_response:
                 self._close_uds_session()
