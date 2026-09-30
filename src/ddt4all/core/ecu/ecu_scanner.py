@@ -205,10 +205,14 @@ class EcuScanner:
                 return False
 
         # Check diagversion
-        if options.simulation_mode:
-            diagversion = can_response.replace(' ', '')[6:8]
-        else:
-            diagversion = str(int(can_response.replace(' ', '')[6:8], 16))
+        value_diag = can_response.replace(' ', '')[6:8]
+        try:
+            diagversion = str(int(value_diag, 16))
+        except ValueError as err:
+            # debug
+            # print(f"Failed to convert '{value_diag}': {err}")
+            diagversion = value_diag
+
 
         # Check supplier ident
         if options.simulation_mode:
