@@ -510,6 +510,10 @@ class MainWidget(widgets.QMainWindow):
 
     def clearHistory(self):
         """Clear last selected vehicle and last opened ECU history"""
+        # First reset the live widgets (ECU / Screen windows) so that a restart
+        # of DDT4ALL is not needed to get a clean state.
+        self.clearHistoryWindows()
+        # Clear the saved history last: refreshing the widgets may save it again
         options.clear_history()
         msgbox = widgets.QMessageBox()
         appIcon = gui.QIcon(ICON_OBD)
@@ -518,6 +522,52 @@ class MainWidget(widgets.QMainWindow):
         msgbox.setText(_("Last selected vehicle and ECU history has been cleared."))
         msgbox.setIcon(widgets.QMessageBox.Information)
         msgbox.exec_()
+
+    def clearHistoryWindows(self):
+        """Empty the "Ecu Window" and "Screen Window" docks.
+
+        The currently opened ECU is unloaded as well so DDT4ALL comes back to
+        the state it has just after a restart.
+        """
+        # Stop auto refresh and unload the current ECU parameter view
+        options.auto_refresh = False
+        self.autorefresh.setChecked(False)
+        self.refresh.setEnabled(True)
+
+        if self.paramview:
+            try:
+                self.paramview.tester_timer.stop()
+            except (AttributeError, RuntimeError):
+                pass
+            self.paramview.setParent(None)
+            self.paramview.close()
+            self.paramview.destroy()
+            self.paramview = None
+        # Replace the removed parameter view by an empty widget
+        self.scrollview.setWidget(widgets.QWidget())
+
+        # "Ecu Window" dock
+        self.treeview_ecu.clear()
+        self.ecunamemap = {}
+
+        # "Screen Window" dock
+        self.treeview_params.clear()
+        self.screennames = []
+
+        # No ECU is loaded anymore: reset the actions that depend on it
+        self.diagaction.setEnabled(False)
+        self.hexinput.setEnabled(False)
+        self.cominput.setEnabled(False)
+        self.sdsready = False
+        self.sdscombo.clear()
+        self.sdscombo.setEnabled(False)
+        self.expert.setChecked(False)
+        options.promode = False
+
+        # Back to the default vehicle of the car list
+        if self.eculistwidget.vehicle_combo.count():
+            self.eculistwidget.vehicle_combo.setCurrentIndex(0)
+            self.eculistwidget.filterProject()
 
     def resetConfig(self):
         """Reset config"""
