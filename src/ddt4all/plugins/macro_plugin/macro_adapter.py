@@ -164,10 +164,9 @@ MACRO_SUBDIR = 'macros'
 def installed_macro_dir(plugin_dir):
     """Macro folder shipped with the plugin: ``(path, origin)``.
 
-    The macros are copied into ``<plugin>/macro_plugin/macros`` at every
-    installation (``install.py``), so they are part of the plugin: no lookup
-    in a pyren checkout and no environment variable is needed, which makes the
-    installation self-contained and deterministic.
+    The macros live in ``<plugin>/macro_plugin/macros``, so they are part of
+    the plugin: no lookup in a pyren checkout and no environment variable is
+    needed, which makes the installation self-contained and deterministic.
     """
     path = os.path.join(os.path.abspath(plugin_dir), MACRO_SUBDIR)
     return (path, 'installed') if os.path.isdir(path) else (None, None)

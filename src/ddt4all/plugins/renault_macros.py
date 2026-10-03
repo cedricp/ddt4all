@@ -3,36 +3,14 @@
 renault_macros.py — ddt4all **master** plugin (>= 3.1)
 ====================================================
 
-ddt4all plugin running the **DDT2000 macros** (``.txt`` and ``.cmd`` files),
-**compatible with the pyren3 macros**, straight from the ddt4all GUI and
-**without** reopening the serial port: the engine works on the ELM connection
-already open in ddt4all (``ddt4all.options.elm``).
+Runs the **DDT2000 macros** (``.txt`` and ``.cmd`` files, format **compatible
+with the pyren3 macros**) from the ddt4all GUI, on the ELM connection ddt4all
+already has open — no serial port is reopened.
 
 The name is deliberately **neutral**: the ``.cmd`` format comes from DDT2000
 (Renault + Dacia), the bundled macros target Renault ECUs, and the engine
 imposes no brand — the addressing follows the tables of the vehicle loaded in
 ddt4all. A macro is only playable if its ECU exists on that vehicle.
-
-Installation (refactored master layout)::
-
-    <ddt4all>/src/ddt4all/plugins/
-        renault_macros.py            <- THIS file (only .py at the root)
-        macro_plugin/                <- plugin modules
-            macro_ui.py
-            macro_engine.py
-            macro_adapter.py
-            can_addressing.py
-            macros/                  <- macro folder (copied by default)
-
-(or: ``python ddt4all/plugin/install.py --target <ddt4all> --layout master``)
-
-``install.py --flat`` puts the modules next to this file instead of the
-``macro_plugin/`` sub-folder. ``install.py --no-macros`` installs the code
-only.
-
-The macro folder is the copy shipped with the plugin (``<macro_plugin>/macros``),
-always present after installation; it stays editable in the GUI to work on
-another macro set.
 """
 
 import os

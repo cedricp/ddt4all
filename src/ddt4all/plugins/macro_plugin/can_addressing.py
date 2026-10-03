@@ -10,9 +10,9 @@ CAN addressing tables of the ddt4all "Macros DDT2000" plugin.
     LEGACY_DNAT / LEGACY_SNAT   pyren3 fallback, last resort
 
 >>> GENERATED FILE, DO NOT EDIT <<<
-    python tools/make_addressing_tables.py
-The tables are extracted from the ddt4all code (``dnat``/``snat``/
-``dnat_ext``/``snat_ext``) and, optionally, from ``pyren3/mod_elm.py``.
+Extracted from the addressing tables of the ddt4all code
+(``dnat``/``snat``/``dnat_ext``/``snat_ext``) and, optionally, from the
+pyren3 ones (``mod_elm.py``).
 
 These tables are only a **cache**: at runtime ``AddressBook`` first reads the
 live tables of the ddt4all ``elm`` module, then these ones, and finally the
