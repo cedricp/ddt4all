@@ -1,0 +1,85 @@
+#
+#
+#       Initialisation macros for mod_term
+#
+#
+
+$addr = 7A
+$txa  = 7E0
+$rxa  = 7E8
+
+# reset elm
+reset_elm {
+  at ws
+  $prompt = ELM
+}
+
+# general CAN init
+init_can {
+  reset_elm      #macro
+  at e1
+  at s0
+  at h0
+  at l0
+  at al
+  at caf0
+  at cfc0
+  at sh $txa
+  at cra $rxa
+  at fc sh $txa
+  at fc sd 30 00 00
+  at fc sm 1
+  $prompt = CAN
+}
+
+# CAN 250 init
+can250 {
+  init_can
+  at st ff
+  at at 0
+  at sp 8
+  at at 1
+  $prompt = CAN250
+}
+
+# CAN 500 init
+can500 {
+  init_can
+  at st ff
+  at at 0
+  at sp 6
+  at at 1
+  $prompt = CAN500
+}
+
+# general ISO init
+init_iso {
+  reset_elm      #macro
+  at e1
+  at l1
+  at d1
+  at sh 81 $addr f1 
+  at sw 96
+  at wm 81 $addr f1 3E
+  #at wm 82 $addr f1 3E01
+  at ib10
+  at st ff
+  at at 0
+  $prompt = KL
+}
+
+# K-Line slow init
+slow {
+  init_iso
+  at sp 4
+  at at 1
+  $prompt = SLOW
+}
+
+# K-Line fast init
+fast {
+  init_iso
+  at sp 5
+  at at 1
+  $prompt = FAST
+}
