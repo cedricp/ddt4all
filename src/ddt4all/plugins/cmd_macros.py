@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-renault_macros.py — ddt4all **master** plugin (>= 3.1)
+cmd_macros.py — ddt4all **master** plugin (>= 3.1)
 ====================================================
 
 Runs the **DDT2000 macros** (``.txt`` and ``.cmd`` files, format **compatible
@@ -20,26 +20,26 @@ import sys
 PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #: shared modules: either next to this file ("flat" installation), or in the
-#: macro_plugin/ sub-folder (default installation)
+#: cmd_macros_lib/ sub-folder (default installation)
 LIB_DIR = PLUGIN_DIR
-for _candidate in (PLUGIN_DIR, os.path.join(PLUGIN_DIR, 'macro_plugin')):
-    if os.path.isfile(os.path.join(_candidate, 'macro_ui.py')):
+for _candidate in (PLUGIN_DIR, os.path.join(PLUGIN_DIR, 'cmd_macros_lib')):
+    if os.path.isfile(os.path.join(_candidate, 'cmd_ui.py')):
         LIB_DIR = _candidate
         break
 if LIB_DIR not in sys.path:
     sys.path.insert(0, LIB_DIR)
 
 try:
-    from macro_ui import run_dialog
+    from cmd_ui import run_dialog
 except ImportError as _err:
     raise ImportError(
-        "macro_ui not found. Copy macro_engine.py, "
-        "macro_adapter.py, can_addressing.py and macro_ui.py "
-        "into %s or %s (cause: %s)"
-        % (PLUGIN_DIR, os.path.join(PLUGIN_DIR, 'macro_plugin'), _err))
+        "cmd_ui not found. Copy cmd_engine.py, "
+        "ddt4all_adapter.py, can_addressing.py, elm_log.py and "
+        "cmd_ui.py into %s or %s (cause: %s)"
+        % (PLUGIN_DIR, os.path.join(PLUGIN_DIR, 'cmd_macros_lib'), _err))
 
 try:
-    from macro_adapter import Ddt4allContext
+    from ddt4all_adapter import Ddt4allContext
     _CONTEXT = Ddt4allContext()
     _ = (_CONTEXT.options.translator('ddt4all')
          if _CONTEXT.options is not None and hasattr(_CONTEXT.options, 'translator')
@@ -48,8 +48,7 @@ except ImportError:
     _ = lambda text: text
 
 
-plugin_name = _("Macros DDT2000 (.cmd)")
-# compatible with the pyren3 / DDT2000 macros (mod_term engine)
+plugin_name = _("DDT2000 command macros (.cmd)")
 category = _("Macros")
 # an ELM connection is required: ddt4all asks for it before running
 need_hw = True
@@ -57,4 +56,4 @@ need_hw = True
 
 def plugin_entry():
     """Called by ddt4all when the user clicks the plugin."""
-    run_dialog(LIB_DIR, title=_("Macros DDT2000 (.cmd)"))
+    run_dialog(LIB_DIR, title=_("DDT2000 command macros (.cmd)"))

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-macro_ui.py
+cmd_ui.py
 ===========
-GUI **shared** by the ddt4all plugins (``master/renault_macros.py`` and
-``legacy/renault_macros.py``).
+GUI **shared** by the ddt4all plugins (``master/cmd_macros.py`` and
+``legacy/cmd_macros.py``).
 
 It allows to:
 
@@ -14,7 +14,7 @@ It allows to:
 * inject a key for the interactive macros (``if_key``) ;
 * follow/interrupt the execution in a ``QThread`` (the GUI never freezes).
 
-Every access to ddt4all goes through :mod:`macro_adapter`.
+Every access to ddt4all goes through :mod:`ddt4all_adapter`.
 """
 
 import os
@@ -43,16 +43,17 @@ def app_icon_path():
     except Exception:                               # pragma: no cover
         return APP_ICON
 
-#: See ``macro_engine``: the plugin folder goes on ``sys.path`` so the sibling
+#: See ``cmd_engine``: the plugin folder goes on ``sys.path`` so the sibling
 #: modules import the same way in both installation layouts.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
-from macro_engine import MacroEngine, MacroError, MacroExit
-from macro_adapter import (Ddt4allContext, describe_macro_dir,
-                           installed_macro_dir, macro_dir_origin,
-                           scan_macro_dir)
+from cmd_engine import MacroEngine, MacroError, MacroExit
+from ddt4all_adapter import (Ddt4allContext, describe_macro_dir,
+                             installed_macro_dir, macro_dir_origin,
+                             scan_macro_dir)
+from elm_log import default_log_name, logs_folder, safe_name
 
 
 # --------------------------------------------------------------------------- #
@@ -90,7 +91,7 @@ ELM_LABELS = {
 
 #: Origin of the macro folder, as translatable literals.
 MACRO_DIR_LABELS = {
-    'installed': _("installed copy (macro_plugin/macros)"),
+    'installed': _("installed copy (cmd_macros_lib/macros)"),
     'custom': _("manually chosen folder"),
 }
 
@@ -169,12 +170,14 @@ class MacroWorker(core.QThread):
     log_line = core.pyqtSignal(str)
     done = core.pyqtSignal(str)
 
-    def __init__(self, engine, kind, target, name='', parent=None):
+    def __init__(self, engine, kind, target, name='', parent=None,
+                 elm_log=None):
         super(MacroWorker, self).__init__(parent)
         self.engine = engine
         self.kind = kind            # 'cmd' or 'macro'
         self.target = target        # lines (.cmd) or macro name
         self.name = name or str(target)
+        self.elm_log = elm_log      # ddt4all journal to close at the end
         self._abort = False
         # the engine writes to the GUI through a signal (thread-safe)
         self.engine.set_log(self.log_line.emit)
@@ -200,6 +203,14 @@ class MacroWorker(core.QThread):
         except Exception:
             self.log_line.emit(traceback.format_exc())
             self.done.emit(_("Error"))
+        finally:
+            self.close_elm_log()
+
+    def close_elm_log(self):
+        """Closes the ddt4all journal, ended or stopped the macro."""
+        if self.elm_log is not None:
+            self.elm_log.close()
+            self.elm_log = None
 
 
 class MacroRunnerDialog(gui.QDialog):
@@ -213,7 +224,7 @@ class MacroRunnerDialog(gui.QDialog):
         self.engine = None
         self.worker = None
 
-        self.setWindowTitle(title or _("Macros DDT2000"))
+        self.setWindowTitle(title or _("DDT2000 command macros"))
         appIcon = qtgui.QIcon(app_icon_path())   # like the other ddt4all plugins
         self.setWindowIcon(appIcon)
         self.resize(820, 600)
@@ -225,7 +236,7 @@ class MacroRunnerDialog(gui.QDialog):
         self.info.setTextInteractionFlags(core.Qt.TextSelectableByMouse)
 
         # --- macro folder ------------------------------------------------
-        # the bundled macros ship with the plugin (macro_plugin/macros);
+        # the bundled macros ship with the plugin (cmd_macros_lib/macros);
         # the field stays editable to point at another macro set.
         self.folder_edit = gui.QLineEdit()
         self.folder, self.origin = installed_macro_dir(self.plugin_dir)
@@ -241,6 +252,23 @@ class MacroRunnerDialog(gui.QDialog):
         folder_row.addWidget(self.folder_edit)
         folder_row.addWidget(self.browse_btn)
         folder_row.addWidget(self.refresh_btn)
+
+        # --- ddt4all journal (elm_<options.log>.txt / ecu_...) ----------
+        # The plugin does not write its own log: it opens the two files
+        # ddt4all already uses (core/elm/elm.py), so ddt4all itself records
+        # the traffic in its own format and its own folder.
+        self.log_check = gui.QCheckBox(_("Log ELM traffic to file"))
+        self.log_check.setChecked(True)
+        self.log_edit = gui.QLineEdit(default_log_name(self.ctx.options))
+        self.log_edit.setMaximumWidth(120)
+        self.log_edit.setToolTip(self.log_tooltip())
+        self.log_edit.textChanged.connect(self.update_log_tooltip)
+
+        log_row = gui.QHBoxLayout()
+        log_row.addWidget(self.log_check)
+        log_row.addWidget(gui.QLabel(_("Log file name:")))
+        log_row.addWidget(self.log_edit)
+        log_row.addStretch(1)
 
         # --- trees: .cmd per ECU + named macros per *.txt ---------------
         # both trees start collapsed (the user opens what he needs).
@@ -296,6 +324,7 @@ class MacroRunnerDialog(gui.QDialog):
         layout = gui.QVBoxLayout(self)
         layout.addWidget(self.info)
         layout.addLayout(folder_row)
+        layout.addLayout(log_row)
         layout.addLayout(lists)
         layout.addLayout(key_row)
         layout.addLayout(buttons)
@@ -461,7 +490,7 @@ class MacroRunnerDialog(gui.QDialog):
 
         self.append_log(_("Host: %(host)s") % {"host": self.host_line()})
         self.append_log(_("Addresses: %(legacy)s") % {"legacy": self.legacy_label()})
-        self.append_log(_("Format: macros DDT2000 (pyren3); the bundled macros "
+        self.append_log(_("Format: DDT2000 command macros (pyren3); the bundled macros "
                           "target Renault ECUs, address resolution follows "
                           "the vehicle loaded in ddt4all."))
         self.append_log(_("Folder: %(folder)s") % {"folder": folder or _("(none)")})
@@ -471,6 +500,49 @@ class MacroRunnerDialog(gui.QDialog):
                         % {"groups": groups, "files": leaves,
                            "named": macros, "txt": mgroups})
         self.update_status(groups, leaves, macros)
+
+    def log_files(self, name=None):
+        """The two ddt4all journal files: ``(elm, ecu)``.
+
+        Same folder and same names as ``ELM.__init__`` (``get_logs_dir()`` and
+        ``elm_<options.log>.txt``).
+        """
+        base = safe_name(name if name is not None
+                         else self.log_edit.text().strip())
+        folder = logs_folder(self.ctx.options)
+        return (os.path.join(folder, 'elm_%s.txt' % base),
+                os.path.join(folder, 'ecu_%s.txt' % base))
+
+    def log_tooltip(self, name=None):
+        """Tooltip of the journal field: the two files really written."""
+        elm, ecu = self.log_files(name)
+        return _("Journal files: %(elm)s and %(ecu)s") % {"elm": elm, "ecu": ecu}
+
+    def update_log_tooltip(self, _text=''):
+        self.log_edit.setToolTip(self.log_tooltip())
+
+    def open_elm_log(self):
+        """Opens the ddt4all journal for the run (None if off/ELM/impossible).
+
+        ddt4all does the writing: the plugin only hands the two files to the
+        ELM (``elm.lf`` / ``elm.vf``) and takes them back when the run ends.
+        A failure never prevents a macro from running: it is reported in the
+        window log and the engine runs without journal.
+        """
+        if not self.log_check.isChecked():
+            return None
+        journal = self.ctx.elm_log(self.log_edit.text().strip())
+        if journal is None:
+            self.append_log(_("No ELM connection: the journal is not written."))
+            return None
+        if not journal.active:
+            self.append_log(_("Cannot write the journal (%(error)s)")
+                            % {"error": journal.error})
+            return None
+        # the paths really written, not a recomputed guess
+        self.append_log(_("Journal: %(elm)s") % {"elm": journal.elm_path})
+        self.append_log(_("Journal: %(ecu)s") % {"ecu": journal.ecu_path})
+        return journal
 
     def origin_label(self, origin):
         """Translated label of a macro folder origin (see MACRO_DIR_LABELS)."""
@@ -506,11 +578,19 @@ class MacroRunnerDialog(gui.QDialog):
                "named": macros})
         self.info.setToolTip(
             _("%(host)s\nAddresses: %(legacy)s\n%(detail)s\n"
-              "Folder: %(folder)s\nSource: %(source)s")
+              "Folder: %(folder)s\nSource: %(source)s\n%(journal)s")
             % {"host": self.host_line(), "legacy": self.legacy_label(),
                "detail": book.detail(),
                "folder": self.folder_edit.text().strip() or _("(none)"),
-               "source": self.origin_label(self.origin)})
+               "source": self.origin_label(self.origin),
+               "journal": self.journal_label()})
+
+    def journal_label(self):
+        """Translated state of the ddt4all journal (``elm_ddt.txt`` ...)."""
+        if not self.log_check.isChecked():
+            return _("Journal: disabled")
+        elm, _ecu = self.log_files()
+        return _("Journal: %(elm)s") % {"elm": elm}
 
     # ------------------------------------------------------------------ #
     #  execution                                                          #
@@ -541,6 +621,7 @@ class MacroRunnerDialog(gui.QDialog):
                               "before running a macro."))
             return
 
+        journal = self.open_elm_log()
         engine = self.ctx.make_engine(
             log=self.append_log,
             wait_hook=self.safe_wait,
@@ -552,7 +633,8 @@ class MacroRunnerDialog(gui.QDialog):
             engine.load_macro_dir(self.folder_edit.text().strip())
 
         self.engine = engine
-        self.worker = MacroWorker(engine, kind, target, name, self)
+        self.worker = MacroWorker(engine, kind, target, name, self,
+                                  elm_log=journal)
         self.worker.log_line.connect(self.append_log)
         self.worker.done.connect(self.on_done)
         self.set_running(True)

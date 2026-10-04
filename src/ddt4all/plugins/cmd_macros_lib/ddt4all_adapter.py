@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-macro_adapter.py
+ddt4all_adapter.py
 =================
-Adaptation layer between the macro engine (:mod:`macro_engine`) and
+Adaptation layer between the macro engine (:mod:`cmd_engine`) and
 **ddt4all**.
 
 It automatically detects the installed ddt4all variant:
@@ -17,20 +17,23 @@ It then builds the objects the engine expects:
 
 * ``elm``       : ``options.elm`` (connection **already open** by ddt4all) ;
 * ``globals_``  : ``mod_globals`` shim (``opt_demo``, ``opt_rate`` ...) ;
-* ``addresses`` : :class:`AddressBook` (embedded tables + ddt4all tables) ;
-* ``log``       : callback wired to the ddt4all log.
+* ``addresses`` : :class:`AddressBook` (ddt4all tables first, then embedded) ;
+* ``log``       : callback wired to the ddt4all log ;
+* ``elm_log``   : optional :class:`~elm_log.ElmLog`, which opens the **ddt4all**
+  journal ``elm_<options.log>.txt`` / ``ecu_<options.log>.txt`` for the run.
 """
 
 import os
 import sys
 
-#: See ``macro_engine``: the plugin folder goes on ``sys.path`` so the sibling
+#: See ``cmd_engine``: the plugin folder goes on ``sys.path`` so the sibling
 #: modules import the same way in both installation layouts.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
-from macro_engine import AddressBook, MacroEngine
+from cmd_engine import AddressBook, MacroEngine
+from elm_log import ElmLog
 
 
 OPTIONS_CANDIDATES = ('ddt4all.options', 'options')
@@ -70,7 +73,8 @@ class ModGlobalsShim(object):
         self.opt_stn = bool(getattr(options, 'opt_stn_basic', False)
                             or getattr(options, 'opt_stpx_full', False))
         self.opt_port = getattr(options, 'port_name', '')
-        self.opt_log = ''
+        # the ddt4all journal name (options.log), see elm_log.py
+        self.opt_log = getattr(options, 'log', '')
 
     def __repr__(self):
         return '<ModGlobalsShim demo=%s rate=%s>' % (self.opt_demo, self.opt_rate)
@@ -140,23 +144,46 @@ class Ddt4allContext(object):
     #  engine construction                                                #
     # ------------------------------------------------------------------ #
     def address_book(self):
-        """Embedded tables + tables of the ddt4all ``elm`` module (if not empty)."""
+        """Live ddt4all tables first, then the embedded ones."""
         return AddressBook.from_elm_module(self.elm_module)
 
     def make_engine(self, elm=None, log=None, addresses=None, **kwargs):
-        """Creates a :class:`MacroEngine` ready to play the macros."""
+        """Creates a :class:`MacroEngine` ready to play the macros.
+
+        Nothing is wrapped or intercepted: the engine talks to the very ELM
+        ddt4all opened. Only ``elm_log`` (an :class:`~elm_log.ElmLog`) adds the
+        ddt4all journal for the duration of the run.
+        """
         kwargs.setdefault('globals_', self.mod_globals)
         return MacroEngine(elm if elm is not None else self.elm,
                            log=log if log is not None else self.log,
                            addresses=addresses or self.address_book(),
                            **kwargs)
 
+    # ------------------------------------------------------------------ #
+    #  ddt4all journal                                                     #
+    # ------------------------------------------------------------------ #
+    def elm_log(self, name=None):
+        """Opens the **ddt4all** journal (``elm_<options.log>.txt`` ...).
+
+        ddt4all opens those files itself when the connection is created; a
+        macro played later finds them closed, so the plugin opens them for the
+        duration of the run and gives ddt4all its state back afterwards.
+
+        :returns: an :class:`~elm_log.ElmLog`, or ``None`` when there is no ELM
+                  (nothing to record) — check ``active`` to know if the files
+                  could really be opened.
+        """
+        if self.elm is None:
+            return None
+        return ElmLog(self.elm, name=name, options_module=self.options)
+
 
 #: Readable label of each possible origin. The **translatable** wording lives
-#: in ``macro_ui.MACRO_DIR_LABELS`` (only literals can be extracted by gettext);
+#: in ``cmd_ui.MACRO_DIR_LABELS`` (only literals can be extracted by gettext);
 #: this mapping is the plain English fallback for non-GUI callers.
 MACRO_DIR_ORIGINS = {
-    'installed': 'installed copy (macro_plugin/macros)',
+    'installed': 'installed copy (cmd_macros_lib/macros)',
     'custom': 'manually chosen folder',
 }
 
@@ -167,7 +194,7 @@ MACRO_SUBDIR = 'macros'
 def installed_macro_dir(plugin_dir):
     """Macro folder shipped with the plugin: ``(path, origin)``.
 
-    The macros live in ``<plugin>/macro_plugin/macros``, so they are part of
+    The macros live in ``<plugin>/cmd_macros_lib/macros``, so they are part of
     the plugin: no lookup in a pyren checkout and no environment variable is
     needed, which makes the installation self-contained and deterministic.
     """

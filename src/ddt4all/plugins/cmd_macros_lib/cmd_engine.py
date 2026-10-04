@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-macro_engine.py
+cmd_engine.py
 =================
 Execution engine for **DDT2000 macros** (``*.txt`` and ``*.cmd`` files,
 mod_term-compatible format): usable from a ddt4all plugin or outside a GUI.
@@ -32,7 +32,7 @@ mod_term.py             here
 
 Minimal usage (without ddt4all)::
 
-    from macro_engine import MacroEngine
+    from cmd_engine import MacroEngine
     engine = MacroEngine(elm)                 # elm = mod_elm.ELM-like object
     engine.load_macro_dir('./macro')          # *.txt  (init.txt, can500, ...)
     engine.play_lines(open('mac.tmp.cmd').readlines())
@@ -47,9 +47,9 @@ import time
 
 #: The modules live side by side in the plugin folder. Putting that folder on
 #: ``sys.path`` keeps the imports below valid whether the plugin is installed
-#: flat (``<plugins>/macro_*.py``) or in the ``macro_plugin`` sub-folder, and
+#: flat (``<plugins>/macro_*.py``) or in the ``cmd_macros_lib`` sub-folder, and
 #: whether it is imported as a plain module or as part of the
-#: ``ddt4all.plugins.macro_plugin`` package.
+#: ``ddt4all.plugins.cmd_macros_lib`` package.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
@@ -155,7 +155,8 @@ class AddressBook(object):
     """
 
     def __init__(self, dnat=None, snat=None, dnat_ext=None, snat_ext=None,
-                 legacy_dnat=None, legacy_snat=None, use_legacy=True):
+                 legacy_dnat=None, legacy_snat=None, use_legacy=True,
+                 elm_module=None):
         self.dnat = normalize(dnat or {})
         self.snat = normalize(snat or {})
         self.dnat_ext = normalize(dnat_ext or {})
@@ -163,6 +164,9 @@ class AddressBook(object):
         self.use_legacy = bool(use_legacy)
         self.legacy_dnat = normalize(legacy_dnat or {}) if use_legacy else {}
         self.legacy_snat = normalize(legacy_snat or {}) if use_legacy else {}
+        #: ddt4all ``elm`` module, used for its own helpers (``addr_exist``,
+        #: ``get_can_addr``) when a reverse lookup is needed
+        self.elm_module = elm_module
         #: ``(addr, (idTx, idRx), (legacy_idTx, legacy_idRx))`` where the ddt4all
         #: tables and the pyren3 ones disagree — reported by the GUI after a run
         self.conflicts = []
@@ -192,7 +196,7 @@ class AddressBook(object):
                    dnat_ext=merged('dnat_ext', DNAT_EXT),
                    snat_ext=merged('snat_ext', SNAT_EXT),
                    legacy_dnat=LEGACY_DNAT, legacy_snat=LEGACY_SNAT,
-                   use_legacy=use_legacy)
+                   use_legacy=use_legacy, elm_module=elm_module)
 
     # ------------------------------------------------------------------ #
     #  resolution                                                         #
@@ -255,10 +259,25 @@ class AddressBook(object):
             return ''
 
     def addr_for_txa(self, txa):
-        """Reverse lookup (like ``elm.get_can_addr`` of ddt4all)."""
+        """Reverse lookup: ddt4all's own ``get_can_addr*`` when available.
+
+        ddt4all answers this question itself (``elm.get_can_addr``,
+        ``get_can_addr_ext``); the local tables are only the fallback, for the
+        addresses the live module does not know yet.
+        """
         target = str(txa).upper()
-        for dnat, snat in ((self.dnat, self.snat), (self.dnat_ext, self.snat_ext),
-                           (self.legacy_dnat, self.legacy_snat)):
+        for name in ('get_can_addr', 'get_can_addr_ext'):
+            finder = getattr(self.elm_module, name, None)
+            if finder is not None:
+                try:
+                    found = finder(target)
+                except Exception:
+                    found = None
+                if found:
+                    return found
+        for dnat, _snat in ((self.dnat, self.snat),
+                            (self.dnat_ext, self.snat_ext),
+                            (self.legacy_dnat, self.legacy_snat)):
             for key, value in dnat.items():
                 if value == target:
                     return key
@@ -290,8 +309,8 @@ class AddressBook(object):
         """Raw count of each table (tooltip).
 
         Plain ``key=value`` data, not prose: the wording lives in
-        ``macro_ui`` so that it can be translated (see
-        :meth:`macro_ui.MacroRunnerDialog.addressing_label`).
+        ``cmd_ui`` so that it can be translated (see
+        :meth:`cmd_ui.MacroRunnerDialog.addressing_label`).
         """
         return ('dnat=%d snat=%d dnat_ext=%d snat_ext=%d legacy=%d'
                 % (len(self.dnat), len(self.snat), len(self.dnat_ext),
