@@ -42,15 +42,20 @@ import inspect
 import os
 import re
 import string
+import sys
 import time
 
-try:
-    from can_addressing import (DNAT, DNAT_EXT, LEGACY_DNAT, LEGACY_SNAT,
-                                SNAT, SNAT_EXT, is_ext, normalize)
-except ImportError:  # package imported without the folder in sys.path
-    from ddt4all.plugins.macro_plugin.can_addressing import (
-        DNAT, DNAT_EXT, LEGACY_DNAT, LEGACY_SNAT, SNAT, SNAT_EXT,
-        is_ext, normalize)
+#: The modules live side by side in the plugin folder. Putting that folder on
+#: ``sys.path`` keeps the imports below valid whether the plugin is installed
+#: flat (``<plugins>/macro_*.py``) or in the ``macro_plugin`` sub-folder, and
+#: whether it is imported as a plain module or as part of the
+#: ``ddt4all.plugins.macro_plugin`` package.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
+
+from can_addressing import (DNAT, DNAT_EXT, LEGACY_DNAT, LEGACY_SNAT,
+                            SNAT, SNAT_EXT, is_ext, normalize)
 
 # ddt4all translates the _("...") strings through its own catalog; outside
 # ddt4all (console, tests) we fall back to the identity function.
@@ -89,6 +94,12 @@ def _accepts(func, param):
         return param in inspect.signature(func).parameters
     except (TypeError, ValueError):
         return True
+
+
+#: Maximum number of ``$variable`` substitutions in a single macro line.
+#: A substitution that does not consume the variable (or a value that
+#: reintroduces one) would otherwise loop forever, as in ``mod_term.py``.
+MAX_VARIABLES_PER_LINE = 100
 
 
 #: ``bit_cmd`` guard messages (translated like every other UI string)
@@ -358,8 +369,8 @@ class MacroEngine(object):
     def _tick(self):
         self.steps += 1
         if self.steps > self.max_steps:
-            raise MacroError(_("guard: %d steps exceeded (infinite loop?)")
-                             % self.max_steps)
+            raise MacroError(_("guard: %(limit)d steps exceeded (infinite loop?)")
+                             % {"limit": self.max_steps})
         if self.abort_hook is not None and self.abort_hook():
             self.log(_("# abort requested"))
             raise MacroExit()
@@ -371,7 +382,7 @@ class MacroEngine(object):
         """Loads a ``*.txt`` macro file."""
         with open(filename, 'rt', encoding='utf-8', errors='replace') as f:
             text = f.read()
-        self.log(_("openning file: %s") % filename)
+        self.log(_("openning file: %(file)s") % {"file": filename})
         self.parse_text(text, filename)
 
     def parse_text(self, text, filename='<text>'):
@@ -393,8 +404,8 @@ class MacroEngine(object):
                         macrostrings.append(literals[1])
                     continue
                 else:
-                    raise MacroError(_("%s:%d: empty macro name")
-                                     % (filename, line_num))
+                    raise MacroError(_("%(file)s:%(line)d: empty macro name")
+                                     % {"file": filename, "line": line_num})
             if '}' in l:
                 if macroname != '':
                     literals = l.split('}')
@@ -406,8 +417,8 @@ class MacroEngine(object):
                     macrostrings = []
                     continue
                 else:
-                    raise MacroError(_("%s:%d: unexpected end of macro")
-                                     % (filename, line_num))
+                    raise MacroError(_("%(file)s:%(line)d: unexpected end of macro")
+                                     % {"file": filename, "line": line_num})
             m = re.search(r'\$\S+\s*=\s*\S+', l)
             if m and macroname == '':
                 # variable definition
@@ -439,9 +450,9 @@ class MacroEngine(object):
 
     def help_text(self):
         """Translated help of the macro language (``h`` command)."""
-        variables = ''.join(_("  %s = %s") % (v, self.var[v])
+        variables = ''.join(_("  %(name)s = %(value)s") % {"name": v, "value": self.var[v]}
                            for v in sorted(self.var))
-        macros = ''.join(_("  %s") % m for m in sorted(self.macro))
+        macros = ''.join(_("  %(macro)s") % {"macro": m} for m in sorted(self.macro))
         return '\n'.join((_("[h]elp                 - this help"),
                           _("[q]uit, [e]xit, end    - exit from terminal"),
                           _("wait|sleep x           - wait x seconds"),
@@ -456,10 +467,10 @@ class MacroEngine(object):
     def play_macro(self, mname):
         """Port of ``mod_term.play_macro`` (recursion forbidden)."""
         if mname not in self.macro:
-            self.log(_("Error: unknown macro name: %s") % mname)
+            self.log(_("Error: unknown macro name: %(macro)s") % {"macro": mname})
             return
         if mname in self.stack:
-            self.log(_("Error: recursion prohibited: %s") % mname)
+            self.log(_("Error: recursion prohibited: %(macro)s") % {"macro": mname})
             return
         self.stack.append(mname)
         try:
@@ -480,7 +491,8 @@ class MacroEngine(object):
         """
         cmd_lines = [str(x).rstrip('\r\n') for x in lines]
         cmd_ref = 0
-        self.log(_("### %s : %d lines") % (name, len(cmd_lines)))
+        self.log(_("### %(file)s : %(count)d lines")
+                     % {"file": name, "count": len(cmd_lines)})
         while True:
             self._tick()
             if cmd_ref < len(cmd_lines):
@@ -490,7 +502,7 @@ class MacroEngine(object):
                 self.log(_("# end of command file"))
                 return
 
-            self.log(_("> %s") % l)
+            self.log(_("> %(line)s") % {"line": l})
             goto = self.proc_line(l)
 
             if goto:
@@ -501,7 +513,7 @@ class MacroEngine(object):
                         found = True
                         break
                 if not found:
-                    self.log(_("Error: unknown label '%s'") % goto)
+                    self.log(_("Error: unknown label '%(label)s'") % {"label": goto})
                     return
 
     def proc_line(self, l):
@@ -527,7 +539,8 @@ class MacroEngine(object):
         if l in ('var',):
             self.log(_("###### Variables #####"))
             for v in sorted(self.var):
-                self.log(_("# %20s = %s") % (v, self.var[v]))
+                self.log(_("# %(name)20s = %(value)s")
+                         % {"name": v, "value": self.var[v]})
             return
 
         if l in ('cls',):
@@ -545,14 +558,24 @@ class MacroEngine(object):
         # find variable usage
         m = re.search(r'.+(\$\S+)', l)
         if m:
-            while m:
+            for _attempt in range(MAX_VARIABLES_PER_LINE):
                 vu = m.group(1)
-                if vu in self.var:
-                    l = re.sub('\\' + vu, self.var[vu], l)
-                else:
-                    self.log(_("Error: unknown variable %s") % vu)
+                if vu not in self.var:
+                    self.log(_("Error: unknown variable %(name)s")
+                             % {"name": vu})
                     return
+                # ``re.escape`` matches the variable name literally (``$txa``)
+                # and a **function** as the replacement inserts the value as-is:
+                # a value holding a backslash or ``\1`` is not read as a
+                # replacement template.
+                l = re.sub(re.escape(vu),
+                           lambda _match, value=self.var[vu]: value, l)
                 m = re.search(r'.+(\$\S+)', l)
+                if m is None:
+                    break
+            else:
+                self.log(_("Error: too many variables in one line"))
+                return
             self.log(_("#(subst)") + l)
 
         m = re.search(r'\$\S+\s*=\s*\S+', l)
@@ -643,7 +666,7 @@ class MacroEngine(object):
             self.log(self.term_cmd(l))
 
         if self.cmd_delay > 0:
-            self.log(_("# delay: %s") % self.cmd_delay)
+            self.log(_("# delay: %(seconds)s") % {"seconds": self.cmd_delay})
             self.wait(self.cmd_delay)
 
     # ------------------------------------------------------------------ #
@@ -698,7 +721,7 @@ class MacroEngine(object):
             self._require_elm()
             getattr(self.elm, mname)()
         else:
-            self.log(_("Unrecognized init command: %s") % mname)
+            self.log(_("Unrecognized init command: %(name)s") % {"name": mname})
 
     def wait(self, seconds):
         """Wait (``wait``/``sleep``/``delay``).
@@ -873,9 +896,11 @@ class MacroEngine(object):
             self.var['$rawValue'] = str(int_val)
             self.var['$scaledValue'] = str(res)
             self.var['$hexValue'] = hex(int_val)[2:].upper()
-            self.log(_("# LID(%s) $rawValue = %s  $scaledValue = %s  $hexValue = %s")
-                     % (lid, self.var['$rawValue'], self.var['$scaledValue'],
-                        self.var['$hexValue']))
+            self.log(_("# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  "
+                      "$hexValue = %(hex)s")
+                     % {"lid": lid, "raw": self.var['$rawValue'],
+                        "scaled": self.var['$scaledValue'],
+                        "hex": self.var['$hexValue']})
             return
 
         if rsp[:2] == '61':
@@ -884,7 +909,7 @@ class MacroEngine(object):
             wcmd = '2E' + rsp[2:]
         else:
             # mod_term.py left wcmd undefined here (UnboundLocalError)
-            self.log(_("ERROR: unexpected positive response: %s") % rsp)
+            self.log(_("ERROR: unexpected positive response: %(rsp)s") % {"rsp": rsp})
             return
 
         self.log(_("write value: ") + wcmd)

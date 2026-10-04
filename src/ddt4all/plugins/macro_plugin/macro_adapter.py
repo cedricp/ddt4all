@@ -24,10 +24,13 @@ It then builds the objects the engine expects:
 import os
 import sys
 
-try:
-    from macro_engine import AddressBook, MacroEngine
-except ImportError:  # package imported without the folder in sys.path
-    from ddt4all.plugins.macro_engine import AddressBook, MacroEngine
+#: See ``macro_engine``: the plugin folder goes on ``sys.path`` so the sibling
+#: modules import the same way in both installation layouts.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
+
+from macro_engine import AddressBook, MacroEngine
 
 
 OPTIONS_CANDIDATES = ('ddt4all.options', 'options')

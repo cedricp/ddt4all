@@ -18,6 +18,7 @@ Every access to ddt4all goes through :mod:`macro_adapter`.
 """
 
 import os
+import sys
 import time
 import traceback
 
@@ -42,17 +43,16 @@ def app_icon_path():
     except Exception:                               # pragma: no cover
         return APP_ICON
 
-try:
-    from macro_engine import MacroEngine, MacroError, MacroExit
-    from macro_adapter import (Ddt4allContext, describe_macro_dir,
-                               installed_macro_dir, macro_dir_origin,
-                               scan_macro_dir)
-except ImportError:  # package imported without the folder in sys.path
-    from ddt4all.plugins.macro_plugin.macro_engine import (
-        MacroEngine, MacroError, MacroExit)
-    from ddt4all.plugins.macro_plugin.macro_adapter import (
-        Ddt4allContext, describe_macro_dir, installed_macro_dir,
-        macro_dir_origin, scan_macro_dir)
+#: See ``macro_engine``: the plugin folder goes on ``sys.path`` so the sibling
+#: modules import the same way in both installation layouts.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
+
+from macro_engine import MacroEngine, MacroError, MacroExit
+from macro_adapter import (Ddt4allContext, describe_macro_dir,
+                           installed_macro_dir, macro_dir_origin,
+                           scan_macro_dir)
 
 
 # --------------------------------------------------------------------------- #
@@ -104,9 +104,10 @@ def addressing_label(book):
     """
     live = len(book.dnat) + len(book.dnat_ext)
     if live:
-        return _("ddt4all tables (%d addresses)") % live
+        return _("ddt4all tables (%(count)d addresses)") % {"count": live}
     if book.legacy_dnat:
-        return _("pyren3 fallback (%d addresses)") % len(book.legacy_dnat)
+        return (_("pyren3 fallback (%(count)d addresses)")
+                % {"count": len(book.legacy_dnat)})
     return _("no table")
 
 
@@ -123,9 +124,11 @@ def legacy_label(book):
     if not count:
         return _("pyren3 fallback: no entry")
     if book.dnat or book.dnat_ext:
-        return _("pyren3 fallback: %d addresses as a fallback, used only "
-                 "for the addresses missing from the ddt4all tables") % count
-    return _("pyren3 fallback: %d addresses (source in use)") % count
+        return (_("pyren3 fallback: %(count)d addresses as a fallback, used "
+                  "only for the addresses missing from the ddt4all tables")
+                % {"count": count})
+    return (_("pyren3 fallback: %(count)d addresses (source in use)")
+            % {"count": count})
 
 
 def natural_key(text):
@@ -192,7 +195,7 @@ class MacroWorker(core.QThread):
         except MacroExit:
             self.done.emit(_("Done"))
         except MacroError as err:
-            self.log_line.emit(_("ERROR: %s") % err)
+            self.log_line.emit(_("ERROR: %(error)s") % {"error": err})
             self.done.emit(_("Error"))
         except Exception:
             self.log_line.emit(traceback.format_exc())
@@ -339,7 +342,9 @@ class MacroRunnerDialog(gui.QDialog):
             return (0, natural_key(item.text(column)))
 
         def recurse(parent):
-            items = [parent.takeChild(0) for _ in range(parent.childCount())]
+            # always index 0: takeChild() removes and shifts the children
+            items = [parent.takeChild(0)
+                     for _index in range(parent.childCount())]
             for child in sorted(items, key=key):
                 parent.insertChild(parent.childCount(), child)
                 recurse(child)
@@ -418,10 +423,12 @@ class MacroRunnerDialog(gui.QDialog):
             try:
                 engine.parse_file(path)
             except MacroError as err:
-                self.append_log(_("Parsing error %s: %s") % (rel, err))
+                self.append_log(_("Parsing error %(file)s: %(error)s")
+                                % {"file": rel, "error": err})
                 continue
             except OSError as err:
-                self.append_log(_("Cannot read %s: %s") % (rel, err))
+                self.append_log(_("Cannot read %(file)s: %(error)s")
+                                % {"file": rel, "error": err})
                 continue
 
             names = [name for name in engine.macro if name not in seen]
@@ -434,7 +441,8 @@ class MacroRunnerDialog(gui.QDialog):
                 leaf = NaturalItem(node, [name])
                 leaf.setData(0, core.Qt.UserRole, name)
                 leaf.setData(0, core.Qt.UserRole + 1, rel)
-                leaf.setToolTip(0, _("%s (defined in %s)") % (name, rel))
+                leaf.setToolTip(0, _("%(macro)s (defined in %(file)s)")
+                            % {"macro": name, "file": rel})
             groups += 1
 
         tree.collapseAll()
@@ -451,16 +459,17 @@ class MacroRunnerDialog(gui.QDialog):
         groups, leaves = self.fill_cmd_tree(folder, cmds)
         mgroups, macros = self.fill_macro_tree(folder, txts)
 
-        self.append_log(_("Host: %s") % self.host_line())
-        self.append_log(_("Addresses: %s") % self.legacy_label())
+        self.append_log(_("Host: %(host)s") % {"host": self.host_line()})
+        self.append_log(_("Addresses: %(legacy)s") % {"legacy": self.legacy_label()})
         self.append_log(_("Format: macros DDT2000 (pyren3); the bundled macros "
                           "target Renault ECUs, address resolution follows "
                           "the vehicle loaded in ddt4all."))
-        self.append_log(_("Folder: %s") % (folder or _("(none)")))
-        self.append_log(_("Source: %s") % self.origin_label(self.origin))
-        self.append_log(_("%d ECU group(s), %d .cmd file(s), "
-                          "%d named macro(s) in %d .txt file(s)")
-                        % (groups, leaves, macros, mgroups))
+        self.append_log(_("Folder: %(folder)s") % {"folder": folder or _("(none)")})
+        self.append_log(_("Source: %(source)s") % {"source": self.origin_label(self.origin)})
+        self.append_log(_("%(groups)d ECU group(s), %(files)d .cmd file(s), "
+                          "%(named)d named macro(s) in %(txt)d .txt file(s)")
+                        % {"groups": groups, "files": leaves,
+                           "named": macros, "txt": mgroups})
         self.update_status(groups, leaves, macros)
 
     def origin_label(self, origin):
@@ -483,19 +492,25 @@ class MacroRunnerDialog(gui.QDialog):
         """Translated one-line summary of the host (status bar / log)."""
         if not self.ctx.is_available():
             return _("ddt4all not found (console mode only)")
-        return _("ddt4all %s | %s | addressing: %s") % (
-            self.ctx.flavor, self.elm_label(), self.addressing_label())
+        return (_("ddt4all %(flavor)s | %(elm)s | addressing: %(addressing)s")
+                % {"flavor": self.ctx.flavor, "elm": self.elm_label(),
+                   "addressing": self.addressing_label()})
 
     def update_status(self, groups=0, leaves=0, macros=0):
         """Short header + detailed tooltip (the rest lives in the log)."""
         book = self.ctx.address_book()
-        self.info.setText(_("%s | %d .cmd (%d ECU) | %d named macro(s)")
-                          % (self.elm_label(), leaves, groups, macros))
+        self.info.setText(
+            _("%(elm)s | %(files)d .cmd (%(groups)d ECU) | "
+              "%(named)d named macro(s)")
+            % {"elm": self.elm_label(), "files": leaves, "groups": groups,
+               "named": macros})
         self.info.setToolTip(
-            _("%s\nAddresses: %s\n%s\nFolder: %s\nSource: %s")
-            % (self.host_line(), self.legacy_label(), book.detail(),
-               self.folder_edit.text().strip() or _("(none)"),
-               self.origin_label(self.origin)))
+            _("%(host)s\nAddresses: %(legacy)s\n%(detail)s\n"
+              "Folder: %(folder)s\nSource: %(source)s")
+            % {"host": self.host_line(), "legacy": self.legacy_label(),
+               "detail": book.detail(),
+               "folder": self.folder_edit.text().strip() or _("(none)"),
+               "source": self.origin_label(self.origin)})
 
     # ------------------------------------------------------------------ #
     #  execution                                                          #
@@ -541,7 +556,7 @@ class MacroRunnerDialog(gui.QDialog):
         self.worker.log_line.connect(self.append_log)
         self.worker.done.connect(self.on_done)
         self.set_running(True)
-        self.append_log(_("--- START %s: %s ---") % (kind, name))
+        self.append_log(_("--- START %(kind)s: %(macro)s ---") % {"kind": kind, "macro": name})
         self.worker.start()
 
     def run_cmd(self):
@@ -554,7 +569,7 @@ class MacroRunnerDialog(gui.QDialog):
             with open(path, 'rt', encoding='utf-8', errors='replace') as f:
                 lines = f.readlines()
         except OSError as err:
-            self.append_log(_("Cannot read %s: %s") % (path, err))
+            self.append_log(_("Cannot read %(file)s: %(error)s") % {"file": path, "error": err})
             return
         self.start_worker('cmd', lines,
                           item.data(0, core.Qt.UserRole + 1)
@@ -575,7 +590,7 @@ class MacroRunnerDialog(gui.QDialog):
         text = self.key_edit.text().strip()
         if text:
             self.engine.set_key(text[0])
-            self.append_log(_("# key '%s' sent") % text[0])
+            self.append_log(_("# key '%(key)s' sent") % {"key": text[0]})
         self.key_edit.clear()
 
     def stop(self):
@@ -584,7 +599,7 @@ class MacroRunnerDialog(gui.QDialog):
             self.append_log(_("# stop requested..."))
 
     def on_done(self, status):
-        self.append_log(_("--- END: %s ---") % status)
+        self.append_log(_("--- END: %(status)s ---") % {"status": status})
         self.report_addressing_conflicts()
         self.set_running(False)
 
@@ -597,9 +612,10 @@ class MacroRunnerDialog(gui.QDialog):
         book = self.engine.addresses if self.engine is not None else None
         for addr, current, legacy in getattr(book, 'conflicts', ()):
             self.append_log(
-                _("WARNING: address %s resolves to %s/%s (ddt4all) but "
-                  "pyren3 uses %s/%s") % (addr, current[0], current[1],
-                                          legacy[0], legacy[1]))
+                _("WARNING: address %(addr)s resolves to %(tx)s/%(rx)s "
+                  "(ddt4all) but pyren3 uses %(pltx)s/%(plrx)s")
+                % {"addr": addr, "tx": current[0], "rx": current[1],
+                   "pltx": legacy[0], "plrx": legacy[1]})
 
     def set_running(self, running):
         self.run_cmd_btn.setEnabled(not running)
