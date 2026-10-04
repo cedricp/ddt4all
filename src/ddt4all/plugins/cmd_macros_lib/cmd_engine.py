@@ -101,6 +101,25 @@ def _accepts(func, param):
 #: reintroduces one) would otherwise loop forever, as in ``mod_term.py``.
 MAX_VARIABLES_PER_LINE = 100
 
+#: Maximum nesting of ``include`` directives (a cycle raises earlier).
+MAX_INCLUDE_DEPTH = 8
+
+#: ``include <file>`` (a comment may follow the file name)
+_INCLUDE_RE = re.compile(r'^\s*include\s+(\S+)', re.IGNORECASE)
+
+
+def include_target(line):
+    """File named by an ``include`` line, or ``None`` for a normal line.
+
+    The ``#`` comment is stripped first, so an included file can document its
+    own content::
+
+        include 03_read_config.cmd   # backup of the original value
+    """
+    text = str(line).split('#', 1)[0].strip()
+    match = _INCLUDE_RE.match(text)
+    return match.group(1) if match else None
+
 
 #: ``bit_cmd`` guard messages (translated like every other UI string)
 BIT_CMD_ERROR_1 = _("""ERROR: command should have 5 parameters: 
@@ -356,6 +375,9 @@ class MacroEngine(object):
         self.stack = []
         self.key_pressed = ''
         self.steps = 0
+        #: folder of the macros played (see ``load_macro_dir``), used to
+        #: resolve ``include`` directives
+        self.macro_folder = ''
 
         self.init_var()
 
@@ -452,7 +474,8 @@ class MacroEngine(object):
         """Loads every ``*.txt`` of a folder (and its sub-folders).
 
         ``mod_term.load_macro`` only walked ``./macro`` and forgot the
-        sub-folder in the ``join``: fixed here.
+        sub-folder in the ``join``: fixed here. The folder is also remembered:
+        it is where the ``include`` directives of a ``*.cmd`` are looked up.
         """
         count = 0
         for root, _dirs, files in os.walk(folder):
@@ -460,12 +483,72 @@ class MacroEngine(object):
                 if mfile.lower().endswith('.txt'):
                     self.parse_file(os.path.join(root, mfile))
                     count += 1
+        self.macro_folder = os.path.abspath(folder)
         return count
 
     def load_commands(self, filename):
-        """Reads a ``*.cmd`` (or ``*.tmp``) file and returns its lines."""
-        with open(filename, 'rt', encoding='utf-8', errors='replace') as f:
-            return f.readlines()
+        """Reads a ``*.cmd`` (or ``*.tmp``) file and returns its lines.
+
+        ``include <file>`` is expanded here (section 2 of the README), so a
+        safe session can be split into one file per step::
+
+            include 01_session_start.cmd
+            include 03_read_config.cmd      # the backup
+            include 04_write_config.cmd
+            include 05_read_back.cmd
+
+        The inclusion is **textual**: labels and ``goto`` work across the
+        whole session, exactly as if it were a single file. A cycle or a
+        missing file raises :class:`MacroError`.
+        """
+        folder = os.path.dirname(os.path.abspath(filename))
+        # play_lines() announces the line count, once the includes are resolved
+        return self._expand(filename, folder, (os.path.abspath(filename),))
+
+    def _expand(self, filename, folder, stack, depth=0):
+        """Lines of ``filename``, ``include`` directives replaced by content."""
+        if depth > MAX_INCLUDE_DEPTH:
+            raise MacroError(_("%(file)s: includes are nested too deeply "
+                               "(%(limit)d levels)")
+                             % {"file": filename, "limit": MAX_INCLUDE_DEPTH})
+        try:
+            with open(filename, 'rt', encoding='utf-8', errors='replace') as f:
+                raw_lines = f.readlines()
+        except OSError as err:
+            raise MacroError(_("Cannot read %(file)s: %(error)s")
+                             % {"file": filename, "error": err})
+
+        out = []
+        for raw in raw_lines:
+            target = include_target(raw)
+            if target is None:
+                out.append(raw)
+                continue
+            path = self._resolve_include(target, folder)
+            if path is None:
+                raise MacroError(_("%(file)s: included file not found: "
+                                   "%(target)s")
+                                 % {"file": os.path.basename(filename),
+                                    "target": target})
+            if path in stack:
+                raise MacroError(_("include loop: %(target)s")
+                                 % {"target": os.path.basename(path)})
+            self.log(_("# include %(file)s") % {"file": target})
+            out.extend(self._expand(path, os.path.dirname(path),
+                                     stack + (path,), depth + 1))
+        return out
+
+    def _resolve_include(self, target, folder):
+        """Path of an included file: relative to ``folder``, then the macro
+        folder set by :meth:`load_macro_dir`."""
+        candidates = [os.path.join(folder, target)]
+        if self.macro_folder:
+            candidates.append(os.path.join(self.macro_folder, target))
+        candidates.append(os.path.abspath(target))
+        for candidate in candidates:
+            if os.path.isfile(candidate):
+                return os.path.abspath(candidate)
+        return None
 
     def help_text(self):
         """Translated help of the macro language (``h`` command)."""
@@ -475,6 +558,7 @@ class MacroEngine(object):
         return '\n'.join((_("[h]elp                 - this help"),
                           _("[q]uit, [e]xit, end    - exit from terminal"),
                           _("wait|sleep x           - wait x seconds"),
+                          _("include <file>         - play another .cmd here"),
                           '',
                           _("Variables:"), variables,
                           '',
