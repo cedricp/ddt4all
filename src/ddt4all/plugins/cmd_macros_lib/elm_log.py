@@ -83,7 +83,7 @@ def logs_folder(options_module=None):
         try:                                   # ddt4all master (>= 3.1)
             from ddt4all.file_manager import get_logs_dir
         except ImportError:                    # ddt4all legacy
-            from file_manager import get_logs_dir
+            from file_manager import get_logs_dir # noqa: F401
         return os.fspath(get_logs_dir())
     except Exception:
         # outside ddt4all (console, tests): keep the files next to the plugin
