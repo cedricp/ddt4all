@@ -247,6 +247,7 @@ def test_ecu_file_connect_to_hardware(dummy_ecu_file, mocker):
             "idRx": "7E8",
             "ecuname": "b'TEST_ECU'",
             "protocol": "CAN",
+            "brp": "1",
         },
         1,
     )
