@@ -250,9 +250,10 @@ class EcuFile:
             ecu_conf = {'idTx': self.ecu_send_id, 'idRx': self.ecu_recv_id, 'ecuname': str(ecuname), 'protocol': 'CAN'}
 
             if not options.simulation_mode:
-                # Next lines not more needed.
-                # if self.baudrate == 250000 or self.baudrate == 10400:
-                #    ecu_conf['brp'] = "1"
+                # Preserve the ECU metadata's CAN baudrate hint so Auto mode can choose
+                # the correct 250 kbit/s branch when the target bus is not 500 kbit/s.
+                if self.baudrate == 250000 or self.baudrate == 10400:
+                    ecu_conf['brp'] = "1"
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf, canline)
 

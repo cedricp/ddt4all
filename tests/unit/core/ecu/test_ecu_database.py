@@ -1,7 +1,10 @@
 import json
 import zipfile
 
+import ddt4all.core.elm.elm as elm_module
+import ddt4all.options as options
 from ddt4all.core.ecu.ecu_database import EcuDatabase
+from ddt4all.core.ecu.ecu_file import EcuFile
 
 
 def test_vehiclemap_keeps_full_project_codes_from_json_targets(tmp_path, monkeypatch):
@@ -97,3 +100,40 @@ def test_vehiclemap_does_not_truncate_project_codes(tmp_path, monkeypatch):
     database.addVehicleMapEntry("X95PH2", "CAN", "26")
 
     assert database.vehiclemap == {"X95PH2": [("CAN", "26")]}
+
+
+def test_connect_to_hardware_sets_brp_for_250k_can_auto(monkeypatch):
+    monkeypatch.setattr(options, "simulation_mode", False)
+    monkeypatch.setattr(elm_module, "get_can_addr", lambda txa: "01")
+    monkeypatch.setattr(elm_module, "get_can_addr_ext", lambda txa: "01")
+
+    captured = {}
+
+    class FakeELM:
+        def init_can(self):
+            pass
+
+        def set_can_addr(self, addr, ecu_conf, canline):
+            captured["addr"] = addr
+            captured["ecu_conf"] = ecu_conf
+            captured["canline"] = canline
+
+    monkeypatch.setattr(options, "elm", FakeELM())
+
+    ecu = EcuFile.__new__(EcuFile)
+    ecu.ecu_protocol = "CAN"
+    ecu.ecu_send_id = "7E0"
+    ecu.ecu_recv_id = "7E8"
+    ecu.ecuname = "Test ECU"
+    ecu.baudrate = 250000
+
+    ecu.connect_to_hardware(canline=0)
+
+    assert captured["ecu_conf"]["brp"] == "1"
+    assert captured["canline"] == 0
+
+    ecu.baudrate = 500000
+    captured.clear()
+    ecu.connect_to_hardware(canline=0)
+
+    assert "brp" not in captured["ecu_conf"]
