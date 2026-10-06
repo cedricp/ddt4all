@@ -9,7 +9,7 @@ Source: `src/ddt4all/core/doip/doip_devices.py`
 - [Method Reference And Flowcharts](#method-reference-and-flowcharts)
 - [Initialization Functions](#initialization-functions)
   - [`init_can(self)`](#init-can-self)
-  - [`__init__(self, target_ip='192.168.0.12')`](#init-self-target-ip-192-168-0-12)
+  - [`__init__(self, target_ip='192.168.0.12', target_port=13400)`](#init-self-target-ip-192-168-0-12-target-port-13400)
 - [Main Functions](#main-functions)
   - [`start_session_can(self, start_session)`](#start-session-can-self-start-session)
   - [`set_can_addr(self, addr, ecu, canline=0)`](#set-can-addr-self-addr-ecu-canline-0)
@@ -21,9 +21,10 @@ Source: `src/ddt4all/core/doip/doip_devices.py`
 
 ## Other Code Used By This Class
 
-- `socket` and `struct`: used for network messages and binary packet layout.
-- `DoIPMessageType`: names DoIP payload types.
+- `DoIPConnection`: opens the DoIP connection and exchanges DoIP frames.
 - `DoIPProtocolError`: reports DoIP protocol failures.
+- `elm`: provides CAN address tables (`dnat`, `snat`, ...) used when setting addresses.
+- `options`: provides device settings and translated messages.
 
 ## Stored Values
 
@@ -60,8 +61,8 @@ flowchart TD
     F --> G
 ```
 
-<a id="init-self-target-ip-192-168-0-12"></a>
-### `__init__(self, target_ip='192.168.0.12')`
+<a id="init-self-target-ip-192-168-0-12-target-port-13400"></a>
+### `__init__(self, target_ip='192.168.0.12', target_port=13400)`
 
 Creates a `DoIPDevice` object and sets its starting state.
 

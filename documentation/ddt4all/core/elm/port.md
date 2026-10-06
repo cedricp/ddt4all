@@ -31,9 +31,10 @@ Supports USB, Bluetooth, WiFi OBD-II devices with cross-platform compatibility
 
 ## Collaborators
 
-- `Port`: handles low-level serial, Bluetooth, WiFi, or DoIP transport when used by ELM.
 - `options`: provides runtime flags and adapter settings.
-- `DeviceManager`: applies adapter-specific settings for supported devices.
+- `DeviceManager`: provides optimal connection settings for the adapter type.
+- `doip_devices`: provides the `DoIPDevice` used for DoIP (TCP/IP) connections.
+- `serial` and `socket`: provide the low-level transport for serial and TCP ports.
 
 ## State
 
@@ -42,15 +43,19 @@ Supports USB, Bluetooth, WiFi OBD-II devices with cross-platform compatibility
 | `adapter_type` | Adapter type. |
 | `_lock` | Internal `_lock` value used by the class. |
 | `reconnect_attempts` | Internal `reconnect_attempts` value used by the class. |
+| `max_reconnect_attempts` | Maximum number of TCP reconnect attempts. |
 | `buff` | Internal `buff` value used by the class. |
 | `tcpprt` | Internal `tcpprt` value used by the class. |
 | `portType` | Internal `portType` value used by the class. |
 | `portName` | Port name. |
+| `ipaddr` | IP address parsed from a TCP port name (default `192.168.0.10`). |
 | `hdr` | Internal `hdr` value used by the class. |
 | `connectionStatus` | Connection status flag. |
 | `doip_device` | Internal `doip_device` value used by the class. |
 | `tcp_needs_reconnect` | Internal `tcp_needs_reconnect` value used by the class. |
 | `settings` | Device-specific settings. |
+| `droid` | Android Bluetooth device handle, when used. |
+| `btcid` | Bluetooth connection id, when used. |
 
 ## Method Reference And Flowcharts
 

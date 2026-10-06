@@ -14,23 +14,21 @@ DoIP Message Types according to ISO 13400
 
 ## Collaborators
 
-- `socket` and `struct`: used for network messages and binary packet layout.
-- `DoIPMessageType`: names DoIP payload types.
-- `DoIPProtocolError`: reports DoIP protocol failures.
+- `enum`: provides the `Enum` base class used by `DoIPMessageType`.
 
 ## Enum Values
 
 | Name | Value |
 | --- | --- |
-| `VEHICLE_IDENTIFICATION_REQUEST` | `1` |
-| `VEHICLE_IDENTIFICATION_RESPONSE` | `2` |
-| `VEHICLE_ANNOUNCEMENT` | `3` |
-| `DIAGNOSTIC_SESSION_CONTROL` | `16385` |
-| `DIAGNOSTIC_MESSAGE` | `16386` |
-| `ALIVE_CHECK_REQUEST` | `16387` |
-| `ALIVE_CHECK_RESPONSE` | `16388` |
-| `ENTITY_STATUS_REQUEST` | `16389` |
-| `ENTITY_STATUS_RESPONSE` | `16390` |
+| `VEHICLE_IDENTIFICATION_REQUEST` | `0x0001` |
+| `VEHICLE_IDENTIFICATION_RESPONSE` | `0x0002` |
+| `VEHICLE_ANNOUNCEMENT` | `0x0003` |
+| `DIAGNOSTIC_SESSION_CONTROL` | `0x4001` |
+| `DIAGNOSTIC_MESSAGE` | `0x4002` |
+| `ALIVE_CHECK_REQUEST` | `0x4003` |
+| `ALIVE_CHECK_RESPONSE` | `0x4004` |
+| `ENTITY_STATUS_REQUEST` | `0x4005` |
+| `ENTITY_STATUS_RESPONSE` | `0x4006` |
 
 ## Method Reference And Flowcharts
 

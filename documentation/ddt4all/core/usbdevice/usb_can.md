@@ -31,8 +31,8 @@ Source: `src/ddt4all/core/usbdevice/usb_can.py`
 ## Collaborators
 
 - `usb.core`, `usb.util`, and `usb.legacy`: access USB devices.
+- `constants`: provides USB request and CAN mode constants.
 - `options`: provides translated messages and device settings.
-- `elm` address helpers: convert ECU addresses for CAN setup.
 
 ## State
 

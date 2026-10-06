@@ -20,17 +20,17 @@ ELM327 class
   - [`set_iso8_addr(self, addr, ecu)`](#set-iso8-addr-self-addr-ecu)
   - [`set_can_timeout(self, value)`](#set-can-timeout-self-value)
   - [`set_can_addr(self, addr, ecu, canline=0)`](#set-can-addr-self-addr-ecu-canline-0)
-  - [`send_stn_command(self, command, enhanced=True)`](#send-stn-command-self-command-enhanced-true)
-  - [`send_raw(self, command, expect='>')`](#send-raw-self-command-expect->)
+  - [`send_raw(self, command)`](#send-raw-self-command)
   - [`send_cmd(self, command)`](#send-cmd-self-command)
   - [`send_can_cfc0(self, command)`](#send-can-cfc0-self-command)
+  - [`send_can_cfc(self, command)`](#send-can-cfc-self-command)
+  - [`send_can_cfc_caf(self, command)`](#send-can-cfc-caf-self-command)
   - [`send_can(self, command)`](#send-can-self-command)
   - [`request(self, req, positive='', cache=True, serviceDelay='0')`](#request-self-req-positive-cache-true-servicedelay-0)
-  - [`raise_vgate_speed(self, baudrate)`](#raise-vgate-speed-self-baudrate)
-  - [`raise_odb_speed(self, baudrate, device_name='OBDLINK')`](#raise-odb-speed-self-baudrate-device-name-obdlink)
-  - [`raise_elm_speed(self, baudrate, device_name='ELM')`](#raise-elm-speed-self-baudrate-device-name-elm)
+  - [`change_device_speed(self, baudrate, device_name='ELM')`](#change-device-speed-self-baudrate-device-name-elm)
+  - [`set_can_250(self, addr='ABC')`](#set-can-250-self-addr-abc)
+  - [`set_can_500(self, addr='ABC')`](#set-can-500-self-addr-abc)
   - [`monitor_can_bus(self, callback)`](#monitor-can-bus-self-callback)
-  - [`enable_stpx_mode(self)`](#enable-stpx-mode-self)
   - [`cmd(self, command, serviceDelay='0')`](#cmd-self-command-servicedelay-0)
   - [`close_protocol(self)`](#close-protocol-self)
   - [`clear_cache(self)`](#clear-cache-self)
@@ -43,6 +43,8 @@ ELM327 class
 - `Port`: handles low-level serial, Bluetooth, WiFi, or DoIP transport when used by ELM.
 - `options`: provides runtime flags and adapter settings.
 - `DeviceManager`: applies adapter-specific settings for supported devices.
+- `constants`: provides command bytes (`cmdb`) and negative response codes (`negrsp`).
+- `UsbCan`: detects USB adapters during port enumeration.
 
 ## State
 
@@ -68,6 +70,14 @@ ELM327 class
 | `vf` | Internal `vf` value used by the class. |
 | `ATR1` | Internal `ATR1` value used by the class. |
 | `buff` | Internal `buff` value used by the class. |
+| `portName` | Port name used to open the connection. |
+| `portTimeout` | Timeout of the port (com or tcp) in seconds. |
+| `elmTimeout` | Timeout set by the adapter `ATST` command. |
+| `busLoad` | Reported bus load value. |
+| `screenRefreshTime` | Screen refresh time value. |
+| `lastMessage` | Last raw message kept for monitoring. |
+| `monitorstop` | Flag that stops the CAN bus monitor. |
+| `error_*` | Error counters (`error_frame`, `error_bufferfull`, `error_question`, `error_nodata`, `error_timeout`, `error_rx`, `error_can`). |
 
 ## Method Reference And Flowcharts
 
@@ -234,26 +244,10 @@ flowchart TD
     D --> E([End])
 ```
 
-<a id="send-stn-command-self-command-enhanced-true"></a>
-### `send_stn_command(self, command, enhanced=True)`
+<a id="send-raw-self-command"></a>
+### `send_raw(self, command)`
 
-Send command using STN protocol with enhanced features
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare command or bytes]
-    B --> C{Connection is ready?}
-    C -- No --> D[Return error or raise exception]
-    C -- Yes --> E[Send data]
-    E --> F[Read or return response]
-    F --> G([End])
-    D --> G
-```
-
-<a id="send-raw-self-command-expect->"></a>
-### `send_raw(self, command, expect='>')`
-
-Enhanced send_raw with STN/STPX support
+Sends a raw command to the adapter and returns its response.
 
 ```mermaid
 flowchart TD
@@ -286,6 +280,38 @@ flowchart TD
 ### `send_can_cfc0(self, command)`
 
 Sends data or a command through the active connection.
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[Prepare command or bytes]
+    B --> C{Connection is ready?}
+    C -- No --> D[Return error or raise exception]
+    C -- Yes --> E[Send data]
+    E --> F[Read or return response]
+    F --> G([End])
+    D --> G
+```
+
+<a id="send-can-cfc-self-command"></a>
+### `send_can_cfc(self, command)`
+
+Sends a CAN request with manual ISO-TP framing and flow control (OBDLink based ELM only).
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[Prepare command or bytes]
+    B --> C{Connection is ready?}
+    C -- No --> D[Return error or raise exception]
+    C -- Yes --> E[Send data]
+    E --> F[Read or return response]
+    F --> G([End])
+    D --> G
+```
+
+<a id="send-can-cfc-caf-self-command"></a>
+### `send_can_cfc_caf(self, command)`
+
+Sends a CAN request through STPX with CAN auto formatting (OBDLink based ELM, wireless especially).
 
 ```mermaid
 flowchart TD
@@ -331,52 +357,50 @@ flowchart TD
     G --> H
 ```
 
-<a id="raise-vgate-speed-self-baudrate"></a>
-### `raise_vgate_speed(self, baudrate)`
+<a id="change-device-speed-self-baudrate-device-name-elm"></a>
+### `change_device_speed(self, baudrate, device_name='ELM')`
 
-Runs the `raise_vgate_speed` operation for `ELM`.
+Unified speed switch for ELM (ATBRD) and STN-based adapters (ST SBR).
 
 ```mermaid
 flowchart TD
     A([Start]) --> B[Prepare adapter-specific commands]
     B --> C[Run commands in order]
     C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
+    D -- Yes --> E[Switch port speed and wait]
+    D -- No --> F[Print warning and raise exception]
     E --> G([End])
     F --> G
 ```
 
-<a id="raise-odb-speed-self-baudrate-device-name-obdlink"></a>
-### `raise_odb_speed(self, baudrate, device_name='OBDLINK')`
+<a id="set-can-250-self-addr-abc"></a>
+### `set_can_250(self, addr='ABC')`
 
-Runs the `raise_odb_speed` operation for `ELM`.
+Sets the CAN bus to 250 kbit/s (uses STN `STP`/`STPBR` when supported, otherwise `AT SP 8`/`AT SP 9`).
 
 ```mermaid
 flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
+    A([Start]) --> B[Run method logic]
+    B --> C{Operation succeeds?}
+    C -- Yes --> D[Return normal result]
+    C -- No --> E[Return fallback or raise error]
+    D --> F([End])
+    E --> F
 ```
 
-<a id="raise-elm-speed-self-baudrate-device-name-elm"></a>
-### `raise_elm_speed(self, baudrate, device_name='ELM')`
+<a id="set-can-500-self-addr-abc"></a>
+### `set_can_500(self, addr='ABC')`
 
-Runs the `raise_elm_speed` operation for `ELM`.
+Sets the CAN bus to 500 kbit/s (uses STN `STP`/`STPBR` when supported, otherwise `AT SP 6`/`AT SP 7`).
 
 ```mermaid
 flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
+    A([Start]) --> B[Run method logic]
+    B --> C{Operation succeeds?}
+    C -- Yes --> D[Return normal result]
+    C -- No --> E[Return fallback or raise error]
+    D --> F([End])
+    E --> F
 ```
 
 <a id="monitor-can-bus-self-callback"></a>
@@ -391,22 +415,6 @@ flowchart TD
     C --> D{Response type is expected?}
     D -- Yes --> E[Parse and return result]
     D -- No --> F[Raise or report protocol error]
-    E --> G([End])
-    F --> G
-```
-
-<a id="enable-stpx-mode-self"></a>
-### `enable_stpx_mode(self)`
-
-Enable STPX mode for enhanced long command support on STN-based adapters
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
     E --> G([End])
     F --> G
 ```
@@ -463,7 +471,7 @@ flowchart TD
 <a id="connectionstat-self"></a>
 ### `connectionStat(self)`
 
-Opens or prepares the connection used by `ELM`.
+Returns whether the underlying port connection is active.
 
 ```mermaid
 flowchart TD

@@ -14,9 +14,7 @@ Source: `src/ddt4all/core/doip/doip_protocol_error.py`
 
 ## Other Code Used By This Class
 
-- `socket` and `struct`: used for network messages and binary packet layout.
-- `DoIPMessageType`: names DoIP payload types.
-- `DoIPProtocolError`: reports DoIP protocol failures.
+- `Exception`: built-in base class that `DoIPProtocolError` extends.
 
 ## Method Reference And Flowcharts
 

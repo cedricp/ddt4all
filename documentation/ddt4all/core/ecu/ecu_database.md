@@ -18,6 +18,7 @@ Source: `src/ddt4all/core/ecu/ecu_database.py`
     - [`getTargets(self, name)`](#gettargets-self-name)
     - [`getTarget(self, name)`](#gettarget-self-name)
   - [Auxiliary Functions](#auxiliary-functions)
+    - [`addVehicleMapEntry(self, project, protocol, addr)`](#addvehicmapentry-self-project-protocol-addr)
     - [`dump(self)`](#dump-self)
 - [Flow Summary](#flow-summary)
 
@@ -135,6 +136,27 @@ flowchart TD
 
 <a id="auxiliary-functions"></a>
 ## Auxiliary Functions
+
+<a id="addvehicmapentry-self-project-protocol-addr"></a>
+### `addVehicleMapEntry(self, project, protocol, addr)`
+
+Adds a `(protocol, addr)` pair to the [vehiclemap](ecu_database.md#state) entry of `project`. The project code is normalized to upper case, empty codes are ignored, and duplicate pairs are not stored twice.
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[Convert project to upper case]
+    B --> C{Project is empty?}
+    C -- Yes --> H([End])
+    C -- No --> D[Build protocol and address pair]
+    D --> E{Project already in vehicle map?}
+    E -- No --> F[Create empty entry list]
+    E --> G[Use existing entry list]
+    F --> I{Pair already in list?}
+    G --> I
+    I -- No --> J[Append pair to list]
+    I -- Yes --> H
+    J --> H
+```
 
 <a id="dump-self"></a>
 ### `dump(self)`

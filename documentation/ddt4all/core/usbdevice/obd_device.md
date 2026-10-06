@@ -21,7 +21,7 @@ Source: `src/ddt4all/core/usbdevice/obd_device.py`
 
 ## Collaborators
 
-- `usb.core`, `usb.util`, and `usb.legacy`: access USB devices.
+- `UsbCan`: provides the underlying USB CAN device handle and transfer methods.
 - `options`: provides translated messages and device settings.
 - `elm` address helpers: convert ECU addresses for CAN setup.
 

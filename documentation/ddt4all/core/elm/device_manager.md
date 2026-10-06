@@ -11,25 +11,14 @@ Enhanced device manager for OBD-II adapters with optimal settings and STN/STPX s
   - [`initialize_device(elm_instance, device_type=None)`](#initialize-device-elm-instance-device-type-none)
 - [Main Functions](#main-functions)
   - [`normalize_adapter_type(adapter_type)`](#normalize-adapter-type-adapter-type)
-  - [`enable_enhanced_features(elm_instance, device_type)`](#enable-enhanced-features-elm-instance-device-type)
   - [`detect_device_type(elm_instance)`](#detect-device-type-elm-instance)
 - [Auxiliary Functions](#auxiliary-functions)
   - [`get_optimal_settings(device_type)`](#get-optimal-settings-device-type)
-  - [`_swap_vgate_pins(elm_instance)`](#swap-vgate-pins-elm-instance)
-  - [`_swap_usbcan_pins(elm_instance)`](#swap-usbcan-pins-elm-instance)
-  - [`_swap_obdlink_pins(elm_instance)`](#swap-obdlink-pins-elm-instance)
-  - [`_swap_els27_pins(elm_instance)`](#swap-els27-pins-elm-instance)
-  - [`_swap_derlek_diag3_pins(elm_instance)`](#swap-derlek-diag3-pins-elm-instance)
-  - [`_swap_derlek_diag2_pins(elm_instance)`](#swap-derlek-diag2-pins-elm-instance)
-  - [`_enable_stpx_mode(elm_instance)`](#enable-stpx-mode-elm-instance)
-  - [`_auto_swap_pins(elm_instance, device_type)`](#auto-swap-pins-elm-instance-device-type)
 - [Flow Summary](#flow-summary)
 
 ## Collaborators
 
-- `Port`: handles low-level serial, Bluetooth, WiFi, or DoIP transport when used by ELM.
-- `options`: provides runtime flags and adapter settings.
-- `DeviceManager`: applies adapter-specific settings for supported devices.
+- `options`: provides the message translator and runtime settings.
 
 ## Method Reference And Flowcharts
 
@@ -43,13 +32,18 @@ Complete device initialization with enhanced features
 
 ```mermaid
 flowchart TD
-    A([Start]) --> B[Prepare connection settings]
-    B --> C[Open or configure device]
-    C --> D{Setup succeeded?}
-    D -- Yes --> E[Store connected state and return True]
-    D -- No --> F[Store failed state and return False]
-    E --> G([End])
-    F --> G
+    A([Start]) --> B{ELM instance provided?}
+    B -- No --> Z[Return False]
+    B -- Yes --> C{Device type provided?}
+    C -- No --> D[Auto-detect device type]
+    C -- Yes --> E[Use provided device type]
+    D --> F[Get optimal settings]
+    E --> F
+    F --> H[Return True]
+    F -- Error --> Y[Print error and return False]
+    H --> I([End])
+    Y --> I
+    Z --> I
 ```
 
 <a id="main-functions"></a>
@@ -68,22 +62,6 @@ flowchart TD
     C -- No --> E[Return fallback or raise error]
     D --> F([End])
     E --> F
-```
-
-<a id="enable-enhanced-features-elm-instance-device-type"></a>
-### `enable_enhanced_features(elm_instance, device_type)`
-
-Enable enhanced features based on device type
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
 ```
 
 <a id="detect-device-type-elm-instance"></a>
@@ -119,139 +97,12 @@ flowchart TD
     E --> F
 ```
 
-<a id="swap-vgate-pins-elm-instance"></a>
-### `_swap_vgate_pins(elm_instance)`
-
-Swap pins for VGate adapters using STN protocol
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="swap-usbcan-pins-elm-instance"></a>
-### `_swap_usbcan_pins(elm_instance)`
-
-Swap pins for USB CAN adapters
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="swap-obdlink-pins-elm-instance"></a>
-### `_swap_obdlink_pins(elm_instance)`
-
-Swap pins for OBDLink adapters
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="swap-els27-pins-elm-instance"></a>
-### `_swap_els27_pins(elm_instance)`
-
-Swap pins for ELS27 adapters
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="swap-derlek-diag3-pins-elm-instance"></a>
-### `_swap_derlek_diag3_pins(elm_instance)`
-
-Swap pins for DerleK USB-DIAG3 adapters
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="swap-derlek-diag2-pins-elm-instance"></a>
-### `_swap_derlek_diag2_pins(elm_instance)`
-
-Swap pins for DerleK USB-DIAG2 adapters
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="enable-stpx-mode-elm-instance"></a>
-### `_enable_stpx_mode(elm_instance)`
-
-Enable STPX mode for enhanced long command support
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Prepare adapter-specific commands]
-    B --> C[Run commands in order]
-    C --> D{All commands worked?}
-    D -- Yes --> E[Return True]
-    D -- No --> F[Print warning and return False]
-    E --> G([End])
-    F --> G
-```
-
-<a id="auto-swap-pins-elm-instance-device-type"></a>
-### `_auto_swap_pins(elm_instance, device_type)`
-
-Auto-swap pins based on device type
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Run method logic]
-    B --> C{Operation succeeds?}
-    C -- Yes --> D[Return normal result]
-    C -- No --> E[Return fallback or raise error]
-    D --> F([End])
-    E --> F
-```
-
 ## Flow Summary
 
 This summary shows the usual high-level flow through `DeviceManager`.
 
 ```mermaid
 flowchart LR
-    A[Create object] --> B[Run method]
-    B --> C[Update state or return value]
+    A[Call a static method] --> B[Normalize, detect, or read settings]
+    B --> C[Return result]
 ```

@@ -14,9 +14,7 @@ DoIP Protocol specific errors
 
 ## Collaborators
 
-- `socket` and `struct`: used for network messages and binary packet layout.
-- `DoIPMessageType`: names DoIP payload types.
-- `DoIPProtocolError`: reports DoIP protocol failures.
+- `Exception`: built-in base class that `DoIPProtocolError` extends.
 
 ## Method Reference And Flowcharts
 
