@@ -199,6 +199,7 @@ Vehicle-specific procedures are provided as Python modules under
 - `ab90_reset.py` — AB90 air-bag reset
 - `card_programming.py` — ECU card programming
 - `clio3_eps_reset.py`, `clio4_eps_reset.py` — Clio 3/4 EPS reset
+- `cmd_macros.py` — DDT2000 command macros (`.cmd`, uses `cmd_macros_lib/`)
 - `laguna2_uch_reset.py`, `laguna3_uch_reset.py` — Laguna 2/3 UCH
 - `megane2_uch_reset.py`, `megane3_uch_reset.py` — Megane 2/3 UCH
 - `megane3_ab_reset.py` — Megane 3 air-bag reset

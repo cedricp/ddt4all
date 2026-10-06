@@ -55,6 +55,8 @@ src/
 │   │   ├── card_programming.py
 │   │   ├── clio3_eps_reset.py
 │   │   ├── clio4_eps_reset.py
+│   │   ├── cmd_macros.py
+│   │   ├── cmd_macros_lib/ # DDT2000 macros engine + bundled macros
 │   │   ├── laguna2_uch_reset.py
 │   │   ├── laguna3_uch_reset.py
 │   │   ├── megane2_uch_reset.py
