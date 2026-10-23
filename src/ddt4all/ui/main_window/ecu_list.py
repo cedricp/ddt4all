@@ -5,11 +5,13 @@ import locale
 import PyQt5.QtCore as core
 import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
+from PyQt5.QtWidgets import QCompleter
+from PyQt5.QtCore import QSortFilterProxyModel
 
 import ddt4all.core.ecu.ecu_database as ecudb
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
-from ddt4all.ui.main_window.icons_paths import ICON_SCAN
+from ddt4all.ui.main_window.icons_paths import ICON_SCAN, ICON_FIND
 
 _ = options.translator('ddt4all')
 
@@ -32,16 +34,46 @@ class EcuList(widgets.QWidget):
         self.ecuscan = ecuscan  # Store reference to ecuscan
         self.ecu_map = {}
         self.vehicles = vehicles
+
+        # Create a proxy model for search/filter functionality
+        self.vehicle_proxy_model = QSortFilterProxyModel(self.vehicle_combo)
+        self.vehicle_proxy_model.setFilterCaseSensitivity(core.Qt.CaseInsensitive)
+        self.vehicle_proxy_model.setFilterKeyColumn(0)
+
         self.populateVehicleCombo()
+
+        # Enable search/filter functionality on the vehicle combo box
+        self.vehicle_combo.setEditable(True)
+        self.vehicle_combo.setInsertPolicy(widgets.QComboBox.NoInsert)
+
+        # Set up completer with proxy model for proper filtering
+        completer = self.vehicle_combo.completer()
+        completer.setCompletionMode(QCompleter.PopupCompletion)
+        completer.setModel(self.vehicle_proxy_model)
+        completer.setFilterMode(core.Qt.MatchContains)
+        completer.setCaseSensitivity(core.Qt.CaseInsensitive)
+
+        # Connect line edit text changes to update the proxy model filter
+        self.vehicle_combo.lineEdit().textChanged.connect(self._on_vehicle_search_text_changed)
 
         self.vehicle_combo.activated.connect(self.filterProject)
 
         layout = widgets.QVBoxLayout()
         layouth = widgets.QHBoxLayout()
+
+        # Search button - focuses combo box and shows completer popup
+        self.search_button = widgets.QPushButton()
+        self.search_button.setIcon(gui.QIcon(ICON_FIND))
+        self.search_button.setToolTip(_("Search vehicle"))
+        self.search_button.setFixedWidth(32)
+        self.search_button.clicked.connect(self._on_search_clicked)
+
         scanbutton = widgets.QPushButton()
         scanbutton.setIcon(gui.QIcon(ICON_SCAN))
         scanbutton.clicked.connect(self.scanselvehicle)
-        layouth.addWidget(self.vehicle_combo)
+
+        layouth.addWidget(self.search_button)
+        layouth.addWidget(self.vehicle_combo, 1)  # Stretch factor 1 to fill available space
         layouth.addWidget(scanbutton)
         layout.addLayout(layouth)
         self.setLayout(layout)
@@ -102,7 +134,10 @@ class EcuList(widgets.QWidget):
         
         # Enable combo box only if we have vehicles
         self.vehicle_combo.setEnabled(True)
-        
+
+        # Set the proxy model's source model to the combo box's model
+        self.vehicle_proxy_model.setSourceModel(self.vehicle_combo.model())
+
         # Restore last selected vehicle if available
         last_vehicle = options.get_last_selected_vehicle()
         if last_vehicle:
@@ -114,6 +149,18 @@ class EcuList(widgets.QWidget):
                 index = self.vehicle_combo.findText(last_vehicle)
                 if index >= 0:
                     self.vehicle_combo.setCurrentIndex(index)
+
+    def _on_vehicle_search_text_changed(self, text):
+        """Handle search text changes to filter the vehicle list"""
+        self.vehicle_proxy_model.setFilterFixedString(text)
+
+    def _on_search_clicked(self):
+        """Handle search button click - focus combo box and show completer popup"""
+        self.vehicle_combo.setFocus()
+        self.vehicle_combo.lineEdit().selectAll()
+        # Show completer popup if there's text to filter
+        if self.vehicle_combo.lineEdit().text():
+            self.vehicle_combo.completer().complete()
 
     def refreshVehicleList(self):
         """Refresh the vehicle combo box when sorting mode changes"""
