@@ -33,7 +33,7 @@ OBDLink SX/EX and ELS27 adapters.
 - **Networks**: CAN bus sniffing (with live non-blocking capture), DoIP, KWP2000.
 - **Database**: XML + ZIP (auto `ecu.zip`), JSON internal conversion, graphics extraction.
 - **Automation**: Plugin system (vehicle-specific procedures) and extensible Python CLI.
-- **Internationalization**: gettext/polib catalogs in 14 languages, real-time switch, HTML-aware strings.
+- **Internationalization**: gettext/polib catalogs in 15 languages, real-time switch, HTML-aware strings.
 
 ---
 
@@ -88,6 +88,7 @@ the following catalogues are shipped:
 | `tr` | Türkçe |
 | `cs_CZ` | Czech |
 | `uk_UA` | Українська |
+| `zh_CN` | 简体中文 |
 
 All catalogs are complete (content of all `msgstr` fields is present
 and no `#, fuzzy` remains), keep valid gettext syntax and preserve the original

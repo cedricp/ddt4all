@@ -75,6 +75,7 @@ lang_list = {
     "Russian": "ru",
     "Serbian": "sr",
     "Czech":"cs_CZ",
+    "简体中文": "zh_CN",
     "Turkish": "tr",
     "Ukrainian": "uk_UA"
 }
