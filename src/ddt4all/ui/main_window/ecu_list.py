@@ -11,7 +11,7 @@ from PyQt5.QtCore import QSortFilterProxyModel
 import ddt4all.core.ecu.ecu_database as ecudb
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
-from ddt4all.ui.main_window.icons_paths import ICON_SCAN
+from ddt4all.ui.main_window.icons_paths import ICON_SCAN, ICON_FIND
 
 _ = options.translator('ddt4all')
 
@@ -60,10 +60,20 @@ class EcuList(widgets.QWidget):
 
         layout = widgets.QVBoxLayout()
         layouth = widgets.QHBoxLayout()
+
+        # Search button - focuses combo box and shows completer popup
+        self.search_button = widgets.QPushButton()
+        self.search_button.setIcon(gui.QIcon(ICON_FIND))
+        self.search_button.setToolTip(_("Search vehicle"))
+        self.search_button.setFixedWidth(32)
+        self.search_button.clicked.connect(self._on_search_clicked)
+
         scanbutton = widgets.QPushButton()
         scanbutton.setIcon(gui.QIcon(ICON_SCAN))
         scanbutton.clicked.connect(self.scanselvehicle)
-        layouth.addWidget(self.vehicle_combo)
+
+        layouth.addWidget(self.search_button)
+        layouth.addWidget(self.vehicle_combo, 1)  # Stretch factor 1 to fill available space
         layouth.addWidget(scanbutton)
         layout.addLayout(layouth)
         self.setLayout(layout)
@@ -143,6 +153,14 @@ class EcuList(widgets.QWidget):
     def _on_vehicle_search_text_changed(self, text):
         """Handle search text changes to filter the vehicle list"""
         self.vehicle_proxy_model.setFilterFixedString(text)
+
+    def _on_search_clicked(self):
+        """Handle search button click - focus combo box and show completer popup"""
+        self.vehicle_combo.setFocus()
+        self.vehicle_combo.lineEdit().selectAll()
+        # Show completer popup if there's text to filter
+        if self.vehicle_combo.lineEdit().text():
+            self.vehicle_combo.completer().complete()
 
     def refreshVehicleList(self):
         """Refresh the vehicle combo box when sorting mode changes"""
