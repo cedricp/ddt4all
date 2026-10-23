@@ -1,0 +1,1974 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DDT4ALL\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 08:01+0200\n"
+"PO-Revision-Date: 2026-09-07 00:00+0000\n"
+"Last-Translator: DDT4ALL Chinese Translation Team\n"
+"Language-Team: Simplified Chinese\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "DoIP device connected successfully"
+msgstr "DoIP 设备连接成功"
+
+msgid "DoIP CAN initialized with Electric ECU support"
+msgstr "支持电动汽车 ECU 的 DoIP CAN 已初始化"
+
+#, python-format
+msgid "DoIP response: %s"
+msgstr "DoIP 响应：%s"
+
+#, python-format
+msgid "DoIP request failed: %s"
+msgstr "DoIP 请求失败：%s"
+
+#, python-format
+msgid "Testing Electric ECU: %s"
+msgstr "正在测试电动 ECU：%s"
+
+msgid "Failed to connect to DoIP device"
+msgstr "连接 DoIP 设备失败"
+
+#, python-format
+msgid "DoIP connected to %(ip)s:%(port)s"
+msgstr "DoIP 已连接至 %(ip)s:%(port)s"
+
+#, python-format
+msgid "DoIP connection failed: %s"
+msgstr "DoIP 连接失败：%s"
+
+msgid "Insufficient vehicle identification data"
+msgstr "车辆识别数据不足"
+
+#, python-format
+msgid "Expected vehicle identification response, got: %s"
+msgstr "预期为车辆识别响应，实际获取：%s"
+
+#, python-format
+msgid "Vehicle identification failed: %s"
+msgstr "车辆识别失败：%s"
+
+msgid "Insufficient session control data"
+msgstr "会话控制数据不足"
+
+#, python-format
+msgid "Expected diagnostic session control response, got: %s"
+msgstr "预期为诊断会话控制响应，实际获取：%s"
+
+#, python-format
+msgid "Diagnostic session control failed: %s"
+msgstr "诊断会话控制失败：%s"
+
+msgid "Insufficient diagnostic message data"
+msgstr "诊断消息数据不足"
+
+#, python-format
+msgid "Expected diagnostic message response, got: %s"
+msgstr "预期为诊断消息响应，实际获取：%s"
+
+msgid "Insufficient alive check data"
+msgstr "保持存活检查（Alive check）数据不足"
+
+#, python-format
+msgid "Expected alive check response, got: %s"
+msgstr "预期为保持存活检查响应，实际获取：%s"
+
+#, python-format
+msgid "Alive check failed: %s"
+msgstr "保持存活检查失败：%s"
+
+#, python-format
+msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
+msgstr "DoIP 识别出车辆：VIN=%(vin)s，地址=%(addr)s"
+
+#, python-format
+msgid "DoIP vehicle identification failed: %s"
+msgstr "DoIP 车辆识别失败：%s"
+
+msgid "Not connected to DoIP device"
+msgstr "未连接到 DoIP 设备"
+
+#, python-format
+msgid "Invalid hex request format: %s"
+msgstr "无效的十六进制请求格式：%s"
+
+#, python-format
+msgid "DoIP session start failed: %s"
+msgstr "DoIP 会话开启失败：%s"
+
+#, python-format
+msgid "DoIP CAN initialization failed: %s"
+msgstr "DoIP CAN 初始化失败：%s"
+
+#, python-format
+msgid "DoIP: Electric ECU detected - %s"
+msgstr "DoIP：检测到电动 ECU - %s"
+
+msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
+msgstr "DoIP：正在对电动汽车系统使用扩展寻址"
+
+#, python-brace-format
+msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
+msgstr "DoIP：正在使用 29 位扩展寻址 - 发送:0x{:04X}，接收:0x{:04X}"
+
+#, python-brace-format
+msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
+msgstr "DoIP：正在使用 11 位标准寻址 - 发送:0x{:03X}，接收:0x{:03X}"
+
+msgid "Warning, cannot get signed value for"
+msgstr "警告，无法获取有符号值："
+
+msgid "Division by zero, please check data item: "
+msgstr "除以零错误，请检查数据项："
+
+msgid "getHexValue >> abnormal remaining bytes "
+msgstr "getHexValue >> 剩余字节异常 "
+
+msgid "Adding group "
+msgstr "正在添加组 "
+
+msgid "Unable to find eculist"
+msgstr "无法找到 ECU 列表（eculist）"
+
+msgid "Cannot find file "
+msgstr "无法找到文件 "
+
+msgid "Cannot load ECU file"
+msgstr "无法加载 ECU 文件"
+
+msgid "XML not found"
+msgstr "未找到 XML 文件"
+
+msgid "Cannot retrieve functionnal address of ECU"
+msgstr "无法获取 ECU 的功能地址"
+
+msgid "Generated stream "
+msgstr "已生成的流 "
+
+msgid "Send request stream "
+msgstr "发送请求流 "
+
+msgid "Received stream "
+msgstr "接收到的流 "
+
+msgid "Request ECU Error"
+msgstr "请求 ECU 错误"
+
+msgid "Decoded values"
+msgstr "解码后的值"
+
+msgid "Found: "
+msgstr "已找到："
+
+msgid "Identified ECU"
+msgstr "已识别的 ECU"
+
+msgid "Found ECU"
+msgstr "找到 ECU"
+
+msgid "(not perfect match)"
+msgstr "(非完全匹配)"
+
+msgid "(no relevant ECU file found)"
+msgstr "(未找到相关 ECU 文件)"
+
+msgid "Warning, address"
+msgstr "警告，地址"
+
+msgid "is not mapped"
+msgstr "未进行映射"
+
+msgid "Scanning address: "
+msgstr "正在扫描地址："
+
+#, python-format
+msgid "DoIP ECU response format unknown: %s"
+msgstr "DoIP ECU 响应格式未知：%s"
+
+#, python-format
+msgid "Error parsing DoIP response: %s"
+msgstr "解析 DoIP 响应时出错：%s"
+
+#, python-format
+msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
+msgstr "位于 %(addr)s 的 DoIP ECU 仅响应了极少的数据：%(response)s"
+
+#, python-format
+msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgstr "正在初始化与 %(ip)s:%(port)s 的 DoIP 连接（超时时间：%(timeout)s 秒）"
+
+#, python-format
+msgid "DoIP connection established: %(ip)s:%(port)s"
+msgstr "DoIP 连接已建立：%(ip)s:%(port)s"
+
+#, python-format
+msgid "DoIP initialization error: %s"
+msgstr "DoIP 初始化错误：%s"
+
+msgid "No DoIP addresses available for scanning"
+msgstr "没有可供扫描的 DoIP 地址"
+
+msgid "Scanning DoIP address: "
+msgstr "正在扫描 DoIP 地址："
+
+#, python-format
+msgid "Warning: address %(addr)s is not mapped"
+msgstr "警告：地址 %(addr)s 未映射"
+
+#, python-format
+msgid "No identification data from DoIP ECU at address %s"
+msgstr "未从地址为 %s 的 DoIP ECU 收到识别数据"
+
+#, python-format
+msgid "Negative response from DoIP ECU at address %s"
+msgstr "收到来自地址 %s 的 DoIP ECU 否定响应"
+
+#, python-format
+msgid "Failed to start session with DoIP ECU at address %s"
+msgstr "无法与地址为 %s 的 DoIP ECU 开启会话"
+
+#, python-format
+msgid "Failed to initialize DoIP communication with address %s"
+msgstr "无法与地址 %s 初始化 DoIP 通信"
+
+msgid "DoIP device not available for scanning"
+msgstr "DoIP 设备当前不可用于扫描"
+
+#, python-format
+msgid "Error during DoIP scan: %s"
+msgstr "DoIP 扫描期间出错：%s"
+
+#, python-format
+msgid "Simulation mode: DoIP address %s would be scanned"
+msgstr "模拟模式：将对 DoIP 地址 %s 进行扫描"
+
+#, python-format
+msgid "Would connect to DoIP ECU at address %s and read identification data"
+msgstr "将连接到地址为 %s 的 DoIP ECU 并读取识别数据"
+
+msgid "DoIP connection closed"
+msgstr "DoIP 连接已关闭"
+
+#, python-format
+msgid "Error closing DoIP connection: %s"
+msgstr "关闭 DoIP 连接时出错：%s"
+
+#, python-format
+msgid "Device detection error: %s"
+msgstr "设备检测错误：%s"
+
+#, python-format
+msgid "Device initialization error: %s"
+msgstr "设备初始化错误：%s"
+
+msgid "Found USB device:"
+msgstr "找到 USB 设备："
+
+msgid "USB device detection error:"
+msgstr "USB 设备检测错误："
+
+msgid "Note: This error does not affect serial communication or bypass cable functionality."
+msgstr "注意：此错误不会影响串口通信或旁路线缆（Bypass cable）功能。"
+
+msgid "Trying to open port "
+msgstr "正在尝试打开端口 "
+
+msgid "Port initialization failed"
+msgstr "端口初始化失败"
+
+msgid "Port connection failed - port object is invalid"
+msgstr "端口连接失败 - 端口对象无效"
+
+msgid "STN connection established"
+msgstr "STN 连接已建立"
+
+msgid "Version: "
+msgstr "版本："
+
+#, python-format
+msgid "STPX/STN configuration warning: %s"
+msgstr "STPX/STN 配置警告：%s"
+
+msgid "No ELM interface on port"
+msgstr "端口上未发现 ELM 接口"
+
+msgid "OBDLink Connection OK, attempting full speed UART switch"
+msgstr "OBDLink 连接正常，正在尝试切换到全速 UART"
+
+msgid "Failed to switch OBDLink to "
+msgstr "无法将 OBDLink 切换至 "
+
+msgid "OBDLink Connection OK, using optimal settings"
+msgstr "OBDLink 连接正常，正在使用最佳设置"
+
+msgid "Connection established successfully"
+msgstr "连接建立成功"
+
+msgid "Configuring ELS27 V5 CAN pins (12-13)"
+msgstr "正在配置 ELS27 V5 CAN 引脚 (12-13)"
+
+msgid "ELS27 V5 CAN configuration complete"
+msgstr "ELS27 V5 CAN 配置完成"
+
+#, python-format
+msgid "ELS27 V5 configuration warning: %s"
+msgstr "ELS27 V5 配置警告：%s"
+
+msgid "Port is None - cannot switch speed"
+msgstr "端口为 None - 无法切换波特率"
+
+#, python-format
+msgid "%s switched baudrate OK, changing UART speed now..."
+msgstr "%s 波特率切换成功，正在更改 UART 速度..."
+
+#, python-format
+msgid "%s baudrate switched OK, changing UART speed now..."
+msgstr "%s 波特率切换成功，正在更改 UART 速度..."
+
+#, python-format
+msgid "Not supported baudrate %s"
+msgstr "不支持的波特率 %s"
+
+msgid "ELM reset..."
+msgstr "ELM 复位中..."
+
+msgid "Unknown address: "
+msgstr "未知地址："
+
+msgid "send_can: received first frame only — AT CAF0 may have been reset by AT SP, or FC failed"
+msgstr "send_can：仅接收到首帧 — AT CAF0 可能已被 AT SP 重置，或者流控制（FC）失败"
+
+#, python-format
+msgid "send_can: unexpected response byte %s — check AT CAF0 is active"
+msgstr "send_can：意外的响应字节 %s — 请检查 AT CAF0 是否已激活"
+
+msgid "Using saved device settings"
+msgstr "正在使用保存的设备设置"
+
+msgid "Using optimal device settings"
+msgstr "正在使用最佳设备设置"
+
+msgid "Connecting to device at port: "
+msgstr "正在连接位于端口的设备："
+
+msgid "Using baudrate: "
+msgstr "正在使用的波特率："
+
+msgid "Testing for ELS27 device..."
+msgstr "正在测试是否存在 ELS27 设备..."
+
+msgid "ELS27 device detected: "
+msgstr "检测到 ELS27 设备："
+
+msgid "Using detected baud rate: "
+msgstr "正在使用检测到的波特率："
+
+msgid "Warning: No ELS27 response detected"
+msgstr "警告：未检测到 ELS27 的响应"
+
+msgid "Will attempt connection anyway..."
+msgstr "仍将尝试连接..."
+
+msgid "Connection failed: "
+msgstr "连接失败："
+
+msgid "Testing basic connectivity..."
+msgstr "正在测试基础连通性..."
+
+msgid "Warning: Device may not be ELM327 compatible"
+msgstr "警告：设备可能不兼容 ELM327"
+
+msgid "ELM327 device detected successfully"
+msgstr "成功检测到 ELM327 设备"
+
+msgid "Device version: "
+msgstr "设备版本："
+
+msgid "Connection error: "
+msgstr "连接错误："
+
+msgid "FAIL"
+msgstr "失败"
+
+msgid "OK/TIMEOUT"
+msgstr "正常/超时"
+
+msgid "OK"
+msgstr "成功"
+
+msgid "Incompatible adapter on ARM core"
+msgstr "ARM 核心上的适配器不兼容"
+
+msgid "Result: "
+msgstr "结果："
+
+msgid " succeeded from "
+msgstr " 成功来自 "
+
+msgid "ELM Max version:"
+msgstr "ELM 最高支持版本："
+
+msgid "Using saved settings for"
+msgstr "正在使用保存的设置用于"
+
+msgid "Using optimal settings for"
+msgstr "正在使用最佳设置用于"
+
+msgid "Using settings for"
+msgstr "正在使用设置用于"
+
+msgid "ELM327 doesn't support DoIP, falling back to serial mode"
+msgstr "ELM327 不支持 DoIP，正在回退至串口模式"
+
+msgid "Serial port opened"
+msgstr "串口已打开"
+
+#, python-format
+msgid "Serial connection error: %s"
+msgstr "串口连接错误：%s"
+
+msgid "ELM not connected or wrong COM port"
+msgstr "ELM 未连接或选择了错误的 COM 端口"
+
+#, python-format
+msgid "Unexpected error: %s"
+msgstr "未预期的错误：%s"
+
+#, python-format
+msgid "Bluetooth connection attempted: %s"
+msgstr "已尝试蓝牙连接：%s"
+
+#, python-format
+msgid "Serial connection established: %(port)s @ %(baud)s baud"
+msgstr "串口连接已建立：%(port)s @ %(baud)s 波特率"
+
+#, python-format
+msgid "Bluetooth connection failed: %s"
+msgstr "蓝牙连接失败：%s"
+
+#, python-format
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr "正在初始化与 %(ip)s:%(port)s 的 DoIP 连接"
+
+#, python-format
+msgid "DoIP connection failed: %(ip)s:%(port)s"
+msgstr "DoIP 连接失败：%(ip)s:%(port)s"
+
+#, python-format
+msgid "DoIP initialization failed: %s"
+msgstr "DoIP 初始化失败：%s"
+
+#, python-format
+msgid "Port closed: %s"
+msgstr "端口已关闭：%s"
+
+#, python-format
+msgid "Error closing port: %s"
+msgstr "关闭端口时出错：%s"
+
+#, python-format
+msgid "Connecting to WiFi adapter at %(ip)s:%(port)s"
+msgstr "正在连接位于 %(ip)s:%(port)s 的 WiFi 适配器"
+
+#, python-format
+msgid "WiFi connection established: %(ip)s:%(port)s"
+msgstr "WiFi 连接已建立：%(ip)s:%(port)s"
+
+#, python-format
+msgid "WiFi connection timeout to %(ip)s:%(port)s"
+msgstr "连接至 %(ip)s:%(port)s 的 WiFi 超时"
+
+#, python-format
+msgid "WiFi connection error: %s"
+msgstr "WiFi 连接错误：%s"
+
+#, python-format
+msgid "Unexpected WiFi error: %s"
+msgstr "未预期的 WiFi 错误：%s"
+
+#, python-format
+msgid "WiFi recv: %s"
+msgstr "WiFi 接收：%s"
+
+#, python-format
+msgid "Serial error in read_byte: %s"
+msgstr "read_byte 中的串口错误：%s"
+
+msgid "Connection to ELM was lost"
+msgstr "与 ELM 的连接已断开"
+
+#, python-format
+msgid "*       Error: %s"
+msgstr "*       错误：%s"
+
+#, python-format
+msgid "Cannot decode bytes %s"
+msgstr "无法解码字节 %s"
+
+#, python-format
+msgid "Error in read(): %s"
+msgstr "read() 函数出错：%s"
+
+msgid "WiFi connection - baudrate change not applicable"
+msgstr "WiFi 连接 - 不适用更改波特率"
+
+msgid "Attempting WiFi reconnection..."
+msgstr "正在尝试重新连接 WiFi..."
+
+msgid "Port handler is None, cannot write"
+msgstr "端口句柄为 None，无法写入"
+
+#, python-format
+msgid "Serial write error: %s"
+msgstr "串口写入错误：%s"
+
+#, python-format
+msgid "*       Write error: %s"
+msgstr "*       写入错误：%s"
+
+msgid "TIMEOUT"
+msgstr "超时"
+
+msgid "Checking port speed:"
+msgstr "正在检查端口速度："
+
+msgid "WiFi connection - skipping baudrate check"
+msgstr "WiFi 连接 - 跳过波特率检查"
+
+msgid "Bluetooth connection - skipping baudrate check"
+msgstr "蓝牙连接 - 跳过波特率检查"
+
+msgid "Start COM speed: "
+msgstr "起始 COM 波特率："
+
+msgid "ELM not responding"
+msgstr "ELM 未响应"
+
+msgid "Cannot zip database, no 'ecus' directory"
+msgstr "无法压缩数据库，不存在 'ecus' 目录"
+
+msgid "Starting conversion"
+msgstr "开始转换"
+
+msgid "Starting processing "
+msgstr "开始处理 "
+
+msgid " to "
+msgstr " 至 "
+
+msgid "Skipping current file (cannot parse it)"
+msgstr "正在跳过当前文件（无法解析）"
+
+msgid "Writing database"
+msgstr "正在写入数据库"
+
+msgid "Writing archive"
+msgstr "正在写入归档文件"
+
+msgid "Opening ECU Database..."
+msgstr "正在打开 ECU 数据库..."
+
+msgid "parts as: "
+msgstr "部件为："
+
+msgid " please review dumpVehicles def."
+msgstr " 请检查 dumpVehicles 定义。"
+
+msgid "ELS27 V5 CAN pin configuration complete"
+msgstr "ELS27 V5 CAN 引脚配置完成"
+
+msgid "Found USB adapter:"
+msgstr "找到 USB 适配器："
+
+msgid "USB not available"
+msgstr "USB 不可用"
+
+msgid "USB Device"
+msgstr "USB 设备"
+
+msgid "Warning: Could not read string descriptor:"
+msgstr "警告：无法读取字符串描述符："
+
+msgid "USB OBD Device"
+msgstr "USB OBD 设备"
+
+msgid "Warning: Vendor request failed:"
+msgstr "警告：厂商请求失败："
+
+msgid "Warning: PyQtWebEngine not available. Some features may be limited."
+msgstr "警告：PyQtWebEngine 不可用。部分功能可能会受限。"
+
+msgid "resources/projects.json not found or invalid."
+msgstr "resources/projects.json 未找到或无效。"
+
+#, python-format
+msgid "Warning: Could not write version.h: %s"
+msgstr "警告：无法写入 version.h：%s"
+
+msgid "Using custom DDT database"
+msgstr "正在使用自定义 DDT 数据库"
+
+msgid "No COM port selected"
+msgstr "未选择 COM 端口"
+
+#, python-format
+msgid "Initializing ELM with speed %i..."
+msgstr "正在以波特率 %i 初始化 ELM..."
+
+msgid "No ELM327 or OBDLINK-SX detected on COM port "
+msgstr "在 COM 端口上未检测到 ELM327 或 OBDLINK-SX "
+
+msgid "AB90 AIRBAG Reset"
+msgstr "AB90 安全气囊重置"
+
+msgid "Airbag Tools"
+msgstr "安全气囊工具"
+
+msgid "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "AB90 (Clio III)/2<br>安全气囊刷空工具<br><font color='red'>本插件将解锁气囊碰撞数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Check ACU Virgin"
+msgstr "检查 ACU 是否为空白/新件"
+
+msgid "Waiting"
+msgstr "等待中"
+
+msgid "Virginize ACU"
+msgstr "刷空 ACU（重置为新件状态）"
+
+msgid "Cannot connect to ECU"
+msgstr "无法连接到 ECU"
+
+msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
+msgstr "<font color='orange'>未预期的响应</font>"
+
+msgid "<font color='red'>CRASH DETECTED</font>"
+msgstr "<font color='red'>检测到碰撞记录</font>"
+
+msgid "<font color='green'>NO CRASH DETECTED</font>"
+msgstr "<font color='green'>未检测到碰撞记录</font>"
+
+#, python-format
+msgid "SDS stream: %s"
+msgstr "SDS 流：%s"
+
+msgid "<font color='green'>CLEAR EXECUTED</font>"
+msgstr "<font color='green'>清除操作已执行</font>"
+
+msgid "<font color='red'>CLEAR FAILED</font>"
+msgstr "<font color='red'>清除操作失败</font>"
+
+msgid "Megane/Scenic II card programming"
+msgstr "梅甘娜/风景 II 卡片钥匙编程"
+
+msgid "Keys"
+msgstr "钥匙"
+
+msgid "ENTER AFTER SALE MODE"
+msgstr "进入售后模式"
+
+msgid "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED YET</font>"
+msgstr "<font color='red'>梅甘娜 II 卡片钥匙编程<br>实验性功能：尚未测试</font>"
+
+msgid "LEARN"
+msgstr "学习/匹配"
+
+msgid "VALIDATE"
+msgstr "验证/确认"
+
+msgid "CANCEL"
+msgstr "取消"
+
+msgid "Algo 2"
+msgstr "算法 2"
+
+msgid "ISK"
+msgstr "ISK 码"
+
+msgid "PIN"
+msgstr "PIN 码"
+
+msgid "Num key learnt"
+msgstr "已学习钥匙数量"
+
+msgid "CARD IDE"
+msgstr "卡片 ID"
+
+msgid "Cannot get ISK, check connections and UCH compatibility"
+msgstr "无法获取 ISK，请检查连接和 UCH 兼容性"
+
+msgid "<font color='red'>PIN CODE NOT RECOGNIZED</font>"
+msgstr "<font color='red'>无法识别密码 (PIN CODE)</font>"
+
+msgid "<font color='green'>PIN CODE OK / KEY LEARNING</font>"
+msgstr "<font color='green'>密码正确 / 正在匹配钥匙</font>"
+
+msgid "<font color='green'>PIN CODE OK / UCH LEARNING</font>"
+msgstr "<font color='green'>密码正确 / 正在匹配 UCH</font>"
+
+msgid "Modus/Clio III EPS Reset"
+msgstr "Modus/克丽欧 III 电动助力转向(EPS)重置"
+
+msgid "EPS Tools"
+msgstr "EPS 工具"
+
+msgid "Modus/Clio III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Modus/克丽欧 III EPS 刷空工具<br><font color='red'>本插件将重置 EPS 防盗数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "BLANK STATUS & VIN READ"
+msgstr "空白状态与 VIN 读取"
+
+msgid "Virginize EPS"
+msgstr "刷空 EPS"
+
+msgid "VIN - READ"
+msgstr "VIN - 读取"
+
+msgid "VIN - WRITE"
+msgstr "VIN - 写入"
+
+msgid "Write VIN"
+msgstr "写入 VIN"
+
+msgid "<font color='red'>VIN - INVALID</font>"
+msgstr "<font color='red'>VIN - 无效</font>"
+
+msgid "<font color='red'>VIN - BAD LENGTH</font>"
+msgstr "<font color='red'>VIN - 长度错误</font>"
+
+msgid "<font color='orange'>VIN WRITE FAILED</font>"
+msgstr "<font color='orange'>VIN 写入失败</font>"
+
+msgid "<font color='green'>VIN WRITE OK</font>"
+msgstr "<font color='green'>VIN 写入成功</font>"
+
+msgid "<font color='green'>EPS virgin</font>"
+msgstr "<font color='green'>EPS 状态：未编程/全新</font>"
+
+msgid "<font color='red'>EPS coded</font>"
+msgstr "<font color='red'>EPS 状态：已编程/已绑定</font>"
+
+#, python-format
+msgid "SdSC0 stream: %s"
+msgstr "SdSC0 流：%s"
+
+msgid "Clio IV EPS Reset"
+msgstr "克丽欧 IV EPS 重置"
+
+msgid "Clio IV EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "克丽欧 IV EPS 刷空工具<br><font color='red'>本插件将重置 EPS 防盗数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Check EPS Virgin"
+msgstr "检查 EPS 是否为全新状态"
+
+msgid "<font color='green'>EPS not operational</font>"
+msgstr "<font color='green'>EPS 未工作/未激活</font>"
+
+msgid "<font color='red'>UNEXPECTED RESPONSE</font>"
+msgstr "<font color='red'>未预期的响应</font>"
+
+#, python-format
+msgid "SdSFA stream: %s"
+msgstr "SdSFA 流：%s"
+
+msgid "Laguna II UCH Reset"
+msgstr "拉古娜 II UCH 重置"
+
+msgid "UCH Tools"
+msgstr "UCH 工具"
+
+msgid "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "拉古娜 II UCH 刷空工具<br><font color='red'>本插件将抹除您的 UCH 数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Check UCH Virgin"
+msgstr "检查 UCH 是否为空白"
+
+msgid "Virginize UCH"
+msgstr "刷空 UCH"
+
+msgid "<font color='green'>UCH virgin</font>"
+msgstr "<font color='green'>UCH 状态：全新/未绑定</font>"
+
+msgid "<font color='red'>UCH coded</font>"
+msgstr "<font color='red'>UCH 状态：已绑定</font>"
+
+msgid "Laguna III UCH Reset"
+msgstr "拉古娜 III UCH 重置"
+
+msgid "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "拉古娜 III UCH 刷空工具<br><font color='red'>本插件将抹除您的 UCH 数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Megane/Scenic II UCH Reset"
+msgstr "梅甘娜/风景 II UCH 重置"
+
+msgid "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "梅甘娜 II UCH 刷空工具<br><font color='red'>本插件将抹除您的 UCH 数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Megane3 AIRBAG Reset"
+msgstr "梅甘娜 3 安全气囊重置"
+
+msgid "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "梅甘娜 III<br>安全气囊刷空工具<br><font color='red'>本插件将解锁气囊碰撞数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+#, python-format
+msgid "SDS FA stream: %s"
+msgstr "SDS FA 流：%s"
+
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS Reset"
+msgstr "ZOE/风朗/梅甘娜 III/风景 III EPS 重置"
+
+msgid "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>THIS PLUGIN WILL RESET EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "ZOE/风朗/梅甘娜 III/风景 III EPS 刷空工具<br><font color='red'>本插件将重置 EPS 防盗数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Megane/Scenic III UCH Reset"
+msgstr "梅甘娜/风景 III UCH 重置"
+
+msgid "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "梅甘娜 III UCH 刷空工具<br><font color='red'>本插件将抹除您的 UCH 数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "RSAT4 AIRBAG Reset"
+msgstr "RSAT4 安全气囊重置"
+
+msgid "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG VIRGINIZER<br><font color='red'>THIS PLUGIN WILL UNLOCK AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/卡缤/LODGY ph1/2<br>安全气囊刷空工具<br><font color='red'>本插件将解锁气囊碰撞数据<br>如果您不明白这是什么意思，请立即离开</font>"
+
+#, python-format
+msgid "SdSEX stream: %s"
+msgstr "SdSEX 流：%s"
+
+msgid "CRC calculator"
+msgstr "CRC 计算器"
+
+msgid "VIN"
+msgstr "VIN 码"
+
+msgid "CRC Calculator"
+msgstr "CRC 计算器"
+
+msgid "CRC CALCULATOR"
+msgstr "CRC 计算器"
+
+msgid "Zoe water pump Reset"
+msgstr "Zoe 水泵重置"
+
+msgid "EVC Tools"
+msgstr "EVC 工具"
+
+msgid "Water pump counters"
+msgstr "水泵计数器"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Values"
+msgstr "数值"
+
+msgid "Action"
+msgstr "操作"
+
+msgid "Low Speed"
+msgstr "低速"
+
+msgid "Middle Speed"
+msgstr "中速"
+
+msgid "High Speed"
+msgstr "高速"
+
+msgid "V_Timer_DrivWEP_ON"
+msgstr "V_Timer_DrivWEP_ON"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
+msgstr "Zoe 水泵计数器<br><font color='red'>本插件将清空水泵计数器<br>如果您不明白这是什么意思，请立即离开</font>"
+
+msgid "Check values"
+msgstr "检查数值"
+
+msgid "Waiting action"
+msgstr "等待操作"
+
+msgid "Reset all counters"
+msgstr "重置所有计数器"
+
+msgid "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/Stay START until <b>Remove card</b> message</li><li>Put P position</li><li>Keep key card inserted</li></ul>"
+msgstr "<h1>提示</h1><ul><li>插入钥匙卡</li><li>挂 D 挡</li><li>长按 START 键直到提示<b>拔出卡片 (Remove card)</b></li><li>挂 P 挡</li><li>保持钥匙卡插入状态</li></ul>"
+
+msgid "<font color='green'>Values read</font>"
+msgstr "<font color='green'>数值已读取</font>"
+
+msgid "Reading Low speed"
+msgstr "正在读取低速状态"
+
+msgid "Reading Middle speed"
+msgstr "正在读取中速状态"
+
+msgid "Reading High speed"
+msgstr "正在读取高速状态"
+
+msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
+msgstr "<font color='green'>清空 V_Timer_DrivWEP_ON 已执行</font>"
+
+msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
+msgstr "<font color='red'>清空 V_Timer_DrivWEP_ON 失败</font>"
+
+msgid "<font color='green'>CLEAR Low EXECUTED</font>"
+msgstr "<font color='green'>清空低速计数已执行</font>"
+
+msgid "<font color='red'>CLEAR Low FAILED</font>"
+msgstr "<font color='red'>清空低速计数失败</font>"
+
+msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
+msgstr "<font color='green'>清空中速计数已执行</font>"
+
+msgid "<font color='red'>CLEAR Medium FAILED</font>"
+msgstr "<font color='red'>清空中速计数失败</font>"
+
+msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
+msgstr "<font color='green'>清空高速计数已执行</font>"
+
+msgid "<font color='red'>CLEAR HIGH FAILED</font>"
+msgstr "<font color='red'>清空高速计数失败</font>"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Del"
+msgstr "删除"
+
+msgid "Refresh"
+msgstr "刷新"
+
+msgid "Move up"
+msgstr "上移"
+
+msgid "Check"
+msgstr "检查"
+
+#, python-format
+msgid "Request %s not found"
+msgstr "未找到请求 %s"
+
+#, python-format
+msgid "<font color=green>Request</font><font color=blue>'%s'</font> has no missing input values"
+msgstr "<font color=green>请求</font><font color=blue>'%s'</font> 无缺失的输入值"
+
+#, python-format
+msgid "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
+msgstr "<font color=red>请求</font><font color=blue>'%s'</font> 存在缺失的输入项"
+
+#, python-format
+msgid "<font color=orange> - '%s'</font>"
+msgstr "<font color=orange> - '%s'</font>"
+
+msgid "Delay;Request"
+msgstr "延迟;请求"
+
+msgid "Screen initialization"
+msgstr "屏幕初始化"
+
+msgid "Requests to send before screen drawing"
+msgstr "绘制屏幕前需要发送的请求"
+
+msgid "Button name;Unique name"
+msgstr "按钮名称;唯一标识名"
+
+msgid "New"
+msgstr "新建"
+
+msgid "Duplicate selected"
+msgstr "复制选中项"
+
+msgid "Remove selected"
+msgstr "移除选中项"
+
+msgid "Reload"
+msgstr "重新加载"
+
+msgid "Validate changes"
+msgstr "应用/验证修改"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Data type"
+msgstr "数据类型"
+
+msgid "Numeric"
+msgstr "数值"
+
+msgid "Numeric items"
+msgstr "数值项"
+
+msgid "Hex"
+msgstr "十六进制"
+
+#, python-format
+msgid "Data is used by request %s"
+msgstr "数据已被请求 %s 使用"
+
+msgid "New data"
+msgstr "新建数据"
+
+msgid "Replace me with request description"
+msgstr "请替换为请求描述"
+
+msgid "Data name;Description"
+msgstr "数据名称;描述"
+
+msgid "Goto data"
+msgstr "跳转至数据"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Add to screen"
+msgstr "添加至屏幕"
+
+msgid "ECU Function address"
+msgstr "ECU 功能地址"
+
+msgid "ECU Protocol"
+msgstr "ECU 通信协议"
+
+msgid "Tool > Ecu ID (Hex)"
+msgstr "诊断仪 > ECU ID (Hex)"
+
+msgid "Ecu > Tool ID (Hex)"
+msgstr "ECU > 诊断仪 ID (Hex)"
+
+msgid "Coding"
+msgstr "编码"
+
+msgid "ECU Auto identification"
+msgstr "ECU 自动识别"
+
+msgid "Add new"
+msgstr "新增"
+
+msgid "Delete selected"
+msgstr "删除选中项"
+
+msgid "Number of bits"
+msgstr "位（bit）数"
+
+msgid "Signed"
+msgstr "有符号"
+
+msgid "Add item"
+msgstr "添加项"
+
+msgid "Del item"
+msgstr "删除项"
+
+msgid "New item"
+msgstr "新建项"
+
+msgid "Value;Text"
+msgstr "值;文本"
+
+msgid "Number of bit"
+msgstr "位数"
+
+msgid "Unit"
+msgstr "单位"
+
+msgid "Format"
+msgstr "格式"
+
+msgid "Value = (AX+B) / C"
+msgstr "值 = (AX+B) / C"
+
+msgid "Number of bytes"
+msgstr "字节数"
+
+msgid "Send request bytes (HEX)"
+msgstr "发送请求字节 (HEX)"
+
+msgid "Receive bytes (HEX)"
+msgstr "接收字节 (HEX)"
+
+msgid "Data length"
+msgstr "数据长度"
+
+msgid "Shift byte count"
+msgstr "字节偏移量"
+
+msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
+msgstr "数据名称;起始字节;位偏移;位数量;端序"
+
+msgid "Little"
+msgstr "小端序 (Little)"
+
+msgid "Big"
+msgstr "大端序 (Big)"
+
+msgid "Inherits globals"
+msgstr "继承全局变量"
+
+msgid "No SDS"
+msgstr "无 SDS"
+
+msgid "Plant"
+msgstr "工厂级"
+
+msgid "After Sale"
+msgstr "售后级"
+
+msgid "Engineering"
+msgstr "工程级"
+
+msgid "Supplier"
+msgstr "供应商级"
+
+msgid "Reload requests"
+msgstr "重新加载请求"
+
+msgid "Add request"
+msgstr "添加请求"
+
+msgid "Send bytes"
+msgstr "发送字节"
+
+msgid "Receive bytes"
+msgstr "接收字节"
+
+msgid "Request name;Bytes;Manual"
+msgstr "请求名称;字节数据;手动"
+
+msgid "No request named"
+msgstr "无对应命名的请求："
+
+msgid "Found similar"
+msgstr "找到相似项"
+
+msgid "DataItem not found"
+msgstr "未找到数据项 (DataItem)"
+
+msgid "Cannot find data "
+msgstr "无法找到数据 "
+
+msgid " vs "
+msgstr " 对比 "
+
+msgid "Cannot draw input "
+msgstr "无法绘制输入项 "
+
+msgid "No Value"
+msgstr "无数值"
+
+msgid "<center>This Software is free, but I need money to buy cables/ECUs and make this application more reliable</center>"
+msgstr "<center>本软件完全免费，但我需要资金购买线缆/ECU 硬件以提升程序稳定性</center>"
+
+msgid "Yes I contribute"
+msgstr "是的，我愿赞助"
+
+msgid "No, I don't"
+msgstr "不了，谢谢"
+
+msgid "Thank you for you contribution, if nothing happens, please go to"
+msgstr "非常感谢您的支持！如果未自动打开网页，请访问："
+
+msgid "ECU Finder"
+msgstr "ECU 查找器"
+
+msgid "Address :"
+msgstr "地址："
+
+msgid "ID frame :"
+msgstr "ID 帧："
+
+msgid "No vehicles available"
+msgstr "无可用车型"
+
+#, python-format
+msgid "%d loaded ECUs in database."
+msgstr "数据库已加载 %d 个 ECU。"
+
+msgid "No database found"
+msgstr "未找到数据库"
+
+msgid "Check documentation"
+msgstr "查看文档"
+
+msgid "DDT4All Documentation"
+msgstr "DDT4All 使用文档"
+
+msgid "WebEngine not available."
+msgstr "WebEngine 组件不可用。"
+
+msgid "For full documentation with web browsing capability, install PyQtWebEngine:"
+msgstr "若需体验完整的网页级文档浏览功能，请安装 PyQtWebEngine："
+
+msgid "Visit the online documentation at:"
+msgstr "访问在线文档："
+
+msgid "This basic view will still show ECU documentation when available."
+msgstr "此基础视图仍将在可用时显示 ECU 文档。"
+
+msgid "Refresh rate (ms):"
+msgstr "刷新率 (毫秒):"
+
+msgid "Can timeout (ms) [0:AUTO] :"
+msgstr "CAN 超时时间 (毫秒) [0:自动] :"
+
+msgid "Documentation"
+msgstr "文档"
+
+msgid "Screen"
+msgstr "界面/屏幕"
+
+msgid "CAN Sniffer"
+msgstr "CAN 抓包工具"
+
+msgid "Requests"
+msgstr "请求"
+
+msgid "Data"
+msgstr "数据"
+
+msgid "Buttons"
+msgstr "按钮"
+
+msgid "Ecu parameters"
+msgstr "ECU 参数"
+
+msgid "Screen Window"
+msgstr "屏幕窗口"
+
+msgid "Screens"
+msgstr "屏幕列表"
+
+msgid "Logs Window"
+msgstr "日志窗口"
+
+msgid "Ecu Window"
+msgstr "ECU 窗口"
+
+msgid "Ecu List Window"
+msgstr "ECU 列表窗口"
+
+msgid "ToolBar"
+msgstr "工具栏"
+
+msgid "Read DTC"
+msgstr "读取故障码 (DTC)"
+
+msgid "Full log"
+msgstr "完整日志"
+
+msgid "Expert mode (enable writing)"
+msgstr "专家模式（允许写入）"
+
+msgid "Auto refresh"
+msgstr "自动刷新"
+
+msgid "Refresh (one shot)"
+msgstr "单次刷新"
+
+msgid "Manual command"
+msgstr "手动命令"
+
+msgid "Manual request"
+msgstr "手动请求"
+
+msgid "Software flow control"
+msgstr "软件流控制"
+
+msgid "Zoom In"
+msgstr "放大"
+
+msgid "Zoom Out"
+msgstr "缩小"
+
+msgid "UI Edit"
+msgstr "界面编辑"
+
+msgid "File"
+msgstr "文件"
+
+msgid "Open XML"
+msgstr "打开 XML"
+
+msgid "Save current ECU"
+msgstr "保存当前 ECU"
+
+msgid "Save last record"
+msgstr "保存最后记录"
+
+msgid "Save ECU list"
+msgstr "保存 ECU 列表"
+
+msgid "Exit"
+msgstr "退出"
+
+msgid "Tools"
+msgstr "工具"
+
+msgid "Identify ECU"
+msgstr "识别 ECU"
+
+msgid "Create New ECU"
+msgstr "新建 ECU"
+
+msgid "Zip database"
+msgstr "打包/压缩数据库"
+
+msgid "Clear DDT4ALL History"
+msgstr "清除 DDT4ALL 历史记录"
+
+msgid "Reset DDT4ALL Settings"
+msgstr "重置 DDT4ALL 设置"
+
+msgid "View"
+msgstr "视图"
+
+msgid "CarList Order"
+msgstr "车型列表排序"
+
+msgid "By Project Code"
+msgstr "按项目代码"
+
+msgid "By Car Name"
+msgstr "按车型名称"
+
+msgid "Theme"
+msgstr "主题"
+
+msgid "Dark Theme"
+msgstr "暗黑主题"
+
+msgid "Light Theme"
+msgstr "明亮主题"
+
+msgid "Panels"
+msgstr "面板"
+
+msgid "New Category"
+msgstr "新建分类"
+
+msgid "New Screen"
+msgstr "新建屏幕界面"
+
+msgid "Rename"
+msgstr "重命名"
+
+msgid "Plugins"
+msgstr "插件"
+
+msgid "Cannot load plugin "
+msgstr "无法加载插件 "
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Web Wiki"
+msgstr "网页 Wiki"
+
+msgid "About Developers"
+msgstr "关于开发者"
+
+msgid "Get Git update"
+msgstr "获取 Git 更新"
+
+msgid "About"
+msgstr "关于"
+
+msgid "About DDT4ALL"
+msgstr "关于 DDT4ALL"
+
+msgid " version:"
+msgstr " 版本："
+
+msgid "Created by:"
+msgstr "开发者："
+
+msgid "History cleared"
+msgstr "历史记录已清除"
+
+msgid "Last selected vehicle and ECU history has been cleared."
+msgstr "上次选择的车型和 ECU 历史记录已被清除。"
+
+msgid "Configuration Reset"
+msgstr "配置已重置"
+
+msgid "The configuration has been reset."
+msgstr "软件配置已被重置。"
+
+msgid "Options"
+msgstr "选项"
+
+#, python-format
+msgid "Error updating menu bar: %s"
+msgstr "更新菜单栏时出错：%s"
+
+msgid "CAN Line 1 Auto"
+msgstr "CAN 1 线（自动波特率）"
+
+msgid "CAN Line 1@500K"
+msgstr "CAN 1 线@500K"
+
+msgid "CAN Line 1@250K"
+msgstr "CAN 1 线@250K"
+
+msgid "CAN Line 2@500K"
+msgstr "CAN 2 线@500K"
+
+msgid "CAN Line 2@250K"
+msgstr "CAN 2 线@250K"
+
+msgid "CAN Line 2@125K"
+msgstr "CAN 2 线@125K"
+
+msgid "KWP2000"
+msgstr "KWP2000"
+
+msgid "ISO8"
+msgstr "ISO8"
+
+msgid "Save database (keep '.zip' extension)"
+msgstr "保存数据库（保持 '.zip' 扩展名）"
+
+msgid "Zipping XML database... (this can take a few minutes)"
+msgstr "正在压缩 XML 数据库...（可能需要几分钟时间）"
+
+msgid "Zip job finished"
+msgstr "压缩任务已完成"
+
+msgid "Enter new name"
+msgstr "输入新名称"
+
+msgid "Enter category name"
+msgstr "输入分类名称"
+
+msgid "Please select a category before creating new screen"
+msgstr "在创建新屏幕界面前请先选择一个分类"
+
+msgid "Enter screen name"
+msgstr "输入屏幕名称"
+
+msgid "Scanning CAN"
+msgstr "正在扫描 CAN 总线"
+
+msgid "Scanning KWP"
+msgstr "正在扫描 KWP 协议"
+
+msgid "Scanning DoIP"
+msgstr "正在扫描 DoIP"
+
+msgid "Scan options"
+msgstr "扫描选项"
+
+msgid "EDITION MODE"
+msgstr "编辑模式"
+
+msgid "CONNECTED"
+msgstr "已连接"
+
+msgid "DISCONNECTED"
+msgstr "未连接"
+
+msgid "Save vehicule (keep '.ecu' extension)"
+msgstr "保存车型文件（保持 '.ecu' 扩展名）"
+
+msgid "Save ECU (keep '.json' extension)"
+msgstr "保存 ECU 文件（保持 '.json' 扩展名）"
+
+msgid "Save record (keep '.txt' extension)"
+msgstr "保存记录（保持 '.txt' 扩展名）"
+
+msgid "Recorded "
+msgstr "已记录 "
+
+msgid " entries"
+msgstr " 条记录"
+
+msgid "No"
+msgstr "否"
+
+msgid "ELM port selection"
+msgstr "ELM 端口选择"
+
+msgid "USB"
+msgstr "USB"
+
+msgid "WiFi"
+msgstr "WiFi"
+
+msgid "Bluetooth"
+msgstr "蓝牙"
+
+msgid "OBDLINK SX/EX"
+msgstr "OBDLINK SX/EX"
+
+msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
+msgstr "ELS27/ELS27 V5 - 可能显示为 FTDI/CH340/CP210x 设备"
+
+msgid "Vlinker FS/MC"
+msgstr "Vlinker FS/MC"
+
+msgid "DERLEK USB-DIAG2/3"
+msgstr "DERLEK USB-DIAG2/3"
+
+msgid "VGate (High-Speed)"
+msgstr "VGate (高速)"
+
+msgid "DoIP (Diagnostics over IP)"
+msgstr "DoIP (车载以太网诊断)"
+
+msgid "Interface language"
+msgstr "界面语言"
+
+msgid "Port speed"
+msgstr "端口波特率"
+
+msgid "Connected mode"
+msgstr "连接模式"
+
+msgid "Edition mode"
+msgstr "编辑模式"
+
+msgid "ELM benchmark"
+msgstr "ELM 基准性能测试"
+
+msgid "WiFi port : "
+msgstr "WiFi 端口："
+
+msgid "I'm aware that I can harm my car if badly used"
+msgstr "我清楚如果不当使用可能会对车辆造成损坏"
+
+msgid "Enable CAN2"
+msgstr "启用 CAN2 总线"
+
+msgid "Dark style"
+msgstr "暗黑风格"
+
+msgid "WiFi Socket-TimeOut"
+msgstr "WiFi Socket 超时时间"
+
+msgid "Enable DoIP Scan"
+msgstr "启用 DoIP 扫描"
+
+msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
+msgstr "DoIP (车载以太网诊断) 配置（实验性）"
+
+msgid "Device Preset : "
+msgstr "设备预设："
+
+msgid "Custom"
+msgstr "自定义"
+
+msgid "Bosch MTS"
+msgstr "博世 MTS"
+
+msgid "VXDIAG VCX Nano"
+msgstr "VXDIAG VCX Nano"
+
+msgid "VAG ODIS"
+msgstr "大众 ODIS"
+
+msgid "JLR DoIP VCI"
+msgstr "捷豹路虎 DoIP VCI"
+
+msgid "Generic DoIP"
+msgstr "通用 DoIP"
+
+msgid "DoIP Target IP : "
+msgstr "DoIP 目标 IP："
+
+msgid "DoIP Port : "
+msgstr "DoIP 端口："
+
+msgid "DoIP Timeout (seconds) : "
+msgstr "DoIP 超时 (秒)："
+
+msgid "Enable Vehicle Announcement Discovery"
+msgstr "启用车辆宣告（Vehicle Announcement）自动发现"
+
+msgid "Auto-reconnect on connection loss"
+msgstr "连接断开时自动重连"
+
+msgid "Change UART speed"
+msgstr "更改 UART 速度"
+
+#, python-format
+msgid "DoIP device added to list: %(ip)s:%(port)s"
+msgstr "已将 DoIP 设备添加至列表：%(ip)s:%(port)s"
+
+#, python-format
+msgid "Error adding DoIP device to list: %s"
+msgstr "将 DoIP 设备添加至列表时出错：%s"
+
+msgid "DoIP device removed from list"
+msgstr "已从列表中移除 DoIP 设备"
+
+#, python-format
+msgid "Error removing DoIP device from list: %s"
+msgstr "从列表中移除 DoIP 设备时出错：%s"
+
+msgid "Checking..."
+msgstr "正在检查..."
+
+msgid "Please enter WiFi adapter IP address"
+msgstr "请输入 WiFi 适配器的 IP 地址"
+
+msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
+msgstr "WiFi 格式无效。请使用 IP:端口 格式 (例如 192.168.0.10:35000)"
+
+msgid "Please select a serial port"
+msgstr "请选择串口"
+
+msgid "Selected port is no longer available"
+msgstr "选中的端口不再可用"
+
+msgid "Attempting connection..."
+msgstr "正在尝试连接..."
+
+msgid "Port: "
+msgstr "端口："
+
+msgid "Speed: "
+msgstr "波特率："
+
+msgid "Connection test failed"
+msgstr "连接测试失败"
+
+msgid "Troubleshooting suggestions:"
+msgstr "故障排查建议："
+
+msgid "1. Check device is properly connected"
+msgstr "1. 检查设备是否已正确连接"
+
+msgid "2. Try different baud rates"
+msgstr "2. 尝试更改波特率"
+
+msgid "3. Ensure device drivers are installed"
+msgstr "3. 确保设备驱动程序已成功安装"
+
+msgid "4. Check port permissions (Linux/macOS)"
+msgstr "4. 检查端口权限 (Linux/macOS)"
+
+msgid "Connection test successful!"
+msgstr "连接测试成功！"
+
+msgid "Error during connection test: "
+msgstr "连接测试期间发生错误："
+
+msgid "Reset and Recheck"
+msgstr "重置并重新检查"
+
+#, python-format
+msgid "Error updating port list: %s"
+msgstr "更新端口列表时出错：%s"
+
+msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
+msgstr "已选择 VGate iCar Pro - 已启用增强型 STN/STPX 支持"
+
+msgid "Long command support and high-speed communication available"
+msgstr "可支持长指令和高速通信"
+
+#, python-format
+msgid "DoIP preset applied: %(name)s -> %(ip)s"
+msgstr "已应用 DoIP 预设：%(name)s -> %(ip)s"
+
+#, python-format
+msgid "DoIP preset applied: %(name)s (IP unchanged)"
+msgstr "已应用 DoIP 预设：%(name)s（IP 保持不变）"
+
+#, python-format
+msgid "Error preparing DoIP update: %s"
+msgstr "准备 DoIP 更新时出错：%s"
+
+#, python-format
+msgid "Applied %s preset:"
+msgstr "已应用 %s 预设："
+
+#, python-format
+msgid "  IP: %s"
+msgstr "  IP：%s"
+
+#, python-format
+msgid "  Port: %s"
+msgstr "  端口：%s"
+
+#, python-format
+msgid "  Timeout: %ss"
+msgstr "  超时：%s 秒"
+
+msgid "  Configuration saved and device list reloaded"
+msgstr "  配置已保存，设备列表已重新加载"
+
+#, python-format
+msgid "Error in force DoIP update: %s"
+msgstr "强制 DoIP 更新出错：%s"
+
+#, python-format
+msgid "Error in delayed DoIP update: %s"
+msgstr "延迟 DoIP 更新出错：%s"
+
+#, python-format
+msgid "DoIP device updated: %(ip)s:%(port)s"
+msgstr "DoIP 设备已更新：%(ip)s:%(port)s"
+
+msgid "DoIP device removed from list (scan disabled)"
+msgstr "DoIP 设备已从列表中移除（扫描已禁用）"
+
+#, python-format
+msgid "Error in targeted DoIP update: %s"
+msgstr "定向 DoIP 更新出错：%s"
+
+msgid "N/A"
+msgstr "不适用/无"
+
+msgid "DoIP (Diagnostics over IP) selected"
+msgstr "已选择 DoIP (车载以太网诊断)"
+
+msgid "Ethernet-based diagnostic communication"
+msgstr "基于以太网的诊断通信"
+
+msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
+msgstr "兼容 Bosch MTS、VXDIAG、大众 ODIS、捷豹路虎 DoIP VCI"
+
+msgid "You must check the recommandations"
+msgstr "您必须阅读并勾选安全建议"
+
+msgid "Please select a communication port"
+msgstr "请选择通信端口"
+
+msgid "ECU Command"
+msgstr "ECU 指令"
+
+msgid "Start diagnostic session"
+msgstr "启动诊断会话"
+
+msgid "Request"
+msgstr "请求"
+
+msgid "Data to send"
+msgstr "待发送数据"
+
+msgid "Computed ISOTP Frame"
+msgstr "计算出的 ISOTP 数据帧"
+
+msgid "Compute frame"
+msgstr "计算数据帧"
+
+msgid "Data received"
+msgstr "接收到的数据"
+
+msgid "Execute"
+msgstr "执行"
+
+msgid ""
+"<center>This feature is experimental</center>\n"
+"<center>Use it at your own risk</center>\n"
+"<center>and if you know exactely what you do</center>\n"
+msgstr ""
+"<center>此功能属于实验性质</center>\n"
+"<center>使用风险需自行承担</center>\n"
+"<center>请确保您完全清楚自己在做什么</center>\n"
+
+msgid "Err, cannot rename "
+msgstr "错误，无法重命名 "
+
+msgid "To be able to edit your screen, first export it in JSON format"
+msgstr "若要编辑界面，请先将其导出为 JSON 格式"
+
+msgid "Enter label name"
+msgstr "输入标签名称"
+
+msgid "Add button"
+msgstr "添加按钮"
+
+msgid "Add label"
+msgstr "添加标签"
+
+msgid "Rename label"
+msgstr "重命名标签"
+
+msgid "Change color"
+msgstr "修改颜色"
+
+msgid "Remove element"
+msgstr "移除元素"
+
+msgid "Diagnotic session"
+msgstr "诊断会话"
+
+msgid "Input"
+msgstr "输入"
+
+msgid "Output"
+msgstr "输出"
+
+msgid "Protocol not supported"
+msgstr "协议不支持"
+
+msgid "Protocol not supported: "
+msgstr "不支持的协议："
+
+msgid "XML file not found : "
+msgstr "未找到 XML 文件："
+
+msgid "Invalid DDT file"
+msgstr "无效的 DDT 文件"
+
+msgid "Connection to ELM lost, trying to reconnect..."
+msgstr "与 ELM 的连接断开，正在尝试重连..."
+
+msgid "Cannot reconnect..."
+msgstr "无法重新连接..."
+
+msgid "Switching to session mode"
+msgstr "正在切换至会话模式"
+
+msgid "Sending ELM request :"
+msgstr "正在发送 ELM 请求："
+
+msgid "Blocked ELM request :"
+msgstr "已拦截 ELM 请求："
+
+msgid "Sending ELM request:"
+msgstr "正在发送 ELM 请求："
+
+msgid "Sending simulated ELM request :"
+msgstr "正在发送模拟 ELM 请求："
+
+msgid "Bad ELM response :"
+msgstr "错误的 ELM 响应："
+
+msgid "ELM response : "
+msgstr "ELM 响应："
+
+msgid "Button request not found : "
+msgstr "未找到按钮对应的请求："
+
+msgid "Sending request :"
+msgstr "正在发送请求："
+
+msgid "Unknown request "
+msgstr "未知请求 "
+
+msgid "Command aborted "
+msgstr "命令已中止 "
+
+msgid "Value error of this stuff need a bypass gateway maybe."
+msgstr "此项数值错误，可能需要网关旁路（Bypass Gateway）。"
+
+msgid "Request aborted (look at red paramters entries): "
+msgstr "请求已中止（请查看红色参数输入项）："
+
+msgid "Delay"
+msgstr "延迟"
+
+msgid "For your safety"
+msgstr "为了您的安全"
+
+msgid ""
+"<center>BLOCKED COMMAND</center>\n"
+"Activate expert mode to unlock"
+msgstr ""
+"<center>命令已被拦截</center>\n"
+"请开启专家模式以解锁"
+
+msgid "Writing parameter"
+msgstr "正在写入参数"
+
+msgid "Blocked writing parameter"
+msgstr "已拦截参数写入"
+
+msgid "Invalid"
+msgstr "无效"
+
+msgid "ECU uses SDS "
+msgstr "ECU 使用 SDS "
+
+msgid "Cannot call request "
+msgstr "无法调用请求 "
+
+msgid "Update time"
+msgstr "更新时间"
+
+msgid "Clearing DTC information"
+msgstr "正在清除故障码 (DTC) 信息"
+
+msgid "No ClearDTC request for that ECU, will send default 14FF00"
+msgstr "该 ECU 无专属清除 DTC 请求，将发送默认指令 14FF00"
+
+msgid "<center>You are about to clear diagnostic troubles codes</center>"
+msgstr "<center>您即将清除诊断故障码 (DTC)</center>"
+
+msgid "<center>Ae you sure this is what you want.</center>"
+msgstr "<center>您确定要执行此操作吗？</center>"
+
+msgid "Clear DTC failed"
+msgstr "清除故障码 (DTC) 失败"
+
+msgid "Clear DTC successfully done"
+msgstr "成功清除故障码 (DTC)"
+
+msgid "No ReadDTC request for that ECU"
+msgstr "该 ECU 无读取 DTC 请求"
+
+msgid "Invalid response for ReadDTC command"
+msgstr "ReadDTC 命令的响应无效"
+
+msgid "Read DTC returned an error"
+msgstr "读取故障码 (DTC) 返回错误"
+
+msgid "No DTC"
+msgstr "无故障码 (DTC)"
+
+msgid "Invalid DTC response: "
+msgstr "无效的 DTC 响应："
+
+msgid "DTC parsing error - response: "
+msgstr "DTC 解析错误 - 响应："
+
+msgid "Diagnostic Trouble Codes"
+msgstr "诊断故障码 (DTC)"
+
+msgid "Clear ALL DTC"
+msgstr "清除所有 DTC 故障码"
+
+msgid "ECU trouble codes"
+msgstr "ECU 故障码"
+
+msgid "Parsing screen "
+msgstr "正在解析界面 "
+
+msgid "found request in input "
+msgstr "在输入中找到请求 "
+
+msgid "found in display "
+msgstr "在显示中找到 "
+
+msgid "found in button "
+msgstr "在按钮中找到 "
+
+msgid "found in presend "
+msgstr "在预发送中找到 "
+
+msgid "found data in input "
+msgstr "在输入中找到数据 "
+
+msgid "found data in display "
+msgstr "在显示中找到数据 "
+
+msgid "Waiting..."
+msgstr "等待中..."
+
+msgid "Frame length error: "
+msgstr "数据帧长度错误："
+
+msgid "Frame hex error: "
+msgstr "数据帧十六进制格式错误："

@@ -170,6 +170,10 @@ ptbr.UninstallProgram=Desinstalar o {#MyAppName}
 pt.UninstallProgram=Desinstalar o {#MyAppName}
 ru.UninstallProgram=Удалить {#MyAppName}
 tr.UninstallProgram={#MyAppName} kaldır
+zhcn.MSruntimes=安装 Microsoft Visual C++ Redistributable 运行库
+zhcn.OpenAfterInstall=安装完成后打开 {#MyAppName}
+zhcn.AfterMyProgInstall=请不要忘记将数据库安装到 %n%n
+zhcn.UninstallProgram=卸载 {#MyAppName}
 
 [Languages]
 Name: "en";   MessagesFile: "compiler:\Default.isl"
@@ -183,3 +187,4 @@ Name: "ptbr"; MessagesFile: "compiler:\Languages\BrazilianPortuguese.isl"
 Name: "pt";   MessagesFile: "compiler:\Languages\Portuguese.isl"
 Name: "ru";   MessagesFile: "compiler:\Languages\Russian.isl"
 Name: "tr";   MessagesFile: "compiler:\Languages\Turkish.isl"
+Name: "zhcn"; MessagesFile: "D:\Inno Setup 7\Languages\ChineseSimplified.isl"

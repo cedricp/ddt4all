@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import gettext
+from io import BytesIO
 import json
 import locale
 import os
 import time
 import sys
 from pathlib import Path
+
+import polib
 
 from ddt4all.file_manager import get_config_dir
 
@@ -75,6 +78,7 @@ lang_list = {
     "Russian": "ru",
     "Serbian": "sr",
     "Czech":"cs_CZ",
+    "简体中文": "zh_CN",
     "Turkish": "tr",
     "Ukrainian": "uk_UA"
 }
@@ -104,6 +108,20 @@ configuration = {
 
 
 BASE_DIR = Path(__file__).resolve().parent
+
+
+def _source_translation(domain, language):
+    """Load a catalog directly from its PO source when no compiled catalog exists."""
+    catalog = (
+        BASE_DIR.parents[1]
+        / "locales"
+        / str(language)
+        / "LC_MESSAGES"
+        / f"{domain}.po"
+    )
+    if not catalog.is_file():
+        return None
+    return gettext.GNUTranslations(BytesIO(polib.pofile(catalog).to_binary()))
 
 def save_config():
     # print(f'Save ddt4all_data/config.json lang: {configuration["lang"]} -> Ok.')
@@ -306,7 +324,23 @@ def translator(domain, lang=None):
     target_lang = lang if lang else configuration.get("lang", lang_list["Default"])
     # Set up message catalog access with specific language
     global _current_translation
-    _current_translation = gettext.translation(domain, str(BASE_DIR / "generated" / "locales"), languages=[str(target_lang)], fallback=True)
+    compiled_catalog = (
+        BASE_DIR
+        / "generated"
+        / "locales"
+        / str(target_lang)
+        / "LC_MESSAGES"
+        / f"{domain}.mo"
+    )
+    if compiled_catalog.is_file():
+        _current_translation = gettext.translation(
+            domain,
+            str(BASE_DIR / "generated" / "locales"),
+            languages=[str(target_lang)],
+            fallback=True,
+        )
+    else:
+        _current_translation = _source_translation(domain, target_lang) or gettext.NullTranslations()
     return _dynamic_gettext
 
 def dtt4all_time():
