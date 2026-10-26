@@ -266,7 +266,10 @@ class Port:
                         if options.debug:
                             print(_("WiFi recv: %s") % byte)
                     except socket.timeout:
-                        self.tcp_needs_reconnect = True
+                        # Some WiFi ELM adapters are slow to answer; a single timeout is not a
+                        # dead socket. Keep the connection alive and let the higher level logic
+                        # decide whether to retry or reconnect.
+                        self.tcp_needs_reconnect = False
                         return None
                     except (socket.error, ConnectionResetError) as e:
                         print(_("WiFi connection error: %s") % e)
@@ -489,3 +492,4 @@ class Port:
                     break
         print("\n" + _("ELM not responding"))
         return False
+ 
