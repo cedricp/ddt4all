@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 07:56+0200\n"
+"POT-Creation-Date: 2026-10-29 19:30+0100\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -512,6 +512,10 @@ msgid "WiFi recv: %s"
 msgstr "WiFi recv: %s"
 
 #, python-format
+msgid "WiFi socket timed out %s times in a row; reconnect scheduled"
+msgstr ""
+
+#, python-format
 msgid "Serial error in read_byte: %s"
 msgstr "Eroare serială în read_byte: %s"
 
@@ -588,6 +592,9 @@ msgstr "Scriere arhivă"
 
 msgid "Opening ECU Database..."
 msgstr "Deschidere bază de date ECU..."
+
+msgid "DataItem not found"
+msgstr "DataItem negăsit"
 
 msgid "parts as: "
 msgstr "părți ca: "
@@ -812,6 +819,451 @@ msgstr "<font color='red'>RĂSPUNS NEAȘTEPTAT</font>"
 msgid "SdSFA stream: %s"
 msgstr "Flux SdSFA: %s"
 
+msgid "DDT2000 command macros (.cmd)"
+msgstr ""
+
+msgid "Macros"
+msgstr ""
+
+msgid ""
+"ERROR: command should have 5 parameters: \n"
+"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"        <lid> - ECUs local identifier. Length should be 2 simbols for KWP or "
+"4 for CAN\n"
+"        <rsp_len> - lengt of command response including positive response "
+"bytes, equals MinBytes from ddt db\n"
+"        <offset> - offeset in bytes to first changed byte (starts from 1 not "
+"0) \n"
+"        <hex mask> - bit mask for changed bits, 1 - changable, 0 - "
+"untachable\n"
+"        <hex value> - bit value\n"
+"    <hex mask> and <hex value> should have equal length\n"
+msgstr ""
+
+msgid ""
+"ERROR: command should have 6 parameters: \n"
+"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"        <lid> - ECUs local identifier. Length should be 2 simbols for KWP or "
+"4 for CAN\n"
+"        <rsp_len> - lengt of command response including positive response "
+"bytes, equals MinBytes from ddt db\n"
+"        <offset> - offeset in bytes to first changed byte (starts from 1 not "
+"0) \n"
+"        <hex mask> - bit mask for changed bits, 1 - changable, 0 - "
+"untachable\n"
+"        <hex value> - bit value\n"
+"        <label> - label to go\n"
+"    <hex mask> and <hex value> should have equal length\n"
+msgstr ""
+
+msgid ""
+"ERROR: command should have 4 or 7 parameters: \n"
+"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"        <lid> - ECUs local identifier. Length should be 2 simbols for KWP or "
+"4 for CAN\n"
+"        <rsp_len> - lengt of command response including positive response "
+"bytes, equals MinBytes from ddt db\n"
+"        <offset> - offeset in bytes to first changed byte (starts from 1 not "
+"0) \n"
+"        <hex mask> - bit mask for changed bits, 1 - changable, 0 - "
+"untachable\n"
+"        <val step> - value step\n"
+"        <val offset> - value offset\n"
+"        <val divider> - value divider\n"
+"\n"
+msgstr ""
+
+msgid "No ELM connection (plugin need_hw=True ?)"
+msgstr ""
+
+#, python-format
+msgid "guard: %(limit)d steps exceeded (infinite loop?)"
+msgstr ""
+
+#, fuzzy
+msgid "# abort requested"
+msgstr "Nicio cerere numită"
+
+#, python-format
+msgid "openning file: %(file)s"
+msgstr ""
+
+#, python-format
+msgid "%(file)s:%(line)d: empty macro name"
+msgstr ""
+
+#, python-format
+msgid "%(file)s:%(line)d: unexpected end of macro"
+msgstr ""
+
+#, python-format
+msgid "%(file)s: includes are nested too deeply (%(limit)d levels)"
+msgstr ""
+
+#, python-format
+msgid "Cannot read %(file)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "%(file)s: included file not found: %(target)s"
+msgstr ""
+
+#, python-format
+msgid "include loop: %(target)s"
+msgstr ""
+
+#, python-format
+msgid "# include %(file)s"
+msgstr ""
+
+#, python-format
+msgid "  %(name)s = %(value)s"
+msgstr ""
+
+#, python-format
+msgid "  %(macro)s"
+msgstr ""
+
+msgid "[h]elp                 - this help"
+msgstr ""
+
+msgid "[q]uit, [e]xit, end    - exit from terminal"
+msgstr ""
+
+msgid "wait|sleep x           - wait x seconds"
+msgstr ""
+
+msgid "include <file>         - play another .cmd here"
+msgstr ""
+
+msgid "Variables:"
+msgstr ""
+
+msgid "Macros:"
+msgstr ""
+
+#, python-format
+msgid "Error: unknown macro name: %(macro)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Error: recursion prohibited: %(macro)s"
+msgstr "Eroare la închiderea portului: %s"
+
+#, python-format
+msgid "### %(file)s : %(count)d lines"
+msgstr ""
+
+msgid "# end of command file"
+msgstr ""
+
+#, python-format
+msgid "> %(line)s"
+msgstr ""
+
+#, python-format
+msgid "Error: unknown label '%(label)s'"
+msgstr ""
+
+msgid "###### Variables #####"
+msgstr ""
+
+#, python-format
+msgid "# %(name)20s = %(value)s"
+msgstr ""
+
+#, python-format
+msgid "Error: unknown variable %(name)s"
+msgstr ""
+
+msgid "Error: too many variables in one line"
+msgstr ""
+
+msgid "#(subst)"
+msgstr ""
+
+#, python-format
+msgid "# delay: %(seconds)s"
+msgstr ""
+
+#, python-format
+msgid "Unrecognized init command: %(name)s"
+msgstr ""
+
+msgid "ERROR: Unknown function"
+msgstr ""
+
+msgid "read  value: "
+msgstr ""
+
+msgid "ERROR: Length is unexpected"
+msgstr ""
+
+msgid "ERROR: Wrong simbol in response"
+msgstr ""
+
+msgid "ERROR: Not positive response"
+msgstr ""
+
+msgid "Match. Exit"
+msgstr ""
+
+msgid "Not match. Continue"
+msgstr ""
+
+msgid "Not match. Exit"
+msgstr ""
+
+msgid "Match. Continue"
+msgstr ""
+
+msgid "Match. goto: "
+msgstr ""
+
+msgid "Not match. goto: "
+msgstr ""
+
+#, python-format
+msgid ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "ERROR: unexpected positive response: %(rsp)s"
+msgstr "Se aștepta răspuns verificare alive, s-a primit: %s"
+
+msgid "write value: "
+msgstr ""
+
+msgid "ELM connected"
+msgstr ""
+
+#, fuzzy
+msgid "ELM not connected"
+msgstr "ELM nu este conectat sau port COM gresit"
+
+msgid "installed copy (cmd_macros_lib/macros)"
+msgstr ""
+
+msgid "manually chosen folder"
+msgstr ""
+
+#, python-format
+msgid "ddt4all tables (%(count)d addresses)"
+msgstr ""
+
+#, python-format
+msgid "pyren3 fallback (%(count)d addresses)"
+msgstr ""
+
+msgid "no table"
+msgstr ""
+
+msgid "pyren3 fallback: disabled"
+msgstr ""
+
+msgid "pyren3 fallback: no entry"
+msgstr ""
+
+#, python-format
+msgid ""
+"pyren3 fallback: %(count)d addresses as a fallback, used only for the "
+"addresses missing from the ddt4all tables"
+msgstr ""
+
+#, python-format
+msgid "pyren3 fallback: %(count)d addresses (source in use)"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+#, python-format
+msgid "ERROR: %(error)s"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "DDT2000 command macros"
+msgstr ""
+
+msgid "Macro folder (.cmd and *.txt)"
+msgstr ""
+
+msgid "Browse"
+msgstr ""
+
+msgid "Refresh"
+msgstr "Reimprospateaza"
+
+msgid "Macro folder:"
+msgstr ""
+
+msgid "Log ELM traffic to file"
+msgstr ""
+
+msgid "Log file name:"
+msgstr ""
+
+msgid ".cmd files (by ECU)"
+msgstr ""
+
+msgid "Named macros (by *.txt)"
+msgstr ""
+
+msgid "Macros by ECU (.cmd)"
+msgstr ""
+
+msgid "Named macros (*.txt)"
+msgstr ""
+
+#, fuzzy
+msgid "Send key"
+msgstr "Trimiteti octeti"
+
+msgid "Key for 'if_key':"
+msgstr ""
+
+#, fuzzy
+msgid "Execute .cmd"
+msgstr "Execută"
+
+#, fuzzy
+msgid "Execute macro"
+msgstr "Execută"
+
+msgid "Stop"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Log"
+msgstr ""
+
+msgid "Macro folder"
+msgstr ""
+
+#, python-format
+msgid "Parsing error %(file)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "%(macro)s (defined in %(file)s)"
+msgstr ""
+
+#, python-format
+msgid "Host: %(host)s"
+msgstr ""
+
+#, python-format
+msgid "Addresses: %(legacy)s"
+msgstr ""
+
+msgid ""
+"Format: DDT2000 command macros (pyren3); the bundled macros target Renault "
+"ECUs, address resolution follows the vehicle loaded in ddt4all."
+msgstr ""
+
+#, python-format
+msgid "Folder: %(folder)s"
+msgstr ""
+
+msgid "(none)"
+msgstr ""
+
+#, python-format
+msgid "Source: %(source)s"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(groups)d ECU group(s), %(files)d .cmd file(s), %(named)d named macro(s) in "
+"%(txt)d .txt file(s)"
+msgstr ""
+
+#, python-format
+msgid "Journal files: %(elm)s and %(ecu)s"
+msgstr ""
+
+msgid "No ELM connection: the journal is not written."
+msgstr ""
+
+#, python-format
+msgid "Cannot write the journal (%(error)s)"
+msgstr ""
+
+#, python-format
+msgid "Journal: %(elm)s"
+msgstr ""
+
+#, python-format
+msgid "Journal: %(ecu)s"
+msgstr ""
+
+msgid "ddt4all not found (console mode only)"
+msgstr ""
+
+#, python-format
+msgid "ddt4all %(flavor)s | %(elm)s | addressing: %(addressing)s"
+msgstr ""
+
+#, python-format
+msgid "%(elm)s | %(files)d .cmd (%(groups)d ECU) | %(named)d named macro(s)"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(host)s\n"
+"Addresses: %(legacy)s\n"
+"%(detail)s\n"
+"Folder: %(folder)s\n"
+"Source: %(source)s\n"
+"%(journal)s"
+msgstr ""
+
+msgid "Journal: disabled"
+msgstr ""
+
+msgid "A macro is already running."
+msgstr ""
+
+msgid "ddt4all is not available: this plugin must be started from ddt4all."
+msgstr ""
+
+msgid "No ELM connection: connect ddt4all to the ELM before running a macro."
+msgstr ""
+
+#, python-format
+msgid "--- START %(kind)s: %(macro)s ---"
+msgstr ""
+
+msgid "Select a .cmd file (double-click to run)."
+msgstr ""
+
+msgid "Select a named macro (double-click to run)."
+msgstr ""
+
+#, python-format
+msgid "# key '%(key)s' sent"
+msgstr ""
+
+#, fuzzy
+msgid "# stop requested..."
+msgstr "Nicio cerere numită"
+
+#, python-format
+msgid "--- END: %(status)s ---"
+msgstr ""
+
+#, python-format
+msgid ""
+"WARNING: address %(addr)s resolves to %(tx)s/%(rx)s (ddt4all) but pyren3 "
+"uses %(pltx)s/%(plrx)s"
+msgstr ""
+
 msgid "Laguna II UCH Reset"
 msgstr "Laguna II UCH Reset"
 
@@ -1022,9 +1474,6 @@ msgstr "Adauga"
 msgid "Del"
 msgstr "Sterge"
 
-msgid "Refresh"
-msgstr "Reimprospateaza"
-
 msgid "Move up"
 msgstr "Muta in sus"
 
@@ -1234,9 +1683,6 @@ msgstr "Nicio cerere numită"
 msgid "Found similar"
 msgstr "Găsit similar"
 
-msgid "DataItem not found"
-msgstr "DataItem negăsit"
-
 msgid "Cannot find data "
 msgstr "Nu se pot găsi date "
 
@@ -1275,6 +1721,9 @@ msgstr "Adresă :"
 
 msgid "ID frame :"
 msgstr "ID cadru :"
+
+msgid "Search vehicle"
+msgstr ""
 
 msgid "No vehicles available"
 msgstr "Nu sunt vehicule disponibile"
