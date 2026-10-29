@@ -537,6 +537,9 @@ class ParamWidget(widgets.QWidget):
         self.initELM()
 
     def initELM(self):
+        # A (re)connect (e.g. after changing the CAN line speed) leaves the ECU in its default
+        # session, so forget the remembered session and let startDiagnosticSession() reopen it.
+        self.currentsession = ""
         connection_status = self.ecurequestsparser.connect_to_hardware(self.canline)
         if not connection_status:
             self.logview.append("<font color='red'>" + _("Protocol not supported") + "</font>")

@@ -265,11 +265,22 @@ class Port:
                         byte = self.hdr.recv(1)
                         if options.debug:
                             print(_("WiFi recv: %s") % byte)
+
+                        # A successful read means the socket is still alive; reset the timeout counter.
+                        self.reconnect_attempts = 0
+                        self.tcp_needs_reconnect = False
                     except socket.timeout:
-                        self.tcp_needs_reconnect = True
+                        # Some WiFi ELM adapters are slow to answer; a short timeout should not be
+                        # treated as a dead socket by itself. Only trigger reconnect after a few
+                        # consecutive timeouts so V-Link / WiFi units stay stable under load.
+                        self.reconnect_attempts += 1
+                        if self.reconnect_attempts >= self.max_reconnect_attempts:
+                            self.tcp_needs_reconnect = True
+                            print(_("WiFi socket timed out %s times in a row; reconnect scheduled") % self.reconnect_attempts)
                         return None
                     except (socket.error, ConnectionResetError) as e:
                         print(_("WiFi connection error: %s") % e)
+                        self.reconnect_attempts = self.max_reconnect_attempts
                         self.tcp_needs_reconnect = True
                         return None
                 elif self.portType == 2:  # Bluetooth
@@ -489,3 +500,4 @@ class Port:
                     break
         print("\n" + _("ELM not responding"))
         return False
+ 
