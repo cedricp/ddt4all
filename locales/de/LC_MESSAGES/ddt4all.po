@@ -2098,7 +2098,7 @@ msgstr "ELM testen"
 msgid "WiFi port : "
 msgstr "WiFi Anschluss: "
 
-msgid "I'm aware that I can harm my car if badly used"
+msgid "I acknowledge that improper use may cause damage to my vehicle."
 msgstr "Ich bin mir bewusst, dass falsche Benutzung meinem Auto schaden kann"
 
 msgid "Enable CAN2"

@@ -2087,7 +2087,7 @@ msgstr "ELM değerlendirme testi"
 msgid "WiFi port : "
 msgstr "WiFi bağlantı noktası : "
 
-msgid "I'm aware that I can harm my car if badly used"
+msgid "I acknowledge that improper use may cause damage to my vehicle."
 msgstr "Hatalı kullanırsam arabama zarar verebileceğimin farkındayım"
 
 msgid "Enable CAN2"

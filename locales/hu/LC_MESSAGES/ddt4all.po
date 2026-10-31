@@ -2088,7 +2088,7 @@ msgstr "ELM kiértékelése"
 msgid "WiFi port : "
 msgstr "WiFi port: "
 
-msgid "I'm aware that I can harm my car if badly used"
+msgid "I acknowledge that improper use may cause damage to my vehicle."
 msgstr ""
 "Tisztában vagyok vele, hogy a helytelen használat kárt tehet a járművemben"
 

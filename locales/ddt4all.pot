@@ -1966,7 +1966,7 @@ msgstr ""
 msgid "WiFi port : "
 msgstr ""
 
-msgid "I'm aware that I can harm my car if badly used"
+msgid "I acknowledge that improper use may cause damage to my vehicle."
 msgstr ""
 
 msgid "Enable CAN2"
