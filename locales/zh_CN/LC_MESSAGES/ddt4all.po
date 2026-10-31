@@ -2064,7 +2064,7 @@ msgstr "ELM 基准性能测试"
 msgid "WiFi port : "
 msgstr "WiFi 端口："
 
-msgid "I'm aware that I can harm my car if badly used"
+msgid "I acknowledge that improper use may cause damage to my vehicle."
 msgstr "我清楚如果不当使用可能会对车辆造成损坏"
 
 msgid "Enable CAN2"

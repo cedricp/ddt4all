@@ -2086,7 +2086,7 @@ msgstr "Referinta ELM"
 msgid "WiFi port : "
 msgstr "Port WiFi : "
 
-msgid "I'm aware that I can harm my car if badly used"
+msgid "I acknowledge that improper use may cause damage to my vehicle."
 msgstr "Sunt constient ca imi pot strica masina daca este folosita prost"
 
 msgid "Enable CAN2"
