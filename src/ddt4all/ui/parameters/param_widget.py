@@ -70,6 +70,7 @@ class ParamWidget(widgets.QWidget):
         self.allow_parameters_update = True
         self.record_values = []
         self.record_keys = {}
+        self.record_time = time.time()
         self.infobox = None
 
     def set_soft_fc(self, b):
