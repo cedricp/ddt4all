@@ -1,0 +1,12 @@
+PyInstaller==6.11.1
+pyinstaller-hooks-contrib==2024.10
+PyQt5==5.15.11
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.16.1
+PyQtWebEngine==5.15.7
+PyQtWebEngine-Qt5==5.15.2
+pyserial==3.5
+pyusb==1.2.1
+crcmod==1.7
+polib==1.2.0
+platformdirs==3.11.0

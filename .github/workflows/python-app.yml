@@ -7,13 +7,20 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.platform.runner }}
 
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.x"]
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        platform:
+          - runner: ubuntu-24.04
+            architecture: x86_64
+          - runner: windows-latest
+          - runner: macos-15-intel
+            architecture: x86_64
+          - runner: macos-15
+            architecture: arm64
 
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +30,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
+
+      - name: Verify Linux/macOS architecture
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+        env:
+          EXPECTED_ARCH: ${{ matrix.platform.architecture }}
+        run: |
+          python -c "import os, platform; expected = os.environ['EXPECTED_ARCH']; actual = platform.machine(); actual = {'aarch64': 'arm64', 'amd64': 'x86_64'}.get(actual.lower(), actual.lower()); print(f'Expected {expected}; Python is {actual}'); assert actual == expected"
 
       # Linux only: install xvfb
       - name: Install system deps (Qt headless - Linux only)
@@ -60,4 +74,3 @@ jobs:
       #     files: coverage.xml
       #     fail_ci_if_error: true
       #     token: ${{ secrets.CODECOV_TOKEN }}
-
