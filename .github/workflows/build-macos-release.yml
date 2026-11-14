@@ -81,7 +81,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          bash setup_tools/mac-os/builddmg.sh --arch "${{ matrix.arch }}"
+          PYTHON=python bash setup_tools/mac-os/builddmg.sh --arch "${{ matrix.arch }}"
           test -s "setup_tools/mac-os/dist/${{ matrix.arch }}/DDT4ALL-macOS-${{ matrix.arch }}.dmg"
 
       - name: Upload architecture installer

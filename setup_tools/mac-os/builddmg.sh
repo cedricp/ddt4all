@@ -105,8 +105,10 @@ DIST_DIR="$DIST_ROOT/$TARGET_ARCH"
 
 "$PYTHON_BIN" -c 'import sys; sys.exit(0 if (3, 10) <= sys.version_info[:2] < (3, 13) else 1)' || \
     fail "Python 3.10, 3.11, or 3.12 is required (found $PYTHON_VERSION)."
-"$PYTHON_BIN" -c 'import sys; from PyInstaller import __version__; p=tuple(int(x) for x in __version__.split(".")[:2]); sys.exit(0 if (6, 11) <= p < (7, 0))' 2>/dev/null || \
-    fail "PyInstaller 6.11 or newer, but earlier than 7.0, is required."
+PYINSTALLER_VERSION="$("$PYTHON_BIN" -m PyInstaller --version)" || \
+    fail "PyInstaller is not runnable with $PYTHON_BIN."
+"$PYTHON_BIN" -c 'import sys; p=tuple(int(x) for x in sys.argv[1].split(".")[:2]); sys.exit(0 if (6, 11) <= p < (7, 0) else 1)' "$PYINSTALLER_VERSION" || \
+    fail "PyInstaller 6.11 or newer, but earlier than 7.0, is required (found $PYINSTALLER_VERSION with $PYTHON_BIN)."
 "$PYTHON_BIN" - "$SCRIPT_DIR/requirements-macos.txt" <<'PY' || \
     fail "Installed macOS build dependencies do not match requirements-macos.txt."
 import importlib.metadata
