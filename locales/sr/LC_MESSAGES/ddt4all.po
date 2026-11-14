@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ddt4all\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 19:30+0100\n"
+"POT-Creation-Date: 2026-11-14 22:49+0100\n"
 "PO-Revision-Date: 2026-05-10 06:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Serbian\n"
@@ -19,123 +19,49 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
 
-msgid "DoIP device connected successfully"
-msgstr "DoIP uređaj uspešno povezan"
-
-msgid "DoIP CAN initialized with Electric ECU support"
-msgstr "DoIP CAN inicijalizovan sa podrškom za električni ECU"
+#, python-format
+msgid "Failed to connect to DoIP entity: %s"
+msgstr "Nije uspelo povezivanje sa DoIP entitetom: %s"
 
 #, python-format
-msgid "DoIP response: %s"
-msgstr "DoIP odgovor: %s"
+msgid "DoIP routing activated for %(ip)s:%(port)s"
+msgstr "DoIP rutiranje aktivirano za %(ip)s:%(port)s"
+
+msgid "No vehicle-identification response was received"
+msgstr "Nije primljen odgovor identifikacije vozila"
 
 #, python-format
-msgid "DoIP request failed: %s"
-msgstr "DoIP zahtev nije uspeo: %s"
-
-#, python-format
-msgid "Testing Electric ECU: %s"
-msgstr "Testiranje električnog ECU: %s"
-
-msgid "Failed to connect to DoIP device"
-msgstr "Neuspela veza sa DoIP uređajem"
-
-#, python-format
-msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr "DoIP povezan na %(ip)s:%(port)s"
+msgid "Vehicle VIN=%(vin)s logical address=0x%(address)04X EID=%(eid)s"
+msgstr "Vozilo VIN=%(vin)s logička adresa=0x%(address)04X EID=%(eid)s"
 
 #, python-format
 msgid "DoIP connection failed: %s"
 msgstr "DoIP povezivanje nije uspelo: %s"
 
-msgid "Insufficient vehicle identification data"
-msgstr "Nedovoljni podaci za identifikaciju vozila"
-
-#, python-format
-msgid "Expected vehicle identification response, got: %s"
-msgstr "Očekivan odgovor identifikacije vozila, dobijeno: %s"
-
-#, python-format
-msgid "Vehicle identification failed: %s"
-msgstr "Identifikacija vozila nije uspela: %s"
-
-msgid "Insufficient session control data"
-msgstr "Nedovoljni podaci za kontrolu sesije"
-
-#, python-format
-msgid "Expected diagnostic session control response, got: %s"
-msgstr "Očekivan odgovor kontrole dijagnostičke sesije, dobijeno: %s"
-
-#, python-format
-msgid "Diagnostic session control failed: %s"
-msgstr "Kontrola dijagnostičke sesije nije uspela: %s"
-
-msgid "Insufficient diagnostic message data"
-msgstr "Nedovoljni podaci dijagnostičke poruke"
-
-#, python-format
-msgid "Expected diagnostic message response, got: %s"
-msgstr "Očekivan odgovor dijagnostičke poruke, dobijeno: %s"
-
-msgid "Insufficient alive check data"
-msgstr "Nedovoljni podaci za proveru alive"
-
-#, python-format
-msgid "Expected alive check response, got: %s"
-msgstr "Očekivan odgovor provere alive, dobijeno: %s"
-
-#, python-format
-msgid "Alive check failed: %s"
-msgstr "Provera alive nije uspela: %s"
-
-#, python-format
-msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr "DoIP vozilo identifikovano: VIN=%(vin)s, Adresa=%(addr)s"
-
-#, python-format
-msgid "DoIP vehicle identification failed: %s"
-msgstr "Identifikacija DoIP vozila nije uspela: %s"
-
 msgid "Not connected to DoIP device"
 msgstr "Nije povezano sa DoIP uređajem"
+
+msgid "No DoIP ECU logical address is selected"
+msgstr "Nije izabrana logička adresa DoIP ECU-a"
 
 #, python-format
 msgid "Invalid hex request format: %s"
 msgstr "Neispravan format heksadecimalnog zahteva: %s"
 
-#, python-format
-msgid "DoIP session start failed: %s"
-msgstr "Pokretanje DoIP sesije nije uspelo: %s"
+msgid "ELM AT commands are not supported over DoIP"
+msgstr "ELM AT komande nisu podržane preko DoIP-a"
 
-#, python-format
-msgid "DoIP CAN initialization failed: %s"
-msgstr "Inicijalizacija DoIP CAN nije uspela: %s"
+msgid "K-line initialization is not supported over DoIP"
+msgstr "K-line inicijalizacija nije podržana preko DoIP-a"
 
-#, python-format
-msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP: Električni ECU otkriven - %s"
-
-msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP: Korišćenje proširenog adresiranja za sisteme električnih vozila"
-
-#, python-brace-format
-msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: Korišćenje 29-bitnog proširenog adresiranja - TX:0x{:04X}, RX:0x{:04X}"
-
-#, python-brace-format
-msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
-"DoIP: Korišćenje 11-bitnog standardnog adresiranja - TX:0x{:03X}, RX:0x{:03X}"
+msgid "K-line addressing is not supported over DoIP"
+msgstr "K-line adresiranje nije podržano preko DoIP-a"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Upozorenje, ne može se dobiti vrednost sa znakom za"
 
 msgid "Division by zero, please check data item: "
 msgstr "Deljenje sa nulom, molimo proverite stavku podataka: "
-
-msgid "getHexValue >> abnormal remaining bytes "
-msgstr "getHexValue >> abnormalni preostali bajtovi "
 
 msgid "Adding group "
 msgstr "Dodavanje grupe "
@@ -194,79 +120,67 @@ msgstr "nije mapiran"
 msgid "Scanning address: "
 msgstr "Skeniranje adrese: "
 
-#, python-format
-msgid "DoIP ECU response format unknown: %s"
-msgstr "Nepoznat format odgovora DoIP ECU: %s"
+msgid "No DoIP addresses available for scanning"
+msgstr "Nema dostupnih DoIP adresa za skeniranje"
 
 #, python-format
-msgid "Error parsing DoIP response: %s"
-msgstr "Greška u analizi DoIP odgovora: %s"
-
-#, python-format
-msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"DoIP ECU na adresi %(addr)s je odgovorio sa minimalnim podacima: %(response)s"
-
-#, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "Inicijalizacija DoIP veze ka %(ip)s:%(port)s (timeout: %(timeout)ss)"
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr "Inicijalizacija DoIP veze ka %(ip)s:%(port)s"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
 msgstr "DoIP veza uspostavljena: %(ip)s:%(port)s"
 
 #, python-format
-msgid "DoIP initialization error: %s"
-msgstr "Greška DoIP inicijalizacije: %s"
-
-msgid "No DoIP addresses available for scanning"
-msgstr "Nema dostupnih DoIP adresa za skeniranje"
-
-msgid "Scanning DoIP address: "
-msgstr "Skeniranje DoIP adrese: "
+msgid "DoIP vehicle discovered: VIN=%(vin)s address=%(addr)04X"
+msgstr "DoIP vozilo otkriveno: VIN=%(vin)s adresa=%(addr)04X"
 
 #, python-format
-msgid "Warning: address %(addr)s is not mapped"
-msgstr "Upozorenje: adresa %(addr)s nije mapirana"
+msgid "DoIP reconnection failed: %s"
+msgstr "DoIP ponovno povezivanje nije uspelo: %s"
+
+msgid "unmapped ECU"
+msgstr "ECU bez mapiranja"
 
 #, python-format
-msgid "No identification data from DoIP ECU at address %s"
-msgstr "Nema podataka identifikacije sa DoIP ECU na adresi %s"
+msgid "Scanning DoIP address %(addr)s ECU: %(name)s"
+msgstr "Skeniranje DoIP adrese %(addr)s ECU: %(name)s"
 
 #, python-format
-msgid "Negative response from DoIP ECU at address %s"
-msgstr "Negativan odgovor od DoIP ECU na adresi %s"
+msgid "Simulation mode: DoIP address %s was not queried"
+msgstr "Režim simulacije: DoIP adresa %s nije bila upitana"
 
 #, python-format
-msgid "Failed to start session with DoIP ECU at address %s"
-msgstr "Neuspelo pokretanje sesije sa DoIP ECU na adresi %s"
+msgid "Skipping invalid DoIP address %(addr)s: %(error)s"
+msgstr "Nevažeća DoIP adresa %(addr)s se preskače: %(error)s"
 
 #, python-format
-msgid "Failed to initialize DoIP communication with address %s"
-msgstr "Neuspela inicijalizacija DoIP komunikacije sa adresom %s"
-
-msgid "DoIP device not available for scanning"
-msgstr "DoIP uređaj nije dostupan za skeniranje"
+msgid "DoIP scan failed at %(addr)s: %(error)s"
+msgstr "DoIP skeniranje nije uspelo na %(addr)s: %(error)s"
 
 #, python-format
-msgid "Error during DoIP scan: %s"
-msgstr "Greška tokom DoIP skeniranja: %s"
+msgid "Could not start DoIP UDS session at %(addr)s: %(error)s"
+msgstr "Nije moguće pokrenuti DoIP UDS sesiju na %(addr)s: %(error)s"
 
 #, python-format
-msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr "Režim simulacije: DoIP adresa %s bi bila skenirana"
+msgid "DoIP UDS identification failed at %(addr)s: %(error)s"
+msgstr "DoIP UDS identifikacija nije uspela na %(addr)s: %(error)s"
 
 #, python-format
-msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
-"Povezao bi se sa DoIP ECU na adresi %s i pročitaj podatke identifikacije"
-
-msgid "DoIP connection closed"
-msgstr "DoIP veza zatvorena"
+msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
+msgstr "Nije moguće zatvoriti DoIP dijagnostičku sesiju na %(addr)s: %(error)s"
 
 #, python-format
-msgid "Error closing DoIP connection: %s"
-msgstr "Greška pri zatvaranju DoIP veze: %s"
+msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
+msgstr "Nije moguće pokrenuti DoIP staru sesiju na %(addr)s: %(error)s"
+
+#, python-format
+msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
+msgstr "DoIP identifikacija starog protokola nije uspela na %(addr)s: %(error)s"
+
+#, python-format
+msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
+msgstr "Nije moguće zatvoriti DoIP staru sesiju na %(addr)s: %(error)s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -471,10 +385,6 @@ msgid "Bluetooth connection failed: %s"
 msgstr "Bluetooth veza nije uspela: %s"
 
 #, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr "Inicijalizacija DoIP veze ka %(ip)s:%(port)s"
-
-#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
 msgstr "DoIP povezivanje nije uspelo: %(ip)s:%(port)s"
 
@@ -646,6 +556,9 @@ msgstr "Nije izabran COM port"
 #, python-format
 msgid "Initializing ELM with speed %i..."
 msgstr "Inicijalizacija ELM sa brzinom %i..."
+
+msgid "DoIP connection failed: "
+msgstr "DoIP povezivanje nije uspelo: "
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Nema ELM327 ili OBDLINK-SX uređaja na COM portu "
@@ -1782,11 +1695,18 @@ msgstr "Nema dostupnih vozila"
 msgid "%d loaded ECUs in database."
 msgstr "%d učitanih ECU jedinica u bazi podataka."
 
-msgid "No database found"
-msgstr "Baza podataka nije pronađena"
+msgid "No ECU database is installed"
+msgstr "Nije instalirana baza podataka ECU-a"
 
-msgid "Check documentation"
-msgstr "Proverite dokumentaciju"
+msgid "Restart DDT4ALL after installing or updating the database."
+msgstr "Ponovo pokrenite DDT4ALL nakon instaliranja ili ažuriranja baze podataka."
+
+msgid ""
+"Download the ECU database separately and copy the file (`ecu.zip` or the "
+"original DDT2000 XML database (`DDT2000DATA`)) to:\n"
+msgstr ""
+"Preuzmite bazu podataka ECU odvojeno i kopirajte fajl (`ecu.zip` ili originalnu "
+"bazu podataka XML DDT2000 (`DDT2000DATA`)) u:\n"
 
 msgid "DDT4All Documentation"
 msgstr "DDT4All Dokumentacija"
@@ -2037,6 +1957,12 @@ msgstr "Zipovanje XML baze podataka... (ovo može potrajati nekoliko minuta)"
 msgid "Zip job finished"
 msgstr "Završeno zipovanje baze podataka"
 
+msgid "No database found"
+msgstr "Baza podataka nije pronađena"
+
+msgid "Check documentation"
+msgstr "Proverite dokumentaciju"
+
 msgid "Enter new name"
 msgstr "Unesi novo ime za kategoriju ili ekran"
 
@@ -2084,6 +2010,10 @@ msgstr "Snimljeno "
 
 msgid " entries"
 msgstr " unosa"
+
+#, python-format
+msgid "Invalid DoIP ECU address: %s"
+msgstr "Nevažeća DoIP ECU adresa: %s"
 
 msgid "No"
 msgstr "Ne"
@@ -2328,8 +2258,8 @@ msgstr "DoIP (Dijagnostika preko IP) izabran"
 msgid "Ethernet-based diagnostic communication"
 msgstr "Dijagnostična komunikacija bazirana na Ethernetu"
 
-msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
-msgstr "Kompatibilno sa Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
+msgid "Select an ISO 13400 DoIP entity by its IP address"
+msgstr "Izaberite ISO 13400 DoIP entitet po njegovoj IP adresi"
 
 msgid "You must check the recommandations"
 msgstr "Morate proveriti preporuke"

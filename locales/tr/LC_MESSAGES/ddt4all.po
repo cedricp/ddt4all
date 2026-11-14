@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 19:30+0100\n"
+"POT-Creation-Date: 2026-11-14 22:49+0100\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -18,123 +18,49 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-msgid "DoIP device connected successfully"
-msgstr "DoIP cihazı başarıyla bağlandı"
-
-msgid "DoIP CAN initialized with Electric ECU support"
-msgstr "DoIP CAN, Elektrikli ECU desteğiyle başlatıldı"
+#, python-format
+msgid "Failed to connect to DoIP entity: %s"
+msgstr "DoIP varlığına bağlanılamadı: %s"
 
 #, python-format
-msgid "DoIP response: %s"
-msgstr "DoIP yanıtı: %s"
+msgid "DoIP routing activated for %(ip)s:%(port)s"
+msgstr "DoIP yönlendirme %(ip)s:%(port)s için etkinleştirildi"
+
+msgid "No vehicle-identification response was received"
+msgstr "Araç tanımlama yanıtı alınmadı"
 
 #, python-format
-msgid "DoIP request failed: %s"
-msgstr "DoIP isteği başarısız: %s"
-
-#, python-format
-msgid "Testing Electric ECU: %s"
-msgstr "Elektrikli ECU test ediliyor: %s"
-
-msgid "Failed to connect to DoIP device"
-msgstr "DoIP cihazına bağlanılamadı"
-
-#, python-format
-msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr "DoIP %(ip)s:%(port)s adresine bağlandı"
+msgid "Vehicle VIN=%(vin)s logical address=0x%(address)04X EID=%(eid)s"
+msgstr "Araç VIN=%(vin)s mantıksal adres=0x%(address)04X EID=%(eid)s"
 
 #, python-format
 msgid "DoIP connection failed: %s"
 msgstr "DoIP bağlantısı başarısız: %s"
 
-msgid "Insufficient vehicle identification data"
-msgstr "Yetersiz araç tanımlama verisi"
-
-#, python-format
-msgid "Expected vehicle identification response, got: %s"
-msgstr "Beklenen araç tanımlama yanıtı, alındı: %s"
-
-#, python-format
-msgid "Vehicle identification failed: %s"
-msgstr "Araç tanımlama başarısız: %s"
-
-msgid "Insufficient session control data"
-msgstr "Yetersiz oturum kontrol verisi"
-
-#, python-format
-msgid "Expected diagnostic session control response, got: %s"
-msgstr "Beklenen tanı oturum kontrol yanıtı, alındı: %s"
-
-#, python-format
-msgid "Diagnostic session control failed: %s"
-msgstr "Tanı oturum kontrolü başarısız: %s"
-
-msgid "Insufficient diagnostic message data"
-msgstr "Yetersiz tanılama mesajı verisi"
-
-#, python-format
-msgid "Expected diagnostic message response, got: %s"
-msgstr "Beklenen tanı mesajı yanıtı, alındı: %s"
-
-msgid "Insufficient alive check data"
-msgstr "Yetersiz canlılık kontrolü verisi"
-
-#, python-format
-msgid "Expected alive check response, got: %s"
-msgstr "Beklenen can kontrol yanıtı, alındı: %s"
-
-#, python-format
-msgid "Alive check failed: %s"
-msgstr "Can kontrolü başarısız: %s"
-
-#, python-format
-msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr "DoIP Aracı tanımlandı: VIN=%(vin)s, Adres=%(addr)s"
-
-#, python-format
-msgid "DoIP vehicle identification failed: %s"
-msgstr "DoIP araç tanımlama başarısız: %s"
-
 msgid "Not connected to DoIP device"
 msgstr "DoIP cihazına bağlı değil"
+
+msgid "No DoIP ECU logical address is selected"
+msgstr "DoIP ECU mantıksal adresi seçilmedi"
 
 #, python-format
 msgid "Invalid hex request format: %s"
 msgstr "Geçersiz hex istek formatı: %s"
 
-#, python-format
-msgid "DoIP session start failed: %s"
-msgstr "DoIP oturumu başlatılamadı: %s"
+msgid "ELM AT commands are not supported over DoIP"
+msgstr "ELM AT komutları DoIP üzerinden desteklenmiyor"
 
-#, python-format
-msgid "DoIP CAN initialization failed: %s"
-msgstr "DoIP CAN başlatma başarısız: %s"
+msgid "K-line initialization is not supported over DoIP"
+msgstr "K-line başlatma DoIP üzerinden desteklenmiyor"
 
-#, python-format
-msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP: Elektrikli ECU algılandı - %s"
-
-msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr ""
-"DoIP: Elektrikli Araç Sistemleri için genişletilmiş adresleme kullanılıyor"
-
-#, python-brace-format
-msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP: 29-bit genişletilmiş adresleme kullanıyor - TX:0x{:04X}, RX:0x{:04X}"
-
-#, python-brace-format
-msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP: 11-bit standart adresleme kullanıyor - TX:0x{:03X}, RX:0x{:03X}"
+msgid "K-line addressing is not supported over DoIP"
+msgstr "K-line adresleme DoIP üzerinden desteklenmiyor"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Uyarı, imzalı değer alınamıyor"
 
 msgid "Division by zero, please check data item: "
 msgstr "Sıfıra bölme, lütfen veri öğesini kontrol edin: "
-
-msgid "getHexValue >> abnormal remaining bytes "
-msgstr "getHexValue >> anormal kalan baytlar "
 
 msgid "Adding group "
 msgstr "Grup ekleniyor "
@@ -193,79 +119,67 @@ msgstr "haritalanmamış"
 msgid "Scanning address: "
 msgstr "Adres taranıyor: "
 
-#, python-format
-msgid "DoIP ECU response format unknown: %s"
-msgstr "DoIP ECU yanıt formatı bilinmiyor: %s"
+msgid "No DoIP addresses available for scanning"
+msgstr "Tarama için mevcut DoIP adresi yok"
 
 #, python-format
-msgid "Error parsing DoIP response: %s"
-msgstr "DoIP yanıtı ayrıştırma hatası: %s"
-
-#, python-format
-msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"%(addr)s adresindeki DoIP ECU minimal veriyle yanıt verdi: %(response)s"
-
-#, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor (timeout: %(timeout)ss)"
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr "%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
 msgstr "DoIP bağlantısı kuruldu: %(ip)s:%(port)s"
 
 #, python-format
-msgid "DoIP initialization error: %s"
-msgstr "DoIP başlatma hatası: %s"
-
-msgid "No DoIP addresses available for scanning"
-msgstr "Tarama için mevcut DoIP adresi yok"
-
-msgid "Scanning DoIP address: "
-msgstr "DoIP adresi taranıyor: "
+msgid "DoIP vehicle discovered: VIN=%(vin)s address=%(addr)04X"
+msgstr "DoIP aracı algılandı: VIN=%(vin)s adres=%(addr)04X"
 
 #, python-format
-msgid "Warning: address %(addr)s is not mapped"
-msgstr "Uyarı: %(addr)s adresi haritalanmamış"
+msgid "DoIP reconnection failed: %s"
+msgstr "DoIP yeniden bağlanma başarısız: %s"
+
+msgid "unmapped ECU"
+msgstr "Eşlenmemiş ECU"
 
 #, python-format
-msgid "No identification data from DoIP ECU at address %s"
-msgstr "%s adresindeki DoIP ECU'dan tanımlama verisi yok"
+msgid "Scanning DoIP address %(addr)s ECU: %(name)s"
+msgstr "DoIP adresi %(addr)s ECU taranıyor: %(name)s"
 
 #, python-format
-msgid "Negative response from DoIP ECU at address %s"
-msgstr "%s adresindeki DoIP ECU'dan negatif yanıt"
+msgid "Simulation mode: DoIP address %s was not queried"
+msgstr "Simülasyon modu: DoIP adresi %s sorgulanmadı"
 
 #, python-format
-msgid "Failed to start session with DoIP ECU at address %s"
-msgstr "%s adresindeki DoIP ECU ile oturum başlatılamadı"
+msgid "Skipping invalid DoIP address %(addr)s: %(error)s"
+msgstr "Geçersiz DoIP adresi %(addr)s atlanıyor: %(error)s"
 
 #, python-format
-msgid "Failed to initialize DoIP communication with address %s"
-msgstr "%s adresi ile DoIP iletişimi başlatılamadı"
-
-msgid "DoIP device not available for scanning"
-msgstr "DoIP cihazı tarama için mevcut değil"
+msgid "DoIP scan failed at %(addr)s: %(error)s"
+msgstr "DoIP taraması %(addr)s konumunda başarısız: %(error)s"
 
 #, python-format
-msgid "Error during DoIP scan: %s"
-msgstr "DoIP taraması sırasında hata: %s"
+msgid "Could not start DoIP UDS session at %(addr)s: %(error)s"
+msgstr "DoIP UDS oturumu %(addr)s konumunda başlatılamadı: %(error)s"
 
 #, python-format
-msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr "Simülasyon modu: %s DoIP adresi taranacaktır"
+msgid "DoIP UDS identification failed at %(addr)s: %(error)s"
+msgstr "DoIP UDS tanımlaması %(addr)s konumunda başarısız: %(error)s"
 
 #, python-format
-msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "%s adresindeki DoIP ECU'ya bağlanır ve tanımlama verilerini okur"
-
-msgid "DoIP connection closed"
-msgstr "DoIP bağlantısı kapalı"
+msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
+msgstr "DoIP tanılama oturumu %(addr)s konumunda kapatılamadı: %(error)s"
 
 #, python-format
-msgid "Error closing DoIP connection: %s"
-msgstr "DoIP bağlantısı kapatma hatası: %s"
+msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
+msgstr "DoIP eski oturum %(addr)s konumunda başlatılamadı: %(error)s"
+
+#, python-format
+msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
+msgstr "DoIP eski tanımlama %(addr)s konumunda başarısız: %(error)s"
+
+#, python-format
+msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
+msgstr "DoIP eski oturum %(addr)s konumunda kapatılamadı: %(error)s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -470,10 +384,6 @@ msgid "Bluetooth connection failed: %s"
 msgstr "Bluetooth bağlantısı başarısız: %s"
 
 #, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr "%(ip)s:%(port)s adresine DoIP bağlantısı başlatılıyor"
-
-#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
 msgstr "DoIP bağlantısı başarısız: %(ip)s:%(port)s"
 
@@ -646,6 +556,9 @@ msgstr "COM port seçilmedi"
 #, python-format
 msgid "Initializing ELM with speed %i..."
 msgstr "ELM %i hızıyla başlatılıyor..."
+
+msgid "DoIP connection failed: "
+msgstr "DoIP bağlantısı başarısız: "
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "COM portta ELM327 veya OBDLINK-SX algılanmadı "
@@ -1784,11 +1697,18 @@ msgstr "Araç bulunamadı"
 msgid "%d loaded ECUs in database."
 msgstr "Veritabanına %d adet ECU yüklendi."
 
-msgid "No database found"
-msgstr "Veritabanı bulunamadı"
+msgid "No ECU database is installed"
+msgstr "ECU veritabanı yüklü değil"
 
-msgid "Check documentation"
-msgstr "Belgeleri kontrol edin"
+msgid "Restart DDT4ALL after installing or updating the database."
+msgstr "Veritabanını yükledikten veya güncelledikten sonra DDT4ALL'ı yeniden başlatın."
+
+msgid ""
+"Download the ECU database separately and copy the file (`ecu.zip` or the "
+"original DDT2000 XML database (`DDT2000DATA`)) to:\n"
+msgstr ""
+"ECU veritabanını ayrı olarak indirin ve dosyayı (`ecu.zip` veya orijinal DDT2000 XML "
+"veritabanını (`DDT2000DATA`)) şuraya kopyalayın:\n"
 
 msgid "DDT4All Documentation"
 msgstr "DDT4All Belgeleri"
@@ -2038,6 +1958,12 @@ msgstr "XML veritabanı sıkıştırılıyor... (bu işlem birkaç dakika süreb
 msgid "Zip job finished"
 msgstr "Sıkıştırma işlemi tamamlandı"
 
+msgid "No database found"
+msgstr "Veritabanı bulunamadı"
+
+msgid "Check documentation"
+msgstr "Belgeleri kontrol edin"
+
 msgid "Enter new name"
 msgstr "Yeni ad girin"
 
@@ -2085,6 +2011,10 @@ msgstr "Kaydedildi "
 
 msgid " entries"
 msgstr " girişler"
+
+#, python-format
+msgid "Invalid DoIP ECU address: %s"
+msgstr "Geçersiz DoIP ECU adresi: %s"
 
 msgid "No"
 msgstr "Hayır"
@@ -2329,8 +2259,8 @@ msgstr "DoIP (IP Üzerine Tanılama) seçildi"
 msgid "Ethernet-based diagnostic communication"
 msgstr "Ethernet tabanlı tanılama iletişimi"
 
-msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
-msgstr "Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI ile uyumlu"
+msgid "Select an ISO 13400 DoIP entity by its IP address"
+msgstr "ISO 13400 DoIP varlığını IP adresiyle seçin"
 
 msgid "You must check the recommandations"
 msgstr "Önerileri kontrol etmelisiniz"

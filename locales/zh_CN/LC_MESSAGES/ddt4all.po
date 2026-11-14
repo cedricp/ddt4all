@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 19:30+0100\n"
+"POT-Creation-Date: 2026-11-14 22:49+0100\n"
 "PO-Revision-Date: 2026-09-07 00:00+0000\n"
 "Last-Translator: DDT4ALL Chinese Translation Team\n"
 "Language-Team: Simplified Chinese\n"
@@ -15,121 +15,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "DoIP device connected successfully"
-msgstr "DoIP 设备连接成功"
-
-msgid "DoIP CAN initialized with Electric ECU support"
-msgstr "支持电动汽车 ECU 的 DoIP CAN 已初始化"
+#, python-format
+msgid "Failed to connect to DoIP entity: %s"
+msgstr "连接 DoIP 实体失败：%s"
 
 #, python-format
-msgid "DoIP response: %s"
-msgstr "DoIP 响应：%s"
+msgid "DoIP routing activated for %(ip)s:%(port)s"
+msgstr "已为 %(ip)s:%(port)s 激活 DoIP 路由"
+
+msgid "No vehicle-identification response was received"
+msgstr "未收到车辆识别响应"
 
 #, python-format
-msgid "DoIP request failed: %s"
-msgstr "DoIP 请求失败：%s"
-
-#, python-format
-msgid "Testing Electric ECU: %s"
-msgstr "正在测试电动 ECU：%s"
-
-msgid "Failed to connect to DoIP device"
-msgstr "连接 DoIP 设备失败"
-
-#, python-format
-msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr "DoIP 已连接至 %(ip)s:%(port)s"
+msgid "Vehicle VIN=%(vin)s logical address=0x%(address)04X EID=%(eid)s"
+msgstr "车辆 VIN=%(vin)s 逻辑地址=0x%(address)04X EID=%(eid)s"
 
 #, python-format
 msgid "DoIP connection failed: %s"
 msgstr "DoIP 连接失败：%s"
 
-msgid "Insufficient vehicle identification data"
-msgstr "车辆识别数据不足"
-
-#, python-format
-msgid "Expected vehicle identification response, got: %s"
-msgstr "预期为车辆识别响应，实际获取：%s"
-
-#, python-format
-msgid "Vehicle identification failed: %s"
-msgstr "车辆识别失败：%s"
-
-msgid "Insufficient session control data"
-msgstr "会话控制数据不足"
-
-#, python-format
-msgid "Expected diagnostic session control response, got: %s"
-msgstr "预期为诊断会话控制响应，实际获取：%s"
-
-#, python-format
-msgid "Diagnostic session control failed: %s"
-msgstr "诊断会话控制失败：%s"
-
-msgid "Insufficient diagnostic message data"
-msgstr "诊断消息数据不足"
-
-#, python-format
-msgid "Expected diagnostic message response, got: %s"
-msgstr "预期为诊断消息响应，实际获取：%s"
-
-msgid "Insufficient alive check data"
-msgstr "保持存活检查（Alive check）数据不足"
-
-#, python-format
-msgid "Expected alive check response, got: %s"
-msgstr "预期为保持存活检查响应，实际获取：%s"
-
-#, python-format
-msgid "Alive check failed: %s"
-msgstr "保持存活检查失败：%s"
-
-#, python-format
-msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr "DoIP 识别出车辆：VIN=%(vin)s，地址=%(addr)s"
-
-#, python-format
-msgid "DoIP vehicle identification failed: %s"
-msgstr "DoIP 车辆识别失败：%s"
-
 msgid "Not connected to DoIP device"
 msgstr "未连接到 DoIP 设备"
+
+msgid "No DoIP ECU logical address is selected"
+msgstr "未选择 DoIP ECU 逻辑地址"
 
 #, python-format
 msgid "Invalid hex request format: %s"
 msgstr "无效的十六进制请求格式：%s"
 
-#, python-format
-msgid "DoIP session start failed: %s"
-msgstr "DoIP 会话开启失败：%s"
+msgid "ELM AT commands are not supported over DoIP"
+msgstr "DoIP 不支持 ELM AT 命令"
 
-#, python-format
-msgid "DoIP CAN initialization failed: %s"
-msgstr "DoIP CAN 初始化失败：%s"
+msgid "K-line initialization is not supported over DoIP"
+msgstr "DoIP 不支持 K-line 初始化"
 
-#, python-format
-msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP：检测到电动 ECU - %s"
-
-msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr "DoIP：正在对电动汽车系统使用扩展寻址"
-
-#, python-brace-format
-msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr "DoIP：正在使用 29 位扩展寻址 - 发送:0x{:04X}，接收:0x{:04X}"
-
-#, python-brace-format
-msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr "DoIP：正在使用 11 位标准寻址 - 发送:0x{:03X}，接收:0x{:03X}"
+msgid "K-line addressing is not supported over DoIP"
+msgstr "DoIP 不支持 K-line 寻址"
 
 msgid "Warning, cannot get signed value for"
 msgstr "警告，无法获取有符号值："
 
 msgid "Division by zero, please check data item: "
 msgstr "除以零错误，请检查数据项："
-
-msgid "getHexValue >> abnormal remaining bytes "
-msgstr "getHexValue >> 剩余字节异常 "
 
 msgid "Adding group "
 msgstr "正在添加组 "
@@ -188,77 +116,67 @@ msgstr "未进行映射"
 msgid "Scanning address: "
 msgstr "正在扫描地址："
 
-#, python-format
-msgid "DoIP ECU response format unknown: %s"
-msgstr "DoIP ECU 响应格式未知：%s"
+msgid "No DoIP addresses available for scanning"
+msgstr "没有可供扫描的 DoIP 地址"
 
 #, python-format
-msgid "Error parsing DoIP response: %s"
-msgstr "解析 DoIP 响应时出错：%s"
-
-#, python-format
-msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr "位于 %(addr)s 的 DoIP ECU 仅响应了极少的数据：%(response)s"
-
-#, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr "正在初始化与 %(ip)s:%(port)s 的 DoIP 连接（超时时间：%(timeout)s 秒）"
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr "正在初始化与 %(ip)s:%(port)s 的 DoIP 连接"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
 msgstr "DoIP 连接已建立：%(ip)s:%(port)s"
 
 #, python-format
-msgid "DoIP initialization error: %s"
-msgstr "DoIP 初始化错误：%s"
-
-msgid "No DoIP addresses available for scanning"
-msgstr "没有可供扫描的 DoIP 地址"
-
-msgid "Scanning DoIP address: "
-msgstr "正在扫描 DoIP 地址："
+msgid "DoIP vehicle discovered: VIN=%(vin)s address=%(addr)04X"
+msgstr "发现 DoIP 车辆：VIN=%(vin)s 地址=%(addr)04X"
 
 #, python-format
-msgid "Warning: address %(addr)s is not mapped"
-msgstr "警告：地址 %(addr)s 未映射"
+msgid "DoIP reconnection failed: %s"
+msgstr "DoIP 重连失败：%s"
+
+msgid "unmapped ECU"
+msgstr "未映射的 ECU"
 
 #, python-format
-msgid "No identification data from DoIP ECU at address %s"
-msgstr "未从地址为 %s 的 DoIP ECU 收到识别数据"
+msgid "Scanning DoIP address %(addr)s ECU: %(name)s"
+msgstr "正在扫描 DoIP 地址 %(addr)s ECU：%(name)s"
 
 #, python-format
-msgid "Negative response from DoIP ECU at address %s"
-msgstr "收到来自地址 %s 的 DoIP ECU 否定响应"
+msgid "Simulation mode: DoIP address %s was not queried"
+msgstr "模拟模式：DoIP 地址 %s 未被查询"
 
 #, python-format
-msgid "Failed to start session with DoIP ECU at address %s"
-msgstr "无法与地址为 %s 的 DoIP ECU 开启会话"
+msgid "Skipping invalid DoIP address %(addr)s: %(error)s"
+msgstr "跳过无效的 DoIP 地址 %(addr)s：%(error)s"
 
 #, python-format
-msgid "Failed to initialize DoIP communication with address %s"
-msgstr "无法与地址 %s 初始化 DoIP 通信"
-
-msgid "DoIP device not available for scanning"
-msgstr "DoIP 设备当前不可用于扫描"
+msgid "DoIP scan failed at %(addr)s: %(error)s"
+msgstr "DoIP 扫描在 %(addr)s 失败：%(error)s"
 
 #, python-format
-msgid "Error during DoIP scan: %s"
-msgstr "DoIP 扫描期间出错：%s"
+msgid "Could not start DoIP UDS session at %(addr)s: %(error)s"
+msgstr "无法在 %(addr)s 启动 DoIP UDS 会话：%(error)s"
 
 #, python-format
-msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr "模拟模式：将对 DoIP 地址 %s 进行扫描"
+msgid "DoIP UDS identification failed at %(addr)s: %(error)s"
+msgstr "DoIP UDS 识别在 %(addr)s 失败：%(error)s"
 
 #, python-format
-msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr "将连接到地址为 %s 的 DoIP ECU 并读取识别数据"
-
-msgid "DoIP connection closed"
-msgstr "DoIP 连接已关闭"
+msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
+msgstr "无法在 %(addr)s 关闭 DoIP 诊断会话：%(error)s"
 
 #, python-format
-msgid "Error closing DoIP connection: %s"
-msgstr "关闭 DoIP 连接时出错：%s"
+msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
+msgstr "无法在 %(addr)s 启动 DoIP 旧版会话：%(error)s"
+
+#, python-format
+msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
+msgstr "DoIP 旧版识别在 %(addr)s 失败：%(error)s"
+
+#, python-format
+msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
+msgstr "无法在 %(addr)s 关闭 DoIP 旧版会话：%(error)s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -459,10 +377,6 @@ msgid "Bluetooth connection failed: %s"
 msgstr "蓝牙连接失败：%s"
 
 #, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr "正在初始化与 %(ip)s:%(port)s 的 DoIP 连接"
-
-#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
 msgstr "DoIP 连接失败：%(ip)s:%(port)s"
 
@@ -633,6 +547,9 @@ msgstr "未选择 COM 端口"
 #, python-format
 msgid "Initializing ELM with speed %i..."
 msgstr "正在以波特率 %i 初始化 ELM..."
+
+msgid "DoIP connection failed: "
+msgstr "DoIP 连接失败： "
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "在 COM 端口上未检测到 ELM327 或 OBDLINK-SX "
@@ -1751,11 +1668,18 @@ msgstr "无可用车型"
 msgid "%d loaded ECUs in database."
 msgstr "数据库已加载 %d 个 ECU。"
 
-msgid "No database found"
-msgstr "未找到数据库"
+msgid "No ECU database is installed"
+msgstr "未安装 ECU 数据库"
 
-msgid "Check documentation"
-msgstr "查看文档"
+msgid "Restart DDT4ALL after installing or updating the database."
+msgstr "安装或更新数据库后，请重启 DDT4ALL。"
+
+msgid ""
+"Download the ECU database separately and copy the file (`ecu.zip` or the "
+"original DDT2000 XML database (`DDT2000DATA`)) to:\n"
+msgstr ""
+"单独下载 ECU 数据库，并将文件(`ecu.zip` 或原始 DDT2000 XML "
+"数据库(`DDT2000DATA`))复制到:\n"
 
 msgid "DDT4All Documentation"
 msgstr "DDT4All 使用文档"
@@ -2002,6 +1926,12 @@ msgstr "正在压缩 XML 数据库...（可能需要几分钟时间）"
 msgid "Zip job finished"
 msgstr "压缩任务已完成"
 
+msgid "No database found"
+msgstr "未找到数据库"
+
+msgid "Check documentation"
+msgstr "查看文档"
+
 msgid "Enter new name"
 msgstr "输入新名称"
 
@@ -2049,6 +1979,10 @@ msgstr "已记录 "
 
 msgid " entries"
 msgstr " 条记录"
+
+#, python-format
+msgid "Invalid DoIP ECU address: %s"
+msgstr "无效的 DoIP ECU 地址：%s"
 
 msgid "No"
 msgstr "否"
@@ -2293,8 +2227,8 @@ msgstr "已选择 DoIP (车载以太网诊断)"
 msgid "Ethernet-based diagnostic communication"
 msgstr "基于以太网的诊断通信"
 
-msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
-msgstr "兼容 Bosch MTS、VXDIAG、大众 ODIS、捷豹路虎 DoIP VCI"
+msgid "Select an ISO 13400 DoIP entity by its IP address"
+msgstr "按 IP 地址选择 ISO 13400 DoIP 实体"
 
 msgid "You must check the recommandations"
 msgstr "您必须阅读并勾选安全建议"
