@@ -5,6 +5,7 @@ from ddt4all.core.ecu.ecu_database import (
 )
 from ddt4all.core.ecu.ecu_ident import EcuIdent
 from ddt4all.core.doip.doip_devices import DoIPDevice
+from ddt4all.core.doip.doip_protocol_error import DoIPProtocolError
 import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
 
@@ -87,10 +88,15 @@ class EcuScanner:
 
         targetNum = 0
         for target in self.ecu_database.targets:
-            if target.protocol == "CAN" and protocol != "CAN":
-                continue
-            if target.protocol.startswith("KWP") and protocol != "KWP":
-                continue
+            target_protocol = target.protocol.upper()
+            if protocol.upper() == "DOIP":
+                if target_protocol not in ("CAN", "DOIP"):
+                    continue
+            else:
+                if target_protocol == "CAN" and protocol != "CAN":
+                    continue
+                if target_protocol.startswith("KWP") and protocol != "KWP":
+                    continue
 
             if target.checkWith(diagversion, supplier, soft, version, addr):
                 ecuname = "[ " + target.group + " ] " + target.name
@@ -118,12 +124,17 @@ class EcuScanner:
             min_delta_version = 0xFFFFFF
             kept_ecu = None
             for tgt in approximate_ecu:
-                ecu_protocol = 'CAN'
-                if tgt.protocol.startswith("KWP"):
-                    ecu_protocol = "KWP"
-                # Shouldn't happen, but...
-                if tgt.protocol.startswith("ISO8"):
-                    ecu_protocol = "KWP"
+                if protocol.upper() == "DOIP":
+                    if tgt.protocol.upper() not in ("CAN", "DOIP"):
+                        continue
+                    ecu_protocol = protocol
+                else:
+                    ecu_protocol = 'CAN'
+                    if tgt.protocol.startswith("KWP"):
+                        ecu_protocol = "KWP"
+                    # Shouldn't happen, but...
+                    if tgt.protocol.startswith("ISO8"):
+                        ecu_protocol = "KWP"
                 if ecu_protocol != protocol:
                     continue
 
@@ -162,6 +173,7 @@ class EcuScanner:
                    % (diagversion, supplier, soft, version)
 
             options.main_window.logview.append(line)
+        return found_exact or found_approximate
 
     def _close_uds_session(self):
         """Send ECU back to default session after scanning (prevents broadcast bleed)."""
@@ -447,170 +459,224 @@ class EcuScanner:
             options.elm.close_protocol()
 
     def check_ecu(self, can_response, label, addr, protocol):
-        if len(can_response) > 59:
-            diagversion = str(int(can_response[21:23], 16))
-            supplier = bytes.fromhex(can_response[24:32].replace(' ', '')).decode('utf-8')
-            soft = can_response[48:53].replace(' ', '')
-            version = can_response[54:59].replace(' ', '')
-            self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
+        try:
+            response = bytes.fromhex(str(can_response).replace(" ", ""))
+        except ValueError:
+            return
 
-        elif protocol.upper() == "DOIP" and options.configuration.get('doip_scan', False):
-            # Handle DoIP protocol responses (different format)
-            if len(can_response) > 20:
-                # DoIP responses have different structure
-                try:
-                    # Parse DoIP response format
-                    if can_response.startswith("61 80"):
-                        # Positive response with diagnostic version
-                        diagversion = can_response[6:8]  # Simplified for DoIP
-                        supplier = can_response[9:17]  # Supplier code
-                        soft = can_response[18:26]  # Software version
-                        version = can_response[27:35]  # Version
-                        self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
-                    else:
-                        print(_("DoIP ECU response format unknown: %s") % can_response)
-                except Exception as e:
-                    print(_("Error parsing DoIP response: %s") % e)
-            else:
-                print(_("DoIP ECU at %(addr)s responded with minimal data: %(response)s") % {"addr": addr, "response": can_response})
+        if len(response) >= 20:
+            diagversion = str(response[7])
+            supplier = response[8:12].decode("utf-8", errors="ignore")
+            soft = response[16:18].hex().upper()
+            version = response[18:20].hex().upper()
+        elif len(response) >= 15:
+            diagversion = str(response[2])
+            supplier = response[3:7].decode("utf-8", errors="ignore")
+            soft = response[7:11].hex().upper()
+            version = response[11:15].hex().upper()
         else:
-            # Handle other protocols (CAN, KWP)                
-            if len(can_response) > 20:
-                try:
-                    diagversion = str(int(can_response[6:8], 16))
-                    supplier = bytes.fromhex(can_response[9:17].replace(' ', '')).decode('utf-8')
-                    soft = can_response[18:26].replace(' ', '')
-                    version = can_response[27:35].replace(' ', '')
-                    self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
-                except Exception:
-                    return  # Changed from continue to return since we're not in a loop
+            return
+
+        self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
 
     def scan_doip(self, progress=None, label=None, vehiclefilter=None):
-        """Scan for DoIP ECUs using ISO 13400 protocol"""
+        """Discover DoIP entities and identify their ECU logical addresses."""
         if not options.configuration.get('doip_scan', False):
             return
-        if not options.simulation_mode:
-            # Initialize DoIP connection with target IP from options
-            try:
-                target_ip = getattr(options, 'doip_target_ip', '192.168.0.12')
-                target_port = getattr(options, 'doip_target_port', 13400)
-                timeout = getattr(options, 'doip_timeout', 5)
-                
-                print(_("Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)") % {"ip": target_ip, "port": target_port, "timeout": timeout})
-                
-                # Create DoIP device independently (not through ELM)
-                doip_device = DoIPDevice(target_ip, target_port)
-                
-                # Set timeout if supported
-                if hasattr(doip_device, 'timeout'):
-                    doip_device.timeout = timeout
-                
-                if not doip_device.connect():
-                    print("DoIP connection failed, cannot scan DoIP ECUs")
-                    return
-                else:
-                    print(_("DoIP connection established: %(ip)s:%(port)s") % {"ip": target_ip, "port": target_port})
-                    # Store the device for scanning use
-                    self.current_doip_device = doip_device
-                    
-            except Exception as e:
-                print(_("DoIP initialization error: %s") % e)
-                return
 
         project_doip_addresses = []
         if vehiclefilter:
-            if vehiclefilter in self.ecu_database.vehiclemap:
-                for proto, addr in self.ecu_database.vehiclemap[vehiclefilter]:
-                    if proto.upper() == "DOIP" and addr not in project_doip_addresses:
-                        project_doip_addresses.append(addr)
-        else:
-            # Use DoIP addresses from projects.json (loaded in main.py)
-            if doip_addressing:
-                project_doip_addresses = list(doip_addressing.keys())
-            else:
-                # Fallback to database
-                project_doip_addresses = self.ecu_database.available_addr_doip
+            for proto, addr in self.ecu_database.vehiclemap.get(vehiclefilter.upper(), []):
+                if proto.upper() == "DOIP":
+                    project_doip_addresses.append(str(addr))
+            if not project_doip_addresses:
+                project_doip_addresses.extend(str(addr) for addr in doip_addressing)
+        project_doip_addresses.extend(
+            str(addr) for addr in self.ecu_database.available_addr_doip
+        )
+        if not vehiclefilter:
+            project_doip_addresses.extend(str(addr) for addr in doip_addressing)
+        project_doip_addresses = list(dict.fromkeys(project_doip_addresses))
 
-        if len(project_doip_addresses) == 0:
+        if not project_doip_addresses:
             print(_("No DoIP addresses available for scanning"))
             return
 
-        i = 0
+        doip_device = None
+        owns_doip_device = False
+        if not options.simulation_mode:
+            active_device = options.elm
+            if (
+                getattr(active_device, "is_doip_device", False) is True
+                and active_device.connectionStat()
+            ):
+                doip_device = active_device
+            else:
+                target_ip = options.configuration.get(
+                    "doip_target_ip", getattr(options, "doip_target_ip", "192.168.0.12")
+                )
+                target_port = options.configuration.get(
+                    "doip_target_port", getattr(options, "doip_target_port", 13400)
+                )
+                timeout = options.configuration.get(
+                    "doip_timeout", getattr(options, "doip_timeout", 5)
+                )
+                doip_device = DoIPDevice(target_ip, target_port)
+                doip_device.timeout = float(timeout)
+                owns_doip_device = True
+            self.current_doip_device = doip_device
+            if owns_doip_device:
+                print(_("Initializing DoIP connection to %(ip)s:%(port)s") % {
+                    "ip": target_ip, "port": target_port
+                })
+                if not doip_device.connect():
+                    print(_("DoIP connection failed: %s") % doip_device.last_error)
+                    self.current_doip_device = None
+                    return
+                print(_("DoIP connection established: %(ip)s:%(port)s") % {
+                    "ip": target_ip, "port": target_port
+                })
+            for vehicle in doip_device.vehicle_info:
+                print(_("DoIP vehicle discovered: VIN=%(vin)s address=%(addr)04X") % {
+                    "vin": vehicle["vin"],
+                    "addr": vehicle["logical_address"],
+                })
+
         if progress:
             progress.setRange(0, len(project_doip_addresses))
             progress.setValue(0)
 
-        # Scan DoIP addresses
-        for addr in list(set(project_doip_addresses)):
-            i += 1
-            if progress:
-                progress.setValue(i)
-                if self.qapp:
-                    self.qapp.processEvents()
+        try:
+            for index, addr in enumerate(project_doip_addresses, 1):
+                if progress:
+                    progress.setValue(index)
+                    if self.qapp:
+                        self.qapp.processEvents()
 
-            text = _("Scanning DoIP address: ")
-            
-            # Skip invalid addresses
-            if addr not in self.ecu_database.addr_group_mapping:
-                # Try to get name from projects.json DoIP data
-                if doip_addressing and addr in doip_addressing:
-                    print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": doip_addressing[addr]})
-                else:
-                    print(_("Warning: address %(addr)s is not mapped") % {"addr": addr})
+                if (
+                    not options.simulation_mode
+                    and not doip_device.connectionStat()
+                ):
+                    if not doip_device.connect():
+                        print(_("DoIP reconnection failed: %s") % doip_device.last_error)
+                        break
+
+                ecu_name = self.ecu_database.addr_group_mapping_long.get(
+                    addr,
+                    self.ecu_database.addr_group_mapping.get(
+                        addr, doip_addressing.get(addr, _("unmapped ECU"))
+                    ),
+                )
+                print(_("Scanning DoIP address %(addr)s ECU: %(name)s") % {
+                    "addr": addr, "name": ecu_name
+                })
+
+                if options.simulation_mode:
+                    print(_("Simulation mode: DoIP address %s was not queried") % addr)
                     continue
-            else:
-                # Use database mapping
-                try:
-                    # Try long name first
-                    print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping_long[addr]})
-                except:
-                    print(("%(text)s%(addr)s ECU: %(name)s") % {"text": text, "addr": addr.ljust(35), "name": self.ecu_database.addr_group_mapping[addr]})
 
-            if not options.simulation_mode:
                 try:
-                    # Use the independent DoIP device
-                    if hasattr(self, 'current_doip_device') and self.current_doip_device:
-                        # Set target address for DoIP communication
-                        self.current_doip_device.target_address = int(addr, 16)
-                        
-                        # Start diagnostic session
-                        if self.current_doip_device.start_session_can('10C0'):
-                            # Send tester present
-                            response = self.current_doip_device.request('3E00')
-                            if response and len(response['data']) >= 1:
-                                if response['data'][0] == 0x50:  # Positive response
-                                    # Send read data request - get actual ECU identification from DDT database
-                                    response = self.current_doip_device.request('2180')
-                                    if response and len(response['data']) >= 59:
-                                        can_response = ' '.join([f'{b:02X}' for b in response['data']])
-                                        # Parse real DoIP response from ECU
-                                        self.check_ecu(can_response, label, addr, "DoIP")
-                                    else:
-                                        print(_("No identification data from DoIP ECU at address %s") % addr)
-                                else:
-                                    print(_("Negative response from DoIP ECU at address %s") % addr)
-                            else:
-                                print(_("Failed to start session with DoIP ECU at address %s") % addr)
-                        else:
-                            print(_("Failed to initialize DoIP communication with address %s") % addr)
-                    else:
-                        print(_("DoIP device not available for scanning"))
-                except Exception as e:
-                    print(_("Error during DoIP scan: %s") % str(e))
-            else:
-                # Simulation mode - use real DDT database data
-                print(_("Simulation mode: DoIP address %s would be scanned") % addr)
-                # Don't provide fake data - let user know it's simulation
-                print(_("Would connect to DoIP ECU at address %s and read identification data") % addr)
+                    doip_device.set_target_address(addr)
+                except DoIPProtocolError as exc:
+                    print(_("Skipping invalid DoIP address %(addr)s: %(error)s") % {
+                        "addr": addr, "error": exc
+                    })
+                    continue
 
-        if not options.simulation_mode:
-            # Clean up DoIP connection
                 try:
-                    # Close DoIP connection
-                    if hasattr(self.current_doip_device, 'disconnect'):
-                        self.current_doip_device.disconnect()
-                    print(_("DoIP connection closed"))
-                except Exception as e:
-                    print(_("Error closing DoIP connection: %s") % e)
-                finally:
-                    self.current_doip_device = None
+                    self._identify_doip_ecu(doip_device, addr, label)
+                except (DoIPProtocolError, OSError) as exc:
+                    print(_("DoIP scan failed at %(addr)s: %(error)s") % {
+                        "addr": addr, "error": exc
+                    })
+        finally:
+            if doip_device is not None and owns_doip_device:
+                doip_device.disconnect()
+            self.current_doip_device = None
+
+    def _identify_doip_ecu(self, doip_device, addr, label):
+        """Use ECU-reported identifiers, first UDS DIDs then the legacy 0x2180 record."""
+        try:
+            uds_session_open = doip_device.start_session_can("1003")
+        except (DoIPProtocolError, OSError) as exc:
+            print(_("Could not start DoIP UDS session at %(addr)s: %(error)s") % {
+                "addr": addr, "error": exc
+            })
+            return
+
+        if uds_session_open:
+            try:
+                diagnostic = self._read_doip_did(doip_device, "F1A0")
+                supplier_data = self._read_doip_did(doip_device, "F18A")
+                soft_data = self._read_doip_did(doip_device, "F194")
+                version_data = self._read_doip_did(doip_device, "F195")
+                if diagnostic and supplier_data and soft_data and version_data:
+                    supplier = supplier_data.rstrip(b"\x00\xFF ").decode(
+                        "utf-8", errors="ignore"
+                    )
+                    soft = soft_data.rstrip(b"\x00\xFF ").decode(
+                        "utf-8", errors="ignore"
+                    )
+                    version = version_data.rstrip(b"\x00\xFF ").decode(
+                        "utf-8", errors="ignore"
+                    )
+                    if supplier and soft and version:
+                        identified = self.check_ecu2(
+                            str(diagnostic[0]), supplier, soft, version,
+                            label, str(addr), "DoIP"
+                        )
+                        if identified:
+                            return
+            except (DoIPProtocolError, OSError, ValueError) as exc:
+                print(_("DoIP UDS identification failed at %(addr)s: %(error)s") % {
+                    "addr": addr, "error": exc
+                })
+            finally:
+                try:
+                    doip_device.request("1001", cache=False)
+                except (DoIPProtocolError, OSError) as exc:
+                    print(_("Could not close DoIP diagnostic session at %(addr)s: %(error)s") % {
+                        "addr": addr, "error": exc
+                    })
+
+        if not doip_device.connectionStat():
+            return
+        try:
+            legacy_session_open = doip_device.start_session_can("10C0")
+        except (DoIPProtocolError, OSError) as exc:
+            print(_("Could not start DoIP legacy session at %(addr)s: %(error)s") % {
+                "addr": addr, "error": exc
+            })
+            return
+        if not legacy_session_open:
+            return
+        try:
+            response = doip_device.request("2180", cache=False)
+            if response:
+                self.check_ecu(response, label, str(addr), "DoIP")
+        except (DoIPProtocolError, OSError, ValueError) as exc:
+            print(_("DoIP legacy identification failed at %(addr)s: %(error)s") % {
+                "addr": addr, "error": exc
+            })
+        finally:
+            try:
+                doip_device.request("1081", cache=False)
+            except (DoIPProtocolError, OSError) as exc:
+                print(_("Could not close DoIP legacy session at %(addr)s: %(error)s") % {
+                    "addr": addr, "error": exc
+                })
+
+    @staticmethod
+    def _read_doip_did(doip_device, did):
+        response = doip_device.request("22" + did, cache=False)
+        try:
+            response_data = bytes.fromhex(response)
+        except ValueError:
+            return b""
+        if (
+            len(response_data) < 3
+            or response_data[0] != 0x62
+            or response_data[1:3] != bytes.fromhex(did)
+        ):
+            return b""
+        return response_data[3:]

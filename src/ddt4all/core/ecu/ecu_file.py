@@ -237,6 +237,18 @@ class EcuFile:
         ecuname = self.ecuname.encode('ascii', errors='ignore')
         short_addr = None
         # print("Connecting to ECU > " + self.ecu_protocol + " > " + ecuname )
+        if (
+            getattr(options.elm, "is_doip_device", False) is True
+            and self.ecu_protocol.upper() in ("CAN", "DOIP")
+        ):
+            if (
+                self.ecu_protocol.upper() == "DOIP"
+                and options.elm.target_address is None
+                and self.funcaddr
+            ):
+                options.elm.set_target_address(self.funcaddr)
+            return options.elm.init_can()
+
         if self.ecu_protocol.upper() == 'CAN':
             if not options.simulation_mode:
                 if len(self.ecu_send_id) == 8:
@@ -280,13 +292,7 @@ class EcuFile:
                 options.elm.init_iso()
                 options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
 
-        # DOIP handling
-        # //TODO: this need implementation
-        # elif self.ecu_protocol.upper() == 'DOIP':
-        #     ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'DOIP'}
-        #     if not options.simulation_mode:
-        #         options.elm.init()
-        #         options.elm.set_doip_addr(self.funcaddr, ecu_conf)
+        # DoIP sessions are routed by logical address, not CAN identifiers.
         else:
             return False
 

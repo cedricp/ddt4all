@@ -295,6 +295,24 @@ def is_els27_device(port, timeout=2):
 
 def reconnect_elm():
     """Enhanced reconnection with device-specific handling"""
+    if options.elm and getattr(options.elm, "is_doip_device", False) is True:
+        from ddt4all.core.doip.doip_devices import DoIPDevice
+
+        try:
+            target_address = options.elm.target_address
+            target_ip, target_port = options.port.rsplit(":", 1)
+            device = DoIPDevice(target_ip, int(target_port))
+            device.timeout = float(options.configuration.get("doip_timeout", 5))
+            if device.connect():
+                if target_address is not None:
+                    device.set_target_address(target_address)
+                options.elm = device
+                return True
+            options.last_error = device.last_error
+        except (ValueError, OSError) as exc:
+            options.last_error = str(exc)
+        return False
+
     ports = get_available_ports()
     current_adapter = "STD"
     if options.elm:

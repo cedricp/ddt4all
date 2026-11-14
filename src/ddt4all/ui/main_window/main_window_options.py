@@ -158,8 +158,6 @@ class MainWindowOptions(widgets.QDialog):
         self.doipbutton.setFixedWidth(64)
         self.doipbutton.setCheckable(True)
         self.doipbutton.setToolTip(_("DoIP (Diagnostics over IP)"))
-        # Hide DoIP button if scan is disabled
-        self.doipbutton.setVisible(options.configuration.get('doip_scan', True))
         medialayout.addWidget(self.doipbutton)
 
         layout.addLayout(medialayout)
@@ -1139,7 +1137,7 @@ class MainWindowOptions(widgets.QDialog):
         # Display DoIP support information
         self.logview.append(_("DoIP (Diagnostics over IP) selected"))
         self.logview.append(_("Ethernet-based diagnostic communication"))
-        self.logview.append(_("Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"))
+        self.logview.append(_("Select an ISO 13400 DoIP entity by its IP address"))
         
         self.wifibutton.blockSignals(True)
         self.btbutton.blockSignals(True)
