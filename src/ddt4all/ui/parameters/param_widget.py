@@ -24,6 +24,7 @@ import ddt4all.version as version
 
 _ = options.translator('ddt4all')
 
+
 class ParamWidget(widgets.QWidget):
     def __init__(self, parent, ddtfile, ecu_addr, ecu_name, logview, prot_status, canline):
         super(ParamWidget, self).__init__(parent)
@@ -735,7 +736,27 @@ class ParamWidget(widgets.QWidget):
                 elm_response = options.elm.request(command, cache=False)
                 txt = '<font color=red>' + _('Sending ELM request:') + '</font>'
         else:
-            if "1902" in command:
+            if (
+                self.ecurequestsparser.ecuname.upper().startswith("DDCR")
+                and self.ecurequestsparser.ecu_protocol.upper() == "KWP2000"
+                and self.ecurequestsparser.funcaddr.upper() == "7A"
+                and command.replace(" ", "").upper() in ("21A1", "21A2", "21A7", "21C9")
+            ):
+                command = command.replace(" ", "").upper()
+                if command == "21A1":
+                    elm_response = "61 A1 00 00 80 0C 00 00 00 00 8F 0B" + " 00" * 16
+                elif command == "21A2":
+                    elm_response = (
+                        "61 A2 00 00 70 0B 72 0B 72 0B D9 03 E8 03 "
+                        "28 23 00 00 B8 5E 00 60 00 00 00 00 B8 0B"
+                    )
+                elif command == "21A7":
+                    elm_response = "61 A7 80 0C" + " 00" * 24
+                elif command == "21C9":
+                    elm_response = (
+                        "61 C9" + " 00" * 21 + " 10 01 DF 00 01 00"
+                    )
+            elif "1902" in command:
                 elm_response = "59 40 FF 01 00 28 40 01 00 28 40 02 25 12 40 02 25 14 40 02 56 44 02 12 01 24 02 12 01 44 02 12 06 44 02 29 93 14 02 29 99 74 00 30 16 64 00 30 26 64 00 30 36 64 00 30 46 64 00 30 06 64 02 42 51 24 02 42 51 14 02 42 51 34 02 42 54 94 00 48 71 24 00 48 71 14 00 48 71 34 00 48 87 34 00 48 87 24 00 54 41 55 02 08 0F 15 02 08 0F 15 00 34 03 14 00 34 03 84 00 33 53 14 00 33 53 84 00 01 63 84 02 26 92 45 00 38 02 F4 00 38 03 16 80 38 00 94 00 67 11 24 00 67 10 94 00 67 21 24 00 67 20 94 00 67 31 24 00 67 30 94 00 67 41 24 00 67 40 94 01 20 51 24 02 42 AF 15 02 42 AF 04 02 14 61 14 02 14 64 94 00 62"
             # Only test data
             if self.ecurequestsparser.ecu_send_id == "745":
