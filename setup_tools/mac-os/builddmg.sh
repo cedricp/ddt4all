@@ -253,8 +253,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from platformdirs import PlatformDirs
-
 executable, smoke_dir = sys.argv[1:]
 environment = os.environ.copy()
 environment["HOME"] = os.path.join(smoke_dir, "home")
@@ -283,9 +281,13 @@ print(result.stdout, end="")
 if result.returncode != 0 or "usage:" not in result.stdout.lower():
     raise SystemExit("Packaged executable smoke test failed (exit {}).".format(result.returncode))
 
-database_path = Path(
-    PlatformDirs("ddt4all", home_dir=os.path.join(smoke_dir, "home")).user_data_dir
-) / "ecu.zip"
+database_path = (
+    Path(environment["HOME"])
+    / "Library"
+    / "Application Support"
+    / "ddt4all"
+    / "ecu.zip"
+)
 if database_path.exists():
     raise SystemExit("Smoke test unexpectedly created or copied ecu.zip.")
 PY
