@@ -5,11 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 19:30+0100\n"
+"POT-Creation-Date: 2026-11-14 22:49+0100\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
-"Language: fr_FR\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,126 +17,49 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-msgid "DoIP device connected successfully"
-msgstr "Appareil DoIP connecté avec succès"
-
-msgid "DoIP CAN initialized with Electric ECU support"
-msgstr "DoIP CAN initialisé avec prise en charge du calculateur électrique"
+#, python-format
+msgid "Failed to connect to DoIP entity: %s"
+msgstr "Échec de la connexion à l'entité DoIP : %s"
 
 #, python-format
-msgid "DoIP response: %s"
-msgstr "Réponse DoIP : %s"
+msgid "DoIP routing activated for %(ip)s:%(port)s"
+msgstr "Routage DoIP activé pour %(ip)s:%(port)s"
+
+msgid "No vehicle-identification response was received"
+msgstr "Aucune réponse d'identification du véhicule n'a été reçue"
 
 #, python-format
-msgid "DoIP request failed: %s"
-msgstr "Demande DoIP a échoué : %s"
-
-#, python-format
-msgid "Testing Electric ECU: %s"
-msgstr "Test ECU électrique : %s"
-
-msgid "Failed to connect to DoIP device"
-msgstr "Échec de connexion à l'appareil DoIP"
-
-#, python-format
-msgid "DoIP connected to %(ip)s:%(port)s"
-msgstr "DoIP connecté à %(ip)s:%(port)s"
+msgid "Vehicle VIN=%(vin)s logical address=0x%(address)04X EID=%(eid)s"
+msgstr "Véhicule VIN=%(vin)s adresse logique=0x%(address)04X EID=%(eid)s"
 
 #, python-format
 msgid "DoIP connection failed: %s"
 msgstr "Échec de la connexion DoIP : %s"
 
-msgid "Insufficient vehicle identification data"
-msgstr "Données d'identification du véhicule insuffisantes"
-
-#, python-format
-msgid "Expected vehicle identification response, got: %s"
-msgstr "Réponse d'identification du véhicule attendue, reçu : %s"
-
-#, python-format
-msgid "Vehicle identification failed: %s"
-msgstr "Échec d'identification du véhicule : %s"
-
-msgid "Insufficient session control data"
-msgstr "Données de contrôle de session insuffisantes"
-
-#, python-format
-msgid "Expected diagnostic session control response, got: %s"
-msgstr "Réponse attendue du contrôle de session de diagnostic, obtenue : %s"
-
-#, python-format
-msgid "Diagnostic session control failed: %s"
-msgstr "Échec du contrôle de session de diagnostic : %s"
-
-msgid "Insufficient diagnostic message data"
-msgstr "Données de message de diagnostic insuffisantes"
-
-#, python-format
-msgid "Expected diagnostic message response, got: %s"
-msgstr "Réponse de message de diagnostic attendue, obtenue : %s"
-
-msgid "Insufficient alive check data"
-msgstr "Données de vérification alive insuffisantes"
-
-#, python-format
-msgid "Expected alive check response, got: %s"
-msgstr "Réponse de vérification alive attendue, obtenue : %s"
-
-#, python-format
-msgid "Alive check failed: %s"
-msgstr "Échec de la vérification alive : %s"
-
-#, python-format
-msgid "DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s"
-msgstr "Véhicule DoIP identifié : VIN=%(vin)s, Adresse=%(addr)s"
-
-#, python-format
-msgid "DoIP vehicle identification failed: %s"
-msgstr "Échec d'identification du véhicule DoIP : %s"
-
 msgid "Not connected to DoIP device"
 msgstr "Non connecté à l'appareil DoIP"
+
+msgid "No DoIP ECU logical address is selected"
+msgstr "Aucune adresse logique d'ECU DoIP n'est sélectionnée"
 
 #, python-format
 msgid "Invalid hex request format: %s"
 msgstr "Format de demande hex invalide : %s"
 
-#, python-format
-msgid "DoIP session start failed: %s"
-msgstr "Échec du démarrage de session DoIP : %s"
+msgid "ELM AT commands are not supported over DoIP"
+msgstr "Les commandes AT ELM ne sont pas prises en charge via DoIP"
 
-#, python-format
-msgid "DoIP CAN initialization failed: %s"
-msgstr "L'initialisation de DoIP CAN a échoué : %s"
+msgid "K-line initialization is not supported over DoIP"
+msgstr "L'initialisation K-line n'est pas prise en charge via DoIP"
 
-#, python-format
-msgid "DoIP: Electric ECU detected - %s"
-msgstr "DoIP : calculateur électrique détecté - %s"
-
-msgid "DoIP: Using extended addressing for Electric Vehicle Systems"
-msgstr ""
-"DoIP : utilisation de l'adressage étendu pour les systèmes de véhicules "
-"électriques"
-
-#, python-brace-format
-msgid "DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}"
-msgstr ""
-"DoIP : utilisation de l'adressage étendu de 29-bit - TX:0x{:04X}, RX:0x{:04X}"
-
-#, python-brace-format
-msgid "DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}"
-msgstr ""
-"DoIP : utilisation de l'adressage standard de 11-bit - TX:0x{:03X}, "
-"RX:0x{:03X}"
+msgid "K-line addressing is not supported over DoIP"
+msgstr "L'adressage K-line n'est pas pris en charge via DoIP"
 
 msgid "Warning, cannot get signed value for"
 msgstr "Avertissement, ne peut pas obtenir la valeur signée pour"
 
 msgid "Division by zero, please check data item: "
 msgstr "Division par zéro, veuillez vérifier l'élément de données: "
-
-msgid "getHexValue >> abnormal remaining bytes "
-msgstr "getHexValue >> octets anormaux restants "
 
 msgid "Adding group "
 msgstr "Ajout du groupe "
@@ -195,82 +118,67 @@ msgstr "n'est pas mappé"
 msgid "Scanning address: "
 msgstr "Adresse d'analyse: "
 
-#, python-format
-msgid "DoIP ECU response format unknown: %s"
-msgstr "Format de réponse ECU DoIP inconnu : %s"
+msgid "No DoIP addresses available for scanning"
+msgstr "Aucune adresse DoIP disponible pour le scan"
 
 #, python-format
-msgid "Error parsing DoIP response: %s"
-msgstr "Erreur lors de l'analyse de la réponse DoIP : %s"
-
-#, python-format
-msgid "DoIP ECU at %(addr)s responded with minimal data: %(response)s"
-msgstr ""
-"ECU DoIP à %(addr)s a répondu avec des données minimales : %(response)s"
-
-#, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s (timeout: %(timeout)ss)"
-msgstr ""
-"Initialisation de la connexion DoIP à %(ip)s:%(port)s (délai d'attente : "
-"%(timeout)ss)"
+msgid "Initializing DoIP connection to %(ip)s:%(port)s"
+msgstr "Initialisation de la connexion DoIP à %(ip)s:%(port)s"
 
 #, python-format
 msgid "DoIP connection established: %(ip)s:%(port)s"
 msgstr "Connexion DoIP établie : %(ip)s:%(port)s"
 
 #, python-format
-msgid "DoIP initialization error: %s"
-msgstr "Erreur d'initialisation DoIP : %s"
-
-msgid "No DoIP addresses available for scanning"
-msgstr "Aucune adresse DoIP disponible pour le scan"
-
-msgid "Scanning DoIP address: "
-msgstr "Analyse de l'adresse DoIP: "
+msgid "DoIP vehicle discovered: VIN=%(vin)s address=%(addr)04X"
+msgstr "Véhicule DoIP détecté : VIN=%(vin)s adresse=%(addr)04X"
 
 #, python-format
-msgid "Warning: address %(addr)s is not mapped"
-msgstr "Avertissement : l'adresse %(addr)s n'est pas mappée"
+msgid "DoIP reconnection failed: %s"
+msgstr "Échec de la reconnexion DoIP : %s"
+
+msgid "unmapped ECU"
+msgstr "ECU non mappée"
 
 #, python-format
-msgid "No identification data from DoIP ECU at address %s"
-msgstr "Aucune donnée d'identification de l'ECU DoIP à l'adresse %s"
+msgid "Scanning DoIP address %(addr)s ECU: %(name)s"
+msgstr "Analyse de l'adresse DoIP %(addr)s ECU : %(name)s"
 
 #, python-format
-msgid "Negative response from DoIP ECU at address %s"
-msgstr "Réponse négative de l'ECU DoIP à l'adresse %s"
+msgid "Simulation mode: DoIP address %s was not queried"
+msgstr "Mode simulation : l'adresse DoIP %s n'a pas été interrogée"
 
 #, python-format
-msgid "Failed to start session with DoIP ECU at address %s"
-msgstr "Échec du démarrage de session avec l'ECU DoIP à l'adresse %s"
+msgid "Skipping invalid DoIP address %(addr)s: %(error)s"
+msgstr "Adresse DoIP invalide %(addr)s ignorée : %(error)s"
 
 #, python-format
-msgid "Failed to initialize DoIP communication with address %s"
-msgstr "Échec de l'initialisation de la communication DoIP avec l'adresse %s"
-
-msgid "DoIP device not available for scanning"
-msgstr "Appareil DoIP non disponible pour le scan"
+msgid "DoIP scan failed at %(addr)s: %(error)s"
+msgstr "Échec de l'analyse DoIP sur %(addr)s : %(error)s"
 
 #, python-format
-msgid "Error during DoIP scan: %s"
-msgstr "Erreur pendant le scan DoIP : %s"
+msgid "Could not start DoIP UDS session at %(addr)s: %(error)s"
+msgstr "Impossible de démarrer la session UDS DoIP sur %(addr)s : %(error)s"
 
 #, python-format
-msgid "Simulation mode: DoIP address %s would be scanned"
-msgstr "Mode simulation : l'adresse DoIP %s serait scannée"
+msgid "DoIP UDS identification failed at %(addr)s: %(error)s"
+msgstr "Échec de l'identification UDS DoIP sur %(addr)s : %(error)s"
 
 #, python-format
-msgid "Would connect to DoIP ECU at address %s and read identification data"
-msgstr ""
-"Se connecterait à l'ECU DoIP à l'adresse %s et lirait les données "
-"d'identification"
-
-msgid "DoIP connection closed"
-msgstr "Connexion DoIP fermée"
+msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
+msgstr "Impossible de fermer la session de diagnostic DoIP sur %(addr)s : %(error)s"
 
 #, python-format
-msgid "Error closing DoIP connection: %s"
-msgstr "Erreur lors de la fermeture de la connexion DoIP : %s"
+msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
+msgstr "Impossible de démarrer la session héritée DoIP sur %(addr)s : %(error)s"
+
+#, python-format
+msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
+msgstr "Échec de l'identification héritée DoIP sur %(addr)s : %(error)s"
+
+#, python-format
+msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
+msgstr "Impossible de fermer la session héritée DoIP sur %(addr)s : %(error)s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -476,10 +384,6 @@ msgid "Bluetooth connection failed: %s"
 msgstr "Échec de la connexion Bluetooth : %s"
 
 #, python-format
-msgid "Initializing DoIP connection to %(ip)s:%(port)s"
-msgstr "Initialisation de la connexion DoIP à %(ip)s:%(port)s"
-
-#, python-format
 msgid "DoIP connection failed: %(ip)s:%(port)s"
 msgstr "Échec de la connexion DoIP : %(ip)s:%(port)s"
 
@@ -653,6 +557,9 @@ msgstr "Aucun port COM sélectionné"
 #, python-format
 msgid "Initializing ELM with speed %i..."
 msgstr "Initialisation d'ELM avec la vitesse %i..."
+
+msgid "DoIP connection failed: "
+msgstr "Échec de la connexion DoIP : "
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
 msgstr "Aucun ELM327 ou OBDLINK-SX détecté sur le port COM "
@@ -1799,11 +1706,18 @@ msgstr "Aucun véhicule disponible"
 msgid "%d loaded ECUs in database."
 msgstr "%d calculateurs chargés dans la base de données."
 
-msgid "No database found"
-msgstr "Aucune base de données trouvée"
+msgid "No ECU database is installed"
+msgstr "Aucune base de données d'ECU n'est installée"
 
-msgid "Check documentation"
-msgstr "Vérifier la documentation"
+msgid "Restart DDT4ALL after installing or updating the database."
+msgstr "Redémarrez DDT4ALL après avoir installé ou mis à jour la base de données."
+
+msgid ""
+"Download the ECU database separately and copy the file (`ecu.zip` or the "
+"original DDT2000 XML database (`DDT2000DATA`)) to:\n"
+msgstr ""
+"Téléchargez séparément la base de données d'ECU et copiez le fichier (`ecu.zip` ou la "
+"base de données XML DDT2000 d'origine (`DDT2000DATA`)) dans :\n"
 
 msgid "DDT4All Documentation"
 msgstr "Documentation DDT4All"
@@ -2055,6 +1969,12 @@ msgstr ""
 msgid "Zip job finished"
 msgstr "Travail zippé terminé"
 
+msgid "No database found"
+msgstr "Aucune base de données trouvée"
+
+msgid "Check documentation"
+msgstr "Vérifier la documentation"
+
 msgid "Enter new name"
 msgstr "Entrez un nouveau nom"
 
@@ -2102,6 +2022,10 @@ msgstr "Enregistré "
 
 msgid " entries"
 msgstr " entrées"
+
+#, python-format
+msgid "Invalid DoIP ECU address: %s"
+msgstr "Adresse ECU DoIP invalide : %s"
 
 msgid "No"
 msgstr "Non"
@@ -2350,8 +2274,8 @@ msgstr "DoIP (Diagnostic sur IP) sélectionné"
 msgid "Ethernet-based diagnostic communication"
 msgstr "Communication de diagnostic basée sur Ethernet"
 
-msgid "Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
-msgstr "Compatible avec Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI"
+msgid "Select an ISO 13400 DoIP entity by its IP address"
+msgstr "Sélectionnez une entité DoIP ISO 13400 par son adresse IP"
 
 msgid "You must check the recommandations"
 msgstr "Vous devez vérifier les recommandations"

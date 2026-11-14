@@ -12,7 +12,7 @@ It lets you **create your own ECU parameter screens** and **communicate with ECU
 through various OBD-II interfaces, including ELM327, Vlinker FS, VGate iCar Pro,
 OBDLink SX/EX and ELS27 adapters.
 
-- **Current version:** `v3.1.4` (Aetherion Phoenix)
+- **Current version:** `v3.1.5` (Aetherion Ascendant)
 - **License:** [GPL-3.0-or-later](https://opensource.org/licenses/GPL-3.0)
 
 ---
