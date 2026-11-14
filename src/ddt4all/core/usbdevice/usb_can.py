@@ -1,3 +1,5 @@
+from pathlib import Path
+import sys
 import time
 
 try:
@@ -27,6 +29,24 @@ import ddt4all.options as options
 
 _ = options.translator('ddt4all')
 
+
+def _get_libusb_backend():
+    import usb.backend.libusb1
+
+    if sys.platform == "darwin" and getattr(sys, "frozen", False):
+        bundled_libusb = (
+            Path(sys.executable).resolve().parent.parent
+            / "Frameworks"
+            / "libusb-1.0.0.dylib"
+        )
+        if bundled_libusb.is_file():
+            return usb.backend.libusb1.get_backend(
+                find_library=lambda _name: str(bundled_libusb)
+            )
+
+    return usb.backend.libusb1.get_backend()
+
+
 class UsbCan:
     _descriptor_warning_shown = False
 
@@ -43,8 +63,7 @@ class UsbCan:
         
         # Test if USB backend is available before attempting device detection
         try:
-            import usb.backend.libusb1
-            backend = usb.backend.libusb1.get_backend()
+            backend = _get_libusb_backend()
             if backend is None:
                 return False
         except ImportError:
@@ -253,4 +272,3 @@ class UsbCan:
 
     def set_can_mode_monitor(self):
         self.set_vendor_request(VENDOR_CAN_MODE, CAN_MONITOR_MODE)
-

@@ -2,6 +2,7 @@ import glob
 from importlib.machinery import SourceFileLoader
 import json
 import os
+import sys
 from pathlib import Path
 
 import PyQt5.QtCore as core
@@ -13,6 +14,7 @@ from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.ecu.ecu_scanner import EcuScanner
 from ddt4all.core.parameters.helpers import zipConvertXML
 from ddt4all.file_manager import (
+    get_dir,
     get_logs_dir,
     get_vehicles_dir,
     is_not_package_file
@@ -85,9 +87,10 @@ class MainWidget(widgets.QMainWindow):
             msgbox.setWindowIcon(appIcon)
             msgbox.setWindowTitle(version.__appname__)
             msgbox.setIcon(widgets.QMessageBox.Warning)
-            msgbox.setText(_("No database found"))
-            msgbox.setInformativeText(_("Check documentation"))
+            msgbox.setText(_("No ECU database is installed"))
+            msgbox.setInformativeText(_("Download the ECU database separately and copy the file (`ecu.zip` or the original DDT2000 XML database (`DDT2000DATA`)) to:\n" + str(get_dir("."))+ "\n\n" + _("Restart DDT4ALL after installing or updating the database.")))
             msgbox.exec_()
+            exit(0)
 
         self.paramview = None
         

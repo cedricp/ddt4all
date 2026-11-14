@@ -1,0 +1,132 @@
+name: Build macOS Installers
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]+.[0-9]+.[0-9]+*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: macOS ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            runner: macos-15-intel
+          - arch: arm64
+            runner: macos-15
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Verify native runner and Python architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$(uname -m)" == "${{ matrix.arch }}" ]]
+          python -c 'import platform; print(platform.python_version(), platform.machine()); assert platform.machine() == "${{ matrix.arch }}"'
+
+      - name: Verify tag matches application version
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag_version="${GITHUB_REF_NAME#v}"
+          app_version="$(
+            python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          tree = ast.parse(Path("src/ddt4all/version.py").read_text(encoding="utf-8"))
+          version = next(
+              ast.literal_eval(node.value)
+              for node in tree.body
+              if isinstance(node, ast.Assign)
+              and any(
+                  isinstance(target, ast.Name) and target.id == "__version__"
+                  for target in node.targets
+              )
+          )
+          print(version)
+          PY
+          )"
+          [[ "$tag_version" == "$app_version" ]]
+
+      - name: Install native build tools
+        run: brew install libusb
+
+      - name: Install application and packaging dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . -r setup_tools/mac-os/requirements-macos.txt
+          python -m pip install pytest==7.4.4
+          python -m pip check
+
+      - name: Test ECU database optional installation lifecycle
+        run: python -m pytest tests/unit/core/ecu/test_ecu_database.py
+
+      - name: Build and validate DMG
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash setup_tools/mac-os/builddmg.sh --arch "${{ matrix.arch }}"
+          test -s "setup_tools/mac-os/dist/${{ matrix.arch }}/DDT4ALL-macOS-${{ matrix.arch }}.dmg"
+
+      - name: Upload architecture installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: DDT4ALL-macOS-${{ matrix.arch }}
+          path: setup_tools/mac-os/dist/${{ matrix.arch }}/DDT4ALL-macOS-${{ matrix.arch }}.dmg
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Publish macOS installers
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download both architecture installers
+        uses: actions/download-artifact@v4
+        with:
+          pattern: DDT4ALL-macOS-*
+          path: release-assets
+          merge-multiple: true
+
+      - name: Verify release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s release-assets/DDT4ALL-macOS-x86_64.dmg
+          test -s release-assets/DDT4ALL-macOS-arm64.dmg
+          test "$(find release-assets -maxdepth 1 -type f -name 'DDT4ALL-macOS-*.dmg' | wc -l | tr -d ' ')" = 2
+
+      - name: Create or update tagged release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          body: |
+            ## macOS installation
+
+            Download the installer matching your Mac: `x86_64` for Intel or `arm64` for Apple Silicon. On Apple Silicon, the Intel build runs only with Rosetta 2 installed; use the native arm64 build when possible.
+
+            These apps and DMGs are intentionally unsigned and not notarized. macOS Gatekeeper may block the first launch; use Finder's Control-click > Open or approve Open Anyway in System Settings > Privacy & Security.
+
+            The ECU database is distributed separately and is not included in either application or installer. Install the app, obtain `ecu.zip` through the project's separate database distribution, then copy it to `~/Library/Application Support/ddt4all/ecu.zip`. Restart DDT4ALL after installing or updating the database.
+          files: |
+            release-assets/DDT4ALL-macOS-x86_64.dmg
+            release-assets/DDT4ALL-macOS-arm64.dmg
+          fail_on_unmatched_files: true
+          overwrite_files: true

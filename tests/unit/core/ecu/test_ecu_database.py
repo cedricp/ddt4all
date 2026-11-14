@@ -60,6 +60,36 @@ def test_vehiclemap_keeps_full_project_codes_from_zip_database(tmp_path, monkeyp
     assert database.vehiclemap == {"X95PH2": [("CAN", "26")]}
 
 
+def test_missing_zip_database_is_nonfatal_and_later_install_is_detected(
+    tmp_path, monkeypatch
+):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(options, "ecus_dir", "ecus/")
+    (tmp_path / "ecus").mkdir()
+
+    database = EcuDatabase()
+
+    assert database.numecu == 0
+
+    dbdict = {
+        "test.json": {
+            "group": "UCH",
+            "protocol": "CAN",
+            "projects": ["X95PH2"],
+            "address": "26",
+            "ecuname": "Test ECU",
+            "autoidents": [],
+        }
+    }
+    with zipfile.ZipFile(tmp_path / "ecu.zip", mode="w") as archive:
+        archive.writestr("db.json", json.dumps(dbdict))
+
+    installed_database = EcuDatabase()
+
+    assert installed_database.numecu > 0
+    assert installed_database.vehiclemap == {"X95PH2": [("CAN", "26")]}
+
+
 def test_vehiclemap_keeps_full_project_codes_from_xml_database(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     ecus_dir = tmp_path / "ecus"

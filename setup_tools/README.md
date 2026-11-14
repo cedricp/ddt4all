@@ -7,7 +7,7 @@ This directory contains comprehensive build and packaging tools for creating dis
 DDT4All uses modern Python packaging with `pyproject.toml` and provides automated build scripts for creating platform-specific installers:
 
 - **Windows**: InnoSetup-based installer with embedded Python runtime
-- **macOS**: PyInstaller-based DMG with universal binary support
+- **macOS**: PyInstaller-based architecture-specific DMGs for Intel and Apple Silicon
 - **Linux**: Native package support (development mode)
 
 ## Prerequisites
@@ -26,8 +26,9 @@ DDT4All uses modern Python packaging with `pyproject.toml` and provides automate
 
 #### macOS
 - **Xcode Command Line Tools**: `xcode-select --install`
-- **PyInstaller**: `pip install pyinstaller`
-- **create-dmg** (optional, for enhanced DMG creation): `brew install create-dmg`
+- **Homebrew libusb**: `brew install libusb`
+- See [`mac-os/README.md`](mac-os/README.md) for the pinned Python dependencies,
+  architecture-specific build commands, signing, notarization, and validation.
 
 #### Linux
 - **Build essentials**: `sudo apt-get install build-essential`
@@ -87,74 +88,11 @@ cd setup_tools/inno-win-setup
 
 ## macOS Build Process
 
-### 1. Prepare Environment
-```bash
-# Clone repository
-git clone https://github.com/cedricp/ddt4all.git
-cd ddt4all
-
-# Create virtual environment
-python3 -m venv ./venv
-source ./venv/bin/activate
-
-# Upgrade packaging tools (recommended on macOS)
-python3 -m pip install --upgrade pip setuptools wheel
-
-# Install dependencies including PyInstaller
-pip install -e ".[dev]"
-pip install pyinstaller
-```
-
-### 2. Update Build Configuration
-Edit `setup_tools/mac-os/main.spec` if needed:
-- Update paths for new project structure
-- Modify hidden imports for additional dependencies
-- Adjust data files for new resource locations
-
-### 3. Build Application
-```bash
-# Navigate to setup tools directory
-cd setup_tools/mac-os
-
-# Build using PyInstaller
-pyinstaller main.spec
-
-# Or use the build script
-chmod +x builddmg.sh
-./builddmg.sh
-```
-
-### 4. Create DMG (Optional Enhanced)
-```bash
-# Install create-dmg if not already installed
-brew install create-dmg
-
-# Create enhanced DMG with background and proper layout
-create-dmg \
-  --volname "DDT4ALL" \
-  --volicon "DDT4ALL.app/Contents/Resources/icon.icns" \
-  --window-pos 200 120 \
-  --window-size 600 300 \
-  --icon-size 100 \
-  --icon "DDT4ALL.app" 175 120 \
-  --hide-extension "DDT4ALL.app" \
-  --app-drop-link 425 120 \
-  "DDT4ALL.dmg" \
-  "dist/"
-```
-
-### 5. Output
-- **Application**: `DDT4ALL.app` (in `dist/` directory)
-- **DMG**: `DDT4ALL.dmg` (if using create-dmg)
-- **Architecture**: Universal binary (Intel + Apple Silicon)
-- **Size**: ~80-120MB
-
-### macOS Build Features
-- **Universal binary** support for Intel and Apple Silicon
-- **Code signing** support (with appropriate certificates)
-- **Notarization** ready (entitlements.plist included)
-- **Standalone application** with embedded dependencies
-- **Proper macOS integration** (dock, menus, etc.)
+Follow [`mac-os/README.md`](mac-os/README.md) for the complete build guide.
+Intel (`x86_64`) and Apple Silicon (`arm64`) are built separately with matching
+Python interpreters; a universal binary is not supported. The build script
+creates and validates a self-contained app bundle and DMG, with optional
+Developer ID signing and notarization.
 
 ## Linux Build Process
 
@@ -251,7 +189,8 @@ The build systems automatically sync version information from:
 - **Editable install fails**: Upgrade tooling, then retry:
   `python3 -m pip install --upgrade pip setuptools wheel`
 - **Code signing errors**: Ensure proper certificates installed
-- **Universal binary issues**: Build on both architectures or use universal tools
+- **Architecture issues**: Use a native Python and Homebrew libusb matching the
+  requested architecture; see [`mac-os/README.md`](mac-os/README.md)
 - **Notarization failures**: Check entitlements and signing identity
 - **`resources/projects.json not found or invalid` at startup**:
   Reinstall from repository root so package data is present:
@@ -282,7 +221,7 @@ Build scripts can be integrated into GitHub Actions or other CI/CD systems:
 - name: Build macOS DMG
   run: |
     cd setup_tools/mac-os
-    ./builddmg.sh
+    bash builddmg.sh
 ```
 
 ## Support
