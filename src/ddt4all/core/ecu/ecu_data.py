@@ -389,7 +389,7 @@ class EcuData:
         reqdatabytelen = int(math.ceil(float(self.bitscount + startBit) / 8.0))
 
         sb = startByte - 1
-        if (sb * 2 + databytelen * 2) > (len(resp)):
+        if sb < 0 or sb + reqdatabytelen > len(res_bytes):
             return None
 
         hexval = resp[sb * 2:(sb + reqdatabytelen) * 2]
@@ -402,32 +402,9 @@ class EcuData:
             return None
 
         if little_endian:
-            # Don't like this method
-
-            totalremainingbits = bits
-            lastbit = 7 - startBit + 1
-            firstbit = lastbit - bits
-            if firstbit < 0:
-                firstbit = 0
-
-            tmp_bin = hextobin[firstbit:lastbit]
-            totalremainingbits -= lastbit - firstbit
-
-            if totalremainingbits > 8:
-                offset1 = 8
-                offset2 = offset1 + ((reqdatabytelen - 2) * 8)
-                tmp_bin += hextobin[offset1:offset2]
-                totalremainingbits -= offset2 - offset1
-
-            if totalremainingbits > 0:
-                offset1 = (reqdatabytelen - 1) * 8
-                offset2 = offset1 - totalremainingbits
-                tmp_bin += hextobin[offset2:offset1]
-                totalremainingbits -= offset1 - offset2
-
-            if totalremainingbits != 0:
-                print(_("getHexValue >> abnormal remaining bytes "), bits, totalremainingbits)
-            hexval = hex(int("0b" + tmp_bin, 2))[2:].replace("L", "")
+            value = (int(hexval, 16) >> startBit) & ((1 << bits) - 1)
+            value_bytes = value.to_bytes(databytelen, byteorder="big")
+            hexval = value_bytes[::-1].hex()
         else:
             valtmp = "0b" + hextobin[startBit:startBit + bits]
             hexval = hex(int(valtmp, 2))[2:].replace("L", "")
