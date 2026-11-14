@@ -640,15 +640,11 @@ class MainWidget(widgets.QMainWindow):
         options_dialog.exec_()
 
     def set_can_combo(self, bus):
-        # Keep the user's CAN line choice when the combo is rebuilt (e.g. on every screen change);
-        # rebuilding used to reset it to "Auto" and reconnect the ECU at 500K.
-        previous = self.canlinecombo.currentIndex()
-        self.canlinecombo.blockSignals(True)
+        self.canlinecombo.clear()
         try:
-            self.canlinecombo.currentIndexChanged.disconnect()
+            self.canlinecombo.clicked.disconnect()
         except Exception:
             pass
-        self.canlinecombo.clear()
         if bus == "CAN":
             self.canlinecombo.addItem(_("CAN Line 1 Auto"))
             self.canlinecombo.addItem(_("CAN Line 1@500K"))
@@ -657,15 +653,12 @@ class MainWidget(widgets.QMainWindow):
                 self.canlinecombo.addItem(_("CAN Line 2@500K"))
                 self.canlinecombo.addItem(_("CAN Line 2@250K"))
                 self.canlinecombo.addItem(_("CAN Line 2@125K"))
-            if 0 < previous < self.canlinecombo.count():
-                self.canlinecombo.setCurrentIndex(previous)
             self.canlinecombo.currentIndexChanged.connect(self.changecanspeed)
         else:
             if bus == "KWP2000":
                 self.canlinecombo.addItem(_("KWP2000"))
             if bus == "ISO8":
                 self.canlinecombo.addItem(_("ISO8"))
-        self.canlinecombo.blockSignals(False)
 
     def flow_control(self):
         enabled = self.fctrigger.isChecked()
