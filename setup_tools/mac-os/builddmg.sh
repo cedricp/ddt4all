@@ -298,7 +298,7 @@ warn "This app and DMG are unsigned and not notarized. macOS Gatekeeper may requ
 
 DMG_NAME="DDT4ALL-macOS-${TARGET_ARCH}.dmg"
 DMG="$DIST_DIR/$DMG_NAME"
-DMG_TEMP="$DIST_DIR/.${DMG_NAME}.tmp"
+DMG_TEMP="$DIST_DIR/.${DMG_NAME}.tmp.dmg"
 STAGING_DIR="$BUILD_DIR/dmg-staging"
 mkdir -p "$STAGING_DIR"
 ditto "$APP" "$STAGING_DIR/DDT4ALL.app"
