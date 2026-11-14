@@ -547,7 +547,11 @@ class ParamWidget(widgets.QWidget):
             return
 
         if self.main_protocol_status:
-            if self.ecurequestsparser.ecu_protocol.upper() == "CAN":
+            if getattr(options.elm, "is_doip_device", False) is True:
+                self.startDiagnosticSession()
+                address = options.elm.target_address
+                self.main_protocol_status.setText("DoIP @ 0x%04X" % address)
+            elif self.ecurequestsparser.ecu_protocol.upper() == "CAN":
                 self.startDiagnosticSession()
                 txrx = "(Tx0x%s/Rx0x%s)@%iK" % (self.ecurequestsparser.ecu_send_id,
                                                 self.ecurequestsparser.ecu_recv_id,

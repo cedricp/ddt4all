@@ -11,6 +11,7 @@ import PyQt5.QtWidgets as widgets
 import ddt4all.options as options
 from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.ecu.ecu_scanner import EcuScanner
+from ddt4all.core.doip.doip_protocol_error import DoIPProtocolError
 from ddt4all.core.parameters.helpers import zipConvertXML
 from ddt4all.file_manager import (
     get_logs_dir,
@@ -1188,6 +1189,12 @@ class MainWidget(widgets.QMainWindow):
                 isxml = False
             ecu_file = options.ecus_dir + ecu.href
             ecu_addr = ecu.addr
+            if getattr(options.elm, "is_doip_device", False) is True:
+                try:
+                    options.elm.set_target_address(ecu_addr)
+                except DoIPProtocolError as exc:
+                    self.logview.append(_("Invalid DoIP ECU address: %s") % exc)
+                    return
 
         if self.snifferview.set_file(ecu_file):
             self.tabbedview.setCurrentIndex(2)
