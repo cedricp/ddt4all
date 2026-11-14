@@ -1,158 +1,123 @@
 from ddt4all.core.doip.doip_connection import DoIPConnection
 from ddt4all.core.doip.doip_protocol_error import DoIPProtocolError
-import ddt4all.core.elm.elm as elm
 import ddt4all.options as options
 
-_ = options.translator('ddt4all')
+_ = options.translator("ddt4all")
 
-# TODO: Review DoIP device interface implementation.
+
 class DoIPDevice:
-    """DoIP Device Interface for Ethernet-based diagnostic tools
-    
-    Provides high-level interface for DoIP communication with modern automotive
-    diagnostic interfaces. Compatible with Bosch MTS, VXDIAG, VAG ODIS, JLR DoIP VCI and other
-    ISO 13400 compliant devices.
-    """
-    
-    # TODO: Review DoIP device initialization defaults and options usage.
+    """DDT4All diagnostic-device interface backed by ISO 13400."""
+
+    is_doip_device = True
+    adapter_type = "DOIP"
+
     def __init__(self, target_ip="192.168.0.12", target_port=13400):
-        self.doip = DoIPConnection(target_ip, target_port)
+        self.target_ip = target_ip
+        self.target_port = int(target_port)
+        self.doip = DoIPConnection(target_ip, self.target_port)
         self.connectionStatus = False
-        self.currentaddress = 0x00
+        self.currentaddress = None
+        self.target_address = None
+        self.source_address = self.doip.source_address
         self.startSession = ""
         self.rsp_cache = {}
-        self.device_type = "doip_device"
-        
-        # Get device-specific settings
-        self.settings = options.get_device_settings(self.device_type)
-        self.timeout = self.settings.get('timeout', 4.0)
+        self.vehicle_info = []
+        self.last_error = ""
+        self.timeout = float(options.get_device_settings("doip_device").get("timeout", 4.0))
         self.doip.timeout = self.timeout
-    
-    # TODO: Review DoIPDevice connect logic and ISO 13400 vehicle identification.
+
+    @staticmethod
+    def discover_vehicles(target_ip="255.255.255.255", target_port=13400, timeout=1.0):
+        return DoIPConnection.discover(target_ip, target_port, timeout)
+
     def connect(self):
-        """Establish DoIP connection with vehicle identification"""
-        if self.doip.connect():
+        self.disconnect()
+        self.doip.timeout = self.timeout
+        try:
+            self.vehicle_info = self.doip.vehicle_identification_request(
+                timeout=min(self.timeout, 1.0)
+            )
+            self.doip.connect()
+            self.doip.routing_activation()
             self.connectionStatus = True
-            # Perform vehicle identification according to ISO 13400
-            try:
-                vehicle_info = self.doip.vehicle_identification_request()
-                print(_("DoIP Vehicle identified: VIN=%(vin)s, Address=%(addr)s") % {"vin": vehicle_info['vin'], "addr": vehicle_info['logical_address']})
-                self.target_address = vehicle_info['logical_address']
-                return True
-            except Exception as e:
-                print(_("DoIP vehicle identification failed: %s") % e)
-                self.disconnect()
-                return False
-        return False
-    
-    # TODO: Review DoIPDevice disconnect cleanup.
+            self.last_error = ""
+            return True
+        except (DoIPProtocolError, OSError) as exc:
+            self.last_error = str(exc)
+            self.disconnect()
+            options.last_error = self.last_error
+            print(_("DoIP connection failed: %s") % exc)
+            return False
+
     def disconnect(self):
-        """Close DoIP connection gracefully"""
         self.doip.disconnect()
         self.connectionStatus = False
-    
-    # TODO: Review DoIP request conversion and error handling.
-    def request(self, req, positive='', cache=True, serviceDelay="0"):
-        """Send diagnostic request over DoIP with proper error handling"""
-        if not self.connectionStatus:
+
+    def close(self):
+        self.disconnect()
+
+    def connectionStat(self):
+        return self.connectionStatus and self.doip.connection_status
+
+    def set_target_address(self, address):
+        if isinstance(address, str):
+            address = address.strip()
+            if not address:
+                raise DoIPProtocolError("Target logical address must not be empty")
+            try:
+                address = int(address, 0) if address.lower().startswith("0x") else int(address, 10)
+            except ValueError as exc:
+                raise DoIPProtocolError("Invalid target logical address: %s" % address) from exc
+        address = int(address)
+        if not 0 <= address <= 0xFFFF:
+            raise DoIPProtocolError("Target logical address is out of range")
+        self.target_address = address
+        self.currentaddress = address
+        self.doip.target_address = address
+
+    def request(self, req, positive="", cache=True, serviceDelay="0"):
+        if not self.connectionStat():
             raise DoIPProtocolError(_("Not connected to DoIP device"))
-        
-        # Convert hex string to bytes with validation
+        if self.target_address is None:
+            raise DoIPProtocolError(_("No DoIP ECU logical address is selected"))
         try:
-            req_bytes = bytes.fromhex(req.replace(' ', ''))
-        except ValueError as e:
-            raise DoIPProtocolError(_("Invalid hex request format: %s") % e)
-        
-        # Send diagnostic message with addressing
-        try:
-            response = self.doip.send_diagnostic_message(req_bytes)
-            return response
-        except Exception as e:
-            raise DoIPProtocolError(_("DoIP request failed: %s") % e)
-    
-    # TODO: Review DoIP session start flow and response validation.
+            req_bytes = bytes.fromhex(str(req).replace(" ", ""))
+        except ValueError as exc:
+            raise DoIPProtocolError(_("Invalid hex request format: %s") % exc) from exc
+        response = self.doip.send_diagnostic_message(req_bytes)
+        return " ".join("%02X" % byte for byte in response)
+
+    def cmd(self, command, *args, **kwargs):
+        command = str(command).strip()
+        if command.upper().startswith("AT"):
+            raise DoIPProtocolError(_("ELM AT commands are not supported over DoIP"))
+        return self.request(command, *args, **kwargs)
+
     def start_session_can(self, start_session):
-        """Start diagnostic session over DoIP according to ISO 13400"""
-        if not self.connectionStatus:
-            return False
-        
         try:
-            # Convert start session command to hex bytes
-            session_bytes = bytes.fromhex(start_session.replace(' ', ''))
-            response = self.doip.send_diagnostic_message(session_bytes)
-            if len(response['data']) >= 1 and response['data'][0] == 0x50:
-                self.startSession = start_session
-                return True
-            return False
-        except Exception as e:
-            raise DoIPProtocolError(_("DoIP session start failed: %s") % e)
-    
-    # TODO: Review DoIP CAN initialization path.
+            response = self.request(start_session, cache=False)
+        except DoIPProtocolError:
+            raise
+        response_bytes = bytes.fromhex(response) if response else b""
+        if response_bytes and response_bytes[0] == 0x50:
+            self.startSession = str(start_session)
+            return True
+        return False
+
     def init_can(self):
-        """Initialize CAN communication over DoIP"""
-        if not self.connectionStatus:
+        if not self.connectionStat():
             return False
-        
-        try:
-            # Start diagnostic session with extended addressing
-            return self.start_session_can("10C0")
-        except Exception as e:
-            raise DoIPProtocolError(_("DoIP CAN initialization failed: %s") % e)
-            return False
-    
-    # TODO: Review DoIP CAN addressing logic for electric ECUs and standard ECUs.
-    def set_can_addr(self, addr, ecu, canline=0):
-        """Set CAN addressing for DoIP communication with Electric ECU support
-        
-        Special support for Electric ECUs and EVC (Electric Vehicle Controller) in newer vehicles.
-        Electric vehicles use various addressing schemes including 29-bit, extended addressing,
-        and special protocols for high-voltage systems.
-        """
-        self.currentaddress = addr
-        if 'idTx' in ecu and 'idRx' in ecu:
-            TXa = ecu['idTx']
-            RXa = ecu['idRx']
-        elif addr in elm.dnat and addr in elm.snat:
-            # addr is a logical ECU address (dnat key); look up the CAN TX/RX IDs directly
-            TXa = elm.dnat[addr]
-            RXa = elm.snat[addr]
-        elif addr in elm.dnat_ext and addr in elm.snat_ext:
-            TXa = elm.dnat_ext[addr]
-            RXa = elm.snat_ext[addr]
-        elif elm.get_can_addr(addr) is not None and elm.get_can_addr_snat(addr) is not None:
-            TXa = elm.get_can_addr(addr)
-            RXa = elm.get_can_addr_snat(addr)
-        elif elm.get_can_addr_ext(addr) is not None and elm.get_can_addr_snat_ext(addr) is not None:
-            TXa = elm.get_can_addr_ext(addr)
-            RXa = elm.get_can_addr_snat_ext(addr)
-        else:
-            TXa = 'undefined'
-            RXa = 'undefined'
+        return self.doip.routing_activated
 
-        # Special handling for Electric ECUs and EVC
-        addr_upper = addr.upper()
-        is_electric_ecu = addr_upper in ['EVC', 'BMS', 'OBC', 'MCU', 'PEB', 'LBC', 'INV', 'VCM', 'BCM', 'GWM']
-        
-        if is_electric_ecu:
-            self.doip.extended_29bit = True
-            print(_("DoIP: Electric ECU detected - %s") % addr)
-            print(_("DoIP: Using extended addressing for Electric Vehicle Systems"))
-            # Configure for 29-bit addressing if needed (newer vehicles)
-            # Electric ECUs and EVC typically use 29-bit addressing
-            if TXa > 0x7FF or RXa > 0x7FF:
-                self.doip.extended_29bit = True
-                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}") % (TXa, RXa))
-            else:
-                self.doip.extended_29bit = False
-                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}") % (TXa, RXa))
-        else:
-            # Configure for 29-bit addressing if needed (newer vehicles)
-            if TXa > 0x7FF or RXa > 0x7FF:
-                self.doip.extended_29bit = True
-                print(_("DoIP: Using 29-bit extended addressing - TX:0x{:04X}, RX:0x{:04X}") % (TXa, RXa))
-            else:
-                self.doip.extended_29bit = False
-                print(_("DoIP: Using 11-bit standard addressing - TX:0x{:03X}, RX:0x{:03X}") % (TXa, RXa))
+    def set_can_addr(self, addr, ecu=None, canline=0):
+        """Retain the selected DoIP logical address; CAN IDs are not DoIP addresses."""
+        self.currentaddress = self.target_address
 
-        self.doip.source_address = TXa
-        self.doip.target_address = RXa
+    def set_doip_addr(self, address, ecu=None):
+        self.set_target_address(address)
+
+    def init_iso(self):
+        raise DoIPProtocolError(_("K-line initialization is not supported over DoIP"))
+
+    def set_iso_addr(self, addr, ecu=None):
+        raise DoIPProtocolError(_("K-line addressing is not supported over DoIP"))

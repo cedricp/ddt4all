@@ -10,6 +10,7 @@ import PyQt5.QtWidgets as widgets
 from ddt4all.cli.cli_args_parser import build_parser
 import ddt4all.core.ecu.ecu_database as ecu_db
 import ddt4all.core.elm.elm as elm
+from ddt4all.core.doip.doip_devices import DoIPDevice
 from ddt4all.file_manager import (
     get_config_dir,
     get_json_dir,
@@ -148,8 +149,19 @@ def main(argv=None) -> int:
             msgbox.setText(_("No COM port selected"))
             msgbox.exec_()
 
-        print(_("Initializing ELM with speed %i...") % port_speed)
-        options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
+        if pc.adapter.upper() == "DOIP":
+            try:
+                target_ip, target_port = options.port.rsplit(":", 1)
+                options.elm = DoIPDevice(target_ip, int(target_port))
+                options.elm_failed = not options.elm.connect()
+                if options.elm_failed:
+                    options.last_error = options.elm.last_error
+            except (ValueError, OSError) as exc:
+                options.elm_failed = True
+                options.last_error = str(exc)
+        else:
+            print(_("Initializing ELM with speed %i...") % port_speed)
+            options.elm = elm.ELM(options.port, port_speed, pc.adapter, pc.raise_port_speed)
 
         if options.elm_failed:
             pc.show()
@@ -157,7 +169,10 @@ def main(argv=None) -> int:
             msgbox = widgets.QMessageBox()
             msgbox.setWindowIcon(gui.QIcon(":icons/obd.png"))
             msgbox.setWindowTitle(version.__appname__)
-            msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
+            if pc.adapter.upper() == "DOIP":
+                msgbox.setText(_("DoIP connection failed: ") + options.get_last_error())
+            else:
+                msgbox.setText(_("No ELM327 or OBDLINK-SX detected on COM port ") + options.port)
             msgbox.exec_()
         else:
             nok = False

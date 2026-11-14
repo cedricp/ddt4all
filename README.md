@@ -64,6 +64,20 @@ OBDLink SX/EX and ELS27 adapters.
 > Most adapters appear as a standard serial port. Dedicated USB-CAN / USB-ELM327
 > devices are handled natively with an automatic fallback.
 
+### DoIP diagnostics
+
+DDT4All includes a native Python ISO 13400 DoIP driver. Select **DoIP** in the
+connection dialog to discover a vehicle, open TCP diagnostics, and activate
+routing. Enable **DoIP Scan** in the options to scan the logical addresses in
+the selected DDT project. Discovery reports the DoIP entity/gateway address;
+individual ECU logical addresses come from the project data.
+
+ECU matching uses identifiers returned by the ECU (UDS DIDs, with the legacy
+`0x2180` identification request as a fallback) and the existing DDT database.
+DoIP is distinct from J2534 and does not provide Bosch MTS J2534 support. Real
+VCI and vehicle validation is still required; the automated tests use mocked
+network peers.
+
 ---
 
 ## Language support
