@@ -632,7 +632,7 @@ class MainWidget(widgets.QMainWindow):
     def toggle_theme(self):
         """Toggle theme between light and dark"""
         new_theme = not options.dark_mode
-        set_theme_style(2 if new_theme else 0)
+        set_theme_style(app=self, onoff=2 if new_theme else 0)
         
     def show_options_dialog(self):
         """Show options dialog for device settings"""
