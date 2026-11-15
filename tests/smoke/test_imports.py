@@ -22,3 +22,6 @@ def test_import_plugins():
         assert callable(plugin.plugin_entry)
         assert plugin.plugin_name
         assert plugin.category
+
+    macros_plugin = import_module("ddt4all.plugins.cmd_macros")
+    assert (macros_plugin._library_dir() / "macros" / "init.txt").is_file()

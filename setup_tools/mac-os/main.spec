@@ -42,6 +42,12 @@ datas = [
     if Path(entry[0]).name.lower() != "ecu.zip"
 ]
 datas.extend(
+    collect_data_files(
+        "ddt4all.plugins.cmd_macros_lib",
+        includes=["macros/*", "macros/**/*"],
+    )
+)
+datas.extend(
     [
         (str(PROJECT_ROOT / "license.txt"), "."),
         (str(PROJECT_ROOT / "README.md"), "."),

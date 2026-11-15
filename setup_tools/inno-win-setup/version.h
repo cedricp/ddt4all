@@ -1,7 +1,7 @@
 #define __appname__ "DDT4ALL"
 #define __author__ "Cedric PAILLE"
 #define __copyright__ "Copyright ©2016-2026"
-#define __version__ "3.1.5.1"
+#define __version__ "3.1.5.2"
 #define __email__ "cedricpaille@gmail.com"
 #define __codename__ "Aetherion Ascendant"
 #define __status__ "dev"

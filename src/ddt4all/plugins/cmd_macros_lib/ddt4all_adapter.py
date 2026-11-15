@@ -26,14 +26,8 @@ It then builds the objects the engine expects:
 import os
 import sys
 
-#: See ``cmd_engine``: the plugin folder goes on ``sys.path`` so the sibling
-#: modules import the same way in both installation layouts.
-_HERE = os.path.dirname(os.path.abspath(__file__))
-if _HERE not in sys.path:
-    sys.path.insert(0, _HERE)
-
-from cmd_engine import AddressBook, MacroEngine
-from elm_log import ElmLog
+from .cmd_engine import AddressBook, MacroEngine
+from .elm_log import ElmLog
 
 
 OPTIONS_CANDIDATES = ('ddt4all.options', 'options')

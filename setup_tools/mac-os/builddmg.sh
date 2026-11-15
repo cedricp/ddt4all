@@ -209,6 +209,8 @@ fi
     fail "Bundled ddt4all/resources/projects.json is missing."
 [[ -f "$RESOURCES/ddt4all/generated/locales/fr/LC_MESSAGES/ddt4all.mo" ]] || \
     fail "Compiled gettext catalogs were not included."
+[[ -f "$RESOURCES/ddt4all/plugins/cmd_macros_lib/macros/init.txt" ]] || \
+    fail "Bundled command macro resources are missing."
 [[ -f "$APP/Contents/Frameworks/libusb-1.0.0.dylib" ]] || \
     fail "Bundled libusb dylib is missing from Contents/Frameworks."
 install_name_tool -id "@rpath/libusb-1.0.0.dylib" \

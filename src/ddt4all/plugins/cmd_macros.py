@@ -13,39 +13,17 @@ imposes no brand — the addressing follows the tables of the vehicle loaded in
 ddt4all. A macro is only playable if its ECU exists on that vehicle.
 """
 
-import os
 import sys
+from pathlib import Path
 
-#: folder of this file (root of the ddt4all "plugins" folder)
-PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
+from .cmd_macros_lib.cmd_ui import run_dialog
 
-#: shared modules: either next to this file ("flat" installation), or in the
-#: cmd_macros_lib/ sub-folder (default installation)
-LIB_DIR = PLUGIN_DIR
-for _candidate in (PLUGIN_DIR, os.path.join(PLUGIN_DIR, 'cmd_macros_lib')):
-    if os.path.isfile(os.path.join(_candidate, 'cmd_ui.py')):
-        LIB_DIR = _candidate
-        break
-if LIB_DIR not in sys.path:
-    sys.path.insert(0, LIB_DIR)
+from .cmd_macros_lib.ddt4all_adapter import Ddt4allContext
 
-try:
-    from cmd_ui import run_dialog
-except ImportError as _err:
-    raise ImportError(
-        "cmd_ui not found. Copy cmd_engine.py, "
-        "ddt4all_adapter.py, can_addressing.py, elm_log.py and "
-        "cmd_ui.py into %s or %s (cause: %s)"
-        % (PLUGIN_DIR, os.path.join(PLUGIN_DIR, 'cmd_macros_lib'), _err))
-
-try:
-    from ddt4all_adapter import Ddt4allContext
-    _CONTEXT = Ddt4allContext()
-    _ = (_CONTEXT.options.translator('ddt4all')
-         if _CONTEXT.options is not None and hasattr(_CONTEXT.options, 'translator')
-         else (lambda text: text))
-except ImportError:
-    _ = lambda text: text
+_CONTEXT = Ddt4allContext()
+_ = (_CONTEXT.options.translator('ddt4all')
+     if _CONTEXT.options is not None and hasattr(_CONTEXT.options, 'translator')
+     else (lambda text: text))
 
 
 plugin_name = _("DDT2000 command macros (.cmd)")
@@ -54,6 +32,26 @@ category = _("Macros")
 need_hw = True
 
 
+def _library_dir():
+    if getattr(sys, "frozen", False):
+        if sys.platform == "darwin":
+            return (
+                Path(sys.executable).resolve().parent.parent
+                / "Resources"
+                / "ddt4all"
+                / "plugins"
+                / "cmd_macros_lib"
+            )
+        return (
+            Path(getattr(sys, "_MEIPASS"))
+            / "ddt4all"
+            / "plugins"
+            / "cmd_macros_lib"
+        )
+
+    return Path(__file__).resolve().parent / "cmd_macros_lib"
+
+
 def plugin_entry():
     """Called by ddt4all when the user clicks the plugin."""
-    run_dialog(LIB_DIR, title=_("DDT2000 command macros (.cmd)"))
+    run_dialog(str(_library_dir()), title=_("DDT2000 command macros (.cmd)"))

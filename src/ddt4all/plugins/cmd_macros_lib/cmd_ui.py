@@ -43,17 +43,11 @@ def app_icon_path():
     except Exception:                               # pragma: no cover
         return APP_ICON
 
-#: See ``cmd_engine``: the plugin folder goes on ``sys.path`` so the sibling
-#: modules import the same way in both installation layouts.
-_HERE = os.path.dirname(os.path.abspath(__file__))
-if _HERE not in sys.path:
-    sys.path.insert(0, _HERE)
-
-from cmd_engine import MacroEngine, MacroError, MacroExit
-from ddt4all_adapter import (Ddt4allContext, describe_macro_dir,
-                             installed_macro_dir, macro_dir_origin,
-                             scan_macro_dir)
-from elm_log import default_log_name, logs_folder, safe_name
+from .cmd_engine import MacroEngine, MacroError, MacroExit
+from .ddt4all_adapter import (Ddt4allContext, describe_macro_dir,
+                              installed_macro_dir, macro_dir_origin,
+                              scan_macro_dir)
+from .elm_log import default_log_name, logs_folder, safe_name
 
 
 # --------------------------------------------------------------------------- #

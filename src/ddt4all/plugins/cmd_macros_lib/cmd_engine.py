@@ -45,17 +45,8 @@ import string
 import sys
 import time
 
-#: The modules live side by side in the plugin folder. Putting that folder on
-#: ``sys.path`` keeps the imports below valid whether the plugin is installed
-#: flat (``<plugins>/macro_*.py``) or in the ``cmd_macros_lib`` sub-folder, and
-#: whether it is imported as a plain module or as part of the
-#: ``ddt4all.plugins.cmd_macros_lib`` package.
-_HERE = os.path.dirname(os.path.abspath(__file__))
-if _HERE not in sys.path:
-    sys.path.insert(0, _HERE)
-
-from can_addressing import (DNAT, DNAT_EXT, LEGACY_DNAT, LEGACY_SNAT,
-                            SNAT, SNAT_EXT, is_ext, normalize)
+from .can_addressing import (DNAT, DNAT_EXT, LEGACY_DNAT, LEGACY_SNAT,
+                             SNAT, SNAT_EXT, is_ext, normalize)
 
 # ddt4all translates the _("...") strings through its own catalog; outside
 # ddt4all (console, tests) we fall back to the identity function.
