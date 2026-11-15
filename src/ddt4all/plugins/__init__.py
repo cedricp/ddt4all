@@ -1,0 +1,16 @@
+PLUGIN_MODULES = (
+    "ab90_reset",
+    "card_programming",
+    "clio3_eps_reset",
+    "clio4_eps_reset",
+    "cmd_macros",
+    "laguna2_uch_reset",
+    "laguna3_uch_reset",
+    "megane2_uch_reset",
+    "megane3_ab_reset",
+    "megane3_eps_reset",
+    "megane3_uch_reset",
+    "rsat4_reset",
+    "vin_crc",
+    "zoe_waterpump_counter_reset",
+)

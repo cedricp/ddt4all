@@ -1,7 +1,7 @@
-import glob
-from importlib.machinery import SourceFileLoader
+from importlib import import_module
 import json
 import os
+from pkgutil import iter_modules
 import sys
 from pathlib import Path
 
@@ -10,6 +10,7 @@ import PyQt5.QtGui as gui
 import PyQt5.QtWidgets as widgets
 
 import ddt4all.options as options
+import ddt4all.plugins as plugins_package
 from ddt4all.core.ecu.ecu_file import EcuFile
 from ddt4all.core.ecu.ecu_scanner import EcuScanner
 from ddt4all.core.doip.doip_protocol_error import DoIPProtocolError
@@ -17,8 +18,7 @@ from ddt4all.core.parameters.helpers import zipConvertXML
 from ddt4all.file_manager import (
     get_dir,
     get_logs_dir,
-    get_vehicles_dir,
-    is_not_package_file
+    get_vehicles_dir
 )
 from ddt4all.ui.data_editor.button_editor import ButtonEditor
 from ddt4all.ui.data_editor.request_editor import RequestEditor
@@ -57,9 +57,6 @@ except ImportError:
     print(_("Warning: PyQtWebEngine not available. Some features may be limited."))
     webkitwidgets = None
     HAS_WEBENGINE = False
-
-BASE_DIR = Path(__file__).resolve().parent
-plugins_base_dir = BASE_DIR / ".." / ".." / "plugins"
 
 class MainWidget(widgets.QMainWindow):
     def __init__(self, app, vehicles, parent=None):
@@ -439,11 +436,17 @@ class MainWidget(widgets.QMainWindow):
         plugins_menu = menu.addMenu(_("Plugins"))
         category_menus = {}
 
-        plugins = list(filter(is_not_package_file, glob.glob(str(plugins_base_dir) + "/*.py")))
-        for plugin in plugins:
+        if getattr(sys, "frozen", False):
+            plugin_modules = plugins_package.PLUGIN_MODULES
+        else:
+            plugin_modules = (
+                module.name
+                for module in iter_modules(plugins_package.__path__)
+                if not module.ispkg
+            )
+        for modulename in plugin_modules:
             try:
-                modulename = os.path.basename(plugin).replace(".py", "")
-                plug = SourceFileLoader(modulename, plugin).load_module()
+                plug = import_module("{}.{}".format(plugins_package.__name__, modulename))
 
                 category = plug.category
                 name = plug.plugin_name
@@ -459,7 +462,7 @@ class MainWidget(widgets.QMainWindow):
 
                 self.plugins[modulename] = plug
             except Exception as e:
-                print(_("Cannot load plugin ") + plugin)
+                print(_("Cannot load plugin ") + modulename)
                 print(e)
 
         # Help menu
