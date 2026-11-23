@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-23 21:34+0100\n"
 "PO-Revision-Date: 2026-05-28 19:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -85,13 +85,13 @@ msgid "Generated stream "
 msgstr "Generált stream "
 
 msgid "Send request stream "
-msgstr "Kérés stream küldése "
+msgstr "Kérésfolyam küldése "
 
 msgid "Received stream "
-msgstr "Fogadott stream "
+msgstr "Fogadott folyam "
 
 msgid "Request ECU Error"
-msgstr "ECU kérés hiba"
+msgstr "ECU-kérés hibája"
 
 msgid "Decoded values"
 msgstr "Dekódolt értékek"
@@ -118,7 +118,19 @@ msgid "is not mapped"
 msgstr "nincs leképezve"
 
 msgid "Scanning address: "
-msgstr "Cím szkennelése: "
+msgstr "Cím vizsgálata: "
+
+#, python-format
+msgid "# check_ecu: empty response for addr %s protocol %s"
+msgstr "# check_ecu: üres válasz addr %s protokoll %s"
+
+#, python-format
+msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
+msgstr "# check_ecu: érvénytelen hex válasz addr %s protokoll %s: %s"
+
+#, python-format
+msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
+msgstr "# check_ecu: túl rövid válasz (%d bájt) addr %s protokoll %s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Nincsenek elérhető DoIP címek a szkenneléshez"
@@ -160,7 +172,8 @@ msgstr "DoIP vizsgálat sikertelen a következőnél: %(addr)s: %(error)s"
 
 #, python-format
 msgid "Could not start DoIP UDS session at %(addr)s: %(error)s"
-msgstr "Nem sikerült elindítani a DoIP UDS munkamenetet itt: %(addr)s: %(error)s"
+msgstr ""
+"Nem sikerült elindítani a DoIP UDS munkamenetet itt: %(addr)s: %(error)s"
 
 #, python-format
 msgid "DoIP UDS identification failed at %(addr)s: %(error)s"
@@ -168,11 +181,14 @@ msgstr "DoIP UDS azonosítás sikertelen itt: %(addr)s: %(error)s"
 
 #, python-format
 msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
-msgstr "Nem sikerült bezárni a DoIP diagnosztikai munkamenetet itt: %(addr)s: %(error)s"
+msgstr ""
+"Nem sikerült bezárni a DoIP diagnosztikai munkamenetet itt: %(addr)s: "
+"%(error)s"
 
 #, python-format
 msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
-msgstr "Nem sikerült elindítani a DoIP régi munkamenetet itt: %(addr)s: %(error)s"
+msgstr ""
+"Nem sikerült elindítani a DoIP régi munkamenetet itt: %(addr)s: %(error)s"
 
 #, python-format
 msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
@@ -341,7 +357,7 @@ msgid "Result: "
 msgstr "Eredmény: "
 
 msgid " succeeded from "
-msgstr " sikeres innen: összesen "
+msgstr " sikeres / összesen "
 
 msgid "ELM Max version:"
 msgstr "ELM Max verzió:"
@@ -596,7 +612,7 @@ msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
 msgstr "<font color='orange'>VÁRATLAN VÁLASZ</font>"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr "<font color='red'>ÜTKÖZÉS ÉSZLELVE</font>"
+msgstr "<font color='red'>KAZA ÉSZLELVE</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>NINCS ÜTKÖZÉS ÉSZLELVE</font>"
@@ -759,17 +775,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "HIBA: a parancsnak 5 paraméterrel kell rendelkeznie: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"    <parancs> <lid> <rsp_len> <eltolás> <hex maszk> <hex érték>\n"
 "        <lid> - ECU helyi azonosítója. A hossz KWP esetén 2, CAN esetén 4 "
 "karakter legyen\n"
 "        <rsp_len> - parancsválasz hossza a pozitív válaszbájtokkal együtt, "
 "egyenlő a ddt adatbázis MinBytes értékével\n"
-"        <offset> - eltolás bájtokban az első módosított bájthoz (1-től "
+"        <eltolás> - eltolás bájtokban az első módosított bájthoz (1-től "
 "kezdődik, nem 0-tól) \n"
-"        <hex mask> - bitmaszk a módosított bitekhez, 1 - módosítható, 0 - "
+"        <hex maszk> - bitmaszk a módosított bitekhez, 1 - módosítható, 0 - "
 "érinthetetlen\n"
-"        <hex value> - bitérték\n"
-"    A <hex mask> és <hex value> értékeknek azonos hosszúságúaknak kell "
+"        <hex érték> - bitérték\n"
+"    A <hex maszk> és <hex érték> értékeknek azonos hosszúságúaknak kell "
 "lenniük\n"
 
 msgid ""
@@ -788,18 +804,18 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "HIBA: a parancsnak 6 paraméterrel kell rendelkeznie: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <parancs> <lid> <rsp_len> <eltolás> <hex maszk> <hex érték> <felirat>\n"
 "        <lid> - ECU helyi azonosítója. A hossz KWP esetén 2, CAN esetén 4 "
 "karakter legyen\n"
 "        <rsp_len> - parancsválasz hossza a pozitív válaszbájtokkal együtt, "
 "egyenlő a ddt adatbázis MinBytes értékével\n"
-"        <offset> - eltolás bájtokban az első módosított bájthoz (1-től "
+"        <eltolás> - eltolás bájtokban az első módosított bájthoz (1-től "
 "kezdődik, nem 0-tól) \n"
-"        <hex mask> - bitmaszk a módosított bitekhez, 1 - módosítható, 0 - "
+"        <hex maszk> - bitmaszk a módosított bitekhez, 1 - módosítható, 0 - "
 "érinthetetlen\n"
-"        <hex value> - bitérték\n"
-"        <label> - célcímke\n"
-"    A <hex mask> és <hex value> értékeknek azonos hosszúságúaknak kell "
+"        <hex érték> - bitérték\n"
+"        <felirat> - célcímke\n"
+"    A <hex maszk> és <hex érték> értékeknek azonos hosszúságúaknak kell "
 "lenniük\n"
 
 msgid ""
@@ -819,18 +835,18 @@ msgid ""
 "\n"
 msgstr ""
 "HIBA: a parancsnak 4 vagy 7 paraméterrel kell rendelkeznie: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <parancs> <lid> <rsp_len> <eltolás> <hex maszk> <hex érték> <felirat>\n"
 "        <lid> - ECU helyi azonosítója. A hossz KWP esetén 2, CAN esetén 4 "
 "karakter legyen\n"
 "        <rsp_len> - parancsválasz hossza a pozitív válaszbájtokkal együtt, "
 "egyenlő a ddt adatbázis MinBytes értékével\n"
-"        <offset> - eltolás bájtokban az első módosított bájthoz (1-től "
+"        <eltolás> - eltolás bájtokban az első módosított bájthoz (1-től "
 "kezdődik, nem 0-tól) \n"
-"        <hex mask> - bitmaszk a módosított bitekhez, 1 - módosítható, 0 - "
+"        <hex maszk> - bitmaszk a módosított bitekhez, 1 - módosítható, 0 - "
 "érinthetetlen\n"
-"        <val step> - értéklépés\n"
-"        <val offset> - értékeltolás\n"
-"        <val divider> - értékosztó\n"
+"        <érték lépése> - értéklépés\n"
+"        <érték eltolása> - értékeltolás\n"
+"        <érték osztója> - értékosztó\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -986,7 +1002,9 @@ msgstr "Nincs egyezés. Ugrás ide: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1071,7 +1089,7 @@ msgid ".cmd files (by ECU)"
 msgstr ".cmd fájlok (ECU szerint)"
 
 msgid "Named macros (by *.txt)"
-msgstr "Megnevezett makrók (*.txt szerint)"
+msgstr "Megnevezett makrók (*.txt alapján)"
 
 msgid "Macros by ECU (.cmd)"
 msgstr "Makrók ECU szerint (.cmd)"
@@ -1345,13 +1363,13 @@ msgid "CRC CALCULATOR"
 msgstr "CRC SZÁMOLÓ"
 
 msgid "Zoe water pump Reset"
-msgstr "Zoe vízpumpa Reset"
+msgstr "Zoe vízpumpa visszaállítása"
 
 msgid "EVC Tools"
 msgstr "EVC eszközök"
 
 msgid "Water pump counters"
-msgstr "Vízpumpa számlálók"
+msgstr "Vízpumpa-számlálók"
 
 msgid "Name"
 msgstr "Név"
@@ -1372,7 +1390,7 @@ msgid "High Speed"
 msgstr "Magas sebesség"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Timer_DrivWEP_ON (időzítő)"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Visszaállítás"
@@ -1391,7 +1409,7 @@ msgid "Waiting action"
 msgstr "Műveletre várakozás"
 
 msgid "Reset all counters"
-msgstr "Összes számláló resetje"
+msgstr "Összes számláló visszaállítása"
 
 msgid ""
 "<h1>TIPS</h1><ul><li>Insert key CARD</li><li>Put D position</li><li>Press/"
@@ -1453,7 +1471,7 @@ msgstr "Ellenőrzés"
 
 #, python-format
 msgid "Request %s not found"
-msgstr "Nincs %s parancs"
+msgstr "A(z) %s kérés nem található"
 
 #, python-format
 msgid ""
@@ -1467,20 +1485,21 @@ msgstr ""
 msgid ""
 "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
-"<font color=red>Kérés</font><font color=blue>'%s'</font> hiányzó bemenetek"
+"<font color=red>Kérés</font><font color=blue>'%s'</font> hiányzó "
+"bemenetekkel rendelkezik"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
 msgid "Delay;Request"
-msgstr "Késleltetés;Parancs"
+msgstr "Késleltetés;Kérés"
 
 msgid "Screen initialization"
 msgstr "Képernyő inicializálása"
 
 msgid "Requests to send before screen drawing"
-msgstr "A képernyő megjelenítése előtt elküldendő parancsok"
+msgstr "A képernyő kirajzolása előtt elküldendő kérések"
 
 msgid "Button name;Unique name"
 msgstr "Gomb neve;Egyedi név"
@@ -1489,7 +1508,7 @@ msgid "New"
 msgstr "Új"
 
 msgid "Duplicate selected"
-msgstr "Kijelölt másolása"
+msgstr "Kijelöltek duplikálása"
 
 msgid "Remove selected"
 msgstr "Kijelölt eltávolítása"
@@ -1517,13 +1536,13 @@ msgstr "Hexadecimális"
 
 #, python-format
 msgid "Data is used by request %s"
-msgstr "Adatot használja a %s parancs"
+msgstr "Az adatot a(z) %s kérés használja"
 
 msgid "New data"
 msgstr "Új adat"
 
 msgid "Replace me with request description"
-msgstr "Ide kerül a parancs leírása"
+msgstr "Ide kerül a kérés leírása"
 
 msgid "Data name;Description"
 msgstr "Adat neve;Leírás"
@@ -1538,7 +1557,7 @@ msgid "Add to screen"
 msgstr "Képernyõhöz adás"
 
 msgid "ECU Function address"
-msgstr "ECU funkció címe"
+msgstr "ECU funkciócím"
 
 msgid "ECU Protocol"
 msgstr "ECU protokoll"
@@ -1595,7 +1614,7 @@ msgid "Number of bytes"
 msgstr "Bájtok száma"
 
 msgid "Send request bytes (HEX)"
-msgstr "Parancsbájtok küldése (HEX)"
+msgstr "Kérés bájtjainak küldése (HEX)"
 
 msgid "Receive bytes (HEX)"
 msgstr "Bájtok fogadása (HEX)"
@@ -1634,10 +1653,10 @@ msgid "Supplier"
 msgstr "Gyártó"
 
 msgid "Reload requests"
-msgstr "Parancsok újratöltése"
+msgstr "Kérések újratöltése"
 
 msgid "Add request"
-msgstr "Parancs hozzáadása"
+msgstr "Kérés hozzáadása"
 
 msgid "Send bytes"
 msgstr "Bájtok küldése"
@@ -1646,10 +1665,10 @@ msgid "Receive bytes"
 msgstr "Bájtok fogadása"
 
 msgid "Request name;Bytes;Manual"
-msgstr "Parancs neve;Bájtok;Kézi"
+msgstr "Kérés neve;Bájtok;Kézi"
 
 msgid "No request named"
-msgstr "Nincs elnevezett parancs"
+msgstr "Nincs elnevezett kérés"
 
 msgid "Found similar"
 msgstr "Hasonló található"
@@ -1661,7 +1680,7 @@ msgid " vs "
 msgstr " ellenében "
 
 msgid "Cannot draw input "
-msgstr "Sikertelen parancshívás "
+msgstr "A bemenet nem jeleníthető meg "
 
 msgid "No Value"
 msgstr "Nincs érték"
@@ -1686,7 +1705,7 @@ msgid "ECU Finder"
 msgstr "ECU kereső"
 
 msgid "Address :"
-msgstr "Cím :"
+msgstr "Cím:"
 
 msgid "ID frame :"
 msgstr "ID keret:"
@@ -1711,8 +1730,8 @@ msgid ""
 "Download the ECU database separately and copy the file (`ecu.zip` or the "
 "original DDT2000 XML database (`DDT2000DATA`)) to:\n"
 msgstr ""
-"Töltse le külön az ECU adatbázist, és másolja a fájlt (`ecu.zip` vagy az eredeti "
-"DDT2000 XML adatbázist (`DDT2000DATA`)) ide:\n"
+"Töltse le külön az ECU adatbázist, és másolja a fájlt (`ecu.zip` vagy az "
+"eredeti DDT2000 XML adatbázist (`DDT2000DATA`)) ide:\n"
 
 msgid "DDT4All Documentation"
 msgstr "DDT4All Dokumentáció"
@@ -1749,7 +1768,7 @@ msgid "CAN Sniffer"
 msgstr "CAN elemző"
 
 msgid "Requests"
-msgstr "Parancsok"
+msgstr "Kérések"
 
 msgid "Data"
 msgstr "Adatok"
@@ -1975,7 +1994,7 @@ msgid "Enter category name"
 msgstr "Adja meg a kategória nevét"
 
 msgid "Please select a category before creating new screen"
-msgstr "Új képernyő létrehozásához válassz ki egy kategóriát"
+msgstr "Új képernyő létrehozásához válasszon ki egy kategóriát"
 
 msgid "Enter screen name"
 msgstr "Adja meg a képernyő nevét"
@@ -2060,10 +2079,10 @@ msgid "Port speed"
 msgstr "Port sebessége"
 
 msgid "Connected mode"
-msgstr "Csatlakoztatott mód"
+msgstr "Kapcsolódott mód"
 
 msgid "Edition mode"
-msgstr "Szerkesztés mód"
+msgstr "Szerkesztési mód"
 
 msgid "ELM benchmark"
 msgstr "ELM kiértékelése"
@@ -2271,22 +2290,22 @@ msgid "Select an ISO 13400 DoIP entity by its IP address"
 msgstr "Válasszon ki egy ISO 13400 DoIP entitást az IP-címe alapján"
 
 msgid "You must check the recommandations"
-msgstr "Tudomásul kell venned a figyelmeztetést"
+msgstr "Ellenőriznie kell a javaslatokat"
 
 msgid "Please select a communication port"
-msgstr "Válassz egy portot a kapcsolathoz"
+msgstr "Válasszon egy kommunikációs portot"
 
 msgid "ECU Command"
 msgstr "ECU parancs"
 
 msgid "Start diagnostic session"
-msgstr "Diagnózis munkaszakasz"
+msgstr "Diagnosztikai munkamenet indítása"
 
 msgid "Request"
-msgstr "Parancsok"
+msgstr "Kérés"
 
 msgid "Data to send"
-msgstr "Adattípus"
+msgstr "Küldendő adatok"
 
 msgid "Computed ISOTP Frame"
 msgstr "Számított ISOTP keret"
@@ -2313,7 +2332,7 @@ msgid "Err, cannot rename "
 msgstr "Hiba, nem lehet átnevezni "
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "A képernyő módosításához először exportáld JSON formátumba"
+msgstr "A képernyő módosításához először exportálja JSON formátumba"
 
 msgid "Enter label name"
 msgstr "Címke nevének megadása"
@@ -2334,7 +2353,7 @@ msgid "Remove element"
 msgstr "Elem eltávolítása"
 
 msgid "Diagnotic session"
-msgstr "Diagnózis munkaszakasz"
+msgstr "Diagnosztikai munkamenet"
 
 msgid "Input"
 msgstr "Bemenet"
@@ -2361,19 +2380,19 @@ msgid "Cannot reconnect..."
 msgstr "Nem lehet újracsatlakozni..."
 
 msgid "Switching to session mode"
-msgstr "Munkaszakasz módba váltás"
+msgstr "Váltás munkamenet módba"
 
 msgid "Sending ELM request :"
-msgstr "ELM parancs küldése:"
+msgstr "ELM kérés küldése:"
 
 msgid "Blocked ELM request :"
-msgstr "Blokkolt ELM parancs:"
+msgstr "Letiltott ELM kérés:"
 
 msgid "Sending ELM request:"
-msgstr "ELM parancs küldése:"
+msgstr "ELM kérés küldése:"
 
 msgid "Sending simulated ELM request :"
-msgstr "Szimulált ELM parancs küldése:"
+msgstr "Szimulált ELM kérés küldése:"
 
 msgid "Bad ELM response :"
 msgstr "Rossz ELM válasz :"
@@ -2382,10 +2401,10 @@ msgid "ELM response : "
 msgstr "ELM válasz: "
 
 msgid "Button request not found : "
-msgstr "Gomb parancs nem létezik: "
+msgstr "A gombkérés nem található: "
 
 msgid "Sending request :"
-msgstr "Parancs küldése:"
+msgstr "Kérés küldése:"
 
 msgid "Unknown request "
 msgstr "Ismeretlen kérés "
@@ -2394,10 +2413,10 @@ msgid "Command aborted "
 msgstr "Parancs megszakítva "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Értékhiba, lehet hogy bypass átjáró szükséges."
+msgstr "Értékhiba: bypass átjáró szükséges lehet."
 
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Parancs visszautasítva (ellenőrizd a piros paramétereket): "
+msgstr "A kérés megszakadt (nézze meg a piros paramétermezőket): "
 
 msgid "Delay"
 msgstr "Késleltetés"
@@ -2425,18 +2444,18 @@ msgid "ECU uses SDS "
 msgstr "Az ECU SDS-t használ "
 
 msgid "Cannot call request "
-msgstr "Sikertelen parancshívás "
+msgstr "A kérés nem hívható meg "
 
 msgid "Update time"
-msgstr "Frissítési idő"
+msgstr "Frissítési időpont"
 
 msgid "Clearing DTC information"
 msgstr "DTC információk törlése"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr ""
-"Nem létezik ClearDTC parancs ehhez az ECU-hoz, az alapértelmezett 14FF00 "
-"küldése"
+"Ehhez az ECU-hoz nincs ClearDTC kérés, az alapértelmezett 14FF00 kerül "
+"elküldésre"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Törölni fogod a diagnosztikai hibakódokat</center>"
@@ -2472,13 +2491,13 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Diagnosztikai hibakódok"
 
 msgid "Clear ALL DTC"
-msgstr "Összes DTC törlése"
+msgstr "ÖSSZES DTC TÖRLÉSE"
 
 msgid "ECU trouble codes"
 msgstr "ECU hibakódok"
 
 msgid "Parsing screen "
-msgstr "Képernyő beolvasása "
+msgstr "Képernyő elemzése "
 
 msgid "found request in input "
 msgstr "kérés található a bemenetben "
@@ -2490,7 +2509,7 @@ msgid "found in button "
 msgstr "gombban található "
 
 msgid "found in presend "
-msgstr "előküldésben található "
+msgstr "presend-ben található "
 
 msgid "found data in input "
 msgstr "adat található a bemenetben "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-23 21:34+0100\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: ROMANIAN <numaialmeu@yahoo.com>\n"
@@ -120,6 +120,18 @@ msgstr "nu este mapat"
 msgid "Scanning address: "
 msgstr "Scanare adresă: "
 
+#, python-format
+msgid "# check_ecu: empty response for addr %s protocol %s"
+msgstr "# check_ecu: răspuns gol pentru addr %s protocol %s"
+
+#, python-format
+msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
+msgstr "# check_ecu: răspuns hex invalid pentru addr %s protocol %s: %s"
+
+#, python-format
+msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
+msgstr "# check_ecu: răspuns prea scurt (%d octeți) pentru addr %s protocol %s"
+
 msgid "No DoIP addresses available for scanning"
 msgstr "Nu există adrese DoIP disponibile pentru scanare"
 
@@ -168,7 +180,8 @@ msgstr "Identificarea UDS DoIP a eșuat la %(addr)s: %(error)s"
 
 #, python-format
 msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
-msgstr "Nu s-a putut închide sesiunea de diagnosticare DoIP la %(addr)s: %(error)s"
+msgstr ""
+"Nu s-a putut închide sesiunea de diagnosticare DoIP la %(addr)s: %(error)s"
 
 #, python-format
 msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
@@ -226,7 +239,7 @@ msgid "No ELM interface on port"
 msgstr "Nu există interfață ELM pe port"
 
 msgid "OBDLink Connection OK, attempting full speed UART switch"
-msgstr "Conectare OBDLink OK, încercare comutare la viteză maximă UART"
+msgstr "Conectare OBDLink OK, încercare de comutare UART la viteză maximă"
 
 msgid "Failed to switch OBDLink to "
 msgstr "Comutarea OBDLink la a eșuat "
@@ -302,7 +315,7 @@ msgid "Using detected baud rate: "
 msgstr "Utilizare baudrate detectat: "
 
 msgid "Warning: No ELS27 response detected"
-msgstr "Avertisment: Nu s-a detectat nicio răspuns de la ELS27"
+msgstr "Avertisment: Nu s-a detectat niciun răspuns de la ELS27"
 
 msgid "Will attempt connection anyway..."
 msgstr "Se va încerca conectarea oricum..."
@@ -341,7 +354,7 @@ msgid "Result: "
 msgstr "Rezultat: "
 
 msgid " succeeded from "
-msgstr " a reușit de la "
+msgstr " reușite din "
 
 msgid "ELM Max version:"
 msgstr "Versiune maximă ELM:"
@@ -366,7 +379,7 @@ msgid "Serial connection error: %s"
 msgstr "Eroare de conexiune serială: %s"
 
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM nu este conectat sau port COM gresit"
+msgstr "ELM nu este conectat sau port COM greșit"
 
 #, python-format
 msgid "Unexpected error: %s"
@@ -433,7 +446,7 @@ msgid "Serial error in read_byte: %s"
 msgstr "Eroare serială în read_byte: %s"
 
 msgid "Connection to ELM was lost"
-msgstr "Conexiunea cu ELM a fost pierduta"
+msgstr "Conexiunea cu ELM a fost pierdută"
 
 #, python-format
 msgid "*       Error: %s"
@@ -498,7 +511,7 @@ msgid "Skipping current file (cannot parse it)"
 msgstr "Omitere fișier curent (nu se poate parsa)"
 
 msgid "Writing database"
-msgstr "Scriere bază de date"
+msgstr "Scrierea bazei de date"
 
 msgid "Writing archive"
 msgstr "Scriere arhivă"
@@ -598,20 +611,20 @@ msgid "<font color='red'>CRASH DETECTED</font>"
 msgstr "<font color='red'>ACCIDENT DETECTAT</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr "<font color='green'>NU EXISTĂ ACCIDENT</font>"
+msgstr "<font color='green'>NU A FOST DETECTAT NICIUN ACCIDENT</font>"
 
 #, python-format
 msgid "SDS stream: %s"
 msgstr "Flux SDS: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr "<font color='green'>CURĂȚARE EXECUTATĂ</font>"
+msgstr "<font color='green'>CLEAR EXECUTAT</font>"
 
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr "<font color='red'>CURĂȚARE EȘUATĂ</font>"
+msgstr "<font color='red'>CLEAR EȘUAT</font>"
 
 msgid "Megane/Scenic II card programming"
-msgstr "Programare card Megane/Scenic II"
+msgstr "Programarea cardului Megane/Scenic II"
 
 msgid "Keys"
 msgstr "Chei"
@@ -624,7 +637,7 @@ msgid ""
 "YET</font>"
 msgstr ""
 "<font color='red'>PROGRAMARE CARD MEGANE II<br>EXPERIMENTAL : NU A FOST "
-"TESTAT ÎNCĂ</font>"
+"TESTATĂ ÎNCĂ</font>"
 
 msgid "LEARN"
 msgstr "ÎNVĂȚĂ"
@@ -645,7 +658,7 @@ msgid "PIN"
 msgstr "Cod PIN"
 
 msgid "Num key learnt"
-msgstr "Nume cheie învățat"
+msgstr "Număr de chei învățate"
 
 msgid "CARD IDE"
 msgstr "Identificator card (IDE)"
@@ -676,7 +689,7 @@ msgstr ""
 "DATELE IMMO EPS<br>PLECAȚI DACĂ NU AVEȚI IDEIE CE INSEAMNĂ</font>"
 
 msgid "BLANK STATUS & VIN READ"
-msgstr "ȘTERGE STATUS ȘI CITESTE VIN"
+msgstr "STATUS GOL ȘI CITIRE VIN"
 
 msgid "Virginize EPS"
 msgstr "Verginizare EPS"
@@ -703,7 +716,7 @@ msgid "<font color='green'>VIN WRITE OK</font>"
 msgstr "<font color='green'>SCRIERE VIN BINE</font>"
 
 msgid "<font color='green'>EPS virgin</font>"
-msgstr "<font color='green'>EPS virgin (nou)</font>"
+msgstr "<font color='green'>EPS curat (nou)</font>"
 
 msgid "<font color='red'>EPS coded</font>"
 msgstr "<font color='red'>EPS codat</font>"
@@ -756,17 +769,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "EROARE: comanda trebuie să aibă 5 parametri: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"    <comandă> <lid> <rsp_len> <deplasare> <mască hex> <valoare hex>\n"
 "        <lid> - identificatorul local al ECU. Lungimea trebuie să fie de 2 "
 "simboluri pentru KWP sau 4 pentru CAN\n"
 "        <rsp_len> - lungimea răspunsului la comandă inclusiv octeții de "
 "răspuns pozitiv, egală cu MinBytes din baza ddt\n"
-"        <offset> - deplasarea în octeți până la primul octet modificat "
+"        <deplasare> - deplasarea în octeți până la primul octet modificat "
 "(începe de la 1, nu 0) \n"
-"        <hex mask> - mască de biți pentru biții modificați, 1 - modificabil, "
-"0 - neatins\n"
-"        <hex value> - valoarea bitului\n"
-"    <hex mask> și <hex value> trebuie să aibă aceeași lungime\n"
+"        <mască hex> - mască de biți pentru biții modificați, 1 - "
+"modificabil, 0 - neatins\n"
+"        <valoare hex> - valoarea bitului\n"
+"    <mască hex> și <valoare hex> trebuie să aibă aceeași lungime\n"
 
 msgid ""
 "ERROR: command should have 6 parameters: \n"
@@ -784,18 +797,19 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "EROARE: comanda trebuie să aibă 6 parametri: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <comandă> <lid> <rsp_len> <deplasare> <mască hex> <valoare hex> "
+"<etichetă>\n"
 "        <lid> - identificatorul local al ECU. Lungimea trebuie să fie de 2 "
 "simboluri pentru KWP sau 4 pentru CAN\n"
 "        <rsp_len> - lungimea răspunsului la comandă inclusiv octeții de "
 "răspuns pozitiv, egală cu MinBytes din baza ddt\n"
-"        <offset> - deplasarea în octeți până la primul octet modificat "
+"        <deplasare> - deplasarea în octeți până la primul octet modificat "
 "(începe de la 1, nu 0) \n"
-"        <hex mask> - mască de biți pentru biții modificați, 1 - modificabil, "
-"0 - neatins\n"
-"        <hex value> - valoarea bitului\n"
-"        <label> - etichetă de salt\n"
-"    <hex mask> și <hex value> trebuie să aibă aceeași lungime\n"
+"        <mască hex> - mască de biți pentru biții modificați, 1 - "
+"modificabil, 0 - neatins\n"
+"        <valoare hex> - valoarea bitului\n"
+"        <etichetă> - etichetă de salt\n"
+"    <mască hex> și <valoare hex> trebuie să aibă aceeași lungime\n"
 
 msgid ""
 "ERROR: command should have 4 or 7 parameters: \n"
@@ -814,18 +828,19 @@ msgid ""
 "\n"
 msgstr ""
 "EROARE: comanda trebuie să aibă 4 sau 7 parametri: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <comandă> <lid> <rsp_len> <deplasare> <mască hex> <valoare hex> "
+"<etichetă>\n"
 "        <lid> - identificatorul local al ECU. Lungimea trebuie să fie de 2 "
 "simboluri pentru KWP sau 4 pentru CAN\n"
 "        <rsp_len> - lungimea răspunsului la comandă inclusiv octeții de "
 "răspuns pozitiv, egală cu MinBytes din baza ddt\n"
-"        <offset> - deplasarea în octeți până la primul octet modificat "
+"        <deplasare> - deplasarea în octeți până la primul octet modificat "
 "(începe de la 1, nu 0) \n"
-"        <hex mask> - mască de biți pentru biții modificați, 1 - modificabil, "
-"0 - neatins\n"
-"        <val step> - pasul valorii\n"
-"        <val offset> - deplasarea valorii\n"
-"        <val divider> - divizorul valorii\n"
+"        <mască hex> - mască de biți pentru biții modificați, 1 - "
+"modificabil, 0 - neatins\n"
+"        <pasul valorii> - pasul valorii\n"
+"        <deplasarea valorii> - deplasarea valorii\n"
+"        <împărțitorul valorii> - divizorul valorii\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -888,7 +903,7 @@ msgid "wait|sleep x           - wait x seconds"
 msgstr "wait|sleep x           - așteaptă x secunde"
 
 msgid "include <file>         - play another .cmd here"
-msgstr "include <fișier>       - execută alt fișier .cmd aici"
+msgstr "include <fișier>         - execută alt fișier .cmd aici"
 
 msgid "Variables:"
 msgstr "Variabile:"
@@ -981,7 +996,9 @@ msgstr "Fără potrivire. Salt la: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1051,7 +1068,7 @@ msgid "Browse"
 msgstr "Răsfoire"
 
 msgid "Refresh"
-msgstr "Reimprospateaza"
+msgstr "Reîmprospătează"
 
 msgid "Macro folder:"
 msgstr "Dosar macrocomenzi:"
@@ -1250,7 +1267,7 @@ msgid "Virginize UCH"
 msgstr "Verginizare UCH"
 
 msgid "<font color='green'>UCH virgin</font>"
-msgstr "<font color='green'>UCH virgin (nou)</font>"
+msgstr "<font color='green'>UCH curat (nou)</font>"
 
 msgid "<font color='red'>UCH coded</font>"
 msgstr "<font color='red'>UCH codat</font>"
@@ -1367,7 +1384,7 @@ msgid "High Speed"
 msgstr "Viteză mare"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Timer_DrivWEP_ON (temporizator)"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Resetare"
@@ -1435,20 +1452,20 @@ msgid "<font color='red'>CLEAR HIGH FAILED</font>"
 msgstr "<font color='red'>CLEAR RIDICAT EȘUAT</font>"
 
 msgid "Add"
-msgstr "Adauga"
+msgstr "Adaugă"
 
 msgid "Del"
-msgstr "Sterge"
+msgstr "Șterge"
 
 msgid "Move up"
-msgstr "Muta in sus"
+msgstr "Mută în sus"
 
 msgid "Check"
-msgstr "Verifica"
+msgstr "Verifică"
 
 #, python-format
 msgid "Request %s not found"
-msgstr "Cererea %s nu a fost gasita"
+msgstr "Cererea %s nu a fost găsită"
 
 #, python-format
 msgid ""
@@ -1475,7 +1492,7 @@ msgid "Screen initialization"
 msgstr "Initializarea ecranului"
 
 msgid "Requests to send before screen drawing"
-msgstr "Trimite cereri inainte de afisarea ecranului"
+msgstr "Cereri de trimis înainte de afișarea ecranului"
 
 msgid "Button name;Unique name"
 msgstr "Nume buton;Nume unic"
@@ -1484,16 +1501,16 @@ msgid "New"
 msgstr "Nou"
 
 msgid "Duplicate selected"
-msgstr "Duplicare selectie"
+msgstr "Duplică selecția"
 
 msgid "Remove selected"
-msgstr "Sterge selectia"
+msgstr "Elimină selecția"
 
 msgid "Reload"
 msgstr "Reincarca"
 
 msgid "Validate changes"
-msgstr "Validati modificarile"
+msgstr "Validați modificările"
 
 msgid "Description"
 msgstr "Descriere"
@@ -1502,7 +1519,7 @@ msgid "Data type"
 msgstr "Tipul de date"
 
 msgid "Numeric"
-msgstr "Valoare numerică"
+msgstr "Numeric"
 
 msgid "Numeric items"
 msgstr "Articole numerice"
@@ -1530,10 +1547,10 @@ msgid "Remove"
 msgstr "Elimina"
 
 msgid "Add to screen"
-msgstr "Adaugati pe ecran"
+msgstr "Adăugați pe ecran"
 
 msgid "ECU Function address"
-msgstr "ECU Adresa functiei"
+msgstr "Adresa funcției ECU"
 
 msgid "ECU Protocol"
 msgstr "Protocol ECU"
@@ -1548,22 +1565,22 @@ msgid "Coding"
 msgstr "Codificare"
 
 msgid "ECU Auto identification"
-msgstr "ECU Identificare automata"
+msgstr "Identificare automată ECU"
 
 msgid "Add new"
-msgstr "Adauga nou"
+msgstr "Adaugă nou"
 
 msgid "Delete selected"
-msgstr "Sterge selectia"
+msgstr "Șterge selecția"
 
 msgid "Number of bits"
 msgstr "Numar de biti"
 
 msgid "Signed"
-msgstr "Semnat"
+msgstr "Cu semn"
 
 msgid "Add item"
-msgstr "Adaugare element"
+msgstr "Adaugă element"
 
 msgid "Del item"
 msgstr "Șterge elementul"
@@ -1581,7 +1598,7 @@ msgid "Unit"
 msgstr "Unitate"
 
 msgid "Format"
-msgstr "Format afișare"
+msgstr "Format"
 
 msgid "Value = (AX+B) / C"
 msgstr "Valoare = (AX+B) / C"
@@ -1590,7 +1607,7 @@ msgid "Number of bytes"
 msgstr "Număr de octeți"
 
 msgid "Send request bytes (HEX)"
-msgstr "Trimiteti octeti de solicitare (HEX)"
+msgstr "Trimiteți octeți de cerere (HEX)"
 
 msgid "Receive bytes (HEX)"
 msgstr "Primiti octeti (HEX)"
@@ -1614,13 +1631,13 @@ msgid "Inherits globals"
 msgstr "Moștenește variabile globale"
 
 msgid "No SDS"
-msgstr "Fara SDS"
+msgstr "Fără SDS"
 
 msgid "Plant"
 msgstr "Uzină"
 
 msgid "After Sale"
-msgstr "Dupa vanzare"
+msgstr "După vânzare"
 
 msgid "Engineering"
 msgstr "Inginerie"
@@ -1632,16 +1649,16 @@ msgid "Reload requests"
 msgstr "Reincarcare cereri"
 
 msgid "Add request"
-msgstr "Adaugati o solicitare"
+msgstr "Adăugați o cerere"
 
 msgid "Send bytes"
-msgstr "Trimiteti octeti"
+msgstr "Trimite octeți"
 
 msgid "Receive bytes"
 msgstr "Primiti octeti"
 
 msgid "Request name;Bytes;Manual"
-msgstr "Numele solicitarii;Octeti;Manual"
+msgstr "Numele cererii;Octeți;Manual"
 
 msgid "No request named"
 msgstr "Nicio cerere numită"
@@ -1656,7 +1673,7 @@ msgid " vs "
 msgstr " față de "
 
 msgid "Cannot draw input "
-msgstr "Pluginul nu se poate incarca "
+msgstr "Nu se poate afișa intrarea "
 
 msgid "No Value"
 msgstr "Valori"
@@ -1676,14 +1693,14 @@ msgstr "Nu, nu vreu"
 
 msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr ""
-"Vă mulțumesc pentru contribuția dumneavoastră, dacă nu se întâmplă nimic, vă "
+"Vă mulțumim pentru contribuția dumneavoastră, dacă nu se întâmplă nimic, vă "
 "rugăm mergeți la"
 
 msgid "ECU Finder"
 msgstr "Căutător ECU"
 
 msgid "Address :"
-msgstr "Adresă :"
+msgstr "Adresă:"
 
 msgid "ID frame :"
 msgstr "Cadru ID:"
@@ -1708,8 +1725,8 @@ msgid ""
 "Download the ECU database separately and copy the file (`ecu.zip` or the "
 "original DDT2000 XML database (`DDT2000DATA`)) to:\n"
 msgstr ""
-"Descărcați separat baza de date ECU și copiați fișierul (`ecu.zip` sau baza de date XML DDT2000 "
-"originală (`DDT2000DATA`)) în:\n"
+"Descărcați separat baza de date ECU și copiați fișierul (`ecu.zip` sau baza "
+"de date XML DDT2000 originală (`DDT2000DATA`)) în:\n"
 
 msgid "DDT4All Documentation"
 msgstr "Documentație DDT4All"
@@ -1735,7 +1752,7 @@ msgid "Refresh rate (ms):"
 msgstr "Rata de actualizare (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr "Se poate expira timpul (ms) [0: AUTO] :"
+msgstr "Timeout CAN (ms) [0:AUTO] :"
 
 msgid "Documentation"
 msgstr "Documentație"
@@ -1786,16 +1803,16 @@ msgid "Expert mode (enable writing)"
 msgstr "Mod expert (activare scriere)"
 
 msgid "Auto refresh"
-msgstr "Reimprospatare automata"
+msgstr "Reîmprospătare automată"
 
 msgid "Refresh (one shot)"
 msgstr "Reimprospatati (o singura data)"
 
 msgid "Manual command"
-msgstr "Comanda manuala"
+msgstr "Comanda manuală"
 
 msgid "Manual request"
-msgstr "Cerere manuala"
+msgstr "Cerere manuală"
 
 msgid "Software flow control"
 msgstr "Control flux software"
@@ -1813,16 +1830,16 @@ msgid "File"
 msgstr "Fișier"
 
 msgid "Open XML"
-msgstr "Deschideti XML-ul"
+msgstr "Deschide XML"
 
 msgid "Save current ECU"
-msgstr "Salvati ECU curent"
+msgstr "Salvați ECU curent"
 
 msgid "Save last record"
-msgstr "Salvati ultimul inregistrare"
+msgstr "Salvați ultima înregistrare"
 
 msgid "Save ECU list"
-msgstr "Salvati lista ECU"
+msgstr "Salvați lista ECU"
 
 msgid "Exit"
 msgstr "Iesire"
@@ -1831,13 +1848,13 @@ msgid "Tools"
 msgstr "Instrumente"
 
 msgid "Identify ECU"
-msgstr "Identificati ECU"
+msgstr "Identificați ECU"
 
 msgid "Create New ECU"
 msgstr "Creati un nou ECU"
 
 msgid "Zip database"
-msgstr "Baza de date zip"
+msgstr "Arhivare zip a bazei de date"
 
 msgid "Clear DDT4ALL History"
 msgstr "Șterge istoricul DDT4ALL"
@@ -1852,10 +1869,10 @@ msgid "CarList Order"
 msgstr "Ordinea listei de masini"
 
 msgid "By Project Code"
-msgstr "Dupa codul proiectului"
+msgstr "După codul proiectului"
 
 msgid "By Car Name"
-msgstr "Dupa numele masinii"
+msgstr "După numele mașinii"
 
 msgid "Theme"
 msgstr "Tema"
@@ -1894,7 +1911,7 @@ msgid "About Developers"
 msgstr "Despre dezvoltatori"
 
 msgid "Get Git update"
-msgstr "Obtine actualizare Git"
+msgstr "Obține actualizarea Git"
 
 msgid "About"
 msgstr "Despre"
@@ -1952,7 +1969,7 @@ msgid "ISO8"
 msgstr "Protocol ISO8"
 
 msgid "Save database (keep '.zip' extension)"
-msgstr "Salvati baza de date (pastrati extensia \".zip\")"
+msgstr "Salvați baza de date (păstrați extensia '.zip')"
 
 msgid "Zipping XML database... (this can take a few minutes)"
 msgstr "Arhivarea bazei de date XML... (poate dura câteva minute)"
@@ -1967,16 +1984,16 @@ msgid "Check documentation"
 msgstr "Documentatie"
 
 msgid "Enter new name"
-msgstr "Introduceti un nume nou"
+msgstr "Introduceți un nume nou"
 
 msgid "Enter category name"
-msgstr "Introduceti numele categoriei"
+msgstr "Introduceți numele categoriei"
 
 msgid "Please select a category before creating new screen"
-msgstr "Va rugam sa selectati o categorie inainte de a crea un ecran nou"
+msgstr "Vă rugăm să selectați o categorie înainte de a crea un ecran nou"
 
 msgid "Enter screen name"
-msgstr "Introduceti numele ecranului"
+msgstr "Introduceți numele ecranului"
 
 msgid "Scanning CAN"
 msgstr "Scanare CAN"
@@ -1988,7 +2005,7 @@ msgid "Scanning DoIP"
 msgstr "Scanare DoIP"
 
 msgid "Scan options"
-msgstr "Optiuni de scanare"
+msgstr "Opțiuni de scanare"
 
 msgid "EDITION MODE"
 msgstr "MOD DE EDITARE"
@@ -2000,13 +2017,13 @@ msgid "DISCONNECTED"
 msgstr "DECONECTAT"
 
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Salvati vehiculul (pastrati extensia '.ecu')"
+msgstr "Salvați vehiculul (păstrați extensia '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Salvati ECU (pastrati extensia \".json\")"
+msgstr "Salvați ECU (păstrați extensia '.json')"
 
 msgid "Save record (keep '.txt' extension)"
-msgstr "Salvati inregistrarea (pastrati extensia '.txt')"
+msgstr "Salvați înregistrarea (păstrați extensia '.txt')"
 
 msgid "Recorded "
 msgstr "Inregistrat "
@@ -2070,7 +2087,8 @@ msgid "WiFi port : "
 msgstr "Port WiFi : "
 
 msgid "I acknowledge that improper use may cause damage to my vehicle."
-msgstr "Sunt constient ca imi pot strica masina daca este folosita prost"
+msgstr ""
+"Sunt conștient că folosirea necorespunzătoare poate deteriora vehiculul meu."
 
 msgid "Enable CAN2"
 msgstr "Activați CAN2"
@@ -2118,10 +2136,10 @@ msgid "DoIP Timeout (seconds) : "
 msgstr "Timeout DoIP (secunde) : "
 
 msgid "Enable Vehicle Announcement Discovery"
-msgstr "Activare Descoperire Anunt Vehicul"
+msgstr "Activare descoperire anunț vehicul"
 
 msgid "Auto-reconnect on connection loss"
-msgstr "Reconectare automata la pierderea conexiunii"
+msgstr "Reconectare automată la pierderea conexiunii"
 
 msgid "Change UART speed"
 msgstr "Modificare viteza UART"
@@ -2145,13 +2163,13 @@ msgid "Checking..."
 msgstr "Verificare..."
 
 msgid "Please enter WiFi adapter IP address"
-msgstr "Va rugam introduceti adresa IP a adaptorului WiFi"
+msgstr "Vă rugăm introduceți adresa IP a adaptorului WiFi"
 
 msgid "Invalid WiFi format. Use IP:PORT (e.g., 192.168.0.10:35000)"
 msgstr "Format WiFi invalid. Folositi IP:PORT (ex. 192.168.0.10:35000)"
 
 msgid "Please select a serial port"
-msgstr "Va rugam selectati un port serial"
+msgstr "Vă rugăm selectați un port serial"
 
 msgid "Selected port is no longer available"
 msgstr "Portul selectat nu mai este disponibil"
@@ -2166,31 +2184,31 @@ msgid "Speed: "
 msgstr "Viteza: "
 
 msgid "Connection test failed"
-msgstr "Testul de conexiune a esuat"
+msgstr "Testul de conexiune a eșuat"
 
 msgid "Troubleshooting suggestions:"
 msgstr "Sugestii de depanare:"
 
 msgid "1. Check device is properly connected"
-msgstr "1. Verificati daca dispozitivul este conectat corect"
+msgstr "1. Verificați dacă dispozitivul este conectat corect"
 
 msgid "2. Try different baud rates"
-msgstr "2. Incercati rate de baud diferite"
+msgstr "2. Încercați rate de baud diferite"
 
 msgid "3. Ensure device drivers are installed"
-msgstr "3. Asigurati-va ca driverele dispozitivului sunt instalate"
+msgstr "3. Asigurați-vă că driverele dispozitivului sunt instalate"
 
 msgid "4. Check port permissions (Linux/macOS)"
-msgstr "4. Verificati permisiunile portului (Linux/macOS)"
+msgstr "4. Verificați permisiunile portului (Linux/macOS)"
 
 msgid "Connection test successful!"
-msgstr "Testul de conexiune a reusit!"
+msgstr "Testul de conexiune a reușit!"
 
 msgid "Error during connection test: "
 msgstr "Eroare in timpul testului de conexiune: "
 
 msgid "Reset and Recheck"
-msgstr "Resetare si reverificare"
+msgstr "Resetare și reverificare"
 
 #, python-format
 msgid "Error updating port list: %s"
@@ -2200,7 +2218,7 @@ msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro selectat - Suport STN/STPX imbunatatit activat"
 
 msgid "Long command support and high-speed communication available"
-msgstr "Suport comenzi lungi si comunicare viteza mare disponibil"
+msgstr "Suport comenzi lungi și comunicare viteză mare disponibil"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
@@ -2265,22 +2283,22 @@ msgid "Select an ISO 13400 DoIP entity by its IP address"
 msgstr "Selectați o entitate DoIP ISO 13400 după adresa IP"
 
 msgid "You must check the recommandations"
-msgstr "Trebuie sa verificati recomandarile"
+msgstr "Trebuie să verificați recomandările"
 
 msgid "Please select a communication port"
-msgstr "Va rugam sa selectati un port de comunicare"
+msgstr "Vă rugăm să selectați un port de comunicare"
 
 msgid "ECU Command"
 msgstr "Comanda ECU"
 
 msgid "Start diagnostic session"
-msgstr "Sesiune de diagnosticare"
+msgstr "Pornește sesiunea de diagnosticare"
 
 msgid "Request"
-msgstr "Cereri"
+msgstr "Cerere"
 
 msgid "Data to send"
-msgstr "Tipul de date"
+msgstr "Date de trimis"
 
 msgid "Computed ISOTP Frame"
 msgstr "Cadru ISOTP calculat"
@@ -2307,19 +2325,19 @@ msgid "Err, cannot rename "
 msgstr "Eroare, nu se poate redenumi "
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "Pentru a putea edita ecranul, exportati-l mai intai in format JSON"
+msgstr "Pentru a putea edita ecranul, exportați-l mai întâi în format JSON"
 
 msgid "Enter label name"
-msgstr "Introduceti numele etichetei"
+msgstr "Introduceți numele etichetei"
 
 msgid "Add button"
-msgstr "Adaugati butonul"
+msgstr "Adăugați butonul"
 
 msgid "Add label"
-msgstr "Adaugati eticheta"
+msgstr "Adăugați eticheta"
 
 msgid "Rename label"
-msgstr "Redenumiti eticheta"
+msgstr "Redenumiți eticheta"
 
 msgid "Change color"
 msgstr "Schimbati culoarea"
@@ -2343,28 +2361,28 @@ msgid "Protocol not supported: "
 msgstr "Protocol neacceptat: "
 
 msgid "XML file not found : "
-msgstr "Fisierul XML nu a fost gasit : "
+msgstr "Fișierul XML nu a fost găsit : "
 
 msgid "Invalid DDT file"
-msgstr "Fisier DDT nevalid"
+msgstr "Fișier DDT nevalid"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr "S-a pierdut conexiunea cu ELM, incerc reconectarea ..."
+msgstr "S-a pierdut conexiunea cu ELM, încerc reconectarea..."
 
 msgid "Cannot reconnect..."
-msgstr "Nu se poate reconecta ..."
+msgstr "Nu se poate reconecta..."
 
 msgid "Switching to session mode"
 msgstr "Trecere la modul sesiune"
 
 msgid "Sending ELM request :"
-msgstr "Trimite solicitarea ELM :"
+msgstr "Trimite cererea ELM :"
 
 msgid "Blocked ELM request :"
 msgstr "Cerere ELM blocata :"
 
 msgid "Sending ELM request:"
-msgstr "Trimite solicitarea ELM:"
+msgstr "Trimite cererea ELM:"
 
 msgid "Sending simulated ELM request :"
 msgstr "Trimite o cerere ELM simulata :"
@@ -2376,10 +2394,10 @@ msgid "ELM response : "
 msgstr "Raspuns ELM : "
 
 msgid "Button request not found : "
-msgstr "Cerere de buton nu a fost gasita : "
+msgstr "Cererea butonului nu a fost găsită : "
 
 msgid "Sending request :"
-msgstr "Trimite solicitare :"
+msgstr "Trimite cerere :"
 
 msgid "Unknown request "
 msgstr "Cerere necunoscută "
@@ -2388,10 +2406,10 @@ msgid "Command aborted "
 msgstr "Comandă anulată "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Eroare de valoare a acestui lucru poate necesita un gateway bypass."
+msgstr "Eroare de valoare: s-ar putea să fie necesar un gateway bypass."
 
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Solicitare anulata (consultati intrarile cu parametri rosii): "
+msgstr "Cerere anulată (verificați intrările cu parametri roșii): "
 
 msgid "Delay"
 msgstr "Întârziere"
@@ -2422,18 +2440,16 @@ msgid "Cannot call request "
 msgstr "Nu se poate apela cererea "
 
 msgid "Update time"
-msgstr "Timp actualizare"
+msgstr "Ora actualizării"
 
 msgid "Clearing DTC information"
-msgstr "Stergerea informatiilor DTC"
+msgstr "Ștergerea informațiilor DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr ""
-"Nici o solicitare de stergere DTC pentru acest ECU, se va trimite 14FF00 "
-"implicit"
+msgstr "Nicio cerere ClearDTC pentru acest ECU, se va trimite implicit 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
-msgstr "<Center>Esti pe cale sa stergi codurile de diagnosticare</center>"
+msgstr "<center>Esti pe cale sa stergi codurile de diagnosticare</center>"
 
 msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Sunteti sigur ca asta doriti.</center>"
@@ -2445,13 +2461,13 @@ msgid "Clear DTC successfully done"
 msgstr "Ștergere DTC efectuată cu succes"
 
 msgid "No ReadDTC request for that ECU"
-msgstr "Nicio cerere ReadDTC pentru acest ECUimplicit"
+msgstr "Nicio cerere ReadDTC pentru acest ECU implicit"
 
 msgid "Invalid response for ReadDTC command"
-msgstr "Raspuns nevalid pentru comanda de citire DTC"
+msgstr "Răspuns nevalid pentru comanda ReadDTC"
 
 msgid "Read DTC returned an error"
-msgstr "Citeste DTC a returnat o eroare"
+msgstr "Citirea DTC a returnat o eroare"
 
 msgid "No DTC"
 msgstr "Fara DTC"
@@ -2466,13 +2482,13 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Coduri de eroare de diagnosticare"
 
 msgid "Clear ALL DTC"
-msgstr "Stergeti TOT DTC"
+msgstr "Ștergeți TOATE DTC"
 
 msgid "ECU trouble codes"
-msgstr "codurile de eroare ECU"
+msgstr "Coduri de eroare ECU"
 
 msgid "Parsing screen "
-msgstr "Ecran de analiza "
+msgstr "Analiză ecran "
 
 msgid "found request in input "
 msgstr "cerere găsită în intrare "
@@ -2484,7 +2500,7 @@ msgid "found in button "
 msgstr "găsit în buton "
 
 msgid "found in presend "
-msgstr "găsit în pre-trimitere "
+msgstr "găsit în presend "
 
 msgid "found data in input "
 msgstr "date găsite în intrare "

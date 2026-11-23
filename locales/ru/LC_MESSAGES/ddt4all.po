@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-23 21:34+0100\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -33,7 +33,9 @@ msgstr "Ответ идентификации транспортного сре�
 
 #, python-format
 msgid "Vehicle VIN=%(vin)s logical address=0x%(address)04X EID=%(eid)s"
-msgstr "Транспортное средство VIN=%(vin)s логический адрес=0x%(address)04X EID=%(eid)s"
+msgstr ""
+"Транспортное средство VIN=%(vin)s логический адрес=0x%(address)04X "
+"EID=%(eid)s"
 
 #, python-format
 msgid "DoIP connection failed: %s"
@@ -92,7 +94,7 @@ msgid "Received stream "
 msgstr "Полученный поток "
 
 msgid "Request ECU Error"
-msgstr "Запросить ошибку ЭБУ"
+msgstr "Ошибка запроса ЭБУ"
 
 msgid "Decoded values"
 msgstr "Декодированные значения"
@@ -120,6 +122,18 @@ msgstr "не отображен"
 
 msgid "Scanning address: "
 msgstr "Сканирование адреса: "
+
+#, python-format
+msgid "# check_ecu: empty response for addr %s protocol %s"
+msgstr "# check_ecu: пустой ответ для addr %s протокол %s"
+
+#, python-format
+msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
+msgstr "# check_ecu: недопустимый hex-ответ для addr %s протокол %s: %s"
+
+#, python-format
+msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
+msgstr "# check_ecu: слишком короткий ответ (%d байт) для addr %s протокол %s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Нет доступных адресов DoIP для сканирования"
@@ -173,11 +187,13 @@ msgstr "Не удалось закрыть сеанс диагностики DoI
 
 #, python-format
 msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
-msgstr "Не удалось запустить сеанс старого протокола DoIP на %(addr)s: %(error)s"
+msgstr ""
+"Не удалось запустить сеанс старого протокола DoIP на %(addr)s: %(error)s"
 
 #, python-format
 msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
-msgstr "Идентификация по старому протоколу DoIP не удалась на %(addr)s: %(error)s"
+msgstr ""
+"Идентификация по старому протоколу DoIP не удалась на %(addr)s: %(error)s"
 
 #, python-format
 msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
@@ -211,7 +227,7 @@ msgid "Port initialization failed"
 msgstr "Инициализация порта не удалась"
 
 msgid "Port connection failed - port object is invalid"
-msgstr "Подключение к порту не удалось - объект порра недействителен"
+msgstr "Подключение к порту не удалось - объект порта недействителен"
 
 msgid "STN connection established"
 msgstr "Соединение STN установлено"
@@ -341,7 +357,7 @@ msgid "Result: "
 msgstr "Результат: "
 
 msgid " succeeded from "
-msgstr " успешно из "
+msgstr " успешных из "
 
 msgid "ELM Max version:"
 msgstr "Максимальная версия ELM:"
@@ -454,11 +470,11 @@ msgid "Attempting WiFi reconnection..."
 msgstr "Попытка переподключения WiFi..."
 
 msgid "Port handler is None, cannot write"
-msgstr "Обработчик порра равен None, нельзя записать"
+msgstr "Обработчик порта равен None, нельзя записать"
 
 #, python-format
 msgid "Serial write error: %s"
-msgstr "Ошибка записи последовательного порра: %s"
+msgstr "Ошибка записи последовательного порта: %s"
 
 #, python-format
 msgid "*       Write error: %s"
@@ -576,8 +592,8 @@ msgid ""
 "font>"
 msgstr ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>ЭТОТ ПЛАГИН "
-"РАЗБЛОКИРУЕТ ДАННЫЕ О СРАЖЕНИИ ПОДУШКИ БЕЗОПАСНОСТИ<br>УХОДИТЕ, ЕСЛИ НЕ "
-"ПРЕДСТАВЛЯЕТЕ, ЧТО ЭТО ЗНАЧИТ</font>"
+"РАЗБЛОКИРУЕТ ДАННЫЕ О СРАЖЕНИИ ПОДУШКИ БЕЗОПАСНОСТИ<br>УХОДИТЕ, ЕСЛИ У ВАС "
+"НЕТ ПОНИМАНИЯ, ЧТО ЭТО ОЗНАЧАЕТ</font>"
 
 msgid "Check ACU Virgin"
 msgstr "Проверить ACU Virgin"
@@ -756,17 +772,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "ОШИБКА: команда должна иметь 5 параметров: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"    <команда> <lid> <rsp_len> <смещение> <hex-маска> <hex-значение>\n"
 "        <lid> - локальный идентификатор ЭБУ. Длина должна быть 2 символа для "
 "KWP или 4 для CAN\n"
 "        <rsp_len> - длина ответа команды, включая байты положительного "
 "ответа, равна MinBytes из базы ddt\n"
-"        <offset> - смещение в байтах до первого изменённого байта "
+"        <смещение> - смещение в байтах до первого изменённого байта "
 "(начинается с 1, а не с 0) \n"
-"        <hex mask> - битовая маска для изменённых битов, 1 - изменяемый, 0 - "
-"неприкосновенный\n"
-"        <hex value> - значение бита\n"
-"    <hex mask> и <hex value> должны иметь одинаковую длину\n"
+"        <hex-маска> - битовая маска для изменённых битов, 1 - изменяемый, 0 "
+"- неприкосновенный\n"
+"        <hex-значение> - значение бита\n"
+"    <hex-маска> и <hex-значение> должны иметь одинаковую длину\n"
 
 msgid ""
 "ERROR: command should have 6 parameters: \n"
@@ -784,18 +800,18 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "ОШИБКА: команда должна иметь 6 параметров: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <команда> <lid> <rsp_len> <смещение> <hex-маска> <hex-значение> <метка>\n"
 "        <lid> - локальный идентификатор ЭБУ. Длина должна быть 2 символа для "
 "KWP или 4 для CAN\n"
 "        <rsp_len> - длина ответа команды, включая байты положительного "
 "ответа, равна MinBytes из базы ddt\n"
-"        <offset> - смещение в байтах до первого изменённого байта "
+"        <смещение> - смещение в байтах до первого изменённого байта "
 "(начинается с 1, а не с 0) \n"
-"        <hex mask> - битовая маска для изменённых битов, 1 - изменяемый, 0 - "
-"неприкосновенный\n"
-"        <hex value> - значение бита\n"
-"        <label> - метка перехода\n"
-"    <hex mask> и <hex value> должны иметь одинаковую длину\n"
+"        <hex-маска> - битовая маска для изменённых битов, 1 - изменяемый, 0 "
+"- неприкосновенный\n"
+"        <hex-значение> - значение бита\n"
+"        <метка> - метка перехода\n"
+"    <hex-маска> и <hex-значение> должны иметь одинаковую длину\n"
 
 msgid ""
 "ERROR: command should have 4 or 7 parameters: \n"
@@ -814,18 +830,18 @@ msgid ""
 "\n"
 msgstr ""
 "ОШИБКА: команда должна иметь 4 или 7 параметров: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <команда> <lid> <rsp_len> <смещение> <hex-маска> <hex-значение> <метка>\n"
 "        <lid> - локальный идентификатор ЭБУ. Длина должна быть 2 символа для "
 "KWP или 4 для CAN\n"
 "        <rsp_len> - длина ответа команды, включая байты положительного "
 "ответа, равна MinBytes из базы ddt\n"
-"        <offset> - смещение в байтах до первого изменённого байта "
+"        <смещение> - смещение в байтах до первого изменённого байта "
 "(начинается с 1, а не с 0) \n"
-"        <hex mask> - битовая маска для изменённых битов, 1 - изменяемый, 0 - "
-"неприкосновенный\n"
-"        <val step> - шаг значения\n"
-"        <val offset> - смещение значения\n"
-"        <val divider> - делитель значения\n"
+"        <hex-маска> - битовая маска для изменённых битов, 1 - изменяемый, 0 "
+"- неприкосновенный\n"
+"        <шаг значения> - шаг значения\n"
+"        <смещение значения> - смещение значения\n"
+"        <делитель значения> - делитель значения\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -981,7 +997,9 @@ msgstr "Нет совпадения. Перейти к: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1370,7 +1388,7 @@ msgid "High Speed"
 msgstr "Высокая скорость"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Timer_DrivWEP_ON (таймер)"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Сброс"
@@ -1565,7 +1583,7 @@ msgid "Number of bits"
 msgstr "Количество битов"
 
 msgid "Signed"
-msgstr "Подписан"
+msgstr "Знаковый"
 
 msgid "Add item"
 msgstr "Добавить элемент"
@@ -1662,7 +1680,7 @@ msgid " vs "
 msgstr " против "
 
 msgid "Cannot draw input "
-msgstr "Не могу сформировать запрос "
+msgstr "Не удаётся отобразить поле ввода "
 
 msgid "No Value"
 msgstr "Нет значения"
@@ -1675,7 +1693,7 @@ msgstr ""
 "покупку кабелей/ECU и сделать это приложение более надежным</center>"
 
 msgid "Yes I contribute"
-msgstr "Да, Я заплачу"
+msgstr "Да, я внесу вклад"
 
 msgid "No, I don't"
 msgstr "Нет, не сейчас"
@@ -1687,7 +1705,7 @@ msgid "ECU Finder"
 msgstr "Поиск ЭБУ"
 
 msgid "Address :"
-msgstr "Адрес :"
+msgstr "Адрес:"
 
 msgid "ID frame :"
 msgstr "Кадр ID:"
@@ -1958,7 +1976,7 @@ msgid "Save database (keep '.zip' extension)"
 msgstr "Сохранить базу данных (сохранить расширение '.zip')"
 
 msgid "Zipping XML database... (this can take a few minutes)"
-msgstr "Архивирование XML базы данных ... (это может занять несколько минут)"
+msgstr "Архивирование XML базы данных... (это может занять несколько минут)"
 
 msgid "Zip job finished"
 msgstr "Архивирование завершено"
@@ -1994,7 +2012,7 @@ msgid "Scan options"
 msgstr "Опции сканирования"
 
 msgid "EDITION MODE"
-msgstr "РЕДАКТОР"
+msgstr "РЕЖИМ РЕДАКТИРОВАНИЯ"
 
 msgid "CONNECTED"
 msgstr "ПОДКЛЮЧЕН"
@@ -2003,10 +2021,10 @@ msgid "DISCONNECTED"
 msgstr "ОТКЛЮЧЕН"
 
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Сохранить список моих ЭБУ (.ecu)"
+msgstr "Сохранить автомобиль (сохранить расширение '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Создание нового ЭБУ (.json)"
+msgstr "Сохранить ЭБУ (сохранить расширение '.json')"
 
 msgid "Save record (keep '.txt' extension)"
 msgstr "Сохранить запись (сохранить расширение '.txt')"
@@ -2061,10 +2079,10 @@ msgid "Port speed"
 msgstr "Скорость порта"
 
 msgid "Connected mode"
-msgstr "Подключиться"
+msgstr "Режим подключения"
 
 msgid "Edition mode"
-msgstr "Редактор"
+msgstr "Режим редактирования"
 
 msgid "ELM benchmark"
 msgstr "Проверка ELM"
@@ -2088,7 +2106,7 @@ msgid "Enable DoIP Scan"
 msgstr "Включить сканирование DoIP"
 
 msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
-msgstr "Конфигурация DoIP (Диагностика по IP) (Экспериментально)"
+msgstr "Конфигурация DoIP (Диагностика через IP) (Экспериментально)"
 
 msgid "Device Preset : "
 msgstr "Предустановка устройства : "
@@ -2269,7 +2287,7 @@ msgid "Select an ISO 13400 DoIP entity by its IP address"
 msgstr "Выберите сущность DoIP ISO 13400 по её IP-адресу"
 
 msgid "You must check the recommandations"
-msgstr "Вы должны согласиться с условиями"
+msgstr "Вы должны проверить рекомендации"
 
 msgid "Please select a communication port"
 msgstr "Выберите нужный порт"
@@ -2278,13 +2296,13 @@ msgid "ECU Command"
 msgstr "Команда ЭБУ"
 
 msgid "Start diagnostic session"
-msgstr "Диагностическая сессия"
+msgstr "Начать диагностическую сессию"
 
 msgid "Request"
-msgstr "Запросы"
+msgstr "Запрос"
 
 msgid "Data to send"
-msgstr "Тип данных"
+msgstr "Данные для отправки"
 
 msgid "Computed ISOTP Frame"
 msgstr "Вычисленный кадр ISOTP"
@@ -2359,7 +2377,7 @@ msgid "Cannot reconnect..."
 msgstr "Переподключение невозможно..."
 
 msgid "Switching to session mode"
-msgstr "Переключение в режим"
+msgstr "Переключение в режим сессии"
 
 msgid "Sending ELM request :"
 msgstr "Отправляем ELM запрос :"
@@ -2392,7 +2410,7 @@ msgid "Command aborted "
 msgstr "Команда прервана "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Ошибка значения этого материала требует обходной шлюз возможно."
+msgstr "Ошибка значения: возможно, требуется обходной шлюз."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Запрос прерван (проверьте красные записи): "
@@ -2414,7 +2432,7 @@ msgid "Writing parameter"
 msgstr "Запись параметра"
 
 msgid "Blocked writing parameter"
-msgstr "Заблокированный параметр записи"
+msgstr "Заблокирована запись параметра"
 
 msgid "Invalid"
 msgstr "Недействительный"
@@ -2423,13 +2441,13 @@ msgid "ECU uses SDS "
 msgstr "ЭБУ использующих SDS "
 
 msgid "Cannot call request "
-msgstr "Не могу сформировать запрос "
+msgstr "Не удаётся вызвать запрос "
 
 msgid "Update time"
 msgstr "Время обновления"
 
 msgid "Clearing DTC information"
-msgstr "Сброс ошибок DTC"
+msgstr "Очистка информации DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "У ЭБУ нет запроса ClearDTC, буду посылать стандартный 14FF00"
@@ -2450,7 +2468,7 @@ msgid "No ReadDTC request for that ECU"
 msgstr "Нет запроса ReadDTC для этого ЭБУ"
 
 msgid "Invalid response for ReadDTC command"
-msgstr "Неверный отклик на команду чтения ошибок"
+msgstr "Неверный ответ на команду ReadDTC"
 
 msgid "Read DTC returned an error"
 msgstr "Чтение ошибок DTC вернулось с ошибкой"
@@ -2468,13 +2486,13 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Коды неисправностей"
 
 msgid "Clear ALL DTC"
-msgstr "Сбросить ВСЕ ошибки"
+msgstr "Сбросить ВСЕ DTC"
 
 msgid "ECU trouble codes"
-msgstr "Считанные ошибки"
+msgstr "Коды ошибок ЭБУ"
 
 msgid "Parsing screen "
-msgstr "Расшифровка "
+msgstr "Анализ экрана "
 
 msgid "found request in input "
 msgstr "запрос найден во входных данных "
@@ -2486,7 +2504,7 @@ msgid "found in button "
 msgstr "найдено в кнопке "
 
 msgid "found in presend "
-msgstr "найдено в предварительной отправке "
+msgstr "найдено в presend "
 
 msgid "found data in input "
 msgstr "данные найдены во вводе "
