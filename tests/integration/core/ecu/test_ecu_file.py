@@ -345,6 +345,7 @@ def test_ecu_file_connect_to_hardware_extended_can_uses_get_can_addr_ext(mocker,
             "idRx": ecu.ecu_recv_id,
             "ecuname": "b'EXT_CAN_ECU'",
             "protocol": "CAN",
+            "brp": "0",
         },
         2,
     )
