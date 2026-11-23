@@ -266,6 +266,11 @@ class EcuFile:
                 # the correct 250 kbit/s branch when the target bus is not 500 kbit/s.
                 if self.baudrate == 250000 or self.baudrate == 10400:
                     ecu_conf['brp'] = "1"
+                elif self.baudrate == 500000:
+                    # R-Link 1 / Navigation-UCC-ITM and similar ECUs require 500 kbit/s.
+                    # Setting brp to "0" avoids the 250 kbit/s default and allows the
+                    # ELM to select the 500 kbit/s configuration.
+                    ecu_conf['brp'] = "0"
                 options.elm.init_can()
                 options.elm.set_can_addr(short_addr, ecu_conf, canline)
 

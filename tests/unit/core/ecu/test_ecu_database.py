@@ -166,4 +166,5 @@ def test_connect_to_hardware_sets_brp_for_250k_can_auto(monkeypatch):
     captured.clear()
     ecu.connect_to_hardware(canline=0)
 
-    assert "brp" not in captured["ecu_conf"]
+    # brp = "0" is set for 500 kbit/s ECUs (e.g. R-Link 1 / Navigation-UCC-ITM)
+    assert captured["ecu_conf"].get("brp") == "0"
