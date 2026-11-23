@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 21:34+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-07 13:13+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: TURKISH\n"
@@ -120,16 +120,24 @@ msgid "Scanning address: "
 msgstr "Adres taranıyor: "
 
 #, python-format
-msgid "# check_ecu: empty response for addr %s protocol %s"
-msgstr "# check_ecu: addr %s protokol %s için boş yanıt"
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: addr %(addr)s protokol %(protocol)s için boş yanıt"
 
 #, python-format
-msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
-msgstr "# check_ecu: addr %s protokol %s için geçersiz hex yanıtı: %s"
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: addr %(addr)s protokol %(protocol)s için geçersiz hex yanıtı: "
+"%(err)s"
 
 #, python-format
-msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
-msgstr "# check_ecu: yanıt çok kısa (%d bayt), addr %s protokol %s için"
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: yanıt çok kısa (%(bytes)d bayt), addr %(addr)s protokol "
+"%(protocol)s için"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Tarama için mevcut DoIP adresi yok"
@@ -609,7 +617,7 @@ msgid "<font color='red'>CRASH DETECTED</font>"
 msgstr "<font color='red'>KAZA TESPİT EDİLDİ</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr "<font color='green'>ÇARPMASI TESPİT EDİLMEDİ</font>"
+msgstr "<font color='green'>KAZA TESPİT EDİLMEDİ</font>"
 
 #, python-format
 msgid "SDS stream: %s"

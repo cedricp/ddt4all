@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 21:34+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-28 19:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -121,16 +121,24 @@ msgid "Scanning address: "
 msgstr "Cím vizsgálata: "
 
 #, python-format
-msgid "# check_ecu: empty response for addr %s protocol %s"
-msgstr "# check_ecu: üres válasz addr %s protokoll %s"
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: üres válasz addr %(addr)s protokoll %(protocol)s"
 
 #, python-format
-msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
-msgstr "# check_ecu: érvénytelen hex válasz addr %s protokoll %s: %s"
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: érvénytelen hex válasz addr %(addr)s protokoll %(protocol)s: "
+"%(err)s"
 
 #, python-format
-msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
-msgstr "# check_ecu: túl rövid válasz (%d bájt) addr %s protokoll %s"
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: túl rövid válasz (%(bytes)d bájt) addr %(addr)s protokoll "
+"%(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Nincsenek elérhető DoIP címek a szkenneléshez"
@@ -615,7 +623,7 @@ msgid "<font color='red'>CRASH DETECTED</font>"
 msgstr "<font color='red'>KAZA ÉSZLELVE</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
-msgstr "<font color='green'>NINCS ÜTKÖZÉS ÉSZLELVE</font>"
+msgstr "<font color='green'>NINCS KAZA ÉSZLELVE</font>"
 
 #, python-format
 msgid "SDS stream: %s"

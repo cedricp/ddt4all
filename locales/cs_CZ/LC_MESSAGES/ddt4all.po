@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 21:34+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -119,17 +119,24 @@ msgid "Scanning address: "
 msgstr "Skenování adresy: "
 
 #, python-format
-msgid "# check_ecu: empty response for addr %s protocol %s"
-msgstr "# check_ecu: prázdná odpověď pro adresu %s protokol %s"
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: prázdná odpověď pro adresu %(addr)s protokol %(protocol)s"
 
 #, python-format
-msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
-msgstr "# check_ecu: neplatná hex odpověď pro adresu %s protokol %s: %s"
-
-#, python-format
-msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
 msgstr ""
-"# check_ecu: odpověď je příliš krátká (%d bajtů) pro adresu %s protokol %s"
+"# check_ecu: neplatná hex odpověď pro adresu %(addr)s protokol %(protocol)s: "
+"%(err)s"
+
+#, python-format
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: odpověď je příliš krátká (%(bytes)d bajtů) pro adresu %(addr)s "
+"protokol %(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Žádné adresy DoIP nejsou k dispozici pro skenování"

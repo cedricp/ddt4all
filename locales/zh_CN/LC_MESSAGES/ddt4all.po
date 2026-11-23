@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 21:34+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-09-07 00:00+0000\n"
 "Last-Translator: DDT4ALL Chinese Translation Team\n"
 "Language-Team: Simplified Chinese\n"
@@ -117,16 +117,22 @@ msgid "Scanning address: "
 msgstr "正在扫描地址："
 
 #, python-format
-msgid "# check_ecu: empty response for addr %s protocol %s"
-msgstr "# check_ecu: addr %s 协议 %s 的空响应"
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: addr %(addr)s 协议 %(protocol)s 的空响应"
 
 #, python-format
-msgid "# check_ecu: invalid hex response for addr %s protocol %s: %s"
-msgstr "# check_ecu: addr %s 协议 %s 的无效十六进制响应: %s"
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: addr %(addr)s 协议 %(protocol)s 的无效十六进制响应: %(err)s"
 
 #, python-format
-msgid "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
-msgstr "# check_ecu: 响应过短（%d 字节），addr %s 协议 %s"
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: 响应过短（%(bytes)d 字节），addr %(addr)s 协议 %(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "没有可供扫描的 DoIP 地址"

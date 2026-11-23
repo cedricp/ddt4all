@@ -24,8 +24,8 @@ __contributors__ = {
     "walkman2021": "Translator"
 }
 __license__ = "GPL"
-__version__ = "3.1.5.2"
+__version__ = "3.1.6"
 __maintainer__ = "Cedric PAILLE"
 __email__ = "cedricpaille@gmail.com"
-__codename__ = "Aetherion Ascendant"
+__codename__ = "Aetherion Nexus"
 __status__ = "dev"
