@@ -1827,6 +1827,10 @@ class ELM:
         self.cmd("AT IB10")  # baud rate 10400
         self.cmd("AT ST FF")  # set timeout to 1 second
         self.cmd("AT SP 3")
+        # Set the slow-init address before AT SI. The ELM327 defaults to
+        # init address 33 (0x21); without this, an ECU sitting at any other
+        # address (e.g. 0x7A for a Sagem Safir) never answers the 5 baud init.
+        self.cmd("AT IIA " + addr)
         self.cmd("AT AT 0")  # enable adaptive timing
         self.cmd("AT SI")  # ISO8 needs slow init
         self.cmd("AT AT 1")

@@ -43,7 +43,7 @@ debug = 'DDTDEBUG' in os.environ
 cantimeout = 0
 refreshrate = 5
 mode_edit = False
-safe_commands = ['10','12','14','17','19','1A','21','22','23','3E']
+safe_commands = ['10','12','14','17','19','1A','21','22','23','33','3E']
 
 # TODO: Review DoIP configuration defaults and runtime flags.
 # DoIP Configuration
