@@ -460,26 +460,17 @@ class EcuScanner:
 
     def check_ecu(self, can_response, label, addr, protocol):
         if not can_response:
-            print(
-                "# check_ecu: empty response for addr %s protocol %s"
-                % (addr, protocol)
-            )
+            print(_("# check_ecu: empty response for addr %s protocol %s" % (addr, protocol)))
             return
 
         try:
             response = bytes.fromhex(str(can_response).replace(" ", ""))
         except ValueError as err:
-            print(
-                "# check_ecu: invalid hex response for addr %s protocol %s: %s"
-                % (addr, protocol, err)
-            )
+            print(_("# check_ecu: invalid hex response for addr %s protocol %s: %s" % (addr, protocol, err)))
             return
 
         if len(response) < 15:
-            print(
-                "# check_ecu: response too short (%d bytes) for addr %s protocol %s"
-                % (len(response), addr, protocol)
-            )
+            print(_("# check_ecu: response too short (%d bytes) for addr %s protocol %s" % (len(response), addr, protocol)))
             return
 
         if len(response) >= 20:
