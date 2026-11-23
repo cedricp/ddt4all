@@ -52,3 +52,5 @@ coverage.xml
 /scripts/resources.qrc
 *.po~
 ddt4all-*.AppImage
+/.fast-agent/
+/.devin/

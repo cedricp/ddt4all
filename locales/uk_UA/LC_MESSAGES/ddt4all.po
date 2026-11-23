@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-10 06:30+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -33,7 +33,8 @@ msgstr "Відповідь ідентифікації транспортного
 
 #, python-format
 msgid "Vehicle VIN=%(vin)s logical address=0x%(address)04X EID=%(eid)s"
-msgstr "Транспортний засіб VIN=%(vin)s логічна адреса=0x%(address)04X EID=%(eid)s"
+msgstr ""
+"Транспортний засіб VIN=%(vin)s логічна адреса=0x%(address)04X EID=%(eid)s"
 
 #, python-format
 msgid "DoIP connection failed: %s"
@@ -86,7 +87,7 @@ msgid "Generated stream "
 msgstr "Згенерований потік "
 
 msgid "Send request stream "
-msgstr "Надіслати потік запиту байт (HEX) "
+msgstr "Надіслати потік запиту "
 
 msgid "Received stream "
 msgstr "Отриманий потік "
@@ -116,10 +117,30 @@ msgid "Warning, address"
 msgstr "Попередження, адреса"
 
 msgid "is not mapped"
-msgstr "не визначено"
+msgstr "не зіставлено"
 
 msgid "Scanning address: "
 msgstr "Сканування адреси: "
+
+#, python-format
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: порожня відповідь для addr %(addr)s протокол %(protocol)s"
+
+#, python-format
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: недійсна hex-відповідь для addr %(addr)s протокол %(protocol)s: "
+"%(err)s"
+
+#, python-format
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: занадто коротка відповідь (%(bytes)d байт) для addr %(addr)s "
+"протокол %(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Немає доступних DoIP адрес для сканування"
@@ -173,11 +194,13 @@ msgstr "Не вдалося закрити сеанс діагностики DoI
 
 #, python-format
 msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
-msgstr "Не вдалося запустити сеанс старого протоколу DoIP на %(addr)s: %(error)s"
+msgstr ""
+"Не вдалося запустити сеанс старого протоколу DoIP на %(addr)s: %(error)s"
 
 #, python-format
 msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
-msgstr "Ідентифікація за старим протоколом DoIP не вдалася на %(addr)s: %(error)s"
+msgstr ""
+"Ідентифікація за старим протоколом DoIP не вдалася на %(addr)s: %(error)s"
 
 #, python-format
 msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
@@ -578,8 +601,8 @@ msgid ""
 "font>"
 msgstr ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>Цей плагін "
-"розблокує дані про зіткнення AIRBAG<br>Ідіть геть, якщо не маєте ідеї, що це "
-"означає</font>"
+"розблокує дані про зіткнення AIRBAG<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ "
+"ОЗНАЧАЄ</font>"
 
 msgid "Check ACU Virgin"
 msgstr "Перевірити ACU Virgin"
@@ -594,10 +617,10 @@ msgid "Cannot connect to ECU"
 msgstr "Не вдається підключитися до ECU"
 
 msgid "<font color='orange'>UNEXPECTED RESPONSE</font>"
-msgstr "НЕСПОДІВАНА ВІДПОВІДЬ"
+msgstr "<font color='orange'>НЕСПОДІВАНА ВІДПОВІДЬ</font>"
 
 msgid "<font color='red'>CRASH DETECTED</font>"
-msgstr "АВАРІЯ ЗНАЙДЕНА"
+msgstr "<font color='red'>АВАРІЯ ЗНАЙДЕНА</font>"
 
 msgid "<font color='green'>NO CRASH DETECTED</font>"
 msgstr "<font color='green'>АВАРІЯ НЕ ВИЯВЛЕНО</font>"
@@ -607,10 +630,10 @@ msgid "SDS stream: %s"
 msgstr "Потік SDS: %s"
 
 msgid "<font color='green'>CLEAR EXECUTED</font>"
-msgstr "ОЧИЩЕННЯ ВИКОНАНО"
+msgstr "<font color='green'>ОЧИЩЕННЯ ВИКОНАНО</font>"
 
 msgid "<font color='red'>CLEAR FAILED</font>"
-msgstr "<font color='red'>Очистити невдалось</font>"
+msgstr "<font color='red'>ОЧИЩЕННЯ НЕ ВДАЛОСЯ</font>"
 
 msgid "Megane/Scenic II card programming"
 msgstr "Програмування картки Megane/Scenic II"
@@ -625,14 +648,14 @@ msgid ""
 "<font color='red'>MEGANE II CARD PROGRAMMING<br>EXPERIMENTAL : NOT TESTED "
 "YET</font>"
 msgstr ""
-"<font color='red'>ПРОГРАМУВАННЯ КАРТКИ MEGANE II<br>ЕКСПЕРИМЕНТАЛЬНО : НЕ "
-"ТЕСТОВАНО ЩЕ</font>"
+"<font color='red'>ПРОГРАМУВАННЯ КАРТКИ MEGANE II<br>ЕКСПЕРИМЕНТАЛЬНО : ЩЕ НЕ "
+"ТЕСТОВАНО</font>"
 
 msgid "LEARN"
 msgstr "Навчити"
 
 msgid "VALIDATE"
-msgstr "ПІДТВЕРДИТИ"
+msgstr "ПЕРЕВІРИТИ"
 
 msgid "CANCEL"
 msgstr "Відміна"
@@ -678,7 +701,7 @@ msgstr ""
 "IMMO EPS<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</font>"
 
 msgid "BLANK STATUS & VIN READ"
-msgstr "СТАН BLANK & ЧИТАННЯ VIN"
+msgstr "ПУСТИЙ СТАН & ЧИТАННЯ VIN"
 
 msgid "Virginize EPS"
 msgstr "Очистити EPS (новий стан)"
@@ -758,17 +781,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "ПОМИЛКА: команда повинна мати 5 параметрів: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
-"        <lid> - локальний ідентифікатор ЕБК. Довжина має бути 2 символи для "
+"    <команда> <lid> <rsp_len> <зсув> <hex-маска> <hex-значення>\n"
+"        <lid> - локальний ідентифікатор ЕБУ. Довжина має бути 2 символи для "
 "KWP або 4 для CAN\n"
 "        <rsp_len> - довжина відповіді команди, включаючи байти позитивної "
 "відповіді, дорівнює MinBytes з бази ddt\n"
-"        <offset> - зміщення в байтах до першого зміненого байта (починається "
-"з 1, а не з 0) \n"
-"        <hex mask> - бітова маска для змінених бітів, 1 - змінюваний, 0 - "
+"        <зсув> - зміщення в байтах до першого зміненого байта (починається з "
+"1, а не з 0) \n"
+"        <hex-маска> - бітова маска для змінених бітів, 1 - змінюваний, 0 - "
 "недоторканний\n"
-"        <hex value> - значення біта\n"
-"    <hex mask> та <hex value> повинні мати однакову довжину\n"
+"        <hex-значення> - значення біта\n"
+"    <hex-маска> та <hex-значення> повинні мати однакову довжину\n"
 
 msgid ""
 "ERROR: command should have 6 parameters: \n"
@@ -786,18 +809,18 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "ПОМИЛКА: команда повинна мати 6 параметрів: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
-"        <lid> - локальний ідентифікатор ЕБК. Довжина має бути 2 символи для "
+"    <команда> <lid> <rsp_len> <зсув> <hex-маска> <hex-значення> <мітка>\n"
+"        <lid> - локальний ідентифікатор ЕБУ. Довжина має бути 2 символи для "
 "KWP або 4 для CAN\n"
 "        <rsp_len> - довжина відповіді команди, включаючи байти позитивної "
 "відповіді, дорівнює MinBytes з бази ddt\n"
-"        <offset> - зміщення в байтах до першого зміненого байта (починається "
-"з 1, а не з 0) \n"
-"        <hex mask> - бітова маска для змінених бітів, 1 - змінюваний, 0 - "
+"        <зсув> - зміщення в байтах до першого зміненого байта (починається з "
+"1, а не з 0) \n"
+"        <hex-маска> - бітова маска для змінених бітів, 1 - змінюваний, 0 - "
 "недоторканний\n"
-"        <hex value> - значення біта\n"
-"        <label> - мітка переходу\n"
-"    <hex mask> та <hex value> повинні мати однакову довжину\n"
+"        <hex-значення> - значення біта\n"
+"        <мітка> - мітка переходу\n"
+"    <hex-маска> та <hex-значення> повинні мати однакову довжину\n"
 
 msgid ""
 "ERROR: command should have 4 or 7 parameters: \n"
@@ -816,18 +839,18 @@ msgid ""
 "\n"
 msgstr ""
 "ПОМИЛКА: команда повинна мати 4 або 7 параметрів: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
-"        <lid> - локальний ідентифікатор ЕБК. Довжина має бути 2 символи для "
+"    <команда> <lid> <rsp_len> <зсув> <hex-маска> <hex-значення> <мітка>\n"
+"        <lid> - локальний ідентифікатор ЕБУ. Довжина має бути 2 символи для "
 "KWP або 4 для CAN\n"
 "        <rsp_len> - довжина відповіді команди, включаючи байти позитивної "
 "відповіді, дорівнює MinBytes з бази ddt\n"
-"        <offset> - зміщення в байтах до першого зміненого байта (починається "
-"з 1, а не з 0) \n"
-"        <hex mask> - бітова маска для змінених бітів, 1 - змінюваний, 0 - "
+"        <зсув> - зміщення в байтах до першого зміненого байта (починається з "
+"1, а не з 0) \n"
+"        <hex-маска> - бітова маска для змінених бітів, 1 - змінюваний, 0 - "
 "недоторканний\n"
-"        <val step> - крок значення\n"
-"        <val offset> - зміщення значення\n"
-"        <val divider> - дільник значення\n"
+"        <крок значення> - крок значення\n"
+"        <зсув значення> - зміщення значення\n"
+"        <дільник значення> - дільник значення\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -984,7 +1007,9 @@ msgstr "Немає збігу. Перейти до: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1066,13 +1091,13 @@ msgid "Log file name:"
 msgstr "Назва файлу журналу:"
 
 msgid ".cmd files (by ECU)"
-msgstr "Файли .cmd (за ЕБК)"
+msgstr "Файли .cmd (за ЕБУ)"
 
 msgid "Named macros (by *.txt)"
 msgstr "Іменовані макроси (за *.txt)"
 
 msgid "Macros by ECU (.cmd)"
-msgstr "Макроси за ЕБК (.cmd)"
+msgstr "Макроси за ЕБУ (.cmd)"
 
 msgid "Named macros (*.txt)"
 msgstr "Іменовані макроси (*.txt)"
@@ -1122,7 +1147,7 @@ msgid ""
 "ECUs, address resolution follows the vehicle loaded in ddt4all."
 msgstr ""
 "Формат: командні макроси DDT2000 (pyren3); вбудовані макроси призначені для "
-"ЕБК Renault, зіставлення адрес слідує завантаженому автомобілю в ddt4all."
+"ЕБУ Renault, зіставлення адрес слідує завантаженому автомобілю в ddt4all."
 
 #, python-format
 msgid "Folder: %(folder)s"
@@ -1140,7 +1165,7 @@ msgid ""
 "%(groups)d ECU group(s), %(files)d .cmd file(s), %(named)d named macro(s) in "
 "%(txt)d .txt file(s)"
 msgstr ""
-"%(groups)d груп ЕБК, %(files)d файлів .cmd, %(named)d іменованих макросів у "
+"%(groups)d груп ЕБУ, %(files)d файлів .cmd, %(named)d іменованих макросів у "
 "%(txt)d файлах .txt"
 
 #, python-format
@@ -1172,7 +1197,7 @@ msgstr "ddt4all %(flavor)s | %(elm)s | адресація: %(addressing)s"
 #, python-format
 msgid "%(elm)s | %(files)d .cmd (%(groups)d ECU) | %(named)d named macro(s)"
 msgstr ""
-"%(elm)s | %(files)d файлів .cmd (%(groups)d груп ЕБК) | %(named)d іменованих "
+"%(elm)s | %(files)d файлів .cmd (%(groups)d груп ЕБУ) | %(named)d іменованих "
 "макросів"
 
 #, python-format
@@ -1243,7 +1268,7 @@ msgid ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA II UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДЛИТЬ ВАШ "
+"LAGUNA II UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДАЛИТЬ ВАШ "
 "UCH<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</font>"
 
 msgid "Check UCH Virgin"
@@ -1265,7 +1290,7 @@ msgid ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"LAGUNA III UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДЛИТЬ ВАШ "
+"LAGUNA III UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДАЛИТЬ ВАШ "
 "UCH<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</font>"
 
 msgid "Megane/Scenic II UCH Reset"
@@ -1275,7 +1300,7 @@ msgid ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"MEGANE II UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДЛИТЬ ВАШ "
+"MEGANE II UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДАЛИТЬ ВАШ "
 "UCH<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</font>"
 
 msgid "Megane3 AIRBAG Reset"
@@ -1286,7 +1311,7 @@ msgid ""
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>Цей плагін розблокує "
-"дані про зіткнення AIRBAG<br>Ідіть геть, якщо не маєте ідеї, що це означає</"
+"дані про зіткнення AIRBAG<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</"
 "font>"
 
 #, python-format
@@ -1302,7 +1327,7 @@ msgid ""
 "MEANS</font>"
 msgstr ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>Цей "
-"плагін скине дані IMMO EPS<br>Ідіть геть, якщо не маєте ідеї, що це означає</"
+"плагін скине дані IMMO EPS<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</"
 "font>"
 
 msgid "Megane/Scenic III UCH Reset"
@@ -1312,7 +1337,7 @@ msgid ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>THIS PLUGIN WILL ERASE YOUR "
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"MEGANE III UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДЛИТЬ ВАШ "
+"MEGANE III UCH VIRGINIZER<br><font color='red'>ЦЕЙ ПЛАГІН ВИДАЛИТЬ ВАШ "
 "UCH<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</font>"
 
 msgid "RSAT4 AIRBAG Reset"
@@ -1371,7 +1396,7 @@ msgid "High Speed"
 msgstr "Висока швидкість"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Timer_DrivWEP_ON (таймер)"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Скидання"
@@ -1380,7 +1405,7 @@ msgid ""
 "Zoe water pump counters<br><font color='red'>THIS PLUGIN WILL ERASE WATER "
 "PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
-"Лічильники водяного насоса Zoe<br><font color='red'>ЦЕЙ ПЛАГІН ВИДЛИТЬ "
+"Лічильники водяного насоса Zoe<br><font color='red'>ЦЕЙ ПЛАГІН ВИДАЛИТЬ "
 "ЛІЧИЛЬНИКИ ВОДЯНОГО НАСОСА<br>ІДІТЬ ГЕТЬ, ЯКЩО НЕ МАЄТЕ ІДЕЇ, ЩО ЦЕ ОЗНАЧАЄ</"
 "font>"
 
@@ -1483,13 +1508,13 @@ msgid "Requests to send before screen drawing"
 msgstr "Запити для відправки перед відображенням екрану"
 
 msgid "Button name;Unique name"
-msgstr "Назва кнопки;Унікальне імя"
+msgstr "Назва кнопки;Унікальне ім'я"
 
 msgid "New"
 msgstr "Нове"
 
 msgid "Duplicate selected"
-msgstr "Дублікат обрано"
+msgstr "Дублювати вибране"
 
 msgid "Remove selected"
 msgstr "Видалити обране"
@@ -1498,7 +1523,7 @@ msgid "Reload"
 msgstr "Перезавантажити"
 
 msgid "Validate changes"
-msgstr "Зберегти зміни"
+msgstr "Перевірити зміни"
 
 msgid "Description"
 msgstr "Опис"
@@ -1541,13 +1566,13 @@ msgid "ECU Function address"
 msgstr "Функціональна адреса ECU"
 
 msgid "ECU Protocol"
-msgstr "Протокол ЕБК"
+msgstr "Протокол ЕБУ"
 
 msgid "Tool > Ecu ID (Hex)"
-msgstr "Прилад > ID ЕБК (Hex)"
+msgstr "Прилад > ID ЕБУ (Hex)"
 
 msgid "Ecu > Tool ID (Hex)"
-msgstr "ЕБК > ID Приладу (Hex)"
+msgstr "ЕБУ > ID Приладу (Hex)"
 
 msgid "Coding"
 msgstr "Кодування"
@@ -1662,7 +1687,7 @@ msgid " vs "
 msgstr " проти "
 
 msgid "Cannot draw input "
-msgstr "Не вдалось намалювати вхід "
+msgstr "Не вдалося відобразити поле введення "
 
 msgid "No Value"
 msgstr "Немає значення"
@@ -1675,7 +1700,7 @@ msgstr ""
 "купівлю кабелів/ECU і зробити цю програму більш надійною</center>"
 
 msgid "Yes I contribute"
-msgstr "Так, я дам внесок"
+msgstr "Так, я зроблю внесок"
 
 msgid "No, I don't"
 msgstr "Ні, я не буду"
@@ -1688,7 +1713,7 @@ msgid "ECU Finder"
 msgstr "Пошук ECU"
 
 msgid "Address :"
-msgstr "Адреса :"
+msgstr "Адреса:"
 
 msgid "ID frame :"
 msgstr "Кадр ID:"
@@ -1713,8 +1738,8 @@ msgid ""
 "Download the ECU database separately and copy the file (`ecu.zip` or the "
 "original DDT2000 XML database (`DDT2000DATA`)) to:\n"
 msgstr ""
-"Завантажте базу даних ECU окремо та скопіюйте файл (`ecu.zip` або оригінальну "
-"базу даних XML DDT2000 (`DDT2000DATA`)) до:\n"
+"Завантажте базу даних ECU окремо та скопіюйте файл (`ecu.zip` або "
+"оригінальну базу даних XML DDT2000 (`DDT2000DATA`)) до:\n"
 
 msgid "DDT4All Documentation"
 msgstr "Документація DDT4All"
@@ -1763,7 +1788,7 @@ msgid "Ecu parameters"
 msgstr "Параметри ЕБУ"
 
 msgid "Screen Window"
-msgstr "Екран Window"
+msgstr "Вікно екрана"
 
 msgid "Screens"
 msgstr "Екрани"
@@ -1781,7 +1806,7 @@ msgid "ToolBar"
 msgstr "Панель інструментів"
 
 msgid "Read DTC"
-msgstr "Читання прмилок DTC"
+msgstr "Читання помилок DTC"
 
 msgid "Full log"
 msgstr "Повний лог"
@@ -1841,7 +1866,7 @@ msgid "Create New ECU"
 msgstr "Створити новий ЕБУ"
 
 msgid "Zip database"
-msgstr "Zip база даних"
+msgstr "Стиснути базу даних"
 
 msgid "Clear DDT4ALL History"
 msgstr "Очистити історію DDT4ALL"
@@ -1962,7 +1987,7 @@ msgid "Zipping XML database... (this can take a few minutes)"
 msgstr "Стиснення XML бази даних... (це може зайняти кілька хвилин)"
 
 msgid "Zip job finished"
-msgstr "Zip job завершено"
+msgstr "Архівування завершено"
 
 msgid "No database found"
 msgstr "Не знайдено базу данних"
@@ -1974,13 +1999,13 @@ msgid "Enter new name"
 msgstr "Введіть нове ім'я"
 
 msgid "Enter category name"
-msgstr "Введіть імя категорії"
+msgstr "Введіть назву категорії"
 
 msgid "Please select a category before creating new screen"
-msgstr "Виберіть категорію перед сторенням нового екрана"
+msgstr "Виберіть категорію перед створенням нового екрана"
 
 msgid "Enter screen name"
-msgstr "Введіть імя екрана"
+msgstr "Введіть назву екрана"
 
 msgid "Scanning CAN"
 msgstr "Сканування CAN"
@@ -2004,10 +2029,10 @@ msgid "DISCONNECTED"
 msgstr "ВІДКЛЮЧЕНО"
 
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Зберегти список моїх ЕБУ (.ecu)"
+msgstr "Зберегти автомобіль (зберегти розширення '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
-msgstr "Зберегти ЕБУ (формат .json)"
+msgstr "Зберегти ЕБУ (зберегти розширення '.json')"
 
 msgid "Save record (keep '.txt' extension)"
 msgstr "Зберегти запис (зберегти розширення '.txt')"
@@ -2056,7 +2081,7 @@ msgid "DoIP (Diagnostics over IP)"
 msgstr "DoIP (Діагностика через IP)"
 
 msgid "Interface language"
-msgstr "Мова інтерфейсу (портібно зберегти та закрити)"
+msgstr "Мова інтерфейсу"
 
 msgid "Port speed"
 msgstr "Швидкість порта"
@@ -2270,22 +2295,22 @@ msgid "Select an ISO 13400 DoIP entity by its IP address"
 msgstr "Виберіть сутність DoIP ISO 13400 за її IP-адресою"
 
 msgid "You must check the recommandations"
-msgstr "Ви мовинні погодитись з рекомендаціями"
+msgstr "Ви повинні перевірити рекомендації"
 
 msgid "Please select a communication port"
-msgstr "Виберіть прорт для звязку"
+msgstr "Виберіть порт для зв'язку"
 
 msgid "ECU Command"
 msgstr "Команда ЕБУ"
 
 msgid "Start diagnostic session"
-msgstr "Діагностична сесія"
+msgstr "Почати діагностичну сесію"
 
 msgid "Request"
-msgstr "Запити"
+msgstr "Запит"
 
 msgid "Data to send"
-msgstr "Тип даних"
+msgstr "Дані для надсилання"
 
 msgid "Computed ISOTP Frame"
 msgstr "Обчислений кадр ISOTP"
@@ -2357,7 +2382,7 @@ msgid "Connection to ELM lost, trying to reconnect..."
 msgstr "Підключення до ELM втрачено, спроба підключитися знову..."
 
 msgid "Cannot reconnect..."
-msgstr "Не можу підключитися знову..."
+msgstr "Не вдається перепідключитися..."
 
 msgid "Switching to session mode"
 msgstr "Переключення до сесійного режиму"
@@ -2381,7 +2406,7 @@ msgid "ELM response : "
 msgstr "Відповідь ELM : "
 
 msgid "Button request not found : "
-msgstr "Немає параметрів для кнопки : "
+msgstr "Запит кнопки не знайдено : "
 
 msgid "Sending request :"
 msgstr "Відправка запиту :"
@@ -2390,10 +2415,10 @@ msgid "Unknown request "
 msgstr "Невідомий запит "
 
 msgid "Command aborted "
-msgstr "Команда перервано "
+msgstr "Команду перервано "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Помилка значення цього матеріалу потребує обхідного шлюзу можливо."
+msgstr "Помилка значення: можливо, потрібен обхідний шлюз."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Запит перервано (перевірта червоні значення): "
@@ -2415,7 +2440,7 @@ msgid "Writing parameter"
 msgstr "Запис параметрів"
 
 msgid "Blocked writing parameter"
-msgstr "Заблокавано запис параметрів"
+msgstr "Заблоковано записування параметра"
 
 msgid "Invalid"
 msgstr "Недійсний"
@@ -2427,10 +2452,10 @@ msgid "Cannot call request "
 msgstr "Неможливо викликати запит "
 
 msgid "Update time"
-msgstr "Оновити час"
+msgstr "Час оновлення"
 
 msgid "Clearing DTC information"
-msgstr "Скидання помилок DTC"
+msgstr "Скидання інформації DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr "У ЕБУ немає запиту ClearDTC, посилаю стандартний 14FF00"
@@ -2442,16 +2467,16 @@ msgid "<center>Ae you sure this is what you want.</center>"
 msgstr "<center>Впевнені?</center>"
 
 msgid "Clear DTC failed"
-msgstr "Скидання помилок DTC"
+msgstr "Не вдалося скинути DTC"
 
 msgid "Clear DTC successfully done"
-msgstr "Скидання помилок DTC вдале"
+msgstr "DTC успішно скинуто"
 
 msgid "No ReadDTC request for that ECU"
 msgstr "Немає запиту ReadDTC для цього ECU"
 
 msgid "Invalid response for ReadDTC command"
-msgstr "Неправильна відповідь на команду читання DTC"
+msgstr "Неправильна відповідь на команду ReadDTC"
 
 msgid "Read DTC returned an error"
 msgstr "Читання DTC завершилось помилкою"
@@ -2469,13 +2494,13 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Коди діагностичних несправностей"
 
 msgid "Clear ALL DTC"
-msgstr "Витерти усі DTC"
+msgstr "Витерти УСІ DTC"
 
 msgid "ECU trouble codes"
 msgstr "ECU коди помилок"
 
 msgid "Parsing screen "
-msgstr "Екран розшифровки "
+msgstr "Аналіз екрана "
 
 msgid "found request in input "
 msgstr "знайдено запит на вході "
@@ -2487,7 +2512,7 @@ msgid "found in button "
 msgstr "знайдено в кнопці "
 
 msgid "found in presend "
-msgstr "знайдено в пресенді "
+msgstr "знайдено в presend "
 
 msgid "found data in input "
 msgstr "дані знайдені на вході "

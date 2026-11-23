@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-28 19:28+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -118,10 +118,30 @@ msgid "is not mapped"
 msgstr "ist nicht zugeordnet"
 
 msgid "Scanning address: "
-msgstr "Scanne Adresse: "
+msgstr "Adresse wird gescannt: "
+
+#, python-format
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: leere Antwort für Addr. %(addr)s Protokoll %(protocol)s"
+
+#, python-format
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: ungültige Hex-Antwort für Addr. %(addr)s Protokoll "
+"%(protocol)s: %(err)s"
+
+#, python-format
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: Antwort zu kurz (%(bytes)d Bytes) für Addr. %(addr)s Protokoll "
+"%(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
-msgstr "Keine DoIP-Adressen für Scanning verfügbar"
+msgstr "Keine DoIP-Adressen zum Scannen verfügbar"
 
 #, python-format
 msgid "Initializing DoIP connection to %(ip)s:%(port)s"
@@ -168,11 +188,13 @@ msgstr "DoIP-UDS-Identifizierung bei %(addr)s fehlgeschlagen: %(error)s"
 
 #, python-format
 msgid "Could not close DoIP diagnostic session at %(addr)s: %(error)s"
-msgstr "DoIP-Diagnosesitzung bei %(addr)s konnte nicht geschlossen werden: %(error)s"
+msgstr ""
+"DoIP-Diagnosesitzung bei %(addr)s konnte nicht geschlossen werden: %(error)s"
 
 #, python-format
 msgid "Could not start DoIP legacy session at %(addr)s: %(error)s"
-msgstr "DoIP-Legacy-Sitzung bei %(addr)s konnte nicht gestartet werden: %(error)s"
+msgstr ""
+"DoIP-Legacy-Sitzung bei %(addr)s konnte nicht gestartet werden: %(error)s"
 
 #, python-format
 msgid "DoIP legacy identification failed at %(addr)s: %(error)s"
@@ -180,7 +202,8 @@ msgstr "DoIP-Legacy-Identifizierung bei %(addr)s fehlgeschlagen: %(error)s"
 
 #, python-format
 msgid "Could not close DoIP legacy session at %(addr)s: %(error)s"
-msgstr "DoIP-Legacy-Sitzung bei %(addr)s konnte nicht geschlossen werden: %(error)s"
+msgstr ""
+"DoIP-Legacy-Sitzung bei %(addr)s konnte nicht geschlossen werden: %(error)s"
 
 #, python-format
 msgid "Device detection error: %s"
@@ -204,7 +227,7 @@ msgstr ""
 "die Funktionalität des Bypass-Kabels."
 
 msgid "Trying to open port "
-msgstr "Versuche Anschluss zu oeffnen "
+msgstr "Versuche Anschluss zu öffnen "
 
 msgid "Port initialization failed"
 msgstr "Port-Initialisierung fehlgeschlagen"
@@ -216,21 +239,21 @@ msgid "STN connection established"
 msgstr "STN-Verbindung hergestellt"
 
 msgid "Version: "
-msgstr "Programmversion: "
+msgstr "Version: "
 
 #, python-format
 msgid "STPX/STN configuration warning: %s"
 msgstr "STPX/STN-Konfigurationswarnung: %s"
 
 msgid "No ELM interface on port"
-msgstr "Kein ELM angeschlossen"
+msgstr "Keine ELM-Schnittstelle am Port"
 
 msgid "OBDLink Connection OK, attempting full speed UART switch"
 msgstr ""
 "OBDLink-Verbindung OK, versuche UART-Umschaltung auf volle Geschwindigkeit"
 
 msgid "Failed to switch OBDLink to "
-msgstr "Umschaltung von OBDLink fehlgeschlagen zu volle Geschwindigkeit "
+msgstr "Umschaltung von OBDLink fehlgeschlagen zu "
 
 msgid "OBDLink Connection OK, using optimal settings"
 msgstr "OBDLink-Verbindung OK, verwende optimale Einstellungen"
@@ -329,22 +352,22 @@ msgid "Connection error: "
 msgstr "Verbindungsfehler: "
 
 msgid "FAIL"
-msgstr "Keine Antwort"
+msgstr "FEHLGESCHLAGEN"
 
 msgid "OK/TIMEOUT"
-msgstr "BESTÄTIGEN/ZEITÜBERSCHREITUNG"
+msgstr "OK/ZEITÜBERSCHREITUNG"
 
 msgid "OK"
-msgstr "Bestätigen"
+msgstr "OK"
 
 msgid "Incompatible adapter on ARM core"
-msgstr "Adapter inkompatibel fuer ARM Architektur"
+msgstr "Adapter inkompatibel für ARM Architektur"
 
 msgid "Result: "
 msgstr "Ergebnis: "
 
 msgid " succeeded from "
-msgstr " Kommandos haben geantwortet von insgesamt "
+msgstr " erfolgreich von "
 
 msgid "ELM Max version:"
 msgstr "Maximale ELM Version:"
@@ -369,7 +392,7 @@ msgid "Serial connection error: %s"
 msgstr "Serieller Verbindungsfehler: %s"
 
 msgid "ELM not connected or wrong COM port"
-msgstr "ELM nicht angeschlossen oder falscher Anschluss"
+msgstr "ELM nicht angeschlossen oder falscher COM-Port"
 
 #, python-format
 msgid "Unexpected error: %s"
@@ -413,7 +436,7 @@ msgstr "WiFi-Verbindung hergestellt: %(ip)s:%(port)s"
 
 #, python-format
 msgid "WiFi connection timeout to %(ip)s:%(port)s"
-msgstr "WiFi-Verbindung-Timeout zu %(ip)s:%(port)s"
+msgstr "WiFi-Verbindungs-Timeout zu %(ip)s:%(port)s"
 
 #, python-format
 msgid "WiFi connection error: %s"
@@ -472,7 +495,7 @@ msgid "TIMEOUT"
 msgstr "ZEITÜBERSCHREITUNG"
 
 msgid "Checking port speed:"
-msgstr "Test der Baudrate:"
+msgstr "Portgeschwindigkeit prüfen:"
 
 msgid "WiFi connection - skipping baudrate check"
 msgstr "WiFi-Verbindung - Baudrate-Prüfung überspringen"
@@ -481,7 +504,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Bluetooth-Verbindung - Baudrate-Prüfung überspringen"
 
 msgid "Start COM speed: "
-msgstr "Starten mit Baudrate: "
+msgstr "COM-Startgeschwindigkeit: "
 
 msgid "ELM not responding"
 msgstr "ELM antwortet nicht"
@@ -556,7 +579,7 @@ msgid "Using custom DDT database"
 msgstr "Verwendung einer benutzerdefinierten Datenbank"
 
 msgid "No COM port selected"
-msgstr "Kein Anschluss ausgewaehlt"
+msgstr "Keine COM-Port-Auswahl"
 
 #, python-format
 msgid "Initializing ELM with speed %i..."
@@ -566,7 +589,7 @@ msgid "DoIP connection failed: "
 msgstr "DoIP-Verbindung fehlgeschlagen: "
 
 msgid "No ELM327 or OBDLINK-SX detected on COM port "
-msgstr "Kein ELM327 oder OBDLINK-SX am ausgewählten Anschluss erkannt: "
+msgstr "Kein ELM327 oder OBDLINK-SX an COM-Port erkannt: "
 
 msgid "AB90 AIRBAG Reset"
 msgstr "AB90 AIRBAG Zurücksetzen"
@@ -763,17 +786,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "FEHLER: Befehl muss 5 Parameter haben: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"    <Befehl> <lid> <rsp_len> <Offset> <Hex-Maske> <Hex-Wert>\n"
 "        <lid> - Lokale ECU-Kennung. Länge sollte 2 Zeichen für KWP oder 4 "
 "für CAN sein\n"
 "        <rsp_len> - Länge der Befehlsantwort einschließlich positiver "
 "Antwortbytes, entspricht MinBytes aus der ddt-Datenbank\n"
-"        <offset> - Offset in Bytes bis zum ersten geänderten Byte (beginnt "
+"        <Offset> - Offset in Bytes bis zum ersten geänderten Byte (beginnt "
 "bei 1, nicht bei 0) \n"
-"        <hex mask> - Bitmaske für geänderte Bits, 1 - änderbar, 0 - "
+"        <Hex-Maske> - Bitmaske für geänderte Bits, 1 - änderbar, 0 - "
 "unberührt\n"
-"        <hex value> - Bitwert\n"
-"    <hex mask> und <hex value> müssen die gleiche Länge haben\n"
+"        <Hex-Wert> - Bitwert\n"
+"    <Hex-Maske> und <Hex-Wert> müssen die gleiche Länge haben\n"
 
 msgid ""
 "ERROR: command should have 6 parameters: \n"
@@ -791,18 +814,18 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "FEHLER: Befehl muss 6 Parameter haben: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <Befehl> <lid> <rsp_len> <Offset> <Hex-Maske> <Hex-Wert> <Beschriftung>\n"
 "        <lid> - Lokale ECU-Kennung. Länge sollte 2 Zeichen für KWP oder 4 "
 "für CAN sein\n"
 "        <rsp_len> - Länge der Befehlsantwort einschließlich positiver "
 "Antwortbytes, entspricht MinBytes aus der ddt-Datenbank\n"
-"        <offset> - Offset in Bytes bis zum ersten geänderten Byte (beginnt "
+"        <Offset> - Offset in Bytes bis zum ersten geänderten Byte (beginnt "
 "bei 1, nicht bei 0) \n"
-"        <hex mask> - Bitmaske für geänderte Bits, 1 - änderbar, 0 - "
+"        <Hex-Maske> - Bitmaske für geänderte Bits, 1 - änderbar, 0 - "
 "unberührt\n"
-"        <hex value> - Bitwert\n"
-"        <label> - Ziel-Sprungmarke\n"
-"    <hex mask> und <hex value> müssen die gleiche Länge haben\n"
+"        <Hex-Wert> - Bitwert\n"
+"        <Beschriftung> - Ziel-Sprungmarke\n"
+"    <Hex-Maske> und <Hex-Wert> müssen die gleiche Länge haben\n"
 
 msgid ""
 "ERROR: command should have 4 or 7 parameters: \n"
@@ -821,18 +844,18 @@ msgid ""
 "\n"
 msgstr ""
 "FEHLER: Befehl muss 4 oder 7 Parameter haben: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <Befehl> <lid> <rsp_len> <Offset> <Hex-Maske> <Hex-Wert> <Beschriftung>\n"
 "        <lid> - Lokale ECU-Kennung. Länge sollte 2 Zeichen für KWP oder 4 "
 "für CAN sein\n"
 "        <rsp_len> - Länge der Befehlsantwort einschließlich positiver "
 "Antwortbytes, entspricht MinBytes aus der ddt-Datenbank\n"
-"        <offset> - Offset in Bytes bis zum ersten geänderten Byte (beginnt "
+"        <Offset> - Offset in Bytes bis zum ersten geänderten Byte (beginnt "
 "bei 1, nicht bei 0) \n"
-"        <hex mask> - Bitmaske für geänderte Bits, 1 - änderbar, 0 - "
+"        <Hex-Maske> - Bitmaske für geänderte Bits, 1 - änderbar, 0 - "
 "unberührt\n"
-"        <val step> - Wert-Schrittweite\n"
-"        <val offset> - Wert-Offset\n"
-"        <val divider> - Wert-Teiler\n"
+"        <Wertschritt> - Wert-Schrittweite\n"
+"        <Wert-Offset> - Wert-Offset\n"
+"        <Wertteiler> - Wert-Teiler\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -895,7 +918,7 @@ msgid "wait|sleep x           - wait x seconds"
 msgstr "wait|sleep x           - x Sekunden warten"
 
 msgid "include <file>         - play another .cmd here"
-msgstr "include <datei>        - anderes .cmd hier ausführen"
+msgstr "include <Datei>         - anderes .cmd hier ausführen"
 
 msgid "Variables:"
 msgstr "Variablen:"
@@ -913,7 +936,7 @@ msgstr "Fehler: Rekursion nicht erlaubt: %(macro)s"
 
 #, python-format
 msgid "### %(file)s : %(count)d lines"
-msgstr "### %(file)s : %(count)d Zeilen"
+msgstr "### %(file)s: %(count)d Zeilen"
 
 msgid "# end of command file"
 msgstr "# Ende der Befehlsdatei"
@@ -988,7 +1011,9 @@ msgstr "Keine Übereinstimmung. Springe zu: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1064,7 +1089,7 @@ msgid "Macro folder:"
 msgstr "Makroordner:"
 
 msgid "Log ELM traffic to file"
-msgstr "ELM-Verkehr in Datei protokollieren"
+msgstr "ELM-Datenverkehr in Datei protokollieren"
 
 msgid "Log file name:"
 msgstr "Name der Protokolldatei:"
@@ -1378,7 +1403,7 @@ msgid "High Speed"
 msgstr "Hohe Geschwindigkeit"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Timer_DrivWEP_ON (Timer)"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Zurücksetzen"
@@ -1395,7 +1420,7 @@ msgid "Check values"
 msgstr "Werte prüfen"
 
 msgid "Waiting action"
-msgstr "Warte auf Aktion"
+msgstr "Warten auf Aktion"
 
 msgid "Reset all counters"
 msgstr "Alle Zähler zurücksetzen"
@@ -1452,7 +1477,7 @@ msgid "Del"
 msgstr "Löschen"
 
 msgid "Move up"
-msgstr "Nach oben"
+msgstr "Nach oben verschieben"
 
 msgid "Check"
 msgstr "Kontrollieren"
@@ -1481,16 +1506,16 @@ msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
 msgid "Delay;Request"
-msgstr "Verzoegerung;Anfrage"
+msgstr "Verzögerung;Anfrage"
 
 msgid "Screen initialization"
-msgstr "Bildschirm laden"
+msgstr "Bildschirm-Initialisierung"
 
 msgid "Requests to send before screen drawing"
-msgstr "Anfrage senden, vor dem Entwerfen des Bildschirms"
+msgstr "Anfragen, die vor dem Zeichnen des Bildschirms gesendet werden"
 
 msgid "Button name;Unique name"
-msgstr "Schaltflaechenname;Einzigartiger Name"
+msgstr "Schaltflächenname;Einzigartiger Name"
 
 msgid "New"
 msgstr "Neu"
@@ -1505,7 +1530,7 @@ msgid "Reload"
 msgstr "Neu laden"
 
 msgid "Validate changes"
-msgstr "Änderungen bestätigen"
+msgstr "Änderungen validieren"
 
 msgid "Description"
 msgstr "Beschreibung"
@@ -1560,7 +1585,7 @@ msgid "Coding"
 msgstr "Codierung"
 
 msgid "ECU Auto identification"
-msgstr "ECU Automatische Identifizierung"
+msgstr "Automatische ECU-Identifizierung"
 
 msgid "Add new"
 msgstr "Neu hinzufügen"
@@ -1572,7 +1597,7 @@ msgid "Number of bits"
 msgstr "Anzahl der Bits"
 
 msgid "Signed"
-msgstr "Signiert"
+msgstr "Mit Vorzeichen"
 
 msgid "Add item"
 msgstr "Element hinzufügen"
@@ -1626,7 +1651,7 @@ msgid "Inherits globals"
 msgstr "Erbt globale Variablen"
 
 msgid "No SDS"
-msgstr "Kein SDS (Sprachdialogsystem)"
+msgstr "Kein SDS"
 
 msgid "Plant"
 msgstr "Werk"
@@ -1644,7 +1669,7 @@ msgid "Reload requests"
 msgstr "Anfragen neuladen"
 
 msgid "Add request"
-msgstr "Anfrage hinzufuegen"
+msgstr "Anfrage hinzufügen"
 
 msgid "Send bytes"
 msgstr "Bytes senden"
@@ -1653,7 +1678,7 @@ msgid "Receive bytes"
 msgstr "Bytes empfangen"
 
 msgid "Request name;Bytes;Manual"
-msgstr "Name;Bytes;Manuell anfordern"
+msgstr "Anfragename;Bytes;Manuell"
 
 msgid "No request named"
 msgstr "Keine Anfrage mit Namen"
@@ -1668,7 +1693,7 @@ msgid " vs "
 msgstr " gegen "
 
 msgid "Cannot draw input "
-msgstr "Plug-In laden fehlgeschlagen "
+msgstr "Eingabe kann nicht angezeigt werden "
 
 msgid "No Value"
 msgstr "Kein Wert"
@@ -1694,7 +1719,7 @@ msgid "ECU Finder"
 msgstr "ECU-Sucher"
 
 msgid "Address :"
-msgstr "Adresse :"
+msgstr "Adresse:"
 
 msgid "ID frame :"
 msgstr "ID-Frame:"
@@ -1713,14 +1738,17 @@ msgid "No ECU database is installed"
 msgstr "Es ist keine ECU-Datenbank installiert"
 
 msgid "Restart DDT4ALL after installing or updating the database."
-msgstr "Starten Sie DDT4ALL nach der Installation oder Aktualisierung der Datenbank neu."
+msgstr ""
+"Starten Sie DDT4ALL nach der Installation oder Aktualisierung der Datenbank "
+"neu."
 
 msgid ""
 "Download the ECU database separately and copy the file (`ecu.zip` or the "
 "original DDT2000 XML database (`DDT2000DATA`)) to:\n"
 msgstr ""
-"Laden Sie die ECU-Datenbank separat herunter und kopieren Sie die Datei (`ecu.zip` oder die "
-"ursprüngliche DDT2000-XML-Datenbank (`DDT2000DATA`)) nach:\n"
+"Laden Sie die ECU-Datenbank separat herunter und kopieren Sie die Datei "
+"(`ecu.zip` oder die ursprüngliche DDT2000-XML-Datenbank (`DDT2000DATA`)) "
+"nach:\n"
 
 msgid "DDT4All Documentation"
 msgstr "DDT4All-Dokumentation"
@@ -1745,7 +1773,7 @@ msgid "Refresh rate (ms):"
 msgstr "Aktualisierungsrate (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr "CAN Timeout (ms) [0:AUTO] :"
+msgstr "CAN Timeout (ms) [0:AUTO]:"
 
 msgid "Documentation"
 msgstr "Dokumentation"
@@ -1823,7 +1851,7 @@ msgid "File"
 msgstr "Datei"
 
 msgid "Open XML"
-msgstr "Öffne XML"
+msgstr "XML öffnen"
 
 msgid "Save current ECU"
 msgstr "Aktuelles ECU speichern"
@@ -1841,7 +1869,7 @@ msgid "Tools"
 msgstr "Werkzeuge"
 
 msgid "Identify ECU"
-msgstr "Identifiziere ECU"
+msgstr "ECU identifizieren"
 
 msgid "Create New ECU"
 msgstr "Neues ECU erstellen"
@@ -1892,7 +1920,7 @@ msgid "Plugins"
 msgstr "Erweiterungen"
 
 msgid "Cannot load plugin "
-msgstr "Plugin kann nicht geladen werden "
+msgstr "Erweiterung kann nicht geladen werden "
 
 msgid "Help"
 msgstr "Hilfe"
@@ -1926,10 +1954,10 @@ msgstr ""
 "Der Verlauf des zuletzt ausgewählten Fahrzeugs und der ECU wurde gelöscht."
 
 msgid "Configuration Reset"
-msgstr "Konfiguration gelöscht"
+msgstr "Konfiguration zurücksetzen"
 
 msgid "The configuration has been reset."
-msgstr "Die Konfiguration wurde gelöscht."
+msgstr "Die Konfiguration wurde zurückgesetzt."
 
 msgid "Options"
 msgstr "Optionen"
@@ -1939,22 +1967,22 @@ msgid "Error updating menu bar: %s"
 msgstr "Fehler beim Aktualisieren der Menüleiste: %s"
 
 msgid "CAN Line 1 Auto"
-msgstr "CAN Leitung 1 Auto"
+msgstr "CAN-Leitung 1 Auto"
 
 msgid "CAN Line 1@500K"
-msgstr "CAN Leitung 1@500K"
+msgstr "CAN-Leitung 1@500K"
 
 msgid "CAN Line 1@250K"
-msgstr "CAN Leitung 1@250K"
+msgstr "CAN-Leitung 1@250K"
 
 msgid "CAN Line 2@500K"
-msgstr "CAN Leitung 2@500K"
+msgstr "CAN-Leitung 2@500K"
 
 msgid "CAN Line 2@250K"
-msgstr "CAN Leitung 2@250K"
+msgstr "CAN-Leitung 2@250K"
 
 msgid "CAN Line 2@125K"
-msgstr "CAN Leitung 2@125K"
+msgstr "CAN-Leitung 2@125K"
 
 msgid "KWP2000"
 msgstr "KWP2000-Protokoll"
@@ -2071,19 +2099,19 @@ msgid "Port speed"
 msgstr "Port-Geschwindigkeit"
 
 msgid "Connected mode"
-msgstr "ELM verbinden"
+msgstr "Verbundener Modus"
 
 msgid "Edition mode"
-msgstr "Dateieditor"
+msgstr "Bearbeitungsmodus"
 
 msgid "ELM benchmark"
-msgstr "ELM testen"
+msgstr "ELM-Benchmark"
 
 msgid "WiFi port : "
 msgstr "WiFi Anschluss: "
 
 msgid "I acknowledge that improper use may cause damage to my vehicle."
-msgstr "Ich bin mir bewusst, dass falsche Benutzung meinem Auto schaden kann"
+msgstr "Ich bin mir bewusst, dass falsche Benutzung meinem Auto schaden kann."
 
 msgid "Enable CAN2"
 msgstr "CAN2 aktivieren"
@@ -2101,7 +2129,7 @@ msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "DoIP (Diagnose über IP) Konfiguration (Experimentell)"
 
 msgid "Device Preset : "
-msgstr "Geräte-Voreinstellung : "
+msgstr "Geräte-Voreinstellung: "
 
 msgid "Custom"
 msgstr "Benutzerdefiniert"
@@ -2122,16 +2150,16 @@ msgid "Generic DoIP"
 msgstr "Allgemeines DoIP"
 
 msgid "DoIP Target IP : "
-msgstr "DoIP Ziel-IP : "
+msgstr "DoIP Ziel-IP: "
 
 msgid "DoIP Port : "
 msgstr "DoIP-Anschluss: "
 
 msgid "DoIP Timeout (seconds) : "
-msgstr "DoIP Zeitüberschreitung (Sekunden) : "
+msgstr "DoIP Zeitüberschreitung (Sekunden): "
 
 msgid "Enable Vehicle Announcement Discovery"
-msgstr "Fahrzeug-Ankündigungs-Erkennung aktivieren"
+msgstr "Fahrzeugankündigungs-Erkennung aktivieren"
 
 msgid "Auto-reconnect on connection loss"
 msgstr "Automatische Neuverbindung bei Verbindungsverlust"
@@ -2155,7 +2183,7 @@ msgid "Error removing DoIP device from list: %s"
 msgstr "Fehler beim Entfernen des DoIP-Geräts aus der Liste: %s"
 
 msgid "Checking..."
-msgstr "Überprüfe..."
+msgstr "Überprüfung..."
 
 msgid "Please enter WiFi adapter IP address"
 msgstr "Bitte geben Sie die IP-Adresse des WiFi-Adapters ein"
@@ -2290,13 +2318,13 @@ msgid "ECU Command"
 msgstr "ECU-Befehl"
 
 msgid "Start diagnostic session"
-msgstr "Diagnosesitzung"
+msgstr "Diagnosesitzung starten"
 
 msgid "Request"
-msgstr "Anfragen"
+msgstr "Anfrage"
 
 msgid "Data to send"
-msgstr "Datentyp"
+msgstr "Zu sendende Daten"
 
 msgid "Computed ISOTP Frame"
 msgstr "Berechneter ISOTP-Rahmen"
@@ -2328,16 +2356,16 @@ msgstr ""
 "Format"
 
 msgid "Enter label name"
-msgstr "Schriftfeldname eingeben"
+msgstr "Beschriftungsname eingeben"
 
 msgid "Add button"
 msgstr "Schaltfläche hinzufügen"
 
 msgid "Add label"
-msgstr "Schriftfeld hinzufügen"
+msgstr "Beschriftung hinzufügen"
 
 msgid "Rename label"
-msgstr "Schriftfeld umbenennen"
+msgstr "Beschriftung umbenennen"
 
 msgid "Change color"
 msgstr "Farbe ändern"
@@ -2364,7 +2392,7 @@ msgid "XML file not found : "
 msgstr "XML Datei nicht gefunden: "
 
 msgid "Invalid DDT file"
-msgstr "Ungueltige ECU Datei"
+msgstr "Ungültige DDT-Datei"
 
 msgid "Connection to ELM lost, trying to reconnect..."
 msgstr "Verbindung zu ELM verloren, versuche erneute Verbindung..."
@@ -2388,13 +2416,13 @@ msgid "Sending simulated ELM request :"
 msgstr "ELM Anfrage simuliert senden:"
 
 msgid "Bad ELM response :"
-msgstr "Schlechte ELM Antwort :"
+msgstr "Schlechte ELM-Antwort:"
 
 msgid "ELM response : "
 msgstr "ELM antwortet: "
 
 msgid "Button request not found : "
-msgstr "Schaltfläche nicht gefunden: "
+msgstr "Schaltflächenanfrage nicht gefunden: "
 
 msgid "Sending request :"
 msgstr "Anfrage senden:"
@@ -2407,7 +2435,7 @@ msgstr "Befehl abgebrochen "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
 msgstr ""
-"Wertefehler dieser Sachen benötigt möglicherweise einen Bypass-Gateway."
+"Wertefehler dieser Funktion benötigt möglicherweise ein Bypass-Gateway."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Anfrage abgebrochen (siehe rote Parametereinträge): "
@@ -2422,14 +2450,14 @@ msgid ""
 "<center>BLOCKED COMMAND</center>\n"
 "Activate expert mode to unlock"
 msgstr ""
-"<center>GEBLOCKTE BEFEHLE</center>\n"
+"<center>BLOCKIERTER BEFEHL</center>\n"
 "Expertenmodus aktivieren zum Entsperren"
 
 msgid "Writing parameter"
-msgstr "Schreibe Parameter"
+msgstr "Parameter schreiben"
 
 msgid "Blocked writing parameter"
-msgstr "Parameter schreiben blockiert"
+msgstr "Schreiben des Parameters blockiert"
 
 msgid "Invalid"
 msgstr "Ungültig"
@@ -2438,16 +2466,16 @@ msgid "ECU uses SDS "
 msgstr "ECU verwendet SDS "
 
 msgid "Cannot call request "
-msgstr "Anfrage nicht möglich "
+msgstr "Anfrage kann nicht aufgerufen werden "
 
 msgid "Update time"
-msgstr "Zeit aktualisieren"
+msgstr "Aktualisierungszeit"
 
 msgid "Clearing DTC information"
 msgstr "DTC-Informationen löschen"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr "Kein ClearDTC für diese ECU, sende Standard 14FF00"
+msgstr "Keine ClearDTC-Anfrage für diese ECU, Standard 14FF00 wird gesendet"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Sie sind dabei die Fehlercodes zu löschen</center>"
@@ -2462,13 +2490,13 @@ msgid "Clear DTC successfully done"
 msgstr "DTC erfolgreich gelöscht"
 
 msgid "No ReadDTC request for that ECU"
-msgstr "Keine ReadDTC-Anfrage für dieses ECU"
+msgstr "Keine ReadDTC-Anfrage für diese ECU"
 
 msgid "Invalid response for ReadDTC command"
-msgstr "Ungültige Antwort des DTC-Befehls"
+msgstr "Ungültige Antwort für ReadDTC-Befehl"
 
 msgid "Read DTC returned an error"
-msgstr "DTC Lesen gab einen Fehler zurück"
+msgstr "Lesen des DTC ergab einen Fehler"
 
 msgid "No DTC"
 msgstr "Kein DTC"
@@ -2483,13 +2511,13 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Diagnose-Fehlercodes"
 
 msgid "Clear ALL DTC"
-msgstr "Alle Fehler löschen"
+msgstr "ALLE DTC löschen"
 
 msgid "ECU trouble codes"
 msgstr "ECU-Fehlercodes"
 
 msgid "Parsing screen "
-msgstr "Bildschirm verarbeiten "
+msgstr "Bildschirm-Analyse "
 
 msgid "found request in input "
 msgstr "Anfrage in Eingabe gefunden "
@@ -2498,10 +2526,10 @@ msgid "found in display "
 msgstr "in Anzeige gefunden "
 
 msgid "found in button "
-msgstr "in Button gefunden "
+msgstr "in Schaltfläche gefunden "
 
 msgid "found in presend "
-msgstr "in Vorschau gefunden "
+msgstr "in presend gefunden "
 
 msgid "found data in input "
 msgstr "Daten in Eingabe gefunden "
@@ -2510,10 +2538,10 @@ msgid "found data in display "
 msgstr "Daten in Anzeige gefunden "
 
 msgid "Waiting..."
-msgstr "Warte..."
+msgstr "Warten..."
 
 msgid "Frame length error: "
-msgstr "Fehler bei Rahmenlänge: "
+msgstr "Rahmenlängenfehler: "
 
 msgid "Frame hex error: "
-msgstr "Hex-Fehler bei Rahmen: "
+msgstr "Hex-Fehler im Rahmen: "

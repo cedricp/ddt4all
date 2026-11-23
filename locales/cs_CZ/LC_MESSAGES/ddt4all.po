@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-28 19:27+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: Czech\n"
@@ -56,7 +56,7 @@ msgid "K-line addressing is not supported over DoIP"
 msgstr "Adresování K-line není přes DoIP podporováno"
 
 msgid "Warning, cannot get signed value for"
-msgstr "Varování, nelze získat podepsanou hodnotu pro"
+msgstr "Varování, nelze získat hodnotu se znaménkem pro"
 
 msgid "Division by zero, please check data item: "
 msgstr "Dělení nulou, prosím zkontrolujte datovou položku: "
@@ -117,6 +117,26 @@ msgstr "není zmapováno"
 
 msgid "Scanning address: "
 msgstr "Skenování adresy: "
+
+#, python-format
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: prázdná odpověď pro adresu %(addr)s protokol %(protocol)s"
+
+#, python-format
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: neplatná hex odpověď pro adresu %(addr)s protokol %(protocol)s: "
+"%(err)s"
+
+#, python-format
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: odpověď je příliš krátká (%(bytes)d bajtů) pro adresu %(addr)s "
+"protokol %(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Žádné adresy DoIP nejsou k dispozici pro skenování"
@@ -251,13 +271,13 @@ msgstr "Port je None - nelze přepnout rychlost"
 #, python-format
 msgid "%s switched baudrate OK, changing UART speed now..."
 msgstr ""
-"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
+"%s přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
 "UART..."
 
 #, python-format
 msgid "%s baudrate switched OK, changing UART speed now..."
 msgstr ""
-"%s Přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
+"%s přepnutí přenosové rychlosti proběhlo v pořádku, právě se mění rychlost "
 "UART..."
 
 #, python-format
@@ -295,7 +315,7 @@ msgid "Using baudrate: "
 msgstr "Použití přenosové rychlosti: "
 
 msgid "Testing for ELS27 device..."
-msgstr "Testování základní konektivity..."
+msgstr "Testování zařízení ELS27..."
 
 msgid "ELS27 device detected: "
 msgstr "Detekováno zařízení ELS27: "
@@ -328,13 +348,13 @@ msgid "Connection error: "
 msgstr "Chyba připojení: "
 
 msgid "FAIL"
-msgstr "CHYBA"
+msgstr "SELHALO"
 
 msgid "OK/TIMEOUT"
-msgstr "POTVRDIT/ČASOVÝ LIMIT"
+msgstr "OK/ČASOVÝ LIMIT"
 
 msgid "OK"
-msgstr "Potvrdit"
+msgstr "OK"
 
 msgid "Incompatible adapter on ARM core"
 msgstr "Nekompatibilní adaptér na jádru ARM"
@@ -434,10 +454,10 @@ msgstr ""
 
 #, python-format
 msgid "Serial error in read_byte: %s"
-msgstr "Sériová chyba při čtení_bajtu: %s"
+msgstr "Sériová chyba v read_byte: %s"
 
 msgid "Connection to ELM was lost"
-msgstr "Spojení s ELM bylo ztraceno."
+msgstr "Spojení s ELM bylo ztraceno"
 
 #, python-format
 msgid "*       Error: %s"
@@ -455,10 +475,10 @@ msgid "WiFi connection - baudrate change not applicable"
 msgstr "Připojení WiFi - změna rychlosti přenosu dat neaplikovatelná"
 
 msgid "Attempting WiFi reconnection..."
-msgstr "Pokus o opětovné připojení k Wi-Fi..."
+msgstr "Pokus o opětovné připojení k WiFi..."
 
 msgid "Port handler is None, cannot write"
-msgstr "Obslužná rutina portu je Žádná, nelze zapisovat"
+msgstr "Obslužná rutina portu je None, nelze zapisovat"
 
 #, python-format
 msgid "Serial write error: %s"
@@ -481,7 +501,7 @@ msgid "Bluetooth connection - skipping baudrate check"
 msgstr "Připojení Bluetooth - přeskakuje kontrolu rychlosti přenosu dat"
 
 msgid "Start COM speed: "
-msgstr "Počáteční rychlost COM : "
+msgstr "Počáteční rychlost COM: "
 
 msgid "ELM not responding"
 msgstr "ELM neodpovídá"
@@ -580,10 +600,10 @@ msgid ""
 msgstr ""
 "AB90 (Clio III)/2<br>AIRBAG VIRGINIZER<br><font color='red'>TENTO PLUGIN "
 "ODEMKNE ÚDAJE O NEHODÁCH AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, "
-"ODEJDĚTE HO</font>"
+"ODEJDĚTE</font>"
 
 msgid "Check ACU Virgin"
-msgstr "Zkontrolujte ACU Virgin"
+msgstr "Zkontrolovat ACU Virgin"
 
 msgid "Waiting"
 msgstr "Čekání"
@@ -630,10 +650,10 @@ msgstr ""
 "NETESTOVÁNO</font>"
 
 msgid "LEARN"
-msgstr "UČIT"
+msgstr "NAUČIT"
 
 msgid "VALIDATE"
-msgstr "Potvrďte změny"
+msgstr "OVĚŘIT"
 
 msgid "CANCEL"
 msgstr "ZRUŠIT"
@@ -676,10 +696,10 @@ msgid ""
 "EPS IMMO DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Modus/Clio III EPS VIRGINIZER<br><font color='red'>TENTO PLUGIN RESETUJE "
-"DATA IMMO EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZRUŠTE HO</font>"
+"DATA IMMO EPS<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "BLANK STATUS & VIN READ"
-msgstr "PRÁZDNÉ STAVY A ČTENÍ VIN"
+msgstr "PRÁZDNÝ STAV A ČTENÍ VIN"
 
 msgid "Virginize EPS"
 msgstr "Uvést EPS do čistého stavu"
@@ -709,7 +729,7 @@ msgid "<font color='green'>EPS virgin</font>"
 msgstr "<font color='green'>Čistá EPS</font>"
 
 msgid "<font color='red'>EPS coded</font>"
-msgstr "<font color='red'>EPS kódovaný</font>"
+msgstr "<font color='red'>EPS kódovaná</font>"
 
 #, python-format
 msgid "SdSC0 stream: %s"
@@ -723,10 +743,10 @@ msgid ""
 "DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Clio IV EPS VIRGINIZER<br><font color='red'>TENTO PLUGIN RESETUJE DATA IMMO "
-"EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZRUŠTE HO</font>"
+"EPS<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "Check EPS Virgin"
-msgstr "Zkontrolujte EPS Virgin"
+msgstr "Zkontrolovat EPS Virgin"
 
 msgid "<font color='green'>EPS not operational</font>"
 msgstr "<font color='green'>EPS není funkční</font>"
@@ -759,17 +779,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "CHYBA: příkaz musí mít 5 parametrů: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"    <příkaz> <lid> <rsp_len> <posun> <hex maska> <hex hodnota>\n"
 "        <lid> - místní identifikátor ECU. Délka by měla být 2 znaky pro KWP "
 "nebo 4 pro CAN\n"
 "        <rsp_len> - délka odpovědi na příkaz včetně bajtů kladné odpovědi, "
 "odpovídá MinBytes z databáze ddt\n"
-"        <offset> - posun v bajtech k prvnímu změněnému bajtu (začíná od 1, "
+"        <posun> - posun v bajtech k prvnímu změněnému bajtu (začíná od 1, "
 "nikoli od 0) \n"
-"        <hex mask> - bitová maska pro změněné bity, 1 - měnitelný, 0 - "
+"        <hex maska> - bitová maska pro změněné bity, 1 - měnitelný, 0 - "
 "nedotknutelný\n"
-"        <hex value> - hodnota bitu\n"
-"    <hex mask> a <hex value> musí mít stejnou délku\n"
+"        <hex hodnota> - hodnota bitu\n"
+"    <hex maska> a <hex hodnota> musí mít stejnou délku\n"
 
 msgid ""
 "ERROR: command should have 6 parameters: \n"
@@ -787,18 +807,18 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "CHYBA: příkaz musí mít 6 parametrů: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <příkaz> <lid> <rsp_len> <posun> <hex maska> <hex hodnota> <popisek>\n"
 "        <lid> - místní identifikátor ECU. Délka by měla být 2 znaky pro KWP "
 "nebo 4 pro CAN\n"
 "        <rsp_len> - délka odpovědi na příkaz včetně bajtů kladné odpovědi, "
 "odpovídá MinBytes z databáze ddt\n"
-"        <offset> - posun v bajtech k prvnímu změněnému bajtu (začíná od 1, "
+"        <posun> - posun v bajtech k prvnímu změněnému bajtu (začíná od 1, "
 "nikoli od 0) \n"
-"        <hex mask> - bitová maska pro změněné bity, 1 - měnitelný, 0 - "
+"        <hex maska> - bitová maska pro změněné bity, 1 - měnitelný, 0 - "
 "nedotknutelný\n"
-"        <hex value> - hodnota bitu\n"
-"        <label> - cílové návěstí\n"
-"    <hex mask> a <hex value> musí mít stejnou délku\n"
+"        <hex hodnota> - hodnota bitu\n"
+"        <popisek> - cílové návěstí\n"
+"    <hex maska> a <hex hodnota> musí mít stejnou délku\n"
 
 msgid ""
 "ERROR: command should have 4 or 7 parameters: \n"
@@ -817,18 +837,18 @@ msgid ""
 "\n"
 msgstr ""
 "CHYBA: příkaz musí mít 4 nebo 7 parametrů: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <příkaz> <lid> <rsp_len> <posun> <hex maska> <hex hodnota> <popisek>\n"
 "        <lid> - místní identifikátor ECU. Délka by měla být 2 znaky pro KWP "
 "nebo 4 pro CAN\n"
 "        <rsp_len> - délka odpovědi na příkaz včetně bajtů kladné odpovědi, "
 "odpovídá MinBytes z databáze ddt\n"
-"        <offset> - posun v bajtech k prvnímu změněnému bajtu (začíná od 1, "
+"        <posun> - posun v bajtech k prvnímu změněnému bajtu (začíná od 1, "
 "nikoli od 0) \n"
-"        <hex mask> - bitová maska pro změněné bity, 1 - měnitelný, 0 - "
+"        <hex maska> - bitová maska pro změněné bity, 1 - měnitelný, 0 - "
 "nedotknutelný\n"
-"        <val step> - krok hodnoty\n"
-"        <val offset> - posun hodnoty\n"
-"        <val divider> - dělitel hodnoty\n"
+"        <krok hodnoty> - krok hodnoty\n"
+"        <posun hodnoty> - posun hodnoty\n"
+"        <dělitel hodnoty> - dělitel hodnoty\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -891,7 +911,7 @@ msgid "wait|sleep x           - wait x seconds"
 msgstr "wait|sleep x           - čekat x sekund"
 
 msgid "include <file>         - play another .cmd here"
-msgstr "include <soubor>       - spustit jiný .cmd zde"
+msgstr "include <soubor>         - spustit jiný .cmd zde"
 
 msgid "Variables:"
 msgstr "Proměnné:"
@@ -909,7 +929,7 @@ msgstr "Chyba: rekurze je zakázána: %(macro)s"
 
 #, python-format
 msgid "### %(file)s : %(count)d lines"
-msgstr "### %(file)s : %(count)d řádků"
+msgstr "### %(file)s: %(count)d řádků"
 
 msgid "# end of command file"
 msgstr "# konec příkazového souboru"
@@ -984,7 +1004,9 @@ msgstr "Bez shody. Přejít na: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1242,10 +1264,10 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA II UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZMIZÍ</font>"
+"UCH<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "Check UCH Virgin"
-msgstr "Zkontrolujte UCH Virgin"
+msgstr "Zkontrolovat UCH Virgin"
 
 msgid "Virginize UCH"
 msgstr "Uvést UCH do čistého stavu"
@@ -1254,7 +1276,7 @@ msgid "<font color='green'>UCH virgin</font>"
 msgstr "<font color='green'>Čistá UCH</font>"
 
 msgid "<font color='red'>UCH coded</font>"
-msgstr "<font color='red'>UCH kódovaný</font>"
+msgstr "<font color='red'>UCH kódovaná</font>"
 
 msgid "Laguna III UCH Reset"
 msgstr "Resetování UCH Laguna III"
@@ -1264,7 +1286,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "LAGUNA III UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZMIZÍ</font>"
+"UCH<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "Megane/Scenic II UCH Reset"
 msgstr "Resetování UCH Megane/Scenic II"
@@ -1274,7 +1296,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE II UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ</font>"
+"UCH<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "Megane3 AIRBAG Reset"
 msgstr "Resetování airbagu Megane3"
@@ -1284,7 +1306,7 @@ msgid ""
 "AIRBAG CRASH DATA<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Megane III<br>AIRBAG VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMKNE "
-"ÚDAJE O NEHODÁCH AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE HO</"
+"ÚDAJE O NEHODÁCH AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</"
 "font>"
 
 #, python-format
@@ -1300,8 +1322,8 @@ msgid ""
 "MEANS</font>"
 msgstr ""
 "ZOE/FLENCE/Megane III/Scenic III EPS VIRGINIZER<br><font color='red'>TENTO "
-"PLUGIN RESETUJE DATA IMMO EPS<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, "
-"ZRUŠTE HO</font>"
+"PLUGIN RESETUJE DATA IMMO EPS<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, "
+"ODEJDĚTE</font>"
 
 msgid "Megane/Scenic III UCH Reset"
 msgstr "Resetování UCH Megane/Scenic III"
@@ -1311,7 +1333,7 @@ msgid ""
 "UCH<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "MEGANE III UCH VIRGINIZER<br><font color='red'>TENTO PLUGIN SMAŽE VAŠE "
-"UCH<br>JDI PŘÍČ, NEMÁŠ-LI PONĚTÍ, CO TO ZNAMENÁ, ZMIZÍ</font>"
+"UCH<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "RSAT4 AIRBAG Reset"
 msgstr "Resetování airbagu RSAT4"
@@ -1323,7 +1345,7 @@ msgid ""
 msgstr ""
 "TWINGO III/ZOE/DOKKER/DUSTER ph2/TRAFIC III/CAPTUR/LODGY ph1/2<br>AIRBAG "
 "VIRGINIZER<br><font color='red'>TENTO PLUGIN ODEMKNE ÚDAJE O NEHODÁCH "
-"AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE HO</font>"
+"AIRBAGŮ<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 #, python-format
 msgid "SdSEX stream: %s"
@@ -1369,7 +1391,7 @@ msgid "High Speed"
 msgstr "Vysoká rychlost"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Časovač_DrivWEP_Zapnuto"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Resetovat"
@@ -1379,10 +1401,10 @@ msgid ""
 "PUMP COUNTERS<br>GO AWAY IF YOU HAVE NO IDEA OF WHAT IT MEANS</font>"
 msgstr ""
 "Zoe počítadla vodní pumpy<br><font color='red'>TENTO PLUGIN VYMAŽE POČÍTADLA "
-"VODNÍ PUMPY<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ZRUŠTE TO</font>"
+"VODNÍ PUMPY<br>POKUD NEMÁTE TUŠENÍ, CO TO ZNAMENÁ, ODEJDĚTE</font>"
 
 msgid "Check values"
-msgstr "Zkontrolujte hodnoty"
+msgstr "Zkontrolovat hodnoty"
 
 msgid "Waiting action"
 msgstr "Čekání na akci"
@@ -1404,37 +1426,37 @@ msgid "<font color='green'>Values read</font>"
 msgstr "<font color='green'>Hodnoty přečteny</font>"
 
 msgid "Reading Low speed"
-msgstr "Čtení Nízká rychlost"
+msgstr "Čtení nízké rychlosti"
 
 msgid "Reading Middle speed"
-msgstr "Střední rychlost čtení"
+msgstr "Čtení střední rychlosti"
 
 msgid "Reading High speed"
-msgstr "Čtení Vysoká rychlost"
+msgstr "Čtení vysoké rychlosti"
 
 msgid "<font color='green'>CLEAR V_Timer_DrivWEP_ON EXECUTED</font>"
-msgstr "<font color='green'>VYMAZAT V_Timer_DrivWEP_ON PROVEDENO</font>"
+msgstr "<font color='green'>VYMAZÁNÍ V_Timer_DrivWEP_ON PROVEDENO</font>"
 
 msgid "<font color='red'>CLEAR V_Timer_DrivWEP_ON FAILED</font>"
-msgstr "<font color='red'>VYMAZÁNÍ V_TIMER_DRIVWEP_ON SE NEPODAŘILO</font>"
+msgstr "<font color='red'>VYMAZÁNÍ V_Timer_DrivWEP_ON SE NEPODAŘILO</font>"
 
 msgid "<font color='green'>CLEAR Low EXECUTED</font>"
-msgstr "<font color='green'>VYČISTIT VYSOKÝ PROVEDENÝ</font>"
+msgstr "<font color='green'>VYMAZÁNÍ NÍZKÉ RYCHLOSTI PROVEDENO</font>"
 
 msgid "<font color='red'>CLEAR Low FAILED</font>"
-msgstr "<font color='red'>VYMAZÁNÍ VYSOKÉ HODNOTY SE NEDOŠLO</font>"
+msgstr "<font color='red'>VYMAZÁNÍ NÍZKÉ RYCHLOSTI SELHALO</font>"
 
 msgid "<font color='green'>CLEAR Medium EXECUTED</font>"
-msgstr "<font color='green'>VYČISTIT VYSOKÝ PROVEDENÝ</font>"
+msgstr "<font color='green'>VYMAZÁNÍ STŘEDNÍ RYCHLOSTI PROVEDENO</font>"
 
 msgid "<font color='red'>CLEAR Medium FAILED</font>"
-msgstr "<font color='red'>VYMAZÁNÍ média NEÚSPĚŠNÉ</font>"
+msgstr "<font color='red'>VYMAZÁNÍ STŘEDNÍ RYCHLOSTI SELHALO</font>"
 
 msgid "<font color='green'>CLEAR HIGH EXECUTED</font>"
-msgstr "<font color='green'>VYČISTIT VYSOKÝ PROVEDENÝ</font>"
+msgstr "<font color='green'>VYMAZÁNÍ VYSOKÉ RYCHLOSTI PROVEDENO</font>"
 
 msgid "<font color='red'>CLEAR HIGH FAILED</font>"
-msgstr "<font color='red'>VYMAZÁNÍ VYSOKÉ HODNOTY SE NEDOŠLO</font>"
+msgstr "<font color='red'>VYMAZÁNÍ VYSOKÉ RYCHLOSTI SELHALO</font>"
 
 msgid "Add"
 msgstr "Přidat"
@@ -1443,7 +1465,7 @@ msgid "Del"
 msgstr "Smazat"
 
 msgid "Move up"
-msgstr "Posuňte se nahoru"
+msgstr "Posunout nahoru"
 
 msgid "Check"
 msgstr "Zkontrolovat"
@@ -1464,23 +1486,24 @@ msgstr ""
 msgid ""
 "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
-"<font color=red>Žádost</font><font color=blue>'%s'</font> má chybějící vstupy"
+"<font color=red>Požadavek</font><font color=blue>'%s'</font> má chybějící "
+"vstupy"
 
 #, python-format
 msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
 msgid "Delay;Request"
-msgstr "Zpoždění; Žádost"
+msgstr "Zpoždění;Požadavek"
 
 msgid "Screen initialization"
 msgstr "Inicializace obrazovky"
 
 msgid "Requests to send before screen drawing"
-msgstr "Žádosti o odeslání před kreslením obrazovky"
+msgstr "Požadavky k odeslání před vykreslením obrazovky"
 
 msgid "Button name;Unique name"
-msgstr "Název tlačítka; Jedinečný název"
+msgstr "Název tlačítka;Jedinečný název"
 
 msgid "New"
 msgstr "Nový"
@@ -1495,7 +1518,7 @@ msgid "Reload"
 msgstr "Znovu načíst"
 
 msgid "Validate changes"
-msgstr "Potvrďte změny"
+msgstr "Ověřit změny"
 
 msgid "Description"
 msgstr "Popis"
@@ -1523,7 +1546,7 @@ msgid "Replace me with request description"
 msgstr "Nahradit mě popisem požadavku"
 
 msgid "Data name;Description"
-msgstr "Název dat; Popis"
+msgstr "Název dat;Popis"
 
 msgid "Goto data"
 msgstr "Přejít na data"
@@ -1541,10 +1564,10 @@ msgid "ECU Protocol"
 msgstr "Protokol ECU"
 
 msgid "Tool > Ecu ID (Hex)"
-msgstr "Nástroj > ID řídicí jednotky (hex)"
+msgstr "Nástroj > ID ECU (Hex)"
 
 msgid "Ecu > Tool ID (Hex)"
-msgstr "Řídicí jednotka > ID nástroje (hex)"
+msgstr "ECU > ID nástroje (Hex)"
 
 msgid "Coding"
 msgstr "Kódování"
@@ -1562,7 +1585,7 @@ msgid "Number of bits"
 msgstr "Počet bitů"
 
 msgid "Signed"
-msgstr "Podepsaný"
+msgstr "Znaménkový"
 
 msgid "Add item"
 msgstr "Přidat položku"
@@ -1607,10 +1630,10 @@ msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr "Název dat;Počáteční bajt;Bitový posun;Počet bitů;Endianita"
 
 msgid "Little"
-msgstr "Malý"
+msgstr "Little-endian"
 
 msgid "Big"
-msgstr "Velký"
+msgstr "Big-endian"
 
 msgid "Inherits globals"
 msgstr "Dědí globální proměnné"
@@ -1680,10 +1703,10 @@ msgid "Thank you for you contribution, if nothing happens, please go to"
 msgstr "Děkujeme za váš příspěvek. Pokud se nic neděje, přejděte prosím na"
 
 msgid "ECU Finder"
-msgstr "Název ECU"
+msgstr "Hledač ECU"
 
 msgid "Address :"
-msgstr "Adresa :"
+msgstr "Adresa:"
 
 msgid "ID frame :"
 msgstr "ID rám:"
@@ -1728,26 +1751,26 @@ msgstr "Navštivte online dokumentaci na adrese:"
 
 msgid "This basic view will still show ECU documentation when available."
 msgstr ""
-"Toto základní zobrazení bude i nadále zobrazovat dokumentaci k řídicí "
-"jednotce motoru (ECU), pokud bude k dispozici."
+"Toto základní zobrazení bude i nadále zobrazovat dokumentaci ECU, pokud bude "
+"k dispozici."
 
 msgid "Refresh rate (ms):"
-msgstr "Časový limit CAN (ms) [0:AUTO] :"
+msgstr "Rychlost obnovení (ms):"
 
 msgid "Can timeout (ms) [0:AUTO] :"
-msgstr "Časový limit CAN (ms) [0:AUTO] :"
+msgstr "Časový limit CAN (ms) [0:AUTO]:"
 
 msgid "Documentation"
 msgstr "Dokumentace"
 
 msgid "Screen"
-msgstr "Přidat na obrazovku"
+msgstr "Obrazovka"
 
 msgid "CAN Sniffer"
 msgstr "Analyzátor CAN"
 
 msgid "Requests"
-msgstr "Znovu načíst požadavky"
+msgstr "Požadavky"
 
 msgid "Data"
 msgstr "Údaje"
@@ -1756,7 +1779,7 @@ msgid "Buttons"
 msgstr "Tlačítka"
 
 msgid "Ecu parameters"
-msgstr "Identifikovat ECU"
+msgstr "Parametry ECU"
 
 msgid "Screen Window"
 msgstr "Okno obrazovky"
@@ -1765,7 +1788,7 @@ msgid "Screens"
 msgstr "Obrazovky"
 
 msgid "Logs Window"
-msgstr "Okno ECU"
+msgstr "Okno protokolů"
 
 msgid "Ecu Window"
 msgstr "Okno ECU"
@@ -1837,13 +1860,13 @@ msgid "Create New ECU"
 msgstr "Vytvořit novou ECU"
 
 msgid "Zip database"
-msgstr "Zip databáze"
+msgstr "Zazipovat databázi"
 
 msgid "Clear DDT4ALL History"
 msgstr "Vymazat historii DDT4ALL"
 
 msgid "Reset DDT4ALL Settings"
-msgstr "Obnovit nastavení DDT4ALL"
+msgstr "Resetovat nastavení DDT4ALL"
 
 msgid "View"
 msgstr "Zobrazit"
@@ -1894,7 +1917,7 @@ msgid "About Developers"
 msgstr "O vývojářích"
 
 msgid "Get Git update"
-msgstr "Aktualizovat čas"
+msgstr "Získat aktualizaci Git"
 
 msgid "About"
 msgstr "O aplikaci"
@@ -1915,10 +1938,10 @@ msgid "Last selected vehicle and ECU history has been cleared."
 msgstr "Historie posledního vybraného vozidla a ECU byla vymazána."
 
 msgid "Configuration Reset"
-msgstr "Konfigurace vymazána"
+msgstr "Reset konfigurace"
 
 msgid "The configuration has been reset."
-msgstr "Konfigurace byla vymazána."
+msgstr "Konfigurace byla resetována."
 
 msgid "Options"
 msgstr "Možnosti"
@@ -1961,10 +1984,10 @@ msgid "Zip job finished"
 msgstr "Úloha zipu dokončena"
 
 msgid "No database found"
-msgstr "Zip databáze"
+msgstr "Databáze nenalezena"
 
 msgid "Check documentation"
-msgstr "Dokumentace"
+msgstr "Zkontrolovat dokumentaci"
 
 msgid "Enter new name"
 msgstr "Zadejte nový název"
@@ -1976,7 +1999,7 @@ msgid "Please select a category before creating new screen"
 msgstr "Před vytvořením nové obrazovky vyberte kategorii"
 
 msgid "Enter screen name"
-msgstr "Zadejte přezdívku"
+msgstr "Zadejte název obrazovky"
 
 msgid "Scanning CAN"
 msgstr "Skenování CAN"
@@ -1991,7 +2014,7 @@ msgid "Scan options"
 msgstr "Možnosti skenování"
 
 msgid "EDITION MODE"
-msgstr "REŽIM EDICE"
+msgstr "REŽIM ÚPRAV"
 
 msgid "CONNECTED"
 msgstr "PŘIPOJENO"
@@ -2025,19 +2048,19 @@ msgid "ELM port selection"
 msgstr "Výběr portu ELM"
 
 msgid "USB"
-msgstr "Připojení USB"
+msgstr "USB"
 
 msgid "WiFi"
-msgstr "Wi-Fi"
+msgstr "WiFi"
 
 msgid "Bluetooth"
-msgstr "Připojení Bluetooth"
+msgstr "Bluetooth"
 
 msgid "OBDLINK SX/EX"
 msgstr "Adaptér OBDLINK SX/EX"
 
 msgid "ELS27/ELS27 V5 - May appear as FTDI/CH340/CP210x device"
-msgstr "ELS27/ELS27 V5 – Může se zobrazovat jako zařízení FTDI/CH340/CP210x"
+msgstr "ELS27/ELS27 V5 - Může se zobrazovat jako zařízení FTDI/CH340/CP210x"
 
 msgid "Vlinker FS/MC"
 msgstr "Adaptér Vlinker FS/MC"
@@ -2055,22 +2078,22 @@ msgid "Interface language"
 msgstr "Jazyk rozhraní"
 
 msgid "Port speed"
-msgstr "Rychlost"
+msgstr "Rychlost portu"
 
 msgid "Connected mode"
 msgstr "Režim připojení"
 
 msgid "Edition mode"
-msgstr "REŽIM EDICE"
+msgstr "REŽIM ÚPRAV"
 
 msgid "ELM benchmark"
-msgstr "Resetovat ELM"
+msgstr "ELM benchmark"
 
 msgid "WiFi port : "
 msgstr "WiFi port: "
 
 msgid "I acknowledge that improper use may cause damage to my vehicle."
-msgstr "Jsem si vědom/a toho, že při špatném používání můžu své auto poškodit"
+msgstr "Jsem si vědom/a toho, že při špatném používání můžu své auto poškodit."
 
 msgid "Enable CAN2"
 msgstr "Povolit CAN2"
@@ -2088,7 +2111,7 @@ msgid "DoIP (Diagnostics over IP) Configuration (Experimental)"
 msgstr "Konfigurace DoIP (Diagnostika přes IP) (Experimentální)"
 
 msgid "Device Preset : "
-msgstr "Předvolba zařízení : "
+msgstr "Předvolba zařízení: "
 
 msgid "Custom"
 msgstr "Vlastní"
@@ -2109,13 +2132,13 @@ msgid "Generic DoIP"
 msgstr "Obecný DoIP"
 
 msgid "DoIP Target IP : "
-msgstr "Cílová IP DoIP : "
+msgstr "Cílová IP DoIP: "
 
 msgid "DoIP Port : "
 msgstr "Port DoIP: "
 
 msgid "DoIP Timeout (seconds) : "
-msgstr "Timeout DoIP (sekundy) : "
+msgstr "Timeout DoIP (sekundy): "
 
 msgid "Enable Vehicle Announcement Discovery"
 msgstr "Povolit objevování oznámení vozidla"
@@ -2142,7 +2165,7 @@ msgid "Error removing DoIP device from list: %s"
 msgstr "Chyba při odebírání zařízení DoIP ze seznamu: %s"
 
 msgid "Checking..."
-msgstr "Kontroluji..."
+msgstr "Kontrola..."
 
 msgid "Please enter WiFi adapter IP address"
 msgstr "Zadejte prosím IP adresu WiFi adaptéru"
@@ -2154,13 +2177,13 @@ msgid "Please select a serial port"
 msgstr "Vyberte prosím komunikační port"
 
 msgid "Selected port is no longer available"
-msgstr "Není vybrán žádný port COM"
+msgstr "Vybraný port již není k dispozici"
 
 msgid "Attempting connection..."
 msgstr "Pokus o připojení..."
 
 msgid "Port: "
-msgstr "Komunikační port: "
+msgstr "Port: "
 
 msgid "Speed: "
 msgstr "Rychlost: "
@@ -2235,7 +2258,7 @@ msgstr "  Konfigurace uložena a seznam zařízení znovu načten"
 
 #, python-format
 msgid "Error in force DoIP update: %s"
-msgstr "Chyba v vynucené aktualizaci DoIP: %s"
+msgstr "Chyba při vynucené aktualizaci DoIP: %s"
 
 #, python-format
 msgid "Error in delayed DoIP update: %s"
@@ -2274,13 +2297,13 @@ msgid "ECU Command"
 msgstr "Příkaz ECU"
 
 msgid "Start diagnostic session"
-msgstr "Diagnostické sezení"
+msgstr "Spustit diagnostickou relaci"
 
 msgid "Request"
-msgstr "Znovu načíst požadavky"
+msgstr "Požadavek"
 
 msgid "Data to send"
-msgstr "Datový typ"
+msgstr "Data k odeslání"
 
 msgid "Computed ISOTP Frame"
 msgstr "Vypočítaný ISOTP rámec"
@@ -2311,25 +2334,25 @@ msgstr ""
 "Abyste mohli upravovat obrazovku, nejprve ji exportujte do formátu JSON"
 
 msgid "Enter label name"
-msgstr "Zadejte nový název"
+msgstr "Zadejte název popisku"
 
 msgid "Add button"
-msgstr "Přidat požadavek"
+msgstr "Přidat tlačítko"
 
 msgid "Add label"
-msgstr "Přidat položku"
+msgstr "Přidat popisek"
 
 msgid "Rename label"
-msgstr "Chyba, nelze přejmenovat"
+msgstr "Přejmenovat popisek"
 
 msgid "Change color"
 msgstr "Změnit barvu"
 
 msgid "Remove element"
-msgstr "Odstranit vybrané"
+msgstr "Odstranit prvek"
 
 msgid "Diagnotic session"
-msgstr "Diagnostické sezení"
+msgstr "Diagnostická relace"
 
 msgid "Input"
 msgstr "Vstup"
@@ -2350,25 +2373,25 @@ msgid "Invalid DDT file"
 msgstr "Neplatný soubor DDT"
 
 msgid "Connection to ELM lost, trying to reconnect..."
-msgstr "Spojení s ELM bylo ztraceno."
+msgstr "Spojení s ELM bylo ztraceno, pokus o opětovné připojení..."
 
 msgid "Cannot reconnect..."
-msgstr "Chyba, nelze přejmenovat..."
+msgstr "Nelze znovu připojit..."
 
 msgid "Switching to session mode"
-msgstr "Diagnostické sezení"
+msgstr "Přepínání do režimu relace"
 
 msgid "Sending ELM request :"
-msgstr "Odeslání simulovaného požadavku ELM:"
+msgstr "Odesílání požadavku ELM:"
 
 msgid "Blocked ELM request :"
-msgstr "Odeslání simulovaného požadavku ELM:"
+msgstr "Blokovaný požadavek ELM:"
 
 msgid "Sending ELM request:"
-msgstr "Odeslání simulovaného požadavku ELM:"
+msgstr "Odesílání požadavku ELM:"
 
 msgid "Sending simulated ELM request :"
-msgstr "Odeslání simulovaného požadavku ELM:"
+msgstr "Odesílání simulovaného požadavku ELM:"
 
 msgid "Bad ELM response :"
 msgstr "Špatná odpověď ELM:"
@@ -2389,7 +2412,7 @@ msgid "Command aborted "
 msgstr "Příkaz zrušen "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Chyba hodnoty u této věci možná potřebuje obchvatovou bránu."
+msgstr "Chyba hodnoty u této funkce: možná je potřeba bypassová brána."
 
 msgid "Request aborted (look at red paramters entries): "
 msgstr "Požadavek přerušen (podívejte se na červené položky parametrů): "
@@ -2411,7 +2434,7 @@ msgid "Writing parameter"
 msgstr "Zápis parametru"
 
 msgid "Blocked writing parameter"
-msgstr "Blokovaný parametr zápisu"
+msgstr "Blokovaný zápis parametru"
 
 msgid "Invalid"
 msgstr "Neplatný"
@@ -2420,18 +2443,18 @@ msgid "ECU uses SDS "
 msgstr "ECU používá SDS "
 
 msgid "Cannot call request "
-msgstr "Nelze zavolat na žádost "
+msgstr "Nelze vyvolat požadavek "
 
 msgid "Update time"
-msgstr "Aktualizovat čas"
+msgstr "Čas aktualizace"
 
 msgid "Clearing DTC information"
 msgstr "Vymazání informací o DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
 msgstr ""
-"Pro danou řídicí jednotku (ECU) není vyžadován ClearDTC, odešle se výchozí "
-"kód 14FF00"
+"Pro danou řídicí jednotku (ECU) neexistuje požadavek ClearDTC, odešle se "
+"výchozí 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Chystáte se vymazat diagnostické chybové kódy</center>"
@@ -2446,13 +2469,13 @@ msgid "Clear DTC successfully done"
 msgstr "Vymazání DTC úspěšně dokončeno"
 
 msgid "No ReadDTC request for that ECU"
-msgstr "Žádný požadavek na čtení DTC pro danou řídicí jednotku (ECU)"
+msgstr "Žádný požadavek ReadDTC pro danou řídicí jednotku (ECU)"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Neplatná odpověď pro příkaz ReadDTC"
 
 msgid "Read DTC returned an error"
-msgstr "Kód DTC čtení vrátil chybu"
+msgstr "Čtení DTC vrátilo chybu"
 
 msgid "No DTC"
 msgstr "Žádný kód DTC"
@@ -2467,13 +2490,13 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Chybové kódy diagnostiky"
 
 msgid "Clear ALL DTC"
-msgstr "Vymažte VŠECHNY DTC"
+msgstr "Vymazat VŠECHNY DTC"
 
 msgid "ECU trouble codes"
 msgstr "Chybové kódy ECU"
 
 msgid "Parsing screen "
-msgstr "Zpracovávám obrazovku "
+msgstr "Analýza obrazovky "
 
 msgid "found request in input "
 msgstr "nalezený požadavek ve vstupu "
@@ -2485,7 +2508,7 @@ msgid "found in button "
 msgstr "nalezen v tlačítku "
 
 msgid "found in presend "
-msgstr "nalezeno v současnosti "
+msgstr "nalezeno v presend "
 
 msgid "found data in input "
 msgstr "data nalezena ve vstupu "
@@ -2494,10 +2517,10 @@ msgid "found data in display "
 msgstr "data nalezena v displeji "
 
 msgid "Waiting..."
-msgstr "Čekám..."
+msgstr "Čekání..."
 
 msgid "Frame length error: "
-msgstr "Chyba délky snímku: "
+msgstr "Chyba délky rámce: "
 
 msgid "Frame hex error: "
-msgstr "Chyba hex snímku: "
+msgstr "Chyba hex rámce: "

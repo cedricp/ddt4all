@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DDT4ALL\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:49+0100\n"
+"POT-Creation-Date: 2026-11-24 00:02+0100\n"
 "PO-Revision-Date: 2026-05-28 19:29+0200\n"
 "Last-Translator: Furtif <msntchat@hotmail.fr>\n"
 "Language-Team: \n"
@@ -86,13 +86,13 @@ msgid "Generated stream "
 msgstr "Wygenerowany strumień "
 
 msgid "Send request stream "
-msgstr "Wyślij strumień poleceń "
+msgstr "Wyślij strumień żądania "
 
 msgid "Received stream "
-msgstr "Odebrany strumień  "
+msgstr "Odebrany strumień "
 
 msgid "Request ECU Error"
-msgstr "Request błędów ECU"
+msgstr "Błąd żądania ECU"
 
 msgid "Decoded values"
 msgstr "Zdekodowane wartości"
@@ -120,6 +120,26 @@ msgstr "nie jest zmapowany"
 
 msgid "Scanning address: "
 msgstr "Skanowanie adresu: "
+
+#, python-format
+msgid "# check_ecu: empty response for addr %(addr)s protocol %(protocol)s"
+msgstr "# check_ecu: pusta odpowiedź dla addr %(addr)s protokół %(protocol)s"
+
+#, python-format
+msgid ""
+"# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: "
+"%(err)s"
+msgstr ""
+"# check_ecu: nieprawidłowa odpowiedź hex dla addr %(addr)s protokół "
+"%(protocol)s: %(err)s"
+
+#, python-format
+msgid ""
+"# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol "
+"%(protocol)s"
+msgstr ""
+"# check_ecu: odpowiedź za krótka (%(bytes)d bajtów) dla addr %(addr)s "
+"protokół %(protocol)s"
 
 msgid "No DoIP addresses available for scanning"
 msgstr "Brak dostępnych adresów DoIP do skanowania"
@@ -332,7 +352,7 @@ msgid "FAIL"
 msgstr "BŁĄD"
 
 msgid "OK/TIMEOUT"
-msgstr "ZATWIERDŹ/LIMIT CZASU"
+msgstr "OK/TIMEOUT"
 
 msgid "OK"
 msgstr "Zatwierdź"
@@ -344,7 +364,7 @@ msgid "Result: "
 msgstr "Wynik: "
 
 msgid " succeeded from "
-msgstr " powiódł się z "
+msgstr " powiodło się z "
 
 msgid "ELM Max version:"
 msgstr "Maksymalna wersja ELMa:"
@@ -470,7 +490,7 @@ msgid "*       Write error: %s"
 msgstr "*       Błąd zapisu: %s"
 
 msgid "TIMEOUT"
-msgstr "LIMIT CZASU"
+msgstr "TIMEOUT"
 
 msgid "Checking port speed:"
 msgstr "Sprawdzanie prędkości portu:"
@@ -635,7 +655,7 @@ msgid "LEARN"
 msgstr "UCZ SIĘ"
 
 msgid "VALIDATE"
-msgstr "ZATWIERDŹ"
+msgstr "ZWERYFIKUJ"
 
 msgid "CANCEL"
 msgstr "ANULUJ"
@@ -761,17 +781,17 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "BŁĄD: polecenie musi mieć 5 parametrów: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value>\n"
+"    <polecenie> <lid> <rsp_len> <przesunięcie> <maska hex> <wartość hex>\n"
 "        <lid> - lokalny identyfikator ECU. Długość powinna wynosić 2 znaki "
 "dla KWP lub 4 dla CAN\n"
 "        <rsp_len> - długość odpowiedzi polecenia wraz z bajtami odpowiedzi "
 "pozytywnej, równa MinBytes z bazy ddt\n"
-"        <offset> - przesunięcie w bajtach do pierwszego zmienionego bajtu "
-"(zaczyna się od 1, nie od 0) \n"
-"        <hex mask> - maska bitowa zmienionych bitów, 1 - modyfikowalny, 0 - "
+"        <przesunięcie> - przesunięcie w bajtach do pierwszego zmienionego "
+"bajtu (zaczyna się od 1, nie od 0) \n"
+"        <maska hex> - maska bitowa zmienionych bitów, 1 - modyfikowalny, 0 - "
 "nienaruszalny\n"
-"        <hex value> - wartość bitowa\n"
-"    <hex mask> i <hex value> muszą mieć jednakową długość\n"
+"        <wartość hex> - wartość bitowa\n"
+"    <maska hex> i <wartość hex> muszą mieć jednakową długość\n"
 
 msgid ""
 "ERROR: command should have 6 parameters: \n"
@@ -789,18 +809,19 @@ msgid ""
 "    <hex mask> and <hex value> should have equal length\n"
 msgstr ""
 "BŁĄD: polecenie musi mieć 6 parametrów: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <polecenie> <lid> <rsp_len> <przesunięcie> <maska hex> <wartość hex> "
+"<etykieta>\n"
 "        <lid> - lokalny identyfikator ECU. Długość powinna wynosić 2 znaki "
 "dla KWP lub 4 dla CAN\n"
 "        <rsp_len> - długość odpowiedzi polecenia wraz z bajtami odpowiedzi "
 "pozytywnej, równa MinBytes z bazy ddt\n"
-"        <offset> - przesunięcie w bajtach do pierwszego zmienionego bajtu "
-"(zaczyna się od 1, nie od 0) \n"
-"        <hex mask> - maska bitowa zmienionych bitów, 1 - modyfikowalny, 0 - "
+"        <przesunięcie> - przesunięcie w bajtach do pierwszego zmienionego "
+"bajtu (zaczyna się od 1, nie od 0) \n"
+"        <maska hex> - maska bitowa zmienionych bitów, 1 - modyfikowalny, 0 - "
 "nienaruszalny\n"
-"        <hex value> - wartość bitowa\n"
-"        <label> - etykieta docelowa\n"
-"    <hex mask> i <hex value> muszą mieć jednakową długość\n"
+"        <wartość hex> - wartość bitowa\n"
+"        <etykieta> - etykieta docelowa\n"
+"    <maska hex> i <wartość hex> muszą mieć jednakową długość\n"
 
 msgid ""
 "ERROR: command should have 4 or 7 parameters: \n"
@@ -819,18 +840,19 @@ msgid ""
 "\n"
 msgstr ""
 "BŁĄD: polecenie musi mieć 4 lub 7 parametrów: \n"
-"    <command> <lid> <rsp_len> <offset> <hex mask> <hex value> <label>\n"
+"    <polecenie> <lid> <rsp_len> <przesunięcie> <maska hex> <wartość hex> "
+"<etykieta>\n"
 "        <lid> - lokalny identyfikator ECU. Długość powinna wynosić 2 znaki "
 "dla KWP lub 4 dla CAN\n"
 "        <rsp_len> - długość odpowiedzi polecenia wraz z bajtami odpowiedzi "
 "pozytywnej, równa MinBytes z bazy ddt\n"
-"        <offset> - przesunięcie w bajtach do pierwszego zmienionego bajtu "
-"(zaczyna się od 1, nie od 0) \n"
-"        <hex mask> - maska bitowa zmienionych bitów, 1 - modyfikowalny, 0 - "
+"        <przesunięcie> - przesunięcie w bajtach do pierwszego zmienionego "
+"bajtu (zaczyna się od 1, nie od 0) \n"
+"        <maska hex> - maska bitowa zmienionych bitów, 1 - modyfikowalny, 0 - "
 "nienaruszalny\n"
-"        <val step> - krok wartości\n"
-"        <val offset> - przesunięcie wartości\n"
-"        <val divider> - dzielnik wartości\n"
+"        <krok wartości> - krok wartości\n"
+"        <przesunięcie wartości> - przesunięcie wartości\n"
+"        <dzielnik wartości> - dzielnik wartości\n"
 "\n"
 
 msgid "No ELM connection (plugin need_hw=True ?)"
@@ -986,7 +1008,9 @@ msgstr "Brak dopasowania. Przejdź do: "
 msgid ""
 "# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
 "%(hex)s"
-msgstr "# LID(%(lid)s)  = %(raw)s   = %(scaled)s   = %(hex)s"
+msgstr ""
+"# LID(%(lid)s) $rawValue = %(raw)s  $scaledValue = %(scaled)s  $hexValue = "
+"%(hex)s"
 
 #, python-format
 msgid "ERROR: unexpected positive response: %(rsp)s"
@@ -1371,7 +1395,7 @@ msgid "High Speed"
 msgstr "Wysoka prędkość"
 
 msgid "V_Timer_DrivWEP_ON"
-msgstr "V_Timer_DrivWEP_ON (zegar)"
+msgstr "V_Timer_DrivWEP_ON"
 
 msgid "Reset"
 msgstr "Resetuj"
@@ -1397,7 +1421,7 @@ msgid ""
 "Stay START until <b>Remove card</b> message</li><li>Put P position</"
 "li><li>Keep key card inserted</li></ul>"
 msgstr ""
-"<h1>WSKAZÓWKI</h1><ul><li>Wsuń kartę klucza</li><li>Ustaw pozycję D</"
+"<h1>WSKAZÓWKI</h1><ul><li>Włóż kartę klucza</li><li>Ustaw pozycję D</"
 "li><li>Naciśnij/Przytrzymaj START aż pojawi się komunikat <b>Usuń kartę</b></"
 "li><li>Ustaw pozycję P</li><li>Zostaw kartę klucza wsuniętą</li></ul>"
 
@@ -1451,21 +1475,21 @@ msgstr "Sprawdź"
 
 #, python-format
 msgid "Request %s not found"
-msgstr "Polecenie %s nie znalezione"
+msgstr "Nie znaleziono żądania %s"
 
 #, python-format
 msgid ""
 "<font color=green>Request</font><font color=blue>'%s'</font> has no missing "
 "input values"
 msgstr ""
-"<font color=green>Zapytanie</font><font color=blue>'%s'</font> nie ma "
+"<font color=green>Żądanie</font><font color=blue>'%s'</font> nie ma "
 "brakujących wartości wejściowych"
 
 #, python-format
 msgid ""
 "<font color=red>Request</font><font color=blue>'%s'</font> has missing inputs"
 msgstr ""
-"<font color=red>Zapytanie</font><font color=blue>'%s'</font> ma brakujące "
+"<font color=red>Żądanie</font><font color=blue>'%s'</font> ma brakujące "
 "wejścia"
 
 #, python-format
@@ -1473,13 +1497,13 @@ msgid "<font color=orange> - '%s'</font>"
 msgstr "<font color=orange> - '%s'</font>"
 
 msgid "Delay;Request"
-msgstr "Opożnienie;Request"
+msgstr "Opożnienie;Żądanie"
 
 msgid "Screen initialization"
 msgstr "Inicjalizacja ekranu"
 
 msgid "Requests to send before screen drawing"
-msgstr "Polecenia do wysłania przed wyświetleniem ekranu"
+msgstr "Żądania do wysłania przed narysowaniem ekranu"
 
 msgid "Button name;Unique name"
 msgstr "Nazwa przycisku;Unikalna nazwa"
@@ -1488,16 +1512,16 @@ msgid "New"
 msgstr "Nowy"
 
 msgid "Duplicate selected"
-msgstr "Duplikaty zaznaczone"
+msgstr "Duplikuj zaznaczone"
 
 msgid "Remove selected"
 msgstr "Usuń zaznaczone"
 
 msgid "Reload"
-msgstr "Wyszukaj"
+msgstr "Przeładuj"
 
 msgid "Validate changes"
-msgstr "Zatwierdz zmiane"
+msgstr "Zweryfikuj zmiany"
 
 msgid "Description"
 msgstr "Opis"
@@ -1516,13 +1540,13 @@ msgstr "Szesnastkowy"
 
 #, python-format
 msgid "Data is used by request %s"
-msgstr "Dane użyte w tym requescie %s"
+msgstr "Dane używane przez żądanie %s"
 
 msgid "New data"
 msgstr "Nowe dane"
 
 msgid "Replace me with request description"
-msgstr "Zmien pozycje polecenia"
+msgstr "Zastąp opisem żądania"
 
 msgid "Data name;Description"
 msgstr "Nazwa danych;opis"
@@ -1558,13 +1582,13 @@ msgid "Add new"
 msgstr "Dodaj nowy"
 
 msgid "Delete selected"
-msgstr "Usuń Wybrane"
+msgstr "Usuń wybrane"
 
 msgid "Number of bits"
 msgstr "Liczba bitów"
 
 msgid "Signed"
-msgstr "Podpisano"
+msgstr "Ze znakiem"
 
 msgid "Add item"
 msgstr "Dodaj pozycję"
@@ -1588,13 +1612,13 @@ msgid "Format"
 msgstr "Format danych"
 
 msgid "Value = (AX+B) / C"
-msgstr "Wartość"
+msgstr "Wartość = (AX+B) / C"
 
 msgid "Number of bytes"
-msgstr "Liczba bitow"
+msgstr "Liczba bajtów"
 
 msgid "Send request bytes (HEX)"
-msgstr "Wysłane bajty requesta (HEX)"
+msgstr "Wyślij bajty żądania (HEX)"
 
 msgid "Receive bytes (HEX)"
 msgstr "Otrzymane bajty (HEX)"
@@ -1607,19 +1631,19 @@ msgstr "Liczba przesuniętych bajtów"
 
 msgid "Data name;Start byte;Bit offset;Bit count;Endianess"
 msgstr ""
-"Nazwa danych;Bit startowy;Przesunięcie bitu;Liczba bitów;Kolejność bajtów"
+"Nazwa danych;Bajt początkowy;Przesunięcie bitu;Liczba bitów;Kolejność bajtów"
 
 msgid "Little"
-msgstr "Mały"
+msgstr "Little-endian"
 
 msgid "Big"
-msgstr "Duży"
+msgstr "Big-endian"
 
 msgid "Inherits globals"
 msgstr "Dziedziczenie globalne"
 
 msgid "No SDS"
-msgstr "Nie SDS"
+msgstr "Brak SDS"
 
 msgid "Plant"
 msgstr "Zakład produkcyjny"
@@ -1634,10 +1658,10 @@ msgid "Supplier"
 msgstr "Dostawca"
 
 msgid "Reload requests"
-msgstr "Wyszukaj polecenia"
+msgstr "Przeładuj żądania"
 
 msgid "Add request"
-msgstr "Dodaj polecenie"
+msgstr "Dodaj żądanie"
 
 msgid "Send bytes"
 msgstr "Wyślij bajty"
@@ -1646,10 +1670,10 @@ msgid "Receive bytes"
 msgstr "Odbiera bajty"
 
 msgid "Request name;Bytes;Manual"
-msgstr "Nazwa requesta,Bajty,Manual"
+msgstr "Nazwa żądania;Bajty;Ręcznie"
 
 msgid "No request named"
-msgstr "Nie nazwany request"
+msgstr "Brak nazwy żądania"
 
 msgid "Found similar"
 msgstr "Znaleziono podobne"
@@ -1661,7 +1685,7 @@ msgid " vs "
 msgstr " kontra "
 
 msgid "Cannot draw input "
-msgstr "Nie można narysować wejścia "
+msgstr "Nie można wyświetlić pola wprowadzania "
 
 msgid "No Value"
 msgstr "Brak wartości"
@@ -1670,11 +1694,11 @@ msgid ""
 "<center>This Software is free, but I need money to buy cables/ECUs and make "
 "this application more reliable</center>"
 msgstr ""
-"<center>Ten oprogramowanie jest darmowe, ale potrzebuję pieniędzy na zakup "
+"<center>To oprogramowanie jest darmowe, ale potrzebuję pieniędzy na zakup "
 "kabli/ECU i uczynienie tej aplikacji bardziej niezawodną</center>"
 
 msgid "Yes I contribute"
-msgstr "Tak chce wspomóc"
+msgstr "Tak, chcę wspierać"
 
 msgid "No, I don't"
 msgstr "Nie, nie chce"
@@ -1686,7 +1710,7 @@ msgid "ECU Finder"
 msgstr "Wyszukiwarka ECU"
 
 msgid "Address :"
-msgstr "Adres :"
+msgstr "Adres:"
 
 msgid "ID frame :"
 msgstr "ID ramki :"
@@ -1705,14 +1729,15 @@ msgid "No ECU database is installed"
 msgstr "Nie zainstalowano bazy danych ECU"
 
 msgid "Restart DDT4ALL after installing or updating the database."
-msgstr "Uruchom ponownie DDT4ALL po zainstalowaniu lub zaktualizowaniu bazy danych."
+msgstr ""
+"Uruchom ponownie DDT4ALL po zainstalowaniu lub zaktualizowaniu bazy danych."
 
 msgid ""
 "Download the ECU database separately and copy the file (`ecu.zip` or the "
 "original DDT2000 XML database (`DDT2000DATA`)) to:\n"
 msgstr ""
-"Pobierz bazę danych ECU osobno i skopiuj plik (`ecu.zip` lub oryginalną "
-"bazę danych XML DDT2000 (`DDT2000DATA`)) do:\n"
+"Pobierz bazę danych ECU osobno i skopiuj plik (`ecu.zip` lub oryginalną bazę "
+"danych XML DDT2000 (`DDT2000DATA`)) do:\n"
 
 msgid "DDT4All Documentation"
 msgstr "Dokumentacja DDT4All"
@@ -1750,7 +1775,7 @@ msgid "CAN Sniffer"
 msgstr "Analizator CAN"
 
 msgid "Requests"
-msgstr "Polecenie"
+msgstr "Żądania"
 
 msgid "Data"
 msgstr "Dane"
@@ -1798,10 +1823,10 @@ msgid "Manual command"
 msgstr "Ręczna komenda"
 
 msgid "Manual request"
-msgstr "Manualny request"
+msgstr "Ręczne żądanie"
 
 msgid "Software flow control"
-msgstr "Softwarowy kontroler przepływu"
+msgstr "Programowa kontrola przepływu"
 
 msgid "Zoom In"
 msgstr "Przybliż"
@@ -1837,10 +1862,10 @@ msgid "Identify ECU"
 msgstr "Zidentyfikuj ECU"
 
 msgid "Create New ECU"
-msgstr "Stworz nowy ECU"
+msgstr "Stwórz nowy ECU"
 
 msgid "Zip database"
-msgstr "Zipuj bazę danych"
+msgstr "Skompresuj bazę danych"
 
 msgid "Clear DDT4ALL History"
 msgstr "Wyczyść historię DDT4ALL"
@@ -2003,13 +2028,13 @@ msgid "DISCONNECTED"
 msgstr "ROZLĄCZONY"
 
 msgid "Save vehicule (keep '.ecu' extension)"
-msgstr "Zapisz pojazd (zachowaj rozszerzenie'.ecu')"
+msgstr "Zapisz pojazd (zachowaj rozszerzenie '.ecu')"
 
 msgid "Save ECU (keep '.json' extension)"
 msgstr "Zapisz ECU (zachowaj rozszerzenie '.json')"
 
 msgid "Save record (keep '.txt' extension)"
-msgstr "Zapisz pojazd (zachowaj rozszerzenie'.ecu')"
+msgstr "Zapisz rekord (zachowaj rozszerzenie '.txt')"
 
 msgid "Recorded "
 msgstr "Nagrane "
@@ -2061,7 +2086,7 @@ msgid "Port speed"
 msgstr "Prędkość portu"
 
 msgid "Connected mode"
-msgstr "Połącz"
+msgstr "Tryb połączony"
 
 msgid "Edition mode"
 msgstr "Tryb edycji"
@@ -2204,7 +2229,7 @@ msgid "VGate iCar Pro selected - Enhanced STN/STPX support enabled"
 msgstr "VGate iCar Pro wybrany - Włączona obsługa rozszerzona STN/STPX"
 
 msgid "Long command support and high-speed communication available"
-msgstr "Obsługa długich poleceń i komunikacja wysoka prędkość dostępna"
+msgstr "Obsługa długich poleceń i komunikacja o dużej prędkości dostępna"
 
 #, python-format
 msgid "DoIP preset applied: %(name)s -> %(ip)s"
@@ -2269,22 +2294,22 @@ msgid "Select an ISO 13400 DoIP entity by its IP address"
 msgstr "Wybierz encję DoIP ISO 13400 według adresu IP"
 
 msgid "You must check the recommandations"
-msgstr "Musisz zaznaczyc zalecenie"
+msgstr "Musisz sprawdzić zalecenia"
 
 msgid "Please select a communication port"
-msgstr "Prosze wybrac port komunikacyjny"
+msgstr "Proszę wybrać port komunikacyjny"
 
 msgid "ECU Command"
 msgstr "Komenda ECU"
 
 msgid "Start diagnostic session"
-msgstr "Sesja diagnostyczna"
+msgstr "Rozpocznij sesję diagnostyczną"
 
 msgid "Request"
-msgstr "Polecenie"
+msgstr "Żądanie"
 
 msgid "Data to send"
-msgstr "Typ danych"
+msgstr "Dane do wysłania"
 
 msgid "Computed ISOTP Frame"
 msgstr "Obliczona ramka ISOTP"
@@ -2311,10 +2336,10 @@ msgid "Err, cannot rename "
 msgstr "Błąd, nie można zmienić nazwy "
 
 msgid "To be able to edit your screen, first export it in JSON format"
-msgstr "Zeby edytowac ekran, najpierw eksportuj go do formatu JSON"
+msgstr "Żeby edytować ekran, najpierw eksportuj go do formatu JSON"
 
 msgid "Enter label name"
-msgstr "Wprowadz nazwe etykiety"
+msgstr "Wprowadź nazwę etykiety"
 
 msgid "Add button"
 msgstr "Dodaj przycisk"
@@ -2329,7 +2354,7 @@ msgid "Change color"
 msgstr "Zmień kolor"
 
 msgid "Remove element"
-msgstr "Usun element"
+msgstr "Usuń element"
 
 msgid "Diagnotic session"
 msgstr "Sesja diagnostyczna"
@@ -2350,7 +2375,7 @@ msgid "XML file not found : "
 msgstr "Nie znaleziono pliku XML : "
 
 msgid "Invalid DDT file"
-msgstr "Nieprawidlowy plik DDT"
+msgstr "Nieprawidłowy plik DDT"
 
 msgid "Connection to ELM lost, trying to reconnect..."
 msgstr "Połączenie z ELMem utracone, próba ponownego połączenia..."
@@ -2362,16 +2387,16 @@ msgid "Switching to session mode"
 msgstr "Zmiana do trybu sesji"
 
 msgid "Sending ELM request :"
-msgstr "Wysyłanie komendy do ELMa :"
+msgstr "Wysyłanie żądania do ELMa :"
 
 msgid "Blocked ELM request :"
-msgstr "Zablokowano komendę do ELMa :"
+msgstr "Zablokowane żądanie do ELMa :"
 
 msgid "Sending ELM request:"
-msgstr "Wysyłanie komendy do ELMa:"
+msgstr "Wysyłanie żądania do ELMa:"
 
 msgid "Sending simulated ELM request :"
-msgstr "Wysyłanie zasymulowanej komendy do ELM-a :"
+msgstr "Wysyłanie zasymulowanego żądania do ELMa :"
 
 msgid "Bad ELM response :"
 msgstr "Zła odpowiedź ELMa :"
@@ -2380,22 +2405,22 @@ msgid "ELM response : "
 msgstr "ELM odpowiedział : "
 
 msgid "Button request not found : "
-msgstr "Przycisk polecenia nieobecny : "
+msgstr "Nie znaleziono żądania przycisku : "
 
 msgid "Sending request :"
-msgstr "Wysli polecenie :"
+msgstr "Wysyłanie żądania :"
 
 msgid "Unknown request "
-msgstr "Nieznany request "
+msgstr "Nieznane żądanie "
 
 msgid "Command aborted "
 msgstr "Komenda anulowana "
 
 msgid "Value error of this stuff need a bypass gateway maybe."
-msgstr "Wartość błędu tego sprzętu może wymaga obejścia przez bramę."
+msgstr "Błąd wartości — może być potrzebna brama bypass."
 
 msgid "Request aborted (look at red paramters entries): "
-msgstr "Polecenie przerwane (zobacz na czerwone wpisy parametrów): "
+msgstr "Żądanie przerwane (sprawdź czerwone pola parametrów): "
 
 msgid "Delay"
 msgstr "Opóźnienie"
@@ -2423,7 +2448,7 @@ msgid "ECU uses SDS "
 msgstr "ECU używa SDS "
 
 msgid "Cannot call request "
-msgstr "Nie można wywołać polecenia "
+msgstr "Nie można wywołać żądania "
 
 msgid "Update time"
 msgstr "Czas aktualizacji"
@@ -2432,9 +2457,7 @@ msgid "Clearing DTC information"
 msgstr "Czyszczenie informacji DTC"
 
 msgid "No ClearDTC request for that ECU, will send default 14FF00"
-msgstr ""
-"Brak wyraźnej komendy ClearDTC dla tego ECU, to spowoduje wyslanie "
-"domyślnego numeru 14FF00"
+msgstr "Brak żądania ClearDTC dla tego ECU, zostanie wysłane domyślne 14FF00"
 
 msgid "<center>You are about to clear diagnostic troubles codes</center>"
 msgstr "<center>Zaraz wyczyścić diagnostyczne kody błędów</center>"
@@ -2449,7 +2472,7 @@ msgid "Clear DTC successfully done"
 msgstr "Czyszczanie DTC zakończone sukcesem"
 
 msgid "No ReadDTC request for that ECU"
-msgstr "Brak wyraźnej komendy ReadDTC dla tego ECU"
+msgstr "Brak żądania ReadDTC dla tego ECU"
 
 msgid "Invalid response for ReadDTC command"
 msgstr "Nieprawidłowa odpowiedź dla komendy ReadDTC"
@@ -2470,16 +2493,16 @@ msgid "Diagnostic Trouble Codes"
 msgstr "Kody błędów diagnostycznych"
 
 msgid "Clear ALL DTC"
-msgstr "Wyczysc wszystkie DTC"
+msgstr "Wyczyść WSZYSTKIE DTC"
 
 msgid "ECU trouble codes"
-msgstr "Kody blędów ECU"
+msgstr "Kody błędów ECU"
 
 msgid "Parsing screen "
-msgstr "Parsowanie ekranu "
+msgstr "Analiza ekranu "
 
 msgid "found request in input "
-msgstr "znaleziono request w wejściu "
+msgstr "znaleziono żądanie w wejściu "
 
 msgid "found in display "
 msgstr "znaleziono na wyświetlaczu "
