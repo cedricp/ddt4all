@@ -459,9 +459,18 @@ class EcuScanner:
             options.elm.close_protocol()
 
     def check_ecu(self, can_response, label, addr, protocol):
+        if not can_response:
+            print(_("# check_ecu: empty response for addr %s protocol %s" % (addr, protocol)))
+            return
+
         try:
             response = bytes.fromhex(str(can_response).replace(" ", ""))
-        except ValueError:
+        except ValueError as err:
+            print(_("# check_ecu: invalid hex response for addr %s protocol %s: %s" % (addr, protocol, err)))
+            return
+
+        if len(response) < 15:
+            print(_("# check_ecu: response too short (%d bytes) for addr %s protocol %s" % (len(response), addr, protocol)))
             return
 
         if len(response) >= 20:
@@ -469,13 +478,11 @@ class EcuScanner:
             supplier = response[8:12].decode("utf-8", errors="ignore")
             soft = response[16:18].hex().upper()
             version = response[18:20].hex().upper()
-        elif len(response) >= 15:
+        else:  # len(response) >= 15
             diagversion = str(response[2])
             supplier = response[3:7].decode("utf-8", errors="ignore")
             soft = response[7:11].hex().upper()
             version = response[11:15].hex().upper()
-        else:
-            return
 
         self.check_ecu2(diagversion, supplier, soft, version, label, addr, protocol)
 
