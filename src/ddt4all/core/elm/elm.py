@@ -1804,7 +1804,7 @@ class ELM:
         # self.cmd("AT KW0")
 
     def set_iso8_addr(self, addr, ecu):
-        if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
+        if self.currentprotocol == "iso8" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
             return
 
         if self.lf != 0:
@@ -1813,7 +1813,10 @@ class ELM:
                 ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
-        self.currentprotocol = "iso"
+        if self.currentprotocol == "iso8":
+            self.cmd("82")  # close previous session
+
+        self.currentprotocol = "iso8"
         self.currentsubprotocol = ecu['protocol']
         self.currentaddress = addr
         self.startSession = ""
@@ -1835,6 +1838,9 @@ class ELM:
         self.cmd("AT SI")  # ISO8 needs slow init
         self.cmd("AT AT 1")
 
+        self.cmd("81")  # start session
+        return True
+
     def set_iso_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
             return
@@ -1844,6 +1850,9 @@ class ELM:
                 '#' * 60 + "\n# Connect to: [" + clean_bytestring(ecu['ecuname']) + "] Addr: " + addr + " Protocol: " +
                 ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
+
+        if self.currentprotocol == "iso":
+            self.cmd("82")  # close previous session
 
         self.currentprotocol = "iso"
         self.currentsubprotocol = ecu['protocol']
