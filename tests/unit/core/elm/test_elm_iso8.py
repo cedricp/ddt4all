@@ -1,6 +1,6 @@
 """Regression tests for ELM ISO8 initialization (issue #1928).
 
-Verifies that set_iso8_addr programs the slow-init address with AT IIA
+Verifies that set_iso_addr programs the slow-init address with AT IIA
 before issuing AT SI, so an ECU sitting at an address other than the ELM
 default (33 / 0x21) can answer the 5 baud init.
 """
@@ -29,10 +29,10 @@ def test_set_iso8_addr_sends_at_iia_before_at_si():
 
     elm = FakeELM()
     # Bind the real method onto the fake instance.
-    ELM.set_iso8_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
+    ELM.set_iso_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
 
     # Address tracking must be updated.
-    assert elm.currentprotocol == "iso8"
+    assert elm.currentprotocol == "iso"
     assert elm.currentaddress == "7A"
     assert elm.currentsubprotocol == "ISO8"
 
@@ -50,10 +50,10 @@ def test_set_iso8_addr_early_return_when_already_configured():
     from ddt4all.core.elm.elm import ELM
 
     elm = FakeELM()
-    elm.currentprotocol = "iso8"
+    elm.currentprotocol = "iso"
     elm.currentaddress = "7A"
     elm.currentsubprotocol = "ISO8"
-    ELM.set_iso8_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
+    ELM.set_iso_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
     assert elm.cmd_log == [], elm.cmd_log
 
 
