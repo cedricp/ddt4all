@@ -1781,7 +1781,6 @@ class ELM:
                 return True
             return False
 
-
     def init_iso(self):
         self.currentprotocol = "iso"
         self.currentsubprotocol = ""

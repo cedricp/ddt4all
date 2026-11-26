@@ -264,8 +264,12 @@ class EcuFile:
             if not options.simulation_mode:
                 # Preserve the ECU metadata's CAN baudrate hint so Auto mode can choose
                 # the correct 250 kbit/s branch when the target bus is not 500 kbit/s.
-                if self.baudrate == 250000 or self.baudrate == 10400:
+                if self.baudrate == 250000:
                     ecu_conf['brp'] = "1"
+                elif self.baudrate == 10400:
+                    # 10400 is a K-line rate, not a CAN one: the bus speed is unknown here.
+                    # Let set_can_addr() probe 250K and fall back to 500K on CAN ERROR.
+                    ecu_conf['brp'] = "01"
                 elif self.baudrate == 500000:
                     # R-Link 1 / Navigation-UCC-ITM and similar ECUs require 500 kbit/s.
                     # Setting brp to "0" avoids the 250 kbit/s default and allows the
