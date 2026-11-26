@@ -286,20 +286,19 @@ class EcuFile:
                 options.elm.init_iso()
                 options.elm.set_iso_addr(self.funcaddr, ecu_conf)
 
-        # ISO handling
-        elif self.ecu_protocol.upper() == 'ISO':
-            ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO'}
-            if not options.simulation_mode:
-                options.elm.init_iso()
-                options.elm.set_iso_addr(self.funcaddr, ecu_conf)
+        # # ISO handling
+        # elif self.ecu_protocol.upper() == 'ISO':
+        #     ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO'}
+        #     if not options.simulation_mode:
+        #         options.elm.init_iso()
+        #         options.elm.set_iso_addr(self.funcaddr, ecu_conf)
 
         # ISO8 handling
-        # //TODO: this need maybe some small fix in set_iso8_addr()
         elif self.ecu_protocol.upper() == 'ISO8':
             ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO8'}
             if not options.simulation_mode:
                 options.elm.init_iso()
-                options.elm.set_iso_addr(self.funcaddr, ecu_conf)
+                options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
 
         # DoIP sessions are routed by logical address, not CAN identifiers.
         else:
