@@ -402,7 +402,6 @@ class EcuScanner:
 
             options.elm.init_iso()
 
-
         project_kwp_addresses = []
         if vehiclefilter:
             if vehiclefilter in self.ecu_database.vehiclemap:
