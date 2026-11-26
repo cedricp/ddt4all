@@ -1831,7 +1831,7 @@ class ELM:
         self.cmd("AT ST FF")  # set timeout to 1 second
         self.cmd("AT AT 0")  # disable adaptive timing
 
-        if 'ISO8' in ecu.get('protocol', '').upper():
+        if 'ISO8' in ecu.get('protocol', '').upper() or options.opt_si: # needs maybe also options.opt_si conditional
             # self.cmd("at WM 82 "+addr+" F1 3E01")    #set wakeup message
             self.cmd("AT SP 3")
             # Set the slow-init address before AT SI. The ELM327 defaults to
