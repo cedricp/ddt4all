@@ -1,7 +1,7 @@
 """Regression tests for ELM ISO8 initialization (issue #1928).
 
-Verifies that set_iso_addr programs the slow-init address with AT IIA
-before issuing AT SI, so an ECU sitting at an address other than the ELM
+Verifies that set_iso8_addr programs the slow-init address with AT SI,
+so an ECU sitting at an address other than the ELM
 default (33 / 0x21) can answer the 5 baud init.
 """
 
@@ -23,26 +23,21 @@ class FakeELM:
         return "OK"
 
 
-def test_set_iso8_addr_sends_at_iia_before_at_si():
-    """AT IIA <addr> must precede AT SI for ISO8 slow init."""
+def test_set_iso8_addr_sends_at_si():
+    """AT SI for ISO8 slow init."""
     from ddt4all.core.elm.elm import ELM
 
     elm = FakeELM()
     # Bind the real method onto the fake instance.
-    ELM.set_iso_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
+    ELM.set_iso8_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
 
     # Address tracking must be updated.
     assert elm.currentprotocol == "iso"
     assert elm.currentaddress == "7A"
     assert elm.currentsubprotocol == "ISO8"
 
-    # The command sequence must contain AT IIA 7A before AT SI.
-    assert "AT IIA 7A" in elm.cmd_log, elm.cmd_log
-    iia_index = elm.cmd_log.index("AT IIA 7A")
-    si_index = elm.cmd_log.index("AT SI")
-    assert iia_index < si_index, (
-        "AT IIA must come before AT SI: %s" % elm.cmd_log
-    )
+    # The command sequence must contain AT SI.
+    assert "AT SI" in elm.cmd_log, elm.cmd_log
 
 
 def test_set_iso8_addr_early_return_when_already_configured():

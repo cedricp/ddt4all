@@ -416,7 +416,7 @@ def test_ecu_file_connect_to_hardware_iso8(dummy_ecu_file, mocker):
 
     assert result is True
     mock_elm.init_iso.assert_called_once_with()
-    mock_elm.set_iso_addr.assert_called_once_with(
+    mock_elm.set_iso8_addr.assert_called_once_with(
         "27",
         {
             "idTx": "",
