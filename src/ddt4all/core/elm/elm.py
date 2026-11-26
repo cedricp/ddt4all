@@ -1781,6 +1781,28 @@ class ELM:
                 return True
             return False
 
+    def init_iso8(self):
+        self.currentprotocol = "iso8"
+        self.currentsubprotocol = ""
+        self.currentaddress = ""
+        self.startSession = ""
+        self.lastCMDtime = 0
+        self.lastinitrsp = ""
+
+        if self.lf != 0:
+            tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
+            self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO8\n" + '#' * 60 + "\n")
+            self.lf.flush()
+        self.cmd("AT WS")
+        self.cmd("AT E1")
+        self.cmd("AT S1")
+        self.cmd("AT L1")
+        self.cmd("AT D1")
+        # Others ...
+        # self.cmd("AT H0")  # headers off
+        # self.cmd("AT AL")  # Allow Long (>7 byte) messages
+        # self.cmd("AT KW0")
+
     def init_iso(self):
         self.currentprotocol = "iso"
         self.currentsubprotocol = ""

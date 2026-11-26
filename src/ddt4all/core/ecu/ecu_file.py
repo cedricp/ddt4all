@@ -294,7 +294,7 @@ class EcuFile:
         elif self.ecu_protocol.upper() == 'ISO8':
             ecu_conf = {'idTx': '', 'idRx': '', 'ecuname': str(ecuname), 'protocol': 'ISO8'}
             if not options.simulation_mode:
-                options.elm.init_iso()
+                options.elm.init_iso8()
                 options.elm.set_iso8_addr(self.funcaddr, ecu_conf)
 
         # DoIP sessions are routed by logical address, not CAN identifiers.
