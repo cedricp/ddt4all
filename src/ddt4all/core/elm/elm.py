@@ -1837,7 +1837,10 @@ class ELM:
             # Set the slow-init address before AT SI. The ELM327 defaults to
             # init address 33 (0x21); without this, an ECU sitting at any other
             # address (e.g. 0x7A for a Sagem Safir) never answers the 5 baud init.
-            self.cmd("AT IIA " + addr)
+            si_addr = addr
+            if len(ecu.get('slowInit', '')) > 0:
+                si_addr = ecu['slowInit']
+            self.cmd("AT IIA " + si_addr)
             rsp8 = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
             if 'ERROR' in rsp8 and len(ecu.get('fastInit', '')) > 0:
                 ecu['protocol'] = ''
