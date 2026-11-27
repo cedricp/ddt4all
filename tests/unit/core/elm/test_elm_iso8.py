@@ -48,7 +48,7 @@ def test_set_iso8_addr_early_return_when_already_configured():
     elm.currentprotocol = "iso"
     elm.currentaddress = "7A"
     elm.currentsubprotocol = "ISO8"
-    ELM.set_iso_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
+    ELM.set_iso8_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
     assert elm.cmd_log == [], elm.cmd_log
 
 
