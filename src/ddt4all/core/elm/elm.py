@@ -79,8 +79,6 @@ def detect_usb_device():
             print(_("Note: This error does not affect serial communication or bypass cable functionality."))
         _usb_port_cache = None
 
-
-
 def clean_bytestring(value):
     # If is bytes -> decode
     # print(repr(value), type(value))

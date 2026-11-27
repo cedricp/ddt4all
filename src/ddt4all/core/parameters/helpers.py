@@ -7,7 +7,8 @@ import zipfile
 
 from ddt4all.core.ecu.ecu_database import (
     EcuDatabase,
-    addressing
+    addressing,
+    doip_addressing
 )
 from ddt4all.core.ecu.ecu_file import EcuFile
 import ddt4all.core.elm.elm as elm
@@ -385,6 +386,20 @@ def convertXML():
             jsfile.write(js)
             jsfile.close()
 
+def dumpProtocols(protocols):
+    dictionary = doip_addressing
+    for protocol in protocols:
+        proto = getChildNodesByName(protocol, u"Protocol")
+        for prtc in proto:
+            test = prtc.getAttribute(u"Name")
+            if test == "DoIP":
+                fcts = getChildNodesByName(prtc, u"Fct")
+                for fct in fcts:
+                    add_doip = int(fct.getAttribute(u"Value"), 16)
+                    name_doip = fct.getAttribute(u"Name")
+                    # print(name_doip + " " + str(add_doip))
+                    dictionary[name_doip] = add_doip
+    return dictionary
 
 def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     if not os.path.exists(file):
@@ -397,31 +412,18 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
     projects_str = "<Projects>"
     dictionary["projects"] = {}
     dictionary["projects"]["All"] = {}
-    dictionary["projects"]["All"]["DoIP"] = {}
     dictionary["projects"]["All"]["code"] = "ALL"
     dictionary["projects"]["All"]["addressing"] = dumpAddressing(os.path.join("vehicles", "GenericAddressing.xml"))
     dictionary["projects"]["All"]["snat"] = dumpSNAT(os.path.join("vehicles", "GenericAddressing.xml"))
     dictionary["projects"]["All"]["snat_ext"] = dumpSNAT_ext(os.path.join("vehicles", "GenericAddressing.xml"))
     dictionary["projects"]["All"]["dnat"] = dumpDNAT(os.path.join("vehicles", "GenericAddressing.xml"))
     dictionary["projects"]["All"]["dnat_ext"] = dumpDNAT_ext(os.path.join("vehicles", "GenericAddressing.xml"))
+    dictionary["projects"]["All"]["DoIP"] = doip_addressing
     manufacturers = getChildNodesByName(xdoc, u"Manufacturer")
     for manufacturer in manufacturers:
         name = str(manufacturer.getElementsByTagName(u"name")[0].childNodes[0].nodeValue).lower().title()
         projects = getChildNodesByName(manufacturer, u"project")
         for project in projects:
-            protocols = getChildNodesByName(project, u"ProtocolList")
-            for protocol in protocols:
-                proto = getChildNodesByName(protocol, u"Protocol")
-                for prtc in proto:
-                    test = prtc.getAttribute(u"Name")
-                    if test == "DoIP":
-                        fcts = getChildNodesByName(prtc, u"Fct")
-                        for fct in fcts:
-                            #print(fct.getAttribute(u"Name"))
-                            #print(int(fct.getAttribute(u"Value"), 16))
-                            add_doip = int(fct.getAttribute(u"Value"), 16)
-                            name_doip = fct.getAttribute(u"Name")
-                            dictionary["projects"]["All"]["DoIP"][add_doip] = name_doip
             code = project.getAttribute(u"code")
             p_name = project.getAttribute(u"name")
             parts = []
@@ -454,6 +456,8 @@ def dumpVehicles(file=os.path.join("vehicles", "projects.xml")):
             dictionary["projects"][project_name]["snat_ext"] = dumpSNAT_ext(addressing)
             dictionary["projects"][project_name]["dnat"] = dumpDNAT(addressing)
             dictionary["projects"][project_name]["dnat_ext"] = dumpDNAT_ext(addressing)
+            protocols = getChildNodesByName(project, u"ProtocolList")
+            dictionary["projects"][project_name]["DoIP"] = dumpProtocols(protocols)
             print(f'{code:18} => {addressing:40} => OK')
             projects_list.append(code)
 

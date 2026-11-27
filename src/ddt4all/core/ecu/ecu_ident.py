@@ -30,6 +30,7 @@ class EcuIdent:
         else:
             # debug
             print("protocol: " + protocol + " not supported, ecu: " + name)
+            self.protocol = 'UNKNOWN'
         self.hash = diagversion + supplier + soft + version
         self.zipped = zipped
 
