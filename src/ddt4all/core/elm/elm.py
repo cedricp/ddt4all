@@ -1822,9 +1822,10 @@ class ELM:
         self.cmd("AT IB10")                      # baud rate 10400
         self.cmd("AT ST FF")                     # set timeout to 1 second
         self.cmd("AT SP 3")
-        self.cmd("AT AT 0")                      # enable adaptive timing
+        self.cmd("AT AT 0")                      # disable adaptive timing
+        self.cmd("AT IIA " + addr)
         self.cmd("AT SI")                        # ISO8 needs slow init
-        self.cmd("AT AT 1")
+        self.cmd("AT AT 1")                      # enable adaptive timing
 
     def set_iso_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
@@ -1836,8 +1837,8 @@ class ELM:
                 ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
-        # if self.currentprotocol == "iso":
-        #     self.cmd("82")  # close previous session
+        if self.currentprotocol == "iso":
+            self.cmd("82")  # close previous session
 
         self.currentprotocol = "iso"
         self.currentsubprotocol = ecu['protocol']
@@ -1856,24 +1857,22 @@ class ELM:
         # if 'PRNA2000' in ecu.get('protocol', '').upper() or options.opt_si:
         if options.opt_si:
             self.cmd("AT SP 4")  # slow init mode 4
-            si_addr = addr
-            if len(ecu.get('slowInit', '')) > 0:
-                si_addr = ecu['slowInit']
-            self.cmd("AT IIA " + si_addr)  # address for slow init
-            rsp = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
-            if 'ERROR' in rsp and len(ecu.get('fastInit', '')) > 0:
-                ecu['protocol'] = ''
-                if self.lf != 0:
-                    self.lf.write('### Try fast init\n')
-                    self.lf.flush()
-        if 'OK' not in self.lastinitrsp:
+            self.cmd("AT IIA " + addr)  # address for slow init
+            self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
+
+        if ('OK' not in self.lastinitrsp) or (not options.opt_si):
+            ecu['protocol'] = '' # XXX not sure why we do this
+            if self.lf != 0:
+                self.lf.write('### Try fast init\n')
+                self.lf.flush()
             self.cmd("AT SP 5")  # fast init mode 5
             self.lastinitrsp = self.cmd("AT FI")  # perform fast init mode 5
+
         if 'OK' not in self.lastinitrsp:
             return False
+
         self.cmd("AT AT 1")  # enable adaptive timing
-        # self.cmd("81")  # start session
-        return True
+        return "OK" in self.cmd("81")
 
 
 def elm_checker(port, speed, adapter, logview, app):

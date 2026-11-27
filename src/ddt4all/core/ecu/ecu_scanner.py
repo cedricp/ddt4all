@@ -468,7 +468,8 @@ class EcuScanner:
             if not raw_response:
                 # print(_("# check_ecu: empty response for addr %(addr)s protocol %(protocol)s" % {"addr": addr, "protocol": protocol}))
                 return
-            if raw_response.startswith(("BUS INIT: FB ERROR", "UNABLE TO CONNECT", "NO DATA", "STOPPED", "?")):
+            err_responses = ("ERROR", "UNABLE TO CONNECT", "NO DATA", "STOPPED", "?")
+            if any(err in raw_response for err in err_responses):
                 # print(_("# check_ecu: ELM communication error for addr %(addr)s protocol %(protocol)s: %(response)s" % {"addr": addr, "protocol": protocol,"response": raw_response}))
                 return
             response = bytes.fromhex(str(can_response).replace(" ", ""))
