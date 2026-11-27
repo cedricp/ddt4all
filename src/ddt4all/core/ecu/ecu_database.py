@@ -85,7 +85,7 @@ class EcuDatabase:
             for href, targetv in dbdict.items():
                 self.numecu += 1
                 ecugroup = targetv['group']
-                ecuprotocol = targetv['protocol']
+                ecuprotocol = targetv['protocol'] or "Unknown" # this is empty for doip in ecu.zip
                 ecuprojects = targetv['projects']
                 ecuaddress = targetv['address']
                 ecuname = targetv['ecuname']
