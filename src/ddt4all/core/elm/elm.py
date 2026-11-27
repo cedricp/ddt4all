@@ -1872,7 +1872,8 @@ class ELM:
             return False
 
         self.cmd("AT AT 1")  # enable adaptive timing
-        return "OK" in self.cmd("81")
+        self.cmd("81")  # start session
+        return True
 
 def elm_checker(port, speed, adapter, logview, app):
     """Enhanced ELM327 checker with better error handling and device detection"""
