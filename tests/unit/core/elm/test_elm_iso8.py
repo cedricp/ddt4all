@@ -1,6 +1,6 @@
 """Regression tests for ELM ISO8 initialization (issue #1928).
 
-Verifies that set_iso_addr programs the slow-init address with AT IIA
+Verifies that set_iso8_addr programs the slow-init address with AT IIA
 before issuing AT SI, so an ECU sitting at an address other than the ELM
 default (33 / 0x21) can answer the 5 baud init.
 """
