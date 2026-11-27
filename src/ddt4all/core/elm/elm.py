@@ -1874,7 +1874,6 @@ class ELM:
         self.cmd("AT AT 1")  # enable adaptive timing
         return "OK" in self.cmd("81")
 
-
 def elm_checker(port, speed, adapter, logview, app):
     """Enhanced ELM327 checker with better error handling and device detection"""
     good = 0
