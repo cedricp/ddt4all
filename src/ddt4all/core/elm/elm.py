@@ -635,7 +635,7 @@ class ELM:
                     print(_("ELS27 V5 configuration warning: %s") % e)
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
-            print(text_optional.replace("OBDLINK", adapter_type))
+            print(text_optional.replace("OBDLink", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
 
