@@ -24,9 +24,12 @@ class EcuIdent:
             self.protocol = 'KWP2000'
         elif "ISO8" in protocol.upper():
             self.protocol = 'ISO8'
-        elif "DOIP" in protocol.upper():
+        # DOIP not have protocol
+        elif "UNKNOWN" in protocol.upper():
             self.protocol = 'DOIP'
         else:
+            # debug
+            print("protocol: " + protocol + " not supported, ecu: " + name)
             self.protocol = 'UNKNOWN'
         self.hash = diagversion + supplier + soft + version
         self.zipped = zipped

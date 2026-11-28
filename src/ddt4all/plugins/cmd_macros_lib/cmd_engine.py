@@ -806,7 +806,8 @@ class MacroEngine(object):
             self._require_elm()
             self.elm.init_iso()
             if mname in ('init_iso_slow', 'slow'):
-                self._set_iso_addr(self.var['$addr'], protocol='PRNA2000')
+                options.opt_si = True
+                self._set_iso_addr(self.var['$addr'], protocol='KWP2000')
             else:
                 self._set_iso_addr(self.var['$addr'])
         elif mname in ('init_can', 'init_iso'):

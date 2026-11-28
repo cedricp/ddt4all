@@ -1,4 +1,3 @@
-
 from ddt4all.core.ecu.ecu_database import (
     EcuDatabase,
     doip_addressing
@@ -464,13 +463,23 @@ class EcuScanner:
             return
 
         try:
+            # check response before uses...
+            raw_response = str(can_response).strip()
+            if not raw_response:
+                # print(_("# check_ecu: empty response for addr %(addr)s protocol %(protocol)s" % {"addr": addr, "protocol": protocol}))
+                return
+            err_responses = ("ERROR", "UNABLE TO CONNECT", "NO DATA", "STOPPED", "?")
+            if any(err in raw_response for err in err_responses):
+                # print(_("# check_ecu: ELM communication error for addr %(addr)s protocol %(protocol)s: %(response)s" % {"addr": addr, "protocol": protocol,"response": raw_response}))
+                return
             response = bytes.fromhex(str(can_response).replace(" ", ""))
         except ValueError as err:
             print(_("# check_ecu: invalid hex response for addr %(addr)s protocol %(protocol)s: %(err)s" % {"addr": addr, "protocol": protocol, "err": err}))
             return
 
         if len(response) < 15:
-            print(_("# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol %(protocol)s" % {"bytes": len(response), "addr": addr, "protocol": protocol}))
+            if not options.simulation_mode:
+                print(_("# check_ecu: response too short (%(bytes)d bytes) for addr %(addr)s protocol %(protocol)s" % {"bytes": len(response), "addr": addr, "protocol": protocol}))
             return
 
         if len(response) >= 20:

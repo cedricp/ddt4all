@@ -196,6 +196,7 @@ class EcuList(widgets.QWidget):
         
         project = str(self.vehicles["projects"][project_key]["code"])
         ecudb.addressing = self.vehicles["projects"][project_key]["addressing"]
+        ecudb.doip_addressing = self.vehicles["projects"][project_key]["DoIP"]
         elm.snat = self.vehicles["projects"][project_key]["snat"]
         elm.snat_ext = self.vehicles["projects"][project_key]["snat_ext"]
         elm.dnat = self.vehicles["projects"][project_key]["dnat"]
@@ -313,6 +314,7 @@ class EcuList(widgets.QWidget):
         
         project = str(self.vehicles["projects"][project_key]["code"])
         ecudb.addressing = self.vehicles["projects"][project_key]["addressing"]
+        ecudb.doip_addressing = self.vehicles["projects"][project_key]["DoIP"]
         elm.snat = self.vehicles["projects"][project_key]["snat"]
         elm.snat_ext = self.vehicles["projects"][project_key]["snat_ext"]
         elm.dnat = self.vehicles["projects"][project_key]["dnat"]

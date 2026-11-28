@@ -46,6 +46,7 @@ class EcuDatabase:
             for ecu_dict in ecus_dict:
                 href = jsonecu_file.replace(".targets", "")
                 name = os.path.basename(href)
+                jprotocol = ecu_dict['protocol'] or "Unknown" # this is empty for doip in *.json
                 # Fix typo bug
                 diagversion = ""
                 if 'diagnostic_version' in ecu_dict:
@@ -55,15 +56,12 @@ class EcuDatabase:
 
                 addr = ecu_dict['address']
 
-                if 'KWP' in ecu_dict['protocol']:
+                if 'KWP' in jprotocol:
                     if addr not in self.available_addr_kwp:
                         self.available_addr_kwp.append(str(addr))
-                elif 'CAN' in ecu_dict['protocol']:
+                elif 'CAN' in jprotocol:
                     if addr not in self.available_addr_can:
                         self.available_addr_can.append(str(addr))
-                elif 'DOIP' in ecu_dict['protocol'].upper():
-                    if addr not in self.available_addr_doip:
-                        self.available_addr_doip.append(str(addr))
 
                 if str(addr) not in self.addr_group_mapping:
                     print(_("Adding group "), addr, ecu_dict['group'])
@@ -72,12 +70,12 @@ class EcuDatabase:
                 ecu_ident = EcuIdent(
                     diagversion, ecu_dict['supplier_code'],
                     ecu_dict['soft_version'], ecu_dict['version'],
-                    name, ecu_dict['group'], href, ecu_dict['protocol'],
+                    name, ecu_dict['group'], href, jprotocol,
                     ecu_dict['projects'], addr,
                 )
 
                 for proj in ecu_dict['projects']:
-                    self.addVehicleMapEntry(proj, ecu_dict['protocol'], addr)
+                    self.addVehicleMapEntry(proj, jprotocol, addr)
 
                 self.targets.append(ecu_ident)
 
@@ -88,7 +86,7 @@ class EcuDatabase:
             for href, targetv in dbdict.items():
                 self.numecu += 1
                 ecugroup = targetv['group']
-                ecuprotocol = targetv['protocol']
+                ecuprotocol = targetv['protocol'] or "Unknown" # this is empty for doip in ecu.zip
                 ecuprojects = targetv['projects']
                 ecuaddress = targetv['address']
                 ecuname = targetv['ecuname']
@@ -99,9 +97,6 @@ class EcuDatabase:
                 elif 'CAN' in ecuprotocol:
                     if ecuaddress not in self.available_addr_can:
                         self.available_addr_can.append(str(ecuaddress))
-                elif 'DOIP' in ecuprotocol.upper():
-                    if ecuaddress not in self.available_addr_doip:
-                        self.available_addr_doip.append(str(ecuaddress))
 
                 if str(ecuaddress) not in self.addr_group_mapping:
                     self.addr_group_mapping[ecuaddress] = targetv['group']
@@ -160,9 +155,6 @@ class EcuDatabase:
                     elif 'KWP' in protocol.upper():
                         if address not in self.available_addr_kwp:
                             self.available_addr_kwp.append(str(address))
-                    elif 'DOIP' in protocol.upper():
-                        if address not in self.available_addr_doip:
-                            self.available_addr_doip.append(str(address))
 
                     autoidents = target.getElementsByTagName("AutoIdents")
                     projectselems = target.getElementsByTagName("Projects")

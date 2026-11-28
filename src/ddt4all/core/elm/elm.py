@@ -79,8 +79,6 @@ def detect_usb_device():
             print(_("Note: This error does not affect serial communication or bypass cable functionality."))
         _usb_port_cache = None
 
-
-
 def clean_bytestring(value):
     # If is bytes -> decode
     # print(repr(value), type(value))
@@ -635,7 +633,7 @@ class ELM:
                     print(_("ELS27 V5 configuration warning: %s") % e)
                 print(_("Connection established successfully"))
         elif adapter_type in ["STD_BT", "STD_WIFI"]:
-            print(text_optional.replace("OBDLINK", adapter_type))
+            print(text_optional.replace("OBDLink", adapter_type))
             if not options.elm_failed:
                 print(_("Connection established successfully"))
 
@@ -748,11 +746,9 @@ class ELM:
                 errorstr = errorval(rsp[6:8])
             tmstr = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             if self.currentaddress in dnat_ext and len(self.currentaddress) == 8:
-                self.vf.write(tmstr + ";" + dnat_ext[
-                    self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
+                self.vf.write(tmstr + ";" + dnat_ext[self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
             elif self.currentaddress in dnat:
-                self.vf.write(tmstr + ";" + dnat[
-                    self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
+                self.vf.write(tmstr + ";" + dnat[self.currentaddress] + ";" + req.replace(' ', '') + ";" + rsp + ";" + errorstr + "\n")
             else:
                 print(_("Unknown address: "), self.currentaddress, req.replace(' ', ''))
             self.vf.flush()
@@ -1782,13 +1778,12 @@ class ELM:
             return False
 
     def init_iso(self):
-        self.currentprotocol = "iso"
+        self.currentprotocol = ""
         self.currentsubprotocol = ""
         self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.lastinitrsp = ""
-
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
@@ -1801,11 +1796,11 @@ class ELM:
         # Others ...
         # self.cmd("AT H0")  # headers off
         # self.cmd("AT AL")  # Allow Long (>7 byte) messages
-        # self.cmd("AT KW0")
+        # self.cmd("AT KW0") # disables Key Bytes verification
 
     def set_iso8_addr(self, addr, ecu):
-        if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
-            return
+        if self.currentprotocol == "iso8" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
+            return True
 
         if self.lf != 0:
             self.lf.write(
@@ -1813,31 +1808,42 @@ class ELM:
                 ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
-        self.currentprotocol = "iso"
-        self.currentsubprotocol = ecu['protocol']
-        self.currentaddress = addr
+        self.currentprotocol = ""
+        self.currentsubprotocol = ""
+        self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("AT SH 81 " + addr + " F1")  # set address
-        self.cmd("AT SW 96")  # wakeup message period 3 seconds
+        self.cmd("AT SH 81 " + addr + " F1")     # set address
+        self.cmd("AT SW 96")                     # wakeup message period 3 seconds
         self.cmd("AT WM 81 " + addr + " F1 3E")  # set wakeup message
-        # self.cmd("at WM 82 "+addr+" F1 3E01")    #set wakeup message
-        self.cmd("AT IB10")  # baud rate 10400
-        self.cmd("AT ST FF")  # set timeout to 1 second
+        self.cmd("AT IB10")                      # baud rate 10400
+        self.cmd("AT ST FF")                     # set timeout to 1 second
         self.cmd("AT SP 3")
-        # Set the slow-init address before AT SI. The ELM327 defaults to
-        # init address 33 (0x21); without this, an ECU sitting at any other
-        # address (e.g. 0x7A for a Sagem Safir) never answers the 5 baud init.
-        self.cmd("AT IIA " + addr)
-        self.cmd("AT AT 0")  # enable adaptive timing
-        self.cmd("AT SI")  # ISO8 needs slow init
-        self.cmd("AT AT 1")
+        self.cmd("AT AT 0")                      # disable adaptive timing
+        self.cmd("AT H0")                        # headers off
+        self.cmd("AT AL")                        # Allow Long (>7 byte) messages
+        self.cmd("AT KW0")                       # disables Key Bytes verification
+        slowinit_addr = ecu.get("slowInit") or addr
+        self.cmd("AT IIA " + slowinit_addr)
+        self.lastinitrsp = self.cmd("AT SI")     # ISO8 needs slow init
+
+        if "OK" not in self.lastinitrsp:
+            self.cmd("AT AT 1")                  # leave if fail enable adaptive timing
+            return False
+
+        self.cmd("AT AT 1")                      # enable adaptive timing
+
+        # Commit session state only after successful initialization
+        self.currentprotocol = "iso8"
+        self.currentsubprotocol = ecu['protocol']
+        self.currentaddress = addr
+        return True
 
     def set_iso_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
-            return
+            return True
 
         if self.lf != 0:
             self.lf.write(
@@ -1845,42 +1851,49 @@ class ELM:
                 ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
-        self.currentprotocol = "iso"
-        self.currentsubprotocol = ecu['protocol']
-        self.currentaddress = addr
+        if self.currentprotocol == "iso":
+            self.cmd("82")                          # close previous session
+
+        self.currentprotocol = ""
+        self.currentsubprotocol = ""
+        self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("AT SH 81 " + addr + " F1")  # set address
-        self.cmd("AT SW 96")  # wakeup message period 3 seconds
-        self.cmd("AT WM 81 " + addr + " F1 3E")  # set wakeup message
-        self.cmd("AT IB10")  # baud rate 10400
-        self.cmd("AT ST FF")  # set timeout to 1 second
-        self.cmd("AT AT 0")  # disable adaptive timing
+        self.cmd("AT SH 81 " + addr + " F1")        # set address
+        self.cmd("AT SW 96")                        # wakeup message period 3 seconds
+        self.cmd("AT WM 81 " + addr + " F1 3E")     # set wakeup message
+        self.cmd("AT IB10")                         # baud rate 10400
+        self.cmd("AT ST FF")                        # set timeout to 1 second
+        self.cmd("AT AT 0")                         # disable adaptive timing
 
-        if 'PRNA2000' in ecu.get('protocol', '').upper() or options.opt_si:
-            self.cmd("AT SP 4")  # slow init mode 4
-            if len(ecu.get('slowInit', '')) > 0:
-                self.cmd("AT IIA " + ecu['slowInit'])  # address for slow init
-            rsp = self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
-            # rsp = self.cmd("81")
-            if 'ERROR' in rsp and len(ecu.get('fastInit', '')) > 0:
-                ecu['protocol'] = ''
-                if self.lf != 0:
-                    self.lf.write('### Try fast init\n')
-                    self.lf.flush()
+        if options.opt_si:
+            self.cmd("AT SP 4")                     # slow init mode 4
+            self.cmd("AT IIA " + addr)              # address for slow init
+            self.lastinitrsp = self.cmd("AT SI")    # for slow init mode 4
 
-                    # if 'PRNA2000' not in ecu['protocol'].upper() :
-        if 'OK' not in self.lastinitrsp:
+        if ('OK' not in self.lastinitrsp) or (not options.opt_si):
+            # ecu['protocol'] = '' # XXX not sure why we do this
+            if self.lf != 0:
+                self.lf.write('### Try fast init\n')
+                self.lf.flush()
             self.cmd("AT SP 5")  # fast init mode 5
-            self.lastinitrsp = self.cmd("AT FI")  # perform fast init mode 5
-            # self.lastinitrsp = self.cmd("81")         #init bus
+            self.lastinitrsp = self.cmd("AT FI")    # perform fast init mode 5
+
+        if 'OK' not in self.lastinitrsp:
+            self.cmd("AT AT 1")                     # leave if fail enable adaptive timing
+            return False
 
         self.cmd("AT AT 1")  # enable adaptive timing
-        self.cmd("81")  # start session
-        return True
 
+        # Commit session state only after successful initialization
+        self.currentprotocol = "iso"
+        self.currentsubprotocol = ecu['protocol']
+        self.currentaddress = addr
+
+        self.cmd("81")                              # start session
+        return True
 
 def elm_checker(port, speed, adapter, logview, app):
     """Enhanced ELM327 checker with better error handling and device detection"""
