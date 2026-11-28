@@ -1778,13 +1778,12 @@ class ELM:
             return False
 
     def init_iso(self):
-        self.currentprotocol = "iso"
+        self.currentprotocol = ""
         self.currentsubprotocol = ""
         self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.lastinitrsp = ""
-
         if self.lf != 0:
             tmstr = datetime.now().strftime("%x %H:%M:%S.%f")[:-3]
             self.lf.write('#' * 60 + "\n# [" + tmstr + "] Init ISO\n" + '#' * 60 + "\n")
@@ -1795,13 +1794,13 @@ class ELM:
         self.cmd("AT L1")
         self.cmd("AT D1")
         # Others ...
-        self.cmd("AT H0")  # headers off
-        self.cmd("AT AL")  # Allow Long (>7 byte) messages
-        self.cmd("AT KW0")
+        # self.cmd("AT H0")  # headers off
+        # self.cmd("AT AL")  # Allow Long (>7 byte) messages
+        # self.cmd("AT KW0") # disables Key Bytes verification
 
     def set_iso8_addr(self, addr, ecu):
-        if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
-            return
+        if self.currentprotocol == "iso8" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
+            return True
 
         if self.lf != 0:
             self.lf.write(
@@ -1809,9 +1808,9 @@ class ELM:
                 ecu['protocol'] + "\n" + '#' * 60 + "\n")
             self.lf.flush()
 
-        self.currentprotocol = "iso"
-        self.currentsubprotocol = ecu['protocol']
-        self.currentaddress = addr
+        self.currentprotocol = ""
+        self.currentsubprotocol = ""
+        self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.lastinitrsp = ""
@@ -1823,13 +1822,28 @@ class ELM:
         self.cmd("AT ST FF")                     # set timeout to 1 second
         self.cmd("AT SP 3")
         self.cmd("AT AT 0")                      # disable adaptive timing
-        self.cmd("AT IIA " + addr)
-        self.cmd("AT SI")                        # ISO8 needs slow init
+        self.cmd("AT H0")                        # headers off
+        self.cmd("AT AL")                        # Allow Long (>7 byte) messages
+        self.cmd("AT KW0")                       # disables Key Bytes verification
+        slowinit_addr = ecu.get("slowInit") or addr
+        self.cmd("AT IIA " + slowinit_addr)
+        self.lastinitrsp = self.cmd("AT SI")     # ISO8 needs slow init
+
+        if "OK" not in self.lastinitrsp:
+            self.cmd("AT AT 1")                  # leave if fail enable adaptive timing
+            return False
+
         self.cmd("AT AT 1")                      # enable adaptive timing
+
+        # Commit session state only after successful initialization
+        self.currentprotocol = "iso8"
+        self.currentsubprotocol = ecu['protocol']
+        self.currentaddress = addr
+        return True
 
     def set_iso_addr(self, addr, ecu):
         if self.currentprotocol == "iso" and self.currentaddress == addr and self.currentsubprotocol == ecu['protocol']:
-            return
+            return True
 
         if self.lf != 0:
             self.lf.write(
@@ -1838,41 +1852,47 @@ class ELM:
             self.lf.flush()
 
         if self.currentprotocol == "iso":
-            self.cmd("82")  # close previous session
+            self.cmd("82")                          # close previous session
 
-        self.currentprotocol = "iso"
-        self.currentsubprotocol = ecu['protocol']
-        self.currentaddress = addr
+        self.currentprotocol = ""
+        self.currentsubprotocol = ""
+        self.currentaddress = ""
         self.startSession = ""
         self.lastCMDtime = 0
         self.lastinitrsp = ""
 
-        self.cmd("AT SH 81 " + addr + " F1")  # set address
-        self.cmd("AT SW 96")  # wakeup message period 3 seconds
-        self.cmd("AT WM 81 " + addr + " F1 3E")  # set wakeup message
-        self.cmd("AT IB10")  # baud rate 10400
-        self.cmd("AT ST FF")  # set timeout to 1 second
-        self.cmd("AT AT 0")  # disable adaptive timing
+        self.cmd("AT SH 81 " + addr + " F1")        # set address
+        self.cmd("AT SW 96")                        # wakeup message period 3 seconds
+        self.cmd("AT WM 81 " + addr + " F1 3E")     # set wakeup message
+        self.cmd("AT IB10")                         # baud rate 10400
+        self.cmd("AT ST FF")                        # set timeout to 1 second
+        self.cmd("AT AT 0")                         # disable adaptive timing
 
-        # if 'PRNA2000' in ecu.get('protocol', '').upper() or options.opt_si:
         if options.opt_si:
-            self.cmd("AT SP 4")  # slow init mode 4
-            self.cmd("AT IIA " + addr)  # address for slow init
-            self.lastinitrsp = self.cmd("AT SI")  # for slow init mode 4
+            self.cmd("AT SP 4")                     # slow init mode 4
+            self.cmd("AT IIA " + addr)              # address for slow init
+            self.lastinitrsp = self.cmd("AT SI")    # for slow init mode 4
 
         if ('OK' not in self.lastinitrsp) or (not options.opt_si):
-            ecu['protocol'] = '' # XXX not sure why we do this
+            # ecu['protocol'] = '' # XXX not sure why we do this
             if self.lf != 0:
                 self.lf.write('### Try fast init\n')
                 self.lf.flush()
             self.cmd("AT SP 5")  # fast init mode 5
-            self.lastinitrsp = self.cmd("AT FI")  # perform fast init mode 5
+            self.lastinitrsp = self.cmd("AT FI")    # perform fast init mode 5
 
         if 'OK' not in self.lastinitrsp:
+            self.cmd("AT AT 1")                     # leave if fail enable adaptive timing
             return False
 
         self.cmd("AT AT 1")  # enable adaptive timing
-        self.cmd("81")  # start session
+
+        # Commit session state only after successful initialization
+        self.currentprotocol = "iso"
+        self.currentsubprotocol = ecu['protocol']
+        self.currentaddress = addr
+
+        self.cmd("81")                              # start session
         return True
 
 def elm_checker(port, speed, adapter, logview, app):
