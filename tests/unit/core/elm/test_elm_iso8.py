@@ -32,7 +32,7 @@ def test_set_iso8_addr_sends_at_iia_before_at_si():
     ELM.set_iso8_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
 
     # Address tracking must be updated.
-    assert elm.currentprotocol == "iso"
+    assert elm.currentprotocol == "iso8"
     assert elm.currentaddress == "7A"
     assert elm.currentsubprotocol == "ISO8"
 
@@ -50,7 +50,7 @@ def test_set_iso8_addr_early_return_when_already_configured():
     from ddt4all.core.elm.elm import ELM
 
     elm = FakeELM()
-    elm.currentprotocol = "iso"
+    elm.currentprotocol = "iso8"
     elm.currentaddress = "7A"
     elm.currentsubprotocol = "ISO8"
     ELM.set_iso8_addr(elm, "7A", {"protocol": "ISO8", "ecuname": "SAFIR"})
